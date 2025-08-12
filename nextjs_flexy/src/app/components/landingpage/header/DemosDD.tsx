@@ -7,18 +7,18 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import NextLink from "next/link";
 
-import mainDemo from "/public/images/landingpage/demo-main.jpg";
-import darkDemo from "/public/images/landingpage/demo-dark.jpg";
-import horizontalDemo from "/public/images/landingpage/demo-horizontal.jpg";
-import rtlDemo from "/public/images/landingpage/demo-rtl.jpg";
-import minidemo from '/public/images/landingpage/demo-minisidebar.jpg'
+const mainDemo = "/images/landingpage/demo-main.jpg";
+const darkDemo = "/images/landingpage/demo-dark.jpg";
+const horizontalDemo = "/images/landingpage/demo-horizontal.jpg";
+const rtlDemo = "/images/landingpage/demo-rtl.jpg";
+const minidemo = '/images/landingpage/demo-minisidebar.jpg'
 
 
-import app1 from "/public/images/landingpage/app-calendar.jpg";
-import app2 from "/public/images/landingpage/app-chat.jpg";
-import app3 from "/public/images/landingpage/app-contact.jpg";
-import app4 from "/public/images/landingpage/app-email.jpg";
-import app5 from "/public/images/landingpage/app-notes.jpg";
+const app1 = "/images/landingpage/app-calendar.jpg";
+const app2 = "/images/landingpage/app-chat.jpg";
+const app3 = "/images/landingpage/app-contact.jpg";
+const app4 = "/images/landingpage/app-email.jpg";
+const app5 = "/images/landingpage/app-notes.jpg";
 import Image from "next/image";
 
 interface DemoTypes {

@@ -6,31 +6,31 @@ import { Grid } from '@mui/material'
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 // images
-import mainDemo from "/public/images/landingpage/demo-main.jpg";
-import darkDemo from "/public/images/landingpage/demo-dark.jpg";
-import horizontalDemo from "/public/images/landingpage/demo-horizontal.jpg";
-import rtlDemo from "/public/images/landingpage/demo-rtl.jpg";
-import minidemo from '/public/images/landingpage/demo-minisidebar.jpg'
-import nextauth from '/public/images/landingpage/demo-firebase.jpg'
+const mainDemo = "/images/landingpage/demo-main.jpg";
+const darkDemo = "/images/landingpage/demo-dark.jpg";
+const horizontalDemo = "/images/landingpage/demo-horizontal.jpg";
+const rtlDemo = "/images/landingpage/demo-rtl.jpg";
+const minidemo = '/images/landingpage/demo-minisidebar.jpg'
+const nextauth = '/images/landingpage/demo-firebase.jpg'
 
 
-import app1 from "/public/images/landingpage/app-calendar.jpg";
-import app2 from "/public/images/landingpage/app-chat.jpg";
-import app3 from "/public/images/landingpage/app-contact.jpg";
-import app4 from "/public/images/landingpage/app-email.jpg";
-import app5 from "/public/images/landingpage/app-notes.jpg";
-import app6 from "/public/images/landingpage/app-userprofile.jpg";
-import app7 from "/public/images/landingpage/app-blog.jpg";
-import app9 from '/public/images/landingpage/app-ecomproducts.jpg';
-import app10 from '/public/images/landingpage/app-ecomproduct-details.jpg';
-import app13 from '/public/images/landingpage/app-blogdetail.jpg';
-import app14 from '/public/images/landingpage/app-kanban.jpg';
-import app15 from '/public/images/landingpage/app-invoice.jpg';
+const app1 = "/images/landingpage/app-calendar.jpg";
+const app2 = "/images/landingpage/app-chat.jpg";
+const app3 = "/images/landingpage/app-contact.jpg";
+const app4 = "/images/landingpage/app-email.jpg";
+const app5 = "/images/landingpage/app-notes.jpg";
+const app6 = "/images/landingpage/app-userprofile.jpg";
+const app7 = "/images/landingpage/app-blog.jpg";
+const app9 = '/images/landingpage/app-ecomproducts.jpg';
+const app10 = '/images/landingpage/app-ecomproduct-details.jpg';
+const app13 = '/images/landingpage/app-blogdetail.jpg';
+const app14 = '/images/landingpage/app-kanban.jpg';
+const app15 = '/images/landingpage/app-invoice.jpg';
 
-import Page1 from "/public/images/landingpage/front-homepage.jpg";
-import Page2 from "/public/images/landingpage/front-aboutus.jpg";
-import Page3 from "/public/images/landingpage/front-portfolio.jpg";
-import Page4 from "/public/images/landingpage/front-pricing.jpg";
+const Page1 = "/images/landingpage/front-homepage.jpg";
+const Page2 = "/images/landingpage/front-aboutus.jpg";
+const Page3 = "/images/landingpage/front-portfolio.jpg";
+const Page4 = "/images/landingpage/front-pricing.jpg";
 
 import DemoTitle from "./DemoTitle";
 import Image from "next/image";

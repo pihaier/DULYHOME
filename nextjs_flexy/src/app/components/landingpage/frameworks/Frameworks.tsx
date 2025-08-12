@@ -6,7 +6,7 @@ import { styled } from '@mui/material/styles';
 import FrameworksTitle from "./FrameworksTitle";
 
 // images
-import sliderImg from "/public/images/landingpage/ang-flexy-landscape-img.png";
+const sliderImg = "/images/landingpage/ang-flexy-landscape-img.png";
 import Image from "next/image";
 
 const SliderBox = styled(Box)(() => ({

@@ -7,8 +7,8 @@ import { Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { styled } from '@mui/material/styles';
 import BannerContent from "./BannerContent";
-import bannerbgImg1 from "/public/images/landingpage/bannerimg1.png";
-import bannerbgImg2 from "/public/images/landingpage/bannerimg2.png";
+const bannerbgImg1 = "/images/landingpage/bannerimg1.png";
+const bannerbgImg2 = "/images/landingpage/bannerimg2.png";
 import Image from "next/image";
 
 const Banner = () => {

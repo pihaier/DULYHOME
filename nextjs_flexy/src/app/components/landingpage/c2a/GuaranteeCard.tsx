@@ -6,7 +6,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import BlankCard from '../../shared/BlankCard';
-import badgeImg from '/public/images/landingpage/shape/badge.svg';
+const badgeImg = '/images/landingpage/shape/badge.svg';
 import Image from 'next/image';
 
 const ImgCard = styled(BlankCard)(() => ({

@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 
 // images
-import background2x from "/public/images/backgrounds/blog-bg-2x.jpg";
+const background2x = "/images/backgrounds/blog-bg-2x.jpg";
 
 import { IconClock, IconMessageCircle } from "@tabler/icons-react";
 import BlankCard from "../../shared/BlankCard";
