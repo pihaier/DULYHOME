@@ -1,0 +1,2 @@
+-- This migration was already applied in production
+-- Placeholder file for migration history sync

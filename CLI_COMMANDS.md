@@ -73,3 +73,4 @@ npx supabase gen types typescript --db-url "postgresql://postgres.fzpyfzpmwyvqum
 - **"Remote migration versions not found" 오류**: 
   - 원인: 20250828 버전 충돌
   - 해결: `npx supabase migration repair --status reverted 20250828` 실행 후 `--include-all` 플래그로 push
+  
