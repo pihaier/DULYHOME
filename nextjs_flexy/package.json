@@ -7,18 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "type-check": "tsc --noEmit",
-    "test": "playwright test",
-    "test:headed": "playwright test --headed",
-    "test:ui": "playwright test --ui",
-    "test:debug": "playwright test --debug",
-    "test:market-research": "playwright test tests/market-research.spec.ts",
-    "test:sampling": "playwright test tests/sampling.spec.ts",
-    "test:bulk-order": "playwright test tests/bulk-order.spec.ts",
-    "test:inspection": "playwright test tests/inspection.spec.ts",
-    "test:integration": "playwright test tests/integration.spec.ts",
-    "test:report": "playwright show-report",
-    "update-storage-buckets": "tsx src/scripts/update-storage-bucket.ts"
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "2": "^3.0.0",
