@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #fafafa; line-height: 1.6;">
+  
+  <!-- 전체 래퍼 -->
+  <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #fafafa; min-height: 100vh;">
+    <tr>
+      <td align="center" style="padding: 60px 20px;">
+        
+        <!-- 메인 카드 -->
+        <table cellpadding="0" cellspacing="0" border="0" width="600" style="background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); overflow: hidden;">
+          
+          <!-- 헤더 (그라데이션 배경) -->
+          <tr>
+            <td style="background: linear-gradient(135deg, rgba(25,118,210,0.1) 0%, rgba(156,39,176,0.05) 50%, rgba(255,193,7,0.1) 100%); padding: 40px; text-align: center; border-bottom: 1px solid rgba(0,0,0,0.08);">
+              <h1 style="margin: 0 0 8px 0; font-size: 36px; font-weight: 700; color: #1976d2; letter-spacing: -0.5px;">
+                두리무역
+              </h1>
+              <p style="margin: 0; font-size: 16px; color: #666; font-weight: 500;">
+                한-중 무역의 모든 것
+              </p>
+            </td>
+          </tr>
+          
+          <!-- 본문 -->
+          <tr>
+            <td style="padding: 48px 40px;">
+              
+              <!-- 아이콘 -->
+              <div style="text-align: center; margin-bottom: 32px;">
+                <div style="display: inline-block; width: 80px; height: 80px; background: linear-gradient(135deg, #9c27b0 0%, #ba68c8 100%); border-radius: 50%; position: relative;">
+                  <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 36px; color: white;">🔮</span>
+                </div>
+              </div>
+              
+              <!-- 인사말 -->
+              <h2 style="margin: 0 0 16px 0; font-size: 24px; font-weight: 600; color: #1a1a1a; text-align: center;">
+                로그인 인증번호
+              </h2>
+              
+              <p style="margin: 0 0 32px 0; font-size: 16px; color: #666; text-align: center;">
+                아래 인증번호를 입력하여 로그인해주세요
+              </p>
+              
+              <!-- OTP 코드 박스 -->
+              <div style="background: linear-gradient(135deg, rgba(156,39,176,0.05) 0%, rgba(156,39,176,0.02) 100%); border: 2px solid #9c27b0; border-radius: 12px; padding: 32px; text-align: center; margin: 0 0 32px 0;">
+                <div style="font-size: 48px; font-weight: 700; color: #9c27b0; letter-spacing: 12px; font-family: 'Courier New', monospace; margin: 0 0 16px 0;">
+                  {{ .Token }}
+                </div>
+                <p style="margin: 0; font-size: 14px; color: #f44336; font-weight: 500;">
+                  ⏱ 10분 이내에 입력해주세요
+                </p>
+              </div>
+              
+              <!-- 추가 정보 -->
+              <div style="background-color: #f5f5f5; border-radius: 8px; padding: 20px; margin: 0 0 24px 0;">
+                <p style="margin: 0 0 8px 0; font-size: 14px; color: #333; font-weight: 600;">
+                  🛡️ 보안 안내
+                </p>
+                <p style="margin: 0; font-size: 14px; color: #666; line-height: 1.6;">
+                  이 인증번호를 타인과 공유하지 마세요.<br>
+                  두리무역 직원은 절대 인증번호를 요구하지 않습니다.
+                </p>
+              </div>
+              
+              <!-- 도움말 -->
+              <p style="margin: 0; font-size: 14px; color: #999; text-align: center;">
+                본인이 요청하지 않은 로그인 시도라면 이 이메일을 무시하세요.
+              </p>
+              
+            </td>
+          </tr>
+          
+          <!-- 푸터 -->
+          <tr>
+            <td style="background-color: #f8f9fa; padding: 32px 40px; text-align: center; border-top: 1px solid rgba(0,0,0,0.08);">
+              <p style="margin: 0 0 8px 0; font-size: 13px; color: #666;">
+                궁금하신 점이 있으신가요?
+              </p>
+              <p style="margin: 0 0 16px 0; font-size: 13px; color: #666;">
+                <strong>고객센터:</strong> 031-699-8781<br>
+                <strong>이메일:</strong> duly@duly.co.kr<br>
+                <strong>홈페이지:</strong> www.duly.co.kr
+              </p>
+              <div style="width: 60px; height: 1px; background-color: #ddd; margin: 20px auto;"></div>
+              <p style="margin: 0; font-size: 12px; color: #999;">
+                © 2025 두리무역. All rights reserved.<br>
+                사업자등록번호: 605-29-80697 | 대표: 김두호<br>
+                인천광역시 연수구 센트럴로 313 B2512
+              </p>
+            </td>
+          </tr>
+          
+        </table>
+        
+      </td>
+    </tr>
+  </table>
+
+  <!-- Magic Link 숨김 (Supabase 요구사항) -->
+  <div style="display: none;">
+    <a href="{{ .ConfirmationURL }}">{{ .Token }}</a>
+  </div>
+
+</body>
+</html>

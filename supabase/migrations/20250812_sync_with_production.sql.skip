@@ -1,0 +1,598 @@
+create extension if not exists "pg_net" with schema "public" version '0.14.0';
+
+drop trigger if exists "update_exchange_rates_updated_at" on "public"."exchange_rates";
+
+-- Skip: These policies don't exist in production
+-- drop policy "Service role can insert exchange rates" on "public"."exchange_rates";
+-- drop policy "Service role can update exchange rates" on "public"."exchange_rates";
+
+drop policy "Anyone can view faqs" on "public"."faqs";
+
+drop policy "Only admins can delete faqs" on "public"."faqs";
+
+drop policy "Only admins can insert faqs" on "public"."faqs";
+
+drop policy "Only admins can update faqs" on "public"."faqs";
+
+drop policy "Anyone can view notices" on "public"."notices";
+
+drop policy "Only admins can delete notices" on "public"."notices";
+
+drop policy "Only admins can insert notices" on "public"."notices";
+
+drop policy "Only admins can update notices" on "public"."notices";
+
+drop policy "Korean team full access" on "public"."bulk_orders";
+
+drop policy "Korean team can view all messages" on "public"."chat_messages";
+
+drop policy "order_based_trips" on "public"."china_business_trips";
+
+drop policy "Users can update own factory contact requests" on "public"."factory_contact_requests";
+
+drop policy "staff_all_access_faqs" on "public"."faqs";
+
+drop policy "Korean team full access" on "public"."inspection_applications";
+
+drop policy "market_research_costs_modify" on "public"."market_research_costs";
+
+drop policy "market_research_products_modify" on "public"."market_research_products";
+
+drop policy "Admins can update all applications" on "public"."market_research_requests";
+
+drop policy "Admins can view all applications" on "public"."market_research_requests";
+
+drop policy "Users can update own market research requests" on "public"."market_research_requests";
+
+drop policy "market_research_samples_modify" on "public"."market_research_samples";
+
+drop policy "market_research_suppliers_modify" on "public"."market_research_suppliers";
+
+drop policy "staff_all_access_notices" on "public"."notices";
+
+drop policy "Korean team can update all sampling orders" on "public"."sampling_orders";
+
+drop policy "Korean team can view all sampling orders" on "public"."sampling_orders";
+
+drop policy "view_files_for_own_applications" on "public"."uploaded_files";
+
+alter table "public"."ai_translation_cache" drop constraint "ai_translation_cache_original_language_check";
+
+alter table "public"."ai_translation_cache" drop constraint "ai_translation_cache_target_language_check";
+
+alter table "public"."chat_messages" drop constraint "chat_messages_message_type_check";
+
+alter table "public"."chat_messages" drop constraint "chat_messages_original_language_check";
+
+alter table "public"."chat_messages" drop constraint "chat_messages_translated_language_check";
+
+alter table "public"."china_business_trips" drop constraint "china_business_trips_service_sub_type_check";
+
+alter table "public"."customer_inquiries" drop constraint "customer_inquiries_inquiry_channel_check";
+
+alter table "public"."customer_inquiries" drop constraint "customer_inquiries_status_check";
+
+alter table "public"."guest_tokens" drop constraint "guest_tokens_role_check";
+
+alter table "public"."inspection_reports" drop constraint "inspection_reports_status_check";
+
+alter table "public"."market_research_requests" drop constraint "check_payment_status";
+
+alter table "public"."market_research_requests" drop constraint "check_status";
+
+alter table "public"."orders" drop constraint "orders_payment_status_check";
+
+alter table "public"."orders" drop constraint "orders_service_type_check";
+
+alter table "public"."orders" drop constraint "orders_status_check";
+
+alter table "public"."price_calculations" drop constraint "price_calculations_trade_terms_check";
+
+alter table "public"."process_logs" drop constraint "process_logs_internal_process_check";
+
+alter table "public"."process_logs" drop constraint "process_logs_log_type_check";
+
+alter table "public"."purchasing_orders" drop constraint "purchasing_orders_purchase_type_check";
+
+alter table "public"."sample_orders" drop constraint "sample_orders_shipping_method_check";
+
+alter table "public"."shipping_addresses" drop constraint "shipping_addresses_customs_clearance_type_check";
+
+alter table "public"."shipping_agency_orders" drop constraint "shipping_agency_orders_shipping_status_check";
+
+alter table "public"."uploaded_files" drop constraint "uploaded_files_upload_purpose_check";
+
+alter table "public"."user_profiles" drop constraint "user_profiles_approval_status_check";
+
+alter table "public"."user_profiles" drop constraint "user_profiles_customer_type_check";
+
+alter table "public"."user_profiles" drop constraint "user_profiles_language_preference_check";
+
+alter table "public"."user_profiles" drop constraint "user_profiles_role_check";
+
+-- Skip: sync_email_on_update is needed for email synchronization
+-- drop function if exists "public"."sync_email_on_update"();
+
+drop function if exists "public"."get_today_exchange_rate"();
+
+drop index if exists "public"."idx_hs_codes_pdf_parent_labels_4";
+
+drop index if exists "public"."idx_hs_codes_pdf_parent_labels_6";
+
+drop index if exists "public"."idx_name_en_gin";
+
+drop index if exists "public"."idx_name_ko_gin";
+
+drop index if exists "public"."idx_user_profiles_approval_status";
+
+drop index if exists "public"."idx_user_profiles_role";
+
+drop index if exists "public"."idx_user_profiles_user_id";
+
+alter table "public"."hs_codes" drop column "pdf_description_ko_4";
+
+alter table "public"."hs_codes" drop column "pdf_description_ko_6";
+
+alter table "public"."hs_codes" drop column "pdf_parent_labels_4";
+
+alter table "public"."hs_codes" drop column "pdf_parent_labels_6";
+
+alter table "public"."hs_codes" drop column "pdf_source_4";
+
+alter table "public"."hs_codes" drop column "pdf_source_6";
+
+alter table "public"."hs_codes" drop column "pdf_title_ko_4";
+
+alter table "public"."hs_codes" drop column "pdf_title_ko_6";
+
+alter table "public"."ai_translation_cache" add constraint "ai_translation_cache_original_language_check" CHECK (((original_language)::text = ANY ((ARRAY['ko'::character varying, 'zh'::character varying, 'en'::character varying])::text[]))) not valid;
+
+alter table "public"."ai_translation_cache" validate constraint "ai_translation_cache_original_language_check";
+
+alter table "public"."ai_translation_cache" add constraint "ai_translation_cache_target_language_check" CHECK (((target_language)::text = ANY ((ARRAY['ko'::character varying, 'zh'::character varying, 'en'::character varying])::text[]))) not valid;
+
+alter table "public"."ai_translation_cache" validate constraint "ai_translation_cache_target_language_check";
+
+alter table "public"."chat_messages" add constraint "chat_messages_message_type_check" CHECK (((message_type)::text = ANY ((ARRAY['text'::character varying, 'file'::character varying, 'image'::character varying, 'video'::character varying, 'system'::character varying])::text[]))) not valid;
+
+alter table "public"."chat_messages" validate constraint "chat_messages_message_type_check";
+
+alter table "public"."chat_messages" add constraint "chat_messages_original_language_check" CHECK (((original_language)::text = ANY ((ARRAY['ko'::character varying, 'zh'::character varying])::text[]))) not valid;
+
+alter table "public"."chat_messages" validate constraint "chat_messages_original_language_check";
+
+alter table "public"."chat_messages" add constraint "chat_messages_translated_language_check" CHECK (((translated_language)::text = ANY ((ARRAY['ko'::character varying, 'zh'::character varying])::text[]))) not valid;
+
+alter table "public"."chat_messages" validate constraint "chat_messages_translated_language_check";
+
+alter table "public"."china_business_trips" add constraint "china_business_trips_service_sub_type_check" CHECK (((service_sub_type)::text = ANY ((ARRAY['검품(생산 후)'::character varying, '공장감사'::character varying, '선적검품'::character varying])::text[]))) not valid;
+
+alter table "public"."china_business_trips" validate constraint "china_business_trips_service_sub_type_check";
+
+alter table "public"."customer_inquiries" add constraint "customer_inquiries_inquiry_channel_check" CHECK (((inquiry_channel)::text = ANY ((ARRAY['전화'::character varying, '이메일'::character varying, '웹'::character varying])::text[]))) not valid;
+
+alter table "public"."customer_inquiries" validate constraint "customer_inquiries_inquiry_channel_check";
+
+alter table "public"."customer_inquiries" add constraint "customer_inquiries_status_check" CHECK (((status)::text = ANY ((ARRAY['대기'::character varying, '처리중'::character varying, '완료'::character varying])::text[]))) not valid;
+
+alter table "public"."customer_inquiries" validate constraint "customer_inquiries_status_check";
+
+alter table "public"."guest_tokens" add constraint "guest_tokens_role_check" CHECK (((role)::text = ANY ((ARRAY['inspector'::character varying, 'factory'::character varying])::text[]))) not valid;
+
+alter table "public"."guest_tokens" validate constraint "guest_tokens_role_check";
+
+alter table "public"."inspection_reports" add constraint "inspection_reports_status_check" CHECK (((status)::text = ANY ((ARRAY['uploaded'::character varying, 'processing'::character varying, 'completed'::character varying, 'approved'::character varying])::text[]))) not valid;
+
+alter table "public"."inspection_reports" validate constraint "inspection_reports_status_check";
+
+alter table "public"."market_research_requests" add constraint "check_payment_status" CHECK (((payment_status)::text = ANY ((ARRAY['pending'::character varying, 'paid'::character varying, 'refunded'::character varying])::text[]))) not valid;
+
+alter table "public"."market_research_requests" validate constraint "check_payment_status";
+
+alter table "public"."market_research_requests" add constraint "check_status" CHECK (((status)::text = ANY ((ARRAY['submitted'::character varying, 'payment_pending'::character varying, 'research_in_progress'::character varying, 'research_completed'::character varying])::text[]))) not valid;
+
+alter table "public"."market_research_requests" validate constraint "check_status";
+
+alter table "public"."orders" add constraint "orders_payment_status_check" CHECK (((payment_status)::text = ANY ((ARRAY['pending'::character varying, 'paid'::character varying, 'partial'::character varying, 'refunded'::character varying])::text[]))) not valid;
+
+alter table "public"."orders" validate constraint "orders_payment_status_check";
+
+alter table "public"."orders" add constraint "orders_service_type_check" CHECK (((service_type)::text = ANY ((ARRAY['quality_inspection'::character varying, 'factory_audit'::character varying, 'loading_inspection'::character varying, 'market_research'::character varying, 'import_shipping'::character varying, 'purchasing_agency'::character varying, 'shipping_agency'::character varying])::text[]))) not valid;
+
+alter table "public"."orders" validate constraint "orders_service_type_check";
+
+alter table "public"."orders" add constraint "orders_status_check" CHECK (((status)::text = ANY ((ARRAY['submitted'::character varying, 'under_review'::character varying, 'approved'::character varying, 'rejected'::character varying, 'researching'::character varying, 'quote_preparation'::character varying, 'quote_sent'::character varying, 'payment_pending'::character varying, 'payment_confirmed'::character varying, 'schedule_coordination'::character varying, 'in_progress'::character varying, 'report_writing'::character varying, 'final_review'::character varying, 'completed'::character varying, 'cancelled'::character varying, 'on_hold'::character varying])::text[]))) not valid;
+
+alter table "public"."orders" validate constraint "orders_status_check";
+
+alter table "public"."price_calculations" add constraint "price_calculations_trade_terms_check" CHECK (((trade_terms)::text = ANY ((ARRAY['FOB'::character varying, 'DDP'::character varying, 'EXW'::character varying])::text[]))) not valid;
+
+alter table "public"."price_calculations" validate constraint "price_calculations_trade_terms_check";
+
+alter table "public"."process_logs" add constraint "process_logs_internal_process_check" CHECK (((internal_process)::text = ANY ((ARRAY['AUTO_MEMBER_REGISTRATION'::character varying, 'ORDER_NUMBER_GENERATION'::character varying, 'AUTO_TRANSLATION'::character varying, 'PRICE_CALCULATION'::character varying, 'NOTIFICATION_SENT'::character varying, 'DATA_VALIDATION'::character varying, 'FILE_PROCESSING'::character varying, 'BACKUP_CREATED'::character varying, 'API_CALL'::character varying, 'WEBHOOK_RECEIVED'::character varying, 'SYNC_COMPLETED'::character varying])::text[]))) not valid;
+
+alter table "public"."process_logs" validate constraint "process_logs_internal_process_check";
+
+alter table "public"."process_logs" add constraint "process_logs_log_type_check" CHECK (((log_type)::text = ANY ((ARRAY['system'::character varying, 'manual'::character varying, 'auto'::character varying])::text[]))) not valid;
+
+alter table "public"."process_logs" validate constraint "process_logs_log_type_check";
+
+alter table "public"."purchasing_orders" add constraint "purchasing_orders_purchase_type_check" CHECK (((purchase_type)::text = ANY ((ARRAY['B2B'::character varying, '단일상품'::character varying])::text[]))) not valid;
+
+alter table "public"."purchasing_orders" validate constraint "purchasing_orders_purchase_type_check";
+
+alter table "public"."sample_orders" add constraint "sample_orders_shipping_method_check" CHECK (((shipping_method)::text = ANY ((ARRAY['해운'::character varying, '항공'::character varying])::text[]))) not valid;
+
+alter table "public"."sample_orders" validate constraint "sample_orders_shipping_method_check";
+
+alter table "public"."shipping_addresses" add constraint "shipping_addresses_customs_clearance_type_check" CHECK (((customs_clearance_type)::text = ANY ((ARRAY['personal'::character varying, 'business'::character varying])::text[]))) not valid;
+
+alter table "public"."shipping_addresses" validate constraint "shipping_addresses_customs_clearance_type_check";
+
+alter table "public"."shipping_agency_orders" add constraint "shipping_agency_orders_shipping_status_check" CHECK (((shipping_status)::text = ANY ((ARRAY['대기'::character varying, '입고'::character varying, '포장'::character varying, '출고'::character varying, '배송중'::character varying, '완료'::character varying])::text[]))) not valid;
+
+alter table "public"."shipping_agency_orders" validate constraint "shipping_agency_orders_shipping_status_check";
+
+alter table "public"."uploaded_files" add constraint "uploaded_files_upload_purpose_check" CHECK (((upload_purpose)::text = ANY ((ARRAY['application'::character varying, 'chat'::character varying, 'report'::character varying, 'quotation'::character varying, 'invoice'::character varying, 'customs'::character varying])::text[]))) not valid;
+
+alter table "public"."uploaded_files" validate constraint "uploaded_files_upload_purpose_check";
+
+alter table "public"."user_profiles" add constraint "user_profiles_approval_status_check" CHECK (((approval_status)::text = ANY ((ARRAY['pending'::character varying, 'approved'::character varying, 'rejected'::character varying])::text[]))) not valid;
+
+alter table "public"."user_profiles" validate constraint "user_profiles_approval_status_check";
+
+alter table "public"."user_profiles" add constraint "user_profiles_customer_type_check" CHECK (((customer_type)::text = ANY ((ARRAY['개인'::character varying, '법인'::character varying])::text[]))) not valid;
+
+alter table "public"."user_profiles" validate constraint "user_profiles_customer_type_check";
+
+alter table "public"."user_profiles" add constraint "user_profiles_language_preference_check" CHECK (((language_preference)::text = ANY ((ARRAY['ko'::character varying, 'zh'::character varying])::text[]))) not valid;
+
+alter table "public"."user_profiles" validate constraint "user_profiles_language_preference_check";
+
+alter table "public"."user_profiles" add constraint "user_profiles_role_check" CHECK (((role)::text = ANY ((ARRAY['customer'::character varying, 'chinese_staff'::character varying, 'korean_team'::character varying, 'admin'::character varying, 'inspector'::character varying, 'factory'::character varying])::text[]))) not valid;
+
+alter table "public"."user_profiles" validate constraint "user_profiles_role_check";
+
+set check_function_bodies = off;
+
+CREATE OR REPLACE FUNCTION public.get_today_exchange_rate()
+ RETURNS TABLE(date date, usd_rate numeric, cny_rate numeric)
+ LANGUAGE plpgsql
+AS $function$
+BEGIN
+  -- 오늘 환율 찾기
+  RETURN QUERY
+  SELECT 
+    er.date,
+    er.usd_rate,
+    er.cny_rate
+  FROM exchange_rates er
+  WHERE er.date = CURRENT_DATE
+  LIMIT 1;
+  
+  -- 없으면 가장 최근 환율
+  IF NOT FOUND THEN
+    RETURN QUERY
+    SELECT 
+      er.date,
+      er.usd_rate,
+      er.cny_rate
+    FROM exchange_rates er
+    ORDER BY er.date DESC
+    LIMIT 1;
+  END IF;
+END;
+$function$
+;
+
+CREATE OR REPLACE FUNCTION public.handle_new_user()
+ RETURNS trigger
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+AS $function$
+BEGIN
+  -- 이메일 가입 처리 (provider가 'email'이거나 NULL인 경우)
+  IF NEW.raw_app_meta_data->>'provider' = 'email' 
+     OR NEW.raw_app_meta_data->>'provider' IS NULL THEN
+    
+    INSERT INTO public.user_profiles (
+      user_id,
+      email,  -- 이메일 추가!
+      role,
+      approval_status,
+      company_name,
+      contact_person,
+      phone,
+      terms_accepted_at,
+      privacy_accepted_at,
+      marketing_accepted_at,
+      language_preference,
+      created_at,
+      updated_at
+    )
+    VALUES (
+      NEW.id,
+      NEW.email,  -- 이메일 저장!
+      'customer',
+      'approved',
+      '미입력',
+      '미입력',  
+      '미입력',
+      COALESCE((NEW.raw_user_meta_data->>'terms_accepted_at')::timestamptz, NOW()),
+      COALESCE((NEW.raw_user_meta_data->>'privacy_accepted_at')::timestamptz, NOW()),
+      (NEW.raw_user_meta_data->>'marketing_accepted_at')::timestamptz,
+      'ko',
+      NOW(),
+      NOW()
+    )
+    ON CONFLICT (user_id) DO NOTHING;
+    
+  -- OAuth 로그인 처리
+  ELSE
+    INSERT INTO public.user_profiles (
+      user_id,
+      email,  -- 이메일 추가!
+      role,
+      company_name,
+      contact_person,
+      phone,
+      provider,
+      provider_id,
+      avatar_url,
+      full_name,
+      approval_status,
+      terms_accepted_at,
+      privacy_accepted_at,
+      language_preference,
+      created_at,
+      updated_at
+    ) VALUES (
+      NEW.id,
+      NEW.email,  -- 이메일 저장!
+      'customer',
+      '미입력',
+      COALESCE(NEW.raw_user_meta_data->>'full_name', NEW.email),
+      '미입력',
+      NEW.raw_app_meta_data->>'provider',
+      NEW.raw_app_meta_data->>'provider_id',
+      NEW.raw_user_meta_data->>'avatar_url',
+      NEW.raw_user_meta_data->>'full_name',
+      'approved',
+      NOW(),
+      NOW(),
+      'ko',
+      NOW(),
+      NOW()
+    )
+    ON CONFLICT (user_id) DO NOTHING;
+  END IF;
+  
+  RETURN NEW;
+END;
+$function$
+;
+
+CREATE OR REPLACE FUNCTION public.search_hs_codes(search_term text)
+ RETURNS TABLE(hs_code character varying, name_ko text, name_en text, relevance real)
+ LANGUAGE plpgsql
+AS $function$
+BEGIN
+  RETURN QUERY
+  SELECT 
+    h.hs_code,
+    h.name_ko,
+    h.name_en,
+    CASE
+      WHEN h.hs_code = search_term THEN 100
+      WHEN h.hs_code LIKE search_term || '%' THEN 90
+      WHEN h.name_ko = search_term THEN 85
+      WHEN h.name_ko ILIKE '%' || search_term || '%' THEN 70
+      WHEN h.name_en ILIKE '%' || search_term || '%' THEN 60
+      ELSE 50
+    END::REAL as relevance
+  FROM hs_codes h
+  WHERE 
+    h.hs_code LIKE search_term || '%' OR
+    h.name_ko ILIKE '%' || search_term || '%' OR
+    h.name_en ILIKE '%' || search_term || '%'
+  ORDER BY relevance DESC, h.hs_code
+  LIMIT 100;
+END;
+$function$
+;
+
+CREATE OR REPLACE FUNCTION public.update_updated_at_column()
+ RETURNS trigger
+ LANGUAGE plpgsql
+AS $function$
+BEGIN
+  NEW.updated_at = NOW();
+  RETURN NEW;
+END;
+$function$
+;
+
+create policy "Korean team full access"
+on "public"."bulk_orders"
+as permissive
+for all
+to public
+using ((EXISTS ( SELECT 1
+   FROM user_profiles
+  WHERE ((user_profiles.user_id = auth.uid()) AND ((user_profiles.role)::text = ANY ((ARRAY['korean_team'::character varying, 'admin'::character varying])::text[]))))));
+
+
+create policy "Korean team can view all messages"
+on "public"."chat_messages"
+as permissive
+for all
+to public
+using ((EXISTS ( SELECT 1
+   FROM user_profiles
+  WHERE ((user_profiles.user_id = auth.uid()) AND ((user_profiles.role)::text = ANY ((ARRAY['korean_team'::character varying, 'admin'::character varying])::text[]))))));
+
+
+create policy "order_based_trips"
+on "public"."china_business_trips"
+as permissive
+for all
+to authenticated
+using ((EXISTS ( SELECT 1
+   FROM orders
+  WHERE ((orders.id = china_business_trips.order_id) AND ((orders.user_id = ( SELECT auth.uid() AS uid)) OR (orders.assigned_staff = ( SELECT auth.uid() AS uid)) OR (( SELECT auth.uid() AS uid) IN ( SELECT user_profiles.user_id
+           FROM user_profiles
+          WHERE ((user_profiles.role)::text = ANY ((ARRAY['korean_team'::character varying, 'admin'::character varying])::text[])))))))));
+
+
+create policy "Users can update own factory contact requests"
+on "public"."factory_contact_requests"
+as permissive
+for update
+to public
+using (((auth.uid() = user_id) AND ((status)::text = ANY ((ARRAY['pending'::character varying, 'submitted'::character varying])::text[]))));
+
+
+create policy "staff_all_access_faqs"
+on "public"."faqs"
+as permissive
+for all
+to public
+using ((auth.uid() IN ( SELECT user_profiles.user_id
+   FROM user_profiles
+  WHERE ((user_profiles.role)::text = ANY ((ARRAY['admin'::character varying, 'korean_team'::character varying, 'chinese_staff'::character varying])::text[])))));
+
+
+create policy "Korean team full access"
+on "public"."inspection_applications"
+as permissive
+for all
+to public
+using ((EXISTS ( SELECT 1
+   FROM user_profiles
+  WHERE ((user_profiles.user_id = auth.uid()) AND ((user_profiles.role)::text = ANY ((ARRAY['korean_team'::character varying, 'admin'::character varying])::text[]))))));
+
+
+create policy "market_research_costs_modify"
+on "public"."market_research_costs"
+as permissive
+for all
+to public
+using ((EXISTS ( SELECT 1
+   FROM user_profiles
+  WHERE ((user_profiles.user_id = auth.uid()) AND ((user_profiles.role)::text = ANY ((ARRAY['korean_team'::character varying, 'admin'::character varying])::text[]))))));
+
+
+create policy "market_research_products_modify"
+on "public"."market_research_products"
+as permissive
+for all
+to public
+using ((EXISTS ( SELECT 1
+   FROM user_profiles
+  WHERE ((user_profiles.user_id = auth.uid()) AND ((user_profiles.role)::text = ANY ((ARRAY['korean_team'::character varying, 'admin'::character varying])::text[]))))));
+
+
+create policy "Admins can update all applications"
+on "public"."market_research_requests"
+as permissive
+for update
+to public
+using ((EXISTS ( SELECT 1
+   FROM user_profiles
+  WHERE ((user_profiles.user_id = auth.uid()) AND ((user_profiles.role)::text = ANY ((ARRAY['admin'::character varying, 'korean_team'::character varying])::text[]))))));
+
+
+create policy "Admins can view all applications"
+on "public"."market_research_requests"
+as permissive
+for select
+to public
+using ((EXISTS ( SELECT 1
+   FROM user_profiles
+  WHERE ((user_profiles.user_id = auth.uid()) AND ((user_profiles.role)::text = ANY ((ARRAY['admin'::character varying, 'korean_team'::character varying])::text[]))))));
+
+
+create policy "Users can update own market research requests"
+on "public"."market_research_requests"
+as permissive
+for update
+to public
+using (((auth.uid() = user_id) AND ((status)::text = ANY ((ARRAY['pending'::character varying, 'submitted'::character varying])::text[]))));
+
+
+create policy "market_research_samples_modify"
+on "public"."market_research_samples"
+as permissive
+for all
+to public
+using ((EXISTS ( SELECT 1
+   FROM user_profiles
+  WHERE ((user_profiles.user_id = auth.uid()) AND ((user_profiles.role)::text = ANY ((ARRAY['korean_team'::character varying, 'admin'::character varying])::text[]))))));
+
+
+create policy "market_research_suppliers_modify"
+on "public"."market_research_suppliers"
+as permissive
+for all
+to public
+using ((EXISTS ( SELECT 1
+   FROM user_profiles
+  WHERE ((user_profiles.user_id = auth.uid()) AND ((user_profiles.role)::text = ANY ((ARRAY['korean_team'::character varying, 'admin'::character varying])::text[]))))));
+
+
+create policy "staff_all_access_notices"
+on "public"."notices"
+as permissive
+for all
+to public
+using ((auth.uid() IN ( SELECT user_profiles.user_id
+   FROM user_profiles
+  WHERE ((user_profiles.role)::text = ANY ((ARRAY['admin'::character varying, 'korean_team'::character varying, 'chinese_staff'::character varying])::text[])))));
+
+
+create policy "Korean team can update all sampling orders"
+on "public"."sampling_orders"
+as permissive
+for update
+to public
+using ((EXISTS ( SELECT 1
+   FROM user_profiles
+  WHERE ((user_profiles.user_id = auth.uid()) AND ((user_profiles.role)::text = ANY ((ARRAY['korean_team'::character varying, 'admin'::character varying])::text[]))))));
+
+
+create policy "Korean team can view all sampling orders"
+on "public"."sampling_orders"
+as permissive
+for select
+to public
+using ((EXISTS ( SELECT 1
+   FROM user_profiles
+  WHERE ((user_profiles.user_id = auth.uid()) AND ((user_profiles.role)::text = ANY ((ARRAY['korean_team'::character varying, 'admin'::character varying])::text[]))))));
+
+
+create policy "view_files_for_own_applications"
+on "public"."uploaded_files"
+as permissive
+for select
+to public
+using (((auth.uid() = uploaded_by) OR (reservation_number IN ( SELECT market_research_requests.reservation_number
+   FROM market_research_requests
+  WHERE (market_research_requests.user_id = auth.uid())
+UNION
+ SELECT inspection_applications.reservation_number
+   FROM inspection_applications
+  WHERE (inspection_applications.user_id = auth.uid())
+UNION
+ SELECT factory_contact_requests.reservation_number
+   FROM factory_contact_requests
+  WHERE (factory_contact_requests.user_id = auth.uid())
+UNION
+ SELECT sampling_orders.reservation_number
+   FROM sampling_orders
+  WHERE (sampling_orders.user_id = auth.uid()))) OR (EXISTS ( SELECT 1
+   FROM user_profiles
+  WHERE ((user_profiles.user_id = auth.uid()) AND ((user_profiles.role)::text = ANY ((ARRAY['korean_team'::character varying, 'admin'::character varying])::text[])))))));
+
+
+
+

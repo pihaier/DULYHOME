@@ -1,0 +1,72 @@
+node_modules
+build
+dist
+.git
+.trae
+*.log
+
+# 排除不必要的目录
+flexy-nextjs-admin-v7-1/
+nextjs_backup_20250131/
+project-docs/
+
+# 排除大文件和媒体文件（保留WeChat_20250625002234.mp4）
+*.avi
+*.mov
+*.wmv
+*.flv
+*.mkv
+*.webm
+# 排除其他mp4文件，但保留特定文件
+*.mp4
+!public/images/WeChat_20250625002234.mp4
+*.psd
+*.ai
+*.sketch
+*.fig
+
+# 排除备份文件
+*.backup
+*.backup.*
+*.bak
+*.old
+*.orig
+*.tmp
+
+# 排除数据库文件
+*.sql
+*.db
+*.sqlite
+*.sqlite3
+
+# 排除脚本和批处理文件
+*.bat
+*.cmd
+*.sh
+
+# 排除文档文件（保留README.md）
+*.md
+!README.md
+*.html
+*.txt
+cookies.txt
+
+# 排除IDE和编辑器文件
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 排除系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 排除缓存目录
+.cache/
+.temp/
+.tmp/
+cache/
+temp/
+tmp/

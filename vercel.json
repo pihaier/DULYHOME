@@ -1,0 +1,12 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "cd nextjs_flexy && npm run build",
+  "outputDirectory": "nextjs_flexy/.next",
+  "installCommand": "cd nextjs_flexy && npm install",
+  "regions": ["icn1"],
+  "git": {
+    "deploymentEnabled": {
+      "main": true
+    }
+  }
+}

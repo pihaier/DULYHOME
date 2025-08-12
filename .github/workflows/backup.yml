@@ -1,0 +1,50 @@
+name: Supabase Backup
+
+on:
+  schedule:
+    # 매일 새벽 3시 (한국 시간 기준)에 실행
+    - cron: '0 18 * * *'  # UTC 18:00 = KST 03:00
+  workflow_dispatch: # 수동 실행 가능
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20.x'
+        
+    - name: Install Supabase CLI
+      run: |
+        npm install -g supabase
+        
+    - name: Run backup script
+      env:
+        SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+      run: |
+        chmod +x ./scripts/backup-supabase.sh
+        ./scripts/backup-supabase.sh
+        
+    - name: Upload backup to GitHub Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: supabase-backup-${{ github.run_number }}
+        path: ./backups/*.tar.gz
+        retention-days: 30
+        
+    - name: Notify on success
+      if: success()
+      run: |
+        echo "✅ 백업이 성공적으로 완료되었습니다."
+        echo "백업 파일은 GitHub Actions Artifacts에서 30일간 보관됩니다."
+        
+    - name: Notify on failure
+      if: failure()
+      run: |
+        echo "❌ 백업이 실패했습니다. 로그를 확인해주세요."

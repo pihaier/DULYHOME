@@ -1,0 +1,110 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# backup files
+*.backup
+*.bak
+*.disabled
+*.disabled2
+
+# database files
+*.sql
+local_dump.sql
+local_schema.sql
+production_complete_schema.sql
+
+# batch files
+*.bat
+sync_production.bat
+
+# test results
+test-results/
+
+# large media files (保留WeChat_20250625002234.mp4)
+*.mp4
+!public/images/WeChat_20250625002234.mp4
+*.avi
+*.mov
+*.wmv
+*.flv
+*.webm
+*.mkv
+*.m4v
+*.3gp
+*.3g2
+*.rm
+*.swf
+*.vob
+
+# large image files (keep essential ones)
+*.psd
+*.ai
+*.sketch
+*.fig
+*.xcf
+
+# temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-*
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# logs
+*.log
+logs/
+
+# cache directories
+.cache/
+.parcel-cache/
+.eslintcache
+
+# documentation build
+docs/build/
+
+# storybook
+storybook-static/

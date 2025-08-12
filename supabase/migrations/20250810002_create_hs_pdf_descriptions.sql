@@ -1,0 +1,13 @@
+-- SKIP: Table already exists in 20250100_complete_production_schema.sql
+-- This migration file is kept for history but does nothing
+
+-- Original content commented out to prevent duplicate table creation:
+-- create table if not exists public.hs_pdf_descriptions (
+--   hs6_code text primary key,
+--   title_ko text,
+--   description_ko text,
+--   parent_labels text[],
+--   source text,
+--   updated_at timestamptz default now()
+-- );
+-- create index if not exists idx_hs_pdf_descriptions_parent_labels on public.hs_pdf_descriptions using gin (parent_labels);

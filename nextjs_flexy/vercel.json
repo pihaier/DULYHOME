@@ -1,0 +1,9 @@
+{
+  "framework": "nextjs",
+  "regions": ["icn1"],
+  "git": {
+    "deploymentEnabled": {
+      "main": true
+    }
+  }
+}

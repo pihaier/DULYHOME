@@ -1,0 +1,266 @@
+name: Pull Request Checks
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [ main, develop ]
+
+jobs:
+  # PR 제목 및 설명 검증
+  pr-validation:
+    name: Validate PR
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check PR title format
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const title = context.payload.pull_request.title;
+          const validPrefixes = ['feat:', 'fix:', 'docs:', 'style:', 'refactor:', 'test:', 'chore:'];
+          
+          const isValidTitle = validPrefixes.some(prefix => title.startsWith(prefix));
+          
+          if (!isValidTitle) {
+            core.setFailed(`PR 제목이 올바른 형식이 아닙니다. 다음 중 하나로 시작해야 합니다: ${validPrefixes.join(', ')}`);
+          }
+
+    - name: Check PR description
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const body = context.payload.pull_request.body;
+          
+          if (!body || body.length < 20) {
+            core.setFailed('PR 설명이 너무 짧습니다. 최소 20자 이상 작성해주세요.');
+          }
+
+  # 파일 변경 분석
+  changed-files:
+    name: Analyze Changed Files
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Get changed files
+      id: changed-files
+      uses: tj-actions/changed-files@v41
+      with:
+        files_yaml: |
+          frontend:
+            - 'nextjs/src/**/*.{js,jsx,ts,tsx}'
+            - 'nextjs/src/**/*.{css,scss}'
+          backend:
+            - 'nextjs/src/app/api/**/*.ts'
+            - 'nextjs/src/lib/**/*.ts'
+          database:
+            - 'supabase/migrations/**/*.sql'
+            - 'supabase/functions/**/*.ts'
+          config:
+            - 'nextjs/package*.json'
+            - 'nextjs/tsconfig.json'
+            - 'nextjs/next.config.js'
+            - '.github/workflows/**/*.yml'
+
+    - name: Show changed file categories
+      run: |
+        echo "📁 Changed file categories:"
+        if [ "${{ steps.changed-files.outputs.frontend_any_changed }}" == "true" ]; then
+          echo "🎨 Frontend files changed"
+          echo "Files: ${{ steps.changed-files.outputs.frontend_all_changed_files }}"
+        fi
+        if [ "${{ steps.changed-files.outputs.backend_any_changed }}" == "true" ]; then
+          echo "⚙️ Backend files changed"
+          echo "Files: ${{ steps.changed-files.outputs.backend_all_changed_files }}"
+        fi
+        if [ "${{ steps.changed-files.outputs.database_any_changed }}" == "true" ]; then
+          echo "🗄️ Database files changed"
+          echo "Files: ${{ steps.changed-files.outputs.database_all_changed_files }}"
+        fi
+        if [ "${{ steps.changed-files.outputs.config_any_changed }}" == "true" ]; then
+          echo "⚙️ Configuration files changed"
+          echo "Files: ${{ steps.changed-files.outputs.config_all_changed_files }}"
+        fi
+
+  # Frontend 변경 시 추가 검사
+  frontend-checks:
+    name: Frontend Specific Checks
+    runs-on: ubuntu-latest
+    needs: changed-files
+    if: needs.changed-files.outputs.frontend_any_changed == 'true'
+    defaults:
+      run:
+        working-directory: ./nextjs
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+        cache-dependency-path: ./nextjs/package-lock.json
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Check for console.log statements
+      run: |
+        if grep -r "console\.log" src/ --include="*.ts" --include="*.tsx" --include="*.js" --include="*.jsx"; then
+          echo "❌ console.log statements found. Please remove them before merging."
+          exit 1
+        else
+          echo "✅ No console.log statements found."
+        fi
+
+    - name: Check bundle size
+      run: |
+        npm run build
+        npm run analyze
+        echo "📦 Build completed. Check bundle size in the build output."
+
+  # Database 변경 시 추가 검사
+  database-checks:
+    name: Database Migration Checks
+    runs-on: ubuntu-latest
+    needs: changed-files
+    if: needs.changed-files.outputs.database_any_changed == 'true'
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Supabase CLI
+      uses: supabase/setup-cli@v1
+      with:
+        version: latest
+
+    - name: Validate SQL migrations
+      run: |
+        cd supabase
+        for file in migrations/*.sql; do
+          if [ -f "$file" ]; then
+            echo "🔍 Validating $file"
+            # SQL 구문 검사 (기본적인 체크)
+            if ! grep -q "^--" "$file"; then
+              echo "⚠️ Migration file $file should start with a comment describing the change"
+            fi
+          fi
+        done
+
+    - name: Check for dangerous operations
+      run: |
+        cd supabase/migrations
+        dangerous_operations=("DROP TABLE" "DROP COLUMN" "ALTER TABLE.*DROP" "TRUNCATE")
+        
+        for file in *.sql; do
+          if [ -f "$file" ]; then
+            for op in "${dangerous_operations[@]}"; do
+              if grep -iq "$op" "$file"; then
+                echo "⚠️ Dangerous operation '$op' found in $file"
+                echo "Please review carefully and add appropriate safeguards."
+              fi
+            done
+          fi
+        done
+
+  # 보안 검사
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./nextjs
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+        cache-dependency-path: ./nextjs/package-lock.json
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Check for hardcoded secrets
+      run: |
+        echo "🔍 Checking for potential hardcoded secrets..."
+        if grep -r -i "password\s*=\s*['\"]" src/ --include="*.ts" --include="*.tsx" --include="*.js" --include="*.jsx" || \
+           grep -r -i "api_key\s*=\s*['\"]" src/ --include="*.ts" --include="*.tsx" --include="*.js" --include="*.jsx" || \
+           grep -r -i "secret\s*=\s*['\"]" src/ --include="*.ts" --include="*.tsx" --include="*.js" --include="*.jsx"; then
+          echo "❌ Potential hardcoded secrets found. Please review and use environment variables."
+          exit 1
+        else
+          echo "✅ No obvious hardcoded secrets found."
+        fi
+
+    - name: Audit dependencies
+      run: npm audit --audit-level=moderate
+
+  # 테스트 커버리지 코멘트
+  coverage-comment:
+    name: Coverage Comment
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./nextjs
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+        cache-dependency-path: ./nextjs/package-lock.json
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run tests with coverage
+      run: npm run test:coverage
+
+    - name: Coverage comment
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          const path = require('path');
+          
+          try {
+            const coveragePath = path.join('./nextjs/coverage/coverage-summary.json');
+            if (fs.existsSync(coveragePath)) {
+              const coverage = JSON.parse(fs.readFileSync(coveragePath, 'utf8'));
+              const total = coverage.total;
+              
+              const comment = `## 📊 테스트 커버리지 보고서
+              
+              | 항목 | 커버리지 | 
+              |------|----------|
+              | 라인 | ${total.lines.pct}% |
+              | 함수 | ${total.functions.pct}% |
+              | 브랜치 | ${total.branches.pct}% |
+              | 문장 | ${total.statements.pct}% |
+              
+              ${total.lines.pct >= 70 ? '✅' : '❌'} 라인 커버리지 목표: 70%
+              ${total.functions.pct >= 70 ? '✅' : '❌'} 함수 커버리지 목표: 70%
+              `;
+              
+              // PR에 코멘트 추가 (실제 구현에서는 GitHub API 사용)
+              console.log(comment);
+            }
+          } catch (error) {
+            console.log('Coverage report not available');
+          }

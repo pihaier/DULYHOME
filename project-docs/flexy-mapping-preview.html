@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>두리무역 ERP - Flexy 템플릿 페이지 매핑 및 정리 계획</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { color: #2563eb; border-bottom: 3px solid #2563eb; padding-bottom: 10px; }
+        h2 { color: #1e40af; margin-top: 30px; }
+        h3 { color: #3730a3; margin-top: 25px; }
+        .status { padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+        .keep { background: #dcfce7; color: #166534; }
+        .delete { background: #fee2e2; color: #dc2626; }
+        .review { background: #fef3c7; color: #d97706; }
+        .new { background: #e0e7ff; color: #3730a3; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { border: 1px solid #d1d5db; padding: 12px; text-align: left; }
+        th { background: #f3f4f6; font-weight: bold; }
+        .section { margin: 30px 0; padding: 20px; border: 1px solid #e5e7eb; border-radius: 8px; }
+        .critical { background: #fef2f2; border-color: #fca5a5; }
+        .info { background: #eff6ff; border-color: #93c5fd; }
+        .file-path { font-family: 'Courier New', monospace; background: #f1f5f9; padding: 2px 4px; border-radius: 3px; }
+        .count { font-weight: bold; color: #059669; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏢 두리무역 ERP 시스템 - Flexy 템플릿 페이지 매핑 및 정리 계획</h1>
+        
+        <div class="section info">
+            <h2>📊 현황 요약</h2>
+            <ul>
+                <li><strong>분석 일시:</strong> 2025-01-31</li>
+                <li><strong>총 검토 대상:</strong> <span class="count">50+</span> 개 페이지/컴포넌트</li>
+                <li><strong>유지 필요:</strong> <span class="count">8</span> 개 핵심 페이지</li>
+                <li><strong>삭제 대상:</strong> <span class="count">35+</span> 개 불필요한 페이지</li>
+                <li><strong>검토 필요:</strong> <span class="count">7</span> 개 페이지</li>
+            </ul>
+        </div>
+
+        <div class="section critical">
+            <h2>🚨 즉시 삭제 대상 (빌드 성능 개선)</h2>
+            <p><strong>문제:</strong> 현재 빌드 시간 68초 → 목표: 30초 이하</p>
+            
+            <h3>1. Dashboard Layout 내 데모 페이지들</h3>
+            <table>
+                <tr><th>디렉토리</th><th>상태</th><th>사유</th></tr>
+                <tr><td class="file-path">(DashboardLayout)/apps/</td><td><span class="status delete">삭제</span></td><td>블로그, 이커머스 등 ERP와 무관한 데모</td></tr>
+                <tr><td class="file-path">(DashboardLayout)/charts/</td><td><span class="status delete">삭제</span></td><td>차트 데모 페이지들</td></tr>
+                <tr><td class="file-path">(DashboardLayout)/dashboards/</td><td><span class="status delete">삭제</span></td><td>3개 데모 대시보드</td></tr>
+                <tr><td class="file-path">(DashboardLayout)/forms/</td><td><span class="status delete">삭제</span></td><td>폼 데모 페이지들</td></tr>
+                <tr><td class="file-path">(DashboardLayout)/mui-trees/</td><td><span class="status delete">삭제</span></td><td>트리뷰 데모</td></tr>
+                <tr><td class="file-path">(DashboardLayout)/muicharts/</td><td><span class="status delete">삭제</span></td><td>MUI 차트 데모</td></tr>
+                <tr><td class="file-path">(DashboardLayout)/react-tables/</td><td><span class="status delete">삭제</span></td><td>리액트 테이블 데모</td></tr>
+                <tr><td class="file-path">(DashboardLayout)/tables/</td><td><span class="status delete">삭제</span></td><td>테이블 데모</td></tr>
+                <tr><td class="file-path">(DashboardLayout)/theme-pages/</td><td><span class="status delete">삭제</span></td><td>테마 데모 페이지</td></tr>
+                <tr><td class="file-path">(DashboardLayout)/ui-components/</td><td><span class="status delete">삭제</span></td><td>UI 컴포넌트 데모</td></tr>
+                <tr><td class="file-path">(DashboardLayout)/utilities/</td><td><span class="status delete">삭제</span></td><td>유틸리티 데모</td></tr>
+                <tr><td class="file-path">(DashboardLayout)/widgets/</td><td><span class="status delete">삭제</span></td><td>위젯 데모</td></tr>
+            </table>
+
+            <h3>2. 컴포넌트 내 불필요한 앱들</h3>
+            <table>
+                <tr><th>컴포넌트</th><th>상태</th><th>사유</th></tr>
+                <tr><td class="file-path">components/apps/blog/</td><td><span class="status delete">삭제</span></td><td>블로그 기능 불필요</td></tr>
+                <tr><td class="file-path">components/apps/email/</td><td><span class="status delete">삭제</span></td><td>이메일 앱 기능 불필요 (빌드 경고 발생)</td></tr>
+                <tr><td class="file-path">components/apps/kanban/</td><td><span class="status delete">삭제</span></td><td>칸반 보드 불필요 (빌드 경고 발생)</td></tr>
+                <tr><td class="file-path">components/apps/notes/</td><td><span class="status delete">삭제</span></td><td>노트 기능 불필요</td></tr>
+                <tr><td class="file-path">components/apps/tickets/</td><td><span class="status delete">삭제</span></td><td>티켓 시스템 불필요</td></tr>
+                <tr><td class="file-path">components/apps/ecommerce/</td><td><span class="status delete">삭제</span></td><td>이커머스 기능 불필요</td></tr>
+                <tr><td class="file-path">components/apps/invoice/</td><td><span class="status delete">삭제</span></td><td>인보이스 기능 불필요</td></tr>
+            </table>
+
+            <h3>3. 기타 불필요한 페이지들</h3>
+            <table>
+                <tr><th>페이지</th><th>상태</th><th>사유</th></tr>
+                <tr><td class="file-path">frontend-pages/</td><td><span class="status delete">삭제</span></td><td>프론트엔드 데모 페이지들</td></tr>
+                <tr><td class="file-path">landingpage/</td><td><span class="status delete">삭제</span></td><td>랜딩 페이지 데모</td></tr>
+                <tr><td class="file-path">dashboard/</td><td><span class="status delete">삭제</span></td><td>불필요한 대시보드</td></tr>
+                <tr><td class="file-path">context/EmailContext/</td><td><span class="status delete">삭제</span></td><td>이메일 컨텍스트 (빌드 경고 발생)</td></tr>
+            </table>
+        </div>
+
+        <div class="section info">
+            <h2>✅ 유지할 핵심 페이지들</h2>
+            
+            <h3>1. ERP 핵심 기능</h3>
+            <table>
+                <tr><th>페이지</th><th>상태</th><th>용도</th></tr>
+                <tr><td class="file-path">apps/market-research/</td><td><span class="status keep">유지</span></td><td>시장조사 신청 (DLSY 코드)</td></tr>
+                <tr><td class="file-path">apps/sampling/</td><td><span class="status keep">유지</span></td><td>샘플링 신청 (DLSY 코드)</td></tr>
+                <tr><td class="file-path">auth/</td><td><span class="status keep">유지</span></td><td>로그인, 회원가입, 비밀번호 찾기</td></tr>
+                <tr><td class="file-path">profile/</td><td><span class="status keep">유지</span></td><td>프로필 관리, 설정</td></tr>
+                <tr><td class="file-path">api/</td><td><span class="status keep">유지</span></td><td>모든 API 엔드포인트</td></tr>
+            </table>
+
+            <h3>2. 레이아웃 및 공통 컴포넌트</h3>
+            <table>
+                <tr><th>컴포넌트</th><th>상태</th><th>용도</th></tr>
+                <tr><td class="file-path">(DashboardLayout)/layout/</td><td><span class="status keep">유지</span></td><td>사이드바, 헤더 등 레이아웃</td></tr>
+                <tr><td class="file-path">components/forms/theme-elements/</td><td><span class="status keep">유지</span></td><td>커스텀 MUI 컴포넌트들</td></tr>
+                <tr><td class="file-path">components/container/</td><td><span class="status keep">유지</span></td><td>페이지 컨테이너</td></tr>
+                <tr><td class="file-path">FileUploadCarousel.tsx</td><td><span class="status keep">유지</span></td><td>파일 업로드 컴포넌트</td></tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>🤔 검토 필요한 페이지들</h2>
+            <table>
+                <tr><th>페이지</th><th>상태</th><th>검토 사유</th></tr>
+                <tr><td class="file-path">components/apps/chats/</td><td><span class="status review">검토</span></td><td>ERP 채팅 기능으로 활용 가능</td></tr>
+                <tr><td class="file-path">components/apps/contacts/</td><td><span class="status review">검토</span></td><td>CRM 연락처 관리로 활용 가능</td></tr>
+                <tr><td class="file-path">components/apps/userprofile/</td><td><span class="status review">검토</span></td><td>사용자 프로필 관리로 활용 가능</td></tr>
+                <tr><td class="file-path">(DashboardLayout)/sample-page/</td><td><span class="status review">검토</span></td><td>샘플 페이지, 참고용으로 보관 여부</td></tr>
+                <tr><td class="file-path">(DashboardLayout)/icons/</td><td><span class="status review">검토</span></td><td>아이콘 참조 페이지, 필요 여부</td></tr>
+                <tr><td class="file-path">components/shared/</td><td><span class="status review">검토</span></td><td>공유 컴포넌트들, 사용 여부 확인</td></tr>
+                <tr><td class="file-path">page.tsx (root)</td><td><span class="status review">검토</span></td><td>메인 페이지 활용 방안</td></tr>
+            </table>
+        </div>
+
+        <div class="section info">
+            <h2>🔮 향후 추가 예정 페이지들</h2>
+            <table>
+                <tr><th>페이지</th><th>상태</th><th>계획</th></tr>
+                <tr><td class="file-path">apps/bulk-order/</td><td><span class="status new">신규</span></td><td>대량발주 신청 (DLSY 코드)</td></tr>
+                <tr><td class="file-path">apps/inspection/</td><td><span class="status new">신규</span></td><td>검품감사 신청 (DLKP 코드)</td></tr>
+                <tr><td class="file-path">apps/purchase-agency/</td><td><span class="status new">신규</span></td><td>구매대행 신청 (DLGM 코드)</td></tr>
+                <tr><td class="file-path">apps/shipping-agency/</td><td><span class="status new">신규</span></td><td>배송대행 신청 (DLBS 코드)</td></tr>
+                <tr><td class="file-path">orders/</td><td><span class="status new">신규</span></td><td>내 주문 목록</td></tr>
+                <tr><td class="file-path">orders/[reservationNumber]/</td><td><span class="status new">신규</span></td><td>주문 상세 페이지</td></tr>
+                <tr><td class="file-path">chat/</td><td><span class="status new">신규</span></td><td>실시간 채팅 시스템</td></tr>
+                <tr><td class="file-path">admin/</td><td><span class="status new">신규</span></td><td>직원용 관리 시스템</td></tr>
+            </table>
+        </div>
+
+        <div class="section critical">
+            <h2>⚡ 성능 개선 예상 효과</h2>
+            <ul>
+                <li><strong>빌드 시간:</strong> 68초 → 30초 이하 (55% 단축)</li>
+                <li><strong>번들 크기:</strong> 현재 대비 40% 감소 예상</li>
+                <li><strong>개발 서버 시작:</strong> 더 빠른 HMR</li>
+                <li><strong>TypeScript 체크:</strong> 검사할 파일 수 50% 감소</li>
+                <li><strong>ESLint 경고:</strong> 불필요한 경고 제거</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>📋 정리 작업 순서</h2>
+            <ol>
+                <li><strong>1단계:</strong> 즉시 삭제 대상 제거 (빌드 오류 해결)</li>
+                <li><strong>2단계:</strong> 검토 대상 페이지들 사용자 승인</li>
+                <li><strong>3단계:</strong> Git 커밋 및 배포 테스트</li>
+                <li><strong>4단계:</strong> 성능 개선 효과 측정</li>
+                <li><strong>5단계:</strong> 필요한 신규 페이지 개발 시작</li>
+            </ol>
+        </div>
+
+        <div class="section info">
+            <h2>🔍 사용자 검토 요청 사항</h2>
+            <p>다음 항목들에 대해 최종 결정을 부탁드립니다:</p>
+            <ul>
+                <li>✅ <strong>즉시 삭제 목록</strong> 승인 여부</li>
+                <li>🤔 <strong>검토 필요 목록</strong> 중 보관할 항목</li>
+                <li>📅 <strong>신규 페이지 개발 우선순위</strong></li>
+                <li>🎯 <strong>추가로 필요한 기능</strong>이 있는지</li>
+            </ul>
+        </div>
+
+        <hr style="margin: 40px 0;">
+        <p style="text-align: center; color: #6b7280; font-size: 14px;">
+            생성일: 2025-01-31 | 두리무역 ERP 개발팀 | 
+            <span style="color: #dc2626;">검토 후 승인 필요</span>
+        </p>
+    </div>
+</body>
+</html>
