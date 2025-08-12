@@ -102,6 +102,10 @@ erro.md
 **/supabase/.temp
 **/supabase/.branches
 *.pack
+
+# Production data (contains sensitive information)
+supabase/production_data.sql
+**/production_data.sql
 nextjs_backup*
 node_modules/
 .next/
