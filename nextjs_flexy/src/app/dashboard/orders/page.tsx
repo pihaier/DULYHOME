@@ -372,7 +372,7 @@ export default function OrdersListPage() {
                           size="small"
                           color={
                             order.service_type === 'market_research' ? 'primary' :
-                            order.service_type === 'sampling' ? 'secondary' :
+                            order.service_type === 'factory_contact' ? 'secondary' :
                             order.service_type === 'inspection' ? 'success' :
                             'warning'
                           }

@@ -37,7 +37,7 @@ const ProfileInfoTab = () => {
         company_name: userProfile.company_name || '',
         contact_person: userProfile.contact_person || '',
         phone: userProfile.phone || '',
-        email: userProfile.email || user.email || ''
+        email: user.email || ''
       }));
       setLoading(false);
     } else if (user && !userProfile) {

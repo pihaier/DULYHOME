@@ -584,7 +584,7 @@ const ServicesContent = () => {
         open={modalOpen}
         onClose={handleCloseModal}
         serviceType={selectedService}
-        serviceTitle={selectedServiceTitle}
+        title={selectedServiceTitle}
       />
     </Box>
   );
