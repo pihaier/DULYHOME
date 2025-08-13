@@ -70,7 +70,7 @@ export default function ProfileSetup() {
         // erro.md 요구사항: 로그인 성공 시 이전 페이지로 돌아가기
         // 현재 페이지를 returnUrl로 전달
         const currentUrl = encodeURIComponent(window.location.pathname + window.location.search);
-        router.push(`/auth/auth1/login?returnUrl=${currentUrl}`);
+        router.push(`/auth/customer/login?returnUrl=${currentUrl}`);
         return;
       }
       setUser(user);
@@ -225,7 +225,8 @@ export default function ProfileSetup() {
           router.push('/?message=profile_setup_complete');
         }
       } else {
-        router.push('/auth/auth1/login?message=approval_pending');
+        // 직원 계정은 직원 로그인 페이지로
+        router.push('/staff/login?message=approval_pending');
       }
     } catch (err) {
       console.error('Profile setup error:', err);

@@ -177,18 +177,22 @@ export default function MarketResearchDetailPage() {
         elevation={3}
         sx={{
           mt: 2,
-          height: 'calc(100vh - 200px)',
+          height: 'calc(100vh - 250px)',
           display: 'flex',
           maxWidth: '100%',
           width: '100%',
+          overflow: 'hidden',
         }}
       >
         {/* Main Content */}
         <Box
           sx={{
             flex: 1,
-            overflow: 'auto',
+            overflowY: 'auto',
+            overflowX: 'hidden',
             height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
           }}
         >
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

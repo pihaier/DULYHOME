@@ -597,12 +597,14 @@ export default function SamplingDetailPage() {
         {/* Desktop - Chat on right side */}
         {!isMobile && (
           <Grid size={{ md: 4 }}>
-            <ChatPanel
-              reservationNumber={reservationNumber}
-              currentUserRole="customer"
-              currentUserId="test-user-id"
-              currentUserName="테스트 사용자"
-            />
+            <Box sx={{ height: 'calc(100vh - 250px)', overflow: 'hidden' }}>
+              <ChatPanel
+                reservationNumber={reservationNumber}
+                currentUserRole="customer"
+                currentUserId="test-user-id"
+                currentUserName="테스트 사용자"
+              />
+            </Box>
           </Grid>
         )}
       </Grid>

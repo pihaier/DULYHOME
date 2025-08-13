@@ -27,35 +27,13 @@ import {
   Settings as SettingsIcon,
   Logout as LogoutIcon,
   ChevronLeft as ChevronLeftIcon,
+  Chat as ChatIcon,
 } from '@mui/icons-material';
 import { useRouter, usePathname } from 'next/navigation';
 import { useUser } from '@/lib/context/GlobalContext';
 import { createClient } from '@/lib/supabase/client';
 
 const drawerWidth = 280;
-
-const menuItems = [
-  {
-    title: '대시보드',
-    icon: <DashboardIcon />,
-    path: '/staff',
-  },
-  {
-    title: '고객지원 관리',
-    icon: <SupportIcon />,
-    path: '/staff/customer-support',
-  },
-  {
-    title: '사용자 관리',
-    icon: <PeopleIcon />,
-    path: '/staff/users',
-  },
-  {
-    title: '시스템 설정',
-    icon: <SettingsIcon />,
-    path: '/staff/settings',
-  },
-];
 
 export default function StaffLayout({ children }: { children: React.ReactNode }) {
   const theme = useTheme();
@@ -64,6 +42,47 @@ export default function StaffLayout({ children }: { children: React.ReactNode })
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { user, userProfile } = useUser();
   const supabase = createClient();
+  
+  // 중국 직원인지 확인
+  const isChineseStaff = userProfile?.role === 'chinese_staff';
+
+  const menuItems = [
+    {
+      title: isChineseStaff ? '仪表板' : '대시보드',
+      titleCn: '仪表板',
+      titleKo: '대시보드',
+      icon: <DashboardIcon />,
+      path: '/staff',
+    },
+    {
+      title: isChineseStaff ? '聊天管理' : '채팅 관리',
+      titleCn: '聊天管理',
+      titleKo: '채팅 관리',
+      icon: <ChatIcon />,
+      path: '/staff/chat-management',
+    },
+    {
+      title: isChineseStaff ? '客户支持' : '고객지원 관리',
+      titleCn: '客户支持',
+      titleKo: '고객지원 관리',
+      icon: <SupportIcon />,
+      path: '/staff/customer-support',
+    },
+    {
+      title: isChineseStaff ? '用户管理' : '사용자 관리',
+      titleCn: '用户管理',
+      titleKo: '사용자 관리',
+      icon: <PeopleIcon />,
+      path: '/staff/users',
+    },
+    {
+      title: isChineseStaff ? '系统设置' : '시스템 설정',
+      titleCn: '系统设置',
+      titleKo: '시스템 설정',
+      icon: <SettingsIcon />,
+      path: '/staff/settings',
+    },
+  ];
 
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -73,7 +92,7 @@ export default function StaffLayout({ children }: { children: React.ReactNode })
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    router.push('/auth/login');
+    router.push('/staff/login');
   };
 
   const handleNavigation = (path: string) => {
@@ -92,7 +111,7 @@ export default function StaffLayout({ children }: { children: React.ReactNode })
           </Avatar>
           <Box sx={{ flexGrow: 1 }}>
             <Typography variant="h6" noWrap>
-              직원 관리
+              {isChineseStaff ? '员工管理' : '직원 관리'}
             </Typography>
             <Typography variant="caption" color="text.secondary" noWrap>
               {userProfile?.company_name || userProfile?.contact_person}
@@ -152,7 +171,7 @@ export default function StaffLayout({ children }: { children: React.ReactNode })
           startIcon={<LogoutIcon />}
           onClick={handleLogout}
         >
-          로그아웃
+          {isChineseStaff ? '退出' : '로그아웃'}
         </Button>
       </Box>
     </Box>
@@ -182,7 +201,7 @@ export default function StaffLayout({ children }: { children: React.ReactNode })
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-              직원 관리 시스템
+              {isChineseStaff ? '员工管理系统' : '직원 관리 시스템'}
             </Typography>
           </Toolbar>
         </AppBar>

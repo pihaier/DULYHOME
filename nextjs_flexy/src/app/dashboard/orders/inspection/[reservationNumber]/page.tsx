@@ -627,7 +627,9 @@ export default function InspectionDetailPage() {
         {/* Desktop - Chat on right side */}
         {!isMobile && (
           <Grid size={{ md: 4 }}>
-            <ChatPanel reservationNumber={reservationNumber} serviceType="inspection" />
+            <Box sx={{ height: 'calc(100vh - 250px)', overflow: 'hidden' }}>
+              <ChatPanel reservationNumber={reservationNumber} serviceType="inspection" />
+            </Box>
           </Grid>
         )}
       </Grid>

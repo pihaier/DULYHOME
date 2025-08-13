@@ -127,6 +127,17 @@ When developing this project, Claude Code MUST utilize the following MCP tools:
 - **Server State**: React Query (for data fetching)
 - **Email Service**: TBD (for automated notifications)
 
+## Important Development Rules
+
+### ⚠️ Database Migration Rules
+**NEVER use MCP tools for database migrations!** 
+- ❌ Do NOT use `mcp__supabase__apply_migration` 
+- ❌ Do NOT use `mcp__supabase__execute_sql` for DDL operations
+- ✅ ALWAYS use Supabase CLI commands for migrations
+- ✅ Test locally first with `npx supabase db reset --local`
+- ✅ Apply to production with `npx supabase db push`
+- ✅ Refer to `CLI_COMMANDS.md` for proper migration commands
+
 ## Development Commands
 
 ```bash

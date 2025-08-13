@@ -20,7 +20,28 @@ import CustomTextField from '@/app/components/forms/theme-elements/CustomTextFie
 import CustomFormLabel from '@/app/components/forms/theme-elements/CustomFormLabel';
 import AuthSocialButtons from './AuthSocialButtons';
 
-const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
+interface ExtendedLoginType extends loginType {
+  staffLogin?: boolean;
+  loginButtonText?: string;
+  emailLabel?: string;
+  passwordLabel?: string;
+  rememberMeLabel?: string;
+  forgotPasswordText?: string;
+  hideForgotPassword?: boolean;
+}
+
+const AuthLogin = ({ 
+  title, 
+  subtitle, 
+  subtext,
+  staffLogin = false,
+  loginButtonText = "로그인",
+  emailLabel = "이메일",
+  passwordLabel = "비밀번호",
+  rememberMeLabel = "로그인 유지",
+  forgotPasswordText = "비밀번호를 잊으셨나요?",
+  hideForgotPassword = false
+}: ExtendedLoginType) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const supabase = createClient();
@@ -163,12 +184,14 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
         </Alert>
       )}
 
-      <AuthSocialButtons
-        title="간편 로그인"
-        onGoogleClick={() => handleOAuthLogin('google')}
-        onKakaoClick={() => handleOAuthLogin('kakao')}
-        disabled={loading}
-      />
+      {!staffLogin && (
+        <AuthSocialButtons
+          title="간편 로그인"
+          onGoogleClick={() => handleOAuthLogin('google')}
+          onKakaoClick={() => handleOAuthLogin('kakao')}
+          disabled={loading}
+        />
+      )}
 
       <Box mt={3}>
         <Divider>
@@ -180,7 +203,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
             position="relative"
             px={2}
           >
-            또는 이메일로 로그인
+            {staffLogin ? emailLabel : "또는 이메일로 로그인"}
           </Typography>
         </Divider>
       </Box>
@@ -188,7 +211,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
       <Box component="form" onSubmit={handleLogin}>
         <Stack spacing={2}>
           <Box>
-            <CustomFormLabel htmlFor="email">이메일 주소</CustomFormLabel>
+            <CustomFormLabel htmlFor="email">{emailLabel}</CustomFormLabel>
             <CustomTextField
               id="email"
               type="email"
@@ -201,7 +224,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
             />
           </Box>
           <Box>
-            <CustomFormLabel htmlFor="password">비밀번호</CustomFormLabel>
+            <CustomFormLabel htmlFor="password">{passwordLabel}</CustomFormLabel>
             <CustomTextField
               id="password"
               type="password"
@@ -223,20 +246,22 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
                     disabled={loading}
                   />
                 }
-                label="로그인 상태 유지"
+                label={rememberMeLabel}
               />
             </FormGroup>
-            <Typography
-              component={Link}
-              href="/auth/auth1/forgot-password"
-              fontWeight="500"
-              sx={{
-                textDecoration: 'none',
-                color: 'primary.main',
-              }}
-            >
-              비밀번호 찾기
-            </Typography>
+            {!hideForgotPassword && (
+              <Typography
+                component={Link}
+                href="/auth/auth1/forgot-password"
+                fontWeight="500"
+                sx={{
+                  textDecoration: 'none',
+                  color: 'primary.main',
+                }}
+              >
+                {forgotPasswordText}
+              </Typography>
+            )}
           </Stack>
         </Stack>
 
@@ -249,7 +274,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
             type="submit"
             disabled={loading || !email || !password}
           >
-            {loading ? <CircularProgress size={24} color="inherit" /> : '로그인'}
+            {loading ? <CircularProgress size={24} color="inherit" /> : loginButtonText}
           </Button>
         </Box>
       </Box>

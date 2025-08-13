@@ -57,7 +57,8 @@ export default function ChatPanel({
   const [loadingChat, setLoadingChat] = useState(false);
   const [sendingMessage, setSendingMessage] = useState(false);
   const chatScrollRef = useRef<HTMLDivElement>(null);
-  const { supabase } = useUser();
+  const { supabase, user } = useUser();
+  const effectiveUserId = user?.id || currentUserId || '93c87ed3-a25d-4838-acd5-6e082ed56478';
 
   // 채팅 메시지 가져오기
   const fetchChatMessages = async () => {
@@ -137,6 +138,7 @@ export default function ChatPanel({
           original_language: detectLanguage(messageToSend),
           message_type: 'text',
           service_type: serviceType, // service_type 추가
+          is_read: false, // 새 메시지는 읽지 않은 상태로 추가
         })
         .select()
         .single();
@@ -195,35 +197,102 @@ export default function ChatPanel({
     if (!reservationNumber) return;
 
     setLoadingChat(true);
-    fetchChatMessages();
+    fetchChatMessages().then(() => {
+      // 번역 안 된 메시지 찾아서 번역 요청
+      const translatePendingMessages = async () => {
+        const { data: untranslated } = await supabase
+          .from('chat_messages')
+          .select('*')
+          .eq('reservation_number', reservationNumber)
+          .is('translated_message', null)
+          .not('original_message', 'is', null);
+        
+        if (untranslated && untranslated.length > 0) {
+          console.log(`Found ${untranslated.length} untranslated messages`);
+          
+          for (const msg of untranslated) {
+            await supabase.functions.invoke('translate-message', {
+              body: { record: msg }
+            });
+          }
+        }
+      };
+      
+      translatePendingMessages();
+    });
 
-    // Realtime 구독
+    // Realtime 구독 - 더 간단한 방식으로
+    console.log('Setting up Realtime subscription for:', reservationNumber);
+    
     const channel = supabase
-      .channel(`chat:${reservationNumber}`)
+      .channel(`chat_messages_${reservationNumber}`)
       .on(
         'postgres_changes',
         {
-          event: '*',
+          event: '*', // 모든 이벤트 수신
           schema: 'public',
           table: 'chat_messages',
           filter: `reservation_number=eq.${reservationNumber}`,
         },
         (payload) => {
+          console.log('Realtime event received:', payload);
+          
           if (payload.eventType === 'INSERT') {
-            setChatMessages((prev) => [...prev, payload.new as ChatMessage]);
+            const newMessage = payload.new as ChatMessage;
+            
+            // 중복 체크 후 추가
+            setChatMessages((prev) => {
+              const exists = prev.some(msg => msg.id === newMessage.id);
+              if (exists) {
+                console.log('Message already exists, skipping');
+                return prev;
+              }
+              console.log('Adding new message:', newMessage.id);
+              return [...prev, newMessage];
+            });
+            
+            // 번역 요청
+            if (!newMessage.translated_message && newMessage.original_message) {
+              console.log('Requesting translation for message:', newMessage.id);
+              supabase.functions.invoke('translate-message', {
+                body: { record: newMessage }
+              });
+            }
           } else if (payload.eventType === 'UPDATE') {
+            const updatedMessage = payload.new as ChatMessage;
+            console.log('Updating message:', updatedMessage.id);
             setChatMessages((prev) =>
-              prev.map((msg) => (msg.id === payload.new.id ? (payload.new as ChatMessage) : msg))
+              prev.map((msg) => (msg.id === updatedMessage.id ? updatedMessage : msg))
+            );
+          } else if (payload.eventType === 'DELETE') {
+            const deletedMessage = payload.old as ChatMessage;
+            console.log('Deleting message:', deletedMessage.id);
+            setChatMessages((prev) =>
+              prev.filter((msg) => msg.id !== deletedMessage.id)
             );
           }
         }
       )
-      .subscribe();
+      .subscribe((status, error) => {
+        console.log('Subscription status:', status);
+        if (error) {
+          console.error('Subscription error:', error);
+        }
+        if (status === 'SUBSCRIBED') {
+          console.log('✅ Successfully subscribed to realtime updates');
+        } else if (status === 'CHANNEL_ERROR') {
+          console.error('❌ Channel error - check Supabase Dashboard Realtime settings');
+        } else if (status === 'TIMED_OUT') {
+          console.error('⏱️ Subscription timed out');
+        } else if (status === 'CLOSED') {
+          console.log('🔒 Subscription closed');
+        }
+      });
 
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [reservationNumber]);
+  }, [reservationNumber, supabase]);
 
   // 자동 스크롤
   useEffect(() => {
@@ -243,7 +312,7 @@ export default function ChatPanel({
         flexDirection: 'column',
       }}
     >
-      <Box sx={{ p: 2, height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <Box sx={{ p: 2, height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         <Typography
           variant="h6"
           fontWeight="bold"
@@ -253,17 +322,19 @@ export default function ChatPanel({
             borderColor: 'divider',
             pb: 1,
             mb: 2,
+            flexShrink: 0,
           }}
         >
           채팅
         </Typography>
 
-        <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+        <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
           <Box
             ref={chatScrollRef}
             sx={{
               flex: 1,
-              overflow: 'auto',
+              overflowY: 'auto',
+              overflowX: 'hidden',
               bgcolor: 'white',
               p: 2,
               borderRadius: 1,
@@ -305,25 +376,61 @@ export default function ChatPanel({
                     key={msg.id}
                     sx={{
                       display: 'flex',
-                      justifyContent: msg.sender_id === currentUserId ? 'flex-end' : 'flex-start',
+                      justifyContent: msg.sender_id === effectiveUserId ? 'flex-end' : 'flex-start',
                     }}
                   >
                     <Paper
                       sx={{
                         p: 2,
                         maxWidth: '80%',
-                        bgcolor: msg.sender_id === currentUserId ? 'primary.light' : 'grey.100',
+                        bgcolor: msg.sender_id === effectiveUserId ? 'primary.light' : 'grey.100',
                       }}
                     >
-                      <Typography variant="caption" fontWeight="bold">
+                      {/* 발신자 이름 */}
+                      <Typography variant="caption" fontWeight="bold" color="primary.dark">
                         {msg.sender_name}
                       </Typography>
+                      
+                      {/* 원문 메시지 */}
                       <Typography variant="body2" sx={{ mt: 0.5 }}>
-                        {/* 고객은 한글만 보기 - 원문이 중국어면 번역본 표시 */}
-                        {msg.original_language === 'zh' && msg.translated_message
-                          ? msg.translated_message
-                          : msg.original_message}
+                        {msg.original_message}
                       </Typography>
+                      
+                      {/* 번역 메시지 (있을 경우만) */}
+                      {msg.translated_message && (
+                        <Box
+                          sx={{
+                            mt: 1,
+                            p: 1,
+                            bgcolor: 'background.paper',
+                            borderRadius: 1,
+                            borderLeft: '3px solid',
+                            borderColor: msg.original_language === 'ko' ? 'error.light' : 'info.main',
+                          }}
+                        >
+                          <Typography variant="body2" sx={{ fontSize: '0.9em', color: 'text.secondary' }}>
+                            {msg.original_language === 'ko' ? '🇨🇳 ' : '🇰🇷 '}
+                            {msg.translated_message}
+                          </Typography>
+                        </Box>
+                      )}
+                      
+                      {/* 번역 중 표시 */}
+                      {!msg.translated_message && msg.original_message && msg.original_language !== 'ko' && (
+                        <Typography
+                          variant="caption"
+                          sx={{
+                            mt: 0.5,
+                            display: 'block',
+                            color: 'warning.main',
+                            fontStyle: 'italic',
+                          }}
+                        >
+                          🔄 한국어 번역 중...
+                        </Typography>
+                      )}
+                      
+                      {/* 시간 표시 */}
                       <Typography
                         variant="caption"
                         color="text.secondary"
@@ -346,7 +453,7 @@ export default function ChatPanel({
             value={chatMessage}
             onChange={(e) => setChatMessage(e.target.value)}
             onKeyPress={handleKeyPress}
-            sx={{ bgcolor: 'white' }}
+            sx={{ bgcolor: 'white', flexShrink: 0 }}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
