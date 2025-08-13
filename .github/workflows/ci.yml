@@ -74,7 +74,7 @@ jobs:
         
         # 프로덕션 URL (환경변수로 설정 가능)
         # Vercel 프로젝트명이 변경될 수 있으므로 환경변수 사용 권장
-        URL="${{ vars.PRODUCTION_URL || 'https://dulyhome.vercel.app' }}"
+        URL="${{ vars.PRODUCTION_URL || 'https://nextjsflexy.vercel.app' }}"
         
         echo "Testing URL: $URL"
         
