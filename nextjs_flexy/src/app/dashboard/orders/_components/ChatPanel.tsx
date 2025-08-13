@@ -411,9 +411,7 @@ export default function ChatPanel({
           }
         }
       )
-      .subscribe(() => {
-        // 채널 상태 처리 (조용히)
-      });
+      .subscribe();
 
     return () => {
       supabase.removeChannel(channel);
