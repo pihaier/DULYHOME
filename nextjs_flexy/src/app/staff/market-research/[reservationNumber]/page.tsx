@@ -416,7 +416,7 @@ export default function MarketResearchDetailPage() {
                   size="small"
                 />
               </Grid>
-              <Grid size={12} md={4}>
+              <Grid size={{ xs: 12, md: 4 }}>
                 <TextField
                   fullWidth
                   type="number"
@@ -427,7 +427,7 @@ export default function MarketResearchDetailPage() {
                   size="small"
                 />
               </Grid>
-              <Grid size={12} md={4}>
+              <Grid size={{ xs: 12, md: 4 }}>
                 <TextField
                   fullWidth
                   type="number"
@@ -438,7 +438,7 @@ export default function MarketResearchDetailPage() {
                   size="small"
                 />
               </Grid>
-              <Grid size={12} md={4}>
+              <Grid size={{ xs: 12, md: 4 }}>
                 <TextField
                   fullWidth
                   type="number"
@@ -480,7 +480,7 @@ export default function MarketResearchDetailPage() {
               {isChineseStaff ? '价格信息' : '가격정보'}
             </Typography>
             <Grid container spacing={2}>
-              <Grid size={12} md={4}>
+              <Grid size={{ xs: 12, md: 4 }}>
                 <TextField
                   fullWidth
                   type="number"
@@ -494,7 +494,7 @@ export default function MarketResearchDetailPage() {
                   }}
                 />
               </Grid>
-              <Grid size={12} md={4}>
+              <Grid size={{ xs: 12, md: 4 }}>
                 <TextField
                   fullWidth
                   type="number"
@@ -505,7 +505,7 @@ export default function MarketResearchDetailPage() {
                   size="small"
                 />
               </Grid>
-              <Grid size={12} md={4}>
+              <Grid size={{ xs: 12, md: 4 }}>
                 <TextField
                   fullWidth
                   type="number"
@@ -519,7 +519,7 @@ export default function MarketResearchDetailPage() {
                   }}
                 />
               </Grid>
-              <Grid size={12} md={4}>
+              <Grid size={{ xs: 12, md: 4 }}>
                 <TextField
                   fullWidth
                   label={isChineseStaff ? '佣金' : '수수료'}
@@ -528,7 +528,7 @@ export default function MarketResearchDetailPage() {
                   size="small"
                 />
               </Grid>
-              <Grid size={12} md={4}>
+              <Grid size={{ xs: 12, md: 4 }}>
                 <TextField
                   fullWidth
                   label={isChineseStaff ? '进口VAT' : '수입VAT'}
@@ -537,7 +537,7 @@ export default function MarketResearchDetailPage() {
                   size="small"
                 />
               </Grid>
-              <Grid size={12} md={4}>
+              <Grid size={{ xs: 12, md: 4 }}>
                 <TextField
                   fullWidth
                   label={isChineseStaff ? '预计总额' : '예상총액'}
