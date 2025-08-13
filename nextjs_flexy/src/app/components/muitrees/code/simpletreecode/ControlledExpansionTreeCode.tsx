@@ -1,5 +1,5 @@
-import React from 'react'
-import CodeDialog from '@/app/components/shared/CodeDialog'
+import React from 'react';
+import CodeDialog from '@/app/components/shared/CodeDialog';
 
 function ControlledExpansionTreeCode() {
   return (
@@ -86,7 +86,7 @@ function ControlledExpansionTree() {
 export default ControlledExpansionTree
               `}
     </CodeDialog>
-  )
+  );
 }
 
-export default ControlledExpansionTreeCode
+export default ControlledExpansionTreeCode;

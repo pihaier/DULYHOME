@@ -1,10 +1,10 @@
-import CodeDialog from "@/app/components/shared/CodeDialog";
-import React from "react";
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const LetterAvatarsCode = () => {
-    return (
-        <>
-            <CodeDialog>
-                {`
+  return (
+    <>
+      <CodeDialog>
+        {`
 "use client";
 import * as React from 'react';
 import { Avatar, Stack } from '@mui/material';
@@ -14,9 +14,9 @@ import { Avatar, Stack } from '@mui/material';
     <Avatar alt="Travis Howard" src={"/images/profile/user-2.jpg"} />
     <Avatar alt="Cindy Baker" src={"/images/profile/user-3.jpg"} />
 </Stack>`}
-            </CodeDialog>
-        </>
-    );
+      </CodeDialog>
+    </>
+  );
 };
 
 export default LetterAvatarsCode;

@@ -1,5 +1,5 @@
 import React from 'react';
-import {  Button, Stack } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 
 const DefaultButtons = () => (
   <Stack spacing={1} direction={{ xs: 'column', sm: 'row' }} justifyContent="center">

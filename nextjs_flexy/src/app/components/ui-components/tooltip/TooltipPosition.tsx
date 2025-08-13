@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { Button } from "@mui/material";
-import Tooltip from "@mui/material/Tooltip";
-import InlineItemCard from "@/app/components/shared/InlineItemCard";
+import { Button } from '@mui/material';
+import Tooltip from '@mui/material/Tooltip';
+import InlineItemCard from '@/app/components/shared/InlineItemCard';
 
-import PositionsTooltipCode from "@/app/components/ui-components/tooltip/code/PositionsTooltipCode";
+import PositionsTooltipCode from '@/app/components/ui-components/tooltip/code/PositionsTooltipCode';
 
 // common component
-import ChildCard from "@/app/components/shared/ChildCard";
+import ChildCard from '@/app/components/shared/ChildCard';
 
 const TooltipPosition = () => (
   <ChildCard title="Positions" codeModel={<PositionsTooltipCode />}>

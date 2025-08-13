@@ -32,22 +32,14 @@ export async function middleware(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   // 보호된 경로들
-  const protectedPaths = [
-    '/dashboard',
-    '/chat',
-    '/profile',
-    '/internal',
-    '/staff',
-  ];
+  const protectedPaths = ['/dashboard', '/chat', '/profile', '/internal', '/staff'];
 
   const path = request.nextUrl.pathname;
-  const isProtectedPath = protectedPaths.some(protectedPath => 
-    path.startsWith(protectedPath)
-  );
+  const isProtectedPath = protectedPaths.some((protectedPath) => path.startsWith(protectedPath));
 
   // 인증 페이지는 리다이렉트에서 제외
   const isAuthPage = path.startsWith('/auth/');
-  
+
   // 보호된 경로에 로그인하지 않은 사용자가 접근하려는 경우
   // 단, 이미 인증 페이지인 경우는 제외
   if (isProtectedPath && !user && !isAuthPage) {

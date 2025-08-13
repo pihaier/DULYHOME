@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const ClickPopoverCode = () => {
   return (
     <>
@@ -56,7 +56,7 @@ return (
 );`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default ClickPopoverCode
+export default ClickPopoverCode;

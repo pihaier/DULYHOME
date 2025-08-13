@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import React from "react";
-import { IconX } from "@tabler/icons-react";
-import { Stack, Button, IconButton, Collapse, Alert } from "@mui/material";
+import React from 'react';
+import { IconX } from '@tabler/icons-react';
+import { Stack, Button, IconButton, Collapse, Alert } from '@mui/material';
 
-import ChildCard from "@/app/components/shared/ChildCard";
-import TransitionCode from "@/app/components/ui-components/alert/code/TransitionCode";
+import ChildCard from '@/app/components/shared/ChildCard';
+import TransitionCode from '@/app/components/ui-components/alert/code/TransitionCode';
 
 const AlertTransition = () => {
   const [open, setOpen] = React.useState(true);

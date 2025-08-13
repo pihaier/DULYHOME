@@ -57,18 +57,14 @@ const menuItems = [
   },
 ];
 
-export default function StaffLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function StaffLayout({ children }: { children: React.ReactNode }) {
   const theme = useTheme();
   const router = useRouter();
   const pathname = usePathname();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { user, userProfile } = useUser();
   const supabase = createClient();
-  
+
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleDrawerToggle = () => {
@@ -109,9 +105,9 @@ export default function StaffLayout({
           )}
         </Box>
       </Toolbar>
-      
+
       <Divider />
-      
+
       <List sx={{ flexGrow: 1, px: 2, py: 1 }}>
         {menuItems.map((item) => (
           <ListItem key={item.path} disablePadding sx={{ mb: 0.5 }}>
@@ -145,9 +141,9 @@ export default function StaffLayout({
           </ListItem>
         ))}
       </List>
-      
+
       <Divider />
-      
+
       <Box sx={{ p: 2 }}>
         <Button
           fullWidth
@@ -193,10 +189,7 @@ export default function StaffLayout({
       )}
 
       {/* Sidebar Drawer */}
-      <Box
-        component="nav"
-        sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
-      >
+      <Box component="nav" sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}>
         {isMobile ? (
           <Drawer
             variant="temporary"

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
@@ -21,7 +21,7 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Stack
+  Stack,
 } from '@mui/material';
 import {
   Description as DescriptionIcon,
@@ -33,7 +33,7 @@ import {
   Person as PersonIcon,
   Business as BusinessIcon,
   Inventory as InventoryIcon,
-  AttachMoney as AttachMoneyIcon
+  AttachMoney as AttachMoneyIcon,
 } from '@mui/icons-material';
 import { createClient } from '@/lib/supabase/client';
 import PageContainer from '@/app/components/container/PageContainer';
@@ -59,7 +59,8 @@ const BulkOrderInquiry = () => {
     try {
       const { data, error } = await supabase
         .from('bulk_orders')
-        .select(`
+        .select(
+          `
           *,
           user:user_id(email),
           chinese_staff:assigned_staff_id(
@@ -72,7 +73,8 @@ const BulkOrderInquiry = () => {
             product_name,
             company_name
           )
-        `)
+        `
+        )
         .eq('reservation_number', reservationNumber)
         .single();
 
@@ -91,35 +93,35 @@ const BulkOrderInquiry = () => {
 
   const getStatusColor = (status: string) => {
     const statusColors: any = {
-      'submitted': 'primary',
-      'quoted': 'info',
-      'paid': 'secondary',
-      'in_production': 'warning',
-      'shipped': 'success',
-      'completed': 'success',
-      'cancelled': 'error'
+      submitted: 'primary',
+      quoted: 'info',
+      paid: 'secondary',
+      in_production: 'warning',
+      shipped: 'success',
+      completed: 'success',
+      cancelled: 'error',
     };
     return statusColors[status] || 'default';
   };
 
   const getStatusLabel = (status: string) => {
     const statusLabels: any = {
-      'submitted': '접수됨',
-      'quoted': '견적완료',
-      'paid': '결제완료',
-      'in_production': '생산중',
-      'shipped': '배송중',
-      'completed': '완료',
-      'cancelled': '취소됨'
+      submitted: '접수됨',
+      quoted: '견적완료',
+      paid: '결제완료',
+      in_production: '생산중',
+      shipped: '배송중',
+      completed: '완료',
+      cancelled: '취소됨',
     };
     return statusLabels[status] || status;
   };
 
   const getDeliveryMethodLabel = (method: string) => {
     const labels: any = {
-      'DDP': 'DDP (관세포함)',
-      'FOB': 'FOB (본선인도)',
-      'EXW': 'EXW (공장인도)'
+      DDP: 'DDP (관세포함)',
+      FOB: 'FOB (본선인도)',
+      EXW: 'EXW (공장인도)',
     };
     return labels[method] || method;
   };
@@ -157,8 +159,8 @@ const BulkOrderInquiry = () => {
               </Typography>
             </Box>
             <Box display="flex" gap={2} alignItems="center">
-              <Chip 
-                label={getStatusLabel(orderData.status)} 
+              <Chip
+                label={getStatusLabel(orderData.status)}
                 color={getStatusColor(orderData.status)}
                 size="medium"
               />
@@ -169,10 +171,7 @@ const BulkOrderInquiry = () => {
               >
                 채팅
               </Button>
-              <Button
-                variant="outlined"
-                startIcon={<AttachFileIcon />}
-              >
+              <Button variant="outlined" startIcon={<AttachFileIcon />}>
                 관련파일
               </Button>
             </Box>
@@ -190,7 +189,12 @@ const BulkOrderInquiry = () => {
                   <Tab icon={<DescriptionIcon />} iconPosition="start" label="주문정보" value="0" />
                   <Tab icon={<AttachMoneyIcon />} iconPosition="start" label="견적정보" value="1" />
                   <Tab icon={<FactoryIcon />} iconPosition="start" label="생산현황" value="2" />
-                  <Tab icon={<LocalShippingIcon />} iconPosition="start" label="물류정보" value="3" />
+                  <Tab
+                    icon={<LocalShippingIcon />}
+                    iconPosition="start"
+                    label="물류정보"
+                    value="3"
+                  />
                 </TabList>
               </Box>
 
@@ -207,19 +211,27 @@ const BulkOrderInquiry = () => {
                       <Divider sx={{ my: 2 }} />
                       <Stack spacing={2}>
                         <Box>
-                          <Typography variant="body2" color="text.secondary">회사명</Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            회사명
+                          </Typography>
                           <Typography variant="body1">{orderData.company_name}</Typography>
                         </Box>
                         <Box>
-                          <Typography variant="body2" color="text.secondary">담당자</Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            담당자
+                          </Typography>
                           <Typography variant="body1">{orderData.contact_person}</Typography>
                         </Box>
                         <Box>
-                          <Typography variant="body2" color="text.secondary">연락처</Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            연락처
+                          </Typography>
                           <Typography variant="body1">{orderData.contact_phone}</Typography>
                         </Box>
                         <Box>
-                          <Typography variant="body2" color="text.secondary">이메일</Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            이메일
+                          </Typography>
                           <Typography variant="body1">{orderData.contact_email}</Typography>
                         </Box>
                       </Stack>
@@ -237,16 +249,28 @@ const BulkOrderInquiry = () => {
                         <Divider sx={{ my: 2 }} />
                         <Stack spacing={2}>
                           <Box>
-                            <Typography variant="body2" color="text.secondary">조사 유형</Typography>
-                            <Typography variant="body1">{orderData.market_research.research_type}</Typography>
+                            <Typography variant="body2" color="text.secondary">
+                              조사 유형
+                            </Typography>
+                            <Typography variant="body1">
+                              {orderData.market_research.research_type}
+                            </Typography>
                           </Box>
                           <Box>
-                            <Typography variant="body2" color="text.secondary">제품명</Typography>
-                            <Typography variant="body1">{orderData.market_research.product_name}</Typography>
+                            <Typography variant="body2" color="text.secondary">
+                              제품명
+                            </Typography>
+                            <Typography variant="body1">
+                              {orderData.market_research.product_name}
+                            </Typography>
                           </Box>
                           <Box>
-                            <Typography variant="body2" color="text.secondary">공급업체</Typography>
-                            <Typography variant="body1">{orderData.market_research.company_name}</Typography>
+                            <Typography variant="body2" color="text.secondary">
+                              공급업체
+                            </Typography>
+                            <Typography variant="body1">
+                              {orderData.market_research.company_name}
+                            </Typography>
                           </Box>
                         </Stack>
                       </CardContent>
@@ -292,9 +316,14 @@ const BulkOrderInquiry = () => {
                                   총 금액
                                 </TableCell>
                                 <TableCell align="right" sx={{ fontWeight: 600 }}>
-                                  ¥{orderData.order_items.reduce((sum: number, item: any) => 
-                                    sum + (item.unitPrice * item.quantity), 0
-                                  ).toLocaleString()}
+                                  ¥
+                                  {orderData.order_items
+                                    .reduce(
+                                      (sum: number, item: any) =>
+                                        sum + item.unitPrice * item.quantity,
+                                      0
+                                    )
+                                    .toLocaleString()}
                                 </TableCell>
                               </TableRow>
                             </TableBody>
@@ -318,17 +347,23 @@ const BulkOrderInquiry = () => {
                       <Divider sx={{ my: 2 }} />
                       <Stack spacing={2}>
                         <Box>
-                          <Typography variant="body2" color="text.secondary">배송 방법</Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            배송 방법
+                          </Typography>
                           <Typography variant="body1">
                             {getDeliveryMethodLabel(orderData.delivery_method)}
                           </Typography>
                         </Box>
                         <Box>
-                          <Typography variant="body2" color="text.secondary">희망 납기일</Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            희망 납기일
+                          </Typography>
                           <Typography variant="body1">{orderData.delivery_date}</Typography>
                         </Box>
                         <Box>
-                          <Typography variant="body2" color="text.secondary">배송지</Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            배송지
+                          </Typography>
                           <Typography variant="body1">{orderData.delivery_address}</Typography>
                         </Box>
                       </Stack>
@@ -336,28 +371,42 @@ const BulkOrderInquiry = () => {
                   </Card>
 
                   {/* 추가 요청사항 */}
-                  {(orderData.packing_requirements || orderData.quality_standards || orderData.additional_requests) && (
+                  {(orderData.packing_requirements ||
+                    orderData.quality_standards ||
+                    orderData.additional_requests) && (
                     <Card variant="outlined">
                       <CardContent>
-                        <Typography variant="h6" gutterBottom>추가 요청사항</Typography>
+                        <Typography variant="h6" gutterBottom>
+                          추가 요청사항
+                        </Typography>
                         <Divider sx={{ my: 2 }} />
                         <Stack spacing={2}>
                           {orderData.packing_requirements && (
                             <Box>
-                              <Typography variant="subtitle2" color="text.secondary">포장 요구사항</Typography>
-                              <Typography variant="body1">{orderData.packing_requirements}</Typography>
+                              <Typography variant="subtitle2" color="text.secondary">
+                                포장 요구사항
+                              </Typography>
+                              <Typography variant="body1">
+                                {orderData.packing_requirements}
+                              </Typography>
                             </Box>
                           )}
                           {orderData.quality_standards && (
                             <Box>
-                              <Typography variant="subtitle2" color="text.secondary">품질 기준</Typography>
+                              <Typography variant="subtitle2" color="text.secondary">
+                                품질 기준
+                              </Typography>
                               <Typography variant="body1">{orderData.quality_standards}</Typography>
                             </Box>
                           )}
                           {orderData.additional_requests && (
                             <Box>
-                              <Typography variant="subtitle2" color="text.secondary">기타 요청사항</Typography>
-                              <Typography variant="body1">{orderData.additional_requests}</Typography>
+                              <Typography variant="subtitle2" color="text.secondary">
+                                기타 요청사항
+                              </Typography>
+                              <Typography variant="body1">
+                                {orderData.additional_requests}
+                              </Typography>
                             </Box>
                           )}
                         </Stack>
@@ -374,35 +423,51 @@ const BulkOrderInquiry = () => {
                     <>
                       <Card variant="outlined">
                         <CardContent>
-                          <Typography variant="h6" gutterBottom>견적 정보</Typography>
+                          <Typography variant="h6" gutterBottom>
+                            견적 정보
+                          </Typography>
                           <Divider sx={{ my: 2 }} />
                           <Stack spacing={2}>
                             {orderData.price_adjustment && (
                               <>
                                 <Box>
-                                  <Typography variant="body2" color="text.secondary">가격 조정률</Typography>
-                                  <Typography variant="body1">{orderData.price_adjustment}%</Typography>
+                                  <Typography variant="body2" color="text.secondary">
+                                    가격 조정률
+                                  </Typography>
+                                  <Typography variant="body1">
+                                    {orderData.price_adjustment}%
+                                  </Typography>
                                 </Box>
                                 <Box>
-                                  <Typography variant="body2" color="text.secondary">조정 사유</Typography>
-                                  <Typography variant="body1">{orderData.adjustment_reason}</Typography>
+                                  <Typography variant="body2" color="text.secondary">
+                                    조정 사유
+                                  </Typography>
+                                  <Typography variant="body1">
+                                    {orderData.adjustment_reason}
+                                  </Typography>
                                 </Box>
                               </>
                             )}
                             <Box>
-                              <Typography variant="body2" color="text.secondary">최종 단가</Typography>
+                              <Typography variant="body2" color="text.secondary">
+                                최종 단가
+                              </Typography>
                               <Typography variant="h5" color="primary">
                                 ¥{orderData.revised_unit_price?.toLocaleString()}
                               </Typography>
                             </Box>
                             <Box>
-                              <Typography variant="body2" color="text.secondary">총 금액</Typography>
+                              <Typography variant="body2" color="text.secondary">
+                                총 금액
+                              </Typography>
                               <Typography variant="h5" color="primary">
                                 ¥{orderData.total_amount?.toLocaleString()}
                               </Typography>
                             </Box>
                             <Box>
-                              <Typography variant="body2" color="text.secondary">납기 기간</Typography>
+                              <Typography variant="body2" color="text.secondary">
+                                납기 기간
+                              </Typography>
                               <Typography variant="body1">{orderData.delivery_period}</Typography>
                             </Box>
                           </Stack>
@@ -412,7 +477,9 @@ const BulkOrderInquiry = () => {
                       {/* 견적서 다운로드 */}
                       <Card variant="outlined">
                         <CardContent>
-                          <Typography variant="h6" gutterBottom>문서 다운로드</Typography>
+                          <Typography variant="h6" gutterBottom>
+                            문서 다운로드
+                          </Typography>
                           <Divider sx={{ my: 2 }} />
                           <Stack spacing={1}>
                             {orderData.quotation_file && (
@@ -440,9 +507,7 @@ const BulkOrderInquiry = () => {
                       </Card>
                     </>
                   ) : (
-                    <Alert severity="info">
-                      견적이 아직 준비되지 않았습니다.
-                    </Alert>
+                    <Alert severity="info">견적이 아직 준비되지 않았습니다.</Alert>
                   )}
                 </Stack>
               </TabPanel>
@@ -453,23 +518,31 @@ const BulkOrderInquiry = () => {
                   <Stack spacing={3}>
                     <Card variant="outlined">
                       <CardContent>
-                        <Typography variant="h6" gutterBottom>생산 정보</Typography>
+                        <Typography variant="h6" gutterBottom>
+                          생산 정보
+                        </Typography>
                         <Divider sx={{ my: 2 }} />
                         <Stack spacing={2}>
                           <Box>
-                            <Typography variant="body2" color="text.secondary">공장 확인서</Typography>
+                            <Typography variant="body2" color="text.secondary">
+                              공장 확인서
+                            </Typography>
                             <Typography variant="body1">
                               {orderData.factory_confirmation || '대기중'}
                             </Typography>
                           </Box>
                           <Box>
-                            <Typography variant="body2" color="text.secondary">생산 일정</Typography>
+                            <Typography variant="body2" color="text.secondary">
+                              생산 일정
+                            </Typography>
                             <Typography variant="body1">
                               {orderData.production_schedule || '미정'}
                             </Typography>
                           </Box>
                           <Box>
-                            <Typography variant="body2" color="text.secondary">진행률</Typography>
+                            <Typography variant="body2" color="text.secondary">
+                              진행률
+                            </Typography>
                             <Box display="flex" alignItems="center" gap={1}>
                               <Box sx={{ width: '100%', mr: 1 }}>
                                 <Box
@@ -497,7 +570,9 @@ const BulkOrderInquiry = () => {
                             </Box>
                           </Box>
                           <Box>
-                            <Typography variant="body2" color="text.secondary">완료 예정일</Typography>
+                            <Typography variant="body2" color="text.secondary">
+                              완료 예정일
+                            </Typography>
                             <Typography variant="body1">
                               {orderData.expected_completion_date || '미정'}
                             </Typography>
@@ -510,7 +585,9 @@ const BulkOrderInquiry = () => {
                     {orderData.quality_inspection_report && (
                       <Card variant="outlined">
                         <CardContent>
-                          <Typography variant="h6" gutterBottom>품질검사</Typography>
+                          <Typography variant="h6" gutterBottom>
+                            품질검사
+                          </Typography>
                           <Divider sx={{ my: 2 }} />
                           <Button
                             variant="contained"
@@ -526,9 +603,7 @@ const BulkOrderInquiry = () => {
                     )}
                   </Stack>
                 ) : (
-                  <Alert severity="info">
-                    생산이 아직 시작되지 않았습니다.
-                  </Alert>
+                  <Alert severity="info">생산이 아직 시작되지 않았습니다.</Alert>
                 )}
               </TabPanel>
 
@@ -539,23 +614,31 @@ const BulkOrderInquiry = () => {
                     {/* 물류 상태 */}
                     <Card variant="outlined">
                       <CardContent>
-                        <Typography variant="h6" gutterBottom>물류 상태</Typography>
+                        <Typography variant="h6" gutterBottom>
+                          물류 상태
+                        </Typography>
                         <Divider sx={{ my: 2 }} />
                         <Stack spacing={2}>
                           <Box>
-                            <Typography variant="body2" color="text.secondary">포장 상태</Typography>
+                            <Typography variant="body2" color="text.secondary">
+                              포장 상태
+                            </Typography>
                             <Typography variant="body1">
                               {orderData.packing_status || '대기중'}
                             </Typography>
                           </Box>
                           <Box>
-                            <Typography variant="body2" color="text.secondary">통관 상태</Typography>
+                            <Typography variant="body2" color="text.secondary">
+                              통관 상태
+                            </Typography>
                             <Typography variant="body1">
                               {orderData.customs_status || '대기중'}
                             </Typography>
                           </Box>
                           <Box>
-                            <Typography variant="body2" color="text.secondary">도착 예정일</Typography>
+                            <Typography variant="body2" color="text.secondary">
+                              도착 예정일
+                            </Typography>
                             <Typography variant="body1">
                               {orderData.estimated_arrival_date || '미정'}
                             </Typography>
@@ -567,7 +650,9 @@ const BulkOrderInquiry = () => {
                     {/* 물류 서류 */}
                     <Card variant="outlined">
                       <CardContent>
-                        <Typography variant="h6" gutterBottom>물류 서류</Typography>
+                        <Typography variant="h6" gutterBottom>
+                          물류 서류
+                        </Typography>
                         <Divider sx={{ my: 2 }} />
                         <Stack spacing={1}>
                           {orderData.bl_document && (
@@ -615,9 +700,7 @@ const BulkOrderInquiry = () => {
                     </Card>
                   </Stack>
                 ) : (
-                  <Alert severity="info">
-                    물류 정보가 아직 등록되지 않았습니다.
-                  </Alert>
+                  <Alert severity="info">물류 정보가 아직 등록되지 않았습니다.</Alert>
                 )}
               </TabPanel>
             </TabContext>

@@ -1,117 +1,114 @@
 // project imports
-import "./DefaultColors";
+import './DefaultColors';
 import { Components, Theme } from '@mui/material/styles';
 
 const components = (theme: Theme, isCardShadow: boolean): Components | any => {
-
-
-
-
   const borderColor = theme.palette.divider;
 
   return {
     MuiCssBaseline: {
       styleOverrides: {
-        "*": {
-          boxSizing: "border-box",
+        '*': {
+          boxSizing: 'border-box',
         },
-        "svg": {
-          strokeWidth: '1.7px'
+        svg: {
+          strokeWidth: '1.7px',
         },
         html: {
-          height: "100%",
-          width: "100%",
+          height: '100%',
+          width: '100%',
         },
         a: {
-          textDecoration: "none",
+          textDecoration: 'none',
         },
         body: {
-          height: "100%",
+          height: '100%',
           margin: 0,
           padding: 0,
         },
-        "#root": {
-          height: "100%",
+        '#root': {
+          height: '100%',
         },
         '.ql-container.ql-snow, .ql-toolbar.ql-snow': {
-          border: '0 !important', borderRadius: '7px'
+          border: '0 !important',
+          borderRadius: '7px',
         },
         '.ql-editor, .ql-snow *': {
-          fontFamiy: 'inherit !important'
+          fontFamiy: 'inherit !important',
         },
         "*[dir='rtl'] .buyNowImg": {
-          transform: "scaleX(-1)",
+          transform: 'scaleX(-1)',
         },
-        ".border-none": {
-          border: "0px",
+        '.border-none': {
+          border: '0px',
           td: {
-            border: "0px",
+            border: '0px',
           },
         },
-        ".btn-xs": {
-          minWidth: "30px !important",
-          width: "30px",
-          height: "30px",
-          borderRadius: "6px !important",
-          padding: "0px !important",
+        '.btn-xs': {
+          minWidth: '30px !important',
+          width: '30px',
+          height: '30px',
+          borderRadius: '6px !important',
+          padding: '0px !important',
         },
-        ".hover-text-primary:hover .text-hover": {
+        '.hover-text-primary:hover .text-hover': {
           color: theme.palette.primary.main,
         },
-        ".hoverCard:hover": {
-          scale: "1.01",
-          transition: " 0.1s ease-in",
+        '.hoverCard:hover': {
+          scale: '1.01',
+          transition: ' 0.1s ease-in',
         },
-        ".MuiBox-root": {
+        '.MuiBox-root': {
           borderRadius: theme.shape.borderRadius,
         },
-        ".MuiCardHeader-action": {
-          alignSelf: "center !important",
+        '.MuiCardHeader-action': {
+          alignSelf: 'center !important',
         },
-        ".emoji-picker-react .emoji-scroll-wrapper": {
-          overflowX: "hidden",
+        '.emoji-picker-react .emoji-scroll-wrapper': {
+          overflowX: 'hidden',
         },
-        ".scrollbar-container": {
-          borderRight: "0 !important",
+        '.scrollbar-container': {
+          borderRight: '0 !important',
         },
-        ".theme-timeline .MuiTimelineOppositeContent-root": {
-          minWidth: "90px",
+        '.theme-timeline .MuiTimelineOppositeContent-root': {
+          minWidth: '90px',
         },
-        ".MuiAlert-root .MuiAlert-icon": {
-          color: "inherit!important",
+        '.MuiAlert-root .MuiAlert-icon': {
+          color: 'inherit!important',
         },
-        ".MuiTimelineConnector-root": {
-          width: "1px !important",
+        '.MuiTimelineConnector-root': {
+          width: '1px !important',
         },
-        " .simplebar-scrollbar:before": {
+        ' .simplebar-scrollbar:before': {
           background: `${theme.palette.grey[300]} !important`,
         },
-        ".rounded-bars .apexcharts-bar-series.apexcharts-plot-series .apexcharts-series path": {
-          clipPath: "inset(0 0 0% 0 round 20px)",
+        '.rounded-bars .apexcharts-bar-series.apexcharts-plot-series .apexcharts-series path': {
+          clipPath: 'inset(0 0 0% 0 round 20px)',
         },
-        ".unlimited-img": {
+        '.unlimited-img': {
           margin: '-23px !important',
-          maxHeight: '172px'
+          maxHeight: '172px',
         },
-        ".buynow-img": {
+        '.buynow-img': {
           position: 'absolute',
           right: 0,
           top: '-24px',
-          transform: `${theme.direction === 'rtl' ? 'scaleX(-1)' : 'unset'}`
+          transform: `${theme.direction === 'rtl' ? 'scaleX(-1)' : 'unset'}`,
         },
-        "@keyframes gradient": {
-          "0%": {
-            backgroundPosition: "0% 50%",
+        '@keyframes gradient': {
+          '0%': {
+            backgroundPosition: '0% 50%',
           },
-          "50%": {
-            backgroundPosition: " 100% 50%",
+          '50%': {
+            backgroundPosition: ' 100% 50%',
           },
-          "100% ": {
-            backgroundPosition: " 0% 50%",
+          '100% ': {
+            backgroundPosition: ' 0% 50%',
           },
         },
         hr: {
-          height: "1px",
+          height: '1px',
           border: 0,
           borderTop: `1px solid ${theme.palette.divider}`,
         },
@@ -120,33 +117,31 @@ const components = (theme: Theme, isCardShadow: boolean): Components | any => {
             transform: 'translateZ(0)',
           },
           '100%': {
-            transform: 'translate3d(-2086px,0,0)'
+            transform: 'translate3d(-2086px,0,0)',
           },
         },
         '@keyframes marquee2': {
           '0%': {
-            transform: 'translate3d(-2086px,0,0)'
+            transform: 'translate3d(-2086px,0,0)',
           },
           '100%': {
             transform: 'translateZ(0)',
-
           },
-
         },
-        "@keyframes marqueeRtl": {
+        '@keyframes marqueeRtl': {
           '0%': {
             transform: 'translateZ(0)',
           },
           '100%': {
-            transform: 'translate3d(2086px,0,0)'
+            transform: 'translate3d(2086px,0,0)',
           },
         },
-        "@keyframes marquee2Rtl": {
+        '@keyframes marquee2Rtl': {
           '0%': {
             transform: 'translate3d(2086px,0,0)',
           },
           '100%': {
-            transform: 'translateZ(0)'
+            transform: 'translateZ(0)',
           },
         },
       },
@@ -154,14 +149,14 @@ const components = (theme: Theme, isCardShadow: boolean): Components | any => {
     MuiButtonGroup: {
       styleOverrides: {
         root: {
-          boxShadow: "none",
+          boxShadow: 'none',
         },
       },
     },
     MuiAccordion: {
       styleOverrides: {
         root: {
-          ":before": {
+          ':before': {
             backgroundColor: theme.palette.grey[100],
           },
         },
@@ -170,8 +165,7 @@ const components = (theme: Theme, isCardShadow: boolean): Components | any => {
     MuiPaper: {
       styleOverrides: {
         root: {
-
-          backgroundImage: "none",
+          backgroundImage: 'none',
         },
       },
     },
@@ -185,7 +179,7 @@ const components = (theme: Theme, isCardShadow: boolean): Components | any => {
     MuiFab: {
       styleOverrides: {
         root: {
-          boxShadow: "none",
+          boxShadow: 'none',
         },
 
         sizeSmall: {
@@ -209,7 +203,8 @@ const components = (theme: Theme, isCardShadow: boolean): Components | any => {
         },
         colorPrimary: {
           '&:hover': {
-            backgroundColor: theme.palette.mode === "dark" ? 'white !important' : theme.palette.primary.main,
+            backgroundColor:
+              theme.palette.mode === 'dark' ? 'white !important' : theme.palette.primary.main,
             color: 'white',
           },
         },
@@ -248,13 +243,13 @@ const components = (theme: Theme, isCardShadow: boolean): Components | any => {
     MuiButton: {
       styleOverrides: {
         root: {
-          textTransform: "none",
-          boxShadow: "none",
+          textTransform: 'none',
+          boxShadow: 'none',
           fontWeight: 500,
-          fontSize: "15px"
+          fontSize: '15px',
         },
         text: {
-          padding: "5px 15px",
+          padding: '5px 15px',
           '&:hover': {
             backgroundColor: theme.palette.primary.light,
 
@@ -263,80 +258,80 @@ const components = (theme: Theme, isCardShadow: boolean): Components | any => {
         },
         textPrimary: {
           backgroundColor: theme.palette.primary.light,
-          "&:hover": {
+          '&:hover': {
             backgroundColor: theme.palette.primary.main,
-            color: "white",
+            color: 'white',
           },
         },
         textSecondary: {
           backgroundColor: theme.palette.secondary.light,
-          "&:hover": {
+          '&:hover': {
             backgroundColor: theme.palette.secondary.main,
-            color: "white",
+            color: 'white',
           },
         },
         textSuccess: {
           backgroundColor: theme.palette.success.light,
-          "&:hover": {
+          '&:hover': {
             backgroundColor: theme.palette.success.main,
-            color: "white",
+            color: 'white',
           },
         },
         textError: {
           backgroundColor: theme.palette.error.light,
-          "&:hover": {
+          '&:hover': {
             backgroundColor: theme.palette.error.main,
-            color: "white",
+            color: 'white',
           },
         },
         textInfo: {
           backgroundColor: theme.palette.info.light,
-          "&:hover": {
+          '&:hover': {
             backgroundColor: theme.palette.info.main,
-            color: "white",
+            color: 'white',
           },
         },
         textWarning: {
           backgroundColor: theme.palette.warning.light,
-          "&:hover": {
+          '&:hover': {
             backgroundColor: theme.palette.warning.main,
-            color: "white",
+            color: 'white',
           },
         },
         outlinedPrimary: {
-          "&:hover": {
+          '&:hover': {
             backgroundColor: theme.palette.primary.main,
-            color: "white",
+            color: 'white',
           },
         },
         outlinedSecondary: {
-          "&:hover": {
+          '&:hover': {
             backgroundColor: theme.palette.secondary.main,
-            color: "white",
+            color: 'white',
           },
         },
         outlinedError: {
-          "&:hover": {
+          '&:hover': {
             backgroundColor: theme.palette.error.main,
-            color: "white",
+            color: 'white',
           },
         },
         outlinedSuccess: {
-          "&:hover": {
+          '&:hover': {
             backgroundColor: theme.palette.success.main,
-            color: "white",
+            color: 'white',
           },
         },
         outlinedInfo: {
-          "&:hover": {
+          '&:hover': {
             backgroundColor: theme.palette.info.main,
-            color: "white",
+            color: 'white',
           },
         },
         outlinedWarning: {
-          "&:hover": {
+          '&:hover': {
             backgroundColor: theme.palette.warning.main,
-            color: "white",
+            color: 'white',
           },
         },
       },
@@ -344,32 +339,33 @@ const components = (theme: Theme, isCardShadow: boolean): Components | any => {
     MuiCardHeader: {
       styleOverrides: {
         root: {
-          padding: "16px 24px",
+          padding: '16px 24px',
         },
         title: {
-          fontSize: "1.125rem",
+          fontSize: '1.125rem',
         },
       },
     },
     MuiPopover: {
       styleOverrides: {
         paper: {
-          boxShadow: theme.palette.mode === 'dark' && isCardShadow // If dark theme and card shadow enabled
-            ? "#919eab4d 0 0 2px, #919eab05 0 12px 24px -4px"
-            : '0px 7px 30px 0px rgba(90, 114, 123, 0.11)',
-        }
-      }
+          boxShadow:
+            theme.palette.mode === 'dark' && isCardShadow // If dark theme and card shadow enabled
+              ? '#919eab4d 0 0 2px, #919eab05 0 12px 24px -4px'
+              : '0px 7px 30px 0px rgba(90, 114, 123, 0.11)',
+        },
+      },
     },
     MuiCard: {
       styleOverrides: {
         root: {
-          width: "100%",
-          borderRadius: "20px",
-          padding: "0",
+          width: '100%',
+          borderRadius: '20px',
+          padding: '0',
           boxShadow: !isCardShadow
             ? `1px solid ${borderColor}` // If shadow is disabled, use border color
             : theme.palette.mode === 'dark' && isCardShadow // If dark theme and card shadow enabled
-              ? "#919eab4d 0 0 2px, #919eab05 0 12px 24px -4px"
+              ? '#919eab4d 0 0 2px, #919eab05 0 12px 24px -4px'
               : '0px 7px 30px 0px rgba(90, 114, 123, 0.11)', // Default value if no conditions are met
         },
       },
@@ -377,7 +373,7 @@ const components = (theme: Theme, isCardShadow: boolean): Components | any => {
     MuiCardContent: {
       styleOverrides: {
         root: {
-          padding: "30px",
+          padding: '30px',
         },
       },
     },
@@ -391,7 +387,7 @@ const components = (theme: Theme, isCardShadow: boolean): Components | any => {
     MuiTableRow: {
       styleOverrides: {
         root: {
-          "&:last-child td": {
+          '&:last-child td': {
             borderBottom: 0,
           },
         },
@@ -400,8 +396,8 @@ const components = (theme: Theme, isCardShadow: boolean): Components | any => {
     MuiGridItem: {
       styleOverrides: {
         root: {
-          paddingTop: "30px",
-          paddingLeft: "30px !important",
+          paddingTop: '30px',
+          paddingLeft: '30px !important',
         },
       },
     },
@@ -409,7 +405,7 @@ const components = (theme: Theme, isCardShadow: boolean): Components | any => {
       styleOverrides: {
         root: {
           backgroundColor: theme.palette.grey[200],
-          borderRadius: "6px",
+          borderRadius: '6px',
         },
       },
     },
@@ -432,23 +428,23 @@ const components = (theme: Theme, isCardShadow: boolean): Components | any => {
       styleOverrides: {
         root: {
           fontWeight: 500,
-          fontSize: "0.75rem",
+          fontSize: '0.75rem',
         },
       },
     },
     MuiAlert: {
       styleOverrides: {
         filledSuccess: {
-          color: "white",
+          color: 'white',
         },
         filledInfo: {
-          color: "white",
+          color: 'white',
         },
         filledError: {
-          color: "white",
+          color: 'white',
         },
         filledWarning: {
-          color: "white",
+          color: 'white',
         },
         standardSuccess: {
           backgroundColor: theme.palette.success.light,
@@ -490,21 +486,20 @@ const components = (theme: Theme, isCardShadow: boolean): Components | any => {
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          "& .MuiOutlinedInput-notchedOutline": {
+          '& .MuiOutlinedInput-notchedOutline': {
             borderColor:
-              theme.palette.mode === "dark"
-                ? theme.palette.grey[200]
-                : theme.palette.grey[300],
+              theme.palette.mode === 'dark' ? theme.palette.grey[200] : theme.palette.grey[300],
           },
-          '&.Mui-focused .MuiOutlinedInput-notchedOutline, &:hover .MuiOutlinedInput-notchedOutline': {
-            borderColor: theme.palette.primary.main,
-          }
+          '&.Mui-focused .MuiOutlinedInput-notchedOutline, &:hover .MuiOutlinedInput-notchedOutline':
+            {
+              borderColor: theme.palette.primary.main,
+            },
         },
         input: {
-          padding: "12px 14px",
+          padding: '12px 14px',
         },
         inputSizeSmall: {
-          padding: "8px 14px",
+          padding: '8px 14px',
         },
       },
     },
@@ -527,7 +522,7 @@ const components = (theme: Theme, isCardShadow: boolean): Components | any => {
     MuiDialogTitle: {
       styleOverrides: {
         root: {
-          fontSize: "1.25rem",
+          fontSize: '1.25rem',
         },
       },
     },

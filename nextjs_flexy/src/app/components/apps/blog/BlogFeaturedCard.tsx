@@ -41,7 +41,6 @@ interface Btype {
 }
 
 const BlogFeaturedCard = ({ post, index }: Btype) => {
-
   const { coverImg, title, view, comments, category, author, createdAt } = post;
   const linkTo = title
     .toLowerCase()
@@ -66,87 +65,83 @@ const BlogFeaturedCard = ({ post, index }: Btype) => {
     backgroundSize: 'cover',
   });
 
-
-  return (<>
-    {post ? (
-      <Grid
-        display="flex"
-        alignItems="stretch"
-        size={{
-          xs: 12,
-          lg: mainPost ? 8 : 4,
-          md: 12,
-          sm: 12
-        }}>
-        <CoverImgBg className="hoverCard">
-          <>
-            <Typography
-              component={Link}
-              href={`/apps/blog/detail/${linkTo}`}
-
-            >
-              <CoverBox
-                sx={{ backgroundColor: (theme) => alpha(theme.palette.grey[900], 0.6) }}
-              />
-            </Typography>
-            <CoverImgStyle>
-              <Box
-                height={'100%'}
-                display={'flex'}
-                justifyContent="space-between"
-                flexDirection="column"
-              >
-                <Box>
-                  <Stack direction="row">
-                    <Tooltip title={author?.name} placement="top">
-                      <Avatar aria-label="recipe" src={author?.avatar}></Avatar>
-                    </Tooltip>
-                    <Chip
-                      sx={{ marginLeft: 'auto' }}
-                      label={category}
-                      size="small"
-                      color="primary"
-                    ></Chip>
-                  </Stack>
-                </Box>
-                <Box>
-                  <Box my={3}>
-                    <Typography
-                      gutterBottom
-                      variant="h3"
-                      color="inherit"
-                      sx={{ textDecoration: 'none' }}
-                      component={Link}
-                      href={`/apps/blog/detail/${linkTo}`}
-
-                    >
-                      {title}
-                    </Typography>
+  return (
+    <>
+      {post ? (
+        <Grid
+          display="flex"
+          alignItems="stretch"
+          size={{
+            xs: 12,
+            lg: mainPost ? 8 : 4,
+            md: 12,
+            sm: 12,
+          }}
+        >
+          <CoverImgBg className="hoverCard">
+            <>
+              <Typography component={Link} href={`/apps/blog/detail/${linkTo}`}>
+                <CoverBox
+                  sx={{ backgroundColor: (theme) => alpha(theme.palette.grey[900], 0.6) }}
+                />
+              </Typography>
+              <CoverImgStyle>
+                <Box
+                  height={'100%'}
+                  display={'flex'}
+                  justifyContent="space-between"
+                  flexDirection="column"
+                >
+                  <Box>
+                    <Stack direction="row">
+                      <Tooltip title={author?.name} placement="top">
+                        <Avatar aria-label="recipe" src={author?.avatar}></Avatar>
+                      </Tooltip>
+                      <Chip
+                        sx={{ marginLeft: 'auto' }}
+                        label={category}
+                        size="small"
+                        color="primary"
+                      ></Chip>
+                    </Stack>
                   </Box>
-                  <Stack direction="row" gap={3} alignItems="center">
-                    <Stack direction="row" gap={1} alignItems="center">
-                      <IconEye size="18" /> {view}
-                    </Stack>
-                    <Stack direction="row" gap={1} alignItems="center">
-                      <IconMessage2 size="18" /> {comments?.length}
-                    </Stack>
+                  <Box>
+                    <Box my={3}>
+                      <Typography
+                        gutterBottom
+                        variant="h3"
+                        color="inherit"
+                        sx={{ textDecoration: 'none' }}
+                        component={Link}
+                        href={`/apps/blog/detail/${linkTo}`}
+                      >
+                        {title}
+                      </Typography>
+                    </Box>
+                    <Stack direction="row" gap={3} alignItems="center">
+                      <Stack direction="row" gap={1} alignItems="center">
+                        <IconEye size="18" /> {view}
+                      </Stack>
+                      <Stack direction="row" gap={1} alignItems="center">
+                        <IconMessage2 size="18" /> {comments?.length}
+                      </Stack>
 
-                    <Stack direction="row" ml="auto" alignItems="center">
-                      <IconPoint size="16" />
-                      <small>{format(new Date(createdAt ?? new Date()), 'E, MMM d')}</small>
-
+                      <Stack direction="row" ml="auto" alignItems="center">
+                        <IconPoint size="16" />
+                        <small>{format(new Date(createdAt ?? new Date()), 'E, MMM d')}</small>
+                      </Stack>
                     </Stack>
-                  </Stack>
+                  </Box>
                 </Box>
-              </Box>
-            </CoverImgStyle>
-          </>
-        </CoverImgBg>
-      </Grid>
-    ) : (
-      ''
-    )}
-  </>);
+              </CoverImgStyle>
+            </>
+          </CoverImgBg>
+        </Grid>
+      ) : (
+        ''
+      )}
+    </>
+  );
 };
 
 export default BlogFeaturedCard;

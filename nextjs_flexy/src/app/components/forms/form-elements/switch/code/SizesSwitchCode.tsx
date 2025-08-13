@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const SizesSwitchCode = () => {
   return (
     <>
@@ -16,7 +16,7 @@ import { Box, Switch } from '@mui/material';
 `}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default SizesSwitchCode
+export default SizesSwitchCode;

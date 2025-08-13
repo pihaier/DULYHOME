@@ -18,20 +18,12 @@ import { ContactContext } from '@/app/context/Conatactcontext';
 import { ChangeEvent, useContext, useState } from 'react';
 import React from 'react';
 const ContactDetails = () => {
-
   const theme = useTheme();
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [formData, setFormData] = useState<ContactType | any | null>(null);
 
-
-  const {
-    selectedContact,
-    toggleStarred,
-    updateContact,
-    deleteContact,
-  } = useContext(ContactContext);
-
-
+  const { selectedContact, toggleStarred, updateContact, deleteContact } =
+    useContext(ContactContext);
 
   const warningColor = theme.palette.warning.main;
 
@@ -103,13 +95,11 @@ const ContactDetails = () => {
     }
   };
 
-
   const handleSaveClick = () => {
     if (formData) {
       updateContact(formData);
     }
     setIsEditMode(false);
-
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -122,227 +112,232 @@ const ContactDetails = () => {
     }
   };
 
-
-
-  return (<>
-    {/* ------------------------------------------- */}
-    {/* Contact Detail Part */}
-    {/* ------------------------------------------- */}
-    {selectedContact ? (
-      <>
-        {/* ------------------------------------------- */}
-        {/* Header Part */}
-        {/* ------------------------------------------- */}
-        <Box p={3} py={2} display={'flex'} alignItems="center">
-          <Typography variant="h5">Contact Details</Typography>
-          <Stack gap={0} direction="row" ml={'auto'}>
-            <Tooltip title={selectedContact.starred ? 'Unstar' : 'Star'}>
-              <IconButton onClick={() => (toggleStarred(selectedContact?.id))}>
-                <IconStar
-                  stroke={1.3}
-                  size="18"
-                  style={{
-                    fill: selectedContact.starred ? warningColor : '',
-                    stroke: selectedContact.starred ? warningColor : '',
-                  }}
-                />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title={!isEditMode ? "Edit" : "Save"}>
-              <IconButton onClick={isEditMode ? handleSaveClick : handleEditClick}>
-                {!isEditMode ? (
-                  <IconPencil size="18" stroke={1.3} />
-                ) : (
-                  <IconDeviceFloppy size="18" stroke={1.3} />
-                )}
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Delete">
-              <IconButton onClick={() => deleteContact(selectedContact.id)}>
-                <IconTrash size="18" stroke={1.3} />
-              </IconButton>
-            </Tooltip>
-          </Stack>
-        </Box>
-        <Divider />
-        {/* ------------------------------------------- */}
-        {/* Contact Table Part */}
-        {/* ------------------------------------------- */}
-        <Box sx={{ overflow: 'auto' }}>
-          {!isEditMode ? (
-            <Box>
-              <Box p={3}>
-                <Box display="flex" alignItems="center">
-                  <Avatar
-                    alt={selectedContact.image}
-                    src={selectedContact.image}
-                    sx={{ width: '72px', height: '72px' }}
+  return (
+    <>
+      {/* ------------------------------------------- */}
+      {/* Contact Detail Part */}
+      {/* ------------------------------------------- */}
+      {selectedContact ? (
+        <>
+          {/* ------------------------------------------- */}
+          {/* Header Part */}
+          {/* ------------------------------------------- */}
+          <Box p={3} py={2} display={'flex'} alignItems="center">
+            <Typography variant="h5">Contact Details</Typography>
+            <Stack gap={0} direction="row" ml={'auto'}>
+              <Tooltip title={selectedContact.starred ? 'Unstar' : 'Star'}>
+                <IconButton onClick={() => toggleStarred(selectedContact?.id)}>
+                  <IconStar
+                    stroke={1.3}
+                    size="18"
+                    style={{
+                      fill: selectedContact.starred ? warningColor : '',
+                      stroke: selectedContact.starred ? warningColor : '',
+                    }}
                   />
-                  <Box sx={{ ml: 2 }}>
-                    <Typography variant="subtitle1" fontWeight={500} mb={0.5}>
-                      {selectedContact.firstname} {selectedContact.lastname}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" mb={0.5}>
-                      {selectedContact.department}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {selectedContact.company}
-                    </Typography>
-                  </Box>
-                </Box>
-                <Grid container>
-                  <Grid
-                    mt={4}
-                    size={{
-                      lg: 6,
-                      xs: 12
-                    }}>
-                    <Typography variant="body2" color="text.secondary">
-                      Phone Number
-                    </Typography>
-                    <Typography variant="subtitle1" mb={0.5} fontWeight={500}>
-                      {selectedContact.phone}
-                    </Typography>
-                  </Grid>
-                  <Grid
-                    mt={4}
-                    size={{
-                      lg: 6,
-                      xs: 12
-                    }}>
-                    <Typography variant="body2" color="text.secondary">
-                      Email address
-                    </Typography>
-                    <Typography variant="subtitle1" fontWeight={500} mb={0.5}>
-                      {selectedContact.email}
-                    </Typography>
-                  </Grid>
-                  <Grid
-                    mt={4}
-                    size={{
-                      lg: 12,
-                      xs: 12
-                    }}>
-                    <Typography variant="body2" color="text.secondary">
-                      Address
-                    </Typography>
-                    <Typography variant="subtitle1" fontWeight={500} mb={0.5}>
-                      {selectedContact.address}
-                    </Typography>
-                  </Grid>
-                  <Grid
-                    mt={4}
-                    size={{
-                      lg: 6,
-                      xs: 12
-                    }}>
-                    <Typography variant="body2" color="text.secondary">
-                      Department
-                    </Typography>
-                    <Typography variant="subtitle1" mb={0.5} fontWeight={500}>
-                      {selectedContact.department}
-                    </Typography>
-                  </Grid>
-                  <Grid
-                    mt={4}
-                    size={{
-                      lg: 6,
-                      xs: 12
-                    }}>
-                    <Typography variant="body2" color="text.secondary">
-                      Company
-                    </Typography>
-                    <Typography variant="subtitle1" fontWeight={500} mb={0.5}>
-                      {selectedContact.company}
-                    </Typography>
-                  </Grid>
-                  <Grid
-                    mt={4}
-                    size={{
-                      lg: 12,
-                      xs: 12
-                    }}>
-                    <Typography variant="body2" mb={1} color="text.secondary">
-                      Notes
-                    </Typography>
-                    <Typography variant="subtitle1" mb={0.5}>
-                      {selectedContact.notes}
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </Box>
-              <Divider />
-              <Box p={3} gap={1} display="flex">
-                <Button
-                  color="primary"
-                  variant="contained"
-                  size="small"
-                  onClick={handleEditClick}
-                >
-                  Edit
-                </Button>
-                <Button
-                  color="error"
-                  variant="contained"
-                  size="small"
-                  onClick={() => deleteContact(selectedContact.id)}
-                >
-                  Delete
-                </Button>
-              </Box>
-            </Box>
-          ) : (
-            <>
-              <BlankCard sx={{ p: 0 }}>
-                <Scrollbar sx={{ height: { lg: 'calc(100vh - 360px)', md: '100vh' } }}>
-                  <Box pt={1}>
-                    {tableData.map((data) => (
-                      <Box key={data.id} px={3} py={1.5}>
-                        <Typography variant="subtitle1" fontWeight={500} mb={0.5}>
-                          {data.title}
-                        </Typography>
-                        <TextField
-                          id={data.alias}
-                          size="small"
-                          fullWidth
-                          type={data.type}
-                          name={data.alias}
-                          value={formData ? formData[data.alias] : ''}
-
-                          onChange={handleInputChange}
-                        />
-
-                      </Box>
-                    ))}
-                    <Box p={3}>
-                      <Button
-                        color="primary"
-                        variant="contained"
-                        onClick={handleSaveClick}
-                      >
-                        Save Contact
-                      </Button>
+                </IconButton>
+              </Tooltip>
+              <Tooltip title={!isEditMode ? 'Edit' : 'Save'}>
+                <IconButton onClick={isEditMode ? handleSaveClick : handleEditClick}>
+                  {!isEditMode ? (
+                    <IconPencil size="18" stroke={1.3} />
+                  ) : (
+                    <IconDeviceFloppy size="18" stroke={1.3} />
+                  )}
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Delete">
+                <IconButton onClick={() => deleteContact(selectedContact.id)}>
+                  <IconTrash size="18" stroke={1.3} />
+                </IconButton>
+              </Tooltip>
+            </Stack>
+          </Box>
+          <Divider />
+          {/* ------------------------------------------- */}
+          {/* Contact Table Part */}
+          {/* ------------------------------------------- */}
+          <Box sx={{ overflow: 'auto' }}>
+            {!isEditMode ? (
+              <Box>
+                <Box p={3}>
+                  <Box display="flex" alignItems="center">
+                    <Avatar
+                      alt={selectedContact.image}
+                      src={selectedContact.image}
+                      sx={{ width: '72px', height: '72px' }}
+                    />
+                    <Box sx={{ ml: 2 }}>
+                      <Typography variant="subtitle1" fontWeight={500} mb={0.5}>
+                        {selectedContact.firstname} {selectedContact.lastname}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary" mb={0.5}>
+                        {selectedContact.department}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {selectedContact.company}
+                      </Typography>
                     </Box>
                   </Box>
-                </Scrollbar>
-              </BlankCard>
-            </>
-          )}
+                  <Grid container>
+                    <Grid
+                      mt={4}
+                      size={{
+                        lg: 6,
+                        xs: 12,
+                      }}
+                    >
+                      <Typography variant="body2" color="text.secondary">
+                        Phone Number
+                      </Typography>
+                      <Typography variant="subtitle1" mb={0.5} fontWeight={500}>
+                        {selectedContact.phone}
+                      </Typography>
+                    </Grid>
+                    <Grid
+                      mt={4}
+                      size={{
+                        lg: 6,
+                        xs: 12,
+                      }}
+                    >
+                      <Typography variant="body2" color="text.secondary">
+                        Email address
+                      </Typography>
+                      <Typography variant="subtitle1" fontWeight={500} mb={0.5}>
+                        {selectedContact.email}
+                      </Typography>
+                    </Grid>
+                    <Grid
+                      mt={4}
+                      size={{
+                        lg: 12,
+                        xs: 12,
+                      }}
+                    >
+                      <Typography variant="body2" color="text.secondary">
+                        Address
+                      </Typography>
+                      <Typography variant="subtitle1" fontWeight={500} mb={0.5}>
+                        {selectedContact.address}
+                      </Typography>
+                    </Grid>
+                    <Grid
+                      mt={4}
+                      size={{
+                        lg: 6,
+                        xs: 12,
+                      }}
+                    >
+                      <Typography variant="body2" color="text.secondary">
+                        Department
+                      </Typography>
+                      <Typography variant="subtitle1" mb={0.5} fontWeight={500}>
+                        {selectedContact.department}
+                      </Typography>
+                    </Grid>
+                    <Grid
+                      mt={4}
+                      size={{
+                        lg: 6,
+                        xs: 12,
+                      }}
+                    >
+                      <Typography variant="body2" color="text.secondary">
+                        Company
+                      </Typography>
+                      <Typography variant="subtitle1" fontWeight={500} mb={0.5}>
+                        {selectedContact.company}
+                      </Typography>
+                    </Grid>
+                    <Grid
+                      mt={4}
+                      size={{
+                        lg: 12,
+                        xs: 12,
+                      }}
+                    >
+                      <Typography variant="body2" mb={1} color="text.secondary">
+                        Notes
+                      </Typography>
+                      <Typography variant="subtitle1" mb={0.5}>
+                        {selectedContact.notes}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Box>
+                <Divider />
+                <Box p={3} gap={1} display="flex">
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    size="small"
+                    onClick={handleEditClick}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    color="error"
+                    variant="contained"
+                    size="small"
+                    onClick={() => deleteContact(selectedContact.id)}
+                  >
+                    Delete
+                  </Button>
+                </Box>
+              </Box>
+            ) : (
+              <>
+                <BlankCard sx={{ p: 0 }}>
+                  <Scrollbar sx={{ height: { lg: 'calc(100vh - 360px)', md: '100vh' } }}>
+                    <Box pt={1}>
+                      {tableData.map((data) => (
+                        <Box key={data.id} px={3} py={1.5}>
+                          <Typography variant="subtitle1" fontWeight={500} mb={0.5}>
+                            {data.title}
+                          </Typography>
+                          <TextField
+                            id={data.alias}
+                            size="small"
+                            fullWidth
+                            type={data.type}
+                            name={data.alias}
+                            value={formData ? formData[data.alias] : ''}
+                            onChange={handleInputChange}
+                          />
+                        </Box>
+                      ))}
+                      <Box p={3}>
+                        <Button color="primary" variant="contained" onClick={handleSaveClick}>
+                          Save Contact
+                        </Button>
+                      </Box>
+                    </Box>
+                  </Scrollbar>
+                </BlankCard>
+              </>
+            )}
+          </Box>
+        </>
+      ) : (
+        <Box p={3} height="50vh" display={'flex'} justifyContent="center" alignItems={'center'}>
+          {/* ------------------------------------------- */}
+          {/* If no Contact  */}
+          {/* ------------------------------------------- */}
+          <Box>
+            <Typography variant="h4">Please Select a Contact</Typography>
+            <br />
+            <Image
+              src="/images/breadcrumb/emailSv.png"
+              alt={'emailIcon'}
+              width="250"
+              height="250"
+            />
+          </Box>
         </Box>
-      </>
-    ) : (
-      <Box p={3} height="50vh" display={'flex'} justifyContent="center" alignItems={'center'}>
-        {/* ------------------------------------------- */}
-        {/* If no Contact  */}
-        {/* ------------------------------------------- */}
-        <Box>
-          <Typography variant="h4">Please Select a Contact</Typography>
-          <br />
-          <Image src="/images/breadcrumb/emailSv.png" alt={"emailIcon"} width="250" height="250" />
-        </Box>
-      </Box>
-    )}
-  </>);
+      )}
+    </>
+  );
 };
 
 export default ContactDetails;

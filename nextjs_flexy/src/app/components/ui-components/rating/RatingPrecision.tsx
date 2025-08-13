@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { Rating } from "@mui/material";
-import ChildCard from "@/app/components/shared/ChildCard";
+import * as React from 'react';
+import { Rating } from '@mui/material';
+import ChildCard from '@/app/components/shared/ChildCard';
 
 const RatingPrecision = () => {
   return (

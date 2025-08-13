@@ -1,28 +1,28 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { Box } from "@mui/material";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import TabContext from "@mui/lab/TabContext";
-import TabPanel from "@mui/lab/TabPanel";
-import ChildCard from "@/app/components/shared/ChildCard";
-import { IconUser } from "@tabler/icons-react";
+import * as React from 'react';
+import { Box } from '@mui/material';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import TabContext from '@mui/lab/TabContext';
+import TabPanel from '@mui/lab/TabPanel';
+import ChildCard from '@/app/components/shared/ChildCard';
+import { IconUser } from '@tabler/icons-react';
 
-import ScrollableCode from "@/app/components/ui-components/tab/code/ScrollableCode";
+import ScrollableCode from '@/app/components/ui-components/tab/code/ScrollableCode';
 
 const SCROLLABLE_TAB = [
-  { value: "1", icon: <IconUser width={20} height={20} />, label: "Item 1" },
-  { value: "2", icon: <IconUser width={20} height={20} />, label: "Item 2" },
-  { value: "3", icon: <IconUser width={20} height={20} />, label: "Item 3" },
-  { value: "4", icon: <IconUser width={20} height={20} />, label: "Item 4" },
-  { value: "5", icon: <IconUser width={20} height={20} />, label: "Item 5" },
-  { value: "6", icon: <IconUser width={20} height={20} />, label: "Item 6" },
-  { value: "7", icon: <IconUser width={20} height={20} />, label: "Item 7" },
+  { value: '1', icon: <IconUser width={20} height={20} />, label: 'Item 1' },
+  { value: '2', icon: <IconUser width={20} height={20} />, label: 'Item 2' },
+  { value: '3', icon: <IconUser width={20} height={20} />, label: 'Item 3' },
+  { value: '4', icon: <IconUser width={20} height={20} />, label: 'Item 4' },
+  { value: '5', icon: <IconUser width={20} height={20} />, label: 'Item 5' },
+  { value: '6', icon: <IconUser width={20} height={20} />, label: 'Item 6' },
+  { value: '7', icon: <IconUser width={20} height={20} />, label: 'Item 7' },
 ];
 
 const TabScrollable = () => {
-  const [value, setValue] = React.useState("1");
+  const [value, setValue] = React.useState('1');
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);

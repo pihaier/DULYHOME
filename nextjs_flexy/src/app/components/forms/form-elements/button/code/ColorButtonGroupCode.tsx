@@ -1,4 +1,4 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
+import CodeDialog from '@/app/components/shared/CodeDialog';
 
 const ColorButtonGroupCode = () => {
   return (
@@ -158,7 +158,7 @@ import { IconAlignCenter, IconAlignLeft, IconAlignRight, IconPlayerPlay, IconPla
 </Stack>`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default ColorButtonGroupCode
+export default ColorButtonGroupCode;

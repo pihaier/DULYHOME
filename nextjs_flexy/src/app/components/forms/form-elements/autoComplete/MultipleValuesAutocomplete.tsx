@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import CustomTextField from '../../theme-elements/CustomTextField';

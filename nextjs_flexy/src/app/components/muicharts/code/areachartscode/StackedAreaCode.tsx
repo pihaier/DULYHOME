@@ -1,5 +1,5 @@
-import React from 'react'
-import CodeDialog from '@/app/components/shared/CodeDialog'
+import React from 'react';
+import CodeDialog from '@/app/components/shared/CodeDialog';
 
 function StackedAreaCode() {
   return (
@@ -61,7 +61,7 @@ export default function StackedAreaChart() {
 }
 `}
     </CodeDialog>
-  )
+  );
 }
 
-export default StackedAreaCode
+export default StackedAreaCode;

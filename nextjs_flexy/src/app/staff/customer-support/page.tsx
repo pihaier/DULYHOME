@@ -88,21 +88,25 @@ export default function CustomerSupportManagement() {
   const supabase = createClient();
   const router = useRouter();
   const { userProfile } = useUser();
-  
+
   const [tabValue, setTabValue] = useState(0);
   const [notices, setNotices] = useState<Notice[]>([]);
   const [faqs, setFaqs] = useState<FAQ[]>([]);
   const [loading, setLoading] = useState(true);
-  
+
   // Dialog states
   const [noticeDialog, setNoticeDialog] = useState(false);
   const [faqDialog, setFaqDialog] = useState(false);
-  const [deleteDialog, setDeleteDialog] = useState<{ open: boolean; type: 'notice' | 'faq'; id: string }>({
+  const [deleteDialog, setDeleteDialog] = useState<{
+    open: boolean;
+    type: 'notice' | 'faq';
+    id: string;
+  }>({
     open: false,
     type: 'notice',
     id: '',
   });
-  
+
   // Form states
   const [noticeForm, setNoticeForm] = useState<Partial<Notice>>({
     title: '',
@@ -111,7 +115,7 @@ export default function CustomerSupportManagement() {
     is_important: false,
     is_visible: true,
   });
-  
+
   const [faqForm, setFaqForm] = useState<Partial<FAQ>>({
     category: '서비스신청',
     question: '',
@@ -119,9 +123,13 @@ export default function CustomerSupportManagement() {
     sort_order: 0,
     is_visible: true,
   });
-  
+
   // Snackbar
-  const [snackbar, setSnackbar] = useState<{ open: boolean; message: string; severity: 'success' | 'error' }>({
+  const [snackbar, setSnackbar] = useState<{
+    open: boolean;
+    message: string;
+    severity: 'success' | 'error';
+  }>({
     open: false,
     message: '',
     severity: 'success',
@@ -146,16 +154,16 @@ export default function CustomerSupportManagement() {
         .from('notices')
         .select('*')
         .order('created_at', { ascending: false });
-      
+
       if (noticesError) throw noticesError;
       setNotices(noticesData || []);
-      
+
       // FAQ 조회 (모든 항목)
       const { data: faqsData, error: faqsError } = await supabase
         .from('faqs')
         .select('*')
         .order('sort_order', { ascending: true });
-      
+
       if (faqsError) throw faqsError;
       setFaqs(faqsData || []);
     } catch (error) {
@@ -189,25 +197,23 @@ export default function CustomerSupportManagement() {
             is_visible: noticeForm.is_visible,
           })
           .eq('id', noticeForm.id);
-        
+
         if (error) throw error;
         showSnackbar('공지사항이 수정되었습니다.', 'success');
       } else {
         // Create
-        const { error } = await supabase
-          .from('notices')
-          .insert({
-            title: noticeForm.title,
-            content: noticeForm.content,
-            category: noticeForm.category,
-            is_important: noticeForm.is_important,
-            is_visible: noticeForm.is_visible,
-          });
-        
+        const { error } = await supabase.from('notices').insert({
+          title: noticeForm.title,
+          content: noticeForm.content,
+          category: noticeForm.category,
+          is_important: noticeForm.is_important,
+          is_visible: noticeForm.is_visible,
+        });
+
         if (error) throw error;
         showSnackbar('공지사항이 추가되었습니다.', 'success');
       }
-      
+
       setNoticeDialog(false);
       setNoticeForm({
         title: '',
@@ -230,11 +236,8 @@ export default function CustomerSupportManagement() {
 
   const handleDeleteNotice = async () => {
     try {
-      const { error } = await supabase
-        .from('notices')
-        .delete()
-        .eq('id', deleteDialog.id);
-      
+      const { error } = await supabase.from('notices').delete().eq('id', deleteDialog.id);
+
       if (error) throw error;
       showSnackbar('공지사항이 삭제되었습니다.', 'success');
       setDeleteDialog({ open: false, type: 'notice', id: '' });
@@ -251,7 +254,7 @@ export default function CustomerSupportManagement() {
         .from('notices')
         .update({ is_visible: !currentVisibility })
         .eq('id', id);
-      
+
       if (error) throw error;
       showSnackbar('공개 상태가 변경되었습니다.', 'success');
       fetchData();
@@ -276,25 +279,23 @@ export default function CustomerSupportManagement() {
             is_visible: faqForm.is_visible,
           })
           .eq('id', faqForm.id);
-        
+
         if (error) throw error;
         showSnackbar('FAQ가 수정되었습니다.', 'success');
       } else {
         // Create
-        const { error } = await supabase
-          .from('faqs')
-          .insert({
-            category: faqForm.category,
-            question: faqForm.question,
-            answer: faqForm.answer,
-            sort_order: faqForm.sort_order,
-            is_visible: faqForm.is_visible,
-          });
-        
+        const { error } = await supabase.from('faqs').insert({
+          category: faqForm.category,
+          question: faqForm.question,
+          answer: faqForm.answer,
+          sort_order: faqForm.sort_order,
+          is_visible: faqForm.is_visible,
+        });
+
         if (error) throw error;
         showSnackbar('FAQ가 추가되었습니다.', 'success');
       }
-      
+
       setFaqDialog(false);
       setFaqForm({
         category: '서비스신청',
@@ -317,11 +318,8 @@ export default function CustomerSupportManagement() {
 
   const handleDeleteFAQ = async () => {
     try {
-      const { error } = await supabase
-        .from('faqs')
-        .delete()
-        .eq('id', deleteDialog.id);
-      
+      const { error } = await supabase.from('faqs').delete().eq('id', deleteDialog.id);
+
       if (error) throw error;
       showSnackbar('FAQ가 삭제되었습니다.', 'success');
       setDeleteDialog({ open: false, type: 'faq', id: '' });
@@ -338,7 +336,7 @@ export default function CustomerSupportManagement() {
         .from('faqs')
         .update({ is_visible: !currentVisibility })
         .eq('id', id);
-      
+
       if (error) throw error;
       showSnackbar('공개 상태가 변경되었습니다.', 'success');
       fetchData();
@@ -352,7 +350,9 @@ export default function CustomerSupportManagement() {
     <Box sx={{ p: 3 }}>
       <Card>
         <CardContent>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+          <Box
+            sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}
+          >
             <Typography variant="h4" fontWeight="bold">
               고객지원 관리
             </Typography>
@@ -439,7 +439,9 @@ export default function CustomerSupportManagement() {
                           <IconButton
                             size="small"
                             color="error"
-                            onClick={() => setDeleteDialog({ open: true, type: 'notice', id: notice.id })}
+                            onClick={() =>
+                              setDeleteDialog({ open: true, type: 'notice', id: notice.id })
+                            }
                           >
                             <DeleteIcon />
                           </IconButton>
@@ -510,9 +512,7 @@ export default function CustomerSupportManagement() {
 
       {/* Notice Dialog */}
       <Dialog open={noticeDialog} onClose={() => setNoticeDialog(false)} maxWidth="md" fullWidth>
-        <DialogTitle>
-          {noticeForm.id ? '공지사항 수정' : '공지사항 추가'}
-        </DialogTitle>
+        <DialogTitle>{noticeForm.id ? '공지사항 수정' : '공지사항 추가'}</DialogTitle>
         <DialogContent>
           <Stack spacing={3} sx={{ mt: 2 }}>
             <TextField
@@ -547,7 +547,9 @@ export default function CustomerSupportManagement() {
                 control={
                   <Checkbox
                     checked={noticeForm.is_important}
-                    onChange={(e) => setNoticeForm({ ...noticeForm, is_important: e.target.checked })}
+                    onChange={(e) =>
+                      setNoticeForm({ ...noticeForm, is_important: e.target.checked })
+                    }
                   />
                 }
                 label="중요 공지사항"
@@ -566,15 +568,15 @@ export default function CustomerSupportManagement() {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setNoticeDialog(false)}>취소</Button>
-          <Button variant="contained" onClick={handleSaveNotice}>저장</Button>
+          <Button variant="contained" onClick={handleSaveNotice}>
+            저장
+          </Button>
         </DialogActions>
       </Dialog>
 
       {/* FAQ Dialog */}
       <Dialog open={faqDialog} onClose={() => setFaqDialog(false)} maxWidth="md" fullWidth>
-        <DialogTitle>
-          {faqForm.id ? 'FAQ 수정' : 'FAQ 추가'}
-        </DialogTitle>
+        <DialogTitle>{faqForm.id ? 'FAQ 수정' : 'FAQ 추가'}</DialogTitle>
         <DialogContent>
           <Stack spacing={3} sx={{ mt: 2 }}>
             <FormControl fullWidth>
@@ -625,12 +627,17 @@ export default function CustomerSupportManagement() {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setFaqDialog(false)}>취소</Button>
-          <Button variant="contained" onClick={handleSaveFAQ}>저장</Button>
+          <Button variant="contained" onClick={handleSaveFAQ}>
+            저장
+          </Button>
         </DialogActions>
       </Dialog>
 
       {/* Delete Confirmation Dialog */}
-      <Dialog open={deleteDialog.open} onClose={() => setDeleteDialog({ open: false, type: 'notice', id: '' })}>
+      <Dialog
+        open={deleteDialog.open}
+        onClose={() => setDeleteDialog({ open: false, type: 'notice', id: '' })}
+      >
         <DialogTitle>삭제 확인</DialogTitle>
         <DialogContent>
           <Typography>
@@ -638,7 +645,9 @@ export default function CustomerSupportManagement() {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setDeleteDialog({ open: false, type: 'notice', id: '' })}>취소</Button>
+          <Button onClick={() => setDeleteDialog({ open: false, type: 'notice', id: '' })}>
+            취소
+          </Button>
           <Button
             variant="contained"
             color="error"

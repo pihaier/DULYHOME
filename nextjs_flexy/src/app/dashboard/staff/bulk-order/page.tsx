@@ -57,10 +57,10 @@ interface MarketResearchData {
 
 interface OrderItem {
   productName: string;
-  originalQuantity: number;    // 시장조사 시 수량 (읽기 전용)
-  orderQuantity: number | '';  // 실제 주문 수량 (입력)
-  specifications: string;      // 규격 (수정 가능)
-  customization: string;       // 커스터마이징 요청
+  originalQuantity: number; // 시장조사 시 수량 (읽기 전용)
+  orderQuantity: number | ''; // 실제 주문 수량 (입력)
+  specifications: string; // 규격 (수정 가능)
+  customization: string; // 커스터마이징 요청
 }
 
 interface FormData {
@@ -69,28 +69,28 @@ interface FormData {
   contact_person: string;
   contact_phone: string;
   contact_email: string;
-  
+
   // 시장조사 연계 (필수)
   marketResearchId: string;
-  
+
   // 주문 정보 (시장조사 데이터 참조하여 표시, 수정 가능)
   orderItems: OrderItem[];
-  
+
   // 납품 정보
-  deliveryDate: Dayjs | null;    // 희망 납기일
-  deliveryAddress: string;       // 납품 주소
-  deliveryMethod: string;        // 납품 방법 (DDP/FOB/EXW)
-  
+  deliveryDate: Dayjs | null; // 희망 납기일
+  deliveryAddress: string; // 납품 주소
+  deliveryMethod: string; // 납품 방법 (DDP/FOB/EXW)
+
   // 통관 정보
-  customsClearanceType: string;  // 통관 방식 (사업자통관/개인통관)
+  customsClearanceType: string; // 통관 방식 (사업자통관/개인통관)
   customsClearanceNumber: string; // 통관번호
-  
+
   // 추가 요청사항
-  packingRequirements: string;   // 포장 요구사항 (선택)
-  qualityStandards: string;      // 품질 기준 (선택)
-  additionalRequests: string;    // 기타 요청사항 (선택)
-  referenceFiles: File[];        // 참고 파일
-  
+  packingRequirements: string; // 포장 요구사항 (선택)
+  qualityStandards: string; // 품질 기준 (선택)
+  additionalRequests: string; // 기타 요청사항 (선택)
+  referenceFiles: File[]; // 참고 파일
+
   // 저장 옵션
   saveToProfile: boolean;
   saveDeliveryAddress: boolean;
@@ -115,10 +115,10 @@ export default function BulkOrderApplicationPage() {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [reservationNumber, setReservationNumber] = useState('');
   const [marketResearchData, setMarketResearchData] = useState<MarketResearchData | null>(null);
-  
+
   // 시장조사 연계 확인 (필수)
   const marketResearchId = searchParams.get('marketResearchId') || '';
-  
+
   // 로그인 체크 - 로그인하지 않은 경우 로그인 페이지로 리다이렉트
   React.useEffect(() => {
     if (!authLoading && !user) {
@@ -127,7 +127,7 @@ export default function BulkOrderApplicationPage() {
       router.push(`/auth/customer/login?returnUrl=${encodeURIComponent(currentPath)}`);
     }
   }, [authLoading, user, router]);
-  
+
   const [formData, setFormData] = useState<FormData>({
     company_name: '',
     contact_person: '',
@@ -168,33 +168,36 @@ export default function BulkOrderApplicationPage() {
       if (error) {
         throw error;
       }
-      
+
       setMarketResearchData(researchData);
-      
+
       // 주문 항목 초기화 (시장조사 데이터 기반)
-      const orderItems: OrderItem[] = [{
-        productName: researchData.product_name || '시장조사 제품',
-        originalQuantity: researchData.research_quantity || researchData.moq_quantity || 1000,
-        orderQuantity: researchData.research_quantity || researchData.moq_quantity || 1000,
-        specifications: researchData.product_specifications || '시장조사 데이터 참조',
-        customization: '',
-      }];
-      
-      setFormData(prev => ({ ...prev, orderItems }));
-      
+      const orderItems: OrderItem[] = [
+        {
+          productName: researchData.product_name || '시장조사 제품',
+          originalQuantity: researchData.research_quantity || researchData.moq_quantity || 1000,
+          orderQuantity: researchData.research_quantity || researchData.moq_quantity || 1000,
+          specifications: researchData.product_specifications || '시장조사 데이터 참조',
+          customization: '',
+        },
+      ];
+
+      setFormData((prev) => ({ ...prev, orderItems }));
     } catch (error) {
       console.error('시장조사 데이터 로드 실패:', error);
-      
+
       // 실패 시 임시 데이터 사용 (시장조사 없이 진행)
-      const fallbackOrderItems: OrderItem[] = [{
-        productName: '대량주문용 제품',
-        originalQuantity: 1000,
-        orderQuantity: 1000,
-        specifications: '확인 중',
-        customization: '',
-      }];
-      
-      setFormData(prev => ({ ...prev, orderItems: fallbackOrderItems }));
+      const fallbackOrderItems: OrderItem[] = [
+        {
+          productName: '대량주문용 제품',
+          originalQuantity: 1000,
+          orderQuantity: 1000,
+          specifications: '확인 중',
+          customization: '',
+        },
+      ];
+
+      setFormData((prev) => ({ ...prev, orderItems: fallbackOrderItems }));
     }
   };
 
@@ -206,7 +209,7 @@ export default function BulkOrderApplicationPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!user) {
       alert('로그인이 필요합니다.');
       router.push('/auth/customer/login');
@@ -224,7 +227,7 @@ export default function BulkOrderApplicationPage() {
       return;
     }
 
-    const hasEmptyQuantity = formData.orderItems.some(item => !item.orderQuantity);
+    const hasEmptyQuantity = formData.orderItems.some((item) => !item.orderQuantity);
     if (hasEmptyQuantity) {
       alert('주문 수량을 모두 입력해주세요.');
       return;
@@ -245,7 +248,7 @@ export default function BulkOrderApplicationPage() {
     try {
       // 예약번호 생성
       const newReservationNumber = generateReservationNumber();
-      
+
       // 대량주문 데이터 준비
       const applicationData = {
         reservation_number: newReservationNumber,
@@ -255,34 +258,35 @@ export default function BulkOrderApplicationPage() {
         contact_person: formData.contact_person,
         contact_phone: formData.contact_phone,
         contact_email: formData.contact_email || user.email,
-        
+
         // 시장조사 연계 (필수)
         market_research_id: formData.marketResearchId,
-        
+
         // 주문 정보 (JSON으로 저장)
-        order_items: formData.orderItems.map(item => ({
+        order_items: formData.orderItems.map((item) => ({
           productName: item.productName,
           originalQuantity: item.originalQuantity,
-          orderQuantity: typeof item.orderQuantity === 'number' ? item.orderQuantity : item.originalQuantity,
+          orderQuantity:
+            typeof item.orderQuantity === 'number' ? item.orderQuantity : item.originalQuantity,
           specifications: item.specifications || '',
           customization: item.customization || '',
-          unitPrice: marketResearchData?.estimated_unit_price || 0
+          unitPrice: marketResearchData?.estimated_unit_price || 0,
         })),
-        
+
         // 납품 정보
         delivery_date: formData.deliveryDate?.format('YYYY-MM-DD'),
         delivery_address: formData.deliveryAddress,
         delivery_method: formData.deliveryMethod,
-        
+
         // 통관 정보
         customs_clearance_type: formData.customsClearanceType,
         customs_clearance_number: formData.customsClearanceNumber,
-        
+
         // 추가 요청사항
         packing_requirements: formData.packingRequirements || null,
         quality_standards: formData.qualityStandards || null,
         additional_requests: formData.additionalRequests || null,
-        
+
         status: 'submitted',
         payment_status: 'pending',
       };
@@ -316,18 +320,16 @@ export default function BulkOrderApplicationPage() {
       }
 
       // 활동 로그 기록
-      await supabase
-        .from('activity_logs')
-        .insert({
-          user_id: user.id,
-          action: 'create_bulk_order_application',
-          entity_type: 'bulk_order_application',
-          entity_id: application.id,
-          metadata: {
-            reservation_number: newReservationNumber,
-            market_research_id: formData.marketResearchId,
-          }
-        });
+      await supabase.from('activity_logs').insert({
+        user_id: user.id,
+        action: 'create_bulk_order_application',
+        entity_type: 'bulk_order_application',
+        entity_id: application.id,
+        metadata: {
+          reservation_number: newReservationNumber,
+          market_research_id: formData.marketResearchId,
+        },
+      });
 
       // 파일 업로드 처리 (Storage SDK 사용)
       if (formData.referenceFiles.length > 0) {
@@ -337,13 +339,13 @@ export default function BulkOrderApplicationPage() {
             const fileExt = file.name.split('.').pop() || '';
             const safeFileName = `${Date.now()}_${Math.random().toString(36).substring(2, 8)}.${fileExt}`;
             const filePath = `${newReservationNumber}/bulk_order_reference/${safeFileName}`;
-            
+
             // Storage SDK로 업로드
             const { data: uploadData, error: uploadError } = await supabase.storage
               .from('application-files')
               .upload(filePath, file, {
                 cacheControl: '3600',
-                upsert: false
+                upsert: false,
               });
 
             if (uploadError) {
@@ -352,26 +354,24 @@ export default function BulkOrderApplicationPage() {
             }
 
             // 파일 URL 생성
-            const { data: { publicUrl } } = supabase.storage
-              .from('application-files')
-              .getPublicUrl(uploadData.path);
-            
+            const {
+              data: { publicUrl },
+            } = supabase.storage.from('application-files').getPublicUrl(uploadData.path);
+
             // uploaded_files 테이블에 기록
-            const { error: dbError } = await supabase
-              .from('uploaded_files')
-              .insert({
-                reservation_number: newReservationNumber,
-                uploaded_by: user.id,
-                original_filename: file.name,
-                file_path: uploadData.path,
-                file_size: file.size,
-                file_type: 'bulk_order_reference',
-                mime_type: file.type,
-                upload_purpose: 'application',
-                upload_category: 'bulk_order_reference',
-                upload_status: 'completed',
-                file_url: publicUrl
-              });
+            const { error: dbError } = await supabase.from('uploaded_files').insert({
+              reservation_number: newReservationNumber,
+              uploaded_by: user.id,
+              original_filename: file.name,
+              file_path: uploadData.path,
+              file_size: file.size,
+              file_type: 'bulk_order_reference',
+              mime_type: file.type,
+              upload_purpose: 'application',
+              upload_category: 'bulk_order_reference',
+              upload_status: 'completed',
+              file_url: publicUrl,
+            });
 
             if (dbError) {
               console.error('파일 정보 DB 저장 오류:', dbError);
@@ -383,7 +383,6 @@ export default function BulkOrderApplicationPage() {
       }
 
       setShowSuccessModal(true);
-      
     } catch (error: any) {
       console.error('신청 오류:', error);
       alert(error.message || '신청 중 오류가 발생했습니다.');
@@ -395,7 +394,10 @@ export default function BulkOrderApplicationPage() {
   // 인증 로딩 중일 때만 로딩 스피너 표시
   if (authLoading) {
     return (
-      <PageContainer title="대량주문 신청 - 두리무역" description="시장조사 결과를 바탕으로 대량주문을 신청하세요">
+      <PageContainer
+        title="대량주문 신청 - 두리무역"
+        description="시장조사 결과를 바탕으로 대량주문을 신청하세요"
+      >
         <HpHeader />
         <Container maxWidth="md" sx={{ py: 5 }}>
           <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
@@ -408,9 +410,12 @@ export default function BulkOrderApplicationPage() {
   }
 
   return (
-    <PageContainer title="대량주문 신청 - 두리무역" description="시장조사 결과를 바탕으로 대량주문을 신청하세요">
+    <PageContainer
+      title="대량주문 신청 - 두리무역"
+      description="시장조사 결과를 바탕으로 대량주문을 신청하세요"
+    >
       <HpHeader />
-      
+
       <Container maxWidth="lg" sx={{ py: 5 }}>
         <Card elevation={0} sx={{ border: '1px solid rgba(0,0,0,0.1)' }}>
           <CardContent sx={{ p: 4 }}>
@@ -425,9 +430,7 @@ export default function BulkOrderApplicationPage() {
               <Alert severity="success" sx={{ mb: 3 }}>
                 시장조사 결과를 바탕으로 대량주문을 진행합니다.
                 <br />
-                <Typography variant="caption">
-                  연계된 시장조사 번호: {marketResearchId}
-                </Typography>
+                <Typography variant="caption">연계된 시장조사 번호: {marketResearchId}</Typography>
               </Alert>
             )}
 
@@ -457,7 +460,7 @@ export default function BulkOrderApplicationPage() {
                   <Typography variant="body2" color="text.secondary" mb={2}>
                     시장조사 결과를 참조하여 실제 주문 수량과 요청사항을 입력하세요.
                   </Typography>
-                  
+
                   <TableContainer component={Paper} variant="outlined">
                     <Table>
                       <TableHead>
@@ -486,19 +489,27 @@ export default function BulkOrderApplicationPage() {
                               <TextField
                                 type="number"
                                 value={item.orderQuantity}
-                                onChange={(e) => updateOrderItem(index, 'orderQuantity', e.target.value ? parseInt(e.target.value) : '')}
+                                onChange={(e) =>
+                                  updateOrderItem(
+                                    index,
+                                    'orderQuantity',
+                                    e.target.value ? parseInt(e.target.value) : ''
+                                  )
+                                }
                                 required
                                 size="small"
                                 sx={{ width: 120 }}
                                 InputProps={{
-                                  inputProps: { min: 1 }
+                                  inputProps: { min: 1 },
                                 }}
                               />
                             </TableCell>
                             <TableCell>
                               <TextField
                                 value={item.specifications}
-                                onChange={(e) => updateOrderItem(index, 'specifications', e.target.value)}
+                                onChange={(e) =>
+                                  updateOrderItem(index, 'specifications', e.target.value)
+                                }
                                 placeholder="제품 규격 (수정 가능)"
                                 size="small"
                                 fullWidth
@@ -507,7 +518,9 @@ export default function BulkOrderApplicationPage() {
                             <TableCell>
                               <TextField
                                 value={item.customization}
-                                onChange={(e) => updateOrderItem(index, 'customization', e.target.value)}
+                                onChange={(e) =>
+                                  updateOrderItem(index, 'customization', e.target.value)
+                                }
                                 placeholder="로고, 색상, 특별 요청 등"
                                 size="small"
                                 fullWidth
@@ -518,11 +531,12 @@ export default function BulkOrderApplicationPage() {
                       </TableBody>
                     </Table>
                   </TableContainer>
-                  
+
                   <Alert severity="info" sx={{ mt: 2 }}>
-                    • 수량 변경에 따라 단가가 재조정됩니다<br />
-                    • 커스터마이징 요청은 추가 비용이 발생할 수 있습니다<br />
-                    • 최종 견적은 중국직원 확인 후 제공됩니다
+                    • 수량 변경에 따라 단가가 재조정됩니다
+                    <br />
+                    • 커스터마이징 요청은 추가 비용이 발생할 수 있습니다
+                    <br />• 최종 견적은 중국직원 확인 후 제공됩니다
                   </Alert>
                 </Box>
 
@@ -533,14 +547,16 @@ export default function BulkOrderApplicationPage() {
                   <Typography variant="h6" fontWeight={600} mb={2}>
                     납품 정보
                   </Typography>
-                  
+
                   <Stack spacing={2}>
                     <Box display="flex" gap={2}>
                       <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
                           label="희망 납기일"
                           value={formData.deliveryDate}
-                          onChange={(newValue) => setFormData({ ...formData, deliveryDate: newValue })}
+                          onChange={(newValue) =>
+                            setFormData({ ...formData, deliveryDate: newValue })
+                          }
                           format="YYYY-MM-DD"
                           minDate={dayjs().add(30, 'day')}
                           slotProps={{
@@ -552,12 +568,14 @@ export default function BulkOrderApplicationPage() {
                           }}
                         />
                       </LocalizationProvider>
-                      
+
                       <FormControl fullWidth required>
                         <InputLabel>납품 방법</InputLabel>
                         <Select
                           value={formData.deliveryMethod}
-                          onChange={(e) => setFormData({ ...formData, deliveryMethod: e.target.value })}
+                          onChange={(e) =>
+                            setFormData({ ...formData, deliveryMethod: e.target.value })
+                          }
                           label="납품 방법"
                         >
                           <MenuItem value="DDP">DDP (관세포함 배송)</MenuItem>
@@ -567,23 +585,27 @@ export default function BulkOrderApplicationPage() {
                         <FormHelperText>DDP는 관세까지 포함된 가격입니다</FormHelperText>
                       </FormControl>
                     </Box>
-                    
+
                     <TextField
                       fullWidth
                       label="납품 주소"
                       value={formData.deliveryAddress}
-                      onChange={(e) => setFormData({ ...formData, deliveryAddress: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, deliveryAddress: e.target.value })
+                      }
                       required
                       multiline
                       rows={2}
                       placeholder="정확한 납품 주소를 입력해주세요"
                     />
-                    
+
                     <FormControlLabel
                       control={
                         <Checkbox
                           checked={formData.saveDeliveryAddress}
-                          onChange={(e) => setFormData({ ...formData, saveDeliveryAddress: e.target.checked })}
+                          onChange={(e) =>
+                            setFormData({ ...formData, saveDeliveryAddress: e.target.checked })
+                          }
                         />
                       }
                       label="이 배송 주소를 저장하여 다음에 재사용"
@@ -598,30 +620,44 @@ export default function BulkOrderApplicationPage() {
                   <Typography variant="h6" fontWeight={600} mb={2}>
                     통관 정보
                   </Typography>
-                  
+
                   <Stack spacing={2}>
                     <FormControl fullWidth required>
                       <InputLabel>통관 방식</InputLabel>
                       <Select
                         value={formData.customsClearanceType}
-                        onChange={(e) => setFormData({ ...formData, customsClearanceType: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, customsClearanceType: e.target.value })
+                        }
                         label="통관 방식"
                       >
                         <MenuItem value="business">사업자 통관</MenuItem>
                         <MenuItem value="personal">개인 통관</MenuItem>
                       </Select>
                     </FormControl>
-                    
+
                     <TextField
                       fullWidth
-                      label={formData.customsClearanceType === 'business' ? '사업자등록번호' : '개인통관고유번호'}
+                      label={
+                        formData.customsClearanceType === 'business'
+                          ? '사업자등록번호'
+                          : '개인통관고유번호'
+                      }
                       value={formData.customsClearanceNumber}
-                      onChange={(e) => setFormData({ ...formData, customsClearanceNumber: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, customsClearanceNumber: e.target.value })
+                      }
                       required
-                      placeholder={formData.customsClearanceType === 'business' ? '000-00-00000' : 'P000000000000'}
-                      helperText={formData.customsClearanceType === 'business' 
-                        ? '사업자등록번호를 입력하세요' 
-                        : '개인통관고유번호를 입력하세요 (관세청 홈페이지에서 발급)'}
+                      placeholder={
+                        formData.customsClearanceType === 'business'
+                          ? '000-00-00000'
+                          : 'P000000000000'
+                      }
+                      helperText={
+                        formData.customsClearanceType === 'business'
+                          ? '사업자등록번호를 입력하세요'
+                          : '개인통관고유번호를 입력하세요 (관세청 홈페이지에서 발급)'
+                      }
                     />
                   </Stack>
                 </Box>
@@ -633,33 +669,39 @@ export default function BulkOrderApplicationPage() {
                   <Typography variant="h6" fontWeight={600} mb={2}>
                     추가 요청사항 (선택)
                   </Typography>
-                  
+
                   <Stack spacing={2}>
                     <TextField
                       fullWidth
                       label="포장 요구사항"
                       value={formData.packingRequirements}
-                      onChange={(e) => setFormData({ ...formData, packingRequirements: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, packingRequirements: e.target.value })
+                      }
                       multiline
                       rows={2}
                       placeholder="특별한 포장 방법이나 라벨 부착 요청사항을 입력하세요"
                     />
-                    
+
                     <TextField
                       fullWidth
                       label="품질 기준"
                       value={formData.qualityStandards}
-                      onChange={(e) => setFormData({ ...formData, qualityStandards: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, qualityStandards: e.target.value })
+                      }
                       multiline
                       rows={2}
                       placeholder="특별히 요구하는 품질 기준이나 검사 항목을 입력하세요"
                     />
-                    
+
                     <TextField
                       fullWidth
                       label="기타 요청사항"
                       value={formData.additionalRequests}
-                      onChange={(e) => setFormData({ ...formData, additionalRequests: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, additionalRequests: e.target.value })
+                      }
                       multiline
                       rows={3}
                       placeholder="기타 특별히 요청하실 사항을 자세히 입력해주세요"
@@ -679,10 +721,12 @@ export default function BulkOrderApplicationPage() {
                 {/* 안내 메시지 */}
                 <Alert severity="info">
                   <Typography variant="body2">
-                    • 수량 변경에 따른 정확한 견적은 중국직원 확인 후 제공됩니다<br />
-                    • 계약 후 선금 30%, 생산 중 40%, 선적 전 30% 분할 결제<br />
-                    • 생산 진행 상황을 실시간으로 확인하실 수 있습니다<br />
-                    • 품질 검사 후 문제 발생 시 재생산 또는 환불 처리됩니다
+                    • 수량 변경에 따른 정확한 견적은 중국직원 확인 후 제공됩니다
+                    <br />
+                    • 계약 후 선금 30%, 생산 중 40%, 선적 전 30% 분할 결제
+                    <br />
+                    • 생산 진행 상황을 실시간으로 확인하실 수 있습니다
+                    <br />• 품질 검사 후 문제 발생 시 재생산 또는 환불 처리됩니다
                   </Typography>
                 </Alert>
 
@@ -696,12 +740,7 @@ export default function BulkOrderApplicationPage() {
                   >
                     취소
                   </Button>
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    size="large"
-                    disabled={loading}
-                  >
+                  <Button type="submit" variant="contained" size="large" disabled={loading}>
                     {loading ? '신청 중...' : '대량주문 신청하기'}
                   </Button>
                 </Box>
@@ -710,7 +749,7 @@ export default function BulkOrderApplicationPage() {
           </CardContent>
         </Card>
       </Container>
-      
+
       {/* 신청 완료 모달 */}
       <Dialog
         open={showSuccessModal}
@@ -737,9 +776,10 @@ export default function BulkOrderApplicationPage() {
             </Typography>
           </Box>
           <Typography variant="body2" color="text.secondary">
-            • 변경된 수량에 따른 재견적을 보내드립니다<br/>
-            • 견적 확인 후 계약을 진행하실 수 있습니다<br/>
-            • 궁금한 사항은 채팅으로 문의해주세요
+            • 변경된 수량에 따른 재견적을 보내드립니다
+            <br />
+            • 견적 확인 후 계약을 진행하실 수 있습니다
+            <br />• 궁금한 사항은 채팅으로 문의해주세요
           </Typography>
         </DialogContent>
         <DialogActions sx={{ justifyContent: 'center', pb: 3 }}>
@@ -765,7 +805,7 @@ export default function BulkOrderApplicationPage() {
           </Button>
         </DialogActions>
       </Dialog>
-      
+
       <Footer />
     </PageContainer>
   );

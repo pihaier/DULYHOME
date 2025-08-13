@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React from 'react';
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader } from '@mui/material';
 import BlankCard from '../../shared/BlankCard';

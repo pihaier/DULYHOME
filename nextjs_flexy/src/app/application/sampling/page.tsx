@@ -31,7 +31,12 @@ import {
   Checkbox,
   CircularProgress,
 } from '@mui/material';
-import { Add, Remove, ArrowDropDown as ArrowDropDownIcon, LocalShipping as LocalShippingIcon } from '@mui/icons-material';
+import {
+  Add,
+  Remove,
+  ArrowDropDown as ArrowDropDownIcon,
+  LocalShipping as LocalShippingIcon,
+} from '@mui/icons-material';
 import { useRouter, useSearchParams } from 'next/navigation';
 import PageContainer from '@/app/components/container/PageContainer';
 import HpHeader from '@/app/components/frontend-pages/shared/header/HpHeader';
@@ -53,13 +58,13 @@ interface FormData {
   contact_person: string;
   contact_phone: string;
   contact_email: string;
-  
+
   // 시장조사 연계
   marketResearchId: string;
-  
+
   // 샘플 정보
   sampleItems: SampleItem[];
-  
+
   // 배송 정보
   sampleReceiveAddress: string;
   receiverName: string;
@@ -67,7 +72,7 @@ interface FormData {
   customsClearanceType: string;
   customsClearanceNumber: string;
   shippingMethod: string;
-  
+
   // 요청사항
   requirements: string;
   referenceFiles: File[];
@@ -105,11 +110,11 @@ export default function SamplingApplicationPage() {
   const [savedShippingAddresses, setSavedShippingAddresses] = useState<SavedShippingAddress[]>([]);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [saveShippingAsDefault, setSaveShippingAsDefault] = useState(false);
-  
+
   // 시장조사 연계 데이터 확인 - 선택사항으로 변경
   const marketResearchId = searchParams.get('marketResearchId') || '';
   const isLinkedFromMarketResearch = !!marketResearchId;
-  
+
   // 로그인 체크 - 로그인하지 않은 경우 로그인 페이지로 리다이렉트
   React.useEffect(() => {
     if (!authLoading && !user) {
@@ -118,18 +123,20 @@ export default function SamplingApplicationPage() {
       router.push(`/auth/customer/login?returnUrl=${encodeURIComponent(currentPath)}`);
     }
   }, [authLoading, user, router]);
-  
+
   const [formData, setFormData] = useState<FormData>({
     company_name: '',
     contact_person: '',
     contact_phone: '',
     contact_email: '',
     marketResearchId: marketResearchId,
-    sampleItems: [{
-      productName: '',
-      quantity: '',
-      specifications: '',
-    }],
+    sampleItems: [
+      {
+        productName: '',
+        quantity: '',
+        specifications: '',
+      },
+    ],
     sampleReceiveAddress: '',
     receiverName: '',
     receiverPhone: '',
@@ -166,7 +173,7 @@ export default function SamplingApplicationPage() {
       // 기본 배송 주소가 있으면 자동으로 채우기
       const defaultAddress = addresses?.find((addr: SavedShippingAddress) => addr.is_default);
       if (defaultAddress && !formData.sampleReceiveAddress) {
-        setFormData(prev => ({
+        setFormData((prev) => ({
           ...prev,
           sampleReceiveAddress: defaultAddress.address,
           receiverName: defaultAddress.receiver_name,
@@ -183,7 +190,7 @@ export default function SamplingApplicationPage() {
   };
 
   const handleSelectShippingAddress = (address: SavedShippingAddress) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       sampleReceiveAddress: address.address,
       receiverName: address.receiver_name,
@@ -195,7 +202,7 @@ export default function SamplingApplicationPage() {
   };
 
   const handleNewShippingAddress = () => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       sampleReceiveAddress: '',
       receiverName: '',
@@ -217,7 +224,7 @@ export default function SamplingApplicationPage() {
   const addSampleItem = () => {
     setFormData({
       ...formData,
-      sampleItems: [...formData.sampleItems, { productName: '', quantity: '', specifications: '' }]
+      sampleItems: [...formData.sampleItems, { productName: '', quantity: '', specifications: '' }],
     });
   };
 
@@ -236,7 +243,7 @@ export default function SamplingApplicationPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!user) {
       alert('로그인이 필요합니다.');
       router.push('/auth/customer/login');
@@ -249,7 +256,9 @@ export default function SamplingApplicationPage() {
       return;
     }
 
-    const hasEmptySampleItem = formData.sampleItems.some(item => !item.productName || !item.quantity);
+    const hasEmptySampleItem = formData.sampleItems.some(
+      (item) => !item.productName || !item.quantity
+    );
     if (hasEmptySampleItem) {
       alert('샘플 제품명과 수량은 필수 입력 항목입니다.');
       return;
@@ -270,7 +279,7 @@ export default function SamplingApplicationPage() {
     try {
       // 예약번호 생성
       const newReservationNumber = generateReservationNumber();
-      
+
       // 샘플링 신청 데이터 준비
       const applicationData = {
         reservation_number: newReservationNumber,
@@ -316,17 +325,15 @@ export default function SamplingApplicationPage() {
           .eq('is_default', true);
 
         // 새 주소 저장
-        await supabase
-          .from('shipping_addresses')
-          .insert({
-            user_id: user.id,
-            address: formData.sampleReceiveAddress,
-            receiver_name: formData.receiverName,
-            receiver_phone: formData.receiverPhone,
-            customs_clearance_type: formData.customsClearanceType,
-            customs_clearance_number: formData.customsClearanceNumber,
-            is_default: true,
-          });
+        await supabase.from('shipping_addresses').insert({
+          user_id: user.id,
+          address: formData.sampleReceiveAddress,
+          receiver_name: formData.receiverName,
+          receiver_phone: formData.receiverPhone,
+          customs_clearance_type: formData.customsClearanceType,
+          customs_clearance_number: formData.customsClearanceNumber,
+          is_default: true,
+        });
       }
 
       // 중국직원 자동 배정
@@ -345,18 +352,16 @@ export default function SamplingApplicationPage() {
       }
 
       // 활동 로그 기록
-      await supabase
-        .from('activity_logs')
-        .insert({
-          user_id: user.id,
-          action: 'create_sampling_application',
-          entity_type: 'sampling_application',
-          entity_id: application.id,
-          metadata: {
-            reservation_number: newReservationNumber,
-            sample_count: formData.sampleItems.length,
-          }
-        });
+      await supabase.from('activity_logs').insert({
+        user_id: user.id,
+        action: 'create_sampling_application',
+        entity_type: 'sampling_application',
+        entity_id: application.id,
+        metadata: {
+          reservation_number: newReservationNumber,
+          sample_count: formData.sampleItems.length,
+        },
+      });
 
       // 파일 업로드 처리 (Storage SDK 사용)
       if (formData.referenceFiles.length > 0) {
@@ -366,13 +371,13 @@ export default function SamplingApplicationPage() {
             const fileExt = file.name.split('.').pop() || '';
             const safeFileName = `${Date.now()}_${Math.random().toString(36).substring(2, 8)}.${fileExt}`;
             const filePath = `${newReservationNumber}/sample_reference/${safeFileName}`;
-            
+
             // Storage SDK로 업로드
             const { data: uploadData, error: uploadError } = await supabase.storage
               .from('application-files')
               .upload(filePath, file, {
                 cacheControl: '3600',
-                upsert: false
+                upsert: false,
               });
 
             if (uploadError) {
@@ -381,26 +386,24 @@ export default function SamplingApplicationPage() {
             }
 
             // 파일 URL 생성
-            const { data: { publicUrl } } = supabase.storage
-              .from('application-files')
-              .getPublicUrl(uploadData.path);
-            
+            const {
+              data: { publicUrl },
+            } = supabase.storage.from('application-files').getPublicUrl(uploadData.path);
+
             // uploaded_files 테이블에 기록
-            const { error: dbError } = await supabase
-              .from('uploaded_files')
-              .insert({
-                reservation_number: newReservationNumber,
-                uploaded_by: user.id,
-                original_filename: file.name,
-                file_path: uploadData.path,
-                file_size: file.size,
-                file_type: 'sample_reference',
-                mime_type: file.type,
-                upload_purpose: 'application',
-                upload_category: 'sample_reference',
-                upload_status: 'completed',
-                file_url: publicUrl
-              });
+            const { error: dbError } = await supabase.from('uploaded_files').insert({
+              reservation_number: newReservationNumber,
+              uploaded_by: user.id,
+              original_filename: file.name,
+              file_path: uploadData.path,
+              file_size: file.size,
+              file_type: 'sample_reference',
+              mime_type: file.type,
+              upload_purpose: 'application',
+              upload_category: 'sample_reference',
+              upload_status: 'completed',
+              file_url: publicUrl,
+            });
 
             if (dbError) {
               console.error('파일 정보 DB 저장 오류:', dbError);
@@ -413,7 +416,6 @@ export default function SamplingApplicationPage() {
 
       // 신청 완료 모달 표시
       setShowSuccessModal(true);
-      
     } catch (error: any) {
       console.error('신청 오류:', error);
       alert(error.message || '신청 중 오류가 발생했습니다.');
@@ -440,7 +442,7 @@ export default function SamplingApplicationPage() {
   return (
     <PageContainer title="샘플링 신청 - 두리무역" description="중국 제품의 샘플을 신청하세요">
       <HpHeader />
-      
+
       <Container maxWidth="md" sx={{ py: 5 }}>
         <Card elevation={0} sx={{ border: '1px solid rgba(0,0,0,0.1)' }}>
           <CardContent sx={{ p: 4 }}>
@@ -477,7 +479,7 @@ export default function SamplingApplicationPage() {
                   <Typography variant="h6" fontWeight={600} mb={2}>
                     샘플 정보
                   </Typography>
-                  
+
                   {formData.sampleItems.map((item, index) => (
                     <Box key={index} mb={2}>
                       <Box display="flex" alignItems="center" mb={1}>
@@ -485,8 +487,8 @@ export default function SamplingApplicationPage() {
                           샘플 #{index + 1}
                         </Typography>
                         {formData.sampleItems.length > 1 && (
-                          <IconButton 
-                            size="small" 
+                          <IconButton
+                            size="small"
                             onClick={() => removeSampleItem(index)}
                             sx={{ ml: 1 }}
                           >
@@ -494,7 +496,7 @@ export default function SamplingApplicationPage() {
                           </IconButton>
                         )}
                       </Box>
-                      
+
                       <Stack spacing={2}>
                         <TextField
                           fullWidth
@@ -504,33 +506,41 @@ export default function SamplingApplicationPage() {
                           required
                           placeholder="샘플 제품명을 입력하세요"
                         />
-                        
+
                         <Box display="flex" gap={2}>
                           <TextField
                             fullWidth
                             label="수량"
                             type="number"
                             value={item.quantity}
-                            onChange={(e) => updateSampleItem(index, 'quantity', e.target.value ? parseInt(e.target.value) : '')}
+                            onChange={(e) =>
+                              updateSampleItem(
+                                index,
+                                'quantity',
+                                e.target.value ? parseInt(e.target.value) : ''
+                              )
+                            }
                             required
                             placeholder="1"
                             InputProps={{
-                              inputProps: { min: 1 }
+                              inputProps: { min: 1 },
                             }}
                           />
-                          
+
                           <TextField
                             fullWidth
                             label="규격/사양"
                             value={item.specifications}
-                            onChange={(e) => updateSampleItem(index, 'specifications', e.target.value)}
+                            onChange={(e) =>
+                              updateSampleItem(index, 'specifications', e.target.value)
+                            }
                             placeholder="크기, 색상, 재질 등"
                           />
                         </Box>
                       </Stack>
                     </Box>
                   ))}
-                  
+
                   <Button
                     variant="outlined"
                     startIcon={<Add />}
@@ -549,7 +559,7 @@ export default function SamplingApplicationPage() {
                     <Typography variant="h6" fontWeight={600}>
                       배송 정보
                     </Typography>
-                    
+
                     {user && (
                       <Button
                         size="small"
@@ -568,29 +578,30 @@ export default function SamplingApplicationPage() {
                     open={Boolean(anchorEl)}
                     onClose={() => setAnchorEl(null)}
                   >
-                    {savedShippingAddresses.length > 0 ? savedShippingAddresses.map((address) => (
-                      <MenuItem
-                        key={address.id}
-                        onClick={() => handleSelectShippingAddress(address)}
-                        sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
-                      >
-                        <LocalShippingIcon fontSize="small" color="action" />
-                        <Box flex={1}>
-                          <Typography variant="body2" fontWeight={600}>
-                            {address.receiver_name} | {address.receiver_phone}
-                          </Typography>
-                          <Typography variant="caption" color="text.secondary">
-                            {address.address}
-                          </Typography>
-                          <Typography variant="caption" color="text.secondary" display="block">
-                            {address.customs_clearance_type === 'business' ? '사업자' : '개인'} | {address.customs_clearance_number}
-                          </Typography>
-                        </Box>
-                        {address.is_default && (
-                          <Chip label="기본" size="small" color="primary" />
-                        )}
-                      </MenuItem>
-                    )) : (
+                    {savedShippingAddresses.length > 0 ? (
+                      savedShippingAddresses.map((address) => (
+                        <MenuItem
+                          key={address.id}
+                          onClick={() => handleSelectShippingAddress(address)}
+                          sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+                        >
+                          <LocalShippingIcon fontSize="small" color="action" />
+                          <Box flex={1}>
+                            <Typography variant="body2" fontWeight={600}>
+                              {address.receiver_name} | {address.receiver_phone}
+                            </Typography>
+                            <Typography variant="caption" color="text.secondary">
+                              {address.address}
+                            </Typography>
+                            <Typography variant="caption" color="text.secondary" display="block">
+                              {address.customs_clearance_type === 'business' ? '사업자' : '개인'} |{' '}
+                              {address.customs_clearance_number}
+                            </Typography>
+                          </Box>
+                          {address.is_default && <Chip label="기본" size="small" color="primary" />}
+                        </MenuItem>
+                      ))
+                    ) : (
                       <MenuItem disabled>
                         <Typography variant="body2" color="text.secondary">
                           저장된 배송지가 없습니다
@@ -601,19 +612,21 @@ export default function SamplingApplicationPage() {
                       <Typography color="primary">+ 새 배송지 입력</Typography>
                     </MenuItem>
                   </Menu>
-                  
+
                   <Stack spacing={2}>
                     <TextField
                       fullWidth
                       label="수령 주소"
                       value={formData.sampleReceiveAddress}
-                      onChange={(e) => setFormData({ ...formData, sampleReceiveAddress: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, sampleReceiveAddress: e.target.value })
+                      }
                       required
                       placeholder="샘플을 받으실 주소를 입력하세요"
                       multiline
                       rows={2}
                     />
-                    
+
                     <Box display="flex" gap={2}>
                       <TextField
                         fullWidth
@@ -623,17 +636,19 @@ export default function SamplingApplicationPage() {
                         required
                         placeholder="받는 분 성함"
                       />
-                      
+
                       <TextField
                         fullWidth
                         label="수령인 연락처"
                         value={formData.receiverPhone}
-                        onChange={(e) => setFormData({ ...formData, receiverPhone: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, receiverPhone: e.target.value })
+                        }
                         required
                         placeholder="010-0000-0000"
                       />
                     </Box>
-                    
+
                     {/* 통관 정보 */}
                     <Box>
                       <Typography variant="subtitle2" fontWeight={600} mb={1}>
@@ -644,10 +659,10 @@ export default function SamplingApplicationPage() {
                         exclusive
                         onChange={(e, newValue) => {
                           if (newValue !== null) {
-                            setFormData({ 
-                              ...formData, 
+                            setFormData({
+                              ...formData,
                               customsClearanceType: newValue,
-                              customsClearanceNumber: '' // 타입 변경 시 번호 초기화
+                              customsClearanceNumber: '', // 타입 변경 시 번호 초기화
                             });
                           }
                         }}
@@ -672,33 +687,45 @@ export default function SamplingApplicationPage() {
                         </ToggleButton>
                       </ToggleButtonGroup>
                     </Box>
-                    
+
                     <TextField
                       fullWidth
-                      label={formData.customsClearanceType === 'business' ? '사업자등록번호' : '개인통관고유번호'}
+                      label={
+                        formData.customsClearanceType === 'business'
+                          ? '사업자등록번호'
+                          : '개인통관고유번호'
+                      }
                       value={formData.customsClearanceNumber}
-                      onChange={(e) => setFormData({ ...formData, customsClearanceNumber: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, customsClearanceNumber: e.target.value })
+                      }
                       required
-                      placeholder={formData.customsClearanceType === 'business' ? '000-00-00000' : 'P000000000000'}
-                      helperText={formData.customsClearanceType === 'business' 
-                        ? '사업자등록번호를 입력하세요' 
-                        : '개인통관고유번호를 입력하세요 (관세청 홈페이지에서 발급)'}
+                      placeholder={
+                        formData.customsClearanceType === 'business'
+                          ? '000-00-00000'
+                          : 'P000000000000'
+                      }
+                      helperText={
+                        formData.customsClearanceType === 'business'
+                          ? '사업자등록번호를 입력하세요'
+                          : '개인통관고유번호를 입력하세요 (관세청 홈페이지에서 발급)'
+                      }
                     />
-                    
+
                     {/* 배송 방법 */}
                     <FormControl fullWidth>
                       <InputLabel>배송 방법</InputLabel>
                       <Select
                         value={formData.shippingMethod}
-                        onChange={(e) => setFormData({ ...formData, shippingMethod: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, shippingMethod: e.target.value })
+                        }
                         label="배송 방법"
                       >
                         <MenuItem value="air">항공 배송 (빠름)</MenuItem>
                         <MenuItem value="sea">해운 배송 (저렴)</MenuItem>
                       </Select>
-                      <FormHelperText>
-                        항공: 3-5일 소요 / 해운: 15-20일 소요
-                      </FormHelperText>
+                      <FormHelperText>항공: 3-5일 소요 / 해운: 15-20일 소요</FormHelperText>
                     </FormControl>
                   </Stack>
 
@@ -744,10 +771,12 @@ export default function SamplingApplicationPage() {
                 {/* 안내 메시지 */}
                 <Alert severity="info">
                   <Typography variant="body2">
-                    • 샘플 제작은 보통 3-7일 소요됩니다<br />
-                    • 샘플 비용과 배송비는 별도로 청구됩니다<br />
-                    • 통관 시 관세가 발생할 수 있습니다<br />
-                    • 제작 진행 상황은 실시간으로 확인 가능합니다
+                    • 샘플 제작은 보통 3-7일 소요됩니다
+                    <br />
+                    • 샘플 비용과 배송비는 별도로 청구됩니다
+                    <br />
+                    • 통관 시 관세가 발생할 수 있습니다
+                    <br />• 제작 진행 상황은 실시간으로 확인 가능합니다
                   </Typography>
                 </Alert>
 
@@ -761,12 +790,7 @@ export default function SamplingApplicationPage() {
                   >
                     취소
                   </Button>
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    size="large"
-                    disabled={loading}
-                  >
+                  <Button type="submit" variant="contained" size="large" disabled={loading}>
                     {loading ? '신청 중...' : '신청하기'}
                   </Button>
                 </Box>
@@ -775,7 +799,7 @@ export default function SamplingApplicationPage() {
           </CardContent>
         </Card>
       </Container>
-      
+
       {/* 신청 완료 모달 */}
       <Dialog
         open={showSuccessModal}
@@ -802,9 +826,10 @@ export default function SamplingApplicationPage() {
             </Typography>
           </Box>
           <Typography variant="body2" color="text.secondary">
-            • 공급업체 확인 후 견적을 보내드립니다<br/>
-            • 샘플 제작 및 배송 진행 상황을 확인하실 수 있습니다<br/>
-            • 궁금한 사항은 채팅으로 문의해주세요
+            • 공급업체 확인 후 견적을 보내드립니다
+            <br />
+            • 샘플 제작 및 배송 진행 상황을 확인하실 수 있습니다
+            <br />• 궁금한 사항은 채팅으로 문의해주세요
           </Typography>
         </DialogContent>
         <DialogActions sx={{ justifyContent: 'center', pb: 3 }}>
@@ -830,7 +855,7 @@ export default function SamplingApplicationPage() {
           </Button>
         </DialogActions>
       </Dialog>
-      
+
       <Footer />
     </PageContainer>
   );

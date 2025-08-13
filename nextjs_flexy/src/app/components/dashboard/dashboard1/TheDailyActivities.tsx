@@ -1,12 +1,5 @@
-import React from "react";
-import {
-  Menu,
-  MenuItem,
-  IconButton,
-  Typography,
-  Box,
-  Tooltip,
-} from "@mui/material";
+import React from 'react';
+import { Menu, MenuItem, IconButton, Typography, Box, Tooltip } from '@mui/material';
 import {
   Timeline,
   TimelineItem,
@@ -15,12 +8,12 @@ import {
   TimelineContent,
   TimelineDot,
   TimelineOppositeContent,
-} from "@mui/lab";
-import DashboardCard from "../../shared/DashboardCard";
-import { IconDots } from "@tabler/icons-react";
+} from '@mui/lab';
+import DashboardCard from '../../shared/DashboardCard';
+import { IconDots } from '@tabler/icons-react';
 import Link from 'next/link';
 
-const options = ["Action", "Another Action", "Something else here"];
+const options = ['Action', 'Another Action', 'Something else here'];
 
 const activities = [
   {
@@ -103,7 +96,7 @@ const DailyActivities = () => {
             slotProps={{
               list: {
                 'aria-labelledby': 'long-button',
-              }
+              },
             }}
           >
             {options.map((option) => (
@@ -123,15 +116,18 @@ const DailyActivities = () => {
         }}
       >
         {activities.map((activity, index) => (
-          <TimelineItem key={activity.time} sx={{
-            minHeight: '65px'
-          }}>
+          <TimelineItem
+            key={activity.time}
+            sx={{
+              minHeight: '65px',
+            }}
+          >
             <TimelineOppositeContent
               sx={{
                 flex: '0',
               }}
             >
-              <Typography variant="subtitle2" fontWeight="400" whiteSpace='nowrap'>
+              <Typography variant="subtitle2" fontWeight="400" whiteSpace="nowrap">
                 {activity.time}
               </Typography>
             </TimelineOppositeContent>
@@ -145,12 +141,21 @@ const DailyActivities = () => {
               {index !== activities.length - 1 && <TimelineConnector />}
             </TimelineSeparator>
             <TimelineContent>
-              {activity.isRecorded ?
-                <><Typography color="text.primary" variant="h6" fontWeight={600}> {activity.text} </Typography>
-                  <Typography component={Link} variant="h6" color="primary.main" href='/'>#ML-3467</Typography>
-                </> :
-                <Typography color="text.secondary" variant="h6">{activity.text}</Typography>
-              }
+              {activity.isRecorded ? (
+                <>
+                  <Typography color="text.primary" variant="h6" fontWeight={600}>
+                    {' '}
+                    {activity.text}{' '}
+                  </Typography>
+                  <Typography component={Link} variant="h6" color="primary.main" href="/">
+                    #ML-3467
+                  </Typography>
+                </>
+              ) : (
+                <Typography color="text.secondary" variant="h6">
+                  {activity.text}
+                </Typography>
+              )}
             </TimelineContent>
           </TimelineItem>
         ))}

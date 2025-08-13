@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const TextButtonGroupCode = () => {
   return (
     <>
@@ -28,7 +28,7 @@ import { Button, ButtonGroup, Stack } from '@mui/material';
 </Stack>`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default TextButtonGroupCode
+export default TextButtonGroupCode;

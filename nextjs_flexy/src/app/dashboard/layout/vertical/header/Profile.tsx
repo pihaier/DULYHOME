@@ -1,31 +1,24 @@
-import React, { useState } from "react";
-import { useTheme } from "@mui/material/styles";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import {
-  Box,
-  Menu,
-  Avatar,
-  Typography,
-  Divider,
-  Button,
-} from "@mui/material";
+import React, { useState } from 'react';
+import { useTheme } from '@mui/material/styles';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { Box, Menu, Avatar, Typography, Divider, Button } from '@mui/material';
 import Image from 'next/image';
-import { Stack } from "@mui/system";
+import { Stack } from '@mui/system';
 import {
   IconChevronDown,
   IconCreditCard,
   IconCurrencyDollar,
   IconMail,
   IconShield,
-} from "@tabler/icons-react";
-import { useUser } from "@/lib/context/GlobalContext";
+} from '@tabler/icons-react';
+import { useUser } from '@/lib/context/GlobalContext';
 
 const Profile = () => {
   const [anchorEl2, setAnchorEl2] = useState<HTMLElement | null>(null);
   const { user, userProfile, supabase } = useUser();
   const router = useRouter();
-  
+
   const handleClick2 = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl2(event.currentTarget);
   };
@@ -58,17 +51,17 @@ const Profile = () => {
   /*profile data*/
   const profiledata = [
     {
-      href: "/dashboard/profile",
-      title: "내 프로필",
-      subtitle: "개인정보 및 계정 설정",
+      href: '/dashboard/profile',
+      title: '내 프로필',
+      subtitle: '개인정보 및 계정 설정',
       icon: <IconCurrencyDollar width="20" height="20" />,
       color: primary,
       lightcolor: primarylight,
     },
     {
-      href: "/dashboard/orders",
-      title: "내 주문 내역",
-      subtitle: "신청 현황 및 진행 상태",
+      href: '/dashboard/orders',
+      title: '내 주문 내역',
+      subtitle: '신청 현황 및 진행 상태',
       icon: <IconShield width="20" height="20" />,
       color: success,
       lightcolor: successlight,
@@ -84,15 +77,15 @@ const Profile = () => {
         aria-controls="msgs-menu"
         aria-haspopup="true"
         sx={{
-          ...(typeof anchorEl2 === "object" && {
-            borderRadius: "9px",
+          ...(typeof anchorEl2 === 'object' && {
+            borderRadius: '9px',
           }),
         }}
         onClick={handleClick2}
       >
         <Avatar
-          src={"/images/users/1.jpg"}
-          alt={"ProfileImg"}
+          src={'/images/users/1.jpg'}
+          alt={'ProfileImg'}
           sx={{
             width: 30,
             height: 30,
@@ -101,18 +94,13 @@ const Profile = () => {
         <Box
           sx={{
             display: {
-              xs: "none",
-              sm: "flex",
+              xs: 'none',
+              sm: 'flex',
             },
-            alignItems: "center",
+            alignItems: 'center',
           }}
         >
-          <Typography
-            color="textprimary"
-            variant="h5"
-            fontWeight="400"
-            sx={{ ml: 1 }}
-          >
+          <Typography color="textprimary" variant="h5" fontWeight="400" sx={{ ml: 1 }}>
             Hi,
           </Typography>
           <Typography
@@ -136,11 +124,11 @@ const Profile = () => {
         keepMounted
         open={Boolean(anchorEl2)}
         onClose={handleClose2}
-        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-        transformOrigin={{ horizontal: "right", vertical: "top" }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         sx={{
-          "& .MuiMenu-paper": {
-            width: "360px",
+          '& .MuiMenu-paper': {
+            width: '360px',
             p: 4,
             pb: 2,
           },
@@ -148,11 +136,7 @@ const Profile = () => {
       >
         <Typography variant="h4">User Profile</Typography>
         <Stack direction="row" py={3} spacing={2} alignItems="center">
-          <Avatar
-            src={"/images/users/1.jpg"}
-            alt={"ProfileImg"}
-            sx={{ width: 95, height: 95 }}
-          />
+          <Avatar src={'/images/users/1.jpg'} alt={'ProfileImg'} sx={{ width: 95, height: 95 }} />
           <Box>
             <Typography variant="h4" color="textPrimary">
               {userProfile?.contact_person || user?.user_metadata?.name || '사용자'}
@@ -187,11 +171,11 @@ const Profile = () => {
                     sx={{
                       bgcolor: prf.lightcolor,
                       color: prf.color,
-                      boxShadow: "none",
-                      minWidth: "50px",
-                      width: "45px",
-                      height: "40px",
-                      borderRadius: "10px",
+                      boxShadow: 'none',
+                      minWidth: '50px',
+                      width: '45px',
+                      height: '40px',
+                      borderRadius: '10px',
                     }}
                   >
                     {prf.icon}
@@ -203,7 +187,7 @@ const Profile = () => {
                       color="textPrimary"
                       noWrap
                       sx={{
-                        width: "240px",
+                        width: '240px',
                       }}
                     >
                       {prf.title}
@@ -212,7 +196,7 @@ const Profile = () => {
                       color="textSecondary"
                       variant="h6"
                       sx={{
-                        width: "240px",
+                        width: '240px',
                       }}
                       noWrap
                     >
@@ -231,15 +215,8 @@ const Profile = () => {
           </Box>
         ))}
 
-
-
         <Box mt={2}>
-          <Button
-            variant="outlined"
-            color="secondary"
-            fullWidth
-            onClick={handleLogout}
-          >
+          <Button variant="outlined" color="secondary" fullWidth onClick={handleLogout}>
             로그아웃
           </Button>
         </Box>

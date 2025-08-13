@@ -1,10 +1,10 @@
-import { Box, CardContent, Card, Typography, Stack, Grid } from "@mui/material";
-import { IconArrowUpLeft } from "@tabler/icons-react";
-import dynamic from "next/dynamic";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
-import { useTheme } from "@mui/material/styles";
-import React from "react";
-import { ApexOptions } from "apexcharts";
+import { Box, CardContent, Card, Typography, Stack, Grid } from '@mui/material';
+import { IconArrowUpLeft } from '@tabler/icons-react';
+import dynamic from 'next/dynamic';
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
+import { useTheme } from '@mui/material/styles';
+import React from 'react';
+import { ApexOptions } from 'apexcharts';
 
 const Customers = () => {
   const theme = useTheme();
@@ -65,10 +65,7 @@ const Customers = () => {
         }}
       >
         <CardContent>
-          <Typography
-            variant="h4"
-            mb={0}
-          >
+          <Typography variant="h4" mb={0}>
             Customers
           </Typography>
           <Box mt="20px">

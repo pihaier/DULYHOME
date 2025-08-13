@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import CustomTextField from '../../theme-elements/CustomTextField';
@@ -131,7 +131,6 @@ const top100Films = [
   { label: 'Monty Python and the Holy Grail', year: 1975 },
 ];
 
-
 const SizesAutocomplete = () => (
   <>
     <Autocomplete
@@ -146,7 +145,7 @@ const SizesAutocomplete = () => (
         <CustomTextField {...params} placeholder="Size Medium" aria-label="Size Medium" />
       )}
     />
-    
+
     <Autocomplete
       disablePortal
       id="medium-combo-box-demo"

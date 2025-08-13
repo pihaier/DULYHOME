@@ -1,5 +1,5 @@
-import React from 'react'
-import CodeDialog from '@/app/components/shared/CodeDialog'
+import React from 'react';
+import CodeDialog from '@/app/components/shared/CodeDialog';
 
 function ControlledSelectionCode() {
   return (
@@ -91,7 +91,7 @@ export default ControlledSelectiontree
             
             `}
     </CodeDialog>
-  )
+  );
 }
 
-export default ControlledSelectionCode
+export default ControlledSelectionCode;

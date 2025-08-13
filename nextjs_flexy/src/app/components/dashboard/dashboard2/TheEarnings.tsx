@@ -1,14 +1,6 @@
-import React from "react";
-import {
-  Card,
-  CardContent,
-  Typography,
-  Fab,
-  Box,
-  Stack,
-  Avatar,
-} from "@mui/material";
-import { IconCurrencyDollar } from "@tabler/icons-react";
+import React from 'react';
+import { Card, CardContent, Typography, Fab, Box, Stack, Avatar } from '@mui/material';
+import { IconCurrencyDollar } from '@tabler/icons-react';
 
 const Earnings = () => (
   <Card
@@ -17,7 +9,7 @@ const Earnings = () => (
     }}
   >
     <CardContent>
-      <Stack direction='row' justifyContent='space-between'>
+      <Stack direction="row" justifyContent="space-between">
         <Typography
           variant="h3"
           sx={{
@@ -39,16 +31,10 @@ const Earnings = () => (
         </Fab>
       </Stack>
 
-      <Typography
-        fontWeight="500"
-        variant="h1" mt={3} color='#fff'
-      >
+      <Typography fontWeight="500" variant="h1" mt={3} color="#fff">
         $93,438
       </Typography>
-      <Typography
-        variant="subtitle1"
-        fontWeight="400" color='#fff' sx={{ opacity: 0.5 }}
-      >
+      <Typography variant="subtitle1" fontWeight="400" color="#fff" sx={{ opacity: 0.5 }}>
         Monthly revenue
       </Typography>
     </CardContent>

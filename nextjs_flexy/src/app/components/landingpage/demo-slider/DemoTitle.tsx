@@ -8,13 +8,14 @@ import AnimationFadeIn from '../animation/Animation';
 
 const DemoTitle = () => {
   return (
-    (<Grid container spacing={3} justifyContent="center">
+    <Grid container spacing={3} justifyContent="center">
       <Grid
         size={{
           xs: 12,
           sm: 10,
-          lg: 8
-        }}>
+          lg: 8,
+        }}
+      >
         <AnimationFadeIn>
           <>
             <Stack
@@ -25,9 +26,17 @@ const DemoTitle = () => {
               mb={2}
             >
               <AvatarGroup>
-                <Avatar alt="Remy Sharp" src='/images/users/4.jpg' sx={{ width: 28, height: 28 }} />
-                <Avatar alt="Travis Howard" src='/images/users/2.jpg' sx={{ width: 28, height: 28 }} />
-                <Avatar alt="Cindy Baker" src='/images/users/3.jpg' sx={{ width: 28, height: 28 }} />
+                <Avatar alt="Remy Sharp" src="/images/users/4.jpg" sx={{ width: 28, height: 28 }} />
+                <Avatar
+                  alt="Travis Howard"
+                  src="/images/users/2.jpg"
+                  sx={{ width: 28, height: 28 }}
+                />
+                <Avatar
+                  alt="Cindy Baker"
+                  src="/images/users/3.jpg"
+                  sx={{ width: 28, height: 28 }}
+                />
               </AvatarGroup>
               <Typography variant="h6">52,589+</Typography>
               <Typography variant="h6" color="textSecondary">
@@ -54,7 +63,7 @@ const DemoTitle = () => {
           </>
         </AnimationFadeIn>
       </Grid>
-    </Grid>)
+    </Grid>
   );
 };
 

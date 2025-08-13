@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const BasicHeaderFormCode = () => {
   return (
     <>
@@ -361,7 +361,7 @@ const handleChange4 = (event) => {
 `}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default BasicHeaderFormCode
+export default BasicHeaderFormCode;

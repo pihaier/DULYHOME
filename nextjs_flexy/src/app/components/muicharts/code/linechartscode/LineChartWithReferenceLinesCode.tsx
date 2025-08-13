@@ -1,5 +1,5 @@
-import React from 'react'
-import CodeDialog from '@/app/components/shared/CodeDialog'
+import React from 'react';
+import CodeDialog from '@/app/components/shared/CodeDialog';
 
 function LineChartWithReferenceLinesCode() {
   return (
@@ -69,7 +69,7 @@ export default function LineChartWithReferenceLines() {
 
 `}
     </CodeDialog>
-  )
+  );
 }
 
-export default LineChartWithReferenceLinesCode
+export default LineChartWithReferenceLinesCode;

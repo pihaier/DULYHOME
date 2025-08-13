@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const FABSizeCode = () => {
   return (
     <>
@@ -29,7 +29,7 @@ import { IconBell } from '@tabler/icons-react';
 </Stack>`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default FABSizeCode
+export default FABSizeCode;

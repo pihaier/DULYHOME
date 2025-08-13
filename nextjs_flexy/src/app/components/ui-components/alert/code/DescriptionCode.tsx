@@ -1,10 +1,10 @@
-import CodeDialog from "@/app/components/shared/CodeDialog";
-import React from "react";
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const DescriptionCode = () => {
-    return (
-        <>
-            <CodeDialog>
-                {`
+  return (
+    <>
+      <CodeDialog>
+        {`
 "use client";
 import * as React from 'react';
 import {
@@ -35,9 +35,9 @@ import {
         This is a success alert — <strong>check it out!</strong>
     </Alert>
 </Stack>`}
-            </CodeDialog>
-        </>
-    );
+      </CodeDialog>
+    </>
+  );
 };
 
 export default DescriptionCode;

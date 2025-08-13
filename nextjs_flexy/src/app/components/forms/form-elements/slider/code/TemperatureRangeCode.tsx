@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const DiscreteSliderCode = () => {
   return (
     <>
@@ -28,7 +28,7 @@ import { Slider } from '@mui/material';
 `}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default DiscreteSliderCode
+export default DiscreteSliderCode;

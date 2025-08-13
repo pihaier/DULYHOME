@@ -5,10 +5,10 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
 import FileUploadCarousel from './FileUploadCarousel';
-import { 
-  samplingSchema, 
+import {
+  samplingSchema,
   type SamplingFormData,
-  type SamplingResponse 
+  type SamplingResponse,
 } from '@/lib/schemas/sampling';
 
 // Material UI Components
@@ -50,17 +50,12 @@ interface SamplingFormProps {
   onSuccess?: (data: { reservationNumber: string; orderId: string }) => void;
 }
 
-const steps = [
-  '제품 정보',
-  '배송 방법',
-  '통관 정보',
-  '확인 및 제출'
-];
+const steps = ['제품 정보', '배송 방법', '통관 정보', '확인 및 제출'];
 
 export function SamplingForm({ onSuccess }: SamplingFormProps) {
   const [activeStep, setActiveStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   const {
     register,
     control,
@@ -97,7 +92,7 @@ export function SamplingForm({ onSuccess }: SamplingFormProps) {
 
   const handleNext = async () => {
     let fieldsToValidate: any[] = [];
-    
+
     switch (activeStep) {
       case 0:
         fieldsToValidate = ['productName', 'sampleQuantity', 'requirements'];
@@ -133,7 +128,7 @@ export function SamplingForm({ onSuccess }: SamplingFormProps) {
 
     try {
       const formData = new FormData();
-      
+
       // 텍스트 데이터
       formData.append('productName', data.productName);
       if (data.productNameChinese) formData.append('productNameChinese', data.productNameChinese);
@@ -141,7 +136,7 @@ export function SamplingForm({ onSuccess }: SamplingFormProps) {
       formData.append('requirements', data.requirements);
       formData.append('shippingMethod', data.shippingMethod);
       formData.append('customsType', data.customsType);
-      
+
       if (data.customsType === 'personal') {
         formData.append('personalName', data.personalName || '');
         formData.append('personalCustomsCode', data.personalCustomsCode || '');
@@ -149,13 +144,13 @@ export function SamplingForm({ onSuccess }: SamplingFormProps) {
         formData.append('businessName', data.businessName || '');
         formData.append('businessNumber', data.businessNumber || '');
       }
-      
+
       if (data.shippingMethod === 'direct') {
         formData.append('koreaShippingAddress', data.koreaShippingAddress || '');
         formData.append('koreaReceiverName', data.koreaReceiverName || '');
         formData.append('koreaReceiverPhone', data.koreaReceiverPhone || '');
       }
-      
+
       if (data.chinaAddress) formData.append('chinaAddress', data.chinaAddress);
       if (data.chinaReceiverName) formData.append('chinaReceiverName', data.chinaReceiverName);
       if (data.chinaReceiverPhone) formData.append('chinaReceiverPhone', data.chinaReceiverPhone);
@@ -177,7 +172,7 @@ export function SamplingForm({ onSuccess }: SamplingFormProps) {
       }
 
       toast.success('샘플링 신청이 완료되었습니다!');
-      
+
       if (onSuccess && result.data) {
         onSuccess(result.data);
       }
@@ -201,10 +196,12 @@ export function SamplingForm({ onSuccess }: SamplingFormProps) {
                   label="제품명 (한국어)"
                   {...register('productName')}
                   error={!!errors.productName}
-                  helperText={errors.productName?.message || '샘플링을 원하는 제품명을 입력해주세요'}
+                  helperText={
+                    errors.productName?.message || '샘플링을 원하는 제품명을 입력해주세요'
+                  }
                 />
               </Grid>
-              
+
               <Grid size={12}>
                 <TextField
                   fullWidth
@@ -213,7 +210,7 @@ export function SamplingForm({ onSuccess }: SamplingFormProps) {
                   helperText="중국어 제품명을 알고 있다면 입력해주세요"
                 />
               </Grid>
-              
+
               <Grid size={{ xs: 12, sm: 6 }}>
                 <Controller
                   name="sampleQuantity"
@@ -226,13 +223,15 @@ export function SamplingForm({ onSuccess }: SamplingFormProps) {
                       label="샘플 수량"
                       onChange={(e) => field.onChange(parseInt(e.target.value) || 1)}
                       error={!!errors.sampleQuantity}
-                      helperText={errors.sampleQuantity?.message || '원하시는 샘플 수량을 입력해주세요'}
+                      helperText={
+                        errors.sampleQuantity?.message || '원하시는 샘플 수량을 입력해주세요'
+                      }
                       inputProps={{ min: 1 }}
                     />
                   )}
                 />
               </Grid>
-              
+
               <Grid size={12}>
                 <TextField
                   fullWidth
@@ -241,10 +240,13 @@ export function SamplingForm({ onSuccess }: SamplingFormProps) {
                   label="요청사항"
                   {...register('requirements')}
                   error={!!errors.requirements}
-                  helperText={errors.requirements?.message || '제품 사양, 색상, 사이즈 등 상세 요청사항을 입력해주세요 (최소 10자)'}
+                  helperText={
+                    errors.requirements?.message ||
+                    '제품 사양, 색상, 사이즈 등 상세 요청사항을 입력해주세요 (최소 10자)'
+                  }
                 />
               </Grid>
-              
+
               <Grid size={12}>
                 <Typography variant="subtitle1" gutterBottom>
                   참고 자료 업로드 (선택)
@@ -270,7 +272,7 @@ export function SamplingForm({ onSuccess }: SamplingFormProps) {
             </Grid>
           </Box>
         );
-        
+
       case 1:
         return (
           <Box>
@@ -281,9 +283,9 @@ export function SamplingForm({ onSuccess }: SamplingFormProps) {
                 <FormControl component="fieldset" sx={{ mb: 3 }}>
                   <FormLabel component="legend">배송 방법 선택</FormLabel>
                   <RadioGroup {...field}>
-                    <FormControlLabel 
-                      value="partner" 
-                      control={<Radio />} 
+                    <FormControlLabel
+                      value="partner"
+                      control={<Radio />}
                       label={
                         <Box>
                           <Typography variant="subtitle1">협력업체 배송</Typography>
@@ -293,9 +295,9 @@ export function SamplingForm({ onSuccess }: SamplingFormProps) {
                         </Box>
                       }
                     />
-                    <FormControlLabel 
-                      value="direct" 
-                      control={<Radio />} 
+                    <FormControlLabel
+                      value="direct"
+                      control={<Radio />}
                       label={
                         <Box>
                           <Typography variant="subtitle1">직접 배송</Typography>
@@ -383,7 +385,7 @@ export function SamplingForm({ onSuccess }: SamplingFormProps) {
             </Box>
           </Box>
         );
-        
+
       case 2:
         return (
           <Box>
@@ -394,9 +396,9 @@ export function SamplingForm({ onSuccess }: SamplingFormProps) {
                 <FormControl component="fieldset" sx={{ mb: 3 }}>
                   <FormLabel component="legend">통관 구분</FormLabel>
                   <RadioGroup {...field}>
-                    <FormControlLabel 
-                      value="personal" 
-                      control={<Radio />} 
+                    <FormControlLabel
+                      value="personal"
+                      control={<Radio />}
                       label={
                         <Box>
                           <Typography variant="subtitle1">개인통관</Typography>
@@ -406,9 +408,9 @@ export function SamplingForm({ onSuccess }: SamplingFormProps) {
                         </Box>
                       }
                     />
-                    <FormControlLabel 
-                      value="business" 
-                      control={<Radio />} 
+                    <FormControlLabel
+                      value="business"
+                      control={<Radio />}
                       label={
                         <Box>
                           <Typography variant="subtitle1">사업자통관</Typography>
@@ -475,7 +477,7 @@ export function SamplingForm({ onSuccess }: SamplingFormProps) {
             )}
           </Box>
         );
-        
+
       case 3:
         const formData = watch();
         return (
@@ -483,7 +485,7 @@ export function SamplingForm({ onSuccess }: SamplingFormProps) {
             <Alert severity="info" sx={{ mb: 3 }}>
               신청 내용을 최종 확인해주세요. 제출 후에는 수정이 어려울 수 있습니다.
             </Alert>
-            
+
             <Stack spacing={3}>
               {/* 제품 정보 */}
               <Card variant="outlined">
@@ -494,7 +496,9 @@ export function SamplingForm({ onSuccess }: SamplingFormProps) {
                   </Typography>
                   <Grid container spacing={2}>
                     <Grid size={{ xs: 12, sm: 6 }}>
-                      <Typography variant="body2" color="text.secondary">제품명</Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        제품명
+                      </Typography>
                       <Typography variant="body1">{formData.productName}</Typography>
                       {formData.productNameChinese && (
                         <Typography variant="body2" color="text.secondary">
@@ -503,25 +507,33 @@ export function SamplingForm({ onSuccess }: SamplingFormProps) {
                       )}
                     </Grid>
                     <Grid size={{ xs: 12, sm: 6 }}>
-                      <Typography variant="body2" color="text.secondary">샘플 수량</Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        샘플 수량
+                      </Typography>
                       <Typography variant="body1">{formData.sampleQuantity}개</Typography>
                     </Grid>
                     <Grid size={12}>
-                      <Typography variant="body2" color="text.secondary">요청사항</Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        요청사항
+                      </Typography>
                       <Typography variant="body1" style={{ whiteSpace: 'pre-wrap' }}>
                         {formData.requirements}
                       </Typography>
                     </Grid>
                     {formData.requestFiles.length > 0 && (
                       <Grid size={12}>
-                        <Typography variant="body2" color="text.secondary">첨부파일</Typography>
-                        <Typography variant="body1">{formData.requestFiles.length}개 파일</Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          첨부파일
+                        </Typography>
+                        <Typography variant="body1">
+                          {formData.requestFiles.length}개 파일
+                        </Typography>
                       </Grid>
                     )}
                   </Grid>
                 </CardContent>
               </Card>
-              
+
               {/* 배송 정보 */}
               <Card variant="outlined">
                 <CardContent>
@@ -531,7 +543,9 @@ export function SamplingForm({ onSuccess }: SamplingFormProps) {
                   </Typography>
                   <Grid container spacing={2}>
                     <Grid size={12}>
-                      <Typography variant="body2" color="text.secondary">배송 방법</Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        배송 방법
+                      </Typography>
                       <Typography variant="body1">
                         {formData.shippingMethod === 'partner' ? '협력업체 배송' : '직접 배송'}
                       </Typography>
@@ -539,15 +553,21 @@ export function SamplingForm({ onSuccess }: SamplingFormProps) {
                     {formData.shippingMethod === 'direct' && (
                       <>
                         <Grid size={12}>
-                          <Typography variant="body2" color="text.secondary">한국 배송지</Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            한국 배송지
+                          </Typography>
                           <Typography variant="body1">{formData.koreaShippingAddress}</Typography>
                         </Grid>
                         <Grid size={{ xs: 12, sm: 6 }}>
-                          <Typography variant="body2" color="text.secondary">수령인</Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            수령인
+                          </Typography>
                           <Typography variant="body1">{formData.koreaReceiverName}</Typography>
                         </Grid>
                         <Grid size={{ xs: 12, sm: 6 }}>
-                          <Typography variant="body2" color="text.secondary">연락처</Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            연락처
+                          </Typography>
                           <Typography variant="body1">{formData.koreaReceiverPhone}</Typography>
                         </Grid>
                       </>
@@ -555,7 +575,7 @@ export function SamplingForm({ onSuccess }: SamplingFormProps) {
                   </Grid>
                 </CardContent>
               </Card>
-              
+
               {/* 통관 정보 */}
               <Card variant="outlined">
                 <CardContent>
@@ -569,7 +589,9 @@ export function SamplingForm({ onSuccess }: SamplingFormProps) {
                   </Typography>
                   <Grid container spacing={2}>
                     <Grid size={12}>
-                      <Typography variant="body2" color="text.secondary">통관 구분</Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        통관 구분
+                      </Typography>
                       <Typography variant="body1">
                         {formData.customsType === 'personal' ? '개인통관' : '사업자통관'}
                       </Typography>
@@ -577,22 +599,30 @@ export function SamplingForm({ onSuccess }: SamplingFormProps) {
                     {formData.customsType === 'personal' ? (
                       <>
                         <Grid size={{ xs: 12, sm: 6 }}>
-                          <Typography variant="body2" color="text.secondary">이름</Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            이름
+                          </Typography>
                           <Typography variant="body1">{formData.personalName}</Typography>
                         </Grid>
                         <Grid size={{ xs: 12, sm: 6 }}>
-                          <Typography variant="body2" color="text.secondary">개인통관고유부호</Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            개인통관고유부호
+                          </Typography>
                           <Typography variant="body1">{formData.personalCustomsCode}</Typography>
                         </Grid>
                       </>
                     ) : (
                       <>
                         <Grid size={{ xs: 12, sm: 6 }}>
-                          <Typography variant="body2" color="text.secondary">사업자명</Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            사업자명
+                          </Typography>
                           <Typography variant="body1">{formData.businessName}</Typography>
                         </Grid>
                         <Grid size={{ xs: 12, sm: 6 }}>
-                          <Typography variant="body2" color="text.secondary">사업자등록번호</Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            사업자등록번호
+                          </Typography>
                           <Typography variant="body1">{formData.businessNumber}</Typography>
                         </Grid>
                       </>
@@ -600,7 +630,7 @@ export function SamplingForm({ onSuccess }: SamplingFormProps) {
                   </Grid>
                 </CardContent>
               </Card>
-              
+
               {/* 비용 안내 */}
               <Card variant="outlined" sx={{ bgcolor: 'primary.light' }}>
                 <CardContent>
@@ -618,7 +648,7 @@ export function SamplingForm({ onSuccess }: SamplingFormProps) {
             </Stack>
           </Box>
         );
-        
+
       default:
         return null;
     }
@@ -640,10 +670,18 @@ export function SamplingForm({ onSuccess }: SamplingFormProps) {
                     variant="contained"
                     onClick={index === steps.length - 1 ? handleSubmit(onSubmit) : handleNext}
                     disabled={isSubmitting}
-                    startIcon={isSubmitting ? <CircularProgress size={20} /> : (index === steps.length - 1 ? <SendIcon /> : <NextIcon />)}
+                    startIcon={
+                      isSubmitting ? (
+                        <CircularProgress size={20} />
+                      ) : index === steps.length - 1 ? (
+                        <SendIcon />
+                      ) : (
+                        <NextIcon />
+                      )
+                    }
                     sx={{ mt: 1, mr: 1 }}
                   >
-                    {isSubmitting ? '제출 중...' : (index === steps.length - 1 ? '신청하기' : '다음')}
+                    {isSubmitting ? '제출 중...' : index === steps.length - 1 ? '신청하기' : '다음'}
                   </Button>
                   <Button
                     disabled={index === 0 || isSubmitting}

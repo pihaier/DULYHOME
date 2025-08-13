@@ -1,11 +1,9 @@
-'use client'
+'use client';
 import * as React from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import top100Films from './data';
 import CustomCheckbox from '../../theme-elements/CustomCheckbox';
 import CustomTextField from '../../theme-elements/CustomTextField';
-
-
 
 export default function CheckboxesAutocomplete() {
   return (
@@ -31,6 +29,3 @@ export default function CheckboxesAutocomplete() {
     />
   );
 }
-
-
-

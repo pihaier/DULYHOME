@@ -1,10 +1,10 @@
-import React from "react";
-import dynamic from "next/dynamic";
-import { useTheme } from "@mui/material/styles";
-import { Card, CardContent, Typography, Box, Fab } from "@mui/material";
-import { IconCurrencyDollar } from "@tabler/icons-react";
-import { ApexOptions } from "apexcharts";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+import React from 'react';
+import dynamic from 'next/dynamic';
+import { useTheme } from '@mui/material/styles';
+import { Card, CardContent, Typography, Box, Fab } from '@mui/material';
+import { IconCurrencyDollar } from '@tabler/icons-react';
+import { ApexOptions } from 'apexcharts';
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 const MonthlySales = () => {
   const theme = useTheme();
@@ -13,7 +13,7 @@ const MonthlySales = () => {
   const optionsmonthlychart: ApexOptions = {
     grid: {
       show: true,
-      borderColor: "transparent",
+      borderColor: 'transparent',
       strokeDashArray: 2,
       padding: {
         left: 0,
@@ -26,8 +26,8 @@ const MonthlySales = () => {
       toolbar: {
         show: false,
       },
-      foreColor: "#adb0bb",
-      fontFamily: "inherit",
+      foreColor: '#adb0bb',
+      fontFamily: 'inherit',
       sparkline: {
         enabled: true,
       },
@@ -44,15 +44,15 @@ const MonthlySales = () => {
     stroke: {
       show: true,
       width: 2,
-      curve: "smooth",
+      curve: 'smooth',
     },
     tooltip: {
-      theme: theme.palette.mode === "dark" ? "dark" : "light",
+      theme: theme.palette.mode === 'dark' ? 'dark' : 'light',
     },
   };
   const seriesmonthlychart: ApexAxisChartSeries = [
     {
-      name: "Monthly Sales",
+      name: 'Monthly Sales',
       data: [35, 60, 30, 55, 40],
     },
   ];
@@ -82,10 +82,7 @@ const MonthlySales = () => {
             >
               Monthly Sales
             </Typography>
-            <Typography
-              variant="h2" mb={0}
-              gutterBottom
-            >
+            <Typography variant="h2" mb={0} gutterBottom>
               3,246
             </Typography>
           </Box>
@@ -95,13 +92,8 @@ const MonthlySales = () => {
               marginLeft: 'auto',
             }}
           >
-            <Fab
-              size="medium"
-              color="warning"
-              aria-label="add"
-            >
+            <Fab size="medium" color="warning" aria-label="add">
               <IconCurrencyDollar width="21" height="21" />
-
             </Fab>
           </Box>
         </Box>

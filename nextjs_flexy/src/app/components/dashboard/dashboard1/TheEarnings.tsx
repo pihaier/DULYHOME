@@ -1,6 +1,6 @@
-import React from "react";
-import { Card, CardContent, Typography, Box, Fab } from "@mui/material";
-import { IconCurrencyDollar } from "@tabler/icons-react";
+import React from 'react';
+import { Card, CardContent, Typography, Box, Fab } from '@mui/material';
+import { IconCurrencyDollar } from '@tabler/icons-react';
 
 const Earnings = () => (
   <Card
@@ -25,21 +25,12 @@ const Earnings = () => (
             marginLeft: 'auto',
           }}
         >
-          <Fab
-            size="medium"
-            color="secondary"
-            aria-label="add"
-          >
+          <Fab size="medium" color="secondary" aria-label="add">
             <IconCurrencyDollar width="21" height="21" />
-
           </Fab>
         </Box>
       </Box>
-      <Typography
-        variant="h1"
-        fontWeight="500" mt={3} mb={0}
-        gutterBottom
-      >
+      <Typography variant="h1" fontWeight="500" mt={3} mb={0} gutterBottom>
         $93,438.78
       </Typography>
       <Typography

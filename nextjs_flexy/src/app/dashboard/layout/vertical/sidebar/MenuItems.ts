@@ -1,4 +1,4 @@
-import { uniqueId } from "lodash";
+import { uniqueId } from 'lodash';
 
 import {
   IconBuildingFactory,
@@ -13,7 +13,7 @@ import {
   IconTruck,
   IconUserCircle,
   IconUsers,
-} from "@tabler/icons-react";
+} from '@tabler/icons-react';
 
 interface MenuitemsType {
   [x: string]: any;
@@ -33,41 +33,41 @@ interface MenuitemsType {
 const Menuitems: MenuitemsType[] = [
   {
     navlabel: true,
-    subheader: "🏠 메인",
+    subheader: '🏠 메인',
   },
   {
     id: uniqueId(),
-    title: "마이페이지",
+    title: '마이페이지',
     icon: IconHome,
-    href: "/dashboard",
+    href: '/dashboard',
   },
   {
     navlabel: true,
-    subheader: "📋 서비스 신청",
+    subheader: '📋 서비스 신청',
   },
   {
     id: uniqueId(),
-    title: "시장조사",
+    title: '시장조사',
     icon: IconSearch,
-    href: "/application/market-research",
-    chip: "MR",
-    chipColor: "primary",
+    href: '/application/market-research',
+    chip: 'MR',
+    chipColor: 'primary',
   },
   {
     id: uniqueId(),
-    title: "공장컨택",
+    title: '공장컨택',
     icon: IconBuildingFactory,
-    href: "/application/factory-contact",
-    chip: "FC",
-    chipColor: "secondary",
+    href: '/application/factory-contact',
+    chip: 'FC',
+    chipColor: 'secondary',
   },
   {
     id: uniqueId(),
-    title: "검품감사",
+    title: '검품감사',
     icon: IconClipboardList,
-    href: "/application/inspection",
-    chip: "QC",
-    chipColor: "success",
+    href: '/application/inspection',
+    chip: 'QC',
+    chipColor: 'success',
   },
   // 샘플링과 대량발주는 숨김 처리 (삭제하지 않음)
   // {
@@ -88,25 +88,25 @@ const Menuitems: MenuitemsType[] = [
   // },
   {
     navlabel: true,
-    subheader: "📊 주문 조회",
+    subheader: '📊 주문 조회',
   },
   {
     id: uniqueId(),
-    title: "시장조사 조회",
+    title: '시장조사 조회',
     icon: IconSearch,
-    href: "/dashboard/orders/market-research",
+    href: '/dashboard/orders/market-research',
   },
   {
     id: uniqueId(),
-    title: "공장컨택 조회",
+    title: '공장컨택 조회',
     icon: IconBuildingFactory,
-    href: "/dashboard/orders/factory-contact",
+    href: '/dashboard/orders/factory-contact',
   },
   {
     id: uniqueId(),
-    title: "검품감사 조회",
+    title: '검품감사 조회',
     icon: IconClipboardList,
-    href: "/dashboard/orders/inspection",
+    href: '/dashboard/orders/inspection',
   },
   // 샘플링과 대량주문 조회는 숨김 처리 (삭제하지 않음)
   // {
@@ -123,13 +123,13 @@ const Menuitems: MenuitemsType[] = [
   // },
   {
     navlabel: true,
-    subheader: "⚡ 빠른 액세스",
+    subheader: '⚡ 빠른 액세스',
   },
   {
     id: uniqueId(),
-    title: "내 프로필",
+    title: '내 프로필',
     icon: IconUserCircle,
-    href: "/dashboard/profile",
+    href: '/dashboard/profile',
   },
 ];
 

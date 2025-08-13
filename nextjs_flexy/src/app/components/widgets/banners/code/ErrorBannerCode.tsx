@@ -1,10 +1,10 @@
-import CodeDialog from "@/app/components/shared/CodeDialog";
-import React from "react";
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const ErrorBannerCode = () => {
-    return (
-        <>
-            <CodeDialog>
-                {`
+  return (
+    <>
+      <CodeDialog>
+        {`
 import { CardContent, Typography, Button, Card } from '@mui/material';
 import { Box } from '@mui/system';
 import Image from 'next/image';
@@ -32,9 +32,9 @@ const Banner4 = () => {
 
 export default Banner4;
 `}
-            </CodeDialog>
-        </>
-    );
+      </CodeDialog>
+    </>
+  );
 };
 
 export default ErrorBannerCode;

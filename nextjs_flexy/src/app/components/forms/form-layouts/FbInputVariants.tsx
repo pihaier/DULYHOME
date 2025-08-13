@@ -1,11 +1,11 @@
-"use client";
-import React from "react";
-import { FormControl } from "@mui/material";
-import CustomTextField from "../theme-elements/CustomTextField";
-import CustomFormLabel from "../theme-elements/CustomFormLabel";
-import ParentCard from "../../shared/ParentCard";
+'use client';
+import React from 'react';
+import { FormControl } from '@mui/material';
+import CustomTextField from '../theme-elements/CustomTextField';
+import CustomFormLabel from '../theme-elements/CustomFormLabel';
+import ParentCard from '../../shared/ParentCard';
 
-import InputVariantsCode from "@/app/components/forms/form-layouts/code/InputVariantsCode";
+import InputVariantsCode from '@/app/components/forms/form-layouts/code/InputVariantsCode';
 
 const FbInputVariants = () => {
   return (
@@ -26,26 +26,18 @@ const FbInputVariants = () => {
           fullWidth
           required
           sx={{
-            "& input:valid + fieldset": {
-              borderColor: "#39cb7f",
+            '& input:valid + fieldset': {
+              borderColor: '#39cb7f',
             },
-            "& input:invalid + fieldset": {
-              borderColor: "#fc4b6c",
+            '& input:invalid + fieldset': {
+              borderColor: '#fc4b6c',
             },
           }}
         />
         <CustomFormLabel htmlFor="error-input">Error Input</CustomFormLabel>
-        <CustomTextField
-          id="error-input"
-          variant="outlined"
-          fullWidth
-          required
-          error
-        />
+        <CustomTextField id="error-input" variant="outlined" fullWidth required error />
         <FormControl fullWidth error>
-          <CustomFormLabel htmlFor="error-text-input">
-            Input with Error text
-          </CustomFormLabel>
+          <CustomFormLabel htmlFor="error-text-input">Input with Error text</CustomFormLabel>
           <CustomTextField
             id="error-text-input"
             variant="outlined"

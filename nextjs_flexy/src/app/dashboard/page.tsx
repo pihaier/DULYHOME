@@ -1,13 +1,13 @@
-"use client";
-import React from "react";
-import { Grid, Box } from "@mui/material";
-import PageContainer from "@/app/components/container/PageContainer";
+'use client';
+import React from 'react';
+import { Grid, Box } from '@mui/material';
+import PageContainer from '@/app/components/container/PageContainer';
 // components
-import WelcomeCard from "@/app/components/dashboard/dashboard1/TheWelcomeCard";
-import MyOrderStatsCards from "@/app/components/dashboard/MyOrderStatsCards";
-import RecentApplications from "@/app/components/dashboard/RecentApplications";
-import PendingConfirmations from "@/app/components/dashboard/PendingConfirmations";
-import UnreadMessagesWidget from "@/app/components/dashboard/UnreadMessagesWidget";
+import WelcomeCard from '@/app/components/dashboard/dashboard1/TheWelcomeCard';
+import MyOrderStatsCards from '@/app/components/dashboard/MyOrderStatsCards';
+import RecentApplications from '@/app/components/dashboard/RecentApplications';
+import PendingConfirmations from '@/app/components/dashboard/PendingConfirmations';
+import UnreadMessagesWidget from '@/app/components/dashboard/UnreadMessagesWidget';
 
 export default function Dashboard() {
   return (
@@ -18,31 +18,35 @@ export default function Dashboard() {
           <Grid
             size={{
               xs: 12,
-              lg: 4
-            }}>
+              lg: 4,
+            }}
+          >
             <WelcomeCard />
           </Grid>
           <Grid
             size={{
               xs: 12,
-              lg: 8
-            }}>
+              lg: 8,
+            }}
+          >
             <MyOrderStatsCards />
           </Grid>
-          
+
           {/* ------------------------- row 2: 내 최근 활동 ------------------------- */}
           <Grid
             size={{
               xs: 12,
-              lg: 6
-            }}>
+              lg: 6,
+            }}
+          >
             <RecentApplications />
           </Grid>
           <Grid
             size={{
               xs: 12,
-              lg: 6
-            }}>
+              lg: 6,
+            }}
+          >
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
               <PendingConfirmations />
               <UnreadMessagesWidget />

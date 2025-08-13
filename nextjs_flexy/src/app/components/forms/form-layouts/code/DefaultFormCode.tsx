@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const DefaultFormCode = () => {
   return (
     <>
@@ -369,7 +369,7 @@ const handleChange3 = (event) => {
 `}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default DefaultFormCode
+export default DefaultFormCode;

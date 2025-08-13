@@ -1,12 +1,7 @@
-import React from "react";
+import React from 'react';
 import { Typography, Box, Fab, Button, Divider, Stack } from '@mui/material';
-import DashboardCard from "../../shared/DashboardCard";
-import {
-  IconCheck,
-  IconCreditCard,
-  IconCurrencyDollar,
-  IconShield,
-} from "@tabler/icons-react";
+import DashboardCard from '../../shared/DashboardCard';
+import { IconCheck, IconCreditCard, IconCurrencyDollar, IconShield } from '@tabler/icons-react';
 
 const RecentTransactions = () => {
   const transactions = [
@@ -57,15 +52,12 @@ const RecentTransactions = () => {
     },
   ];
 
-
   return (
     <DashboardCard title="Recent Transactions" subtitle="List of payments">
       <>
-        <Box mb={3}
-        >
+        <Box mb={3}>
           {transactions.map((transaction) => (
-            <Stack direction='row' alignItems='center' mt={2} pt={1}
-              key={transaction.title}>
+            <Stack direction="row" alignItems="center" mt={2} pt={1} key={transaction.title}>
               <Fab
                 sx={{
                   backgroundColor: transaction.btnbg,
@@ -74,9 +66,9 @@ const RecentTransactions = () => {
                   height: '45px',
                   width: '45px',
                   borderRadius: '10px',
-                  "&:hover": {
+                  '&:hover': {
                     backgroundColor: transaction.btnbg,
-                  }
+                  },
                 }}
                 aria-label="transactions"
               >
@@ -88,7 +80,7 @@ const RecentTransactions = () => {
                   {transaction.subtitle}
                 </Typography>
               </Box>
-              <Box ml='auto'>
+              <Box ml="auto">
                 <Typography
                   color={transaction.type === 'profit' ? 'success.main' : 'error.main'}
                   variant="h6"
@@ -100,7 +92,7 @@ const RecentTransactions = () => {
           ))}
         </Box>
         <Divider />
-        <Stack direction='row' alignItems='center' mt={3} justifyContent='space-between'>
+        <Stack direction="row" alignItems="center" mt={3} justifyContent="space-between">
           <Button variant="contained" color="secondary">
             Add
           </Button>

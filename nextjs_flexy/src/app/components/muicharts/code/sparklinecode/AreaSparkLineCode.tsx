@@ -1,5 +1,5 @@
-import React from 'react'
-import CodeDialog from '@/app/components/shared/CodeDialog'
+import React from 'react';
+import CodeDialog from '@/app/components/shared/CodeDialog';
 
 function AreaSparkLineCode() {
   return (
@@ -45,7 +45,7 @@ export default function AreaSparkLineChart() {
     }
 `}
     </CodeDialog>
-  )
+  );
 }
 
-export default AreaSparkLineCode
+export default AreaSparkLineCode;

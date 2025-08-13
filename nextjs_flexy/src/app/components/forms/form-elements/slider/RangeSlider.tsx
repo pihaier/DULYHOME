@@ -1,32 +1,32 @@
-'use client'
+'use client';
 
-import React from 'react'
-import { Slider } from '@mui/material'
-import ChildCard from '@/app/components/shared/ChildCard'
+import React from 'react';
+import { Slider } from '@mui/material';
+import ChildCard from '@/app/components/shared/ChildCard';
 
-import TemperatureRangeCode from '@/app/components/forms/form-elements/slider/code/TemperatureRangeCode'
+import TemperatureRangeCode from '@/app/components/forms/form-elements/slider/code/TemperatureRangeCode';
 
 function valuetext2(value: number) {
-  return `${value}°C`
+  return `${value}°C`;
 }
 
 const RangeSlider = () => {
-  const [value2, setValue2] = React.useState<number[]>([20, 37])
+  const [value2, setValue2] = React.useState<number[]>([20, 37]);
   const handleChange2 = (event2: any, newValue2: React.SetStateAction<number[]>) => {
-    setValue2(newValue2)
-  }
+    setValue2(newValue2);
+  };
 
   return (
-    <ChildCard title='Range Default' codeModel={<TemperatureRangeCode />}>
+    <ChildCard title="Range Default" codeModel={<TemperatureRangeCode />}>
       <Slider
         getAriaLabel={() => 'Temperature range'}
         value={value2}
         onChange={handleChange2}
-        valueLabelDisplay='auto'
+        valueLabelDisplay="auto"
         getAriaValueText={valuetext2}
       />
     </ChildCard>
-  )
-}
+  );
+};
 
-export default RangeSlider
+export default RangeSlider;

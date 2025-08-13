@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const VerticalButtonGroupCode = () => {
   return (
     <>
@@ -34,7 +34,7 @@ const VerticalButtonGroupCode = () => {
   </Stack>`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default VerticalButtonGroupCode
+export default VerticalButtonGroupCode;

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { 
-  Box, 
-  Tabs, 
-  Tab, 
-  Card, 
-  CardContent, 
-  Typography, 
+import {
+  Box,
+  Tabs,
+  Tab,
+  Card,
+  CardContent,
+  Typography,
   Chip,
   List,
   ListItem,
@@ -17,7 +17,7 @@ import {
   Paper,
   Stack,
   Alert,
-  Button
+  Button,
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { OrderData } from '../hooks/useOrderData';
@@ -43,11 +43,7 @@ function TabPanel(props: TabPanelProps) {
       aria-labelledby={`factory-contact-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          {children}
-        </Box>
-      )}
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
     </div>
   );
 }
@@ -76,44 +72,39 @@ const FactoryContactTabs: React.FC<FactoryContactTabsProps> = ({ orderData }) =>
       <TabPanel value={value} index={0}>
         <Grid container spacing={3}>
           <Grid size={{ xs: 12, md: 6 }}>
-            <Typography variant="h6" gutterBottom fontWeight="bold">제품 정보</Typography>
+            <Typography variant="h6" gutterBottom fontWeight="bold">
+              제품 정보
+            </Typography>
             <List>
               <ListItem divider>
-                <ListItemText 
-                  primary="제품명 (한국어)" 
-                  secondary={serviceData.product_name} 
-                />
+                <ListItemText primary="제품명 (한국어)" secondary={serviceData.product_name} />
               </ListItem>
-  
+
               <ListItem divider>
-                <ListItemText 
-                  primary="카테고리" 
-                  secondary={serviceData.product_category} 
-                />
+                <ListItemText primary="카테고리" secondary={serviceData.product_category} />
               </ListItem>
               <ListItem divider>
-                <ListItemText 
-                  primary="목표 단가" 
-                  secondary={`₩${serviceData.target_price?.toLocaleString()} / ${serviceData.target_price_rmb}`} 
+                <ListItemText
+                  primary="목표 단가"
+                  secondary={`₩${serviceData.target_price?.toLocaleString()} / ${serviceData.target_price_rmb}`}
                 />
               </ListItem>
               <ListItem divider>
-                <ListItemText 
-                  primary="MOQ" 
-                  secondary={`${serviceData.moq?.toLocaleString()}개`} 
-                />
+                <ListItemText primary="MOQ" secondary={`${serviceData.moq?.toLocaleString()}개`} />
               </ListItem>
               <ListItem>
-                <ListItemText 
-                  primary="첫 주문 수량" 
-                  secondary={`${serviceData.first_order_quantity?.toLocaleString()}개`} 
+                <ListItemText
+                  primary="첫 주문 수량"
+                  secondary={`${serviceData.first_order_quantity?.toLocaleString()}개`}
                 />
               </ListItem>
             </List>
           </Grid>
 
           <Grid size={{ xs: 12, md: 6 }}>
-            <Typography variant="h6" gutterBottom fontWeight="bold">상세 사양</Typography>
+            <Typography variant="h6" gutterBottom fontWeight="bold">
+              상세 사양
+            </Typography>
             <Paper sx={{ p: 2, bgcolor: 'grey.50' }} elevation={0}>
               <Typography variant="body2" sx={{ whiteSpace: 'pre-line' }}>
                 {serviceData.required_specs}
@@ -125,7 +116,9 @@ const FactoryContactTabs: React.FC<FactoryContactTabsProps> = ({ orderData }) =>
 
       {/* 공장현황 탭 */}
       <TabPanel value={value} index={1}>
-        <Typography variant="h6" gutterBottom fontWeight="bold">공장 컨택 현황</Typography>
+        <Typography variant="h6" gutterBottom fontWeight="bold">
+          공장 컨택 현황
+        </Typography>
         <Stack spacing={2}>
           {serviceData.preferred_factories?.map((factory: any, idx: number) => (
             <Paper key={idx} sx={{ p: 2 }} elevation={0} variant="outlined">
@@ -146,10 +139,10 @@ const FactoryContactTabs: React.FC<FactoryContactTabsProps> = ({ orderData }) =>
                   <Typography variant="body2">납기: {factory.lead_time}</Typography>
                 </Grid>
                 <Grid size={{ xs: 6 }}>
-                  <Chip 
-                    label={factory.status} 
-                    size="small" 
-                    color={factory.status === "견적 접수완료" ? "success" : "warning"}
+                  <Chip
+                    label={factory.status}
+                    size="small"
+                    color={factory.status === '견적 접수완료' ? 'success' : 'warning'}
                   />
                 </Grid>
               </Grid>
@@ -159,14 +152,18 @@ const FactoryContactTabs: React.FC<FactoryContactTabsProps> = ({ orderData }) =>
 
         {serviceData.factory_audit_score && (
           <Box sx={{ mt: 3 }}>
-            <Typography variant="h6" gutterBottom>공장 평가 점수</Typography>
+            <Typography variant="h6" gutterBottom>
+              공장 평가 점수
+            </Typography>
             <Grid container spacing={2}>
               {Object.entries(serviceData.factory_audit_score).map(([factory, score]) => (
                 <Grid size={{ xs: 12, md: 4 }} key={factory}>
                   <Card variant="outlined">
                     <CardContent>
                       <Typography variant="subtitle2">{factory}</Typography>
-                      <Typography variant="h4" color="primary">{String(score)}점</Typography>
+                      <Typography variant="h4" color="primary">
+                        {String(score)}점
+                      </Typography>
                     </CardContent>
                   </Card>
                 </Grid>
@@ -180,7 +177,9 @@ const FactoryContactTabs: React.FC<FactoryContactTabsProps> = ({ orderData }) =>
       <TabPanel value={value} index={2}>
         <Grid container spacing={3}>
           <Grid size={{ xs: 12, md: 6 }}>
-            <Typography variant="h6" gutterBottom fontWeight="bold">거래 조건</Typography>
+            <Typography variant="h6" gutterBottom fontWeight="bold">
+              거래 조건
+            </Typography>
             <Table size="small">
               <TableBody>
                 <TableRow>
@@ -204,24 +203,38 @@ const FactoryContactTabs: React.FC<FactoryContactTabsProps> = ({ orderData }) =>
           </Grid>
 
           <Grid size={{ xs: 12, md: 6 }}>
-            <Typography variant="h6" gutterBottom fontWeight="bold">인증 현황</Typography>
+            <Typography variant="h6" gutterBottom fontWeight="bold">
+              인증 현황
+            </Typography>
             <Stack spacing={1}>
-              {serviceData.certification_status && Object.entries(serviceData.certification_status).map(([cert, status]) => (
-                <Box key={cert} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <Typography variant="body2">{cert}</Typography>
-                  <Chip 
-                    label={String(status)} 
-                    size="small"
-                    color={String(status) === "보유" ? "success" : String(status) === "진행중" ? "warning" : "default"}
-                  />
-                </Box>
-              ))}
+              {serviceData.certification_status &&
+                Object.entries(serviceData.certification_status).map(([cert, status]) => (
+                  <Box
+                    key={cert}
+                    sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+                  >
+                    <Typography variant="body2">{cert}</Typography>
+                    <Chip
+                      label={String(status)}
+                      size="small"
+                      color={
+                        String(status) === '보유'
+                          ? 'success'
+                          : String(status) === '진행중'
+                            ? 'warning'
+                            : 'default'
+                      }
+                    />
+                  </Box>
+                ))}
             </Stack>
           </Grid>
         </Grid>
 
         <Box sx={{ mt: 3 }}>
-          <Typography variant="h6" gutterBottom fontWeight="bold">특별 요구사항</Typography>
+          <Typography variant="h6" gutterBottom fontWeight="bold">
+            특별 요구사항
+          </Typography>
           <Card variant="outlined">
             <CardContent>
               <Typography variant="body2" sx={{ whiteSpace: 'pre-line' }}>
@@ -234,26 +247,38 @@ const FactoryContactTabs: React.FC<FactoryContactTabsProps> = ({ orderData }) =>
 
       {/* 진행상황 탭 */}
       <TabPanel value={value} index={3}>
-        <Typography variant="h6" gutterBottom fontWeight="bold">컨택 진행 이력</Typography>
+        <Typography variant="h6" gutterBottom fontWeight="bold">
+          컨택 진행 이력
+        </Typography>
         <Stack spacing={2}>
           {serviceData.contact_progress?.map((progress: any, idx: number) => (
             <Paper key={idx} sx={{ p: 2 }} elevation={0} variant="outlined">
               <Grid container spacing={2}>
                 <Grid size={{ xs: 12, md: 2 }}>
-                  <Typography variant="caption" color="text.secondary">날짜</Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    날짜
+                  </Typography>
                   <Typography variant="body2">{progress.date}</Typography>
                 </Grid>
                 <Grid size={{ xs: 12, md: 3 }}>
-                  <Typography variant="caption" color="text.secondary">공장</Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    공장
+                  </Typography>
                   <Typography variant="body2">{progress.factory}</Typography>
                 </Grid>
                 <Grid size={{ xs: 12, md: 4 }}>
-                  <Typography variant="caption" color="text.secondary">진행 내용</Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    진행 내용
+                  </Typography>
                   <Typography variant="body2">{progress.action}</Typography>
                 </Grid>
                 <Grid size={{ xs: 12, md: 3 }}>
-                  <Typography variant="caption" color="text.secondary">결과</Typography>
-                  <Typography variant="body2" fontWeight="bold">{progress.result}</Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    결과
+                  </Typography>
+                  <Typography variant="body2" fontWeight="bold">
+                    {progress.result}
+                  </Typography>
                 </Grid>
               </Grid>
             </Paper>
@@ -262,15 +287,26 @@ const FactoryContactTabs: React.FC<FactoryContactTabsProps> = ({ orderData }) =>
 
         {serviceData.confirmation_requests && (
           <Box sx={{ mt: 3 }}>
-            <Typography variant="h6" gutterBottom fontWeight="bold">확인 요청 사항</Typography>
+            <Typography variant="h6" gutterBottom fontWeight="bold">
+              확인 요청 사항
+            </Typography>
             <Stack spacing={2}>
               {serviceData.confirmation_requests.map((req: any) => (
                 <Card key={req.id} variant="outlined">
                   <CardContent>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-                      <Typography variant="subtitle1" fontWeight="bold">{req.title}</Typography>
-                      <Chip 
-                        label={req.status === 'confirmed' ? '확인완료' : '대기중'} 
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        mb: 1,
+                      }}
+                    >
+                      <Typography variant="subtitle1" fontWeight="bold">
+                        {req.title}
+                      </Typography>
+                      <Chip
+                        label={req.status === 'confirmed' ? '확인완료' : '대기중'}
                         color={req.status === 'confirmed' ? 'success' : 'warning'}
                         size="small"
                       />
@@ -300,37 +336,31 @@ const FactoryContactTabs: React.FC<FactoryContactTabsProps> = ({ orderData }) =>
       <TabPanel value={value} index={4}>
         <Grid container spacing={3}>
           <Grid size={{ xs: 12, md: 6 }}>
-            <Typography variant="h6" gutterBottom fontWeight="bold">샘플 정보</Typography>
+            <Typography variant="h6" gutterBottom fontWeight="bold">
+              샘플 정보
+            </Typography>
             <Card variant="outlined">
               <CardContent>
                 <List dense>
                   <ListItem divider>
-                    <ListItemText 
-                      primary="샘플 상태"
-                    />
-                    <Chip 
-                      label={serviceData.sample_status} 
-                      size="small" 
-                      color={serviceData.sample_status === "발송완료" ? "success" : "warning"}
+                    <ListItemText primary="샘플 상태" />
+                    <Chip
+                      label={serviceData.sample_status}
+                      size="small"
+                      color={serviceData.sample_status === '발송완료' ? 'success' : 'warning'}
                     />
                   </ListItem>
                   <ListItem divider>
-                    <ListItemText 
-                      primary="운송장 번호"
-                      secondary={serviceData.sample_tracking}
-                    />
+                    <ListItemText primary="운송장 번호" secondary={serviceData.sample_tracking} />
                   </ListItem>
                   <ListItem divider>
-                    <ListItemText 
+                    <ListItemText
                       primary="도착 예정일"
                       secondary={serviceData.sample_received_date}
                     />
                   </ListItem>
                   <ListItem>
-                    <ListItemText 
-                      primary="피드백 상태"
-                      secondary={serviceData.sample_feedback}
-                    />
+                    <ListItemText primary="피드백 상태" secondary={serviceData.sample_feedback} />
                   </ListItem>
                 </List>
               </CardContent>
@@ -338,12 +368,20 @@ const FactoryContactTabs: React.FC<FactoryContactTabsProps> = ({ orderData }) =>
           </Grid>
 
           <Grid size={{ xs: 12, md: 6 }}>
-            <Typography variant="h6" gutterBottom fontWeight="bold">문서 자료</Typography>
+            <Typography variant="h6" gutterBottom fontWeight="bold">
+              문서 자료
+            </Typography>
             <Stack spacing={1}>
               {serviceData.documents?.map((doc: any, idx: number) => (
                 <Card key={idx} variant="outlined">
                   <CardContent sx={{ py: 1.5 }}>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                      }}
+                    >
                       <Typography variant="body2">📄 {doc.name}</Typography>
                       <Button size="small" disabled>
                         다운로드
@@ -357,9 +395,7 @@ const FactoryContactTabs: React.FC<FactoryContactTabsProps> = ({ orderData }) =>
         </Grid>
 
         <Box sx={{ mt: 3 }}>
-          <Alert severity="info">
-            모든 문서는 계약 체결 후 원본이 제공됩니다.
-          </Alert>
+          <Alert severity="info">모든 문서는 계약 체결 후 원본이 제공됩니다.</Alert>
         </Box>
       </TabPanel>
     </Card>

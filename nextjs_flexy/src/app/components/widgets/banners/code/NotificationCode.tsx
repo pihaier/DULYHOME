@@ -1,10 +1,10 @@
-import CodeDialog from "@/app/components/shared/CodeDialog";
-import React from "react";
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const NotificationCode = () => {
-    return (
-        <>
-            <CodeDialog>
-                {`
+  return (
+    <>
+      <CodeDialog>
+        {`
 import { CardContent, Typography, Button, Card } from '@mui/material';
 import { Box } from '@mui/system';
 import Image from 'next/image';
@@ -33,9 +33,9 @@ const Banner2 = () => {
 
 export default Banner2;
 `}
-            </CodeDialog>
-        </>
-    );
+      </CodeDialog>
+    </>
+  );
 };
 
 export default NotificationCode;

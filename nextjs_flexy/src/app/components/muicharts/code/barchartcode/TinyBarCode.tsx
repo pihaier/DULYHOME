@@ -1,5 +1,5 @@
-import React from 'react'
-import CodeDialog from '@/app/components/shared/CodeDialog'
+import React from 'react';
+import CodeDialog from '@/app/components/shared/CodeDialog';
 
 function TinyBarCode() {
   return (
@@ -57,7 +57,7 @@ const TinyBarChart = () => {
 export default TinyBarChart;
     `}
     </CodeDialog>
-  )
+  );
 }
 
-export default TinyBarCode
+export default TinyBarCode;

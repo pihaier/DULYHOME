@@ -8,7 +8,6 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { styled } from '@mui/material/styles';
 import { IconRocket } from '@tabler/icons-react';
 
-
 // third party
 import { motion } from 'framer-motion';
 
@@ -18,7 +17,6 @@ const StyledButton = styled(Button)(() => ({
 }));
 
 const BannerContent = () => {
-
   const lgDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'));
 
   return (
@@ -52,8 +50,8 @@ const BannerContent = () => {
           }}
         >
           Easy to Customize
-          <Typography component={'span'} variant="inherit" ml='4px' color={'primary'}>
-          Admin Dashboard
+          <Typography component={'span'} variant="inherit" ml="4px" color={'primary'}>
+            Admin Dashboard
           </Typography>
         </Typography>
       </motion.div>
@@ -69,8 +67,8 @@ const BannerContent = () => {
           }}
         >
           <Typography variant="h5" fontWeight={300}>
-            Flexy comes with light & dark color skins, well designed dashboards, applications
-            and pages.
+            Flexy comes with light & dark color skins, well designed dashboards, applications and
+            pages.
           </Typography>
         </motion.div>
       </Box>

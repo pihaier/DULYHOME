@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const FullScreenCode = () => {
   return (
     <>
@@ -77,7 +77,7 @@ return (
 );`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default FullScreenCode
+export default FullScreenCode;

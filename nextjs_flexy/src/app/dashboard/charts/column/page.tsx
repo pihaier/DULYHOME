@@ -1,13 +1,13 @@
-"use client"
+'use client';
 
-import dynamic from "next/dynamic";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+import dynamic from 'next/dynamic';
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 import { useTheme } from '@mui/material/styles';
 import PageContainer from '@/app/components/container/PageContainer';
 import Breadcrumb from '@/app/dashboard/layout/shared/breadcrumb/Breadcrumb';
 import ParentCard from '@/app/components/shared/ParentCard';
-import React from "react";
-import { ApexOptions } from "apexcharts";
+import React from 'react';
+import { ApexOptions } from 'apexcharts';
 
 const BCrumb = [
   {
@@ -20,7 +20,6 @@ const BCrumb = [
 ];
 
 const ColumnChart = () => {
-
   // chart color
   const theme = useTheme();
   const primary = theme.palette.primary.main;
@@ -76,7 +75,6 @@ const ColumnChart = () => {
     legend: {
       show: true,
       position: 'bottom',
-
     },
   };
   const seriescolumnchart: ApexAxisChartSeries = [
@@ -99,12 +97,13 @@ const ColumnChart = () => {
       {/* breadcrumb */}
       <Breadcrumb title="Column Chart" items={BCrumb} />
       {/* end breadcrumb */}
-      <ParentCard title='Column Chart'>
+      <ParentCard title="Column Chart">
         <Chart
           options={optionscolumnchart}
           series={seriescolumnchart}
           type="bar"
-          height="300px" width={"100%"}
+          height="300px"
+          width={'100%'}
         />
       </ParentCard>
     </PageContainer>

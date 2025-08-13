@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React from 'react';
 import {
   Button,
@@ -36,7 +36,9 @@ const MaxWidthDialog = () => {
     setMaxWidth(event.target.value);
   };
 
-  const handleFullWidthChange = (event: { target: { checked: boolean | ((prevState: boolean) => boolean); }; }) => {
+  const handleFullWidthChange = (event: {
+    target: { checked: boolean | ((prevState: boolean) => boolean) };
+  }) => {
     setFullWidth(event.target.checked);
   };
 

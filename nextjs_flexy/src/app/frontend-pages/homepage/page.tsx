@@ -15,7 +15,10 @@ import ScrollToTop from '../../components/frontend-pages/shared/scroll-to-top';
 
 const HomePage = () => {
   return (
-    <PageContainer title="두리무역 - 한중 무역 전문 서비스" description="7년간의 경험을 바탕으로 한-중 무역의 모든 과정을 지원하는 두리무역입니다. 시장조사, 샘플링, 대량주문, 검품감사 전문 서비스를 제공합니다.">
+    <PageContainer
+      title="두리무역 - 한중 무역 전문 서비스"
+      description="7년간의 경험을 바탕으로 한-중 무역의 모든 과정을 지원하는 두리무역입니다. 시장조사, 샘플링, 대량주문, 검품감사 전문 서비스를 제공합니다."
+    >
       <HeaderAlert />
       <HpHeader />
       <Banner />

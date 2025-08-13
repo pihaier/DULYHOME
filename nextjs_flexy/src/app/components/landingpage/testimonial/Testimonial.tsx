@@ -107,7 +107,7 @@ const Testimonial = () => {
   };
 
   return (
-    <Box pt={10} pb={16} sx={{backgroundColor: (theme) => theme.palette.background.paper}}>
+    <Box pt={10} pb={16} sx={{ backgroundColor: (theme) => theme.palette.background.paper }}>
       <Container maxWidth="lg">
         <TestimonialTitle />
         <Box mt={5}>

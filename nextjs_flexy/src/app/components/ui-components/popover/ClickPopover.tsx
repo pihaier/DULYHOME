@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React from 'react';
 import { Popover, Typography, Button, Box } from '@mui/material';
 

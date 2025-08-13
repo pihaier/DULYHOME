@@ -1,13 +1,6 @@
-'use client'
+'use client';
 import BlankCard from '../../shared/BlankCard';
-import {
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Divider
-} from '@mui/material';
+import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider } from '@mui/material';
 
 import { IconInbox, IconMailOpened } from '@tabler/icons-react';
 

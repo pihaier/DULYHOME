@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { Grid, Box, Typography } from '@mui/material';
 import PageContainer from '@/app/components/container/PageContainer';
 import Logo from '@/app/dashboard/layout/shared/logo/Logo';
@@ -7,7 +7,7 @@ import Image from 'next/image';
 
 export default function TwoSteps() {
   return (
-    (<PageContainer title="Two steps Page" description="this is Sample page">
+    <PageContainer title="Two steps Page" description="this is Sample page">
       <Grid container spacing={0} justifyContent="center" sx={{ overflowX: 'hidden' }}>
         <Grid
           sx={{
@@ -27,8 +27,9 @@ export default function TwoSteps() {
             xs: 12,
             sm: 12,
             lg: 8,
-            xl: 9
-          }}>
+            xl: 9,
+          }}
+        >
           <Box position="relative">
             <Box px={3}>
               <Logo />
@@ -45,11 +46,14 @@ export default function TwoSteps() {
               }}
             >
               <Image
-                src={"/images/backgrounds/login-bg.svg"}
-                alt="bg" width={500} height={500}
+                src={'/images/backgrounds/login-bg.svg'}
+                alt="bg"
+                width={500}
+                height={500}
                 style={{
                   width: '100%',
-                  maxWidth: '500px', maxHeight: '500px',
+                  maxWidth: '500px',
+                  maxHeight: '500px',
                 }}
               />
             </Box>
@@ -63,16 +67,17 @@ export default function TwoSteps() {
             xs: 12,
             sm: 12,
             lg: 4,
-            xl: 3
-          }}>
+            xl: 3,
+          }}
+        >
           <Box p={4}>
             <Typography variant="h4" fontWeight="700">
               Two Step Verification
             </Typography>
 
             <Typography variant="subtitle1" color="textSecondary" mt={2} mb={1}>
-              We sent a verification code to your mobile. Enter the code from the mobile in the field
-              below.
+              We sent a verification code to your mobile. Enter the code from the mobile in the
+              field below.
             </Typography>
             <Typography variant="subtitle1" fontWeight="700" mb={1}>
               ******1234
@@ -81,7 +86,6 @@ export default function TwoSteps() {
           </Box>
         </Grid>
       </Grid>
-    </PageContainer>)
+    </PageContainer>
   );
-};
-
+}

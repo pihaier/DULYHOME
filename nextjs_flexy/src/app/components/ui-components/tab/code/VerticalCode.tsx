@@ -1,10 +1,10 @@
-import CodeDialog from "@/app/components/shared/CodeDialog";
-import React from "react";
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const IconBottomCode = () => {
-    return (
-        <>
-            <CodeDialog>
-                {`
+  return (
+    <>
+      <CodeDialog>
+        {`
 "use client";
 import * as React from 'react';
 import {Box, Divider } from '@mui/material';
@@ -50,9 +50,9 @@ const handleChange = (event: React.SyntheticEvent, newValue: string) => {
         </Box>
     </Box>
 </TabContext>`}
-            </CodeDialog>
-        </>
-    );
+      </CodeDialog>
+    </>
+  );
 };
 
 export default IconBottomCode;

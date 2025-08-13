@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -39,12 +39,12 @@ interface ProfileSetupData {
 export default function ProfileSetup() {
   const router = useRouter();
   const supabase = createClient();
-  
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [user, setUser] = useState<any>(null);
   const [isOAuthUser, setIsOAuthUser] = useState(false);
-  
+
   const [profileData, setProfileData] = useState<ProfileSetupData>({
     role: 'customer', // erro.md: 고객 로그인은 무조건 고객임
     company_name: '',
@@ -63,7 +63,9 @@ export default function ProfileSetup() {
 
   useEffect(() => {
     const getUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
         // erro.md 요구사항: 로그인 성공 시 이전 페이지로 돌아가기
         // 현재 페이지를 returnUrl로 전달
@@ -72,28 +74,28 @@ export default function ProfileSetup() {
         return;
       }
       setUser(user);
-      
+
       // erro.md: OAuth 사용자 감지 - 고객 로그인은 무조건 고객임
       const isOAuth = user.app_metadata.provider !== 'email';
       setIsOAuthUser(isOAuth);
-      
+
       // OAuth 로그인인 경우 기본 정보 설정 및 역할을 customer로 고정
       if (isOAuth) {
-        setProfileData(prev => ({
+        setProfileData((prev) => ({
           ...prev,
           role: 'customer', // OAuth는 무조건 고객
           contact_person: user.user_metadata.full_name || user.email?.split('@')[0] || '',
         }));
       }
     };
-    
+
     getUser();
   }, [router, supabase]);
 
   const handleInputChange = (field: keyof ProfileSetupData, value: any) => {
-    setProfileData(prev => ({
+    setProfileData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
@@ -111,8 +113,10 @@ export default function ProfileSetup() {
 
     // 역할별 필수 필드 체크
     const requiredFields = ['role', 'company_name', 'contact_person', 'phone'];
-    const missingFields = requiredFields.filter(field => !profileData[field as keyof ProfileSetupData]);
-    
+    const missingFields = requiredFields.filter(
+      (field) => !profileData[field as keyof ProfileSetupData]
+    );
+
     if (missingFields.length > 0) {
       setError('필수 필드를 모두 입력해주세요.');
       setLoading(false);
@@ -133,7 +137,7 @@ export default function ProfileSetup() {
       if (existingProfile) {
         console.log('Profile already exists, updating instead of inserting');
         operation = 'update';
-        
+
         // 기존 프로필 업데이트
         const updateData = {
           role: isOAuthUser ? 'customer' : profileData.role,
@@ -151,7 +155,7 @@ export default function ProfileSetup() {
           terms_accepted_at: new Date().toISOString(),
           privacy_accepted_at: new Date().toISOString(),
           marketing_accepted_at: profileData.marketing_accepted ? new Date().toISOString() : null,
-          approval_status: (isOAuthUser || profileData.role === 'customer') ? 'approved' : 'pending',
+          approval_status: isOAuthUser || profileData.role === 'customer' ? 'approved' : 'pending',
           language_preference: 'ko',
           notification_enabled: true,
           updated_at: new Date().toISOString(),
@@ -163,7 +167,6 @@ export default function ProfileSetup() {
           .eq('user_id', user.id)
           .select();
       } else {
-
         // 새 프로필 생성
         const profileInsertData = {
           user_id: user.id,
@@ -184,17 +187,14 @@ export default function ProfileSetup() {
           terms_accepted_at: new Date().toISOString(),
           privacy_accepted_at: new Date().toISOString(),
           marketing_accepted_at: profileData.marketing_accepted ? new Date().toISOString() : null,
-          approval_status: (isOAuthUser || profileData.role === 'customer') ? 'approved' : 'pending',
+          approval_status: isOAuthUser || profileData.role === 'customer' ? 'approved' : 'pending',
           language_preference: 'ko',
           notification_enabled: true,
         };
 
         console.log('Attempting to insert profile data:', profileInsertData);
 
-        result = await supabase
-          .from('user_profiles')
-          .insert(profileInsertData)
-          .select();
+        result = await supabase.from('user_profiles').insert(profileInsertData).select();
       }
 
       console.log(`Profile ${operation} result:`, result.data);
@@ -205,10 +205,12 @@ export default function ProfileSetup() {
           message: result.error.message,
           details: result.error.details,
           hint: result.error.hint,
-          code: result.error.code
+          code: result.error.code,
         });
         // erro.md: 상세한 에러 정보 제공
-        setError(`프로필 ${operation === 'insert' ? '생성' : '업데이트'} 중 오류가 발생했습니다: ${result.error.message || '알 수 없는 오류'}`);
+        setError(
+          `프로필 ${operation === 'insert' ? '생성' : '업데이트'} 중 오류가 발생했습니다: ${result.error.message || '알 수 없는 오류'}`
+        );
         return;
       }
 
@@ -225,7 +227,6 @@ export default function ProfileSetup() {
       } else {
         router.push('/auth/auth1/login?message=approval_pending');
       }
-
     } catch (err) {
       console.error('Profile setup error:', err);
       setError('프로필 설정 중 오류가 발생했습니다.');
@@ -244,18 +245,12 @@ export default function ProfileSetup() {
 
   return (
     <PageContainer title="프로필 설정" description="계정 프로필을 설정해주세요">
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        minHeight="100vh"
-        py={4}
-      >
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" py={4}>
         <Paper elevation={3} sx={{ p: 4, maxWidth: 600, width: '100%' }}>
           <Typography variant="h4" mb={3} textAlign="center">
             프로필 설정
           </Typography>
-          
+
           <Typography variant="body2" color="textSecondary" mb={3} textAlign="center">
             서비스 이용을 위해 프로필 정보를 입력해주세요.
           </Typography>
@@ -274,7 +269,9 @@ export default function ProfileSetup() {
                   <CustomFormLabel>역할 *</CustomFormLabel>
                   <CustomSelect
                     value={profileData.role}
-                    onChange={(e: React.ChangeEvent<{ value: unknown }>) => handleInputChange('role', e.target.value as string)}
+                    onChange={(e: React.ChangeEvent<{ value: unknown }>) =>
+                      handleInputChange('role', e.target.value as string)
+                    }
                     fullWidth
                     required
                   >
@@ -290,7 +287,9 @@ export default function ProfileSetup() {
                 <CustomFormLabel>회사명 *</CustomFormLabel>
                 <CustomTextField
                   value={profileData.company_name}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('company_name', e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    handleInputChange('company_name', e.target.value)
+                  }
                   fullWidth
                   required
                 />
@@ -302,7 +301,9 @@ export default function ProfileSetup() {
                   <CustomFormLabel>회사명 (중국어)</CustomFormLabel>
                   <CustomTextField
                     value={profileData.company_name_chinese}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('company_name_chinese', e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      handleInputChange('company_name_chinese', e.target.value)
+                    }
                     fullWidth
                   />
                 </Box>
@@ -313,7 +314,9 @@ export default function ProfileSetup() {
                 <CustomFormLabel>담당자명 *</CustomFormLabel>
                 <CustomTextField
                   value={profileData.contact_person}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('contact_person', e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    handleInputChange('contact_person', e.target.value)
+                  }
                   fullWidth
                   required
                 />
@@ -324,7 +327,9 @@ export default function ProfileSetup() {
                 <CustomFormLabel>연락처 *</CustomFormLabel>
                 <CustomTextField
                   value={profileData.phone}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('phone', e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    handleInputChange('phone', e.target.value)
+                  }
                   fullWidth
                   required
                 />
@@ -339,16 +344,20 @@ export default function ProfileSetup() {
                     <CustomFormLabel>부서</CustomFormLabel>
                     <CustomTextField
                       value={profileData.department}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('department', e.target.value)}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        handleInputChange('department', e.target.value)
+                      }
                       fullWidth
                     />
                   </Box>
-                  
+
                   <Box>
                     <CustomFormLabel>직급</CustomFormLabel>
                     <CustomTextField
                       value={profileData.position}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('position', e.target.value)}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        handleInputChange('position', e.target.value)
+                      }
                       fullWidth
                     />
                   </Box>
@@ -356,14 +365,14 @@ export default function ProfileSetup() {
               )}
 
               {/* erro.md 요구사항: 전체 박스로 둘러서 전체 동의 체크 할 수 있게 */}
-              <Paper 
-                variant="outlined" 
-                sx={{ 
-                  p: 3, 
+              <Paper
+                variant="outlined"
+                sx={{
+                  p: 3,
                   backgroundColor: 'grey.50',
                   border: '2px solid',
                   borderColor: 'primary.main',
-                  borderRadius: 2
+                  borderRadius: 2,
                 }}
               >
                 <Stack spacing={2}>
@@ -375,7 +384,8 @@ export default function ProfileSetup() {
                       size="small"
                       variant="outlined"
                       onClick={() => {
-                        const allChecked = profileData.terms_accepted && profileData.privacy_accepted;
+                        const allChecked =
+                          profileData.terms_accepted && profileData.privacy_accepted;
                         handleInputChange('terms_accepted', !allChecked);
                         handleInputChange('privacy_accepted', !allChecked);
                         handleInputChange('marketing_accepted', !allChecked);
@@ -384,50 +394,56 @@ export default function ProfileSetup() {
                       전체 동의
                     </Button>
                   </Box>
-                  
+
                   <Stack spacing={1}>
                     <FormControlLabel
                       control={
                         <Checkbox
                           checked={profileData.terms_accepted}
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('terms_accepted', e.target.checked)}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            handleInputChange('terms_accepted', e.target.checked)
+                          }
                         />
                       }
                       label={
                         <Typography variant="body2">
-                          <Box component="span" fontWeight="bold" color="error.main">*</Box>
-                          {' '}이용약관 동의 (필수)
+                          <Box component="span" fontWeight="bold" color="error.main">
+                            *
+                          </Box>{' '}
+                          이용약관 동의 (필수)
                         </Typography>
                       }
                     />
-                    
+
                     <FormControlLabel
                       control={
                         <Checkbox
                           checked={profileData.privacy_accepted}
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('privacy_accepted', e.target.checked)}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            handleInputChange('privacy_accepted', e.target.checked)
+                          }
                         />
                       }
                       label={
                         <Typography variant="body2">
-                          <Box component="span" fontWeight="bold" color="error.main">*</Box>
-                          {' '}개인정보처리방침 동의 (필수)
+                          <Box component="span" fontWeight="bold" color="error.main">
+                            *
+                          </Box>{' '}
+                          개인정보처리방침 동의 (필수)
                         </Typography>
                       }
                     />
-                    
+
                     <FormControlLabel
                       control={
                         <Checkbox
                           checked={profileData.marketing_accepted}
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('marketing_accepted', e.target.checked)}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            handleInputChange('marketing_accepted', e.target.checked)
+                          }
                         />
                       }
-                      label={
-                        <Typography variant="body2">
-                          마케팅 정보 수신 동의 (선택)
-                        </Typography>
-                      }
+                      label={<Typography variant="body2">마케팅 정보 수신 동의 (선택)</Typography>}
                     />
                   </Stack>
                 </Stack>
@@ -441,11 +457,7 @@ export default function ProfileSetup() {
                 disabled={loading}
                 sx={{ mt: 3 }}
               >
-                {loading ? (
-                  <CircularProgress size={24} color="inherit" />
-                ) : (
-                  '프로필 설정 완료'
-                )}
+                {loading ? <CircularProgress size={24} color="inherit" /> : '프로필 설정 완료'}
               </Button>
 
               {profileData.role !== 'customer' && (

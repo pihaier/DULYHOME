@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const SelectedListCode = () => {
   return (
     <>
@@ -69,7 +69,7 @@ const handleListItemClick = (
 </BlankCard>`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default SelectedListCode
+export default SelectedListCode;

@@ -11,24 +11,25 @@ import { IconGift } from '@tabler/icons-react';
 const giftCard = [
   {
     title: 'Andrew Grant',
-    avatar: "/images/products/s1.jpg",
+    avatar: '/images/products/s1.jpg',
   },
   {
     title: 'Leo Pratt',
-    avatar: "/images/products/s2.jpg",
+    avatar: '/images/products/s2.jpg',
   },
 ];
 
 const GiftCard = () => {
   return (
-    (<Grid container spacing={3}>
+    <Grid container spacing={3}>
       {giftCard.map((card, index) => (
         <Grid
           key={index}
           size={{
             xs: 12,
-            sm: 6
-          }}>
+            sm: 6,
+          }}
+        >
           <BlankCard>
             <CardContent>
               <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={2}>
@@ -40,7 +41,11 @@ const GiftCard = () => {
                   <IconGift width={20} />
                 </IconButton>
               </Stack>
-              <CardMedia component="img" image={card.avatar} sx={{ height: 160, borderRadius: 2 }} />
+              <CardMedia
+                component="img"
+                image={card.avatar}
+                sx={{ height: 160, borderRadius: 2 }}
+              />
 
               <Stack spacing={2} mt={3}>
                 <Button size="large" variant="contained" color="primary">
@@ -51,7 +56,7 @@ const GiftCard = () => {
           </BlankCard>
         </Grid>
       ))}
-    </Grid>)
+    </Grid>
   );
 };
 

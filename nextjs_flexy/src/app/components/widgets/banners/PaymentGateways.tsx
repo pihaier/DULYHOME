@@ -3,7 +3,6 @@ import { useTheme } from '@mui/material/styles';
 import { Stack, Typography, Avatar, Box, Button } from '@mui/material';
 import DashboardCard from '../../shared/DashboardCard';
 
-
 const PaymentGateways = () => {
   // chart color
   const theme = useTheme();
@@ -23,7 +22,7 @@ const PaymentGateways = () => {
       price: 6235,
       color: primary,
       lightcolor: primarylight,
-      icon: "/images/svgs/icon-paypal.svg",
+      icon: '/images/svgs/icon-paypal.svg',
     },
     {
       title: 'Wallet',
@@ -31,7 +30,7 @@ const PaymentGateways = () => {
       price: 345,
       color: secondary,
       lightcolor: secondarylight,
-      icon: "/images/svgs/icon-office-bag.svg",
+      icon: '/images/svgs/icon-office-bag.svg',
     },
     {
       title: 'Credit Card',
@@ -39,7 +38,7 @@ const PaymentGateways = () => {
       price: 2235,
       color: warning,
       lightcolor: warninglight,
-      icon: "/images/svgs/icon-master-card.svg",
+      icon: '/images/svgs/icon-master-card.svg',
     },
     {
       title: 'Refund',
@@ -47,7 +46,7 @@ const PaymentGateways = () => {
       price: 32,
       color: error,
       lightcolor: errorlight,
-      icon: "/images/svgs/icon-pie.svg",
+      icon: '/images/svgs/icon-pie.svg',
     },
   ];
 
@@ -68,7 +67,7 @@ const PaymentGateways = () => {
                   variant="rounded"
                   sx={{ bgcolor: stat.lightcolor, color: stat.color, width: 40, height: 40 }}
                 >
-                    <Avatar src={stat.icon} alt={stat.icon} sx={{ width: 24, height: 24 }} />
+                  <Avatar src={stat.icon} alt={stat.icon} sx={{ width: 24, height: 24 }} />
                 </Avatar>
                 <Box>
                   <Typography variant="h6" mb="4px">
@@ -90,7 +89,7 @@ const PaymentGateways = () => {
               )}
             </Stack>
           ))}
-          <Button variant="outlined" color="primary" sx={{mt: "40px !important"}}>
+          <Button variant="outlined" color="primary" sx={{ mt: '40px !important' }}>
             View all transactions
           </Button>
         </Stack>

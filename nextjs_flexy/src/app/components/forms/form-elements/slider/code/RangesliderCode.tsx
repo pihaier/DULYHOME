@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const RangesliderCode = () => {
   return (
     <>
@@ -72,7 +72,7 @@ function AirbnbThumbComponent(props: SliderValueLabelProps) {
 `}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default RangesliderCode
+export default RangesliderCode;

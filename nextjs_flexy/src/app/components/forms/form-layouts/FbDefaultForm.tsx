@@ -1,38 +1,31 @@
-"use client";
-import React from "react";
-import {
-  FormControlLabel,
-  Button,
-  Grid,
-  RadioGroup,
-  FormControl,
-  MenuItem,
-} from "@mui/material";
-import CustomTextField from "../theme-elements/CustomTextField";
-import CustomSelect from "../theme-elements/CustomSelect";
-import CustomCheckbox from "../theme-elements/CustomCheckbox";
-import CustomRadio from "../theme-elements/CustomRadio";
-import CustomFormLabel from "../theme-elements/CustomFormLabel";
-import ParentCard from "../../shared/ParentCard";
+'use client';
+import React from 'react';
+import { FormControlLabel, Button, Grid, RadioGroup, FormControl, MenuItem } from '@mui/material';
+import CustomTextField from '../theme-elements/CustomTextField';
+import CustomSelect from '../theme-elements/CustomSelect';
+import CustomCheckbox from '../theme-elements/CustomCheckbox';
+import CustomRadio from '../theme-elements/CustomRadio';
+import CustomFormLabel from '../theme-elements/CustomFormLabel';
+import ParentCard from '../../shared/ParentCard';
 
-import DefaultFormCode from "@/app/components/forms/form-layouts/code/DefaultFormCode";
+import DefaultFormCode from '@/app/components/forms/form-layouts/code/DefaultFormCode';
 
 const numbers = [
   {
-    value: "one",
-    label: "One",
+    value: 'one',
+    label: 'One',
   },
   {
-    value: "two",
-    label: "Two",
+    value: 'two',
+    label: 'Two',
   },
   {
-    value: "three",
-    label: "Three",
+    value: 'three',
+    label: 'Three',
   },
   {
-    value: "four",
-    label: "Four",
+    value: 'four',
+    label: 'Four',
   },
 ];
 
@@ -43,24 +36,24 @@ const FbDefaultForm = () => {
     checkedC: false,
   });
 
-  const handleChange = (event: { target: { name: any; checked: any; }; }) => {
+  const handleChange = (event: { target: { name: any; checked: any } }) => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
 
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = React.useState('');
 
-  const handleChange2 = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+  const handleChange2 = (event: { target: { value: React.SetStateAction<string> } }) => {
     setValue(event.target.value);
   };
 
-  const [number, setNumber] = React.useState("");
+  const [number, setNumber] = React.useState('');
 
-  const handleChange3 = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+  const handleChange3 = (event: { target: { value: React.SetStateAction<string> } }) => {
     setNumber(event.target.value);
   };
 
   return (
-    (<ParentCard title="Default Form" codeModel={<DefaultFormCode />}>
+    <ParentCard title="Default Form" codeModel={<DefaultFormCode />}>
       <form>
         <CustomFormLabel
           sx={{
@@ -77,15 +70,8 @@ const FbDefaultForm = () => {
           fullWidth
         />
         <CustomFormLabel htmlFor="email-text">Email</CustomFormLabel>
-        <CustomTextField
-          id="email-text"
-          type="email"
-          variant="outlined"
-          fullWidth
-        />
-        <CustomFormLabel htmlFor="default-outlined-password-input">
-          Password
-        </CustomFormLabel>
+        <CustomTextField id="email-text" type="email" variant="outlined" fullWidth />
+        <CustomFormLabel htmlFor="default-outlined-password-input">Password</CustomFormLabel>
 
         <CustomTextField
           id="default-outlined-password-input"
@@ -94,9 +80,7 @@ const FbDefaultForm = () => {
           variant="outlined"
           fullWidth
         />
-        <CustomFormLabel htmlFor="outlined-multiline-static">
-          Textarea
-        </CustomFormLabel>
+        <CustomFormLabel htmlFor="outlined-multiline-static">Textarea</CustomFormLabel>
 
         <CustomTextField
           id="outlined-multiline-static"
@@ -121,8 +105,9 @@ const FbDefaultForm = () => {
             size={{
               lg: 4,
               md: 6,
-              sm: 12
-            }}>
+              sm: 12,
+            }}
+          >
             <FormControlLabel
               control={
                 <CustomCheckbox
@@ -161,15 +146,11 @@ const FbDefaultForm = () => {
             size={{
               lg: 4,
               md: 6,
-              sm: 12
-            }}>
+              sm: 12,
+            }}
+          >
             <FormControl component="fieldset">
-              <RadioGroup
-                aria-label="gender"
-                name="gender1"
-                value={value}
-                onChange={handleChange2}
-              >
+              <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange2}>
                 <FormControlLabel
                   value="radio1"
                   control={<CustomRadio />}
@@ -189,9 +170,7 @@ const FbDefaultForm = () => {
             </FormControl>
           </Grid>
         </Grid>
-        <CustomFormLabel htmlFor="standard-select-number">
-          Select
-        </CustomFormLabel>
+        <CustomFormLabel htmlFor="standard-select-number">Select</CustomFormLabel>
         <CustomSelect
           fullWidth
           id="standard-select-number"
@@ -214,7 +193,7 @@ const FbDefaultForm = () => {
           </Button>
         </div>
       </form>
-    </ParentCard>)
+    </ParentCard>
   );
 };
 

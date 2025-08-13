@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const FolderListCode = () => {
   return (
     <>
@@ -51,7 +51,7 @@ IconBeach
 </BlankCard>`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default FolderListCode
+export default FolderListCode;

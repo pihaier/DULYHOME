@@ -1,11 +1,11 @@
-'use client'
+'use client';
 import { useContext } from 'react';
 import { Grid, Pagination } from '@mui/material';
 import BlogCard from './BlogCard';
 import { orderBy } from 'lodash';
 import BlogFeaturedCard from './BlogFeaturedCard';
 import { BlogPostType } from '../../../dashboard/types/apps/blog';
-import { BlogContext } from "@/app/context/BlogContext/index";
+import { BlogContext } from '@/app/context/BlogContext/index';
 
 const BlogListing = () => {
   const { posts, sortBy } = useContext(BlogContext);
@@ -37,7 +37,7 @@ const BlogListing = () => {
   const featuredPosts = filterFeaturedpost(posts);
 
   return (
-    (<Grid container spacing={3}>
+    <Grid container spacing={3}>
       {featuredPosts.map((post, index) => {
         return <BlogFeaturedCard index={index} post={post} key={post.title} />;
       })}
@@ -48,11 +48,12 @@ const BlogListing = () => {
         mt={3}
         size={{
           lg: 12,
-          sm: 12
-        }}>
+          sm: 12,
+        }}
+      >
         <Pagination count={10} color="primary" sx={{ display: 'flex', justifyContent: 'center' }} />
       </Grid>
-    </Grid>)
+    </Grid>
   );
 };
 

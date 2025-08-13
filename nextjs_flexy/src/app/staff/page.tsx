@@ -99,12 +99,13 @@ export default function StaffDashboard() {
           직원 관리 대시보드
         </Typography>
         <Typography variant="body1" color="text.secondary">
-          {new Date().toLocaleDateString('ko-KR', { 
-            year: 'numeric', 
-            month: 'long', 
+          {new Date().toLocaleDateString('ko-KR', {
+            year: 'numeric',
+            month: 'long',
             day: 'numeric',
-            weekday: 'long'
-          })} 현재 시스템 현황입니다.
+            weekday: 'long',
+          })}{' '}
+          현재 시스템 현황입니다.
         </Typography>
       </Box>
 
@@ -112,20 +113,28 @@ export default function StaffDashboard() {
       <Grid container spacing={3} sx={{ mb: 4 }}>
         {stats.map((stat, index) => (
           <Grid size={{ xs: 12, sm: 6, md: 3 }} key={index}>
-            <Card 
-              sx={{ 
+            <Card
+              sx={{
                 position: 'relative',
                 cursor: stat.link ? 'pointer' : 'default',
                 transition: 'transform 0.2s, box-shadow 0.2s',
-                '&:hover': stat.link ? {
-                  transform: 'translateY(-4px)',
-                  boxShadow: 3,
-                } : {},
+                '&:hover': stat.link
+                  ? {
+                      transform: 'translateY(-4px)',
+                      boxShadow: 3,
+                    }
+                  : {},
               }}
               onClick={() => stat.link && router.push(stat.link)}
             >
               <CardContent>
-                <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    justifyContent: 'space-between',
+                  }}
+                >
                   <Box>
                     <Typography color="text.secondary" variant="body2" gutterBottom>
                       {stat.title}
@@ -190,7 +199,9 @@ export default function StaffDashboard() {
         {/* Recent Activities */}
         <Grid size={{ xs: 12, md: 8 }}>
           <Paper sx={{ p: 3, height: '100%' }}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+            <Box
+              sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}
+            >
               <Typography variant="h6" fontWeight="bold">
                 최근 활동
               </Typography>

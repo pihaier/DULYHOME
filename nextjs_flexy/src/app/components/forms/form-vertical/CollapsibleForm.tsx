@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React from 'react';
 import {
   Accordion,
@@ -43,45 +43,49 @@ const CollapsibleForm = () => {
   // address type
   const [value, setValue] = React.useState('');
 
-  const handleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+  const handleChange = (event: { target: { value: React.SetStateAction<string> } }) => {
     setValue(event.target.value);
   };
 
   //   delivery options
   const [value2, setValue2] = React.useState('');
 
-  const handleChange2 = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+  const handleChange2 = (event: { target: { value: React.SetStateAction<string> } }) => {
     setValue2(event.target.value);
   };
 
   //   payment
   const [value3, setValue3] = React.useState('radio1');
 
-  const handleChange3 = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+  const handleChange3 = (event: { target: { value: React.SetStateAction<string> } }) => {
     setValue3(event.target.value);
   };
 
   // states
   const [state, setStates] = React.useState('');
 
-  const handleChange4 = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+  const handleChange4 = (event: { target: { value: React.SetStateAction<string> } }) => {
     setStates(event.target.value);
   };
 
   // default open slide
   const [expanded, setExpanded] = React.useState<string | false>('panel1');
 
-  const handleChange5 =
-    (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
-      setExpanded(newExpanded ? panel : false);
-    };
+  const handleChange5 = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
+    setExpanded(newExpanded ? panel : false);
+  };
 
   return (
     <div>
       {/* ------------------------------------------------------------------------------------------------ */}
       {/* Basic Layout */}
       {/* ------------------------------------------------------------------------------------------------ */}
-      <Accordion elevation={9} sx={{ mb: 2 }} expanded={expanded === 'panel1'} onChange={handleChange5('panel1')}>
+      <Accordion
+        elevation={9}
+        sx={{ mb: 2 }}
+        expanded={expanded === 'panel1'}
+        onChange={handleChange5('panel1')}
+      >
         <AccordionSummary
           expandIcon={<IconChevronDown size="20" />}
           aria-controls="panel1a-content"
@@ -94,8 +98,9 @@ const CollapsibleForm = () => {
             <Grid
               size={{
                 xs: 12,
-                sm: 6
-              }}>
+                sm: 6,
+              }}
+            >
               <CustomFormLabel htmlFor="cs-fname" sx={{ mt: 0 }}>
                 Full Name
               </CustomFormLabel>
@@ -104,8 +109,9 @@ const CollapsibleForm = () => {
             <Grid
               size={{
                 xs: 12,
-                sm: 6
-              }}>
+                sm: 6,
+              }}
+            >
               <CustomFormLabel htmlFor="cs-phone" sx={{ mt: 0 }}>
                 Phone no
               </CustomFormLabel>
@@ -120,8 +126,9 @@ const CollapsibleForm = () => {
             <Grid
               size={{
                 xs: 12,
-                sm: 6
-              }}>
+                sm: 6,
+              }}
+            >
               <CustomFormLabel htmlFor="cs-pin" sx={{ mt: 0 }}>
                 Pincode
               </CustomFormLabel>
@@ -130,8 +137,9 @@ const CollapsibleForm = () => {
             <Grid
               size={{
                 xs: 12,
-                sm: 6
-              }}>
+                sm: 6,
+              }}
+            >
               <CustomFormLabel htmlFor="cs-landmark" sx={{ mt: 0 }}>
                 Landmark
               </CustomFormLabel>
@@ -140,8 +148,9 @@ const CollapsibleForm = () => {
             <Grid
               size={{
                 xs: 12,
-                sm: 6
-              }}>
+                sm: 6,
+              }}
+            >
               <CustomFormLabel htmlFor="cs-city" sx={{ mt: 0 }}>
                 City
               </CustomFormLabel>
@@ -150,8 +159,9 @@ const CollapsibleForm = () => {
             <Grid
               size={{
                 xs: 12,
-                sm: 6
-              }}>
+                sm: 6,
+              }}
+            >
               <CustomFormLabel htmlFor="cs-state" sx={{ mt: 0 }}>
                 State
               </CustomFormLabel>
@@ -186,7 +196,12 @@ const CollapsibleForm = () => {
           </Grid>
         </AccordionDetails>
       </Accordion>
-      <Accordion elevation={9} sx={{ mb: 2 }} expanded={expanded === 'panel2'} onChange={handleChange5('panel2')}>
+      <Accordion
+        elevation={9}
+        sx={{ mb: 2 }}
+        expanded={expanded === 'panel2'}
+        onChange={handleChange5('panel2')}
+      >
         <AccordionSummary
           expandIcon={<IconChevronDown size="20" />}
           aria-controls="panel2a-content"
@@ -202,7 +217,12 @@ const CollapsibleForm = () => {
           </RadioGroup>
         </AccordionDetails>
       </Accordion>
-      <Accordion elevation={9} sx={{ mb: 2 }} expanded={expanded === 'panel3'} onChange={handleChange5('panel3')}>
+      <Accordion
+        elevation={9}
+        sx={{ mb: 2 }}
+        expanded={expanded === 'panel3'}
+        onChange={handleChange5('panel3')}
+      >
         <AccordionSummary
           expandIcon={<IconChevronDown size="20" />}
           aria-controls="panel3a-content"
@@ -215,8 +235,9 @@ const CollapsibleForm = () => {
             <Grid
               size={{
                 xs: 12,
-                sm: 8
-              }}>
+                sm: 8,
+              }}
+            >
               <RadioGroup row name="payment-method" value={value3} onChange={handleChange3}>
                 <FormControlLabel
                   value="radio1"
@@ -233,8 +254,9 @@ const CollapsibleForm = () => {
             <Grid
               size={{
                 xs: 12,
-                sm: 8
-              }}>
+                sm: 8,
+              }}
+            >
               <Box>
                 <Grid container spacing={3}>
                   <Grid size={12}>
@@ -246,8 +268,9 @@ const CollapsibleForm = () => {
                   <Grid
                     size={{
                       xs: 12,
-                      sm: 6
-                    }}>
+                      sm: 6,
+                    }}
+                  >
                     <CustomFormLabel htmlFor="cs-name" sx={{ mt: 0 }}>
                       Name
                     </CustomFormLabel>
@@ -256,8 +279,9 @@ const CollapsibleForm = () => {
                   <Grid
                     size={{
                       xs: 12,
-                      sm: 3
-                    }}>
+                      sm: 3,
+                    }}
+                  >
                     <CustomFormLabel htmlFor="cs-exdate" sx={{ mt: 0 }}>
                       Exp. Date
                     </CustomFormLabel>
@@ -266,8 +290,9 @@ const CollapsibleForm = () => {
                   <Grid
                     size={{
                       xs: 12,
-                      sm: 3
-                    }}>
+                      sm: 3,
+                    }}
+                  >
                     <CustomFormLabel htmlFor="cs-code" sx={{ mt: 0 }}>
                       CCV Code
                     </CustomFormLabel>

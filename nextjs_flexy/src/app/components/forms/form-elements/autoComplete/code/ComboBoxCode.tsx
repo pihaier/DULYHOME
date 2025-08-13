@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const ComboBoxCode = () => {
   return (
     <>
@@ -165,7 +165,7 @@ const top100Films = [
 `}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default ComboBoxCode
+export default ComboBoxCode;

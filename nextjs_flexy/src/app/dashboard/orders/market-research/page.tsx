@@ -22,10 +22,7 @@ import {
   InputAdornment,
   Grid,
 } from '@mui/material';
-import { 
-  Visibility as VisibilityIcon,
-  Search as SearchIcon 
-} from '@mui/icons-material';
+import { Visibility as VisibilityIcon, Search as SearchIcon } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -64,16 +61,16 @@ export default function MarketResearchListPage() {
   const fetchMarketResearchOrders = async () => {
     setLoading(true);
     setError(null);
-    
+
     try {
       // 시장조사 주문만 조회
       const { data, error } = await supabase
         .from('market_research_requests')
         .select('*')
         .order('created_at', { ascending: false });
-      
+
       if (error) throw error;
-      
+
       setOrders(data || []);
     } catch (error) {
       console.error('Error fetching market research orders:', error);
@@ -102,7 +99,7 @@ export default function MarketResearchListPage() {
     }
   };
 
-  const filteredOrders = orders.filter(order => {
+  const filteredOrders = orders.filter((order) => {
     const searchLower = searchTerm.toLowerCase();
     return (
       order.reservation_number.toLowerCase().includes(searchLower) ||
@@ -122,21 +119,15 @@ export default function MarketResearchListPage() {
               <Box flex={1}>
                 {/* 상단: 예약번호 */}
                 <Box display="flex" alignItems="center" gap={1} mb={1}>
-                  <Typography variant="h6">
-                    {order.reservation_number}
-                  </Typography>
-                  <Chip 
-                    label="시장조사" 
-                    size="small" 
-                    color="primary"
-                  />
+                  <Typography variant="h6">{order.reservation_number}</Typography>
+                  <Chip label="시장조사" size="small" color="primary" />
                 </Box>
-                
+
                 {/* 제품 정보 */}
                 <Typography variant="body2" color="textSecondary" mb={1}>
                   {order.product_name}
                 </Typography>
-                
+
                 {/* 상세 정보 */}
                 <Box display="flex" gap={3} mb={1}>
                   <Typography variant="body2">
@@ -149,7 +140,7 @@ export default function MarketResearchListPage() {
                     <Chip label={status.label} size="small" color={status.color} />
                   </Box>
                 </Box>
-                
+
                 {/* 추가 정보 */}
                 <Box display="flex" gap={3} mb={1}>
                   <Typography variant="body2">
@@ -159,29 +150,26 @@ export default function MarketResearchListPage() {
                     <strong>조사기간:</strong> {order.research_period || '-'}일
                   </Typography>
                 </Box>
-                
+
                 {/* 회사명 및 날짜 정보 */}
                 <Typography variant="body2" color="textSecondary">
                   <strong>회사명:</strong> {order.company_name}
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
-                  <strong>신청일:</strong> {new Date(order.created_at).toLocaleDateString('ko-KR', {
+                  <strong>신청일:</strong>{' '}
+                  {new Date(order.created_at).toLocaleDateString('ko-KR', {
                     year: 'numeric',
                     month: '2-digit',
                     day: '2-digit',
                     hour: '2-digit',
-                    minute: '2-digit'
+                    minute: '2-digit',
                   })}
                 </Typography>
               </Box>
-              
+
               {/* 액션 버튼 */}
               <Stack direction="row" spacing={1}>
-                <IconButton
-                  size="small"
-                  onClick={() => handleViewOrder(order)}
-                  title="상세보기"
-                >
+                <IconButton size="small" onClick={() => handleViewOrder(order)} title="상세보기">
                   <VisibilityIcon fontSize="small" />
                 </IconButton>
               </Stack>
@@ -194,7 +182,9 @@ export default function MarketResearchListPage() {
 
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <Box
+        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}
+      >
         <CircularProgress />
       </Box>
     );
@@ -212,137 +202,133 @@ export default function MarketResearchListPage() {
     <PageContainer title="시장조사 주문 조회" description="시장조사 서비스 신청 현황">
       <Box sx={{ p: { xs: 2, sm: 3 } }}>
         <Stack spacing={3}>
-        <Card>
-          <CardContent sx={{ p: { xs: 2, sm: 3 } }}>
-            <Typography variant="h4" gutterBottom fontWeight="bold">
-              시장조사 주문 조회
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              중국 시장조사 서비스 신청 현황을 확인하세요
-            </Typography>
-          </CardContent>
-        </Card>
+          <Card>
+            <CardContent sx={{ p: { xs: 2, sm: 3 } }}>
+              <Typography variant="h4" gutterBottom fontWeight="bold">
+                시장조사 주문 조회
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                중국 시장조사 서비스 신청 현황을 확인하세요
+              </Typography>
+            </CardContent>
+          </Card>
 
-        <Card>
-          <CardContent sx={{ p: { xs: 2, sm: 3 } }}>
-            <TextField
-              fullWidth
-              variant="outlined"
-              placeholder="예약번호, 제품명, 회사명으로 검색"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
-              }}
-              sx={{ mb: 2 }}
-            />
-            
-            {isMobile ? (
-              // 모바일: 카드 레이아웃
-              <Grid container spacing={2}>
-                {filteredOrders.length > 0 ? (
-                  filteredOrders.map(order => renderOrderCard(order))
-                ) : (
-                  <Grid size={{ xs: 12 }}>
-                    <Typography color="text.secondary" align="center" sx={{ py: 4 }}>
-                      {searchTerm ? '검색 결과가 없습니다' : '신청된 시장조사가 없습니다'}
-                    </Typography>
-                  </Grid>
-                )}
-              </Grid>
-            ) : (
-              // 데스크탑: 테이블 레이아웃
-              <Box sx={{ overflowX: 'auto' }}>
-                <TableContainer component={Paper} elevation={0}>
-                  <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>예약번호</TableCell>
-                      <TableCell align="center">상태</TableCell>
-                      <TableCell>신청일</TableCell>
-                      <TableCell>제품명</TableCell>
-                      <TableCell align="right">조사수량</TableCell>
-                      <TableCell>회사명</TableCell>
-                      <TableCell align="center">상세보기</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {filteredOrders.length > 0 ? (
-                      filteredOrders.map((order) => {
-                        const status = getStatusLabel(order.status);
-                        return (
-                          <TableRow 
-                            key={order.id} 
-                            hover
-                            sx={{ cursor: 'pointer' }}
-                            onClick={() => handleViewOrder(order)}
-                          >
-                            <TableCell>
-                              <Chip 
-                                label={order.reservation_number} 
-                                size="small"
-                                color="primary"
-                                variant="outlined"
-                              />
-                            </TableCell>
-                            <TableCell align="center">
-                              <Chip 
-                                label={status.label} 
-                                color={status.color} 
-                                size="small" 
-                              />
-                            </TableCell>
-                            <TableCell>
-                              {new Date(order.created_at).toLocaleDateString('ko-KR')}
-                            </TableCell>
-                            <TableCell>
-                                <Typography variant="body2" fontWeight={500} noWrap>
-                                {order.product_name}
-                              </Typography>
-                            </TableCell>
-                            <TableCell align="right">
-                              {order.research_quantity?.toLocaleString() || '-'}개
-                            </TableCell>
-                            <TableCell>
-                                <Typography variant="body2" color="text.secondary" noWrap>
-                                {order.company_name}
-                              </Typography>
-                            </TableCell>
-                            <TableCell align="center">
-                              <IconButton 
-                                color="primary" 
-                                size="small"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleViewOrder(order);
-                                }}
+          <Card>
+            <CardContent sx={{ p: { xs: 2, sm: 3 } }}>
+              <TextField
+                fullWidth
+                variant="outlined"
+                placeholder="예약번호, 제품명, 회사명으로 검색"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon />
+                    </InputAdornment>
+                  ),
+                }}
+                sx={{ mb: 2 }}
+              />
+
+              {isMobile ? (
+                // 모바일: 카드 레이아웃
+                <Grid container spacing={2}>
+                  {filteredOrders.length > 0 ? (
+                    filteredOrders.map((order) => renderOrderCard(order))
+                  ) : (
+                    <Grid size={{ xs: 12 }}>
+                      <Typography color="text.secondary" align="center" sx={{ py: 4 }}>
+                        {searchTerm ? '검색 결과가 없습니다' : '신청된 시장조사가 없습니다'}
+                      </Typography>
+                    </Grid>
+                  )}
+                </Grid>
+              ) : (
+                // 데스크탑: 테이블 레이아웃
+                <Box sx={{ overflowX: 'auto' }}>
+                  <TableContainer component={Paper} elevation={0}>
+                    <Table>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>예약번호</TableCell>
+                          <TableCell align="center">상태</TableCell>
+                          <TableCell>신청일</TableCell>
+                          <TableCell>제품명</TableCell>
+                          <TableCell align="right">조사수량</TableCell>
+                          <TableCell>회사명</TableCell>
+                          <TableCell align="center">상세보기</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {filteredOrders.length > 0 ? (
+                          filteredOrders.map((order) => {
+                            const status = getStatusLabel(order.status);
+                            return (
+                              <TableRow
+                                key={order.id}
+                                hover
+                                sx={{ cursor: 'pointer' }}
+                                onClick={() => handleViewOrder(order)}
                               >
-                                <VisibilityIcon />
-                              </IconButton>
+                                <TableCell>
+                                  <Chip
+                                    label={order.reservation_number}
+                                    size="small"
+                                    color="primary"
+                                    variant="outlined"
+                                  />
+                                </TableCell>
+                                <TableCell align="center">
+                                  <Chip label={status.label} color={status.color} size="small" />
+                                </TableCell>
+                                <TableCell>
+                                  {new Date(order.created_at).toLocaleDateString('ko-KR')}
+                                </TableCell>
+                                <TableCell>
+                                  <Typography variant="body2" fontWeight={500} noWrap>
+                                    {order.product_name}
+                                  </Typography>
+                                </TableCell>
+                                <TableCell align="right">
+                                  {order.research_quantity?.toLocaleString() || '-'}개
+                                </TableCell>
+                                <TableCell>
+                                  <Typography variant="body2" color="text.secondary" noWrap>
+                                    {order.company_name}
+                                  </Typography>
+                                </TableCell>
+                                <TableCell align="center">
+                                  <IconButton
+                                    color="primary"
+                                    size="small"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleViewOrder(order);
+                                    }}
+                                  >
+                                    <VisibilityIcon />
+                                  </IconButton>
+                                </TableCell>
+                              </TableRow>
+                            );
+                          })
+                        ) : (
+                          <TableRow>
+                            <TableCell colSpan={7} align="center" sx={{ py: 4 }}>
+                              <Typography color="text.secondary">
+                                {searchTerm ? '검색 결과가 없습니다' : '신청된 시장조사가 없습니다'}
+                              </Typography>
                             </TableCell>
                           </TableRow>
-                        );
-                      })
-                    ) : (
-                      <TableRow>
-                        <TableCell colSpan={7} align="center" sx={{ py: 4 }}>
-                          <Typography color="text.secondary">
-                            {searchTerm ? '검색 결과가 없습니다' : '신청된 시장조사가 없습니다'}
-                          </Typography>
-                        </TableCell>
-                      </TableRow>
-                    )}
-                  </TableBody>
-                  </Table>
-                </TableContainer>
-              </Box>
-            )}
-          </CardContent>
-        </Card>
+                        )}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Box>
+              )}
+            </CardContent>
+          </Card>
         </Stack>
       </Box>
     </PageContainer>

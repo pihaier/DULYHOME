@@ -1,22 +1,22 @@
-"use client";
-import { CardContent, Typography, Button } from "@mui/material";
-import ParentCard from "../../shared/ParentCard";
-import { Box } from "@mui/system";
-import Image from "next/image";
+'use client';
+import { CardContent, Typography, Button } from '@mui/material';
+import ParentCard from '../../shared/ParentCard';
+import { Box } from '@mui/system';
+import Image from 'next/image';
 
-import ErrorBannerCode from "./code/ErrorBannerCode";
+import ErrorBannerCode from './code/ErrorBannerCode';
 
 const Banner4 = () => {
   return (
     <ParentCard title="Error" codeModel={<ErrorBannerCode />}>
-      <CardContent sx={{ p: "30px" }}>
+      <CardContent sx={{ p: '30px' }}>
         <Box textAlign="center">
           <Image
-            src={"/images/backgrounds/maintenance2.svg"}
+            src={'/images/backgrounds/maintenance2.svg'}
             width={200}
             height={200}
             alt="star"
-            style={{ width: "200px" }}
+            style={{ width: '200px' }}
           />
 
           <Typography variant="h5" mt={3}>

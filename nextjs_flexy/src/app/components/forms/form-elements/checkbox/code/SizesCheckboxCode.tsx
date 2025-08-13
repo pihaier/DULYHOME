@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const SizesCheckboxCode = () => {
   return (
     <>
@@ -53,7 +53,7 @@ import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 </FormGroup>`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default SizesCheckboxCode
+export default SizesCheckboxCode;

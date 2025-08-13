@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const SizesRadioCode = () => {
   return (
     <>
@@ -36,7 +36,7 @@ const controlProps = (item) => ({
 </Box>`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default SizesRadioCode
+export default SizesRadioCode;

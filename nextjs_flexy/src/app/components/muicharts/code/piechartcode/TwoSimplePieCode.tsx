@@ -1,10 +1,10 @@
-import React from 'react'
-import CodeDialog from "@/app/components/shared/CodeDialog";
+import React from 'react';
+import CodeDialog from '@/app/components/shared/CodeDialog';
 
 function TwoSimplePieCode() {
-    return (
-        <CodeDialog>
-            {`
+  return (
+    <CodeDialog>
+      {`
 import * as React from 'react';
 import { PieChart } from '@mui/x-charts/PieChart';
 
@@ -66,8 +66,8 @@ export default function TwoSimplePieChart() {
     );
 }
          `}
-        </CodeDialog>
-    )
+    </CodeDialog>
+  );
 }
 
-export default TwoSimplePieCode
+export default TwoSimplePieCode;

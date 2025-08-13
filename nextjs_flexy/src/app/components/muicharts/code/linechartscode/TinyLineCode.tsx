@@ -1,5 +1,5 @@
-import React from 'react'
-import CodeDialog from '@/app/components/shared/CodeDialog'
+import React from 'react';
+import CodeDialog from '@/app/components/shared/CodeDialog';
 
 function TinyLineChart() {
   return (
@@ -47,7 +47,7 @@ function TinyLineChart() {
 export default TinyLineChart;
 `}
     </CodeDialog>
-  )
+  );
 }
 
-export default TinyLineChart
+export default TinyLineChart;

@@ -21,10 +21,7 @@ import {
   TextField,
   InputAdornment,
 } from '@mui/material';
-import { 
-  Visibility as VisibilityIcon,
-  Search as SearchIcon 
-} from '@mui/icons-material';
+import { Visibility as VisibilityIcon, Search as SearchIcon } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 
@@ -55,16 +52,16 @@ export default function BulkOrderListPage() {
   const fetchBulkOrders = async () => {
     setLoading(true);
     setError(null);
-    
+
     try {
       // 대량주문만 조회
       const { data, error } = await supabase
         .from('bulk_orders')
         .select('*')
         .order('created_at', { ascending: false });
-      
+
       if (error) throw error;
-      
+
       setOrders(data || []);
     } catch (error) {
       console.error('Error fetching bulk orders:', error);
@@ -106,12 +103,11 @@ export default function BulkOrderListPage() {
     }
   };
 
-  const filteredOrders = orders.filter(order => {
+  const filteredOrders = orders.filter((order) => {
     const searchLower = searchTerm.toLowerCase();
-    const productNames = order.order_items?.map((item: any) => 
-      item.product_name?.toLowerCase() || ''
-    ).join(' ') || '';
-    
+    const productNames =
+      order.order_items?.map((item: any) => item.product_name?.toLowerCase() || '').join(' ') || '';
+
     return (
       order.reservation_number.toLowerCase().includes(searchLower) ||
       productNames.includes(searchLower) ||
@@ -121,7 +117,9 @@ export default function BulkOrderListPage() {
 
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <Box
+        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}
+      >
         <CircularProgress />
       </Box>
     );
@@ -166,7 +164,7 @@ export default function BulkOrderListPage() {
               }}
               sx={{ mb: 2 }}
             />
-            
+
             <TableContainer component={Paper} elevation={0}>
               <Table>
                 <TableHead>
@@ -187,28 +185,24 @@ export default function BulkOrderListPage() {
                       const status = getStatusLabel(order.status);
                       const firstItem = order.order_items?.[0];
                       const itemCount = order.order_items?.length || 0;
-                      
+
                       return (
-                        <TableRow 
-                          key={order.id} 
+                        <TableRow
+                          key={order.id}
                           hover
                           sx={{ cursor: 'pointer' }}
                           onClick={() => handleViewOrder(order)}
                         >
                           <TableCell>
-                            <Chip 
-                              label={order.reservation_number} 
+                            <Chip
+                              label={order.reservation_number}
                               size="small"
                               color="warning"
                               variant="outlined"
                             />
                           </TableCell>
                           <TableCell align="center">
-                            <Chip 
-                              label={status.label} 
-                              color={status.color} 
-                              size="small" 
-                            />
+                            <Chip label={status.label} color={status.color} size="small" />
                           </TableCell>
                           <TableCell>
                             {new Date(order.created_at).toLocaleDateString('ko-KR')}
@@ -224,15 +218,12 @@ export default function BulkOrderListPage() {
                             )}
                           </TableCell>
                           <TableCell align="center">
-                            <Typography variant="body2">
-                              {order.delivery_method || '-'}
-                            </Typography>
+                            <Typography variant="body2">{order.delivery_method || '-'}</Typography>
                           </TableCell>
                           <TableCell>
-                            {order.delivery_date ? 
-                              new Date(order.delivery_date).toLocaleDateString('ko-KR') : 
-                              '-'
-                            }
+                            {order.delivery_date
+                              ? new Date(order.delivery_date).toLocaleDateString('ko-KR')
+                              : '-'}
                           </TableCell>
                           <TableCell>
                             <Typography variant="body2" color="text.secondary">
@@ -240,8 +231,8 @@ export default function BulkOrderListPage() {
                             </Typography>
                           </TableCell>
                           <TableCell align="center">
-                            <IconButton 
-                              color="primary" 
+                            <IconButton
+                              color="primary"
                               size="small"
                               onClick={(e) => {
                                 e.stopPropagation();

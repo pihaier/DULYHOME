@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import Link from "next/link";
+import React, { useContext } from 'react';
+import Link from 'next/link';
 
 // mui imports
 import {
@@ -13,23 +13,15 @@ import {
   ListItemButton,
   useMediaQuery,
   Theme,
-} from "@mui/material";
+} from '@mui/material';
 
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 
-import { CustomizerContext } from "@/app/context/customizerContext";
-import { ItemType } from "@/app/dashboard/types/layout/sidebar";
+import { CustomizerContext } from '@/app/context/customizerContext';
+import { ItemType } from '@/app/dashboard/types/layout/sidebar';
 
-
-
-export default function NavItem({
-  item,
-  level,
-  pathDirect,
-  hideMenu,
-  onClick,
-}: ItemType) {
-  const lgDown = useMediaQuery((theme: Theme) => theme.breakpoints.down("lg"));
+export default function NavItem({ item, level, pathDirect, hideMenu, onClick }: ItemType) {
+  const lgDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'));
 
   const { isBorderRadius } = useContext(CustomizerContext);
 
@@ -37,14 +29,11 @@ export default function NavItem({
   const theme = useTheme();
   const { t } = useTranslation();
 
-
-  const itemIcon = Icon ? (
-    (level ?? 1) > 1 ? (
-      React.createElement(Icon, { stroke: 1.5, size: "1rem" })
-    ) : (
-      React.createElement(Icon, { stroke: 1.5, size: "1.3rem" })
-    )
-  ) : null;
+  const itemIcon = Icon
+    ? (level ?? 1) > 1
+      ? React.createElement(Icon, { stroke: 1.5, size: '1rem' })
+      : React.createElement(Icon, { stroke: 1.5, size: '1.3rem' })
+    : null;
 
   const ListItemStyled = styled(ListItemButton)(() => ({
     padding: '5px 10px',
@@ -52,7 +41,9 @@ export default function NavItem({
     borderRadius: `${isBorderRadius}px`,
     marginBottom: (level ?? 1) > 1 ? '3px' : '0px',
     color:
-      (level ?? 1) > 1 && pathDirect === item.href ? `${theme.palette.primary.main}!important` : theme.palette.text.primary,
+      (level ?? 1) > 1 && pathDirect === item.href
+        ? `${theme.palette.primary.main}!important`
+        : theme.palette.text.primary,
 
     '&:hover': {
       backgroundColor: theme.palette.primary.light,
@@ -67,8 +58,6 @@ export default function NavItem({
     },
   }));
 
-
-
   return (
     <List component="li" disablePadding key={item?.id && item.title}>
       <Link href={item.href || ''}>
@@ -81,31 +70,38 @@ export default function NavItem({
           <ListItemIcon
             sx={{
               minWidth: 'auto',
-              p: "3px 0",
+              p: '3px 0',
               color:
                 (level ?? 1) > 1 && pathDirect === item?.href
                   ? `${theme.palette.primary.main}!important`
-                  : "inherit",
+                  : 'inherit',
             }}
           >
             {itemIcon}
           </ListItemIcon>
           <ListItemText>
-            {hideMenu ? "" : <>{t(`${item?.title}`)}</>}
+            {hideMenu ? '' : <>{t(`${item?.title}`)}</>}
             <br />
             {item?.subtitle ? (
-              <Typography variant="caption">
-                {hideMenu ? "" : item?.subtitle}
-              </Typography>
+              <Typography variant="caption">{hideMenu ? '' : item?.subtitle}</Typography>
             ) : (
-              ""
+              ''
             )}
           </ListItemText>
 
           {!item?.chip || hideMenu ? null : (
             <Chip
-              color={(item?.chipColor as "default" | "error" | "primary" | "secondary" | "info" | "success" | "warning") || "default"}
-              variant={(item?.variant as "filled" | "outlined") || "filled"}
+              color={
+                (item?.chipColor as
+                  | 'default'
+                  | 'error'
+                  | 'primary'
+                  | 'secondary'
+                  | 'info'
+                  | 'success'
+                  | 'warning') || 'default'
+              }
+              variant={(item?.variant as 'filled' | 'outlined') || 'filled'}
               size="small"
               label={item?.chip}
             />

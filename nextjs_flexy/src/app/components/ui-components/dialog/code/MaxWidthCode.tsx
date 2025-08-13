@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const MaxWidthCode = () => {
   return (
     <>
@@ -104,7 +104,7 @@ return (
 );`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default MaxWidthCode
+export default MaxWidthCode;

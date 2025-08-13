@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React from 'react';
 import { Box, FormControlLabel } from '@mui/material';
 import CustomCheckbox from '../../theme-elements/CustomCheckbox';

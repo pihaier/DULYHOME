@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const IconCode = () => {
   return (
     <>
@@ -45,7 +45,7 @@ const handleChange = (event: React.SyntheticEvent, newValue: string) => {
 `}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default IconCode
+export default IconCode;

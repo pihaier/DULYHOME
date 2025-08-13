@@ -1,10 +1,10 @@
-import CodeDialog from "@/app/components/shared/CodeDialog";
-import React from "react";
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const SizesCode = () => {
-    return (
-        <>
-            <CodeDialog>
-                {`
+  return (
+    <>
+      <CodeDialog>
+        {`
 "use client";
 import * as React from 'react';
 import { Avatar, Stack } from '@mui/material';
@@ -18,9 +18,9 @@ import { IconMoodSmile } from '@tabler/icons-react';
     <Avatar alt="Remy Sharp" src={"/images/profile/user-6.jpg"} sx={{ width: 60, height: 60 }} />
     <Avatar alt="Remy Sharp" src={"/images/profile/user-7.jpg"} sx={{ width: 65, height: 65 }} />
 </Stack>`}
-            </CodeDialog>
-        </>
-    );
+      </CodeDialog>
+    </>
+  );
 };
 
 export default SizesCode;

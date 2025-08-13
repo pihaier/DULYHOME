@@ -1,22 +1,22 @@
-"use client"
+'use client';
 
-import dynamic from "next/dynamic";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+import dynamic from 'next/dynamic';
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 import { Grid } from '@mui/material';
-import { useTheme } from "@mui/material/styles";
+import { useTheme } from '@mui/material/styles';
 import PageContainer from '@/app/components/container/PageContainer';
 import Breadcrumb from '@/app/dashboard/layout/shared/breadcrumb/Breadcrumb';
 import ParentCard from '@/app/components/shared/ParentCard';
-import React from "react";
-import { ApexOptions } from "apexcharts";
+import React from 'react';
+import { ApexOptions } from 'apexcharts';
 
 const BCrumb = [
   {
-    to: "/",
-    title: "Home",
+    to: '/',
+    title: 'Home',
   },
   {
-    title: "Radialbar Chart",
+    title: 'Radialbar Chart',
   },
 ];
 
@@ -30,9 +30,9 @@ const RadialbarChart = () => {
 
   const optionsradialchart: ApexOptions = {
     chart: {
-      id: "pie-chart",
+      id: 'pie-chart',
       fontFamily: "'Plus Jakarta Sans', sans-serif",
-      foreColor: "#adb0bb",
+      foreColor: '#adb0bb',
       toolbar: {
         show: false,
       },
@@ -42,23 +42,23 @@ const RadialbarChart = () => {
       radialBar: {
         dataLabels: {
           name: {
-            fontSize: "22px",
+            fontSize: '22px',
           },
           value: {
-            fontSize: "16px",
+            fontSize: '16px',
           },
           total: {
             show: true,
-            label: "Total",
+            label: 'Total',
             formatter() {
-              return "249";
+              return '249';
             },
           },
         },
       },
     },
     tooltip: {
-      theme: "dark",
+      theme: 'dark',
     },
   };
   const seriesradialchart = [44, 55, 67, 83];
@@ -66,27 +66,27 @@ const RadialbarChart = () => {
   // 2
   const optionsradarchart: ApexOptions = {
     chart: {
-      id: "pie-chart",
+      id: 'pie-chart',
       fontFamily: "'Plus Jakarta Sans', sans-serif",
       toolbar: {
         show: false,
       },
     },
     colors: [primary],
-    labels: ["January", "February", "March", "April", "May", "June"],
+    labels: ['January', 'February', 'March', 'April', 'May', 'June'],
     tooltip: {
-      theme: "dark",
+      theme: 'dark',
     },
   };
   const seriesradarchart: ApexAxisChartSeries = [
     {
-      name: "Sales",
+      name: 'Sales',
       data: [80, 50, 30, 40, 100, 20],
     },
   ];
 
   return (
-    (<PageContainer title="Radialbar Chart" description="this is Radialbar Chart">
+    <PageContainer title="Radialbar Chart" description="this is Radialbar Chart">
       {/* breadcrumb */}
       <Breadcrumb title="Radialbar Chart" items={BCrumb} />
       {/* end breadcrumb */}
@@ -95,15 +95,16 @@ const RadialbarChart = () => {
           size={{
             lg: 6,
             md: 12,
-            xs: 12
-          }}>
+            xs: 12,
+          }}
+        >
           <ParentCard title="Radialbar Charts">
             <Chart
               options={optionsradialchart}
               series={seriesradialchart}
               type="radialBar"
               height="300px"
-              width={"100%"}
+              width={'100%'}
             />
           </ParentCard>
         </Grid>
@@ -111,20 +112,21 @@ const RadialbarChart = () => {
           size={{
             lg: 6,
             md: 12,
-            xs: 12
-          }}>
+            xs: 12,
+          }}
+        >
           <ParentCard title="Radar Charts">
             <Chart
               options={optionsradarchart}
               series={seriesradarchart}
               type="radar"
               height="300px"
-              width={"100%"}
+              width={'100%'}
             />
           </ParentCard>
         </Grid>
       </Grid>
-    </PageContainer>)
+    </PageContainer>
   );
 };
 

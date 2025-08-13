@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const PositionsTooltipCode = () => {
   return (
     <>
@@ -52,7 +52,7 @@ import InlineItemCard from "@/app/components/shared/InlineItemCard";
 </InlineItemCard>`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default PositionsTooltipCode
+export default PositionsTooltipCode;

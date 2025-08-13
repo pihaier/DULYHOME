@@ -1,13 +1,13 @@
-"use client";
-import { Fab, Box } from "@mui/material";
-import Tooltip from "@mui/material/Tooltip";
+'use client';
+import { Fab, Box } from '@mui/material';
+import Tooltip from '@mui/material/Tooltip';
 
 // common component
-import ChildCard from "@/app/components/shared/ChildCard";
+import ChildCard from '@/app/components/shared/ChildCard';
 
-import ArrowTooltipCode from "@/app/components/ui-components/tooltip/code/ArrowTooltipCode";
+import ArrowTooltipCode from '@/app/components/ui-components/tooltip/code/ArrowTooltipCode';
 
-import { IconPlus } from "@tabler/icons-react";
+import { IconPlus } from '@tabler/icons-react';
 
 const TooltipArrow = () => (
   <ChildCard title="Arrow" codeModel={<ArrowTooltipCode />}>

@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
@@ -11,73 +11,67 @@ import { useTheme } from '@mui/material';
 import BasicSparkLineCustomizationCode from '../code/sparklinecode/BasicSparkLineCustomizationCode';
 
 export default function BasicSparkLineCustomizationChart() {
-    const [showHighlight, setShowHighlight] = React.useState(true);
-    const [showTooltip, setShowTooltip] = React.useState(true);
+  const [showHighlight, setShowHighlight] = React.useState(true);
+  const [showTooltip, setShowTooltip] = React.useState(true);
 
-    const theme = useTheme();
-    const primary = theme.palette.primary.main;
+  const theme = useTheme();
+  const primary = theme.palette.primary.main;
 
-    const handleHighlightChange = (event: { target: { checked: boolean | ((prevState: boolean) => boolean); }; }) => {
-        setShowHighlight(event.target.checked);
-    };
+  const handleHighlightChange = (event: {
+    target: { checked: boolean | ((prevState: boolean) => boolean) };
+  }) => {
+    setShowHighlight(event.target.checked);
+  };
 
-    const handleTooltipChange = (event: { target: { checked: boolean | ((prevState: boolean) => boolean); }; }) => {
-        setShowTooltip(event.target.checked);
-    };
+  const handleTooltipChange = (event: {
+    target: { checked: boolean | ((prevState: boolean) => boolean) };
+  }) => {
+    setShowTooltip(event.target.checked);
+  };
 
-    return (
-        <ParentCard title=" Customization Chart" codeModel={<BasicSparkLineCustomizationCode />}>
-
-            <Stack direction="column" sx={{ width: '100%' }}>
-                <Stack direction="row">
-                    <FormControlLabel
-                        value="end"
-                        control={
-                            <Switch
-                                color="primary"
-                                checked={showHighlight}
-                                onChange={handleHighlightChange}
-
-                            />
-                        }
-                        label="showHighlight"
-                        labelPlacement="end"
-                    />
-                    <FormControlLabel
-                        value="end"
-                        control={
-                            <Switch
-                                color="primary"
-                                checked={showTooltip}
-                                onChange={handleTooltipChange}
-                            />
-                        }
-                        label="showTooltip"
-                        labelPlacement="end"
-                    />
-                </Stack>
-                <Stack direction="row" sx={{ width: '100%' }}>
-                    <Box sx={{ flexGrow: 1 }}>
-                        <SparkLineChart
-                            data={[1, 4, 2, 5, 7, 2, 4, 6]}
-                            height={100}
-                            showHighlight={showHighlight}
-                            showTooltip={showTooltip}
-                            colors={[primary]}
-                        />
-                    </Box>
-                    <Box sx={{ flexGrow: 1 }}>
-                        <SparkLineChart
-                            plotType="bar"
-                            data={[1, 4, 2, 5, 7, 2, 4, 6]}
-                            height={100}
-                            showHighlight={showHighlight}
-                            showTooltip={showTooltip}
-                            colors={[primary]}
-                        />
-                    </Box>
-                </Stack>
-            </Stack>
-        </ParentCard>
-    );
+  return (
+    <ParentCard title=" Customization Chart" codeModel={<BasicSparkLineCustomizationCode />}>
+      <Stack direction="column" sx={{ width: '100%' }}>
+        <Stack direction="row">
+          <FormControlLabel
+            value="end"
+            control={
+              <Switch color="primary" checked={showHighlight} onChange={handleHighlightChange} />
+            }
+            label="showHighlight"
+            labelPlacement="end"
+          />
+          <FormControlLabel
+            value="end"
+            control={
+              <Switch color="primary" checked={showTooltip} onChange={handleTooltipChange} />
+            }
+            label="showTooltip"
+            labelPlacement="end"
+          />
+        </Stack>
+        <Stack direction="row" sx={{ width: '100%' }}>
+          <Box sx={{ flexGrow: 1 }}>
+            <SparkLineChart
+              data={[1, 4, 2, 5, 7, 2, 4, 6]}
+              height={100}
+              showHighlight={showHighlight}
+              showTooltip={showTooltip}
+              colors={[primary]}
+            />
+          </Box>
+          <Box sx={{ flexGrow: 1 }}>
+            <SparkLineChart
+              plotType="bar"
+              data={[1, 4, 2, 5, 7, 2, 4, 6]}
+              height={100}
+              showHighlight={showHighlight}
+              showTooltip={showTooltip}
+              colors={[primary]}
+            />
+          </Box>
+        </Stack>
+      </Stack>
+    </ParentCard>
+  );
 }

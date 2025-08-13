@@ -1,5 +1,5 @@
-import React from 'react'
-import CodeDialog from '@/app/components/shared/CodeDialog'
+import React from 'react';
+import CodeDialog from '@/app/components/shared/CodeDialog';
 
 function BasicSimpleTreeViewCode() {
   return (
@@ -49,7 +49,7 @@ export default function BasicSimpleTreeView() {
 
             `}
     </CodeDialog>
-  )
+  );
 }
 
-export default BasicSimpleTreeViewCode
+export default BasicSimpleTreeViewCode;

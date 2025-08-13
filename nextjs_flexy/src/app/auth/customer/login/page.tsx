@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import Link from 'next/link';
 import { Grid, Box, Stack, Typography } from '@mui/material';
 import PageContainer from '@/app/components/container/PageContainer';
@@ -15,7 +15,7 @@ export default function CustomerLogin() {
             position: 'relative',
             '&:before': {
               content: '""',
-              background: (theme) => theme.palette.mode === 'light' ? '#ffe8ef' : '#2a1f26',
+              background: (theme) => (theme.palette.mode === 'light' ? '#ffe8ef' : '#2a1f26'),
               position: 'absolute',
               inset: 0,
               opacity: 1,
@@ -27,8 +27,9 @@ export default function CustomerLogin() {
             xs: 12,
             sm: 12,
             lg: 7,
-            xl: 8
-          }}>
+            xl: 8,
+          }}
+        >
           <Box position="relative" sx={{ zIndex: 1 }}>
             <Box px={3}>
               <Logo />
@@ -45,16 +46,17 @@ export default function CustomerLogin() {
               }}
             >
               <Image
-                src={"/images/auth/login-side.png"}
-                alt="두리무역 로그인 일러스트" width={700} height={700}
+                src={'/images/auth/login-side.png'}
+                alt="두리무역 로그인 일러스트"
+                width={700}
+                height={700}
                 style={{
                   width: '100%',
                   maxWidth: '560px',
                   maxHeight: '560px',
-                  objectFit: 'contain'
+                  objectFit: 'contain',
                 }}
               />
-
             </Box>
           </Box>
         </Grid>
@@ -66,8 +68,9 @@ export default function CustomerLogin() {
             xs: 12,
             sm: 12,
             lg: 5,
-            xl: 4
-          }}>
+            xl: 4,
+          }}
+        >
           <Box p={4} sx={{ zIndex: 1 }}>
             <AuthLogin
               title="고객 로그인"

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React from 'react';
 import {
@@ -23,7 +23,6 @@ import { IconCheck, IconX } from '@tabler/icons-react';
 import BlankCard from '@/app/components/shared/BlankCard';
 import Image from 'next/image';
 
-
 const BCrumb = [
   {
     to: '/',
@@ -40,7 +39,7 @@ const pricing = [
     package: 'Silver',
     plan: 'Free',
     monthlyplan: 'Free',
-    avatar: "/images/backgrounds/silver.png",
+    avatar: '/images/backgrounds/silver.png',
     badge: false,
     btntext: 'Choose Silver',
     rules: [
@@ -70,7 +69,7 @@ const pricing = [
     id: 2,
     package: 'Bronze',
     monthlyplan: 10.99,
-    avatar: "/images/backgrounds/bronze.png",
+    avatar: '/images/backgrounds/bronze.png',
     badge: true,
     btntext: 'Choose Bronze',
     rules: [
@@ -100,7 +99,7 @@ const pricing = [
     id: 3,
     package: 'Gold',
     monthlyplan: 22.99,
-    avatar: "/images/backgrounds/gold.png",
+    avatar: '/images/backgrounds/gold.png',
     badge: false,
     btntext: 'Choose Gold',
     rules: [
@@ -148,7 +147,7 @@ const Pricing = () => {
   });
 
   return (
-    (<PageContainer title="Pricing" description="this is Pricing">
+    <PageContainer title="Pricing" description="this is Pricing">
       {/* breadcrumb */}
       <Breadcrumb title="Pricing" items={BCrumb} />
       {/* end breadcrumb */}
@@ -158,8 +157,9 @@ const Pricing = () => {
           size={{
             xs: 12,
             sm: 10,
-            lg: 8
-          }}>
+            lg: 8,
+          }}
+        >
           <Typography variant="h2">
             Flexible Plans Tailored to Fit Your Community&apos;s Unique Needs!
           </Typography>
@@ -177,8 +177,9 @@ const Pricing = () => {
             size={{
               xs: 12,
               lg: 4,
-              sm: 6
-            }}>
+              sm: 6,
+            }}
+          >
             <BlankCard>
               <CardContent sx={{ p: '30px' }}>
                 {price.badge ? <StyledChip label="Popular" size="small"></StyledChip> : null}
@@ -277,7 +278,7 @@ const Pricing = () => {
           </Grid>
         ))}
       </Grid>
-    </PageContainer>)
+    </PageContainer>
   );
 };
 

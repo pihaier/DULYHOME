@@ -1,8 +1,8 @@
-import React from "react";
-import PageContainer from "@/app/components/container/PageContainer";
-import Breadcrumb from "@/app/dashboard/layout/shared/breadcrumb/Breadcrumb";
+import React from 'react';
+import PageContainer from '@/app/components/container/PageContainer';
+import Breadcrumb from '@/app/dashboard/layout/shared/breadcrumb/Breadcrumb';
 
-import FormWizardSteps from "@/app/components/forms/form-wizard/FormWizardSteps";
+import FormWizardSteps from '@/app/components/forms/form-wizard/FormWizardSteps';
 
 const FormWizard = () => {
   return (

@@ -1,17 +1,17 @@
-import fs from "fs";
-import matter from "gray-matter";
-import { join } from "path";
+import fs from 'fs';
+import matter from 'gray-matter';
+import { join } from 'path';
 
-const postsDirectory = join(process.cwd(), "markdown/Blog");
+const postsDirectory = join(process.cwd(), 'markdown/Blog');
 
 export function getPostSlugs() {
   return fs.readdirSync(postsDirectory);
 }
 
 export function getPostBySlug(slug: string, fields: string[] = []) {
-  const realSlug = slug.replace(/\.mdx$/, "");
+  const realSlug = slug.replace(/\.mdx$/, '');
   const fullPath = join(postsDirectory, `${realSlug}.mdx`);
-  const fileContents = fs.readFileSync(fullPath, "utf8");
+  const fileContents = fs.readFileSync(fullPath, 'utf8');
   const { data, content } = matter(fileContents);
 
   type Items = {
@@ -29,20 +29,20 @@ export function getPostBySlug(slug: string, fields: string[] = []) {
 
   // Ensure only the minimal needed data is exposed
   fields.forEach((field) => {
-    if (field === "slug") {
+    if (field === 'slug') {
       items[field] = realSlug;
     }
-    if (field === "content") {
+    if (field === 'content') {
       // You can modify the content here to include Images
       items[field] = processImages(content);
     }
 
-    if (field === "metadata") {
+    if (field === 'metadata') {
       // Include metadata, including the image information
       items[field] = { ...data, coverImage: data.coverImage || null };
     }
 
-    if (typeof data[field] !== "undefined") {
+    if (typeof data[field] !== 'undefined') {
       items[field] = data[field];
     }
   });

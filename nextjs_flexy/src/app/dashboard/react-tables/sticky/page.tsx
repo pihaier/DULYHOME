@@ -1,18 +1,18 @@
-"use client";
-import * as React from "react";
+'use client';
+import * as React from 'react';
 
-import Breadcrumb from "@/app/dashboard/layout/shared/breadcrumb/Breadcrumb";
-import PageContainer from "@/app/components/container/PageContainer";
+import Breadcrumb from '@/app/dashboard/layout/shared/breadcrumb/Breadcrumb';
+import PageContainer from '@/app/components/container/PageContainer';
 
-import TableSticky from "@/app/components/react-table/TableSticky";
+import TableSticky from '@/app/components/react-table/TableSticky';
 
 const BCrumb = [
   {
-    to: "/",
-    title: "Home",
+    to: '/',
+    title: 'Home',
   },
   {
-    title: "Sticky React Table",
+    title: 'Sticky React Table',
   },
 ];
 

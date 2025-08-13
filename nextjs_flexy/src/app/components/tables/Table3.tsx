@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React from 'react';
 import {
   TableContainer,
@@ -17,12 +17,19 @@ import {
 } from '@mui/material';
 import BlankCard from '../shared/BlankCard';
 import { Box, Stack } from '@mui/system';
-import { IconCircle, IconClock, IconDots, IconEdit, IconPlus, IconTrash } from '@tabler/icons-react';
+import {
+  IconCircle,
+  IconClock,
+  IconDots,
+  IconEdit,
+  IconPlus,
+  IconTrash,
+} from '@tabler/icons-react';
 
 const rows = [
   {
     status: 'active',
-    avatar: "/images/users/2.jpg",
+    avatar: '/images/users/2.jpg',
     tag: 'rhye',
     cname: 'Olivia Rhye',
     email: 'olivia@ui.com',
@@ -33,7 +40,7 @@ const rows = [
   },
   {
     status: 'offline',
-    avatar: "/images/users/3.jpg",
+    avatar: '/images/users/3.jpg',
     tag: 'steele',
     cname: 'Barbara Steele',
     email: 'steele@ui.com',
@@ -44,7 +51,7 @@ const rows = [
   },
   {
     status: 'active',
-    avatar: "/images/users/4.jpg",
+    avatar: '/images/users/4.jpg',
     tag: 'gordon',
     cname: 'Leonard Gordon',
     email: 'olivia@ui.com',
@@ -55,7 +62,7 @@ const rows = [
   },
   {
     status: 'offline',
-    avatar: "/images/users/5.jpg",
+    avatar: '/images/users/5.jpg',
     tag: 'pope',
     cname: 'Evelyn Pope',
     email: 'steele@ui.com',
@@ -66,7 +73,7 @@ const rows = [
   },
   {
     status: 'active',
-    avatar: "/images/users/7.jpg",
+    avatar: '/images/users/7.jpg',
     tag: 'garza',
     cname: 'Tommy Garza',
     email: 'olivia@ui.com',
@@ -74,7 +81,7 @@ const rows = [
   },
   {
     status: 'active',
-    avatar: "/images/users/8.jpg",
+    avatar: '/images/users/8.jpg',
     tag: 'vasquez',
     cname: 'Isabel Vasquez',
     email: 'steele@ui.com',
@@ -120,7 +127,7 @@ const Table3 = () => {
                 <TableCell>
                   <Stack direction="row" spacing={2}>
                     <Avatar src={row.avatar} alt={row.avatar} sx={{ width: 42, height: 42 }} />
-                    <Box> 
+                    <Box>
                       <Typography variant="h6">{row.cname}</Typography>
                       <Typography variant="subtitle1" color="textSecondary">
                         @{row.tag}
@@ -185,7 +192,7 @@ const Table3 = () => {
                     slotProps={{
                       list: {
                         'aria-labelledby': 'basic-button',
-                      }
+                      },
                     }}
                   >
                     <MenuItem onClick={handleClose}>

@@ -1,11 +1,6 @@
-import React from "react";
+import React from 'react';
 import { Card, CardContent, Typography, Fab, Box, Grid } from '@mui/material';
-import {
-  IconBox,
-  IconChartBar,
-  IconRefresh,
-  IconUsers,
-} from "@tabler/icons-react";
+import { IconBox, IconChartBar, IconRefresh, IconUsers } from '@tabler/icons-react';
 import { useTheme } from '@mui/material/styles';
 
 const sales = [
@@ -63,8 +58,9 @@ const TopCards = () => {
             size={{
               xs: 6,
               lg: 3,
-              sm: 3
-            }}>
+              sm: 3,
+            }}
+          >
             <CardContent
               sx={{
                 borderRight: {
@@ -84,24 +80,23 @@ const TopCards = () => {
                   backgroundColor: topcard.btnbg,
                   color: topcard.btntext,
                   boxShadow: 'none',
-                  width: 50, height: 50,
-                  "&:hover": {
+                  width: 50,
+                  height: 50,
+                  '&:hover': {
                     backgroundColor: topcard.btnbg,
-                  }
+                  },
                 }}
               >
                 {topcard.icon}
               </Fab>
-              <Box
-                display="flex"
-                alignItems="center" mt={3}
-
-              >
+              <Box display="flex" alignItems="center" mt={3}>
                 <Typography variant="h3">{topcard.digits}</Typography>
                 <Typography
                   color={topcard.type === 'profit' ? 'success.main' : 'error.main'}
                   variant="caption"
-                  fontWeight="400" ml={1}>
+                  fontWeight="400"
+                  ml={1}
+                >
                   {topcard.profit}%
                 </Typography>
               </Box>
@@ -113,6 +108,6 @@ const TopCards = () => {
         ))}
       </Grid>
     </Card>
-  )
-}
+  );
+};
 export default TopCards;

@@ -1,11 +1,11 @@
-import dynamic from "next/dynamic";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+import dynamic from 'next/dynamic';
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 import { useTheme } from '@mui/material/styles';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import BlankCard from '../../shared/BlankCard';
 import { Stack } from '@mui/system';
-import { ApexOptions } from "apexcharts";
+import { ApexOptions } from 'apexcharts';
 
 const Views = () => {
   // chart color
@@ -42,7 +42,6 @@ const Views = () => {
         borderRadius: 4,
         columnWidth: '50%',
         distributed: true,
-
       },
     },
     dataLabels: {
@@ -100,7 +99,13 @@ const Views = () => {
             -4.150%
           </Typography>
         </Stack>
-        <Chart options={optionscolumnchart} series={seriescolumnchart} type="bar" height="80px" width={"100%"} />
+        <Chart
+          options={optionscolumnchart}
+          series={seriescolumnchart}
+          type="bar"
+          height="80px"
+          width={'100%'}
+        />
       </CardContent>
     </BlankCard>
   );

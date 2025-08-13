@@ -1,17 +1,17 @@
-import * as React from "react";
+import * as React from 'react';
 
-import Breadcrumb from "@/app/dashboard/layout/shared/breadcrumb/Breadcrumb";
-import PageContainer from "@/app/components/container/PageContainer";
+import Breadcrumb from '@/app/dashboard/layout/shared/breadcrumb/Breadcrumb';
+import PageContainer from '@/app/components/container/PageContainer';
 
-import TableFilter from "@/app/components/react-table/TableFilter";
+import TableFilter from '@/app/components/react-table/TableFilter';
 
 const BCrumb = [
   {
-    to: "/",
-    title: "Home",
+    to: '/',
+    title: 'Home',
   },
   {
-    title: "Filter React Table",
+    title: 'Filter React Table',
   },
 ];
 

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React from 'react';
 import { FormGroup, FormControlLabel, Checkbox } from '@mui/material';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
@@ -7,44 +7,47 @@ import Favorite from '@mui/icons-material/Favorite';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 
 const SizesCheckbox = () => (
-    <FormGroup
-        row
-        sx={{
-            display: 'flex',
-            justifyContent: 'center',
-        }}
-    >
-        <FormControlLabel
-            control={
-                <Checkbox color="primary"
-                    icon={<CheckBoxOutlineBlankIcon />}
-                    checkedIcon={<CheckBoxIcon />}
-                    name="checkednormal"
-                />
-            }
-            label="Normal Size"
+  <FormGroup
+    row
+    sx={{
+      display: 'flex',
+      justifyContent: 'center',
+    }}
+  >
+    <FormControlLabel
+      control={
+        <Checkbox
+          color="primary"
+          icon={<CheckBoxOutlineBlankIcon />}
+          checkedIcon={<CheckBoxIcon />}
+          name="checkednormal"
         />
-        <FormControlLabel
-            control={
-                <Checkbox color="secondary"
-                    icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
-                    checkedIcon={<CheckBoxIcon fontSize="small" />}
-                    name="checkedsmall"
-                />
-            }
-            label="Small size"
+      }
+      label="Normal Size"
+    />
+    <FormControlLabel
+      control={
+        <Checkbox
+          color="secondary"
+          icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+          checkedIcon={<CheckBoxIcon fontSize="small" />}
+          name="checkedsmall"
         />
-        <FormControlLabel
-            control={
-                <Checkbox color="error"
-                    icon={<FavoriteBorder />}
-                    checkedIcon={<Favorite />}
-                    name="checkedH"
-                />
-            }
-            label="Heart"
+      }
+      label="Small size"
+    />
+    <FormControlLabel
+      control={
+        <Checkbox
+          color="error"
+          icon={<FavoriteBorder />}
+          checkedIcon={<Favorite />}
+          name="checkedH"
         />
-    </FormGroup>
+      }
+      label="Heart"
+    />
+  </FormGroup>
 );
 
 export default SizesCheckbox;

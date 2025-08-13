@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
@@ -7,14 +6,9 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import { ContactContext } from '@/app/context/Conatactcontext';
-import Scrollbar from "../../../components/custom-scroll/Scrollbar";
-import {
-  IconMail,
-  IconSend,
-  IconBucket,
-  IconFolder,
-} from "@tabler/icons-react";
-import ContactAdd from "./ContactAdd";
+import Scrollbar from '../../../components/custom-scroll/Scrollbar';
+import { IconMail, IconSend, IconBucket, IconFolder } from '@tabler/icons-react';
+import ContactAdd from './ContactAdd';
 import { ElementType, useContext, useEffect } from 'react';
 import { CustomizerContext } from '@/app/context/customizerContext';
 import { usePathname } from 'next/navigation';
@@ -30,13 +24,12 @@ interface DataType {
   color?: string;
 }
 
-
 const ContactFilter = () => {
-
   const { isBorderRadius } = useContext(CustomizerContext);
   const br = `${isBorderRadius}px`;
 
-  const { setSelectedDepartment, updateSearchTerm, selectedDepartment } = useContext(ContactContext);
+  const { setSelectedDepartment, updateSearchTerm, selectedDepartment } =
+    useContext(ContactContext);
 
   const filterData: DataType[] = [
     {
@@ -91,43 +84,41 @@ const ContactFilter = () => {
 
   const handleDepartmentClick = (department: string) => {
     setSelectedDepartment(department);
-    updateSearchTerm("");
+    updateSearchTerm('');
   };
 
   const location = usePathname();
 
   // Reset Contacts on browser refresh
   const handleResetTickets = async () => {
-    const response = await fetch("/api/contacts", {
+    const response = await fetch('/api/contacts', {
       method: 'GET',
       headers: {
-        "broserRefreshed": "true"
-      }
+        broserRefreshed: 'true',
+      },
     });
     const result = await response.json();
-    await mutate("/api/contacts");
-  }
+    await mutate('/api/contacts');
+  };
 
   useEffect(() => {
-    const isPageRefreshed = sessionStorage.getItem("isPageRefreshed");
-    if (isPageRefreshed === "true") {
-      console.log("page refreshed");
-      sessionStorage.removeItem("isPageRefreshed");
+    const isPageRefreshed = sessionStorage.getItem('isPageRefreshed');
+    if (isPageRefreshed === 'true') {
+      console.log('page refreshed');
+      sessionStorage.removeItem('isPageRefreshed');
       handleResetTickets();
     }
   }, [location]);
 
   useEffect(() => {
     const handleBeforeUnload = () => {
-      sessionStorage.setItem("isPageRefreshed", "true");
+      sessionStorage.setItem('isPageRefreshed', 'true');
     };
-    window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener('beforeunload', handleBeforeUnload);
     return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, []);
-
-
 
   return (
     <>
@@ -156,12 +147,11 @@ const ContactFilter = () => {
               <ListItemButton
                 sx={{ mb: 1, mx: 3, borderRadius: br }}
                 selected={selectedDepartment === `${filter.name}`}
-
                 onClick={() => handleDepartmentClick(filter.name || '')}
                 key={filter.id}
               >
                 <ListItemIcon sx={{ minWidth: '30px', color: filter.color }}>
-                  {filter.icon && React.createElement(filter.icon, { stroke: "1.5", size: 19 })}
+                  {filter.icon && React.createElement(filter.icon, { stroke: '1.5', size: 19 })}
                 </ListItemIcon>
                 <ListItemText>{filter.name}</ListItemText>
               </ListItemButton>

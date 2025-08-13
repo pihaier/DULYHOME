@@ -1,13 +1,13 @@
-"use client";
-import React from "react";
-import { Box, Typography } from "@mui/material";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import Image from "next/image";
-import { styled } from "@mui/material/styles";
-import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
-import "./carousel.css";
-import { useTheme } from "@mui/material/styles";
+'use client';
+import React from 'react';
+import { Box, Typography } from '@mui/material';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import Image from 'next/image';
+import { styled } from '@mui/material/styles';
+import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
+import './carousel.css';
+import { useTheme } from '@mui/material/styles';
 
 function SampleNextArrow(props: any) {
   const { className, onClick } = props;
@@ -18,15 +18,15 @@ function SampleNextArrow(props: any) {
       justifyContent="center"
       className={className}
       sx={{
-        cursor: "pointer",
-        position: "absolute",
-        top: { xs: "unset ", sm: "-100px" },
-        bottom: { xs: "-60px", sm: "unset" },
+        cursor: 'pointer',
+        position: 'absolute',
+        top: { xs: 'unset ', sm: '-100px' },
+        bottom: { xs: '-60px', sm: 'unset' },
         right: 0,
         backgroundColor: (theme) => theme.palette.grey[100],
-        width: "48px",
-        height: "48px",
-        borderRadius: "50%",
+        width: '48px',
+        height: '48px',
+        borderRadius: '50%',
       }}
       onClick={onClick}
     >
@@ -44,15 +44,15 @@ function SamplePrevArrow(props: any) {
       justifyContent="center"
       className={className}
       sx={{
-        cursor: "pointer",
-        position: "absolute",
-        top: { xs: "unset ", sm: "-100px" },
-        bottom: { xs: "-60px", sm: "unset" },
-        right: "60px",
+        cursor: 'pointer',
+        position: 'absolute',
+        top: { xs: 'unset ', sm: '-100px' },
+        bottom: { xs: '-60px', sm: 'unset' },
+        right: '60px',
         backgroundColor: (theme) => theme.palette.grey[100],
-        width: "48px",
-        height: "48px",
-        borderRadius: "50%",
+        width: '48px',
+        height: '48px',
+        borderRadius: '50%',
       }}
       onClick={onClick}
     >
@@ -65,7 +65,7 @@ const LeaderShipCarousel = () => {
   const theme = useTheme();
 
   const slideStyle = {
-    padding: "0 30px", // Add padding between slides
+    padding: '0 30px', // Add padding between slides
   };
 
   const settings = {
@@ -73,7 +73,7 @@ const LeaderShipCarousel = () => {
     infinite: true,
     speed: 500,
     slidesToShow: 4,
-    className: "slider variable-width",
+    className: 'slider variable-width',
     centerMode: false,
     slidesToScroll: 4,
     nextArrow: <SampleNextArrow />,
@@ -97,16 +97,13 @@ const LeaderShipCarousel = () => {
   };
 
   const UserBox = styled(Box)(() => ({
-    backgroundColor:
-      theme.palette.mode === "dark"
-        ? theme.palette.background.default
-        : "white",
-    maxWidth: "calc(100% - 51px)",
-    marginLeft: "15px",
-    borderRadius: "8px",
-    marginTop: "-30px !important",
-    boxShadow: "0px 6px 12px rgba(127, 145, 156, 0.12)",
-    marginBottom: "10px",
+    backgroundColor: theme.palette.mode === 'dark' ? theme.palette.background.default : 'white',
+    maxWidth: 'calc(100% - 51px)',
+    marginLeft: '15px',
+    borderRadius: '8px',
+    marginTop: '-30px !important',
+    boxShadow: '0px 6px 12px rgba(127, 145, 156, 0.12)',
+    marginBottom: '10px',
   }));
 
   return (
@@ -118,7 +115,7 @@ const LeaderShipCarousel = () => {
             alt="user-img"
             width={270}
             height={290}
-            style={{ borderRadius: "16px" }}
+            style={{ borderRadius: '16px' }}
           />
           <UserBox
             bgcolor="white"
@@ -141,7 +138,7 @@ const LeaderShipCarousel = () => {
             width={270}
             height={290}
             objectFit="cover"
-            style={{ borderRadius: "16px" }}
+            style={{ borderRadius: '16px' }}
           />
           <UserBox
             bgcolor="white"
@@ -164,7 +161,7 @@ const LeaderShipCarousel = () => {
             width={270}
             height={290}
             objectFit="cover"
-            style={{ borderRadius: "16px" }}
+            style={{ borderRadius: '16px' }}
           />
           <UserBox
             bgcolor="white"
@@ -187,7 +184,7 @@ const LeaderShipCarousel = () => {
             width={270}
             height={290}
             objectFit="cover"
-            style={{ borderRadius: "16px" }}
+            style={{ borderRadius: '16px' }}
           />
           <UserBox
             bgcolor="white"
@@ -210,7 +207,7 @@ const LeaderShipCarousel = () => {
             width={270}
             height={290}
             objectFit="cover"
-            style={{ borderRadius: "16px" }}
+            style={{ borderRadius: '16px' }}
           />
           <UserBox
             bgcolor="white"
@@ -233,7 +230,7 @@ const LeaderShipCarousel = () => {
             width={270}
             height={290}
             objectFit="cover"
-            style={{ borderRadius: "16px" }}
+            style={{ borderRadius: '16px' }}
           />
           <UserBox
             bgcolor="white"
@@ -256,7 +253,7 @@ const LeaderShipCarousel = () => {
             width={270}
             height={290}
             objectFit="cover"
-            style={{ borderRadius: "16px" }}
+            style={{ borderRadius: '16px' }}
           />
           <UserBox
             bgcolor="white"
@@ -279,7 +276,7 @@ const LeaderShipCarousel = () => {
             width={270}
             height={290}
             objectFit="cover"
-            style={{ borderRadius: "16px" }}
+            style={{ borderRadius: '16px' }}
           />
           <UserBox
             bgcolor="white"
@@ -302,7 +299,7 @@ const LeaderShipCarousel = () => {
             width={270}
             height={290}
             objectFit="cover"
-            style={{ borderRadius: "16px" }}
+            style={{ borderRadius: '16px' }}
           />
           <UserBox
             bgcolor="white"

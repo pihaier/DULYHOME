@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const SelectCode = () => {
   return (
     <>
@@ -81,7 +81,7 @@ const formik = useFormik({
 `}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default SelectCode
+export default SelectCode;

@@ -1,35 +1,27 @@
-import React, { useContext } from "react";
+import React, { useContext } from 'react';
 
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-import InputBase from "@mui/material/InputBase";
-import { EmojiClickData } from "emoji-picker-react";
-import {
-  IconPaperclip,
-  IconPhoto,
-  IconSend,
-} from "@tabler/icons-react";
-import { ChatContext } from "@/app/context/ChatContext";
-
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import InputBase from '@mui/material/InputBase';
+import { EmojiClickData } from 'emoji-picker-react';
+import { IconPaperclip, IconPhoto, IconSend } from '@tabler/icons-react';
+import { ChatContext } from '@/app/context/ChatContext';
 
 const ChatMsgSent = () => {
-  const [msg, setMsg] = React.useState<string>("");
+  const [msg, setMsg] = React.useState<string>('');
   const { sendMessage, selectedChat } = useContext(ChatContext);
 
   const handleChatMsgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMsg(e.target.value);
   };
 
-
-
-  const onChatMsgSubmit = (e: { preventDefault: () => void; stopPropagation: () => void; }) => {
+  const onChatMsgSubmit = (e: { preventDefault: () => void; stopPropagation: () => void }) => {
     e.preventDefault();
     e.stopPropagation();
     if (!msg.trim() || !selectedChat) return;
     sendMessage(selectedChat.id, msg.trim());
-    setMsg("");
+    setMsg('');
   };
-
 
   return (
     <Box p={2}>
@@ -38,7 +30,7 @@ const ChatMsgSent = () => {
       {/* ------------------------------------------- */}
       <form
         onSubmit={onChatMsgSubmit}
-        style={{ display: "flex", gap: "10px", alignItems: "center" }}
+        style={{ display: 'flex', gap: '10px', alignItems: 'center' }}
       >
         {/* ------------------------------------------- */}
         {/* Emoji picker */}
@@ -51,7 +43,7 @@ const ChatMsgSent = () => {
           placeholder="Type a Message"
           size="small"
           type="text"
-          inputProps={{ "aria-label": "Type a Message" }}
+          inputProps={{ 'aria-label': 'Type a Message' }}
           onChange={handleChatMsgChange.bind(null)}
         />
         <IconButton
@@ -59,7 +51,7 @@ const ChatMsgSent = () => {
           onClick={() => {
             if (msg.trim() && selectedChat) {
               sendMessage(selectedChat.id, msg.trim());
-              setMsg("");
+              setMsg('');
             }
           }}
           disabled={!msg}

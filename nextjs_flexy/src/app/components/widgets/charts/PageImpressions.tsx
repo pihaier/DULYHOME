@@ -1,5 +1,5 @@
-import dynamic from "next/dynamic";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+import dynamic from 'next/dynamic';
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 import { useTheme } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
 import CardContent from '@mui/material/CardContent';
@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import BlankCard from '../../shared/BlankCard';
 import { Stack } from '@mui/system';
 import { IconArrowDownRight } from '@tabler/icons-react';
-import { ApexOptions } from "apexcharts";
+import { ApexOptions } from 'apexcharts';
 
 const PageImpressions = () => {
   // chart color
@@ -30,13 +30,19 @@ const PageImpressions = () => {
         enabled: true,
       },
     },
-    colors: [secondarylight, secondarylight, secondary, secondarylight, secondarylight, secondarylight],
+    colors: [
+      secondarylight,
+      secondarylight,
+      secondary,
+      secondarylight,
+      secondarylight,
+      secondarylight,
+    ],
     plotOptions: {
       bar: {
         borderRadius: 4,
         columnWidth: '50%',
         distributed: true,
-
       },
     },
     dataLabels: {
@@ -86,8 +92,9 @@ const PageImpressions = () => {
 
         <Grid container spacing={3}>
           <Grid size={5}>
-
-            <Typography variant="h4" mt={3} fontWeight={600}>$456,120</Typography>
+            <Typography variant="h4" mt={3} fontWeight={600}>
+              $456,120
+            </Typography>
             <Typography variant="subtitle2" fontSize="12px" color="textSecondary">
               (Change Yesterday)
             </Typography>
@@ -106,7 +113,7 @@ const PageImpressions = () => {
               series={seriescolumnchart}
               type="bar"
               height="100px"
-              width={"100%"}
+              width={'100%'}
             />
           </Grid>
         </Grid>

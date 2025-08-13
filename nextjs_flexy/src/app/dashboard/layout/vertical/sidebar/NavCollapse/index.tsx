@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
+import React, { useContext } from 'react';
 
-import { useState } from "react";
-import { usePathname } from "next/navigation";
+import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 // mui imports
 import {
@@ -13,19 +13,17 @@ import {
   useTheme,
   useMediaQuery,
   Theme,
-} from "@mui/material";
+} from '@mui/material';
 
 // custom imports
-import NavItem from "../NavItem";
+import NavItem from '../NavItem';
 
 // plugins
-import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
-import { useTranslation } from "react-i18next";
-import { isNull } from "lodash";
-import { CustomizerContext } from "@/app/context/customizerContext";
-import { NavCollapseProps } from "@/app/dashboard/types/layout/sidebar";
-
-
+import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
+import { useTranslation } from 'react-i18next';
+import { isNull } from 'lodash';
+import { CustomizerContext } from '@/app/context/customizerContext';
+import { NavCollapseProps } from '@/app/dashboard/types/layout/sidebar';
 
 // FC Component For Dropdown Menu
 export default function NavCollapse({
@@ -36,7 +34,7 @@ export default function NavCollapse({
   hideMenu,
   onClick,
 }: NavCollapseProps) {
-  const lgDown = useMediaQuery((theme: Theme) => theme.breakpoints.down("lg"));
+  const lgDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'));
 
   const { isBorderRadius } = useContext(CustomizerContext);
 
@@ -46,11 +44,11 @@ export default function NavCollapse({
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
 
-
-  const menuIcon = Icon ? (
-    level > 1 ? React.createElement(Icon, { stroke: 1.5, size: "1rem" }) : React.createElement(Icon, { stroke: 1.5, size: "1.3rem" })
-  ) : null;
-
+  const menuIcon = Icon
+    ? level > 1
+      ? React.createElement(Icon, { stroke: 1.5, size: '1rem' })
+      : React.createElement(Icon, { stroke: 1.5, size: '1.3rem' })
+    : null;
 
   const handleClick = () => {
     setOpen(!open);
@@ -73,9 +71,10 @@ export default function NavCollapse({
     backgroundColor: open && level < 2 ? theme.palette.primary.main : '',
     whiteSpace: 'nowrap',
     '&:hover': {
-      backgroundColor: pathname.includes(menu.href || '') || open
-        ? theme.palette.primary.main
-        : theme.palette.primary.light,
+      backgroundColor:
+        pathname.includes(menu.href || '') || open
+          ? theme.palette.primary.main
+          : theme.palette.primary.light,
       color: pathname.includes(menu.href || '') || open ? 'white' : theme.palette.primary.main,
     },
     color:
@@ -86,8 +85,6 @@ export default function NavCollapse({
           : theme.palette.text.primary,
     borderRadius: `${isBorderRadius}px`,
   }));
-
-
 
   // If Menu has Children
   const submenus = menu.children?.map((item: any) => {
@@ -126,21 +123,15 @@ export default function NavCollapse({
       >
         <ListItemIcon
           sx={{
-            minWidth: "36px",
-            p: "3px 0",
-            color: "inherit",
+            minWidth: '36px',
+            p: '3px 0',
+            color: 'inherit',
           }}
         >
           {menuIcon}
         </ListItemIcon>
-        <ListItemText color="inherit">
-          {hideMenu ? "" : <>{t(`${menu.title}`)}</>}
-        </ListItemText>
-        {!open ? (
-          <IconChevronDown size="1rem" />
-        ) : (
-          <IconChevronUp size="1rem" />
-        )}
+        <ListItemText color="inherit">{hideMenu ? '' : <>{t(`${menu.title}`)}</>}</ListItemText>
+        {!open ? <IconChevronDown size="1rem" /> : <IconChevronUp size="1rem" />}
       </ListItemStyled>
       <Collapse in={open} timeout="auto">
         {submenus}

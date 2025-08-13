@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import React from 'react';
 import Breadcrumb from '@/app/dashboard/layout/shared/breadcrumb/Breadcrumb';
 import PageContainer from '@/app/components/container/PageContainer';
@@ -19,7 +19,6 @@ const BCrumb = [
 ];
 
 const TiptapEditor = () => {
-
   return (
     <PageContainer title="Tiptap Editor " description="this is Tiptap Editor ">
       {/* breadcrumb */}

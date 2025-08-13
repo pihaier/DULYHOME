@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React from 'react';
 import { Box } from '@mui/material';
 import CustomCheckbox from '../../theme-elements/CustomCheckbox';
@@ -6,7 +6,9 @@ import CustomCheckbox from '../../theme-elements/CustomCheckbox';
 const CustomEleCheckbox = () => {
   const [checked, setChecked] = React.useState(true);
 
-  const handleChange = (event: { target: { checked: boolean | ((prevState: boolean) => boolean); }; }) => {
+  const handleChange = (event: {
+    target: { checked: boolean | ((prevState: boolean) => boolean) };
+  }) => {
     setChecked(event.target.checked);
   };
 

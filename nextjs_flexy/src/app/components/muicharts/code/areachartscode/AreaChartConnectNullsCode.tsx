@@ -1,11 +1,10 @@
-import React from 'react'
-import CodeDialog from "@/app/components/shared/CodeDialog";
-
+import React from 'react';
+import CodeDialog from '@/app/components/shared/CodeDialog';
 
 function AreaChartConnectNullsCode() {
-    return (
-        <CodeDialog>
-            {`
+  return (
+    <CodeDialog>
+      {`
 'use client'
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
@@ -48,8 +47,8 @@ export default function AreaChartConnectNulls() {
     );
 }
       `}
-        </CodeDialog>
-    )
+    </CodeDialog>
+  );
 }
 
-export default AreaChartConnectNullsCode
+export default AreaChartConnectNullsCode;

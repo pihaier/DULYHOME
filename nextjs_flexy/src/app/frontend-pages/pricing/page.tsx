@@ -8,18 +8,17 @@ import Banner from '../../components/frontend-pages/pricing/Banner';
 import ScrollToTop from '../../components/frontend-pages/shared/scroll-to-top';
 
 const PricingPage = () => {
-    return (
-        <PageContainer title="Pricing" description="this is Pricing">
-
-            <HeaderAlert />
-            <HpHeader />
-            <Banner />
-            <Pricing />
-            <C2a />
-            <Footer />
-            <ScrollToTop />
-        </PageContainer>
-    );
+  return (
+    <PageContainer title="Pricing" description="this is Pricing">
+      <HeaderAlert />
+      <HpHeader />
+      <Banner />
+      <Pricing />
+      <C2a />
+      <Footer />
+      <ScrollToTop />
+    </PageContainer>
+  );
 };
 
 export default PricingPage;

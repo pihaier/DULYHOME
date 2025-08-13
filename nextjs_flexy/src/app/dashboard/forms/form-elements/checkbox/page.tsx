@@ -1,39 +1,39 @@
-import Breadcrumb from "@/app/dashboard/layout/shared/breadcrumb/Breadcrumb";
-import PageContainer from "@/app/components/container/PageContainer";
-import ParentCard from "@/app/components/shared/ParentCard";
-import ChildCard from "@/app/components/shared/ChildCard";
+import Breadcrumb from '@/app/dashboard/layout/shared/breadcrumb/Breadcrumb';
+import PageContainer from '@/app/components/container/PageContainer';
+import ParentCard from '@/app/components/shared/ParentCard';
+import ChildCard from '@/app/components/shared/ChildCard';
 
-import { Grid } from "@mui/material";
+import { Grid } from '@mui/material';
 
 // custom components
-import PositionCheckbox from "@/app/components/forms/form-elements/checkbox/Position";
-import SizesCheckbox from "@/app/components/forms/form-elements/checkbox/Sizes";
-import DefaultcolorsCheckbox from "@/app/components/forms/form-elements/checkbox/DefaultColors";
-import CustomEleCheckbox from "@/app/components/forms/form-elements/checkbox/Custom";
-import DefaultCheckbox from "@/app/components/forms/form-elements/checkbox/Default";
-import ColorsCheckbox from "@/app/components/forms/form-elements/checkbox/Colors";
+import PositionCheckbox from '@/app/components/forms/form-elements/checkbox/Position';
+import SizesCheckbox from '@/app/components/forms/form-elements/checkbox/Sizes';
+import DefaultcolorsCheckbox from '@/app/components/forms/form-elements/checkbox/DefaultColors';
+import CustomEleCheckbox from '@/app/components/forms/form-elements/checkbox/Custom';
+import DefaultCheckbox from '@/app/components/forms/form-elements/checkbox/Default';
+import ColorsCheckbox from '@/app/components/forms/form-elements/checkbox/Colors';
 
 // codeModel
-import CustomEleCheckboxCode from "@/app/components/forms/form-elements/checkbox/code/CustomEleCheckboxCode";
-import ColorsCheckboxCode from "@/app/components/forms/form-elements/checkbox/code/ColorsCheckboxCode";
-import DefaultCheckboxCode from "@/app/components/forms/form-elements/checkbox/code/DefaultCheckboxCode";
-import DefaultcolorsCheckboxCode from "@/app/components/forms/form-elements/checkbox/code/DefaultcolorsCheckboxCode";
-import SizesCheckboxCode from "@/app/components/forms/form-elements/checkbox/code/SizesCheckboxCode";
-import PositionCheckboxCode from "@/app/components/forms/form-elements/checkbox/code/PositionCheckboxCode";
+import CustomEleCheckboxCode from '@/app/components/forms/form-elements/checkbox/code/CustomEleCheckboxCode';
+import ColorsCheckboxCode from '@/app/components/forms/form-elements/checkbox/code/ColorsCheckboxCode';
+import DefaultCheckboxCode from '@/app/components/forms/form-elements/checkbox/code/DefaultCheckboxCode';
+import DefaultcolorsCheckboxCode from '@/app/components/forms/form-elements/checkbox/code/DefaultcolorsCheckboxCode';
+import SizesCheckboxCode from '@/app/components/forms/form-elements/checkbox/code/SizesCheckboxCode';
+import PositionCheckboxCode from '@/app/components/forms/form-elements/checkbox/code/PositionCheckboxCode';
 
 const BCrumb = [
   {
-    to: "/",
-    title: "Home",
+    to: '/',
+    title: 'Home',
   },
   {
-    title: "Checkbox",
+    title: 'Checkbox',
   },
 ];
 
 const MuiCheckbox = () => {
   return (
-    (<PageContainer title="Checkbox" description="this is Checkbox">
+    <PageContainer title="Checkbox" description="this is Checkbox">
       {/* breadcrumb */}
       <Breadcrumb title="Checkbox" items={BCrumb} />
       {/* end breadcrumb */}
@@ -48,8 +48,9 @@ const MuiCheckbox = () => {
             size={{
               xs: 12,
               lg: 6,
-              sm: 6
-            }}>
+              sm: 6,
+            }}
+          >
             <ChildCard title="Custom" codeModel={<CustomEleCheckboxCode />}>
               <CustomEleCheckbox />
             </ChildCard>
@@ -63,8 +64,9 @@ const MuiCheckbox = () => {
             size={{
               xs: 12,
               lg: 6,
-              sm: 6
-            }}>
+              sm: 6,
+            }}
+          >
             <ChildCard title="Colors" codeModel={<ColorsCheckboxCode />}>
               <ColorsCheckbox />
             </ChildCard>
@@ -78,8 +80,9 @@ const MuiCheckbox = () => {
             size={{
               xs: 12,
               lg: 6,
-              sm: 6
-            }}>
+              sm: 6,
+            }}
+          >
             <ChildCard title="Default" codeModel={<DefaultCheckboxCode />}>
               <DefaultCheckbox />
             </ChildCard>
@@ -93,12 +96,10 @@ const MuiCheckbox = () => {
             size={{
               xs: 12,
               lg: 6,
-              sm: 6
-            }}>
-            <ChildCard
-              title="Default with Colors"
-              codeModel={<DefaultcolorsCheckboxCode />}
-            >
+              sm: 6,
+            }}
+          >
+            <ChildCard title="Default with Colors" codeModel={<DefaultcolorsCheckboxCode />}>
               <DefaultcolorsCheckbox />
             </ChildCard>
           </Grid>
@@ -111,12 +112,10 @@ const MuiCheckbox = () => {
             size={{
               xs: 12,
               lg: 6,
-              sm: 6
-            }}>
-            <ChildCard
-              title="Sizes & Custom Icon"
-              codeModel={<SizesCheckboxCode />}
-            >
+              sm: 6,
+            }}
+          >
+            <ChildCard title="Sizes & Custom Icon" codeModel={<SizesCheckboxCode />}>
               <SizesCheckbox />
             </ChildCard>
           </Grid>
@@ -129,15 +128,16 @@ const MuiCheckbox = () => {
             size={{
               xs: 12,
               lg: 6,
-              sm: 6
-            }}>
+              sm: 6,
+            }}
+          >
             <ChildCard title="Position" codeModel={<PositionCheckboxCode />}>
               <PositionCheckbox />
             </ChildCard>
           </Grid>
         </Grid>
       </ParentCard>
-    </PageContainer>)
+    </PageContainer>
   );
 };
 

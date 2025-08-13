@@ -13,8 +13,8 @@ import BlankCard from '../../shared/BlankCard';
 
 const complexCard = [
   {
-    avatar: "/images/users/1.jpg",
-    coveravatar: "/images/blog/blog-img1.jpg",
+    avatar: '/images/users/1.jpg',
+    coveravatar: '/images/blog/blog-img1.jpg',
     title: 'As yen tumbles, gadget-loving Japan goes for iPhones',
     category: 'Social',
     name: 'Georgeanna Ramero',
@@ -23,8 +23,8 @@ const complexCard = [
     time: 'Mon, Dec 19',
   },
   {
-    avatar: "/images/users/2.jpg",
-    coveravatar: "/images/blog/blog-img2.jpg",
+    avatar: '/images/users/2.jpg',
+    coveravatar: '/images/blog/blog-img2.jpg',
     title: 'Intel loses bid to revive antitrust case against patent foe Fortress',
     category: 'Gadget',
     name: 'Georgeanna Ramero',
@@ -33,8 +33,8 @@ const complexCard = [
     time: 'Sun, Dec 18',
   },
   {
-    avatar: "/images/users/3.jpg",
-    coveravatar: "/images/blog/blog-img3.jpg",
+    avatar: '/images/users/3.jpg',
+    coveravatar: '/images/blog/blog-img3.jpg',
     title: 'COVID outbreak deepens as more lockdowns loom in China',
     category: 'Health',
     name: 'Georgeanna Ramero',
@@ -46,14 +46,15 @@ const complexCard = [
 
 const ComplexCard = () => {
   return (
-    (<Grid container spacing={3}>
+    <Grid container spacing={3}>
       {complexCard.map((author, index) => (
         <Grid
           key={index}
           size={{
             xs: 12,
-            sm: 4
-          }}>
+            sm: 4,
+          }}
+        >
           <BlankCard className="hoverCard">
             <>
               <Typography component={Link} href="/">
@@ -70,7 +71,12 @@ const ComplexCard = () => {
                     <Avatar aria-label="recipe" src={author.avatar}></Avatar>
                   </Tooltip>
                   <Chip
-                    sx={{ marginLeft: 'auto', marginTop: '-21px', backgroundColor: (theme) => theme.palette.mode === "light" ? "white" : "#111c2d" }}
+                    sx={{
+                      marginLeft: 'auto',
+                      marginTop: '-21px',
+                      backgroundColor: (theme) =>
+                        theme.palette.mode === 'light' ? 'white' : '#111c2d',
+                    }}
                     label="2 min Read"
                     size="small"
                   ></Chip>
@@ -106,7 +112,7 @@ const ComplexCard = () => {
           </BlankCard>
         </Grid>
       ))}
-    </Grid>)
+    </Grid>
   );
 };
 

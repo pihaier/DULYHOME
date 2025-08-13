@@ -1,23 +1,18 @@
-'use client'
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
+'use client';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 
-import ChildCard from "../../../../components/shared/ChildCard";
-import {
-  IconBriefcase,
-  IconDeviceDesktop,
-  IconMail,
-  IconMapPin,
-} from "@tabler/icons-react";
+import ChildCard from '../../../../components/shared/ChildCard';
+import { IconBriefcase, IconDeviceDesktop, IconMail, IconMapPin } from '@tabler/icons-react';
 
 const IntroCard = () => (
   <ChildCard>
-    <Typography   variant="h4" mb={2}>
+    <Typography variant="h4" mb={2}>
       Introduction
     </Typography>
     <Typography color="textSecondary" variant="subtitle1" mb={2}>
-      Hello, I am Julia Roberts. I love making websites and graphics. Lorem
-      ipsum dolor sit amet, consectetur adipiscing elit.
+      Hello, I am Julia Roberts. I love making websites and graphics. Lorem ipsum dolor sit amet,
+      consectetur adipiscing elit.
     </Typography>
     <Stack direction="row" gap={2} alignItems="center" mb={3}>
       <IconBriefcase size="21" />

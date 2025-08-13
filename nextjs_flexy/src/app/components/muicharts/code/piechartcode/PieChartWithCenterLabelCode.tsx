@@ -1,5 +1,5 @@
-import React from 'react'
-import CodeDialog from '@/app/components/shared/CodeDialog'
+import React from 'react';
+import CodeDialog from '@/app/components/shared/CodeDialog';
 
 function PieChartWithCenterLabelCode() {
   return (
@@ -63,7 +63,7 @@ export default function PieChartWithCenterLabelChart() {
 
             `}
     </CodeDialog>
-  )
+  );
 }
 
-export default PieChartWithCenterLabelCode
+export default PieChartWithCenterLabelCode;

@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const TextWarningCode = () => {
   return (
     <>
@@ -21,7 +21,7 @@ import { Typography } from '@mui/material';
 </Typography>`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default TextWarningCode
+export default TextWarningCode;

@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const PositionSwitchCode = () => {
   return (
     <>
@@ -40,7 +40,7 @@ import { Box, Switch, FormGroup, FormControlLabel } from '@mui/material';
 `}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default PositionSwitchCode
+export default PositionSwitchCode;

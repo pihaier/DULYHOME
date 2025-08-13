@@ -1,14 +1,14 @@
-import React from "react";
-import dynamic from "next/dynamic";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
-import { useTheme } from "@mui/material/styles";
+import React from 'react';
+import dynamic from 'next/dynamic';
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
+import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-import DashboardCard from "../../shared/DashboardCard";
+import DashboardCard from '../../shared/DashboardCard';
 
-import { IconArrowUpRight, IconShoppingCart } from "@tabler/icons-react";
-import { ApexOptions } from "apexcharts";
+import { IconArrowUpRight, IconShoppingCart } from '@tabler/icons-react';
+import { ApexOptions } from 'apexcharts';
 
 const SalesTwo = () => {
   // chart color
@@ -18,14 +18,13 @@ const SalesTwo = () => {
   // chart
   const optionscolumnchart: ApexOptions = {
     chart: {
-      type: "bar",
+      type: 'bar',
       fontFamily: "'Plus Jakarta Sans', sans-serif;",
-      foreColor: "#adb0bb",
+      foreColor: '#adb0bb',
       toolbar: {
         show: false,
       },
       height: 25,
-
 
       offsetX: -15,
       sparkline: {
@@ -39,7 +38,7 @@ const SalesTwo = () => {
     plotOptions: {
       bar: {
         horizontal: false,
-        columnWidth: "100%",
+        columnWidth: '100%',
         borderRadius: 3,
         distributed: true,
       },
@@ -50,7 +49,7 @@ const SalesTwo = () => {
     stroke: {
       show: true,
       width: 5,
-      colors: ["rgba(0,0,0,0.01)"],
+      colors: ['rgba(0,0,0,0.01)'],
     },
     xaxis: {
       axisBorder: {
@@ -73,7 +72,7 @@ const SalesTwo = () => {
       opacity: 1,
     },
     tooltip: {
-      theme: theme.palette.mode === "dark" ? "dark" : "light",
+      theme: theme.palette.mode === 'dark' ? 'dark' : 'light',
       x: {
         show: false,
       },
@@ -84,16 +83,15 @@ const SalesTwo = () => {
         options: {
           chart: { height: 60 },
           plotOptions: {
-            bar: { columnWidth: "60%" },
+            bar: { columnWidth: '60%' },
           },
         },
       },
     ],
-
   };
   const seriescolumnchart = [
     {
-      name: "",
+      name: '',
       data: [100, 60, 35, 90, 35, 100],
     },
   ];
@@ -126,7 +124,7 @@ const SalesTwo = () => {
               series={seriescolumnchart}
               type="bar"
               height="25px"
-              width={"100%"}
+              width={'100%'}
             />
           </Box>
 

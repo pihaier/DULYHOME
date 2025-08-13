@@ -1,19 +1,19 @@
-'use client'
-import React from 'react'
+'use client';
+import React from 'react';
 
-import ChildCard from '@/app/components/shared/ChildCard'
-import dayjs, { Dayjs } from 'dayjs'
-import { LocalizationProvider } from '@mui/x-date-pickers'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
+import ChildCard from '@/app/components/shared/ChildCard';
+import dayjs, { Dayjs } from 'dayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
-import DifferentDesignCode from '@/app/components/forms/form-elements/date-time/code/DifferentDesignCode'
+import DifferentDesignCode from '@/app/components/forms/form-elements/date-time/code/DifferentDesignCode';
 
 const DifferentDateTime = () => {
-  const [value, setValue] = React.useState<Dayjs | null>(dayjs())
+  const [value, setValue] = React.useState<Dayjs | null>(dayjs());
 
   return (
-    <ChildCard title='Different Design' codeModel={<DifferentDesignCode />}>
+    <ChildCard title="Different Design" codeModel={<DifferentDesignCode />}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DateTimePicker
           slotProps={{
@@ -33,12 +33,12 @@ const DifferentDateTime = () => {
           }}
           value={value}
           onChange={(newValue) => {
-            setValue(newValue)
+            setValue(newValue);
           }}
         />
       </LocalizationProvider>
     </ChildCard>
-  )
-}
+  );
+};
 
-export default DifferentDateTime
+export default DifferentDateTime;

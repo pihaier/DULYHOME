@@ -1,5 +1,5 @@
-import React from 'react'
-import CodeDialog from '@/app/components/shared/CodeDialog'
+import React from 'react';
+import CodeDialog from '@/app/components/shared/CodeDialog';
 
 function TrackitemclicksTreeCode() {
   return (
@@ -59,7 +59,7 @@ function TrackitemclicksTree() {
 export default TrackitemclicksTree
     `}
     </CodeDialog>
-  )
+  );
 }
 
-export default TrackitemclicksTreeCode
+export default TrackitemclicksTreeCode;

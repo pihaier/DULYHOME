@@ -1,14 +1,12 @@
-"use client";
-import React from "react";
-import { BarPlot, ChartContainer } from "@mui/x-charts";
-import { useTheme } from "@mui/material/styles";
-import ParentCard from "@/app/components/shared/ParentCard";
-import TinyBarCode from "@/app/components/muicharts/code/barchartcode/TinyBarCode";
+'use client';
+import React from 'react';
+import { BarPlot, ChartContainer } from '@mui/x-charts';
+import { useTheme } from '@mui/material/styles';
+import ParentCard from '@/app/components/shared/ParentCard';
+import TinyBarCode from '@/app/components/muicharts/code/barchartcode/TinyBarCode';
 
 const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
-const xLabels = [
-  "Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6", "Week 7"
-];
+const xLabels = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7'];
 
 const TinyBarChart = () => {
   const theme = useTheme();
@@ -16,33 +14,30 @@ const TinyBarChart = () => {
 
   return (
     <ParentCard title="Tiny Chart" codeModel={<TinyBarCode />}>
-
       <ChartContainer
         width={500}
         height={300}
         series={[
           {
             data: uData,
-            label: "uv",
-            type: "bar",
+            label: 'uv',
+            type: 'bar',
             color: primary,
-
-
           },
         ]}
-        xAxis={[{
-          data: xLabels, scaleType: "band",
-          categoryGapRatio: 0.8,
-          barGapRatio: 0.8,
-        } as any]}
+        xAxis={[
+          {
+            data: xLabels,
+            scaleType: 'band',
+            categoryGapRatio: 0.8,
+            barGapRatio: 0.8,
+          } as any,
+        ]}
       >
         <BarPlot borderRadius={6} />
       </ChartContainer>
-
     </ParentCard>
   );
 };
 
 export default TinyBarChart;
-
-

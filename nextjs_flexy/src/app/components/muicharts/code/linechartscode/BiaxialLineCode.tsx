@@ -1,5 +1,5 @@
-import React from 'react'
-import CodeDialog from '@/app/components/shared/CodeDialog'
+import React from 'react';
+import CodeDialog from '@/app/components/shared/CodeDialog';
 
 function BiaxialLineCode() {
   return (
@@ -51,7 +51,7 @@ export default function BiaxialLineChart() {
 }
 `}
     </CodeDialog>
-  )
+  );
 }
 
-export default BiaxialLineCode
+export default BiaxialLineCode;

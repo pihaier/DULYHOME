@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React from 'react';
 import {
   TableContainer,
@@ -22,7 +22,7 @@ import { IconDots, IconEdit, IconPlus, IconTrash } from '@tabler/icons-react';
 const rows = [
   {
     status: 'active',
-    avatar: "/images/blog/blog-img1.jpg",
+    avatar: '/images/blog/blog-img1.jpg',
     users: '4300',
     title: 'Top Authors',
     subtitle: 'Successful Fellas',
@@ -33,7 +33,7 @@ const rows = [
   },
   {
     status: 'offline',
-    avatar: "/images/blog/blog-img2.jpg",
+    avatar: '/images/blog/blog-img2.jpg',
     users: '1200',
     title: 'Popular Authors',
     subtitle: 'Most Successful',
@@ -41,7 +41,7 @@ const rows = [
   },
   {
     status: 'active',
-    avatar: "/images/blog/blog-img3.jpg",
+    avatar: '/images/blog/blog-img3.jpg',
     users: '2000',
     title: 'New Users',
     subtitle: 'Awesome Users',
@@ -52,7 +52,7 @@ const rows = [
   },
   {
     status: 'offline',
-    avatar: "/images/blog/blog-img4.jpg",
+    avatar: '/images/blog/blog-img4.jpg',
     users: '1500',
     title: 'Active Customers',
     subtitle: 'Best Customers',
@@ -60,7 +60,7 @@ const rows = [
   },
   {
     status: 'active',
-    avatar: "/images/blog/blog-img5.jpg",
+    avatar: '/images/blog/blog-img5.jpg',
     users: '9500',
     title: 'Bestseller Theme',
     subtitle: 'Amazing Templates',
@@ -159,7 +159,7 @@ const Table4 = () => {
                     slotProps={{
                       list: {
                         'aria-labelledby': 'basic-button',
-                      }
+                      },
                     }}
                   >
                     <MenuItem onClick={handleClose}>

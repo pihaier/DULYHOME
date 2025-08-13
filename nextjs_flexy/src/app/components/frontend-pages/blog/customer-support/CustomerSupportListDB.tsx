@@ -96,15 +96,15 @@ const CustomerSupportListDB = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
+
   const [notices, setNotices] = useState<Notice[]>([]);
   const [faqs, setFaqs] = useState<FAQ[]>([]);
-  
+
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [editMode, setEditMode] = useState<'add' | 'edit'>('add');
   const [editType, setEditType] = useState<'notice' | 'faq'>('notice');
   const [editData, setEditData] = useState<any>(null);
-  
+
   useEffect(() => {
     // 로그인한 사용자의 role이 admin 또는 korean_team인지 확인
     if (userProfile?.role && ['admin', 'korean_team'].includes(userProfile.role)) {
@@ -116,14 +116,14 @@ const CustomerSupportListDB = () => {
   const fetchData = async () => {
     setLoading(true);
     setError(null);
-    
+
     try {
       // 공지사항 조회
       const { data: noticesData, error: noticesError } = await supabase
         .from('notices')
         .select('*')
         .order('created_at', { ascending: false });
-      
+
       if (noticesError) {
         console.error('Error fetching notices:', noticesError);
         // 테이블이 없는 경우 빈 배열로 처리
@@ -135,13 +135,13 @@ const CustomerSupportListDB = () => {
       } else {
         setNotices(noticesData || []);
       }
-      
+
       // FAQ 조회
       const { data: faqsData, error: faqsError } = await supabase
         .from('faqs')
         .select('*')
         .order('sort_order', { ascending: true });
-      
+
       if (faqsError) {
         console.error('Error fetching FAQs:', faqsError);
         // 테이블이 없는 경우 빈 배열로 처리
@@ -173,9 +173,10 @@ const CustomerSupportListDB = () => {
     setTabValue(newValue);
   };
 
-  const handleNoticeChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-    setExpandedNotice(isExpanded ? panel : false);
-  };
+  const handleNoticeChange =
+    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+      setExpandedNotice(isExpanded ? panel : false);
+    };
 
   const handleFAQChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
     setExpandedFAQ(isExpanded ? panel : false);
@@ -187,55 +188,58 @@ const CustomerSupportListDB = () => {
     setEditData(item);
     setEditDialogOpen(true);
   };
-  
+
   const handleAdd = (type: 'notice' | 'faq') => {
     setEditMode('add');
     setEditType(type);
-    setEditData(type === 'notice' 
-      ? { title: '', content: '', category: '공지', is_important: false }
-      : { question: '', answer: '', category: '서비스신청', sort_order: 0 }
+    setEditData(
+      type === 'notice'
+        ? { title: '', content: '', category: '공지', is_important: false }
+        : { question: '', answer: '', category: '서비스신청', sort_order: 0 }
     );
     setEditDialogOpen(true);
   };
-  
+
   const handleDelete = async (type: 'notice' | 'faq', id: string) => {
     if (!confirm('정말 삭제하시겠습니까?')) return;
-    
+
     try {
       const { error } = await supabase
         .from(type === 'notice' ? 'notices' : 'faqs')
         .delete()
         .eq('id', id);
-      
+
       if (error) throw error;
-      
+
       // 로컬 상태 업데이트
       if (type === 'notice') {
-        setNotices(notices.filter(n => n.id !== id));
+        setNotices(notices.filter((n) => n.id !== id));
       } else {
-        setFaqs(faqs.filter(f => f.id !== id));
+        setFaqs(faqs.filter((f) => f.id !== id));
       }
     } catch (err) {
       console.error('Error deleting:', err);
       alert('삭제에 실패했습니다.');
     }
   };
-  
+
   const handleSave = async () => {
     try {
       if (editType === 'notice') {
         if (editMode === 'add') {
           const { data, error } = await supabase
             .from('notices')
-            .insert([{
-              title: editData.title,
-              content: editData.content,
-              category: editData.category,
-              is_important: editData.is_important,
-            }])
+            .insert([
+              {
+                title: editData.title,
+                content: editData.content,
+                category: editData.category,
+                is_important: editData.is_important,
+              },
+            ])
             .select()
             .single();
-          
+
           if (error) throw error;
           setNotices([data, ...notices]);
         } else {
@@ -250,23 +254,25 @@ const CustomerSupportListDB = () => {
             .eq('id', editData.id)
             .select()
             .single();
-          
+
           if (error) throw error;
-          setNotices(notices.map(n => n.id === data.id ? data : n));
+          setNotices(notices.map((n) => (n.id === data.id ? data : n)));
         }
       } else {
         if (editMode === 'add') {
           const { data, error } = await supabase
             .from('faqs')
-            .insert([{
-              question: editData.question,
-              answer: editData.answer,
-              category: editData.category,
-              sort_order: editData.sort_order || faqs.length,
-            }])
+            .insert([
+              {
+                question: editData.question,
+                answer: editData.answer,
+                category: editData.category,
+                sort_order: editData.sort_order || faqs.length,
+              },
+            ])
             .select()
             .single();
-          
+
           if (error) throw error;
           setFaqs([...faqs, data]);
         } else {
@@ -281,12 +287,12 @@ const CustomerSupportListDB = () => {
             .eq('id', editData.id)
             .select()
             .single();
-          
+
           if (error) throw error;
-          setFaqs(faqs.map(f => f.id === data.id ? data : f));
+          setFaqs(faqs.map((f) => (f.id === data.id ? data : f)));
         }
       }
-      
+
       setEditDialogOpen(false);
       setEditData(null);
     } catch (err) {
@@ -364,16 +370,8 @@ const CustomerSupportListDB = () => {
             <CardContent>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={tabValue} onChange={handleTabChange} variant="fullWidth">
-                  <Tab 
-                    label="공지사항" 
-                    icon={<AnnouncementIcon />} 
-                    iconPosition="start"
-                  />
-                  <Tab 
-                    label="자주 묻는 질문 (FAQ)" 
-                    icon={<HelpIcon />} 
-                    iconPosition="start"
-                  />
+                  <Tab label="공지사항" icon={<AnnouncementIcon />} iconPosition="start" />
+                  <Tab label="자주 묻는 질문 (FAQ)" icon={<HelpIcon />} iconPosition="start" />
                 </Tabs>
               </Box>
 
@@ -420,9 +418,7 @@ const CustomerSupportListDB = () => {
                           <Typography variant="h6" fontWeight={500}>
                             {notice.title}
                           </Typography>
-                          {notice.is_important && (
-                            <Chip label="중요" color="error" size="small" />
-                          )}
+                          {notice.is_important && <Chip label="중요" color="error" size="small" />}
                           {isAdmin && (
                             <Box sx={{ ml: 'auto', display: 'flex', gap: 1 }}>
                               <IconButton
@@ -447,8 +443,8 @@ const CustomerSupportListDB = () => {
                           )}
                         </Box>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                          <Chip 
-                            label={notice.category} 
+                          <Chip
+                            label={notice.category}
                             color={getCategoryColor(notice.category) as any}
                             size="small"
                             variant="outlined"
@@ -462,7 +458,10 @@ const CustomerSupportListDB = () => {
                         </Box>
                       </AccordionSummary>
                       <AccordionDetails>
-                        <Typography variant="body1" sx={{ whiteSpace: 'pre-line', lineHeight: 1.8 }}>
+                        <Typography
+                          variant="body1"
+                          sx={{ whiteSpace: 'pre-line', lineHeight: 1.8 }}
+                        >
                           {notice.content}
                         </Typography>
                       </AccordionDetails>
@@ -508,8 +507,8 @@ const CustomerSupportListDB = () => {
                           },
                         }}
                       >
-                        <Chip 
-                          label={faq.category} 
+                        <Chip
+                          label={faq.category}
                           color={getFAQCategoryColor(faq.category) as any}
                           size="small"
                           sx={{ minWidth: 80 }}
@@ -552,11 +551,15 @@ const CustomerSupportListDB = () => {
             </CardContent>
           </Card>
         </Grid>
-
       </Grid>
-      
+
       {/* 편집 다이얼로그 */}
-      <Dialog open={editDialogOpen} onClose={() => setEditDialogOpen(false)} maxWidth="md" fullWidth>
+      <Dialog
+        open={editDialogOpen}
+        onClose={() => setEditDialogOpen(false)}
+        maxWidth="md"
+        fullWidth
+      >
         <DialogTitle>
           {editMode === 'add' ? '추가' : '수정'} - {editType === 'notice' ? '공지사항' : 'FAQ'}
         </DialogTitle>
@@ -637,7 +640,9 @@ const CustomerSupportListDB = () => {
                   label="정렬 순서"
                   type="number"
                   value={editData?.sort_order || 0}
-                  onChange={(e) => setEditData({ ...editData, sort_order: parseInt(e.target.value) || 0 })}
+                  onChange={(e) =>
+                    setEditData({ ...editData, sort_order: parseInt(e.target.value) || 0 })
+                  }
                 />
               </>
             )}
@@ -645,7 +650,9 @@ const CustomerSupportListDB = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setEditDialogOpen(false)}>취소</Button>
-          <Button onClick={handleSave} variant="contained">저장</Button>
+          <Button onClick={handleSave} variant="contained">
+            저장
+          </Button>
         </DialogActions>
       </Dialog>
     </Container>

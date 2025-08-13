@@ -1,9 +1,8 @@
-"use client";
-import React, { useContext } from "react";
-import { useTheme } from "@mui/material/styles";
-import { Card, CardHeader, CardContent, Divider, Box } from "@mui/material";
+'use client';
+import React, { useContext } from 'react';
+import { useTheme } from '@mui/material/styles';
+import { Card, CardHeader, CardContent, Divider, Box } from '@mui/material';
 import { CustomizerContext } from '@/app/context/customizerContext';
-
 
 type Props = {
   title: string;
@@ -22,10 +21,10 @@ const ParentCard = ({ title, children, footer, codeModel }: Props) => {
     <Card
       sx={{
         padding: 0,
-        border: !isCardShadow ? `1px solid ${borderColor}` : "none",
+        border: !isCardShadow ? `1px solid ${borderColor}` : 'none',
       }}
       elevation={isCardShadow ? 9 : 0}
-      variant={!isCardShadow ? "outlined" : undefined}
+      variant={!isCardShadow ? 'outlined' : undefined}
     >
       <CardHeader title={title} action={codeModel} />
       <Divider />
@@ -37,7 +36,7 @@ const ParentCard = ({ title, children, footer, codeModel }: Props) => {
           <Box p={3}>{footer}</Box>
         </>
       ) : (
-        ""
+        ''
       )}
     </Card>
   );

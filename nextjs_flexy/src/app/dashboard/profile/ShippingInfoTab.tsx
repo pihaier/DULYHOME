@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  CardContent, 
-  Grid, 
-  Typography, 
-  Box, 
-  Button, 
-  Stack, 
-  Alert, 
-  ToggleButtonGroup, 
+import {
+  CardContent,
+  Grid,
+  Typography,
+  Box,
+  Button,
+  Stack,
+  Alert,
+  ToggleButtonGroup,
   ToggleButton,
   MenuItem,
   FormHelperText,
@@ -16,7 +16,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  Chip
+  Chip,
 } from '@mui/material';
 import BlankCard from '@/app/components/shared/BlankCard';
 import CustomTextField from '@/app/components/forms/theme-elements/CustomTextField';
@@ -56,7 +56,7 @@ const ShippingInfoTab = () => {
     receiver_phone: '',
     customs_clearance_type: '개인통관',
     customs_clearance_number: '',
-    is_default: false
+    is_default: false,
   });
 
   useEffect(() => {
@@ -67,7 +67,7 @@ const ShippingInfoTab = () => {
 
   const fetchShippingAddresses = async () => {
     if (!user || !supabase) return;
-    
+
     try {
       const { data, error } = await supabase
         .from('shipping_addresses')
@@ -77,7 +77,7 @@ const ShippingInfoTab = () => {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      
+
       setShippingAddresses(data || []);
     } catch (error) {
       console.error('Error fetching shipping addresses:', error);
@@ -100,7 +100,7 @@ const ShippingInfoTab = () => {
         receiver_phone: '',
         customs_clearance_type: '개인통관',
         customs_clearance_number: '',
-        is_default: shippingAddresses.length === 0 // 첫 번째 주소는 자동으로 기본값
+        is_default: shippingAddresses.length === 0, // 첫 번째 주소는 자동으로 기본값
       });
     }
     setDialogOpen(true);
@@ -113,15 +113,15 @@ const ShippingInfoTab = () => {
 
   const handleSave = async () => {
     if (!user || !supabase) return;
-    
+
     setSaving(true);
     setMessage(null);
-    
+
     try {
       const addressData = {
         ...formData,
         user_id: user.id,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       };
 
       if (editingAddress) {
@@ -130,7 +130,7 @@ const ShippingInfoTab = () => {
           .from('shipping_addresses')
           .update(addressData)
           .eq('id', editingAddress.id);
-          
+
         if (error) throw error;
       } else {
         // 추가
@@ -138,11 +138,11 @@ const ShippingInfoTab = () => {
           .from('shipping_addresses')
           .insert({
             ...addressData,
-            created_at: new Date().toISOString()
+            created_at: new Date().toISOString(),
           })
           .select()
           .single();
-          
+
         if (error) {
           console.error('Insert error details:', error);
           throw error;
@@ -165,10 +165,7 @@ const ShippingInfoTab = () => {
     if (!supabase) return;
 
     try {
-      const { error } = await supabase
-        .from('shipping_addresses')
-        .delete()
-        .eq('id', id);
+      const { error } = await supabase.from('shipping_addresses').delete().eq('id', id);
 
       if (error) throw error;
 
@@ -182,7 +179,7 @@ const ShippingInfoTab = () => {
 
   const handleSetDefault = async (id: string) => {
     if (!user || !supabase) return;
-    
+
     try {
       // 먼저 모든 주소의 기본값을 false로 설정
       await supabase
@@ -211,22 +208,14 @@ const ShippingInfoTab = () => {
   return (
     <>
       {message && (
-        <Alert 
-          severity={message.type} 
-          onClose={() => setMessage(null)} 
-          sx={{ mb: 3 }}
-        >
+        <Alert severity={message.type} onClose={() => setMessage(null)} sx={{ mb: 3 }}>
           {message.text}
         </Alert>
       )}
-      
+
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
         <Typography variant="h5">배송지 관리</Typography>
-        <Button
-          variant="contained"
-          startIcon={<IconPlus />}
-          onClick={() => handleOpenDialog()}
-        >
+        <Button variant="contained" startIcon={<IconPlus />} onClick={() => handleOpenDialog()}>
           배송지 추가
         </Button>
       </Box>
@@ -259,18 +248,14 @@ const ShippingInfoTab = () => {
                   <Box display="flex" justifyContent="space-between" alignItems="start">
                     <Box flex={1}>
                       <Box display="flex" alignItems="center" gap={1} mb={1}>
-                        <Typography variant="h6">
-                          {address.address_name || '배송지'}
-                        </Typography>
-                        {address.is_default && (
-                          <Chip label="기본" size="small" color="primary" />
-                        )}
+                        <Typography variant="h6">{address.address_name || '배송지'}</Typography>
+                        {address.is_default && <Chip label="기본" size="small" color="primary" />}
                       </Box>
-                      
+
                       <Typography variant="body2" color="textSecondary" mb={1}>
                         {address.shipping_address}
                       </Typography>
-                      
+
                       <Box display="flex" gap={3} mb={1}>
                         <Typography variant="body2">
                           <strong>수령인:</strong> {address.receiver_name}
@@ -279,7 +264,7 @@ const ShippingInfoTab = () => {
                           <strong>연락처:</strong> {address.receiver_phone}
                         </Typography>
                       </Box>
-                      
+
                       <Box display="flex" gap={3}>
                         <Typography variant="body2">
                           <strong>통관:</strong> {address.customs_clearance_type}
@@ -289,7 +274,7 @@ const ShippingInfoTab = () => {
                         </Typography>
                       </Box>
                     </Box>
-                    
+
                     <Stack direction="row" spacing={1}>
                       {!address.is_default && (
                         <IconButton
@@ -300,10 +285,7 @@ const ShippingInfoTab = () => {
                           <IconStar size={20} />
                         </IconButton>
                       )}
-                      <IconButton
-                        size="small"
-                        onClick={() => handleOpenDialog(address)}
-                      >
+                      <IconButton size="small" onClick={() => handleOpenDialog(address)}>
                         <IconEdit size={20} />
                       </IconButton>
                       <IconButton
@@ -324,16 +306,12 @@ const ShippingInfoTab = () => {
 
       {/* 배송지 추가/수정 다이얼로그 */}
       <Dialog open={dialogOpen} onClose={handleCloseDialog} maxWidth="sm" fullWidth>
-        <DialogTitle>
-          {editingAddress ? '배송지 수정' : '배송지 추가'}
-        </DialogTitle>
+        <DialogTitle>{editingAddress ? '배송지 수정' : '배송지 추가'}</DialogTitle>
         <DialogContent>
           <Box pt={2}>
             <Grid container spacing={2}>
               <Grid size={12}>
-                <CustomFormLabel htmlFor="address-name">
-                  배송지 별칭
-                </CustomFormLabel>
+                <CustomFormLabel htmlFor="address-name">배송지 별칭</CustomFormLabel>
                 <CustomTextField
                   id="address-name"
                   value={formData.address_name}
@@ -345,13 +323,13 @@ const ShippingInfoTab = () => {
               </Grid>
 
               <Grid size={12}>
-                <CustomFormLabel htmlFor="shipping-address">
-                  수령 주소 *
-                </CustomFormLabel>
+                <CustomFormLabel htmlFor="shipping-address">수령 주소 *</CustomFormLabel>
                 <CustomTextField
                   id="shipping-address"
                   value={formData.shipping_address}
-                  onChange={(e: any) => setFormData({ ...formData, shipping_address: e.target.value })}
+                  onChange={(e: any) =>
+                    setFormData({ ...formData, shipping_address: e.target.value })
+                  }
                   variant="outlined"
                   fullWidth
                   required
@@ -360,11 +338,9 @@ const ShippingInfoTab = () => {
                   placeholder="예: 인천광역시 연수구 센트럴로 313 B2512"
                 />
               </Grid>
-              
+
               <Grid size={{ xs: 12, sm: 6 }}>
-                <CustomFormLabel htmlFor="receiver-name">
-                  수령인 성함 *
-                </CustomFormLabel>
+                <CustomFormLabel htmlFor="receiver-name">수령인 성함 *</CustomFormLabel>
                 <CustomTextField
                   id="receiver-name"
                   value={formData.receiver_name}
@@ -376,13 +352,13 @@ const ShippingInfoTab = () => {
               </Grid>
 
               <Grid size={{ xs: 12, sm: 6 }}>
-                <CustomFormLabel htmlFor="receiver-phone">
-                  수령인 연락처 *
-                </CustomFormLabel>
+                <CustomFormLabel htmlFor="receiver-phone">수령인 연락처 *</CustomFormLabel>
                 <CustomTextField
                   id="receiver-phone"
                   value={formData.receiver_phone}
-                  onChange={(e: any) => setFormData({ ...formData, receiver_phone: e.target.value })}
+                  onChange={(e: any) =>
+                    setFormData({ ...formData, receiver_phone: e.target.value })
+                  }
                   variant="outlined"
                   fullWidth
                   required
@@ -399,13 +375,13 @@ const ShippingInfoTab = () => {
                   exclusive
                   onChange={(e, newValue) => {
                     if (newValue !== null) {
-                      setFormData({ 
-                        ...formData, 
+                      setFormData({
+                        ...formData,
                         customs_type: newValue as '개인통관' | '사업자통관',
                         personal_name: '',
                         personal_customs_code: '',
                         business_name: '',
-                        business_number: ''
+                        business_number: '',
                       });
                     }
                   }}
@@ -430,17 +406,17 @@ const ShippingInfoTab = () => {
                   </ToggleButton>
                 </ToggleButtonGroup>
               </Grid>
-              
+
               {formData.customs_type === '개인통관' ? (
                 <>
                   <Grid size={{ xs: 12, sm: 6 }}>
-                    <CustomFormLabel htmlFor="personal-name">
-                      개인 성명
-                    </CustomFormLabel>
+                    <CustomFormLabel htmlFor="personal-name">개인 성명</CustomFormLabel>
                     <CustomTextField
                       id="personal-name"
                       value={formData.personal_name || ''}
-                      onChange={(e: any) => setFormData({ ...formData, personal_name: e.target.value })}
+                      onChange={(e: any) =>
+                        setFormData({ ...formData, personal_name: e.target.value })
+                      }
                       variant="outlined"
                       fullWidth
                     />
@@ -452,7 +428,9 @@ const ShippingInfoTab = () => {
                     <CustomTextField
                       id="personal-customs-code"
                       value={formData.personal_customs_code || ''}
-                      onChange={(e: any) => setFormData({ ...formData, personal_customs_code: e.target.value })}
+                      onChange={(e: any) =>
+                        setFormData({ ...formData, personal_customs_code: e.target.value })
+                      }
                       variant="outlined"
                       fullWidth
                       required
@@ -464,25 +442,25 @@ const ShippingInfoTab = () => {
               ) : (
                 <>
                   <Grid size={{ xs: 12, sm: 6 }}>
-                    <CustomFormLabel htmlFor="business-name">
-                      사업자명
-                    </CustomFormLabel>
+                    <CustomFormLabel htmlFor="business-name">사업자명</CustomFormLabel>
                     <CustomTextField
                       id="business-name"
                       value={formData.business_name || ''}
-                      onChange={(e: any) => setFormData({ ...formData, business_name: e.target.value })}
+                      onChange={(e: any) =>
+                        setFormData({ ...formData, business_name: e.target.value })
+                      }
                       variant="outlined"
                       fullWidth
                     />
                   </Grid>
                   <Grid size={{ xs: 12, sm: 6 }}>
-                    <CustomFormLabel htmlFor="business-number">
-                      사업자등록번호 *
-                    </CustomFormLabel>
+                    <CustomFormLabel htmlFor="business-number">사업자등록번호 *</CustomFormLabel>
                     <CustomTextField
                       id="business-number"
                       value={formData.business_number || ''}
-                      onChange={(e: any) => setFormData({ ...formData, business_number: e.target.value })}
+                      onChange={(e: any) =>
+                        setFormData({ ...formData, business_number: e.target.value })
+                      }
                       variant="outlined"
                       fullWidth
                       required
@@ -497,11 +475,18 @@ const ShippingInfoTab = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDialog}>취소</Button>
-          <Button 
-            variant="contained" 
+          <Button
+            variant="contained"
             onClick={handleSave}
-            disabled={saving || !formData.shipping_address || !formData.receiver_name || !formData.receiver_phone || 
-              (formData.customs_type === '개인통관' ? !formData.personal_customs_code : !formData.business_number)}
+            disabled={
+              saving ||
+              !formData.shipping_address ||
+              !formData.receiver_name ||
+              !formData.receiver_phone ||
+              (formData.customs_type === '개인통관'
+                ? !formData.personal_customs_code
+                : !formData.business_number)
+            }
           >
             {saving ? '저장 중...' : '저장'}
           </Button>

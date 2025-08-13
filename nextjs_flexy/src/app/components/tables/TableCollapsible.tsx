@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import * as React from "react";
+import * as React from 'react';
 import {
   Typography,
   Box,
@@ -16,12 +16,12 @@ import {
   TableHead,
   TableRow,
   Stack,
-} from "@mui/material";
-import ParentCard from "@/app/components/shared/ParentCard";
-import BlankCard from "@/app/components/shared/BlankCard";
+} from '@mui/material';
+import ParentCard from '@/app/components/shared/ParentCard';
+import BlankCard from '@/app/components/shared/BlankCard';
 
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 function createData(
   imgsrc?: string,
@@ -39,8 +39,8 @@ function createData(
     price,
     items,
     history: [
-      { date: "2021-02-05", customerId: "15202410", price: 250, amount: 3 },
-      { date: "2021-02-02", customerId: "Anonymous", price: 600, amount: 1 },
+      { date: '2021-02-05', customerId: '15202410', price: 250, amount: 3 },
+      { date: '2021-02-02', customerId: 'Anonymous', price: 600, amount: 1 },
     ],
   };
 }
@@ -51,13 +51,9 @@ function Row(props: { row: ReturnType<typeof createData> }) {
 
   return (
     <>
-      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
+      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
         <TableCell>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpen(!open)}
-          >
+          <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
@@ -69,7 +65,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
               sx={{
                 width: 90,
                 height: 70,
-                borderRadius: "10px",
+                borderRadius: '10px',
               }}
             />
             <Typography variant="h6" fontWeight="600">
@@ -85,9 +81,9 @@ function Row(props: { row: ReturnType<typeof createData> }) {
         <TableCell>
           <Chip
             size="small"
-            label={row.inventory ? "In Stock" : "Out of Stock"}
-            color={row.inventory ? "success" : "error"}
-            sx={{ borderRadius: "6px" }}
+            label={row.inventory ? 'In Stock' : 'Out of Stock'}
+            color={row.inventory ? 'success' : 'error'}
+            sx={{ borderRadius: '6px' }}
           />
         </TableCell>
         <TableCell>
@@ -111,12 +107,12 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                 sx={{
                   mt: 2,
                   backgroundColor: (theme) => theme.palette.grey.A200,
-                  p: "5px 15px",
+                  p: '5px 15px',
                   color: (theme) =>
                     `${
-                      theme.palette.mode === "dark"
+                      theme.palette.mode === 'dark'
                         ? theme.palette.grey.A200
-                        : "rgba(0, 0, 0, 0.87)"
+                        : 'rgba(0, 0, 0, 0.87)'
                     }`,
                 }}
               >
@@ -159,9 +155,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                       </TableCell>
                       <TableCell>
                         <Typography fontWeight="600">
-                          {Math.round(
-                            historyRow.amount * historyRow.price * 100
-                          ) / 100}
+                          {Math.round(historyRow.amount * historyRow.price * 100) / 100}
                         </Typography>
                       </TableCell>
                     </TableRow>
@@ -178,36 +172,36 @@ function Row(props: { row: ReturnType<typeof createData> }) {
 
 const rows = [
   createData(
-    "/images/products/s1.jpg",
-    "Good butterscotch ice-cream",
-    "Sunil Joshi",
+    '/images/products/s1.jpg',
+    'Good butterscotch ice-cream',
+    'Sunil Joshi',
     true,
     250,
-    "2"
+    '2'
   ),
   createData(
-    "/images/products/s2.jpg",
-    "Supreme fresh tomato available",
-    "John Deo",
+    '/images/products/s2.jpg',
+    'Supreme fresh tomato available',
+    'John Deo',
     false,
     450,
-    "1"
+    '1'
   ),
   createData(
-    "/images/products/s3.jpg",
-    "Red color candy from Gucci",
-    "Andrew McDownland",
+    '/images/products/s3.jpg',
+    'Red color candy from Gucci',
+    'Andrew McDownland',
     false,
     150,
-    "2"
+    '2'
   ),
   createData(
-    "/images/products/s4.jpg",
-    "Stylish night lamp for night",
-    "Christopher Jamil",
+    '/images/products/s4.jpg',
+    'Stylish night lamp for night',
+    'Christopher Jamil',
     true,
     550,
-    "6"
+    '6'
   ),
 ];
 
@@ -219,8 +213,8 @@ const TableCollapsible = () => (
           aria-label="collapsible table"
           sx={{
             whiteSpace: {
-              xs: "nowrap",
-              sm: "unset",
+              xs: 'nowrap',
+              sm: 'unset',
             },
           }}
         >

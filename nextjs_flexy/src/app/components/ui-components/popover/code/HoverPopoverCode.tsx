@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const HoverPopoverCode = () => {
   return (
     <>
@@ -67,7 +67,7 @@ return (
 );`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default HoverPopoverCode
+export default HoverPopoverCode;

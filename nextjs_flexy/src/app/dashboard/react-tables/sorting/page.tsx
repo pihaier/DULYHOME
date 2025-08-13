@@ -1,18 +1,18 @@
-"use client";
-import * as React from "react";
+'use client';
+import * as React from 'react';
 
-import Breadcrumb from "@/app/dashboard/layout/shared/breadcrumb/Breadcrumb";
-import PageContainer from "@/app/components/container/PageContainer";
+import Breadcrumb from '@/app/dashboard/layout/shared/breadcrumb/Breadcrumb';
+import PageContainer from '@/app/components/container/PageContainer';
 
-import TableSorting from "@/app/components/react-table/TableSorting";
+import TableSorting from '@/app/components/react-table/TableSorting';
 
 const BCrumb = [
   {
-    to: "/",
-    title: "Home",
+    to: '/',
+    title: 'Home',
   },
   {
-    title: "Sorting React Table",
+    title: 'Sorting React Table',
   },
 ];
 

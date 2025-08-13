@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const SimpleListCode = () => {
   return (
     <>
@@ -53,7 +53,7 @@ import { IconInbox, IconMailOpened } from '@tabler/icons-react';
 </BlankCard>`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default SimpleListCode
+export default SimpleListCode;

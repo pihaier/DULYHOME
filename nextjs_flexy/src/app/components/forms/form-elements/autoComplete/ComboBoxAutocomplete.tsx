@@ -1,5 +1,5 @@
 // import Autocomplete from '@mui/material/Autocomplete';
-'use client'
+'use client';
 import React from 'react';
 import CustomTextField from '../../theme-elements/CustomTextField';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -133,17 +133,15 @@ const top100Films = [
 ];
 
 const ComboBoxAutocomplete = () => (
-
-    <Autocomplete
-      disablePortal
-      id="combo-box-demo"
-      options={top100Films}
-      fullWidth
-      renderInput={(params) => (
-        <CustomTextField {...params} placeholder="Select movie" aria-label="Select movie" />
-      )}
-    />
-
+  <Autocomplete
+    disablePortal
+    id="combo-box-demo"
+    options={top100Films}
+    fullWidth
+    renderInput={(params) => (
+      <CustomTextField {...params} placeholder="Select movie" aria-label="Select movie" />
+    )}
+  />
 );
 
 export default ComboBoxAutocomplete;

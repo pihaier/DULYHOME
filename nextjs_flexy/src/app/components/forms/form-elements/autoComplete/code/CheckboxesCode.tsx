@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const CheckboxesCode = () => {
   return (
     <>
@@ -160,7 +160,7 @@ const top100Films = [
     />`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default CheckboxesCode
+export default CheckboxesCode;

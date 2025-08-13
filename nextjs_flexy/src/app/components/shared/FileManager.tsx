@@ -78,26 +78,26 @@ export default function FileManager({
   const loadFiles = async () => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const supabase = createClient();
-      
+
       let query = supabase
         .from('uploaded_files')
         .select('*')
         .eq('reservation_number', reservationNumber)
         .eq('is_deleted', false)
         .order('created_at', { ascending: false });
-      
+
       if (fileCategory !== 'all') {
         query = query.eq('upload_purpose', fileCategory);
       }
-      
+
       const { data, error } = await query;
-      
+
       if (error) throw error;
-      
-      const fileList: FileInfo[] = (data || []).map(file => ({
+
+      const fileList: FileInfo[] = (data || []).map((file) => ({
         id: file.id,
         name: file.original_filename,
         size: file.file_size,
@@ -106,7 +106,7 @@ export default function FileManager({
         uploadedAt: new Date(file.created_at),
         uploadedBy: file.uploaded_by,
       }));
-      
+
       setFiles(fileList);
       onFilesChange?.(fileList);
     } catch (err) {
@@ -120,49 +120,49 @@ export default function FileManager({
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = event.target.files;
     if (!selectedFiles || selectedFiles.length === 0) return;
-    
+
     // Check file count limit
     if (files.length + selectedFiles.length > maxFiles) {
       setError(`최대 ${maxFiles}개의 파일만 업로드할 수 있습니다.`);
       return;
     }
-    
+
     setUploading(true);
     setUploadProgress(0);
     setError(null);
-    
+
     try {
       const supabase = createClient();
       const uploadedFiles: FileInfo[] = [];
-      
+
       for (let i = 0; i < selectedFiles.length; i++) {
         const file = selectedFiles[i];
-        
+
         // Check file size
         if (file.size > maxFileSize * 1024 * 1024) {
           setError(`${file.name}의 크기가 ${maxFileSize}MB를 초과합니다.`);
           continue;
         }
-        
+
         // Generate unique file name
         const fileExt = file.name.split('.').pop();
         const fileName = `${reservationNumber}/${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
-        
+
         // Upload to Supabase Storage
         const { data: uploadData, error: uploadError } = await supabase.storage
           .from('order-files')
           .upload(fileName, file, {
             cacheControl: '3600',
-            upsert: false
+            upsert: false,
           });
-          
+
         if (uploadError) throw uploadError;
-        
+
         // Get public URL
-        const { data: { publicUrl } } = supabase.storage
-          .from('order-files')
-          .getPublicUrl(fileName);
-        
+        const {
+          data: { publicUrl },
+        } = supabase.storage.from('order-files').getPublicUrl(fileName);
+
         // Save file info to database
         const { data: fileRecord, error: dbError } = await supabase
           .from('uploaded_files')
@@ -177,9 +177,9 @@ export default function FileManager({
           })
           .select()
           .single();
-          
+
         if (dbError) throw dbError;
-        
+
         uploadedFiles.push({
           id: fileRecord.id,
           name: file.name,
@@ -188,15 +188,14 @@ export default function FileManager({
           url: publicUrl,
           uploadedAt: new Date(fileRecord.created_at),
         });
-        
+
         setUploadProgress(((i + 1) / selectedFiles.length) * 100);
       }
-      
+
       // Update files list
       const newFiles = [...files, ...uploadedFiles];
       setFiles(newFiles);
       onFilesChange?.(newFiles);
-      
     } catch (err) {
       console.error('Error uploading files:', err);
       setError('파일 업로드 중 오류가 발생했습니다.');
@@ -208,23 +207,22 @@ export default function FileManager({
 
   const handleFileDelete = async (fileId: string) => {
     if (!confirm('이 파일을 삭제하시겠습니까?')) return;
-    
+
     try {
       const supabase = createClient();
-      
+
       // Soft delete in database
       const { error } = await supabase
         .from('uploaded_files')
         .update({ is_deleted: true })
         .eq('id', fileId);
-        
+
       if (error) throw error;
-      
+
       // Update local state
-      const newFiles = files.filter(f => f.id !== fileId);
+      const newFiles = files.filter((f) => f.id !== fileId);
       setFiles(newFiles);
       onFilesChange?.(newFiles);
-      
     } catch (err) {
       console.error('Error deleting file:', err);
       setError('파일 삭제 중 오류가 발생했습니다.');
@@ -291,7 +289,7 @@ export default function FileManager({
               파일 업로드 ({files.length}/{maxFiles})
             </Button>
           </label>
-          
+
           {uploading && (
             <Box sx={{ mt: 2 }}>
               <LinearProgress variant="determinate" value={uploadProgress} />
@@ -305,28 +303,20 @@ export default function FileManager({
 
       {files.length === 0 ? (
         <Paper sx={{ p: 3, textAlign: 'center' }}>
-          <Typography color="text.secondary">
-            업로드된 파일이 없습니다.
-          </Typography>
+          <Typography color="text.secondary">업로드된 파일이 없습니다.</Typography>
         </Paper>
       ) : (
         <List>
           {files.map((file) => (
             <ListItem key={file.id} divider>
-              <ListItemIcon>
-                {getFileIcon(file.type)}
-              </ListItemIcon>
+              <ListItemIcon>{getFileIcon(file.type)}</ListItemIcon>
               <ListItemText
                 primary={file.name}
                 secondary={`${formatFileSize(file.size)} • ${new Date(file.uploadedAt).toLocaleDateString('ko-KR')}`}
               />
               <ListItemSecondaryAction>
                 <Stack direction="row" spacing={1}>
-                  <IconButton
-                    edge="end"
-                    onClick={() => handleFilePreview(file)}
-                    size="small"
-                  >
+                  <IconButton edge="end" onClick={() => handleFilePreview(file)} size="small">
                     <ViewIcon />
                   </IconButton>
                   <IconButton
@@ -359,18 +349,20 @@ export default function FileManager({
         onClose={() => setPreviewOpen(false)}
         aria-labelledby="image-preview"
       >
-        <Box sx={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          maxWidth: '90vw',
-          maxHeight: '90vh',
-          bgcolor: 'background.paper',
-          boxShadow: 24,
-          p: 2,
-          borderRadius: 2,
-        }}>
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            maxWidth: '90vw',
+            maxHeight: '90vh',
+            bgcolor: 'background.paper',
+            boxShadow: 24,
+            p: 2,
+            borderRadius: 2,
+          }}
+        >
           <IconButton
             onClick={() => setPreviewOpen(false)}
             sx={{

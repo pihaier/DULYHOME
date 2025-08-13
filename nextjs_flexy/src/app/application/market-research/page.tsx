@@ -28,7 +28,9 @@ import PageContainer from '@/app/components/container/PageContainer';
 import HpHeader from '@/app/components/frontend-pages/shared/header/HpHeader';
 import Footer from '@/app/components/frontend-pages/shared/footer';
 import FileUpload from '@/app/components/forms/form-elements/FileUpload';
-import CompanyInfoForm, { useCompanyInfoSubmit } from '@/app/components/forms/form-elements/CompanyInfoForm';
+import CompanyInfoForm, {
+  useCompanyInfoSubmit,
+} from '@/app/components/forms/form-elements/CompanyInfoForm';
 import { createClient } from '@/lib/supabase/client';
 import { createServiceClient } from '@/lib/supabase/service';
 import { useUser } from '@/lib/context/GlobalContext';
@@ -69,7 +71,7 @@ export default function MarketResearchPage() {
   const [loading, setLoading] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [reservationNumber, setReservationNumber] = useState('');
-  
+
   const [formData, setFormData] = useState<FormData>({
     company_name: '',
     contact_person: '',
@@ -98,10 +100,9 @@ export default function MarketResearchPage() {
     }
   }, [authLoading, user, router]);
 
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!user) {
       alert('로그인이 필요합니다.');
       router.push('/auth/customer/login');
@@ -132,12 +133,16 @@ export default function MarketResearchPage() {
 
     try {
       // 체크박스 상태 확인
-      const saveToProfileCheckbox = document.querySelector('input[name="saveToProfile"]') as HTMLInputElement;
-      const saveAsDefaultCheckbox = document.querySelector('input[name="saveAsDefault"]') as HTMLInputElement;
-      
+      const saveToProfileCheckbox = document.querySelector(
+        'input[name="saveToProfile"]'
+      ) as HTMLInputElement;
+      const saveAsDefaultCheckbox = document.querySelector(
+        'input[name="saveAsDefault"]'
+      ) as HTMLInputElement;
+
       // 예약번호 생성
       const newReservationNumber = generateReservationNumber();
-      
+
       // 시장조사 데이터 준비
       const applicationData = {
         reservation_number: newReservationNumber,
@@ -169,7 +174,9 @@ export default function MarketResearchPage() {
 
       if (insertError) {
         console.error('Insert error details:', insertError);
-        throw new Error(`신청 저장 실패: ${insertError.message || insertError.details || '알 수 없는 오류'}`);
+        throw new Error(
+          `신청 저장 실패: ${insertError.message || insertError.details || '알 수 없는 오류'}`
+        );
       }
 
       if (!application || !application.id) {
@@ -181,18 +188,19 @@ export default function MarketResearchPage() {
 
       // 회사 정보 저장 (saveAsDefault 체크된 경우)
       if (saveAsDefaultCheckbox?.checked) {
-        await supabase
-          .from('company_addresses')
-          .upsert({
+        await supabase.from('company_addresses').upsert(
+          {
             user_id: user.id,
             company_name: formData.company_name,
             contact_person: formData.contact_person,
             phone: formData.contact_phone,
             email: formData.contact_email || null,
             is_default: true,
-          }, {
-            onConflict: 'user_id,is_default'
-          });
+          },
+          {
+            onConflict: 'user_id,is_default',
+          }
+        );
       }
 
       // 사용자 프로필이 없으면 생성 또는 업데이트
@@ -203,14 +211,12 @@ export default function MarketResearchPage() {
           contact_person: formData.contact_person,
           phone: formData.contact_phone,
           role: 'customer',
-          approval_status: 'approved'
+          approval_status: 'approved',
         };
 
         if (!userProfile) {
           // 프로필이 없으면 생성
-          await supabase
-            .from('user_profiles')
-            .insert(profileData);
+          await supabase.from('user_profiles').insert(profileData);
         } else {
           // 프로필이 있으면 업데이트
           await supabase
@@ -237,41 +243,43 @@ export default function MarketResearchPage() {
           .from('market_research_requests')
           .update({ assigned_staff: chineseStaff[0].user_id })
           .eq('id', application.id);
-          
+
         if (updateError) {
           console.warn('중국직원 배정 오류 (계속 진행):', {
             error: updateError,
             message: updateError.message,
             details: updateError.details,
-            code: updateError.code
+            code: updateError.code,
           });
           // 배정 실패해도 계속 진행 (중요하지 않은 오류)
         }
       }
 
       // 활동 로그 기록
-      await supabase
-        .from('activity_logs')
-        .insert({
-          user_id: user.id,
-          action: 'create_market_research_application',
-          entity_type: 'market_research_application',
-          entity_id: application.id,
-          metadata: {
-            reservation_number: newReservationNumber,
-            product_name: formData.productName,
-          }
-        });
+      await supabase.from('activity_logs').insert({
+        user_id: user.id,
+        action: 'create_market_research_application',
+        entity_type: 'market_research_application',
+        entity_id: application.id,
+        metadata: {
+          reservation_number: newReservationNumber,
+          product_name: formData.productName,
+        },
+      });
 
       // 파일 업로드 처리 (Storage SDK 사용)
       const uploadFiles = async () => {
         const uploadedFiles = [];
-        
+
         // 모든 파일을 배열로 모으기 (이미 압축된 파일들)
         const filesToUpload = [
-          ...formData.files.map(file => ({ file, category: 'product' })),
-          ...(formData.logoRequired ? formData.logoFiles.map(file => ({ file, category: 'logo' })) : []),
-          ...(formData.customBoxRequired ? formData.boxDesignFiles.map(file => ({ file, category: 'box_design' })) : [])
+          ...formData.files.map((file) => ({ file, category: 'product' })),
+          ...(formData.logoRequired
+            ? formData.logoFiles.map((file) => ({ file, category: 'logo' }))
+            : []),
+          ...(formData.customBoxRequired
+            ? formData.boxDesignFiles.map((file) => ({ file, category: 'box_design' }))
+            : []),
         ];
 
         // 각 파일 업로드 (Storage SDK 사용)
@@ -281,13 +289,13 @@ export default function MarketResearchPage() {
             const fileExt = file.name.split('.').pop() || '';
             const safeFileName = `${Date.now()}_${Math.random().toString(36).substring(2, 8)}.${fileExt}`;
             const filePath = `${newReservationNumber}/${category}/${safeFileName}`;
-            
+
             // Storage SDK로 업로드 시도
             const { data: uploadData, error: uploadError } = await supabase.storage
               .from('application-files')
               .upload(filePath, file, {
                 cacheControl: '3600',
-                upsert: false
+                upsert: false,
               });
 
             if (uploadError) {
@@ -296,10 +304,10 @@ export default function MarketResearchPage() {
             }
 
             // 파일 URL 생성
-            const { data: { publicUrl } } = supabase.storage
-              .from('application-files')
-              .getPublicUrl(uploadData.path);
-            
+            const {
+              data: { publicUrl },
+            } = supabase.storage.from('application-files').getPublicUrl(uploadData.path);
+
             // uploaded_files 테이블에 기록
             const { data: fileRecord, error: dbError } = await supabase
               .from('uploaded_files')
@@ -314,7 +322,7 @@ export default function MarketResearchPage() {
                 upload_purpose: 'application',
                 upload_category: category,
                 upload_status: 'completed',
-                file_url: publicUrl
+                file_url: publicUrl,
               })
               .select()
               .single();
@@ -338,7 +346,7 @@ export default function MarketResearchPage() {
                 const uploadResponse = await fetch('/api/files/upload', {
                   method: 'POST',
                   body: formData,
-                  credentials: 'include'
+                  credentials: 'include',
                 });
 
                 if (uploadResponse.ok) {
@@ -359,22 +367,23 @@ export default function MarketResearchPage() {
       };
 
       // 파일이 있으면 업로드
-      if (formData.files.length > 0 || 
-          (formData.logoRequired && formData.logoFiles.length > 0) || 
-          (formData.customBoxRequired && formData.boxDesignFiles.length > 0)) {
+      if (
+        formData.files.length > 0 ||
+        (formData.logoRequired && formData.logoFiles.length > 0) ||
+        (formData.customBoxRequired && formData.boxDesignFiles.length > 0)
+      ) {
         const uploadedFiles = await uploadFiles();
       }
 
       // 신청 완료 모달 표시
       setShowSuccessModal(true);
-      
     } catch (error: any) {
       let errorMessage = '신청 중 오류가 발생했습니다.';
-      
+
       if (error.message) {
         errorMessage += '\n' + error.message;
       }
-      
+
       alert(errorMessage);
     } finally {
       setLoading(false);
@@ -399,7 +408,7 @@ export default function MarketResearchPage() {
   return (
     <PageContainer title="시장조사 신청 - 두리무역" description="중국 시장 조사를 신청하세요">
       <HpHeader />
-      
+
       <Container maxWidth="md" sx={{ py: 5 }}>
         <Card elevation={0} sx={{ border: '1px solid rgba(0,0,0,0.1)' }}>
           <CardContent sx={{ p: 4 }}>
@@ -460,7 +469,7 @@ export default function MarketResearchPage() {
                       helperText="대략적인 주문 예상 수량을 입력해주세요"
                       disabled={formData.moqCheck}
                       InputProps={{
-                        inputProps: { min: 0 }
+                        inputProps: { min: 0 },
                       }}
                     />
                   </Box>
@@ -471,10 +480,10 @@ export default function MarketResearchPage() {
                           checked={formData.moqCheck}
                           onChange={(e) => {
                             const checked = e.target.checked;
-                            setFormData({ 
-                              ...formData, 
+                            setFormData({
+                              ...formData,
                               moqCheck: checked,
-                              quantity: checked ? '0' : formData.quantity
+                              quantity: checked ? '0' : formData.quantity,
                             });
                           }}
                         />
@@ -482,7 +491,12 @@ export default function MarketResearchPage() {
                       label="MOQ로 진행"
                     />
                     {formData.moqCheck && (
-                      <Typography variant="caption" display="block" color="text.secondary" sx={{ mt: 0.5 }}>
+                      <Typography
+                        variant="caption"
+                        display="block"
+                        color="text.secondary"
+                        sx={{ mt: 0.5 }}
+                      >
                         최소주문수량(MOQ)으로 진행하고 싶습니다
                       </Typography>
                     )}
@@ -513,13 +527,17 @@ export default function MarketResearchPage() {
 
                 {/* 로고 인쇄 및 박스 제작 옵션 */}
                 <Paper sx={{ p: 2, bgcolor: 'grey.50' }}>
-                  <Typography variant="h6" gutterBottom>추가 옵션</Typography>
+                  <Typography variant="h6" gutterBottom>
+                    추가 옵션
+                  </Typography>
                   <Box display="flex" gap={3} flexWrap="wrap">
                     <FormControlLabel
                       control={
                         <Switch
                           checked={formData.logoRequired}
-                          onChange={(e) => setFormData({ ...formData, logoRequired: e.target.checked })}
+                          onChange={(e) =>
+                            setFormData({ ...formData, logoRequired: e.target.checked })
+                          }
                         />
                       }
                       label="로고 인쇄 필요"
@@ -528,7 +546,9 @@ export default function MarketResearchPage() {
                       control={
                         <Switch
                           checked={formData.customBoxRequired}
-                          onChange={(e) => setFormData({ ...formData, customBoxRequired: e.target.checked })}
+                          onChange={(e) =>
+                            setFormData({ ...formData, customBoxRequired: e.target.checked })
+                          }
                         />
                       }
                       label="맞춤 박스 제작 필요"
@@ -576,7 +596,9 @@ export default function MarketResearchPage() {
                         description="박스 디자인 AI 파일을 업로드해주세요 (선택사항)"
                         maxFiles={3}
                         currentFiles={formData.boxDesignFiles}
-                        onFilesChange={(files) => setFormData({ ...formData, boxDesignFiles: files })}
+                        onFilesChange={(files) =>
+                          setFormData({ ...formData, boxDesignFiles: files })
+                        }
                       />
                       <TextField
                         fullWidth
@@ -595,10 +617,12 @@ export default function MarketResearchPage() {
                 {/* 안내 메시지 */}
                 <Alert severity="info">
                   <Typography variant="body2">
-                    • 시장조사는 3-5일 정도 소요됩니다.<br />
-                    • 조사 결과는 상세한 리포트로 제공됩니다.<br />
-                    • 여러 공장의 견적을 비교하여 최적의 조건을 찾아드립니다.<br />
-                    • 로고 인쇄와 박스 제작은 선택사항이며, 조사 시 함께 견적을 받아드립니다.
+                    • 시장조사는 3-5일 정도 소요됩니다.
+                    <br />
+                    • 조사 결과는 상세한 리포트로 제공됩니다.
+                    <br />
+                    • 여러 공장의 견적을 비교하여 최적의 조건을 찾아드립니다.
+                    <br />• 로고 인쇄와 박스 제작은 선택사항이며, 조사 시 함께 견적을 받아드립니다.
                   </Typography>
                 </Alert>
 
@@ -612,12 +636,7 @@ export default function MarketResearchPage() {
                   >
                     취소
                   </Button>
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    size="large"
-                    disabled={loading}
-                  >
+                  <Button type="submit" variant="contained" size="large" disabled={loading}>
                     {loading ? '신청 중...' : '신청하기'}
                   </Button>
                 </Box>
@@ -626,7 +645,7 @@ export default function MarketResearchPage() {
           </CardContent>
         </Card>
       </Container>
-      
+
       {/* 신청 완료 모달 */}
       <Dialog
         open={showSuccessModal}
@@ -635,9 +654,7 @@ export default function MarketResearchPage() {
         fullWidth
         disableEscapeKeyDown
       >
-        <DialogTitle sx={{ textAlign: 'center', pb: 2 }}>
-          🎉 신청 완료!
-        </DialogTitle>
+        <DialogTitle sx={{ textAlign: 'center', pb: 2 }}>🎉 신청 완료!</DialogTitle>
         <DialogContent sx={{ textAlign: 'center', pb: 2 }}>
           <Typography variant="h6" gutterBottom>
             시장조사 신청이 성공적으로 접수되었습니다.
@@ -651,9 +668,10 @@ export default function MarketResearchPage() {
             </Typography>
           </Box>
           <Typography variant="body2" color="text.secondary">
-            • 조사 결과는 3-5일 내에 제공됩니다<br/>
-            • 진행 상황은 주문 내역에서 확인하실 수 있습니다<br/>
-            • 궁금한 사항은 채팅으로 문의해주세요
+            • 조사 결과는 3-5일 내에 제공됩니다
+            <br />
+            • 진행 상황은 주문 내역에서 확인하실 수 있습니다
+            <br />• 궁금한 사항은 채팅으로 문의해주세요
           </Typography>
         </DialogContent>
         <DialogActions sx={{ justifyContent: 'center', pb: 3 }}>
@@ -679,7 +697,7 @@ export default function MarketResearchPage() {
           </Button>
         </DialogActions>
       </Dialog>
-      
+
       <Footer />
     </PageContainer>
   );

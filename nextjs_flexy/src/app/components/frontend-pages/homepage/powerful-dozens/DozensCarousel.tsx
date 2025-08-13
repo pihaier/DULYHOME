@@ -1,11 +1,11 @@
-"use client";
-import React from "react";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import Link from "next/link";
-import "./carousel.css";
-import { Box } from "@mui/material";
-import Image from 'next/image'
+'use client';
+import React from 'react';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import Link from 'next/link';
+import './carousel.css';
+import { Box } from '@mui/material';
+import Image from 'next/image';
 
 const DozensCarousel = () => {
   const settings = {
@@ -51,7 +51,7 @@ const DozensCarousel = () => {
                 alt="두리무역 스크린샷 1"
                 width={380}
                 height={300}
-                style={{ borderRadius: "16px", objectFit: 'contain', padding: 16 }}
+                style={{ borderRadius: '16px', objectFit: 'contain', padding: 16 }}
               />
             </Link>
           </Box>
@@ -70,7 +70,7 @@ const DozensCarousel = () => {
                 alt="두리무역 스크린샷 2"
                 width={380}
                 height={300}
-                style={{ borderRadius: "16px", objectFit: 'contain', padding: 16 }}
+                style={{ borderRadius: '16px', objectFit: 'contain', padding: 16 }}
               />
             </Link>
           </Box>
@@ -89,7 +89,7 @@ const DozensCarousel = () => {
                 alt="두리무역 스크린샷 3"
                 width={380}
                 height={300}
-                style={{ borderRadius: "16px", objectFit: 'contain', padding: 16 }}
+                style={{ borderRadius: '16px', objectFit: 'contain', padding: 16 }}
               />
             </Link>
           </Box>
@@ -108,7 +108,7 @@ const DozensCarousel = () => {
                 alt="두리무역 스크린샷 4"
                 width={380}
                 height={300}
-                style={{ borderRadius: "16px", objectFit: 'contain', padding: 16 }}
+                style={{ borderRadius: '16px', objectFit: 'contain', padding: 16 }}
               />
             </Link>
           </Box>

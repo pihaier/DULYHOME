@@ -1,5 +1,5 @@
-import React from 'react'
-import CodeDialog from '@/app/components/shared/CodeDialog'
+import React from 'react';
+import CodeDialog from '@/app/components/shared/CodeDialog';
 
 function LinewithforecastCode() {
   return (
@@ -104,7 +104,7 @@ export default function LinewithforecastChart() {
 }
 `}
     </CodeDialog>
-  )
+  );
 }
 
-export default LinewithforecastCode
+export default LinewithforecastCode;

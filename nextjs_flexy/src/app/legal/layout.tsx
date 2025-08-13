@@ -1,11 +1,7 @@
 import React from 'react';
 import { Box, Container } from '@mui/material';
 
-export default function LegalLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function LegalLayout({ children }: { children: React.ReactNode }) {
   return (
     <Box
       sx={{
@@ -14,9 +10,7 @@ export default function LegalLayout({
         py: 4,
       }}
     >
-      <Container maxWidth="md">
-        {children}
-      </Container>
+      <Container maxWidth="md">{children}</Container>
     </Box>
   );
 }

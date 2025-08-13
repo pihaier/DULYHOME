@@ -1,12 +1,5 @@
-import React from "react";
-import {
-  Menu,
-  MenuItem,
-  IconButton,
-  Typography,
-  Box,
-  Tooltip,
-} from "@mui/material";
+import React from 'react';
+import { Menu, MenuItem, IconButton, Typography, Box, Tooltip } from '@mui/material';
 import {
   Timeline,
   TimelineItem,
@@ -15,11 +8,11 @@ import {
   TimelineContent,
   TimelineDot,
   TimelineOppositeContent,
-} from "@mui/lab";
-import DashboardCard from "../../shared/DashboardCard";
-import { IconDots } from "@tabler/icons-react";
+} from '@mui/lab';
+import DashboardCard from '../../shared/DashboardCard';
+import { IconDots } from '@tabler/icons-react';
 
-const options = ["Action", "Another Action", "Something else here"];
+const options = ['Action', 'Another Action', 'Something else here'];
 
 const activities = [
   {
@@ -60,12 +53,13 @@ const DailyActivities = () => {
   };
   return (
     <DashboardCard
-      title="Daily Activities" subtitle="Overview of Years"
+      title="Daily Activities"
+      subtitle="Overview of Years"
       action={
         <Box>
           <Tooltip title="Action">
             <IconButton
-              aria-expanded={open ? "true" : undefined}
+              aria-expanded={open ? 'true' : undefined}
               aria-haspopup="true"
               onClick={handleClick}
               size="large"
@@ -80,25 +74,21 @@ const DailyActivities = () => {
             open={open}
             onClose={handleClose}
             anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "right",
+              vertical: 'bottom',
+              horizontal: 'right',
             }}
             transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
+              vertical: 'top',
+              horizontal: 'right',
             }}
             slotProps={{
               list: {
-                "aria-labelledby": "long-button",
-              }
+                'aria-labelledby': 'long-button',
+              },
             }}
           >
             {options.map((option) => (
-              <MenuItem
-                key={option}
-                selected={option === "Pyxis"}
-                onClick={handleClose}
-              >
+              <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>
                 {option}
               </MenuItem>
             ))}
@@ -125,7 +115,7 @@ const DailyActivities = () => {
                 flex: '0',
               }}
             >
-              <Typography variant="subtitle2" fontWeight="500" whiteSpace='nowrap'>
+              <Typography variant="subtitle2" fontWeight="500" whiteSpace="nowrap">
                 {activity.time}
               </Typography>
             </TimelineOppositeContent>

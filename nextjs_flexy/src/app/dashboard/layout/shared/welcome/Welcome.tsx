@@ -8,7 +8,10 @@ const Welcome = () => {
     setOpen(true);
   };
 
-  const handleSnackbarClose = (event: React.SyntheticEvent | Event, reason: SnackbarCloseReason) => {
+  const handleSnackbarClose = (
+    event: React.SyntheticEvent | Event,
+    reason: SnackbarCloseReason
+  ) => {
     if (reason === 'clickaway') {
       return;
     }

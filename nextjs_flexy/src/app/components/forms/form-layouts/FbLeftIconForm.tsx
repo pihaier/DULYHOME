@@ -1,5 +1,5 @@
-"use client";
-import React from "react";
+'use client';
+import React from 'react';
 import {
   Button,
   FormControlLabel,
@@ -7,13 +7,13 @@ import {
   InputAdornment,
   OutlinedInput,
   Stack,
-} from "@mui/material";
-import CustomCheckbox from "../theme-elements/CustomCheckbox";
-import CustomFormLabel from "../theme-elements/CustomFormLabel";
-import ParentCard from "../../shared/ParentCard";
-import { IconLock, IconMail, IconUser } from "@tabler/icons-react";
+} from '@mui/material';
+import CustomCheckbox from '../theme-elements/CustomCheckbox';
+import CustomFormLabel from '../theme-elements/CustomFormLabel';
+import ParentCard from '../../shared/ParentCard';
+import { IconLock, IconMail, IconUser } from '@tabler/icons-react';
 
-import LeftIconFormCode from "@/app/components/forms/form-layouts/code/LeftIconFormCode";
+import LeftIconFormCode from '@/app/components/forms/form-layouts/code/LeftIconFormCode';
 
 const FbLeftIconForm = () => {
   const [state, setState] = React.useState({
@@ -93,9 +93,7 @@ const FbLeftIconForm = () => {
         </FormControl>
 
         <FormControl fullWidth>
-          <CustomFormLabel htmlFor="cpwd-text">
-            Confirm Password
-          </CustomFormLabel>
+          <CustomFormLabel htmlFor="cpwd-text">Confirm Password</CustomFormLabel>
           <OutlinedInput
             startAdornment={
               <InputAdornment position="start">
@@ -110,14 +108,10 @@ const FbLeftIconForm = () => {
 
         <FormControlLabel
           control={
-            <CustomCheckbox
-              checked={state.checkedA}
-              onChange={handleChange}
-              name="checkedA"
-            />
+            <CustomCheckbox checked={state.checkedA} onChange={handleChange} name="checkedA" />
           }
           sx={{
-            mt: "10px",
+            mt: '10px',
           }}
           label="Remember Me!"
         />

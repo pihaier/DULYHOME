@@ -1,5 +1,5 @@
 import Menuitems from './MenuItems';
-import { usePathname } from "next/navigation";
+import { usePathname } from 'next/navigation';
 import { Box, List, useMediaQuery } from '@mui/material';
 import NavItem from './NavItem';
 import NavCollapse from './NavCollapse';
@@ -8,15 +8,15 @@ import { useContext } from 'react';
 import { CustomizerContext } from '@/app/context/customizerContext';
 import React from 'react';
 
-
 const SidebarItems = () => {
   const pathname = usePathname();
   const pathDirect = pathname;
   const pathWithoutLastPart = pathname.slice(0, pathname.lastIndexOf('/'));
-  const { isSidebarHover, isCollapse, isMobileSidebar, setIsMobileSidebar } = useContext(CustomizerContext);
+  const { isSidebarHover, isCollapse, isMobileSidebar, setIsMobileSidebar } =
+    useContext(CustomizerContext);
 
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
-  const hideMenu = lgUp ? isCollapse == "mini-sidebar" && !isSidebarHover : '';
+  const hideMenu = lgUp ? isCollapse == 'mini-sidebar' && !isSidebarHover : '';
 
   return (
     <Box sx={{ px: 3 }}>
@@ -44,7 +44,13 @@ const SidebarItems = () => {
             // {/********If Sub No Menu**********/}
           } else {
             return (
-              <NavItem item={item} key={item.id} pathDirect={pathDirect} hideMenu={hideMenu} onClick={() => setIsMobileSidebar(!isMobileSidebar)} />
+              <NavItem
+                item={item}
+                key={item.id}
+                pathDirect={pathDirect}
+                hideMenu={hideMenu}
+                onClick={() => setIsMobileSidebar(!isMobileSidebar)}
+              />
             );
           }
         })}

@@ -1,21 +1,24 @@
-"use client";
+'use client';
 import React from 'react';
-import { 
-  Box, 
-  Typography, 
-  Paper, 
-  Divider, 
-  List, 
-  ListItem, 
+import {
+  Box,
+  Typography,
+  Paper,
+  Divider,
+  List,
+  ListItem,
   ListItemText,
   Chip,
-  Alert
+  Alert,
 } from '@mui/material';
 import PageContainer from '@/app/components/container/PageContainer';
 
 export default function MarketingPage() {
   return (
-    <PageContainer title="마케팅 정보 수신 동의" description="두리무역 ERP 서비스 마케팅 정보 수신 동의">
+    <PageContainer
+      title="마케팅 정보 수신 동의"
+      description="두리무역 ERP 서비스 마케팅 정보 수신 동의"
+    >
       <Box sx={{ py: 4 }}>
         {/* 헤더 */}
         <Paper sx={{ p: 4, mb: 3, bgcolor: 'primary.lighter' }}>
@@ -33,8 +36,8 @@ export default function MarketingPage() {
 
         <Alert severity="info" sx={{ mb: 3 }}>
           <Typography variant="body2">
-            마케팅 정보 수신은 선택사항이며, 동의하지 않으셔도 서비스 이용에는 제한이 없습니다.
-            동의 후에도 언제든지 수신거부 하실 수 있습니다.
+            마케팅 정보 수신은 선택사항이며, 동의하지 않으셔도 서비스 이용에는 제한이 없습니다. 동의
+            후에도 언제든지 수신거부 하실 수 있습니다.
           </Typography>
         </Alert>
 
@@ -121,22 +124,16 @@ export default function MarketingPage() {
             </Typography>
             <List>
               <ListItem>
-                <ListItemText 
-                  primary="정기 뉴스레터"
-                  secondary="월 1~2회"
-                />
+                <ListItemText primary="정기 뉴스레터" secondary="월 1~2회" />
               </ListItem>
               <ListItem>
-                <ListItemText 
+                <ListItemText
                   primary="이벤트 및 프로모션"
                   secondary="이벤트 진행 시 (월 최대 4회)"
                 />
               </ListItem>
               <ListItem>
-                <ListItemText 
-                  primary="중요 공지사항"
-                  secondary="필요 시"
-                />
+                <ListItemText primary="중요 공지사항" secondary="필요 시" />
               </ListItem>
             </List>
           </Box>
@@ -174,25 +171,25 @@ export default function MarketingPage() {
             </Typography>
             <List>
               <ListItem>
-                <ListItemText 
+                <ListItemText
                   primary="이메일 수신거부"
                   secondary="이메일 하단의 '수신거부' 링크 클릭"
                 />
               </ListItem>
               <ListItem>
-                <ListItemText 
+                <ListItemText
                   primary="SMS 수신거부"
                   secondary="'수신거부' 또는 '080-XXX-XXXX'로 회신"
                 />
               </ListItem>
               <ListItem>
-                <ListItemText 
+                <ListItemText
                   primary="마이페이지"
                   secondary="로그인 후 마이페이지 > 알림 설정에서 변경"
                 />
               </ListItem>
               <ListItem>
-                <ListItemText 
+                <ListItemText
                   primary="고객센터"
                   secondary="031-699-8781 또는 duly@duly.co.kr로 연락"
                 />
@@ -225,22 +222,13 @@ export default function MarketingPage() {
             </Typography>
             <List>
               <ListItem>
-                <ListItemText 
-                  primary="이메일 발송"
-                  secondary="SendGrid, AWS SES 활용"
-                />
+                <ListItemText primary="이메일 발송" secondary="SendGrid, AWS SES 활용" />
               </ListItem>
               <ListItem>
-                <ListItemText 
-                  primary="SMS 발송"
-                  secondary="알리고, 솔루션링크 활용"
-                />
+                <ListItemText primary="SMS 발송" secondary="알리고, 솔루션링크 활용" />
               </ListItem>
               <ListItem>
-                <ListItemText 
-                  primary="카카오톡 알림톡"
-                  secondary="카카오비즈니스 활용"
-                />
+                <ListItemText primary="카카오톡 알림톡" secondary="카카오비즈니스 활용" />
               </ListItem>
             </List>
           </Box>
@@ -281,22 +269,13 @@ export default function MarketingPage() {
             </Typography>
             <List>
               <ListItem>
-                <ListItemText 
-                  primary="고객센터"
-                  secondary="031-699-8781 (평일 09:00~18:00)"
-                />
+                <ListItemText primary="고객센터" secondary="031-699-8781 (평일 09:00~18:00)" />
               </ListItem>
               <ListItem>
-                <ListItemText 
-                  primary="이메일"
-                  secondary="duly@duly.co.kr"
-                />
+                <ListItemText primary="이메일" secondary="duly@duly.co.kr" />
               </ListItem>
               <ListItem>
-                <ListItemText 
-                  primary="카카오톡 채널"
-                  secondary="@두리무역"
-                />
+                <ListItemText primary="카카오톡 채널" secondary="@두리무역" />
               </ListItem>
             </List>
           </Box>
@@ -319,21 +298,13 @@ export default function MarketingPage() {
             <Typography variant="h6" fontWeight="bold" gutterBottom>
               회사 정보
             </Typography>
-            <Typography variant="body2">
-              상호: 두리무역
-            </Typography>
-            <Typography variant="body2">
-              대표자: 김두호
-            </Typography>
-            <Typography variant="body2">
-              사업자등록번호: 605-29-80697
-            </Typography>
+            <Typography variant="body2">상호: 두리무역</Typography>
+            <Typography variant="body2">대표자: 김두호</Typography>
+            <Typography variant="body2">사업자등록번호: 605-29-80697</Typography>
             <Typography variant="body2">
               주소: 인천광역시 연수구 센트럴로 313 B2512 (송도동, 송도 센트로드)
             </Typography>
-            <Typography variant="body2">
-              마케팅 문의: duly@duly.co.kr
-            </Typography>
+            <Typography variant="body2">마케팅 문의: duly@duly.co.kr</Typography>
           </Box>
         </Paper>
       </Box>

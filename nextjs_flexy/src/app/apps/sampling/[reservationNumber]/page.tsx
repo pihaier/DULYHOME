@@ -4,17 +4,17 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import PageContainer from '@/app/components/container/PageContainer';
 import Breadcrumb from '@/app/dashboard/layout/shared/breadcrumb/Breadcrumb';
-import { 
-  Paper, 
-  Typography, 
-  Box, 
-  Grid, 
+import {
+  Paper,
+  Typography,
+  Box,
+  Grid,
   Chip,
   Card,
   CardContent,
   CircularProgress,
   Alert,
-  Divider
+  Divider,
 } from '@mui/material';
 
 const BCrumb = [
@@ -64,11 +64,11 @@ export default function SamplingDetailPage() {
     try {
       const response = await fetch(`/api/sampling/${reservationNumber}`);
       const result = await response.json();
-      
+
       if (!response.ok) {
         throw new Error(result.error || '데이터를 불러오는데 실패했습니다.');
       }
-      
+
       setData(result.data);
     } catch (err) {
       setError(err instanceof Error ? err.message : '오류가 발생했습니다.');
@@ -105,28 +105,38 @@ export default function SamplingDetailPage() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'submitted': return 'default';
-      case 'in_progress': return 'primary';
-      case 'completed': return 'success';
-      case 'cancelled': return 'error';
-      default: return 'default';
+      case 'submitted':
+        return 'default';
+      case 'in_progress':
+        return 'primary';
+      case 'completed':
+        return 'success';
+      case 'cancelled':
+        return 'error';
+      default:
+        return 'default';
     }
   };
 
   const getStatusLabel = (status: string) => {
     switch (status) {
-      case 'submitted': return '접수완료';
-      case 'in_progress': return '진행중';
-      case 'completed': return '완료';
-      case 'cancelled': return '취소됨';
-      default: return status;
+      case 'submitted':
+        return '접수완료';
+      case 'in_progress':
+        return '진행중';
+      case 'completed':
+        return '완료';
+      case 'cancelled':
+        return '취소됨';
+      default:
+        return status;
     }
   };
 
   return (
     <PageContainer title={`샘플링 신청 - ${reservationNumber}`} description="">
       <Breadcrumb title="샘플링 신청 상세" items={BCrumb} />
-      
+
       <Paper elevation={0} sx={{ p: 4, maxWidth: 1200, mx: 'auto' }}>
         <Box sx={{ mb: 4 }}>
           <Typography variant="h4" gutterBottom>
@@ -136,8 +146,8 @@ export default function SamplingDetailPage() {
             <Typography variant="h6" color="text.secondary">
               예약번호: {data.reservation_number}
             </Typography>
-            <Chip 
-              label={getStatusLabel(data.status)} 
+            <Chip
+              label={getStatusLabel(data.status)}
               color={getStatusColor(data.status) as any}
               size="small"
             />
@@ -148,17 +158,29 @@ export default function SamplingDetailPage() {
           <Grid size={{ xs: 12, md: 6 }}>
             <Card>
               <CardContent>
-                <Typography variant="h6" gutterBottom>제품 정보</Typography>
+                <Typography variant="h6" gutterBottom>
+                  제품 정보
+                </Typography>
                 <Box sx={{ mt: 2 }}>
-                  <Typography variant="body2" color="text.secondary">제품명</Typography>
-                  <Typography variant="body1" gutterBottom>{data.product_name}</Typography>
-                  
-                  <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>샘플 수량</Typography>
-                  <Typography variant="body1" gutterBottom>{data.sample_quantity}개</Typography>
-                  
+                  <Typography variant="body2" color="text.secondary">
+                    제품명
+                  </Typography>
+                  <Typography variant="body1" gutterBottom>
+                    {data.product_name}
+                  </Typography>
+
+                  <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+                    샘플 수량
+                  </Typography>
+                  <Typography variant="body1" gutterBottom>
+                    {data.sample_quantity}개
+                  </Typography>
+
                   {data.detail_page && (
                     <>
-                      <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>참고 URL</Typography>
+                      <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+                        참고 URL
+                      </Typography>
                       <Typography variant="body1" gutterBottom>
                         <a href={data.detail_page} target="_blank" rel="noopener noreferrer">
                           {data.detail_page}
@@ -174,15 +196,27 @@ export default function SamplingDetailPage() {
           <Grid size={{ xs: 12, md: 6 }}>
             <Card>
               <CardContent>
-                <Typography variant="h6" gutterBottom>배송 정보</Typography>
+                <Typography variant="h6" gutterBottom>
+                  배송 정보
+                </Typography>
                 <Box sx={{ mt: 2 }}>
-                  <Typography variant="body2" color="text.secondary">수령인</Typography>
-                  <Typography variant="body1" gutterBottom>{data.shipping_address.recipient_name}</Typography>
-                  
-                  <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>연락처</Typography>
-                  <Typography variant="body1" gutterBottom>{data.shipping_address.phone}</Typography>
-                  
-                  <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>배송지</Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    수령인
+                  </Typography>
+                  <Typography variant="body1" gutterBottom>
+                    {data.shipping_address.recipient_name}
+                  </Typography>
+
+                  <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+                    연락처
+                  </Typography>
+                  <Typography variant="body1" gutterBottom>
+                    {data.shipping_address.phone}
+                  </Typography>
+
+                  <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+                    배송지
+                  </Typography>
                   <Typography variant="body1">
                     [{data.shipping_address.postal_code}] {data.shipping_address.address}
                   </Typography>
@@ -197,7 +231,9 @@ export default function SamplingDetailPage() {
           <Grid size={{ xs: 12 }}>
             <Card>
               <CardContent>
-                <Typography variant="h6" gutterBottom>요청사항</Typography>
+                <Typography variant="h6" gutterBottom>
+                  요청사항
+                </Typography>
                 <Typography variant="body1" style={{ whiteSpace: 'pre-wrap' }}>
                   {data.requirements}
                 </Typography>
@@ -208,7 +244,9 @@ export default function SamplingDetailPage() {
           <Grid size={{ xs: 12 }}>
             <Card>
               <CardContent>
-                <Typography variant="h6" gutterBottom>신청 정보</Typography>
+                <Typography variant="h6" gutterBottom>
+                  신청 정보
+                </Typography>
                 <Typography variant="body2" color="text.secondary">
                   신청일시: {new Date(data.created_at).toLocaleString('ko-KR')}
                 </Typography>

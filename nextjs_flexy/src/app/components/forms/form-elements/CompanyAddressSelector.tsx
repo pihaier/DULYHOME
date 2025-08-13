@@ -46,10 +46,10 @@ interface CompanyAddressSelectorProps {
   required?: boolean;
 }
 
-export default function CompanyAddressSelector({ 
-  value, 
-  onChange, 
-  required = false 
+export default function CompanyAddressSelector({
+  value,
+  onChange,
+  required = false,
 }: CompanyAddressSelectorProps) {
   const { user } = useUser();
   const [addresses, setAddresses] = useState<CompanyAddress[]>([]);
@@ -58,7 +58,7 @@ export default function CompanyAddressSelector({
   const [openDialog, setOpenDialog] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-  
+
   // 새 주소 폼 데이터
   const [newAddress, setNewAddress] = useState({
     company_name: '',
@@ -94,9 +94,9 @@ export default function CompanyAddressSelector({
 
       if (error) throw error;
       setAddresses(data || []);
-      
+
       // 기본 주소가 있으면 자동 선택
-      const defaultAddress = data?.find(addr => addr.is_default);
+      const defaultAddress = data?.find((addr) => addr.is_default);
       if (defaultAddress && !value) {
         setSelectedId(defaultAddress.id);
         onChange(defaultAddress);
@@ -111,7 +111,7 @@ export default function CompanyAddressSelector({
   };
 
   const handleAddressSelect = (addressId: string) => {
-    const selected = addresses.find(addr => addr.id === addressId);
+    const selected = addresses.find((addr) => addr.id === addressId);
     if (selected) {
       setSelectedId(addressId);
       onChange(selected);
@@ -120,7 +120,7 @@ export default function CompanyAddressSelector({
 
   const handleSaveNewAddress = async () => {
     setError('');
-    
+
     // 유효성 검사
     if (!newAddress.company_name || !newAddress.contact_person || !newAddress.phone) {
       setError('회사명, 담당자명, 연락처는 필수 입력 항목입니다.');
@@ -128,10 +128,10 @@ export default function CompanyAddressSelector({
     }
 
     setSaving(true);
-    
+
     try {
       const supabase = createClient();
-      
+
       // 기본 주소로 설정하는 경우, 기존 기본 주소 해제
       if (newAddress.is_default) {
         await supabase
@@ -140,7 +140,7 @@ export default function CompanyAddressSelector({
           .eq('user_id', user!.id)
           .eq('is_default', true);
       }
-      
+
       // 새 주소 추가
       const { data, error } = await supabase
         .from('company_addresses')
@@ -154,11 +154,14 @@ export default function CompanyAddressSelector({
       if (error) throw error;
 
       // 목록에 추가하고 선택
-      const newAddresses = [data, ...addresses.filter(addr => !addr.is_default || !data.is_default)];
+      const newAddresses = [
+        data,
+        ...addresses.filter((addr) => !addr.is_default || !data.is_default),
+      ];
       setAddresses(newAddresses);
       setSelectedId(data.id);
       onChange(data);
-      
+
       // 다이얼로그 닫기 및 폼 초기화
       setOpenDialog(false);
       setNewAddress({
@@ -198,7 +201,7 @@ export default function CompanyAddressSelector({
       <FormLabel component="legend" sx={{ fontWeight: 600, mb: 2 }}>
         회사 정보 선택
       </FormLabel>
-      
+
       {!user ? (
         <Alert severity="warning" sx={{ mb: 2 }}>
           로그인이 필요합니다. 로그인 후 회사 정보를 저장할 수 있습니다.
@@ -236,21 +239,19 @@ export default function CompanyAddressSelector({
                         <Typography variant="subtitle1" fontWeight={600}>
                           {address.company_name}
                         </Typography>
-                        {address.is_default && (
-                          <Chip label="기본" size="small" color="primary" />
-                        )}
+                        {address.is_default && <Chip label="기본" size="small" color="primary" />}
                       </Stack>
-                      
+
                       <Typography variant="body2" color="text.secondary">
                         담당자: {address.contact_person} | 연락처: {address.phone}
                       </Typography>
-                      
+
                       {address.email && (
                         <Typography variant="body2" color="text.secondary">
                           이메일: {address.email}
                         </Typography>
                       )}
-                      
+
                       {address.address && (
                         <Typography variant="body2" color="text.secondary">
                           주소: {address.address} {address.address_detail}
@@ -265,7 +266,7 @@ export default function CompanyAddressSelector({
           </Stack>
         </RadioGroup>
       )}
-      
+
       <Button
         startIcon={<AddIcon />}
         variant="outlined"
@@ -282,8 +283,8 @@ export default function CompanyAddressSelector({
       </Button>
 
       {/* 새 주소 추가 다이얼로그 */}
-      <Dialog 
-        open={openDialog} 
+      <Dialog
+        open={openDialog}
         onClose={() => !saving && setOpenDialog(false)}
         maxWidth="sm"
         fullWidth
@@ -295,7 +296,7 @@ export default function CompanyAddressSelector({
               {error}
             </Alert>
           )}
-          
+
           <Stack spacing={3}>
             <TextField
               label="회사명"
@@ -305,16 +306,18 @@ export default function CompanyAddressSelector({
               fullWidth
               disabled={saving}
             />
-            
+
             <TextField
               label="회사명 (중문)"
               value={newAddress.company_name_chinese}
-              onChange={(e) => setNewAddress({ ...newAddress, company_name_chinese: e.target.value })}
+              onChange={(e) =>
+                setNewAddress({ ...newAddress, company_name_chinese: e.target.value })
+              }
               fullWidth
               disabled={saving}
               helperText="선택사항"
             />
-            
+
             <TextField
               label="담당자명"
               value={newAddress.contact_person}
@@ -323,7 +326,7 @@ export default function CompanyAddressSelector({
               fullWidth
               disabled={saving}
             />
-            
+
             <TextField
               label="연락처"
               value={newAddress.phone}
@@ -333,7 +336,7 @@ export default function CompanyAddressSelector({
               disabled={saving}
               placeholder="010-1234-5678"
             />
-            
+
             <TextField
               label="이메일"
               type="email"
@@ -343,9 +346,9 @@ export default function CompanyAddressSelector({
               disabled={saving}
               helperText="선택사항"
             />
-            
+
             <Divider />
-            
+
             <TextField
               label="주소"
               value={newAddress.address}
@@ -354,7 +357,7 @@ export default function CompanyAddressSelector({
               disabled={saving}
               helperText="선택사항"
             />
-            
+
             <TextField
               label="상세주소"
               value={newAddress.address_detail}
@@ -363,7 +366,7 @@ export default function CompanyAddressSelector({
               disabled={saving}
               helperText="선택사항"
             />
-            
+
             <TextField
               label="우편번호"
               value={newAddress.postal_code}
@@ -372,7 +375,7 @@ export default function CompanyAddressSelector({
               disabled={saving}
               helperText="선택사항"
             />
-            
+
             <FormControlLabel
               control={
                 <Checkbox

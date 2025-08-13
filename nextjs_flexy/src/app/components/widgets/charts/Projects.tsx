@@ -1,14 +1,14 @@
-import dynamic from "next/dynamic";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
-import { useTheme } from "@mui/material/styles";
+import dynamic from 'next/dynamic';
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
+import { useTheme } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { IconArrowUpLeft } from "@tabler/icons-react";
+import { IconArrowUpLeft } from '@tabler/icons-react';
 
-import DashboardCard from "../../shared/DashboardCard";
-import { ApexOptions } from "apexcharts";
+import DashboardCard from '../../shared/DashboardCard';
+import { ApexOptions } from 'apexcharts';
 
 const Projects = () => {
   // chart color
@@ -19,14 +19,13 @@ const Projects = () => {
   // chart
   const optionscolumnchart: ApexOptions = {
     chart: {
-      type: "bar",
+      type: 'bar',
       fontFamily: "'Plus Jakarta Sans', sans-serif;",
-      foreColor: "#adb0bb",
+      foreColor: '#adb0bb',
       toolbar: {
         show: false,
       },
       height: 80,
-
 
       sparkline: {
         enabled: true,
@@ -40,8 +39,8 @@ const Projects = () => {
       bar: {
         horizontal: false,
 
-        columnWidth: "60%",
-        barHeight: "20%",
+        columnWidth: '60%',
+        barHeight: '20%',
         borderRadius: 3,
       },
     },
@@ -51,7 +50,7 @@ const Projects = () => {
     stroke: {
       show: true,
       width: 2.5,
-      colors: ["rgba(0,0,0,0.01)"],
+      colors: ['rgba(0,0,0,0.01)'],
     },
     xaxis: {
       axisBorder: {
@@ -74,7 +73,7 @@ const Projects = () => {
       opacity: 1,
     },
     tooltip: {
-      theme: theme.palette.mode === "dark" ? "dark" : "light",
+      theme: theme.palette.mode === 'dark' ? 'dark' : 'light',
       x: {
         show: false,
       },
@@ -82,7 +81,7 @@ const Projects = () => {
   };
   const seriescolumnchart = [
     {
-      name: "",
+      name: '',
       data: [4, 10, 9, 7, 9, 10, 11, 8, 10],
     },
   ];
@@ -109,7 +108,7 @@ const Projects = () => {
               series={seriescolumnchart}
               type="bar"
               height={80}
-              width={"100%"}
+              width={'100%'}
             />
           </Box>
         </>

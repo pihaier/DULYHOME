@@ -1,32 +1,46 @@
-import { Grid, Typography, Accordion, AccordionSummary, AccordionDetails, Divider } from '@mui/material';
+import {
+  Grid,
+  Typography,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Divider,
+} from '@mui/material';
 import { Box } from '@mui/system';
 import { IconChevronDown } from '@tabler/icons-react';
 
 const Questions = () => {
   return (
-    (<Box>
+    <Box>
       <Grid container spacing={3} justifyContent="center">
         <Grid
           size={{
             xs: 12,
-            lg: 8
-          }}>
-          <Typography variant="h3" textAlign="center" mb={1}>Frequently asked questions</Typography>
-          <Typography variant="h6" fontWeight={400} color="textSecondary" textAlign="center" mb={4}>Get to know more about ready-to-use admin dashboard templates</Typography>
+            lg: 8,
+          }}
+        >
+          <Typography variant="h3" textAlign="center" mb={1}>
+            Frequently asked questions
+          </Typography>
+          <Typography variant="h6" fontWeight={400} color="textSecondary" textAlign="center" mb={4}>
+            Get to know more about ready-to-use admin dashboard templates
+          </Typography>
           <Accordion elevation={9}>
             <AccordionSummary
               expandIcon={<IconChevronDown />}
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography variant="h6" px={2} py={1}>What is an Admin Dashboard?</Typography>
+              <Typography variant="h6" px={2} py={1}>
+                What is an Admin Dashboard?
+              </Typography>
             </AccordionSummary>
             <Divider />
             <AccordionDetails>
               <Typography variant="subtitle1" pt={1} px={2} color="textSecondary">
                 Admin Dashboard is the backend interface of a website or an application that helps
-                to manage the website&apos;s overall content and settings. It is widely used by the site
-                owners to keep track of their website, make changes to their content, and more.
+                to manage the website&apos;s overall content and settings. It is widely used by the
+                site owners to keep track of their website, make changes to their content, and more.
               </Typography>
             </AccordionDetails>
           </Accordion>
@@ -36,7 +50,9 @@ const Questions = () => {
               aria-controls="panel2a-content"
               id="panel2a-header"
             >
-              <Typography variant="h6" px={2} py={1}>What should an admin dashboard template include?</Typography>
+              <Typography variant="h6" px={2} py={1}>
+                What should an admin dashboard template include?
+              </Typography>
             </AccordionSummary>
             <Divider />
             <AccordionDetails>
@@ -54,7 +70,9 @@ const Questions = () => {
               aria-controls="panel3a-content"
               id="panel3a-header"
             >
-              <Typography variant="h6" px={2} py={1}>Why should I buy admin templates from Wrappixel?</Typography>
+              <Typography variant="h6" px={2} py={1}>
+                Why should I buy admin templates from Wrappixel?
+              </Typography>
             </AccordionSummary>
             <Divider />
             <AccordionDetails>
@@ -71,7 +89,9 @@ const Questions = () => {
               aria-controls="panel4a-content"
               id="panel4a-header"
             >
-              <Typography variant="h6" px={2} py={1}>Do Wrappixel offers a money back guarantee?</Typography>
+              <Typography variant="h6" px={2} py={1}>
+                Do Wrappixel offers a money back guarantee?
+              </Typography>
             </AccordionSummary>
             <Divider />
             <AccordionDetails>
@@ -83,7 +103,7 @@ const Questions = () => {
           </Accordion>
         </Grid>
       </Grid>
-    </Box>)
+    </Box>
   );
 };
 

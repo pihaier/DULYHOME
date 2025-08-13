@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import Link from 'next/link';
 import { Grid, Box, Stack, Typography } from '@mui/material';
 import PageContainer from '@/app/components/container/PageContainer';
@@ -8,7 +8,7 @@ import Image from 'next/image';
 
 export default function Login() {
   return (
-    (<PageContainer title="Login Page" description="this is Sample page">
+    <PageContainer title="Login Page" description="this is Sample page">
       <Grid container spacing={0} justifyContent="center" sx={{ height: '100vh' }}>
         <Grid
           sx={{
@@ -28,8 +28,9 @@ export default function Login() {
             xs: 12,
             sm: 12,
             lg: 7,
-            xl: 8
-          }}>
+            xl: 8,
+          }}
+        >
           <Box position="relative">
             <Box px={3}>
               <Logo />
@@ -46,8 +47,10 @@ export default function Login() {
               }}
             >
               <Image
-                src={"/images/backgrounds/login-bg.svg"}
-                alt="bg" width={500} height={500}
+                src={'/images/backgrounds/login-bg.svg'}
+                alt="bg"
+                width={500}
+                height={500}
                 style={{
                   width: '100%',
                   maxWidth: '500px',
@@ -65,8 +68,9 @@ export default function Login() {
             xs: 12,
             sm: 12,
             lg: 5,
-            xl: 4
-          }}>
+            xl: 4,
+          }}
+        >
           <Box p={4}>
             <AuthLogin
               title="두리무역 ERP 로그인"
@@ -97,7 +101,6 @@ export default function Login() {
           </Box>
         </Grid>
       </Grid>
-    </PageContainer>)
+    </PageContainer>
   );
-};
-
+}

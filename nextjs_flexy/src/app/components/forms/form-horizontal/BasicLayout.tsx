@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { Grid, InputAdornment, Button } from '@mui/material';
 import React from 'react';
 import CustomFormLabel from '../theme-elements/CustomFormLabel';
@@ -7,7 +7,7 @@ import CustomOutlinedInput from '../theme-elements/CustomOutlinedInput';
 
 const BasicLayout = () => {
   return (
-    (<div>
+    <div>
       {/* ------------------------------------------------------------------------------------------------ */}
       {/* Basic Layout */}
       {/* ------------------------------------------------------------------------------------------------ */}
@@ -18,8 +18,9 @@ const BasicLayout = () => {
           alignItems="center"
           size={{
             xs: 12,
-            sm: 3
-          }}>
+            sm: 3,
+          }}
+        >
           <CustomFormLabel htmlFor="bl-name" sx={{ mt: 0, mb: { xs: '-10px', sm: 0 } }}>
             Name
           </CustomFormLabel>
@@ -27,8 +28,9 @@ const BasicLayout = () => {
         <Grid
           size={{
             xs: 12,
-            sm: 9
-          }}>
+            sm: 9,
+          }}
+        >
           <CustomTextField id="bl-name" placeholder="John Deo" fullWidth />
         </Grid>
         {/* 2 */}
@@ -37,8 +39,9 @@ const BasicLayout = () => {
           alignItems="center"
           size={{
             xs: 12,
-            sm: 3
-          }}>
+            sm: 3,
+          }}
+        >
           <CustomFormLabel htmlFor="bl-company" sx={{ mt: 0, mb: { xs: '-10px', sm: 0 } }}>
             Company
           </CustomFormLabel>
@@ -46,8 +49,9 @@ const BasicLayout = () => {
         <Grid
           size={{
             xs: 12,
-            sm: 9
-          }}>
+            sm: 9,
+          }}
+        >
           <CustomTextField id="bl-company" placeholder="ACME Inc." fullWidth />
         </Grid>
         {/* 3 */}
@@ -56,8 +60,9 @@ const BasicLayout = () => {
           alignItems="center"
           size={{
             xs: 12,
-            sm: 3
-          }}>
+            sm: 3,
+          }}
+        >
           <CustomFormLabel htmlFor="bl-email" sx={{ mt: 0, mb: { xs: '-10px', sm: 0 } }}>
             Email
           </CustomFormLabel>
@@ -65,8 +70,9 @@ const BasicLayout = () => {
         <Grid
           size={{
             xs: 12,
-            sm: 9
-          }}>
+            sm: 9,
+          }}
+        >
           <CustomOutlinedInput
             endAdornment={<InputAdornment position="end">@example.com</InputAdornment>}
             id="bl-email"
@@ -80,8 +86,9 @@ const BasicLayout = () => {
           alignItems="center"
           size={{
             xs: 12,
-            sm: 3
-          }}>
+            sm: 3,
+          }}
+        >
           <CustomFormLabel htmlFor="bl-phone" sx={{ mt: 0, mb: { xs: '-10px', sm: 0 } }}>
             Phone No
           </CustomFormLabel>
@@ -89,8 +96,9 @@ const BasicLayout = () => {
         <Grid
           size={{
             xs: 12,
-            sm: 9
-          }}>
+            sm: 9,
+          }}
+        >
           <CustomTextField id="bl-phone" placeholder="412 2150 451" fullWidth />
         </Grid>
         {/* 5 */}
@@ -99,8 +107,9 @@ const BasicLayout = () => {
           alignItems="center"
           size={{
             xs: 12,
-            sm: 3
-          }}>
+            sm: 3,
+          }}
+        >
           <CustomFormLabel htmlFor="bl-message" sx={{ mt: 0, mb: { xs: '-10px', sm: 0 } }}>
             Message
           </CustomFormLabel>
@@ -108,8 +117,9 @@ const BasicLayout = () => {
         <Grid
           size={{
             xs: 12,
-            sm: 9
-          }}>
+            sm: 9,
+          }}
+        >
           <CustomTextField
             id="bl-message"
             placeholder="Hi, Do you  have a moment to talk Jeo ?"
@@ -120,17 +130,21 @@ const BasicLayout = () => {
         <Grid
           size={{
             xs: 12,
-            sm: 3
-          }}></Grid>
+            sm: 3,
+          }}
+        ></Grid>
         <Grid
           size={{
             xs: 12,
-            sm: 9
-          }}>
-          <Button variant="contained" color="primary">Send</Button>
+            sm: 9,
+          }}
+        >
+          <Button variant="contained" color="primary">
+            Send
+          </Button>
         </Grid>
       </Grid>
-    </div>)
+    </div>
   );
 };
 

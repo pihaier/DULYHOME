@@ -1,30 +1,28 @@
-'use client'
+'use client';
 
-import React from 'react'
-import dayjs, { Dayjs } from 'dayjs'
+import React from 'react';
+import dayjs, { Dayjs } from 'dayjs';
 
-import ChildCard from '@/app/components/shared/ChildCard'
+import ChildCard from '@/app/components/shared/ChildCard';
 
-import { LocalizationProvider } from '@mui/x-date-pickers'
+import { LocalizationProvider } from '@mui/x-date-pickers';
 
-import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 // codeModel
-import BasicDateTimeCode from '@/app/components/forms/form-elements/date-time/code/BasicDateTimeCode'
+import BasicDateTimeCode from '@/app/components/forms/form-elements/date-time/code/BasicDateTimeCode';
 
 const BasicDateTime = () => {
   // date time
-  const [value3, setValue3] = React.useState<Dayjs | null>(
-    dayjs('2018-01-01T00:00:00.000Z')
-  )
+  const [value3, setValue3] = React.useState<Dayjs | null>(dayjs('2018-01-01T00:00:00.000Z'));
 
   return (
-    <ChildCard title='Basic' codeModel={<BasicDateTimeCode />}>
+    <ChildCard title="Basic" codeModel={<BasicDateTimeCode />}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <MobileDateTimePicker
           onChange={(newValue) => {
-            setValue3(newValue)
+            setValue3(newValue);
           }}
           slotProps={{
             textField: {
@@ -38,7 +36,7 @@ const BasicDateTime = () => {
         />
       </LocalizationProvider>
     </ChildCard>
-  )
-}
+  );
+};
 
-export default BasicDateTime
+export default BasicDateTime;

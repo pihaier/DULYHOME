@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import {
   Box,
   Typography,
@@ -9,22 +9,22 @@ import {
   Divider,
   Alert,
   CircularProgress,
-} from "@mui/material";
-import Link from "next/link";
-import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
-import { loginType } from "@/app/dashboard/types/auth/auth";
-import CustomCheckbox from "@/app/components/forms/theme-elements/CustomCheckbox";
-import CustomTextField from "@/app/components/forms/theme-elements/CustomTextField";
-import CustomFormLabel from "@/app/components/forms/theme-elements/CustomFormLabel";
-import AuthSocialButtons from "./AuthSocialButtons";
+} from '@mui/material';
+import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { createClient } from '@/lib/supabase/client';
+import { loginType } from '@/app/dashboard/types/auth/auth';
+import CustomCheckbox from '@/app/components/forms/theme-elements/CustomCheckbox';
+import CustomTextField from '@/app/components/forms/theme-elements/CustomTextField';
+import CustomFormLabel from '@/app/components/forms/theme-elements/CustomFormLabel';
+import AuthSocialButtons from './AuthSocialButtons';
 
 const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const supabase = createClient();
-  
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
@@ -36,7 +36,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
   useEffect(() => {
     const message = searchParams.get('message');
     const emailParam = searchParams.get('email');
-    
+
     if (message === 'signup_success') {
       setSuccessMessage('회원가입이 완료되었습니다! 이메일을 확인하여 인증을 완료해주세요.');
       if (emailParam) {
@@ -82,12 +82,12 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
 
       if (data.user) {
         // 세션이 제대로 설정될 때까지 잠시 대기
-        await new Promise(resolve => setTimeout(resolve, 100));
-        
+        await new Promise((resolve) => setTimeout(resolve, 100));
+
         // 로그인 성공 - 리다이렉트 처리
         const redirectTo = searchParams.get('redirectTo');
         const returnUrl = searchParams.get('returnUrl');
-        
+
         if (redirectTo) {
           // middleware에서 보낸 redirectTo 파라미터 우선
           router.push(decodeURIComponent(redirectTo));
@@ -98,7 +98,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
           // 이전 페이지가 없으면 대시보드로 이동
           router.push('/dashboard');
         }
-        
+
         // 페이지 새로고침을 강제로 수행하여 세션 업데이트
         router.refresh();
       }
@@ -118,10 +118,10 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
       const redirectTo = searchParams.get('redirectTo');
       const returnUrl = searchParams.get('returnUrl');
       const finalReturnUrl = redirectTo || returnUrl || '/';
-      
+
       const callbackUrl = new URL('/api/auth/callback', window.location.origin);
       callbackUrl.searchParams.set('returnUrl', finalReturnUrl);
-      
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
@@ -163,13 +163,13 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
         </Alert>
       )}
 
-      <AuthSocialButtons 
-        title="간편 로그인" 
+      <AuthSocialButtons
+        title="간편 로그인"
         onGoogleClick={() => handleOAuthLogin('google')}
         onKakaoClick={() => handleOAuthLogin('kakao')}
         disabled={loading}
       />
-      
+
       <Box mt={3}>
         <Divider>
           <Typography
@@ -189,11 +189,11 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
         <Stack spacing={2}>
           <Box>
             <CustomFormLabel htmlFor="email">이메일 주소</CustomFormLabel>
-            <CustomTextField 
-              id="email" 
+            <CustomTextField
+              id="email"
               type="email"
-              variant="outlined" 
-              fullWidth 
+              variant="outlined"
+              fullWidth
               value={email}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
               disabled={loading}
@@ -213,16 +213,11 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
               required
             />
           </Box>
-          <Stack
-            justifyContent="space-between"
-            direction="row"
-            alignItems="center"
-            my={2}
-          >
+          <Stack justifyContent="space-between" direction="row" alignItems="center" my={2}>
             <FormGroup>
               <FormControlLabel
                 control={
-                  <CustomCheckbox 
+                  <CustomCheckbox
                     checked={rememberMe}
                     onChange={(e) => setRememberMe(e.target.checked)}
                     disabled={loading}
@@ -236,15 +231,15 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
               href="/auth/auth1/forgot-password"
               fontWeight="500"
               sx={{
-                textDecoration: "none",
-                color: "primary.main",
+                textDecoration: 'none',
+                color: 'primary.main',
               }}
             >
               비밀번호 찾기
             </Typography>
           </Stack>
         </Stack>
-        
+
         <Box mt={2}>
           <Button
             color="primary"
@@ -254,15 +249,11 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
             type="submit"
             disabled={loading || !email || !password}
           >
-            {loading ? (
-              <CircularProgress size={24} color="inherit" />
-            ) : (
-              '로그인'
-            )}
+            {loading ? <CircularProgress size={24} color="inherit" /> : '로그인'}
           </Button>
         </Box>
       </Box>
-      
+
       {subtitle}
     </>
   );

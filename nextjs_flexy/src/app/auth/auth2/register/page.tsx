@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { Grid, Box, Card, Typography, Stack } from '@mui/material';
 import Link from 'next/link';
 import Logo from '@/app/dashboard/layout/shared/logo/Logo';
@@ -7,7 +7,7 @@ import AuthRegister from '../../authForms/AuthRegister';
 
 export default function Register2() {
   return (
-    (<PageContainer title="Register Page" description="this is Sample page">
+    <PageContainer title="Register Page" description="this is Sample page">
       <Box
         sx={{
           position: 'relative',
@@ -32,10 +32,11 @@ export default function Register2() {
               xs: 12,
               sm: 12,
               lg: 5,
-              xl: 4
-            }}>
+              xl: 4,
+            }}
+          >
             <Card elevation={9} sx={{ p: 4, zIndex: 1, width: '100%', maxWidth: '450px' }}>
-              <Box display="flex" alignItems="center" justifyContent="center" textAlign='center'>
+              <Box display="flex" alignItems="center" justifyContent="center" textAlign="center">
                 <Logo />
               </Box>
               <AuthRegister
@@ -67,6 +68,6 @@ export default function Register2() {
           </Grid>
         </Grid>
       </Box>
-    </PageContainer>)
+    </PageContainer>
   );
-};
+}

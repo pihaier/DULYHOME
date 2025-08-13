@@ -1,41 +1,37 @@
-"use client";
-import Link from "next/link";
-import { Grid, Box, Typography, Stack } from "@mui/material";
-import PageContainer from "@/app/components/container/PageContainer";
-import Logo from "@/app/dashboard/layout/shared/logo/Logo";
+'use client';
+import Link from 'next/link';
+import { Grid, Box, Typography, Stack } from '@mui/material';
+import PageContainer from '@/app/components/container/PageContainer';
+import Logo from '@/app/dashboard/layout/shared/logo/Logo';
 
-import AuthRegister from "../../authForms/AuthRegister";
-import Image from "next/image";
+import AuthRegister from '../../authForms/AuthRegister';
+import Image from 'next/image';
 
 export default function CustomerRegister() {
   return (
     <PageContainer title="고객 회원가입" description="두리무역 ERP 고객 회원가입 페이지">
-      <Grid
-        container
-        spacing={0}
-        justifyContent="center"
-        sx={{ overflowX: "hidden" }}
-      >
+      <Grid container spacing={0} justifyContent="center" sx={{ overflowX: 'hidden' }}>
         <Grid
           sx={{
-            position: "relative",
-            "&:before": {
+            position: 'relative',
+            '&:before': {
               content: '""',
-              background: "radial-gradient(#d2f1df, #d3d7fa, #bad8f4)",
-              backgroundSize: "400% 400%",
-              animation: "gradient 15s ease infinite",
-              position: "absolute",
-              height: "100%",
-              width: "100%",
-              opacity: "0.3",
+              background: 'radial-gradient(#d2f1df, #d3d7fa, #bad8f4)',
+              backgroundSize: '400% 400%',
+              animation: 'gradient 15s ease infinite',
+              position: 'absolute',
+              height: '100%',
+              width: '100%',
+              opacity: '0.3',
             },
           }}
           size={{
             xs: 12,
             sm: 12,
             lg: 7,
-            xl: 8
-          }}>
+            xl: 8,
+          }}
+        >
           <Box position="relative">
             <Box px={3}>
               <Logo />
@@ -43,20 +39,23 @@ export default function CustomerRegister() {
             <Box
               alignItems="center"
               justifyContent="center"
-              height={"calc(100vh - 75px)"}
+              height={'calc(100vh - 75px)'}
               sx={{
                 display: {
-                  xs: "none",
-                  lg: "flex",
+                  xs: 'none',
+                  lg: 'flex',
                 },
               }}
             >
               <Image
-                src={"/images/backgrounds/login-bg.png"}
-                alt="bg" width={500} height={500}
+                src={'/images/backgrounds/login-bg.png'}
+                alt="bg"
+                width={500}
+                height={500}
                 style={{
-                  width: "100%",
-                  maxWidth: "500px", maxHeight: '500px',
+                  width: '100%',
+                  maxWidth: '500px',
+                  maxHeight: '500px',
                 }}
               />
             </Box>
@@ -70,8 +69,9 @@ export default function CustomerRegister() {
             xs: 12,
             sm: 12,
             lg: 5,
-            xl: 4
-          }}>
+            xl: 4,
+          }}
+        >
           <Box p={4}>
             <AuthRegister
               title="고객 회원가입"
@@ -90,8 +90,8 @@ export default function CustomerRegister() {
                     href="/auth/customer/login"
                     fontWeight="500"
                     sx={{
-                      textDecoration: "none",
-                      color: "primary.main",
+                      textDecoration: 'none',
+                      color: 'primary.main',
                     }}
                   >
                     로그인하기

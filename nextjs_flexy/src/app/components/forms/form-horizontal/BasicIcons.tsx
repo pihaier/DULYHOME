@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { Grid, InputAdornment, Button } from '@mui/material';
 import React from 'react';
 import CustomFormLabel from '../theme-elements/CustomFormLabel';
@@ -7,7 +7,7 @@ import { IconBuildingArch, IconMail, IconMessage2, IconPhone, IconUser } from '@
 
 const BasicIcons = () => {
   return (
-    (<div>
+    <div>
       {/* ------------------------------------------------------------------------------------------------ */}
       {/* Basic Layout */}
       {/* ------------------------------------------------------------------------------------------------ */}
@@ -18,8 +18,9 @@ const BasicIcons = () => {
           alignItems="center"
           size={{
             xs: 12,
-            sm: 3
-          }}>
+            sm: 3,
+          }}
+        >
           <CustomFormLabel htmlFor="bi-name" sx={{ mt: 0, mb: { xs: '-10px', sm: 0 } }}>
             Name
           </CustomFormLabel>
@@ -27,8 +28,9 @@ const BasicIcons = () => {
         <Grid
           size={{
             xs: 12,
-            sm: 9
-          }}>
+            sm: 9,
+          }}
+        >
           <CustomOutlinedInput
             startAdornment={
               <InputAdornment position="start">
@@ -46,8 +48,9 @@ const BasicIcons = () => {
           alignItems="center"
           size={{
             xs: 12,
-            sm: 3
-          }}>
+            sm: 3,
+          }}
+        >
           <CustomFormLabel htmlFor="bi-company" sx={{ mt: 0, mb: { xs: '-10px', sm: 0 } }}>
             Company
           </CustomFormLabel>
@@ -55,8 +58,9 @@ const BasicIcons = () => {
         <Grid
           size={{
             xs: 12,
-            sm: 9
-          }}>
+            sm: 9,
+          }}
+        >
           <CustomOutlinedInput
             startAdornment={
               <InputAdornment position="start">
@@ -74,8 +78,9 @@ const BasicIcons = () => {
           alignItems="center"
           size={{
             xs: 12,
-            sm: 3
-          }}>
+            sm: 3,
+          }}
+        >
           <CustomFormLabel htmlFor="bi-email" sx={{ mt: 0, mb: { xs: '-10px', sm: 0 } }}>
             Email
           </CustomFormLabel>
@@ -83,8 +88,9 @@ const BasicIcons = () => {
         <Grid
           size={{
             xs: 12,
-            sm: 9
-          }}>
+            sm: 9,
+          }}
+        >
           <CustomOutlinedInput
             startAdornment={
               <InputAdornment position="start">
@@ -102,8 +108,9 @@ const BasicIcons = () => {
           alignItems="center"
           size={{
             xs: 12,
-            sm: 3
-          }}>
+            sm: 3,
+          }}
+        >
           <CustomFormLabel htmlFor="bi-phone" sx={{ mt: 0, mb: { xs: '-10px', sm: 0 } }}>
             Phone No
           </CustomFormLabel>
@@ -111,8 +118,9 @@ const BasicIcons = () => {
         <Grid
           size={{
             xs: 12,
-            sm: 9
-          }}>
+            sm: 9,
+          }}
+        >
           <CustomOutlinedInput
             startAdornment={
               <InputAdornment position="start">
@@ -130,8 +138,9 @@ const BasicIcons = () => {
           alignItems="center"
           size={{
             xs: 12,
-            sm: 3
-          }}>
+            sm: 3,
+          }}
+        >
           <CustomFormLabel htmlFor="bi-message" sx={{ mt: 0, mb: { xs: '-10px', sm: 0 } }}>
             Message
           </CustomFormLabel>
@@ -139,8 +148,9 @@ const BasicIcons = () => {
         <Grid
           size={{
             xs: 12,
-            sm: 9
-          }}>
+            sm: 9,
+          }}
+        >
           <CustomOutlinedInput
             id="bi-message"
             startAdornment={
@@ -156,19 +166,21 @@ const BasicIcons = () => {
         <Grid
           size={{
             xs: 12,
-            sm: 3
-          }}></Grid>
+            sm: 3,
+          }}
+        ></Grid>
         <Grid
           size={{
             xs: 12,
-            sm: 9
-          }}>
+            sm: 9,
+          }}
+        >
           <Button variant="contained" color="primary">
             Send
           </Button>
         </Grid>
       </Grid>
-    </div>)
+    </div>
   );
 };
 

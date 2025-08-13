@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const FABColorCode = () => {
   return (
     <>
@@ -39,7 +39,7 @@ import { IconSend } from '@tabler/icons-react';
 </Stack>`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default FABColorCode
+export default FABColorCode;

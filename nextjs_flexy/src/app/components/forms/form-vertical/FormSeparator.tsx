@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import {
   Grid,
   InputAdornment,
@@ -46,14 +46,14 @@ const FormSeparator = () => {
   // country
   const [country, setCountry] = React.useState('');
 
-  const handleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+  const handleChange = (event: { target: { value: React.SetStateAction<string> } }) => {
     setCountry(event.target.value);
   };
 
   // language
   const [language, setLanguage] = React.useState('');
 
-  const handleChange2 = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+  const handleChange2 = (event: { target: { value: React.SetStateAction<string> } }) => {
     setLanguage(event.target.value);
   };
 
@@ -89,8 +89,9 @@ const FormSeparator = () => {
         <Grid
           size={{
             xs: 12,
-            sm: 6
-          }}>
+            sm: 6,
+          }}
+        >
           <CustomFormLabel htmlFor="fs-uname" sx={{ mt: 0 }}>
             Username
           </CustomFormLabel>
@@ -119,8 +120,9 @@ const FormSeparator = () => {
         <Grid
           size={{
             xs: 12,
-            sm: 6
-          }}>
+            sm: 6,
+          }}
+        >
           <CustomFormLabel htmlFor="fs-email" sx={{ mt: { sm: 0 } }}>
             Email
           </CustomFormLabel>
@@ -161,8 +163,9 @@ const FormSeparator = () => {
         <Grid
           size={{
             xs: 12,
-            sm: 6
-          }}>
+            sm: 6,
+          }}
+        >
           <CustomFormLabel htmlFor="fs-fname" sx={{ mt: 0 }}>
             First Name
           </CustomFormLabel>
@@ -188,8 +191,9 @@ const FormSeparator = () => {
         <Grid
           size={{
             xs: 12,
-            sm: 6
-          }}>
+            sm: 6,
+          }}
+        >
           <CustomFormLabel htmlFor="fs-lname" sx={{ mt: { sm: 0 } }}>
             Last Name
           </CustomFormLabel>

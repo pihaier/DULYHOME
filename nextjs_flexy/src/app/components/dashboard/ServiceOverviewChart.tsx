@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import dynamic from "next/dynamic";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+import dynamic from 'next/dynamic';
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 import { useTheme } from '@mui/material/styles';
 import { Box, Typography, Stack, Avatar, Skeleton } from '@mui/material';
 import DashboardCard from '../shared/DashboardCard';
@@ -22,7 +22,7 @@ const ServiceOverviewChart = () => {
   const [serviceData, setServiceData] = useState<ServiceData[]>([]);
   const [chartData, setChartData] = useState({
     series: [0, 0, 0],
-    labels: ['시장조사', '공장컨택', '검품감사']
+    labels: ['시장조사', '공장컨택', '검품감사'],
   });
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const ServiceOverviewChart = () => {
   const fetchServiceData = async () => {
     try {
       const supabase = createClient();
-      
+
       // 각 서비스별 총 건수 조회
       const { count: marketResearchCount } = await supabase
         .from('market_research_requests')
@@ -51,26 +51,26 @@ const ServiceOverviewChart = () => {
           name: '시장조사',
           count: marketResearchCount || 0,
           icon: <IconSearch size={20} />,
-          color: theme.palette.primary.main
+          color: theme.palette.primary.main,
         },
         {
           name: '공장컨택',
           count: factoryContactCount || 0,
           icon: <IconBuildingFactory size={20} />,
-          color: theme.palette.secondary.main
+          color: theme.palette.secondary.main,
         },
         {
           name: '검품감사',
           count: inspectionCount || 0,
           icon: <IconClipboardList size={20} />,
-          color: theme.palette.success.main
-        }
+          color: theme.palette.success.main,
+        },
       ];
 
       setServiceData(data);
       setChartData({
-        series: data.map(d => d.count),
-        labels: data.map(d => d.name)
+        series: data.map((d) => d.count),
+        labels: data.map((d) => d.name),
       });
     } catch (error) {
       console.error('Error fetching service data:', error);
@@ -81,8 +81,8 @@ const ServiceOverviewChart = () => {
 
   const optionsDonutChart: ApexCharts.ApexOptions = {
     chart: {
-      id: "donut-chart",
-      type: "donut",
+      id: 'donut-chart',
+      type: 'donut',
       fontFamily: theme.typography.fontFamily,
       toolbar: {
         show: false,
@@ -102,7 +102,7 @@ const ServiceOverviewChart = () => {
               show: true,
               fontSize: '18px',
               color: undefined,
-              offsetY: 5
+              offsetY: 5,
             },
             value: {
               show: false,
@@ -114,8 +114,8 @@ const ServiceOverviewChart = () => {
               formatter: function (w) {
                 const total = w.globals.seriesTotals.reduce((a: number, b: number) => a + b, 0);
                 return total.toString() + '건';
-              }
-            }
+              },
+            },
           },
         },
       },
@@ -159,12 +159,7 @@ const ServiceOverviewChart = () => {
           </Box>
           <Stack direction="row" spacing={2} justifyContent="space-between" mt={2}>
             {serviceData.map((service) => (
-              <Stack
-                key={service.name}
-                direction="row"
-                alignItems="center"
-                spacing={1}
-              >
+              <Stack key={service.name} direction="row" alignItems="center" spacing={1}>
                 <Avatar
                   sx={{
                     width: 40,

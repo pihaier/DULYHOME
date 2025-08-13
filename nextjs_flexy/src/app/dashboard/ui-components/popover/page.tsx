@@ -1,27 +1,27 @@
-import { Grid } from "@mui/material";
-import Breadcrumb from "@/app/dashboard/layout/shared/breadcrumb/Breadcrumb";
-import PageContainer from "@/app/components/container/PageContainer";
-import ParentCard from "@/app/components/shared/ParentCard";
-import ChildCard from "@/app/components/shared/ChildCard";
-import ClickPopover from "@/app/components/ui-components/popover/ClickPopover";
-import HoverPopover from "@/app/components/ui-components/popover/HoverPopover";
+import { Grid } from '@mui/material';
+import Breadcrumb from '@/app/dashboard/layout/shared/breadcrumb/Breadcrumb';
+import PageContainer from '@/app/components/container/PageContainer';
+import ParentCard from '@/app/components/shared/ParentCard';
+import ChildCard from '@/app/components/shared/ChildCard';
+import ClickPopover from '@/app/components/ui-components/popover/ClickPopover';
+import HoverPopover from '@/app/components/ui-components/popover/HoverPopover';
 
-import ClickPopoverCode from "@/app/components/ui-components/popover/code/ClickPopoverCode";
-import HoverPopoverCode from "@/app/components/ui-components/popover/code/HoverPopoverCode";
+import ClickPopoverCode from '@/app/components/ui-components/popover/code/ClickPopoverCode';
+import HoverPopoverCode from '@/app/components/ui-components/popover/code/HoverPopoverCode';
 
 const BCrumb = [
   {
-    to: "/",
-    title: "Home",
+    to: '/',
+    title: 'Home',
   },
   {
-    title: "Popover",
+    title: 'Popover',
   },
 ];
 
 const MuiPopover = () => {
   return (
-    (<PageContainer title="Popover" description="this is Popover">
+    <PageContainer title="Popover" description="this is Popover">
       {/* breadcrumb */}
       <Breadcrumb title="Popover" items={BCrumb} />
       {/* end breadcrumb */}
@@ -32,8 +32,9 @@ const MuiPopover = () => {
             alignItems="stretch"
             size={{
               xs: 12,
-              sm: 6
-            }}>
+              sm: 6,
+            }}
+          >
             <ChildCard title="Click" codeModel={<ClickPopoverCode />}>
               <ClickPopover />
             </ChildCard>
@@ -43,15 +44,16 @@ const MuiPopover = () => {
             alignItems="stretch"
             size={{
               xs: 12,
-              sm: 6
-            }}>
+              sm: 6,
+            }}
+          >
             <ChildCard title="Hover" codeModel={<HoverPopoverCode />}>
               <HoverPopover />
             </ChildCard>
           </Grid>
         </Grid>
       </ParentCard>
-    </PageContainer>)
+    </PageContainer>
   );
 };
 export default MuiPopover;

@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const DefaultLabelSwitchCode = () => {
   return (
     <>
@@ -18,7 +18,7 @@ import { Box, Switch, FormGroup, FormControlLabel } from '@mui/material';
 `}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default DefaultLabelSwitchCode
+export default DefaultLabelSwitchCode;

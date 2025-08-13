@@ -5,10 +5,10 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
 import FileUploadCarousel from './FileUploadCarousel';
-import { 
-  marketResearchSchema, 
+import {
+  marketResearchSchema,
   type MarketResearchFormData,
-  type MarketResearchResponse 
+  type MarketResearchResponse,
 } from '@/lib/schemas/market-research';
 
 // Material UI Components
@@ -43,17 +43,12 @@ interface MarketResearchFormProps {
   onSuccess?: (data: { reservationNumber: string; applicationId: string }) => void;
 }
 
-const steps = [
-  '제품 정보',
-  '요청사항',
-  '부가 서비스',
-  '확인 및 제출'
-];
+const steps = ['제품 정보', '요청사항', '부가 서비스', '확인 및 제출'];
 
 export function MarketResearchForm({ onSuccess }: MarketResearchFormProps) {
   const [activeStep, setActiveStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   const {
     register,
     control,
@@ -83,7 +78,7 @@ export function MarketResearchForm({ onSuccess }: MarketResearchFormProps) {
 
   const handleNext = async () => {
     let fieldsToValidate: any[] = [];
-    
+
     switch (activeStep) {
       case 0:
         fieldsToValidate = ['productName', 'researchQuantity', 'photos'];
@@ -112,7 +107,7 @@ export function MarketResearchForm({ onSuccess }: MarketResearchFormProps) {
 
     try {
       const formData = new FormData();
-      
+
       // 텍스트 데이터
       formData.append('productName', data.productName);
       formData.append('researchQuantity', data.researchQuantity.toString());
@@ -126,13 +121,13 @@ export function MarketResearchForm({ onSuccess }: MarketResearchFormProps) {
       data.photos.forEach((file) => {
         formData.append('photos', file);
       });
-      
+
       if (data.logoFile) {
         data.logoFile.forEach((file) => {
           formData.append('logoFiles', file);
         });
       }
-      
+
       if (data.boxDesignFile) {
         data.boxDesignFile.forEach((file) => {
           formData.append('boxDesignFiles', file);
@@ -151,7 +146,7 @@ export function MarketResearchForm({ onSuccess }: MarketResearchFormProps) {
       }
 
       toast.success('시장조사 신청이 완료되었습니다!');
-      
+
       if (onSuccess && result.data) {
         onSuccess(result.data);
       }
@@ -175,10 +170,12 @@ export function MarketResearchForm({ onSuccess }: MarketResearchFormProps) {
                   label="제품명"
                   {...register('productName')}
                   error={!!errors.productName}
-                  helperText={errors.productName?.message || '시장조사를 원하는 제품명을 입력해주세요'}
+                  helperText={
+                    errors.productName?.message || '시장조사를 원하는 제품명을 입력해주세요'
+                  }
                 />
               </Grid>
-              
+
               <Grid size={{ xs: 12, sm: 6 }}>
                 <Controller
                   name="researchQuantity"
@@ -191,13 +188,16 @@ export function MarketResearchForm({ onSuccess }: MarketResearchFormProps) {
                       label="조사 수량"
                       onChange={(e) => field.onChange(parseInt(e.target.value) || 1)}
                       error={!!errors.researchQuantity}
-                      helperText={errors.researchQuantity?.message || '중국에서 구매할 예상 수량을 입력해주세요'}
+                      helperText={
+                        errors.researchQuantity?.message ||
+                        '중국에서 구매할 예상 수량을 입력해주세요'
+                      }
                       inputProps={{ min: 1 }}
                     />
                   )}
                 />
               </Grid>
-              
+
               <Grid size={12}>
                 <Typography variant="subtitle1" gutterBottom>
                   제품 사진 업로드 *
@@ -230,7 +230,7 @@ export function MarketResearchForm({ onSuccess }: MarketResearchFormProps) {
             </Grid>
           </Box>
         );
-        
+
       case 1:
         return (
           <Box>
@@ -243,24 +243,29 @@ export function MarketResearchForm({ onSuccess }: MarketResearchFormProps) {
                   label="요청사항"
                   {...register('requirements')}
                   error={!!errors.requirements}
-                  helperText={errors.requirements?.message || '조사시 참고할 상세 요청사항을 입력해주세요 (최소 10자)'}
+                  helperText={
+                    errors.requirements?.message ||
+                    '조사시 참고할 상세 요청사항을 입력해주세요 (최소 10자)'
+                  }
                 />
               </Grid>
-              
+
               <Grid size={12}>
                 <TextField
                   fullWidth
                   label="상세페이지 URL (선택)"
                   {...register('detailPage')}
                   error={!!errors.detailPage}
-                  helperText={errors.detailPage?.message || '참고할 상품 상세페이지가 있다면 입력해주세요'}
+                  helperText={
+                    errors.detailPage?.message || '참고할 상품 상세페이지가 있다면 입력해주세요'
+                  }
                   placeholder="https://example.com/product/123"
                 />
               </Grid>
             </Grid>
           </Box>
         );
-        
+
       case 2:
         return (
           <Box>
@@ -273,12 +278,7 @@ export function MarketResearchForm({ onSuccess }: MarketResearchFormProps) {
                     control={control}
                     render={({ field }) => (
                       <FormControlLabel
-                        control={
-                          <Checkbox
-                            {...field}
-                            checked={field.value}
-                          />
-                        }
+                        control={<Checkbox {...field} checked={field.value} />}
                         label={
                           <Box>
                             <Typography variant="subtitle1">로고 인쇄 필요</Typography>
@@ -290,7 +290,7 @@ export function MarketResearchForm({ onSuccess }: MarketResearchFormProps) {
                       />
                     )}
                   />
-                  
+
                   {logoRequired && (
                     <Box mt={2}>
                       <Grid container spacing={2}>
@@ -337,12 +337,7 @@ export function MarketResearchForm({ onSuccess }: MarketResearchFormProps) {
                     control={control}
                     render={({ field }) => (
                       <FormControlLabel
-                        control={
-                          <Checkbox
-                            {...field}
-                            checked={field.value}
-                          />
-                        }
+                        control={<Checkbox {...field} checked={field.value} />}
                         label={
                           <Box>
                             <Typography variant="subtitle1">박스 제작 필요</Typography>
@@ -354,7 +349,7 @@ export function MarketResearchForm({ onSuccess }: MarketResearchFormProps) {
                       />
                     )}
                   />
-                  
+
                   {customBoxRequired && (
                     <Box mt={2}>
                       <Typography variant="body2" gutterBottom>
@@ -381,7 +376,7 @@ export function MarketResearchForm({ onSuccess }: MarketResearchFormProps) {
             </Stack>
           </Box>
         );
-        
+
       case 3:
         const formData = watch();
         return (
@@ -389,47 +384,61 @@ export function MarketResearchForm({ onSuccess }: MarketResearchFormProps) {
             <Alert severity="info" sx={{ mb: 3 }}>
               신청 내용을 최종 확인해주세요. 제출 후에는 수정이 어려울 수 있습니다.
             </Alert>
-            
+
             <Stack spacing={3}>
               <Card variant="outlined">
                 <CardContent>
-                  <Typography variant="h6" gutterBottom>제품 정보</Typography>
+                  <Typography variant="h6" gutterBottom>
+                    제품 정보
+                  </Typography>
                   <Grid container spacing={2}>
                     <Grid size={{ xs: 12, sm: 6 }}>
-                      <Typography variant="body2" color="text.secondary">제품명</Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        제품명
+                      </Typography>
                       <Typography variant="body1">{formData.productName}</Typography>
                     </Grid>
                     <Grid size={{ xs: 12, sm: 6 }}>
-                      <Typography variant="body2" color="text.secondary">조사 수량</Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        조사 수량
+                      </Typography>
                       <Typography variant="body1">{formData.researchQuantity}개</Typography>
                     </Grid>
                     <Grid size={12}>
-                      <Typography variant="body2" color="text.secondary">업로드된 사진</Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        업로드된 사진
+                      </Typography>
                       <Typography variant="body1">{formData.photos.length}개</Typography>
                     </Grid>
                   </Grid>
                 </CardContent>
               </Card>
-              
+
               <Card variant="outlined">
                 <CardContent>
-                  <Typography variant="h6" gutterBottom>요청사항</Typography>
+                  <Typography variant="h6" gutterBottom>
+                    요청사항
+                  </Typography>
                   <Typography variant="body1" style={{ whiteSpace: 'pre-wrap' }}>
                     {formData.requirements}
                   </Typography>
                   {formData.detailPage && (
                     <Box mt={2}>
-                      <Typography variant="body2" color="text.secondary">참고 URL</Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        참고 URL
+                      </Typography>
                       <Typography variant="body1">{formData.detailPage}</Typography>
                     </Box>
                   )}
                 </CardContent>
               </Card>
-              
+
               {(formData.logoRequired || formData.customBoxRequired) && (
                 <Card variant="outlined">
                   <CardContent>
-                    <Typography variant="h6" gutterBottom>부가 서비스</Typography>
+                    <Typography variant="h6" gutterBottom>
+                      부가 서비스
+                    </Typography>
                     <Stack spacing={2}>
                       {formData.logoRequired && (
                         <Box>
@@ -454,7 +463,7 @@ export function MarketResearchForm({ onSuccess }: MarketResearchFormProps) {
             </Stack>
           </Box>
         );
-        
+
       default:
         return null;
     }
@@ -476,10 +485,18 @@ export function MarketResearchForm({ onSuccess }: MarketResearchFormProps) {
                     variant="contained"
                     onClick={index === steps.length - 1 ? handleSubmit(onSubmit) : handleNext}
                     disabled={isSubmitting}
-                    startIcon={isSubmitting ? <CircularProgress size={20} /> : (index === steps.length - 1 ? <SendIcon /> : <NextIcon />)}
+                    startIcon={
+                      isSubmitting ? (
+                        <CircularProgress size={20} />
+                      ) : index === steps.length - 1 ? (
+                        <SendIcon />
+                      ) : (
+                        <NextIcon />
+                      )
+                    }
                     sx={{ mt: 1, mr: 1 }}
                   >
-                    {isSubmitting ? '제출 중...' : (index === steps.length - 1 ? '신청하기' : '다음')}
+                    {isSubmitting ? '제출 중...' : index === steps.length - 1 ? '신청하기' : '다음'}
                   </Button>
                   <Button
                     disabled={index === 0 || isSubmitting}

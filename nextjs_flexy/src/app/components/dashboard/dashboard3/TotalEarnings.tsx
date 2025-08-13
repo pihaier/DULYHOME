@@ -1,13 +1,9 @@
-import React from "react";
-import {
-  Typography,
-  Avatar,
-} from "@mui/material";
-import { IconCurrencyDollar } from "@tabler/icons-react";
-import DashboardCard from "../../shared/DashboardCard";
+import React from 'react';
+import { Typography, Avatar } from '@mui/material';
+import { IconCurrencyDollar } from '@tabler/icons-react';
+import DashboardCard from '../../shared/DashboardCard';
 
 const TotalEarnings = () => {
-
   return (
     <DashboardCard
       title="Total Earnings"
@@ -16,7 +12,8 @@ const TotalEarnings = () => {
           sx={{
             width: 48,
             height: 48,
-            bgcolor: "secondary.main", color: "white"
+            bgcolor: 'secondary.main',
+            color: 'white',
           }}
         >
           <IconCurrencyDollar width="24" height="24" />

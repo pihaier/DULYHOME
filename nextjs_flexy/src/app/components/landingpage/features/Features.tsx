@@ -1,9 +1,9 @@
-import React from "react";
-import FeaturesTitle from "./FeaturesTitle";
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
-import { Grid } from '@mui/material'
-import Typography from "@mui/material/Typography";
+import React from 'react';
+import FeaturesTitle from './FeaturesTitle';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import { Grid } from '@mui/material';
+import Typography from '@mui/material/Typography';
 import {
   IconAdjustments,
   IconArchive,
@@ -24,9 +24,9 @@ import {
   IconSquareKey,
   IconTable,
   IconPresentation,
-  IconPackage
-} from "@tabler/icons-react";
-import AnimationFadeIn from "../animation/Animation";
+  IconPackage,
+} from '@tabler/icons-react';
+import AnimationFadeIn from '../animation/Animation';
 
 interface FeaturesType {
   icon: React.ReactElement;
@@ -37,18 +37,18 @@ interface FeaturesType {
 const featuresData: FeaturesType[] = [
   {
     icon: <IconWand width={40} height={40} strokeWidth={1.5} />,
-    title: "6 Theme Colors",
-    subtext: "We have included 6 pre-defined Theme Colors with Elegant Admin.",
+    title: '6 Theme Colors',
+    subtext: 'We have included 6 pre-defined Theme Colors with Elegant Admin.',
   },
   {
     icon: <IconArchive width={40} height={40} strokeWidth={1.5} />,
-    title: "75+ Page Templates",
-    subtext: "Yes, we have 4 demos & 75+ Pages per demo to make it easier.",
+    title: '75+ Page Templates',
+    subtext: 'Yes, we have 4 demos & 75+ Pages per demo to make it easier.',
   },
   {
     icon: <IconAdjustments width={40} height={40} strokeWidth={1.5} />,
-    title: "45+ UI Components",
-    subtext: "Almost 45+ UI Components being given with Flexy Admin Pack.",
+    title: '45+ UI Components',
+    subtext: 'Almost 45+ UI Components being given with Flexy Admin Pack.',
   },
   {
     icon: <IconPresentation width={40} height={40} strokeWidth={1.5} />,
@@ -58,35 +58,33 @@ const featuresData: FeaturesType[] = [
   {
     icon: <IconPackage width={40} height={40} strokeWidth={1.5} />,
     title: 'Blogs with MDX',
-    subtext: 'It provides a comprehensive blogging solution using MDX, which uniquely blends Markdown and JSX.',
+    subtext:
+      'It provides a comprehensive blogging solution using MDX, which uniquely blends Markdown and JSX.',
   },
   {
     icon: <IconTag width={40} height={40} strokeWidth={1.5} />,
-    title: "Material Ui",
-    subtext: "Its been made with Material Ui and full responsive layout.",
+    title: 'Material Ui',
+    subtext: 'Its been made with Material Ui and full responsive layout.',
   },
   {
     icon: <IconLockAccess width={40} height={40} strokeWidth={1.5} />,
-    title: "Next-Auth",
-    subtext:
-      "We have added Google, Github & Credential Provider with NextAuth ",
+    title: 'Next-Auth',
+    subtext: 'We have added Google, Github & Credential Provider with NextAuth ',
   },
   {
     icon: <IconSquareKey width={40} height={40} strokeWidth={1.5} />,
-    title: "Firebase",
-    subtext: "This template comes with Firebase implementation.",
+    title: 'Firebase',
+    subtext: 'This template comes with Firebase implementation.',
   },
   {
     icon: <IconTable width={40} height={40} strokeWidth={1.5} />,
-    title: "React Table",
-    subtext:
-      "Supercharge your tables or build a datagrid from scratch for TS/JS React.",
+    title: 'React Table',
+    subtext: 'Supercharge your tables or build a datagrid from scratch for TS/JS React.',
   },
   {
     icon: <IconDiamond width={40} height={40} strokeWidth={1.5} />,
-    title: "3400+ Font Icons",
-    subtext:
-      "Lots of Icon Fonts are included here in the package of Elegant Admin.",
+    title: '3400+ Font Icons',
+    subtext: 'Lots of Icon Fonts are included here in the package of Elegant Admin.',
   },
   {
     icon: <IconDatabase width={40} height={40} strokeWidth={1.5} />,
@@ -95,55 +93,54 @@ const featuresData: FeaturesType[] = [
   },
   {
     icon: <IconLanguageKatakana width={40} height={40} strokeWidth={1.5} />,
-    title: "i18 React",
-    subtext:
-      "react-i18 is a powerful internationalization framework for React.",
+    title: 'i18 React',
+    subtext: 'react-i18 is a powerful internationalization framework for React.',
   },
   {
     icon: <IconBuildingCarousel width={40} height={40} strokeWidth={1.5} />,
-    title: "Slick Carousel",
-    subtext: "The Last React Carousel You will Ever Need!",
+    title: 'Slick Carousel',
+    subtext: 'The Last React Carousel You will Ever Need!',
   },
   {
     icon: <IconArrowsShuffle width={40} height={40} strokeWidth={1.5} />,
-    title: "Easy to Customize",
-    subtext: "Customization will be easy as we understand your pain.",
+    title: 'Easy to Customize',
+    subtext: 'Customization will be easy as we understand your pain.',
   },
   {
     icon: <IconChartPie width={40} height={40} strokeWidth={1.5} />,
-    title: "Lots of Chart Options",
-    subtext: "You name it and we have it, Yes lots of variations for Charts.",
+    title: 'Lots of Chart Options',
+    subtext: 'You name it and we have it, Yes lots of variations for Charts.',
   },
   {
     icon: <IconLayersIntersect width={40} height={40} strokeWidth={1.5} />,
-    title: "Lots of Table Examples",
-    subtext: "Data Tables are initial requirement and we added them.",
+    title: 'Lots of Table Examples',
+    subtext: 'Data Tables are initial requirement and we added them.',
   },
   {
     icon: <IconRefresh width={40} height={40} strokeWidth={1.5} />,
-    title: "Regular Updates",
-    subtext: "We are constantly updating our pack with new features.",
+    title: 'Regular Updates',
+    subtext: 'We are constantly updating our pack with new features.',
   },
   {
     icon: <IconBook width={40} height={40} strokeWidth={1.5} />,
-    title: "Detailed Documentation",
-    subtext: "We have made detailed documentation, so it will easy to use.",
+    title: 'Detailed Documentation',
+    subtext: 'We have made detailed documentation, so it will easy to use.',
   },
   {
     icon: <IconCalendar width={40} height={40} strokeWidth={1.5} />,
-    title: "Calendar Design",
-    subtext: "Calendar is available with our package & in nice design.",
+    title: 'Calendar Design',
+    subtext: 'Calendar is available with our package & in nice design.',
   },
   {
     icon: <IconMessages width={40} height={40} strokeWidth={1.5} />,
-    title: "Dedicated Support",
-    subtext: "We believe in supreme support is key and we offer that.",
+    title: 'Dedicated Support',
+    subtext: 'We believe in supreme support is key and we offer that.',
   },
 ];
 
 const Features = () => {
   return (
-    (<Box py={10} sx={{ backgroundColor: (theme) => theme.palette.background.paper }}>
+    <Box py={10} sx={{ backgroundColor: (theme) => theme.palette.background.paper }}>
       <Container maxWidth="lg">
         <FeaturesTitle />
         <AnimationFadeIn>
@@ -156,18 +153,14 @@ const Features = () => {
                   size={{
                     xs: 12,
                     sm: 4,
-                    lg: 3
-                  }}>
+                    lg: 3,
+                  }}
+                >
                   <Box color="primary.main">{feature.icon}</Box>
                   <Typography variant="h5" mt={3}>
                     {feature.title}
                   </Typography>
-                  <Typography
-                    variant="subtitle1"
-                    color="textSecondary"
-                    mt={1}
-                    mb={3}
-                  >
+                  <Typography variant="subtitle1" color="textSecondary" mt={1} mb={3}>
                     {feature.subtext}
                   </Typography>
                 </Grid>
@@ -176,7 +169,7 @@ const Features = () => {
           </Box>
         </AnimationFadeIn>
       </Container>
-    </Box>)
+    </Box>
   );
 };
 

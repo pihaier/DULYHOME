@@ -1,13 +1,13 @@
-import dynamic from "next/dynamic";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
-import { useTheme } from "@mui/material/styles";
+import dynamic from 'next/dynamic';
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
+import { useTheme } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { IconArrowDownRight } from "@tabler/icons-react";
-import DashboardCard from "../../shared/DashboardCard";
-import { ApexOptions } from "apexcharts";
+import { IconArrowDownRight } from '@tabler/icons-react';
+import DashboardCard from '../../shared/DashboardCard';
+import { ApexOptions } from 'apexcharts';
 
 const Customers = () => {
   // chart color
@@ -19,9 +19,9 @@ const Customers = () => {
   // chart
   const optionscolumnchart: ApexOptions = {
     chart: {
-      type: "area",
+      type: 'area',
       fontFamily: "'Plus Jakarta Sans', sans-serif;",
-      foreColor: "#adb0bb",
+      foreColor: '#adb0bb',
       toolbar: {
         show: false,
       },
@@ -29,22 +29,22 @@ const Customers = () => {
       sparkline: {
         enabled: true,
       },
-      group: "sparklines",
+      group: 'sparklines',
     },
     stroke: {
-      curve: "smooth",
+      curve: 'smooth',
       width: 2,
     },
     fill: {
       colors: [secondarylight],
-      type: "solid",
+      type: 'solid',
       opacity: 0.05,
     },
     markers: {
       size: 0,
     },
     tooltip: {
-      theme: theme.palette.mode === "dark" ? "dark" : "light",
+      theme: theme.palette.mode === 'dark' ? 'dark' : 'light',
       x: {
         show: false,
       },
@@ -52,7 +52,7 @@ const Customers = () => {
   };
   const seriescolumnchart = [
     {
-      name: "",
+      name: '',
       color: secondary,
       data: [30, 25, 35, 20, 30, 40],
     },
@@ -69,7 +69,7 @@ const Customers = () => {
                 series={seriescolumnchart}
                 type="area"
                 height={80}
-                width={"100%"}
+                width={'100%'}
               />
             </Box>
           </>

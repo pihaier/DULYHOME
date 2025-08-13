@@ -1,6 +1,6 @@
-'use client'
+'use client';
 
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import {
   Box,
   Card,
@@ -18,102 +18,115 @@ import {
   ListItemText,
   Paper,
   Avatar,
-  Divider
-} from '@mui/material'
+  Divider,
+} from '@mui/material';
 import {
   SmartToy as BotIcon,
   Person as PersonIcon,
   Send as SendIcon,
   ContentCopy as CopyIcon,
-  CheckCircle as CheckIcon
-} from '@mui/icons-material'
-import { createClient } from '@/lib/supabase/client'
+  CheckCircle as CheckIcon,
+} from '@mui/icons-material';
+import { createClient } from '@/lib/supabase/client';
 
 interface Message {
-  type: 'user' | 'bot' | 'codes'
-  text?: string
-  questions?: string[]
+  type: 'user' | 'bot' | 'codes';
+  text?: string;
+  questions?: string[];
   codes?: Array<{
-    hs_code: string
-    name_ko: string
-    name_en?: string
-    tax_rate?: number
-    confidence?: number
-  }>
+    hs_code: string;
+    name_ko: string;
+    name_en?: string;
+    tax_rate?: number;
+    confidence?: number;
+  }>;
 }
 
 export default function HSCodeChatSearch() {
-  const [query, setQuery] = useState('')
-  const [messages, setMessages] = useState<Message[]>([])
-  const [loading, setLoading] = useState(false)
-  const [copiedCode, setCopiedCode] = useState<string | null>(null)
-  const [context, setContext] = useState('')
+  const [query, setQuery] = useState('');
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [copiedCode, setCopiedCode] = useState<string | null>(null);
+  const [context, setContext] = useState('');
 
   const handleSearch = async () => {
-    if (!query.trim()) return
+    if (!query.trim()) return;
 
     // 사용자 메시지 추가
-    const userMessage: Message = { type: 'user', text: query }
-    setMessages(prev => [...prev, userMessage])
-    setQuery('')
-    setLoading(true)
+    const userMessage: Message = { type: 'user', text: query };
+    setMessages((prev) => [...prev, userMessage]);
+    setQuery('');
+    setLoading(true);
 
     try {
-      const supabase = createClient()
+      const supabase = createClient();
       const { data, error } = await supabase.functions.invoke('hs-code-smart-search', {
-        body: { query, context }
-      })
+        body: { query, context },
+      });
 
       if (error || (data && data.error)) {
-        console.error('Search error:', error)
-        setMessages(prev => [...prev, {
-          type: 'bot',
-          text: '검색 중 오류가 발생했습니다. 다시 시도해주세요.'
-        }])
-        return
+        console.error('Search error:', error);
+        setMessages((prev) => [
+          ...prev,
+          {
+            type: 'bot',
+            text: '검색 중 오류가 발생했습니다. 다시 시도해주세요.',
+          },
+        ]);
+        return;
       }
 
       if (data.status === 'need_info') {
         // 추가 정보 필요
-        setMessages(prev => [...prev, {
-          type: 'bot',
-          text: data.message,
-          questions: data.questions
-        }])
-        
+        setMessages((prev) => [
+          ...prev,
+          {
+            type: 'bot',
+            text: data.message,
+            questions: data.questions,
+          },
+        ]);
+
         if (data.preliminary_codes?.length > 0) {
-          setMessages(prev => [...prev, {
-            type: 'codes',
-            codes: data.preliminary_codes
-          }])
+          setMessages((prev) => [
+            ...prev,
+            {
+              type: 'codes',
+              codes: data.preliminary_codes,
+            },
+          ]);
         }
       } else {
         // 코드 찾음
-        setMessages(prev => [...prev, {
-          type: 'bot',
-          text: data.message
-        }, {
-          type: 'codes',
-          codes: data.codes
-        }])
+        setMessages((prev) => [
+          ...prev,
+          {
+            type: 'bot',
+            text: data.message,
+          },
+          {
+            type: 'codes',
+            codes: data.codes,
+          },
+        ]);
       }
     } catch (error) {
-      console.error('Error:', error)
+      console.error('Error:', error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const handleQuestionClick = (question: string) => {
-    setContext(prev => prev + ' ' + question)
-    setQuery(question)
-  }
+    setContext((prev) => prev + ' ' + question);
+    setQuery(question);
+  };
 
   const copyToClipboard = (code: string) => {
-    navigator.clipboard.writeText(code)
-    setCopiedCode(code)
-    setTimeout(() => setCopiedCode(null), 2000)
-  }
+    navigator.clipboard.writeText(code);
+    setCopiedCode(code);
+    setTimeout(() => setCopiedCode(null), 2000);
+  };
 
   return (
     <Card>
@@ -128,21 +141,22 @@ export default function HSCodeChatSearch() {
         <Divider sx={{ my: 2 }} />
 
         {/* 대화 내역 */}
-        <Paper 
-          variant="outlined" 
-          sx={{ 
-            height: 400, 
-            overflowY: 'auto', 
-            p: 2, 
+        <Paper
+          variant="outlined"
+          sx={{
+            height: 400,
+            overflowY: 'auto',
+            p: 2,
             mb: 2,
-            bgcolor: 'grey.50'
+            bgcolor: 'grey.50',
           }}
         >
           {messages.length === 0 ? (
             <Box sx={{ textAlign: 'center', color: 'text.secondary', mt: 10 }}>
               <BotIcon sx={{ fontSize: 48, mb: 2 }} />
               <Typography>
-                무엇을 찾으시나요?<br />
+                무엇을 찾으시나요?
+                <br />
                 예: "커피머신", "슬리퍼", "노트북"
               </Typography>
             </Box>
@@ -157,7 +171,7 @@ export default function HSCodeChatSearch() {
                           p: 1.5,
                           bgcolor: 'primary.main',
                           color: 'white',
-                          maxWidth: '70%'
+                          maxWidth: '70%',
                         }}
                       >
                         <Stack direction="row" spacing={1} alignItems="center">
@@ -176,7 +190,7 @@ export default function HSCodeChatSearch() {
                         sx={{
                           p: 1.5,
                           bgcolor: 'white',
-                          maxWidth: '70%'
+                          maxWidth: '70%',
                         }}
                       >
                         <Stack direction="row" spacing={1} alignItems="flex-start">
@@ -213,7 +227,7 @@ export default function HSCodeChatSearch() {
                             mb: 1,
                             borderRadius: 1,
                             border: 1,
-                            borderColor: 'divider'
+                            borderColor: 'divider',
                           }}
                           secondaryAction={
                             <Button
@@ -228,14 +242,8 @@ export default function HSCodeChatSearch() {
                           <ListItemText
                             primary={
                               <Stack direction="row" spacing={1} alignItems="center">
-                                <Chip
-                                  label={code.hs_code}
-                                  size="small"
-                                  color="primary"
-                                />
-                                <Typography variant="body2">
-                                  {code.name_ko}
-                                </Typography>
+                                <Chip label={code.hs_code} size="small" color="primary" />
+                                <Typography variant="body2">{code.name_ko}</Typography>
                                 {code.confidence && code.confidence > 0.8 && (
                                   <Chip
                                     label="추천"
@@ -298,5 +306,5 @@ export default function HSCodeChatSearch() {
         </Stack>
       </CardContent>
     </Card>
-  )
+  );
 }

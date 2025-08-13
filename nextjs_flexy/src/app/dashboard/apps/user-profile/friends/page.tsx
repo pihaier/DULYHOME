@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import { Grid } from '@mui/material';
 import PageContainer from '@/app/components/container/PageContainer';
@@ -8,26 +8,26 @@ import { UserDataProvider } from '@/app/context/UserDataContext';
 
 const Friends = () => {
   return (
-    (
-      <UserDataProvider>
-        <PageContainer title="Friends" description="this is Friends">
-          <Grid container spacing={3}>
-            <Grid
-              size={{
-                sm: 12
-              }}>
-              <ProfileBanner />
-            </Grid>
-            <Grid
-              size={{
-                sm: 12
-              }}>
-              <FriendsCard />
-            </Grid>
+    <UserDataProvider>
+      <PageContainer title="Friends" description="this is Friends">
+        <Grid container spacing={3}>
+          <Grid
+            size={{
+              sm: 12,
+            }}
+          >
+            <ProfileBanner />
           </Grid>
-        </PageContainer>
-      </UserDataProvider>
-    )
+          <Grid
+            size={{
+              sm: 12,
+            }}
+          >
+            <FriendsCard />
+          </Grid>
+        </Grid>
+      </PageContainer>
+    </UserDataProvider>
   );
 };
 

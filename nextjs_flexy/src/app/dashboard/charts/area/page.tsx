@@ -1,13 +1,13 @@
-"use client"
+'use client';
 
-import dynamic from "next/dynamic";
-import { ApexOptions } from "apexcharts";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+import dynamic from 'next/dynamic';
+import { ApexOptions } from 'apexcharts';
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 import { useTheme } from '@mui/material/styles';
 import PageContainer from '@/app/components/container/PageContainer';
 import Breadcrumb from '@/app/dashboard/layout/shared/breadcrumb/Breadcrumb';
 import ParentCard from '@/app/components/shared/ParentCard';
-import React from "react";
+import React from 'react';
 
 const BCrumb = [
   {
@@ -23,7 +23,6 @@ const AreaChart: React.FC = () => {
   const theme = useTheme();
   const primary = theme.palette.primary.main;
   const secondary = theme.palette.secondary.main;
-
 
   const optionsareachart: ApexOptions = {
     chart: {
@@ -75,7 +74,6 @@ const AreaChart: React.FC = () => {
       fillSeriesColor: false,
     },
   };
-
 
   const seriesareachart: ApexAxisChartSeries = [
     {

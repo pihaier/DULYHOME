@@ -28,7 +28,10 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from '@mui/material';
-import { Visibility as VisibilityIcon, ArrowForward as ArrowForwardIcon } from '@mui/icons-material';
+import {
+  Visibility as VisibilityIcon,
+  ArrowForward as ArrowForwardIcon,
+} from '@mui/icons-material';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import PageContainer from '@/app/components/container/PageContainer';
@@ -82,7 +85,7 @@ export default function OrdersListPage() {
   // URL 파라미터에서 탭 및 필터 설정
   useEffect(() => {
     const tab = searchParams.get('tab');
-    switch(tab) {
+    switch (tab) {
       case 'market-research':
         setTabValue(0);
         break;
@@ -95,7 +98,7 @@ export default function OrdersListPage() {
       default:
         setTabValue(0);
     }
-    
+
     // 상태 필터 설정
     const status = searchParams.get('status');
     if (status) {
@@ -110,7 +113,7 @@ export default function OrdersListPage() {
   const fetchAllOrders = async () => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const supabase = createClient();
       const allOrders: Order[] = [];
@@ -120,14 +123,16 @@ export default function OrdersListPage() {
         .from('market_research_requests')
         .select('*')
         .order('created_at', { ascending: false });
-      
+
       if (marketResearch) {
-        allOrders.push(...marketResearch.map(order => ({
-          ...order,
-          quantity: order.research_quantity,
-          service_type: 'market_research' as const,
-          payment_status: order.payment_status
-        })));
+        allOrders.push(
+          ...marketResearch.map((order) => ({
+            ...order,
+            quantity: order.research_quantity,
+            service_type: 'market_research' as const,
+            payment_status: order.payment_status,
+          }))
+        );
       }
 
       // Fetch inspection orders
@@ -135,14 +140,16 @@ export default function OrdersListPage() {
         .from('inspection_applications')
         .select('*')
         .order('created_at', { ascending: false });
-      
+
       if (inspection) {
-        allOrders.push(...inspection.map(order => ({
-          ...order,
-          quantity: order.production_quantity,
-          service_type: 'inspection' as const,
-          payment_status: order.payment_status
-        })));
+        allOrders.push(
+          ...inspection.map((order) => ({
+            ...order,
+            quantity: order.production_quantity,
+            service_type: 'inspection' as const,
+            payment_status: order.payment_status,
+          }))
+        );
       }
 
       // Fetch factory contact orders
@@ -150,14 +157,16 @@ export default function OrdersListPage() {
         .from('factory_contact_requests')
         .select('*')
         .order('created_at', { ascending: false });
-      
+
       if (factoryContact) {
-        allOrders.push(...factoryContact.map(order => ({
-          ...order,
-          quantity: 0, // Factory contact doesn't have quantity
-          service_type: 'factory_contact' as const,
-          payment_status: order.payment_status
-        })));
+        allOrders.push(
+          ...factoryContact.map((order) => ({
+            ...order,
+            quantity: 0, // Factory contact doesn't have quantity
+            service_type: 'factory_contact' as const,
+            payment_status: order.payment_status,
+          }))
+        );
       }
 
       // Bulk orders 및 sampling orders는 현재 비활성화 상태
@@ -174,8 +183,8 @@ export default function OrdersListPage() {
   const handleViewOrder = (order: Order) => {
     // order 객체의 service_type을 직접 사용
     let serviceType = '';
-    
-    switch(order.service_type) {
+
+    switch (order.service_type) {
       case 'market_research':
         serviceType = 'market-research';
         break;
@@ -189,7 +198,7 @@ export default function OrdersListPage() {
         console.error('Unknown service type:', order.service_type);
         return;
     }
-    
+
     router.push(`/dashboard/orders/${serviceType}/${order.reservation_number}`);
   };
 
@@ -223,34 +232,38 @@ export default function OrdersListPage() {
 
   const getFilteredOrders = (serviceType?: string) => {
     let filtered = orders;
-    
+
     // 서비스 타입 필터
     if (serviceType) {
-      filtered = filtered.filter(order => order.service_type === serviceType);
+      filtered = filtered.filter((order) => order.service_type === serviceType);
     }
-    
+
     // 상태 필터
     if (statusFilter !== 'all') {
-      switch(statusFilter) {
+      switch (statusFilter) {
         case 'pending_payment':
-          filtered = filtered.filter(order => order.payment_status === 'pending');
+          filtered = filtered.filter((order) => order.payment_status === 'pending');
           break;
         case 'in_progress':
-          filtered = filtered.filter(order => 
-            order.status === 'in_progress' || 
-            (order.status === 'submitted' && order.payment_status === 'paid')
+          filtered = filtered.filter(
+            (order) =>
+              order.status === 'in_progress' ||
+              (order.status === 'submitted' && order.payment_status === 'paid')
           );
           break;
         case 'completed':
-          filtered = filtered.filter(order => order.status === 'completed');
+          filtered = filtered.filter((order) => order.status === 'completed');
           break;
       }
     }
-    
+
     return filtered;
   };
-  
-  const handleStatusFilterChange = (event: React.MouseEvent<HTMLElement>, newFilter: string | null) => {
+
+  const handleStatusFilterChange = (
+    event: React.MouseEvent<HTMLElement>,
+    newFilter: string | null
+  ) => {
     if (newFilter !== null) {
       setStatusFilter(newFilter);
     }
@@ -271,33 +284,36 @@ export default function OrdersListPage() {
               <Box flex={1}>
                 {/* 상단: 예약번호와 서비스 타입 */}
                 <Box display="flex" alignItems="center" gap={1} mb={1}>
-                  <Typography variant="h6">
-                    {order.reservation_number}
-                  </Typography>
-                  <Chip 
-                    label={getServiceLabel(order.service_type)} 
-                    size="small" 
+                  <Typography variant="h6">{order.reservation_number}</Typography>
+                  <Chip
+                    label={getServiceLabel(order.service_type)}
+                    size="small"
                     color={
-                      order.service_type === 'market_research' ? 'primary' :
-                      order.service_type === 'factory_contact' ? 'secondary' :
-                      order.service_type === 'inspection' ? 'success' :
-                      'default'
+                      order.service_type === 'market_research'
+                        ? 'primary'
+                        : order.service_type === 'factory_contact'
+                          ? 'secondary'
+                          : order.service_type === 'inspection'
+                            ? 'success'
+                            : 'default'
                     }
                   />
                 </Box>
-                
+
                 {/* 제품 정보 */}
                 <Typography variant="body2" color="textSecondary" mb={1}>
                   {order.product_name}
                 </Typography>
-                
+
                 {/* 상세 정보 */}
                 <Box display="flex" gap={3} mb={1}>
-                  {order.quantity !== undefined && order.quantity !== null && order.quantity !== 0 && (
-                    <Typography variant="body2">
-                      <strong>수량:</strong> {order.quantity.toLocaleString()}개
-                    </Typography>
-                  )}
+                  {order.quantity !== undefined &&
+                    order.quantity !== null &&
+                    order.quantity !== 0 && (
+                      <Typography variant="body2">
+                        <strong>수량:</strong> {order.quantity.toLocaleString()}개
+                      </Typography>
+                    )}
                   <Box display="flex" alignItems="center" gap={0.5}>
                     <Typography variant="body2" component="span">
                       <strong>상태:</strong>
@@ -305,26 +321,23 @@ export default function OrdersListPage() {
                     <Chip label={status.label} size="small" color={status.color} />
                   </Box>
                 </Box>
-                
+
                 {/* 날짜 정보 */}
                 <Typography variant="body2" color="textSecondary">
-                  <strong>신청일:</strong> {new Date(order.created_at).toLocaleDateString('ko-KR', {
+                  <strong>신청일:</strong>{' '}
+                  {new Date(order.created_at).toLocaleDateString('ko-KR', {
                     year: 'numeric',
                     month: '2-digit',
                     day: '2-digit',
                     hour: '2-digit',
-                    minute: '2-digit'
+                    minute: '2-digit',
                   })}
                 </Typography>
               </Box>
-              
+
               {/* 액션 버튼 */}
               <Stack direction="row" spacing={1}>
-                <IconButton
-                  size="small"
-                  onClick={() => handleViewOrder(order)}
-                  title="상세보기"
-                >
+                <IconButton size="small" onClick={() => handleViewOrder(order)} title="상세보기">
                   <VisibilityIcon fontSize="small" />
                 </IconButton>
               </Stack>
@@ -356,8 +369,8 @@ export default function OrdersListPage() {
               filteredOrders.map((order) => {
                 const status = getStatusLabel(order.status);
                 return (
-                  <TableRow 
-                    key={order.id} 
+                  <TableRow
+                    key={order.id}
                     hover
                     sx={{ cursor: 'pointer' }}
                     onClick={() => handleViewOrder(order)}
@@ -367,25 +380,30 @@ export default function OrdersListPage() {
                     </TableCell>
                     {!isTablet && (
                       <TableCell>
-                        <Chip 
-                          label={getServiceLabel(order.service_type)} 
+                        <Chip
+                          label={getServiceLabel(order.service_type)}
                           size="small"
                           color={
-                            order.service_type === 'market_research' ? 'primary' :
-                            order.service_type === 'factory_contact' ? 'secondary' :
-                            order.service_type === 'inspection' ? 'success' :
-                            'warning'
+                            order.service_type === 'market_research'
+                              ? 'primary'
+                              : order.service_type === 'factory_contact'
+                                ? 'secondary'
+                                : order.service_type === 'inspection'
+                                  ? 'success'
+                                  : 'warning'
                           }
                         />
                       </TableCell>
                     )}
-                    <TableCell sx={{ 
-                      fontSize: { xs: '0.875rem', sm: '1rem' },
-                      maxWidth: isTablet ? '150px' : 'auto',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap'
-                    }}>
+                    <TableCell
+                      sx={{
+                        fontSize: { xs: '0.875rem', sm: '1rem' },
+                        maxWidth: isTablet ? '150px' : 'auto',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
                       {order.product_name}
                     </TableCell>
                     {!isTablet && (
@@ -394,26 +412,24 @@ export default function OrdersListPage() {
                       </TableCell>
                     )}
                     <TableCell align="center">
-                      <Chip 
-                        label={status.label} 
-                        color={status.color} 
-                        size="small" 
-                      />
+                      <Chip label={status.label} color={status.color} size="small" />
                     </TableCell>
                     <TableCell sx={{ fontSize: { xs: '0.75rem', sm: '0.875rem' } }}>
                       {new Date(order.created_at).toLocaleDateString('ko-KR', {
                         year: isTablet ? '2-digit' : 'numeric',
                         month: '2-digit',
                         day: '2-digit',
-                        ...(isTablet ? {} : {
-                          hour: '2-digit',
-                          minute: '2-digit',
-                        })
+                        ...(isTablet
+                          ? {}
+                          : {
+                              hour: '2-digit',
+                              minute: '2-digit',
+                            }),
                       })}
                     </TableCell>
                     <TableCell align="center">
-                      <IconButton 
-                        color="primary" 
+                      <IconButton
+                        color="primary"
                         size="small"
                         onClick={(e) => {
                           e.stopPropagation();
@@ -429,9 +445,7 @@ export default function OrdersListPage() {
             ) : (
               <TableRow>
                 <TableCell colSpan={isTablet ? 5 : 7} align="center" sx={{ py: 4 }}>
-                  <Typography color="text.secondary">
-                    신청된 주문이 없습니다
-                  </Typography>
+                  <Typography color="text.secondary">신청된 주문이 없습니다</Typography>
                 </TableCell>
               </TableRow>
             )}
@@ -443,7 +457,9 @@ export default function OrdersListPage() {
 
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <Box
+        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}
+      >
         <CircularProgress />
       </Box>
     );
@@ -461,147 +477,153 @@ export default function OrdersListPage() {
     <PageContainer title="주문 조회" description="모든 서비스의 주문 현황을 확인하세요">
       <Box sx={{ p: { xs: 2, sm: 3 } }}>
         <Stack spacing={{ xs: 2, sm: 3 }}>
-        <Card>
-          <CardContent sx={{ p: { xs: 2, sm: 3, md: 4 } }}>
-            <Typography 
-              variant={isMobile ? "h5" : "h4"} 
-              gutterBottom 
-              fontWeight="bold"
-              sx={{ fontSize: { xs: '1.5rem', sm: '2rem', md: '2.125rem' } }}
-            >
-              주문 조회
-            </Typography>
-            <Typography 
-              variant="body2" 
-              color="text.secondary"
-              sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}
-            >
-              모든 서비스의 주문 현황을 확인하세요
-            </Typography>
-          </CardContent>
-        </Card>
+          <Card>
+            <CardContent sx={{ p: { xs: 2, sm: 3, md: 4 } }}>
+              <Typography
+                variant={isMobile ? 'h5' : 'h4'}
+                gutterBottom
+                fontWeight="bold"
+                sx={{ fontSize: { xs: '1.5rem', sm: '2rem', md: '2.125rem' } }}
+              >
+                주문 조회
+              </Typography>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}
+              >
+                모든 서비스의 주문 현황을 확인하세요
+              </Typography>
+            </CardContent>
+          </Card>
 
-        {/* 상태별 필터 */}
-        <Card>
-          <CardContent sx={{ p: { xs: 2, sm: 3 } }}>
-            <ToggleButtonGroup
-              value={statusFilter}
-              exclusive
-              onChange={handleStatusFilterChange}
-              aria-label="status filter"
-              sx={{
-                flexWrap: 'wrap',
-                '& .MuiToggleButton-root': {
-                  px: { xs: 2, sm: 3 },
-                  py: 1,
-                  fontSize: { xs: '0.875rem', sm: '1rem' },
-                  '&.Mui-selected': {
-                    backgroundColor: 'primary.main',
-                    color: 'white',
-                    '&:hover': {
-                      backgroundColor: 'primary.dark',
+          {/* 상태별 필터 */}
+          <Card>
+            <CardContent sx={{ p: { xs: 2, sm: 3 } }}>
+              <ToggleButtonGroup
+                value={statusFilter}
+                exclusive
+                onChange={handleStatusFilterChange}
+                aria-label="status filter"
+                sx={{
+                  flexWrap: 'wrap',
+                  '& .MuiToggleButton-root': {
+                    px: { xs: 2, sm: 3 },
+                    py: 1,
+                    fontSize: { xs: '0.875rem', sm: '1rem' },
+                    '&.Mui-selected': {
+                      backgroundColor: 'primary.main',
+                      color: 'white',
+                      '&:hover': {
+                        backgroundColor: 'primary.dark',
+                      },
                     },
                   },
-                },
-              }}
-            >
-              <ToggleButton value="all">
-                전체 ({orders.length})
-              </ToggleButton>
-              <ToggleButton value="pending_payment">
-                결제 대기 ({orders.filter(o => o.payment_status === 'pending').length})
-              </ToggleButton>
-              <ToggleButton value="in_progress">
-                진행중 ({orders.filter(o => o.status === 'in_progress' || (o.status === 'submitted' && o.payment_status === 'paid')).length})
-              </ToggleButton>
-              <ToggleButton value="completed">
-                완료 ({orders.filter(o => o.status === 'completed').length})
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </CardContent>
-        </Card>
+                }}
+              >
+                <ToggleButton value="all">전체 ({orders.length})</ToggleButton>
+                <ToggleButton value="pending_payment">
+                  결제 대기 ({orders.filter((o) => o.payment_status === 'pending').length})
+                </ToggleButton>
+                <ToggleButton value="in_progress">
+                  진행중 (
+                  {
+                    orders.filter(
+                      (o) =>
+                        o.status === 'in_progress' ||
+                        (o.status === 'submitted' && o.payment_status === 'paid')
+                    ).length
+                  }
+                  )
+                </ToggleButton>
+                <ToggleButton value="completed">
+                  완료 ({orders.filter((o) => o.status === 'completed').length})
+                </ToggleButton>
+              </ToggleButtonGroup>
+            </CardContent>
+          </Card>
 
-        <Card>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs 
-              value={tabValue} 
-              onChange={handleTabChange} 
-              aria-label="order tabs"
-              variant={isMobile ? "scrollable" : "standard"}
-              scrollButtons={isMobile ? "auto" : false}
-              allowScrollButtonsMobile
-              sx={{
-                '& .MuiTab-root': {
-                  fontSize: { xs: '0.75rem', sm: '0.875rem', md: '1rem' },
-                  minWidth: { xs: 'auto', sm: 120 },
-                  px: { xs: 1, sm: 2 }
-                }
-              }}
-            >
-              <Tab label={`시장조사 (${getFilteredOrders('market_research').length})`} />
-              <Tab label={`공장컨택 (${getFilteredOrders('factory_contact').length})`} />
-              <Tab label={`검품감사 (${getFilteredOrders('inspection').length})`} />
-            </Tabs>
-          </Box>
-          
-          <TabPanel value={tabValue} index={0}>
-            {isMobile ? (
-              <Box sx={{ p: 2 }}>
-                <Grid container spacing={2}>
-                  {getFilteredOrders('market_research').length > 0 ? (
-                    getFilteredOrders('market_research').map(order => renderOrderCard(order))
-                  ) : (
-                    <Grid size={{ xs: 12 }}>
-                      <Typography color="text.secondary" align="center" sx={{ py: 4 }}>
-                        신청된 주문이 없습니다
-                      </Typography>
-                    </Grid>
-                  )}
-                </Grid>
-              </Box>
-            ) : (
-              renderOrderTable(getFilteredOrders('market_research'))
-            )}
-          </TabPanel>
-          <TabPanel value={tabValue} index={1}>
-            {isMobile ? (
-              <Box sx={{ p: 2 }}>
-                <Grid container spacing={2}>
-                  {getFilteredOrders('factory_contact').length > 0 ? (
-                    getFilteredOrders('factory_contact').map(order => renderOrderCard(order))
-                  ) : (
-                    <Grid size={{ xs: 12 }}>
-                      <Typography color="text.secondary" align="center" sx={{ py: 4 }}>
-                        신청된 주문이 없습니다
-                      </Typography>
-                    </Grid>
-                  )}
-                </Grid>
-              </Box>
-            ) : (
-              renderOrderTable(getFilteredOrders('factory_contact'))
-            )}
-          </TabPanel>
-          <TabPanel value={tabValue} index={2}>
-            {isMobile ? (
-              <Box sx={{ p: 2 }}>
-                <Grid container spacing={2}>
-                  {getFilteredOrders('inspection').length > 0 ? (
-                    getFilteredOrders('inspection').map(order => renderOrderCard(order))
-                  ) : (
-                    <Grid size={{ xs: 12 }}>
-                      <Typography color="text.secondary" align="center" sx={{ py: 4 }}>
-                        신청된 주문이 없습니다
-                      </Typography>
-                    </Grid>
-                  )}
-                </Grid>
-              </Box>
-            ) : (
-              renderOrderTable(getFilteredOrders('inspection'))
-            )}
-          </TabPanel>
-        </Card>
+          <Card>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <Tabs
+                value={tabValue}
+                onChange={handleTabChange}
+                aria-label="order tabs"
+                variant={isMobile ? 'scrollable' : 'standard'}
+                scrollButtons={isMobile ? 'auto' : false}
+                allowScrollButtonsMobile
+                sx={{
+                  '& .MuiTab-root': {
+                    fontSize: { xs: '0.75rem', sm: '0.875rem', md: '1rem' },
+                    minWidth: { xs: 'auto', sm: 120 },
+                    px: { xs: 1, sm: 2 },
+                  },
+                }}
+              >
+                <Tab label={`시장조사 (${getFilteredOrders('market_research').length})`} />
+                <Tab label={`공장컨택 (${getFilteredOrders('factory_contact').length})`} />
+                <Tab label={`검품감사 (${getFilteredOrders('inspection').length})`} />
+              </Tabs>
+            </Box>
+
+            <TabPanel value={tabValue} index={0}>
+              {isMobile ? (
+                <Box sx={{ p: 2 }}>
+                  <Grid container spacing={2}>
+                    {getFilteredOrders('market_research').length > 0 ? (
+                      getFilteredOrders('market_research').map((order) => renderOrderCard(order))
+                    ) : (
+                      <Grid size={{ xs: 12 }}>
+                        <Typography color="text.secondary" align="center" sx={{ py: 4 }}>
+                          신청된 주문이 없습니다
+                        </Typography>
+                      </Grid>
+                    )}
+                  </Grid>
+                </Box>
+              ) : (
+                renderOrderTable(getFilteredOrders('market_research'))
+              )}
+            </TabPanel>
+            <TabPanel value={tabValue} index={1}>
+              {isMobile ? (
+                <Box sx={{ p: 2 }}>
+                  <Grid container spacing={2}>
+                    {getFilteredOrders('factory_contact').length > 0 ? (
+                      getFilteredOrders('factory_contact').map((order) => renderOrderCard(order))
+                    ) : (
+                      <Grid size={{ xs: 12 }}>
+                        <Typography color="text.secondary" align="center" sx={{ py: 4 }}>
+                          신청된 주문이 없습니다
+                        </Typography>
+                      </Grid>
+                    )}
+                  </Grid>
+                </Box>
+              ) : (
+                renderOrderTable(getFilteredOrders('factory_contact'))
+              )}
+            </TabPanel>
+            <TabPanel value={tabValue} index={2}>
+              {isMobile ? (
+                <Box sx={{ p: 2 }}>
+                  <Grid container spacing={2}>
+                    {getFilteredOrders('inspection').length > 0 ? (
+                      getFilteredOrders('inspection').map((order) => renderOrderCard(order))
+                    ) : (
+                      <Grid size={{ xs: 12 }}>
+                        <Typography color="text.secondary" align="center" sx={{ py: 4 }}>
+                          신청된 주문이 없습니다
+                        </Typography>
+                      </Grid>
+                    )}
+                  </Grid>
+                </Box>
+              ) : (
+                renderOrderTable(getFilteredOrders('inspection'))
+              )}
+            </TabPanel>
+          </Card>
         </Stack>
       </Box>
     </PageContainer>

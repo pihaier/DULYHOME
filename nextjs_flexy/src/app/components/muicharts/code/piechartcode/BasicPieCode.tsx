@@ -1,5 +1,5 @@
-import React from 'react'
-import CodeDialog from '@/app/components/shared/CodeDialog'
+import React from 'react';
+import CodeDialog from '@/app/components/shared/CodeDialog';
 
 function BasicPieCode() {
   return (
@@ -48,7 +48,7 @@ export default function BasicPieChart() {
 }
   `}
     </CodeDialog>
-  )
+  );
 }
 
-export default BasicPieCode
+export default BasicPieCode;

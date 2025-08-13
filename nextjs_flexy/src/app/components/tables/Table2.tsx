@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React from 'react';
 import {
   TableContainer,
@@ -23,51 +23,59 @@ import { IconDotsVertical, IconEdit, IconPlus, IconTrash } from '@tabler/icons-r
 const rows = [
   {
     status: 'active',
-    avatar: "/images/users/2.jpg",
+    avatar: '/images/users/2.jpg',
     name: 'Olivia Rhye',
     project: 'Xtreme admin',
     percent: 60,
-    users: [{ img: "/images/users/3.jpg" }, { img: "/images/users/2.jpg" }],
+    users: [{ img: '/images/users/3.jpg' }, { img: '/images/users/2.jpg' }],
   },
   {
     status: 'cancel',
-    avatar: "/images/users/3.jpg",
+    avatar: '/images/users/3.jpg',
     name: 'Barbara Steele',
     project: 'Adminpro admin',
     percent: 30,
-    users: [{ img: "/images/users/4.jpg" }, { img: "/images/users/2.jpg" }, { img: "/images/users/3.jpg" }],
+    users: [
+      { img: '/images/users/4.jpg' },
+      { img: '/images/users/2.jpg' },
+      { img: '/images/users/3.jpg' },
+    ],
   },
   {
     status: 'active',
-    avatar: "/images/users/4.jpg",
+    avatar: '/images/users/4.jpg',
     name: 'Leonard Gordon',
     project: 'Monster admin',
     percent: 45,
-    users: [{ img: "/images/users/3.jpg" }, { img: "/images/users/2.jpg" }],
+    users: [{ img: '/images/users/3.jpg' }, { img: '/images/users/2.jpg' }],
   },
   {
     status: 'pending',
-    avatar: "/images/users/5.jpg",
+    avatar: '/images/users/5.jpg',
     name: 'Evelyn Pope',
     project: 'Materialpro admin',
     percent: 37,
-    users: [{ img: "/images/users/6.jpg" }, { img: "/images/users/2.jpg" }, { img: "/images/users/3.jpg" }],
+    users: [
+      { img: '/images/users/6.jpg' },
+      { img: '/images/users/2.jpg' },
+      { img: '/images/users/3.jpg' },
+    ],
   },
   {
     status: 'cancel',
-    avatar: "/images/users/7.jpg",
+    avatar: '/images/users/7.jpg',
     name: 'Tommy Garza',
     project: 'Elegant admin',
     percent: 87,
-    users: [{ img: "/images/users/5.jpg" }, { img: "/images/users/6.jpg" }],
+    users: [{ img: '/images/users/5.jpg' }, { img: '/images/users/6.jpg' }],
   },
   {
     status: 'pending',
-    avatar: "/images/users/8.jpg",
+    avatar: '/images/users/8.jpg',
     name: 'Isabel Vasquez',
     project: 'Modernize admin',
     percent: 32,
-    users: [{ img: "/images/users/2.jpg" }, { img: "/images/users/4.jpg" }],
+    users: [{ img: '/images/users/2.jpg' }, { img: '/images/users/4.jpg' }],
   },
 ];
 
@@ -138,14 +146,14 @@ const Table2 = () => {
                         row.status == 'active'
                           ? (theme) => theme.palette.primary.light
                           : row.status == 'cancel'
-                          ? (theme) => theme.palette.error.light
-                          : (theme) => theme.palette.success.light,
+                            ? (theme) => theme.palette.error.light
+                            : (theme) => theme.palette.success.light,
                       color:
                         row.status == 'active'
                           ? (theme) => theme.palette.primary.main
                           : row.status == 'cancel'
-                          ? (theme) => theme.palette.error.main
-                          : (theme) => theme.palette.success.main,
+                            ? (theme) => theme.palette.error.main
+                            : (theme) => theme.palette.success.main,
                     }}
                   />
                 </TableCell>
@@ -168,7 +176,7 @@ const Table2 = () => {
                     slotProps={{
                       list: {
                         'aria-labelledby': 'basic-button',
-                      }
+                      },
                     }}
                   >
                     <MenuItem onClick={handleClose}>

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { 
-  Box, 
-  Tabs, 
-  Tab, 
-  Card, 
-  CardContent, 
-  Typography, 
-  Grid, 
+import {
+  Box,
+  Tabs,
+  Tab,
+  Card,
+  CardContent,
+  Typography,
+  Grid,
   Chip,
   Divider,
   List,
@@ -19,7 +19,7 @@ import {
   TableRow,
   TableCell,
   Paper,
-  Stack
+  Stack,
 } from '@mui/material';
 import { OrderData } from '../hooks/useOrderData';
 import BusinessIcon from '@mui/icons-material/Business';
@@ -49,11 +49,7 @@ function TabPanel(props: TabPanelProps) {
       aria-labelledby={`market-research-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          {children}
-        </Box>
-      )}
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
     </div>
   );
 }
@@ -90,29 +86,48 @@ const MarketResearchTabs: React.FC<MarketResearchTabsProps> = ({ orderData }) =>
               <Table>
                 <TableBody>
                   <TableRow>
-                    <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50', width: '15%' }}>
+                    <TableCell
+                      component="th"
+                      sx={{ fontWeight: 'bold', bgcolor: 'grey.50', width: '15%' }}
+                    >
                       품명
                     </TableCell>
                     <TableCell sx={{ width: '35%' }}>{serviceData.product_name || '-'}</TableCell>
-                    <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50', width: '15%' }}>
+                    <TableCell
+                      component="th"
+                      sx={{ fontWeight: 'bold', bgcolor: 'grey.50', width: '15%' }}
+                    >
                       조사수량
                     </TableCell>
-                    <TableCell sx={{ width: '35%' }}>{serviceData.research_quantity?.toLocaleString() || '-'}개</TableCell>
+                    <TableCell sx={{ width: '35%' }}>
+                      {serviceData.research_quantity?.toLocaleString() || '-'}개
+                    </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
                       신청일시
                     </TableCell>
-                    <TableCell>{serviceData.created_at ? new Date(serviceData.created_at).toLocaleDateString('ko-KR') : '-'}</TableCell>
+                    <TableCell>
+                      {serviceData.created_at
+                        ? new Date(serviceData.created_at).toLocaleDateString('ko-KR')
+                        : '-'}
+                    </TableCell>
                     <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
                       상세 페이지 URL
                     </TableCell>
                     <TableCell>
                       {serviceData.detail_page ? (
-                        <a href={serviceData.detail_page} target="_blank" rel="noopener noreferrer" style={{ color: '#1976d2', textDecoration: 'underline' }}>
+                        <a
+                          href={serviceData.detail_page}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{ color: '#1976d2', textDecoration: 'underline' }}
+                        >
                           {serviceData.detail_page}
                         </a>
-                      ) : '없음'}
+                      ) : (
+                        '없음'
+                      )}
                     </TableCell>
                   </TableRow>
                   <TableRow>
@@ -122,18 +137,30 @@ const MarketResearchTabs: React.FC<MarketResearchTabsProps> = ({ orderData }) =>
                     <TableCell colSpan={3}>
                       <Stack direction="row" spacing={2} alignItems="center">
                         <Box>
-                          <Typography variant="caption" color="text.secondary">MOQ 확인</Typography>
-                          <Typography variant="body2">{serviceData.moq_check ? '확인 필요' : '미확인'}</Typography>
+                          <Typography variant="caption" color="text.secondary">
+                            MOQ 확인
+                          </Typography>
+                          <Typography variant="body2">
+                            {serviceData.moq_check ? '확인 필요' : '미확인'}
+                          </Typography>
                         </Box>
                         <Divider orientation="vertical" flexItem />
                         <Box>
-                          <Typography variant="caption" color="text.secondary">로고 인쇄</Typography>
-                          <Typography variant="body2">{serviceData.logo_required ? '요청' : '요청 없음'}</Typography>
+                          <Typography variant="caption" color="text.secondary">
+                            로고 인쇄
+                          </Typography>
+                          <Typography variant="body2">
+                            {serviceData.logo_required ? '요청' : '요청 없음'}
+                          </Typography>
                         </Box>
                         <Divider orientation="vertical" flexItem />
                         <Box>
-                          <Typography variant="caption" color="text.secondary">커스텀 박스</Typography>
-                          <Typography variant="body2">{serviceData.custom_box_required ? '요청' : '요청 없음'}</Typography>
+                          <Typography variant="caption" color="text.secondary">
+                            커스텀 박스
+                          </Typography>
+                          <Typography variant="body2">
+                            {serviceData.custom_box_required ? '요청' : '요청 없음'}
+                          </Typography>
                         </Box>
                       </Stack>
                     </TableCell>
@@ -197,12 +224,23 @@ const MarketResearchTabs: React.FC<MarketResearchTabsProps> = ({ orderData }) =>
                 <TableBody>
                   {/* 기업 신용정보 */}
                   <TableRow>
-                    <TableCell colSpan={2} sx={{ bgcolor: 'info.lighter', fontWeight: 'bold', textAlign: 'center', borderTop: '2px solid #ddd' }}>
+                    <TableCell
+                      colSpan={2}
+                      sx={{
+                        bgcolor: 'info.lighter',
+                        fontWeight: 'bold',
+                        textAlign: 'center',
+                        borderTop: '2px solid #ddd',
+                      }}
+                    >
                       기업 신용정보
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50', width: '30%' }}>
+                    <TableCell
+                      component="th"
+                      sx={{ fontWeight: 'bold', bgcolor: 'grey.50', width: '30%' }}
+                    >
                       업종
                     </TableCell>
                     <TableCell>{serviceData.industry_kr || '조사중'}</TableCell>
@@ -267,7 +305,10 @@ const MarketResearchTabs: React.FC<MarketResearchTabsProps> = ({ orderData }) =>
               <Table>
                 <TableBody>
                   <TableRow>
-                    <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50', width: '30%' }}>
+                    <TableCell
+                      component="th"
+                      sx={{ fontWeight: 'bold', bgcolor: 'grey.50', width: '30%' }}
+                    >
                       소요시간
                     </TableCell>
                     <TableCell>{serviceData.work_duration || '조사중'}</TableCell>
@@ -320,7 +361,10 @@ const MarketResearchTabs: React.FC<MarketResearchTabsProps> = ({ orderData }) =>
               <Table>
                 <TableBody>
                   <TableRow>
-                    <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50', width: '30%' }}>
+                    <TableCell
+                      component="th"
+                      sx={{ fontWeight: 'bold', bgcolor: 'grey.50', width: '30%' }}
+                    >
                       목표 단가
                     </TableCell>
                     <TableCell>{serviceData.target_price || '-'}</TableCell>
@@ -329,7 +373,9 @@ const MarketResearchTabs: React.FC<MarketResearchTabsProps> = ({ orderData }) =>
                     <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
                       실제 단가
                     </TableCell>
-                    <TableCell>{serviceData.factory_candidates?.[0]?.price_per_unit || '-'}</TableCell>
+                    <TableCell>
+                      {serviceData.factory_candidates?.[0]?.price_per_unit || '-'}
+                    </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
@@ -341,7 +387,10 @@ const MarketResearchTabs: React.FC<MarketResearchTabsProps> = ({ orderData }) =>
                     <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
                       예상 주문량
                     </TableCell>
-                    <TableCell>{serviceData.expected_order_quantity || `${serviceData.production_quantity?.toLocaleString()}개`}</TableCell>
+                    <TableCell>
+                      {serviceData.expected_order_quantity ||
+                        `${serviceData.production_quantity?.toLocaleString()}개`}
+                    </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -359,7 +408,10 @@ const MarketResearchTabs: React.FC<MarketResearchTabsProps> = ({ orderData }) =>
                   <TableBody>
                     {Object.entries(serviceData.research_findings).map(([key, value]) => (
                       <TableRow key={key}>
-                        <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50', width: '30%' }}>
+                        <TableCell
+                          component="th"
+                          sx={{ fontWeight: 'bold', bgcolor: 'grey.50', width: '30%' }}
+                        >
                           {key}
                         </TableCell>
                         <TableCell>{value as string}</TableCell>
@@ -382,11 +434,14 @@ const MarketResearchTabs: React.FC<MarketResearchTabsProps> = ({ orderData }) =>
                   <TableBody>
                     {Object.entries(serviceData.competitor_analysis).map(([key, value]) => (
                       <TableRow key={key}>
-                        <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50', width: '30%' }}>
+                        <TableCell
+                          component="th"
+                          sx={{ fontWeight: 'bold', bgcolor: 'grey.50', width: '30%' }}
+                        >
                           {key}
                         </TableCell>
                         <TableCell>
-                          {Array.isArray(value) ? value.join(', ') : value as string}
+                          {Array.isArray(value) ? value.join(', ') : (value as string)}
                         </TableCell>
                       </TableRow>
                     ))}
@@ -435,9 +490,7 @@ const MarketResearchTabs: React.FC<MarketResearchTabsProps> = ({ orderData }) =>
                   </Paper>
                 </Stack>
               ) : (
-                <Alert severity="info">
-                  조사가 완료되면 보고서가 제공됩니다.
-                </Alert>
+                <Alert severity="info">조사가 완료되면 보고서가 제공됩니다.</Alert>
               )}
             </CardContent>
           </Card>
@@ -450,45 +503,46 @@ const MarketResearchTabs: React.FC<MarketResearchTabsProps> = ({ orderData }) =>
               </Typography>
               <List>
                 <ListItem>
-                  <ListItemText 
+                  <ListItemText
                     primary="1단계: 신청 접수"
                     secondary="완료"
                     secondaryTypographyProps={{ color: 'success.main' }}
                   />
                 </ListItem>
                 <ListItem>
-                  <ListItemText 
+                  <ListItemText
                     primary="2단계: 결제 확인"
                     secondary={serviceData.payment_status === 'paid' ? '완료' : '대기 중'}
-                    secondaryTypographyProps={{ 
-                      color: serviceData.payment_status === 'paid' ? 'success.main' : 'warning.main' 
+                    secondaryTypographyProps={{
+                      color:
+                        serviceData.payment_status === 'paid' ? 'success.main' : 'warning.main',
                     }}
                   />
                 </ListItem>
                 <ListItem>
-                  <ListItemText 
+                  <ListItemText
                     primary="3단계: 조사원 배정"
                     secondary={serviceData.assigned_researcher ? '완료' : '대기 중'}
-                    secondaryTypographyProps={{ 
-                      color: serviceData.assigned_researcher ? 'success.main' : 'warning.main' 
+                    secondaryTypographyProps={{
+                      color: serviceData.assigned_researcher ? 'success.main' : 'warning.main',
                     }}
                   />
                 </ListItem>
                 <ListItem>
-                  <ListItemText 
+                  <ListItemText
                     primary="4단계: 시장 조사 진행"
                     secondary={serviceData.research_start_date ? '진행 중' : '대기 중'}
-                    secondaryTypographyProps={{ 
-                      color: serviceData.research_start_date ? 'primary.main' : 'text.secondary' 
+                    secondaryTypographyProps={{
+                      color: serviceData.research_start_date ? 'primary.main' : 'text.secondary',
                     }}
                   />
                 </ListItem>
                 <ListItem>
-                  <ListItemText 
+                  <ListItemText
                     primary="5단계: 보고서 작성"
                     secondary={orderData.status === 'completed' ? '완료' : '대기 중'}
-                    secondaryTypographyProps={{ 
-                      color: orderData.status === 'completed' ? 'success.main' : 'text.secondary' 
+                    secondaryTypographyProps={{
+                      color: orderData.status === 'completed' ? 'success.main' : 'text.secondary',
                     }}
                   />
                 </ListItem>

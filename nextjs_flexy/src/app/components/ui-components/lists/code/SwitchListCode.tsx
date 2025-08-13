@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const SwitchListCode = () => {
   return (
     <>
@@ -72,7 +72,7 @@ const handleToggle = (value: string) => () => {
 </BlankCard>`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default SwitchListCode
+export default SwitchListCode;

@@ -1,15 +1,6 @@
-"use client";
+'use client';
 import React from 'react';
-import { 
-  Box, 
-  Typography, 
-  Paper, 
-  Divider, 
-  List, 
-  ListItem, 
-  ListItemText,
-  Chip
-} from '@mui/material';
+import { Box, Typography, Paper, Divider, List, ListItem, ListItemText, Chip } from '@mui/material';
 import PageContainer from '@/app/components/container/PageContainer';
 
 export default function TermsPage() {
@@ -61,15 +52,15 @@ export default function TermsPage() {
           </Typography>
           <List dense>
             {sections.map((section) => (
-              <ListItem 
-                key={section.id} 
+              <ListItem
+                key={section.id}
                 onClick={() => scrollToSection(section.id)}
-                sx={{ 
-                  '&:hover': { 
+                sx={{
+                  '&:hover': {
                     bgcolor: 'action.hover',
-                    cursor: 'pointer' 
+                    cursor: 'pointer',
                   },
-                  cursor: 'pointer'
+                  cursor: 'pointer',
                 }}
               >
                 <ListItemText primary={section.title} />
@@ -85,12 +76,13 @@ export default function TermsPage() {
               제1조 (목적)
             </Typography>
             <Typography variant="body1" paragraph>
-              본 약관은 두리무역(이하 "회사"라 합니다)이 제공하는 중국 수입대행 ERP 서비스(이하 "서비스"라 합니다)의 
-              이용조건 및 절차, 회사와 회원 간의 권리, 의무 및 책임사항을 규정함을 목적으로 합니다.
+              본 약관은 두리무역(이하 "회사"라 합니다)이 제공하는 중국 수입대행 ERP 서비스(이하
+              "서비스"라 합니다)의 이용조건 및 절차, 회사와 회원 간의 권리, 의무 및 책임사항을
+              규정함을 목적으로 합니다.
             </Typography>
             <Typography variant="body1" paragraph>
-              회사는 위임형 구매대행 서비스를 제공하며, 고객의 요청에 따라 중국 현지에서 제품 시장조사, 
-              공장 컨택, 검품, 구매대행, 통관 및 배송 서비스를 수행합니다.
+              회사는 위임형 구매대행 서비스를 제공하며, 고객의 요청에 따라 중국 현지에서 제품
+              시장조사, 공장 컨택, 검품, 구매대행, 통관 및 배송 서비스를 수행합니다.
             </Typography>
           </Box>
 
@@ -105,29 +97,19 @@ export default function TermsPage() {
             </Typography>
             <List>
               <ListItem>
-                <ListItemText 
-                  primary="1. '서비스'란 회사가 제공하는 모든 중국 수입대행 관련 서비스를 의미합니다."
-                />
+                <ListItemText primary="1. '서비스'란 회사가 제공하는 모든 중국 수입대행 관련 서비스를 의미합니다." />
               </ListItem>
               <ListItem>
-                <ListItemText 
-                  primary="2. '회원'이란 본 약관에 동의하고 회사와 서비스 이용계약을 체결한 자를 의미합니다."
-                />
+                <ListItemText primary="2. '회원'이란 본 약관에 동의하고 회사와 서비스 이용계약을 체결한 자를 의미합니다." />
               </ListItem>
               <ListItem>
-                <ListItemText 
-                  primary="3. '구매대행'이란 회원의 요청에 따라 중국 현지에서 물품을 구매하여 한국으로 배송하는 서비스를 의미합니다."
-                />
+                <ListItemText primary="3. '구매대행'이란 회원의 요청에 따라 중국 현지에서 물품을 구매하여 한국으로 배송하는 서비스를 의미합니다." />
               </ListItem>
               <ListItem>
-                <ListItemText 
-                  primary="4. '시장조사'란 회원이 요청한 제품의 중국 시장 가격, 공급업체 정보 등을 조사하는 서비스를 의미합니다."
-                />
+                <ListItemText primary="4. '시장조사'란 회원이 요청한 제품의 중국 시장 가격, 공급업체 정보 등을 조사하는 서비스를 의미합니다." />
               </ListItem>
               <ListItem>
-                <ListItemText 
-                  primary="5. '검품'이란 제품의 품질, 수량, 규격 등을 확인하는 서비스를 의미합니다."
-                />
+                <ListItemText primary="5. '검품'이란 제품의 품질, 수량, 규격 등을 확인하는 서비스를 의미합니다." />
               </ListItem>
             </List>
           </Box>
@@ -204,10 +186,12 @@ export default function TermsPage() {
               제5조 (계약의 성립)
             </Typography>
             <Typography variant="body1" paragraph>
-              1. 서비스 이용계약은 회원이 본 약관에 동의하고 회원가입을 신청한 후, 회사가 이를 승낙함으로써 성립합니다.
+              1. 서비스 이용계약은 회원이 본 약관에 동의하고 회원가입을 신청한 후, 회사가 이를
+              승낙함으로써 성립합니다.
             </Typography>
             <Typography variant="body1" paragraph>
-              2. 회사는 다음 각 호에 해당하는 신청에 대하여는 승낙을 하지 않거나 사후에 이용계약을 해지할 수 있습니다:
+              2. 회사는 다음 각 호에 해당하는 신청에 대하여는 승낙을 하지 않거나 사후에 이용계약을
+              해지할 수 있습니다:
             </Typography>
             <List>
               <ListItem>
@@ -249,7 +233,8 @@ export default function TermsPage() {
               </ListItem>
             </List>
             <Typography variant="body1" paragraph>
-              2. 회사는 서비스 완료 후 실제 발생한 비용을 기준으로 정산하며, 차액이 발생한 경우 추가 청구 또는 환불합니다.
+              2. 회사는 서비스 완료 후 실제 발생한 비용을 기준으로 정산하며, 차액이 발생한 경우 추가
+              청구 또는 환불합니다.
             </Typography>
             <Typography variant="body1" paragraph>
               3. 환율 변동으로 인한 차액은 결제 시점의 환율을 기준으로 정산합니다.
@@ -317,7 +302,8 @@ export default function TermsPage() {
               제9조 (긴급조치)
             </Typography>
             <Typography variant="body1" paragraph>
-              1. 회사는 다음과 같은 긴급 상황 발생 시 회원의 사전 동의 없이 필요한 조치를 취할 수 있습니다:
+              1. 회사는 다음과 같은 긴급 상황 발생 시 회원의 사전 동의 없이 필요한 조치를 취할 수
+              있습니다:
             </Typography>
             <List>
               <ListItem>
@@ -412,10 +398,12 @@ export default function TermsPage() {
               제12조 (책임의 특별소멸사유와 시효)
             </Typography>
             <Typography variant="body1" paragraph>
-              1. 회원이 물품을 수령한 후 7일 이내에 이의를 제기하지 않은 경우, 회사의 책임은 소멸합니다.
+              1. 회원이 물품을 수령한 후 7일 이내에 이의를 제기하지 않은 경우, 회사의 책임은
+              소멸합니다.
             </Typography>
             <Typography variant="body1" paragraph>
-              2. 손해배상 청구권은 회원이 손해를 안 날로부터 1년, 손해가 발생한 날로부터 3년이 경과하면 소멸합니다.
+              2. 손해배상 청구권은 회원이 손해를 안 날로부터 1년, 손해가 발생한 날로부터 3년이
+              경과하면 소멸합니다.
             </Typography>
             <Typography variant="body1" paragraph>
               3. 단, 회사의 고의 또는 중과실로 인한 손해의 경우 민법상 일반 시효가 적용됩니다.
@@ -475,10 +463,12 @@ export default function TermsPage() {
               1. 본 약관은 2025년 2월 1일부터 시행합니다.
             </Typography>
             <Typography variant="body2" paragraph>
-              2. 회사는 필요한 경우 약관을 개정할 수 있으며, 개정 약관은 공지 후 7일이 경과한 날부터 효력이 발생합니다.
+              2. 회사는 필요한 경우 약관을 개정할 수 있으며, 개정 약관은 공지 후 7일이 경과한 날부터
+              효력이 발생합니다.
             </Typography>
             <Typography variant="body2">
-              3. 기존 회원에게는 개정 약관 시행 전 이메일 또는 서비스 내 공지를 통해 변경 사항을 안내합니다.
+              3. 기존 회원에게는 개정 약관 시행 전 이메일 또는 서비스 내 공지를 통해 변경 사항을
+              안내합니다.
             </Typography>
           </Box>
 
@@ -487,24 +477,14 @@ export default function TermsPage() {
             <Typography variant="h6" fontWeight="bold" gutterBottom>
               회사 정보
             </Typography>
-            <Typography variant="body2">
-              상호: 두리무역
-            </Typography>
-            <Typography variant="body2">
-              대표자: 김두호
-            </Typography>
-            <Typography variant="body2">
-              사업자등록번호: 605-29-80697
-            </Typography>
+            <Typography variant="body2">상호: 두리무역</Typography>
+            <Typography variant="body2">대표자: 김두호</Typography>
+            <Typography variant="body2">사업자등록번호: 605-29-80697</Typography>
             <Typography variant="body2">
               주소: 인천광역시 연수구 센트럴로 313 B2512 (송도동, 송도 센트로드)
             </Typography>
-            <Typography variant="body2">
-              고객센터: 031-699-8781
-            </Typography>
-            <Typography variant="body2">
-              이메일: duly@duly.co.kr
-            </Typography>
+            <Typography variant="body2">고객센터: 031-699-8781</Typography>
+            <Typography variant="body2">이메일: duly@duly.co.kr</Typography>
           </Box>
         </Paper>
       </Box>

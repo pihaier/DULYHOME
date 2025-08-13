@@ -1,6 +1,6 @@
-"use client";
-import React, { useContext, useEffect, useState } from "react";
-import { InvoiceContext } from "@/app/context/InvoiceContext/index";
+'use client';
+import React, { useContext, useEffect, useState } from 'react';
+import { InvoiceContext } from '@/app/context/InvoiceContext/index';
 import {
   Table,
   TextField,
@@ -24,11 +24,11 @@ import {
   Stack,
   InputAdornment,
   Chip,
-} from "@mui/material";
-import Link from "next/link";
-import EditIcon from "@mui/icons-material/Edit";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import DeleteIcon from "@mui/icons-material/Delete";
+} from '@mui/material';
+import Link from 'next/link';
+import EditIcon from '@mui/icons-material/Edit';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import DeleteIcon from '@mui/icons-material/Delete';
 import {
   IconEdit,
   IconEye,
@@ -38,15 +38,15 @@ import {
   IconSortAscending,
   IconTrash,
   IconTruck,
-} from "@tabler/icons-react";
-import CustomCheckbox from "@/app/components/forms/theme-elements/CustomCheckbox";
-import { usePathname } from "next/navigation";
-import { mutate } from "swr";
+} from '@tabler/icons-react';
+import CustomCheckbox from '@/app/components/forms/theme-elements/CustomCheckbox';
+import { usePathname } from 'next/navigation';
+import { mutate } from 'swr';
 
 function InvoiceList() {
   const { invoices, deleteInvoice } = useContext(InvoiceContext);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [activeTab, setActiveTab] = useState("All");
+  const [searchTerm, setSearchTerm] = useState('');
+  const [activeTab, setActiveTab] = useState('All');
   const [selectedProducts, setSelectedProducts] = useState<any>([]);
   const [selectAll, setSelectAll] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
@@ -62,23 +62,15 @@ function InvoiceList() {
       return (
         (invoice.billFrom.toLowerCase().includes(searchTerm.toLowerCase()) ||
           invoice.billTo.toLowerCase().includes(searchTerm.toLowerCase())) &&
-        (activeTab === "All" || invoice.status === activeTab)
+        (activeTab === 'All' || invoice.status === activeTab)
       );
     }
   );
 
-
-
   // Calculate the counts for different statuses
-  const Shipped = invoices.filter(
-    (t: { status: string }) => t.status === "Shipped"
-  ).length;
-  const Delivered = invoices.filter(
-    (t: { status: string }) => t.status === "Delivered"
-  ).length;
-  const Pending = invoices.filter(
-    (t: { status: string }) => t.status === "Pending"
-  ).length;
+  const Shipped = invoices.filter((t: { status: string }) => t.status === 'Shipped').length;
+  const Delivered = invoices.filter((t: { status: string }) => t.status === 'Delivered').length;
+  const Pending = invoices.filter((t: { status: string }) => t.status === 'Pending').length;
 
   // Toggle all checkboxes
   const toggleSelectAll = () => {
@@ -97,9 +89,7 @@ function InvoiceList() {
     if (index === -1) {
       setSelectedProducts([...selectedProducts, productId]);
     } else {
-      setSelectedProducts(
-        selectedProducts.filter((id: any) => id !== productId)
-      );
+      setSelectedProducts(selectedProducts.filter((id: any) => id !== productId));
     }
   };
 
@@ -126,35 +116,34 @@ function InvoiceList() {
   // Reset Contacts on browser refresh
   const location = usePathname();
   const handleResetTickets = async () => {
-    const response = await fetch("/api/invoice", {
+    const response = await fetch('/api/invoice', {
       method: 'GET',
       headers: {
-        "broserRefreshed": "true"
-      }
+        broserRefreshed: 'true',
+      },
     });
     const result = await response.json();
-    await mutate("/api/invoice");
-  }
+    await mutate('/api/invoice');
+  };
 
   useEffect(() => {
-    const isPageRefreshed = sessionStorage.getItem("isPageRefreshed");
-    if (isPageRefreshed === "true") {
-      console.log("page refreshed");
-      sessionStorage.removeItem("isPageRefreshed");
+    const isPageRefreshed = sessionStorage.getItem('isPageRefreshed');
+    if (isPageRefreshed === 'true') {
+      console.log('page refreshed');
+      sessionStorage.removeItem('isPageRefreshed');
       handleResetTickets();
     }
   }, [location]);
 
   useEffect(() => {
     const handleBeforeUnload = () => {
-      sessionStorage.setItem("isPageRefreshed", "true");
+      sessionStorage.setItem('isPageRefreshed', 'true');
     };
-    window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener('beforeunload', handleBeforeUnload);
     return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, []);
-
 
   return (
     <Box>
@@ -163,9 +152,15 @@ function InvoiceList() {
           size={{
             xs: 12,
             sm: 6,
-            lg: 3
-          }}>
-          <Box bgcolor="primary.light" p={3} onClick={() => handleClick("All")} sx={{ cursor: "pointer" }}>
+            lg: 3,
+          }}
+        >
+          <Box
+            bgcolor="primary.light"
+            p={3}
+            onClick={() => handleClick('All')}
+            sx={{ cursor: 'pointer' }}
+          >
             <Stack direction="row" gap={2} alignItems="center">
               <Box
                 width={38}
@@ -186,9 +181,7 @@ function InvoiceList() {
               </Box>
               <Box>
                 <Typography>Total</Typography>
-                <Typography fontWeight={500}>
-                  {invoices.length} Invoices
-                </Typography>
+                <Typography fontWeight={500}>{invoices.length} Invoices</Typography>
               </Box>
             </Stack>
           </Box>
@@ -197,9 +190,15 @@ function InvoiceList() {
           size={{
             xs: 12,
             sm: 6,
-            lg: 3
-          }}>
-          <Box bgcolor="secondary.light" p={3} onClick={() => handleClick("Shipped")} sx={{ cursor: "pointer" }}>
+            lg: 3,
+          }}
+        >
+          <Box
+            bgcolor="secondary.light"
+            p={3}
+            onClick={() => handleClick('Shipped')}
+            sx={{ cursor: 'pointer' }}
+          >
             <Stack direction="row" gap={2} alignItems="center">
               <Box
                 width={38}
@@ -229,9 +228,15 @@ function InvoiceList() {
           size={{
             xs: 12,
             sm: 6,
-            lg: 3
-          }}>
-          <Box bgcolor="success.light" p={3} onClick={() => handleClick("Delivered")} sx={{ cursor: "pointer" }}>
+            lg: 3,
+          }}
+        >
+          <Box
+            bgcolor="success.light"
+            p={3}
+            onClick={() => handleClick('Delivered')}
+            sx={{ cursor: 'pointer' }}
+          >
             <Stack direction="row" gap={2} alignItems="center">
               <Box
                 width={38}
@@ -261,9 +266,15 @@ function InvoiceList() {
           size={{
             xs: 12,
             sm: 6,
-            lg: 3
-          }}>
-          <Box bgcolor="warning.light" p={3} onClick={() => handleClick("Pending")} sx={{ cursor: "pointer" }}>
+            lg: 3,
+          }}
+        >
+          <Box
+            bgcolor="warning.light"
+            p={3}
+            onClick={() => handleClick('Pending')}
+            sx={{ cursor: 'pointer' }}
+          >
             <Stack direction="row" gap={2} alignItems="center">
               <Box
                 width={38}
@@ -293,7 +304,7 @@ function InvoiceList() {
       <Stack
         mt={3}
         justifyContent="space-between"
-        direction={{ xs: "column", sm: "row" }}
+        direction={{ xs: 'column', sm: 'row' }}
         spacing={{ xs: 1, sm: 2, md: 4 }}
       >
         <TextField
@@ -308,10 +319,10 @@ function InvoiceList() {
             input: {
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconSearch size={"16"} />
+                  <IconSearch size={'16'} />
                 </InputAdornment>
               ),
-            }
+            },
           }}
         />
         <Box display="flex" gap={1}>
@@ -325,67 +336,41 @@ function InvoiceList() {
               Delete All
             </Button>
           )}
-          <Button
-            variant="contained"
-            color="primary"
-            component={Link}
-            href="/apps/invoice/create"
-          >
+          <Button variant="contained" color="primary" component={Link} href="/apps/invoice/create">
             New Invoice
           </Button>
         </Box>
       </Stack>
-      <Box sx={{ overflowX: "auto" }}>
-        <Table sx={{ whiteSpace: { xs: "nowrap", md: "unset" } }}>
+      <Box sx={{ overflowX: 'auto' }}>
+        <Table sx={{ whiteSpace: { xs: 'nowrap', md: 'unset' } }}>
           <TableHead>
             <TableRow>
               <TableCell padding="checkbox">
-                <CustomCheckbox
-                  checked={selectAll}
-                  onChange={toggleSelectAll}
-                />
+                <CustomCheckbox checked={selectAll} onChange={toggleSelectAll} />
               </TableCell>
               <TableCell>
-                <Typography variant="h5">
-                  Id
-                </Typography>
+                <Typography variant="h5">Id</Typography>
               </TableCell>
               <TableCell>
-                <Typography variant="h5">
-                  Bill From
-                </Typography>
+                <Typography variant="h5">Bill From</Typography>
               </TableCell>
               <TableCell>
-                <Typography variant="h5">
-                  Bill To
-                </Typography>
+                <Typography variant="h5">Bill To</Typography>
               </TableCell>
               <TableCell>
-                <Typography variant="h5">
-                  Total Cost
-                </Typography>
+                <Typography variant="h5">Total Cost</Typography>
               </TableCell>
               <TableCell>
-                <Typography variant="h5">
-                  Status
-                </Typography>
+                <Typography variant="h5">Status</Typography>
               </TableCell>
               <TableCell align="center">
-                <Typography variant="h5">
-                  Action
-                </Typography>
+                <Typography variant="h5">Action</Typography>
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {filteredInvoices.map(
-              (invoice: {
-                id: any;
-                billFrom: any;
-                billTo: any;
-                totalCost: any;
-                status: any;
-              }) => (
+              (invoice: { id: any; billFrom: any; billTo: any; totalCost: any; status: any }) => (
                 <TableRow key={invoice.id}>
                   <TableCell padding="checkbox">
                     <CustomCheckbox
@@ -394,42 +379,26 @@ function InvoiceList() {
                     />
                   </TableCell>
                   <TableCell>
-                    <Typography variant="h5">
-                      {invoice.id}
-                    </Typography>
+                    <Typography variant="h5">{invoice.id}</Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="subtitle1" >
-                      {invoice.billFrom}
-                    </Typography>
+                    <Typography variant="subtitle1">{invoice.billFrom}</Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography >{invoice.billTo}</Typography>
+                    <Typography>{invoice.billTo}</Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography >{invoice.totalCost}</Typography>
+                    <Typography>{invoice.totalCost}</Typography>
                   </TableCell>
                   <TableCell>
-                    {invoice.status === "Shipped" ? (
-                      <Chip
-                        color="primary"
-                        label={invoice.status}
-                        size="small"
-                      />
-                    ) : invoice.status === "Delivered" ? (
-                      <Chip
-                        color="success"
-                        label={invoice.status}
-                        size="small"
-                      />
-                    ) : invoice.status === "Pending" ? (
-                      <Chip
-                        color="warning"
-                        label={invoice.status}
-                        size="small"
-                      />
+                    {invoice.status === 'Shipped' ? (
+                      <Chip color="primary" label={invoice.status} size="small" />
+                    ) : invoice.status === 'Delivered' ? (
+                      <Chip color="success" label={invoice.status} size="small" />
+                    ) : invoice.status === 'Pending' ? (
+                      <Chip color="warning" label={invoice.status} size="small" />
                     ) : (
-                      ""
+                      ''
                     )}
                   </TableCell>
                   <TableCell align="center">
@@ -471,18 +440,12 @@ function InvoiceList() {
       </Box>
       <Dialog open={openDeleteDialog} onClose={handleCloseDeleteDialog}>
         <DialogTitle>Confirm Delete</DialogTitle>
-        <DialogContent>
-          Are you sure you want to delete selected invoices?
-        </DialogContent>
+        <DialogContent>Are you sure you want to delete selected invoices?</DialogContent>
         <DialogActions>
           <Button variant="contained" onClick={handleCloseDeleteDialog}>
             Cancel
           </Button>
-          <Button
-            color="error"
-            variant="outlined"
-            onClick={handleConfirmDelete}
-          >
+          <Button color="error" variant="outlined" onClick={handleConfirmDelete}>
             Delete
           </Button>
         </DialogActions>

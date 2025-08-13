@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const BasicDateTimeCode = () => {
   return (
     <>
@@ -51,7 +51,7 @@ const [value3, setValue3] = React.useState<Dayjs | null>(
 `}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default BasicDateTimeCode
+export default BasicDateTimeCode;

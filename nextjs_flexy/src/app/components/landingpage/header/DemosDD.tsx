@@ -1,25 +1,24 @@
-import React from "react";
+import React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
-import NextLink from "next/link";
+import NextLink from 'next/link';
 
-const mainDemo = "/images/landingpage/demo-main.jpg";
-const darkDemo = "/images/landingpage/demo-dark.jpg";
-const horizontalDemo = "/images/landingpage/demo-horizontal.jpg";
-const rtlDemo = "/images/landingpage/demo-rtl.jpg";
-const minidemo = '/images/landingpage/demo-minisidebar.jpg'
+const mainDemo = '/images/landingpage/demo-main.jpg';
+const darkDemo = '/images/landingpage/demo-dark.jpg';
+const horizontalDemo = '/images/landingpage/demo-horizontal.jpg';
+const rtlDemo = '/images/landingpage/demo-rtl.jpg';
+const minidemo = '/images/landingpage/demo-minisidebar.jpg';
 
-
-const app1 = "/images/landingpage/app-calendar.jpg";
-const app2 = "/images/landingpage/app-chat.jpg";
-const app3 = "/images/landingpage/app-contact.jpg";
-const app4 = "/images/landingpage/app-email.jpg";
-const app5 = "/images/landingpage/app-notes.jpg";
-import Image from "next/image";
+const app1 = '/images/landingpage/app-calendar.jpg';
+const app2 = '/images/landingpage/app-chat.jpg';
+const app3 = '/images/landingpage/app-contact.jpg';
+const app4 = '/images/landingpage/app-email.jpg';
+const app5 = '/images/landingpage/app-notes.jpg';
+import Image from 'next/image';
 
 interface DemoTypes {
   link: string;
@@ -29,88 +28,86 @@ interface DemoTypes {
 
 const demos: DemoTypes[] = [
   {
-    link: "https://flexy-next-js-dashboard.vercel.app/",
+    link: 'https://flexy-next-js-dashboard.vercel.app/',
     img: mainDemo,
-    title: "Main",
+    title: 'Main',
   },
   {
-    link: "https://flexy-nextjs-dark.vercel.app/",
+    link: 'https://flexy-nextjs-dark.vercel.app/',
     img: darkDemo,
-    title: "Dark",
+    title: 'Dark',
   },
   {
-    link: "https://flexy-nextjs-horizontal.vercel.app/",
+    link: 'https://flexy-nextjs-horizontal.vercel.app/',
     img: horizontalDemo,
-    title: "Horizontal",
+    title: 'Horizontal',
   },
   {
-    link: "https://flexy-nextjs-rtl.vercel.app/",
+    link: 'https://flexy-nextjs-rtl.vercel.app/',
     img: rtlDemo,
-    title: "RTL",
+    title: 'RTL',
   },
   {
-    link: "https://flexy-nextjs-minisidebar.vercel.app/",
+    link: 'https://flexy-nextjs-minisidebar.vercel.app/',
     img: minidemo,
-    title: "Minisidebar",
+    title: 'Minisidebar',
   },
-
-
 ];
 
 const apps: DemoTypes[] = [
   {
-    link: "https://flexy-next-js-dashboard.vercel.app/apps/calendar",
+    link: 'https://flexy-next-js-dashboard.vercel.app/apps/calendar',
     img: app1,
-    title: "Calendar",
+    title: 'Calendar',
   },
   {
-    link: "https://flexy-next-js-dashboard.vercel.app/apps/chats",
+    link: 'https://flexy-next-js-dashboard.vercel.app/apps/chats',
     img: app2,
-    title: "Chat",
+    title: 'Chat',
   },
   {
-    link: "https://flexy-next-js-dashboard.vercel.app/apps/contacts",
+    link: 'https://flexy-next-js-dashboard.vercel.app/apps/contacts',
     img: app3,
-    title: "Contact",
+    title: 'Contact',
   },
   {
-    link: "https://flexy-next-js-dashboard.vercel.app/apps/email",
+    link: 'https://flexy-next-js-dashboard.vercel.app/apps/email',
     img: app4,
-    title: "Email",
+    title: 'Email',
   },
   {
-    link: "https://flexy-next-js-dashboard.vercel.app/apps/notes",
+    link: 'https://flexy-next-js-dashboard.vercel.app/apps/notes',
     img: app5,
-    title: "Note",
+    title: 'Note',
   },
 ];
 
 const StyledBox = styled(Box)(() => ({
-  overflow: "auto",
-  position: "relative",
-  ".MuiButton-root": {
-    display: "none",
+  overflow: 'auto',
+  position: 'relative',
+  '.MuiButton-root': {
+    display: 'none',
   },
-  "&:hover": {
-    ".MuiButton-root": {
-      display: "block",
-      transform: "translate(-50%,-50%)",
-      position: "absolute",
-      left: "50%",
-      right: "50%",
-      top: "50%",
-      minWidth: "100px",
-      zIndex: "9",
+  '&:hover': {
+    '.MuiButton-root': {
+      display: 'block',
+      transform: 'translate(-50%,-50%)',
+      position: 'absolute',
+      left: '50%',
+      right: '50%',
+      top: '50%',
+      minWidth: '100px',
+      zIndex: '9',
     },
-    "&:before": {
+    '&:before': {
       content: '""',
-      position: "absolute",
-      top: "0",
-      left: " 0",
-      width: "100%",
-      height: "100%",
-      zIndex: "8",
-      backgroundColor: "rgba(55,114,255,.2)",
+      position: 'absolute',
+      top: '0',
+      left: ' 0',
+      width: '100%',
+      height: '100%',
+      zIndex: '8',
+      backgroundColor: 'rgba(55,114,255,.2)',
     },
   },
 }));
@@ -124,7 +121,7 @@ const DemosDD = () => {
           Included with the package
         </Typography>
 
-        <Stack mt={2} spacing={3} direction={{ xs: "column", lg: "row" }}>
+        <Stack mt={2} spacing={3} direction={{ xs: 'column', lg: 'row' }}>
           {demos.map((demo, index) => (
             <Box key={index}>
               <StyledBox>
@@ -132,9 +129,9 @@ const DemosDD = () => {
                   src={demo.img}
                   alt="demo"
                   style={{
-                    borderRadius: "8px",
-                    width: "100%",
-                    height: "100%",
+                    borderRadius: '8px',
+                    width: '100%',
+                    height: '100%',
                   }}
                 />
                 <Button
@@ -164,12 +161,7 @@ const DemosDD = () => {
           Different Apps
         </Typography>
 
-        <Stack
-          mt={2}
-          spacing={3}
-          mb={2}
-          direction={{ xs: "column", lg: "row" }}
-        >
+        <Stack mt={2} spacing={3} mb={2} direction={{ xs: 'column', lg: 'row' }}>
           {apps.map((app, index) => (
             <Box key={index}>
               <StyledBox>
@@ -177,9 +169,9 @@ const DemosDD = () => {
                   src={app.img}
                   alt="demo"
                   style={{
-                    borderRadius: "8px",
-                    width: "100%",
-                    height: "100%",
+                    borderRadius: '8px',
+                    width: '100%',
+                    height: '100%',
                   }}
                 />
                 <NextLink href={app.link}>

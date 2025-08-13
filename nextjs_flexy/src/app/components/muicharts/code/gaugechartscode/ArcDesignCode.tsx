@@ -1,10 +1,10 @@
-import React from "react";
-import CodeDialog from "@/app/components/shared/CodeDialog";
+import React from 'react';
+import CodeDialog from '@/app/components/shared/CodeDialog';
 
 function ArcDesignCode() {
-    return (
-        <CodeDialog>
-            {`
+  return (
+    <CodeDialog>
+      {`
 import * as React from 'react';
 import { Gauge, gaugeClasses } from '@mui/x-charts/Gauge';
    
@@ -48,8 +48,8 @@ export default function ArcDesignChart() {
 
 
 `}
-        </CodeDialog>
-    );
+    </CodeDialog>
+  );
 }
 
 export default ArcDesignCode;

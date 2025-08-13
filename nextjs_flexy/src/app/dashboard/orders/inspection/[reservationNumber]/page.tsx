@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { 
-  Box, 
-  Typography, 
-  CircularProgress, 
-  Alert, 
+import {
+  Box,
+  Typography,
+  CircularProgress,
+  Alert,
   Button,
   Stack,
   Tabs,
@@ -22,7 +22,7 @@ import {
   useTheme,
   Drawer,
   IconButton,
-  Divider
+  Divider,
 } from '@mui/material';
 import { useRouter, useParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
@@ -66,7 +66,7 @@ export default function InspectionDetailPage() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'), { noSsr: true });
   const reservationNumber = params.reservationNumber as string;
-  
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<any>(null);
@@ -78,46 +78,46 @@ export default function InspectionDetailPage() {
     const fetchData = async () => {
       console.log('=== Inspection fetchData started ===');
       console.log('Reservation Number:', reservationNumber);
-      
+
       if (!reservationNumber) {
         console.log('No reservation number provided');
         setLoading(false);
         return;
       }
-      
+
       setLoading(true);
       setError(null);
-      
+
       try {
         const supabase = createClient();
-        
+
         console.log('Querying inspection_applications...');
         const { data, error } = await supabase
           .from('inspection_applications')
           .select('*')
           .eq('reservation_number', reservationNumber)
           .maybeSingle();
-        
+
         console.log('Query result:', { data, error });
-        
+
         if (error) {
           console.error('Supabase error:', error);
           throw new Error(error.message);
         }
-        
+
         if (!data) {
           throw new Error('데이터를 찾을 수 없습니다.');
         }
-        
+
         setData(data);
-        
+
         // 업로드된 파일들 가져오기
         const { data: filesData, error: filesError } = await supabase
           .from('uploaded_files')
           .select('*')
           .eq('reservation_number', reservationNumber)
           .order('created_at', { ascending: false });
-        
+
         if (filesError) {
           console.error('Files fetch error:', filesError);
         } else {
@@ -140,7 +140,9 @@ export default function InspectionDetailPage() {
 
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <Box
+        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}
+      >
         <CircularProgress />
         <Typography sx={{ ml: 2 }}>Loading...</Typography>
       </Box>
@@ -161,7 +163,11 @@ export default function InspectionDetailPage() {
   return (
     <Box sx={{ p: 3 }}>
       {/* Header */}
-      <OrderHeader orderData={data} serviceType="inspection" reservationNumber={reservationNumber} />
+      <OrderHeader
+        orderData={data}
+        serviceType="inspection"
+        reservationNumber={reservationNumber}
+      />
 
       {/* Main Content with Chat */}
       <Grid container spacing={isMobile ? 0 : 3} sx={{ mt: 2 }}>
@@ -169,23 +175,39 @@ export default function InspectionDetailPage() {
         <Grid size={{ xs: 12, md: 8 }}>
           <Paper elevation={3} sx={{ mb: isMobile ? 8 : 0 }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs 
-                value={tabValue} 
-                onChange={handleTabChange} 
-                aria-label="order details tabs" 
-                variant={isMobile ? "scrollable" : "fullWidth"}
-                scrollButtons={isMobile ? "auto" : false}
+              <Tabs
+                value={tabValue}
+                onChange={handleTabChange}
+                aria-label="order details tabs"
+                variant={isMobile ? 'scrollable' : 'fullWidth'}
+                scrollButtons={isMobile ? 'auto' : false}
                 sx={{
                   '& .MuiTab-root': {
                     minWidth: isMobile ? 'auto' : 120,
                     fontSize: isMobile ? '0.75rem' : '0.875rem',
-                  }
+                  },
                 }}
               >
-                <Tab icon={<BusinessIcon sx={{ fontSize: isMobile ? 20 : 24 }} />} label={isMobile ? "신청" : "신청정보"} iconPosition="start" />
-                <Tab icon={<InventoryIcon sx={{ fontSize: isMobile ? 20 : 24 }} />} label={isMobile ? "검품" : "검품정보"} iconPosition="start" />
-                <Tab icon={<AttachMoneyIcon sx={{ fontSize: isMobile ? 20 : 24 }} />} label={isMobile ? "비용" : "비용정보"} iconPosition="start" />
-                <Tab icon={<AttachFileIcon sx={{ fontSize: isMobile ? 20 : 24 }} />} label={isMobile ? "자료" : "관련자료"} iconPosition="start" />
+                <Tab
+                  icon={<BusinessIcon sx={{ fontSize: isMobile ? 20 : 24 }} />}
+                  label={isMobile ? '신청' : '신청정보'}
+                  iconPosition="start"
+                />
+                <Tab
+                  icon={<InventoryIcon sx={{ fontSize: isMobile ? 20 : 24 }} />}
+                  label={isMobile ? '검품' : '검품정보'}
+                  iconPosition="start"
+                />
+                <Tab
+                  icon={<AttachMoneyIcon sx={{ fontSize: isMobile ? 20 : 24 }} />}
+                  label={isMobile ? '비용' : '비용정보'}
+                  iconPosition="start"
+                />
+                <Tab
+                  icon={<AttachFileIcon sx={{ fontSize: isMobile ? 20 : 24 }} />}
+                  label={isMobile ? '자료' : '관련자료'}
+                  iconPosition="start"
+                />
               </Tabs>
             </Box>
 
@@ -201,31 +223,45 @@ export default function InspectionDetailPage() {
                       <Grid size={{ xs: 12, md: 6 }}>
                         <Stack spacing={2}>
                           <Box>
-                            <Typography variant="caption" color="text.secondary">제품명</Typography>
-                            <Typography variant="body1" fontWeight="medium">{data?.product_name || '-'}</Typography>
+                            <Typography variant="caption" color="text.secondary">
+                              제품명
+                            </Typography>
+                            <Typography variant="body1" fontWeight="medium">
+                              {data?.product_name || '-'}
+                            </Typography>
                           </Box>
                           <Box>
-                            <Typography variant="caption" color="text.secondary">생산수량</Typography>
-                            <Typography variant="body1" fontWeight="medium">{data?.production_quantity?.toLocaleString() || '-'}개</Typography>
+                            <Typography variant="caption" color="text.secondary">
+                              생산수량
+                            </Typography>
+                            <Typography variant="body1" fontWeight="medium">
+                              {data?.production_quantity?.toLocaleString() || '-'}개
+                            </Typography>
                           </Box>
                         </Stack>
                       </Grid>
                       <Grid size={{ xs: 12, md: 6 }}>
                         <Stack spacing={2}>
                           <Box>
-                            <Typography variant="caption" color="text.secondary">검품방법</Typography>
+                            <Typography variant="caption" color="text.secondary">
+                              검품방법
+                            </Typography>
                             <Box sx={{ mt: 0.5 }}>
-                              <Chip 
-                                label={data?.inspection_method === 'full' ? '전수검품' : '표준검품'} 
+                              <Chip
+                                label={data?.inspection_method === 'full' ? '전수검품' : '표준검품'}
                                 color={data?.inspection_method === 'full' ? 'primary' : 'default'}
                                 size="small"
                               />
                             </Box>
                           </Box>
                           <Box>
-                            <Typography variant="caption" color="text.secondary">신청일시</Typography>
+                            <Typography variant="caption" color="text.secondary">
+                              신청일시
+                            </Typography>
                             <Typography variant="body1" fontWeight="medium">
-                              {data?.created_at ? new Date(data.created_at).toLocaleDateString('ko-KR') : '-'}
+                              {data?.created_at
+                                ? new Date(data.created_at).toLocaleDateString('ko-KR')
+                                : '-'}
                             </Typography>
                           </Box>
                         </Stack>
@@ -241,24 +277,40 @@ export default function InspectionDetailPage() {
                       <Grid size={{ xs: 12, md: 6 }}>
                         <Stack spacing={2.5}>
                           <Box>
-                            <Typography variant="caption" color="text.secondary" display="block">공장명</Typography>
-                            <Typography variant="body1" fontWeight="500">{data?.factory_name || '-'}</Typography>
+                            <Typography variant="caption" color="text.secondary" display="block">
+                              공장명
+                            </Typography>
+                            <Typography variant="body1" fontWeight="500">
+                              {data?.factory_name || '-'}
+                            </Typography>
                           </Box>
                           <Box>
-                            <Typography variant="caption" color="text.secondary" display="block">담당자</Typography>
-                            <Typography variant="body1" fontWeight="500">{data?.factory_contact || '-'}</Typography>
+                            <Typography variant="caption" color="text.secondary" display="block">
+                              담당자
+                            </Typography>
+                            <Typography variant="body1" fontWeight="500">
+                              {data?.factory_contact || '-'}
+                            </Typography>
                           </Box>
                         </Stack>
                       </Grid>
                       <Grid size={{ xs: 12, md: 6 }}>
                         <Stack spacing={2.5}>
                           <Box>
-                            <Typography variant="caption" color="text.secondary" display="block">연락처</Typography>
-                            <Typography variant="body1" fontWeight="500">{data?.factory_phone || '-'}</Typography>
+                            <Typography variant="caption" color="text.secondary" display="block">
+                              연락처
+                            </Typography>
+                            <Typography variant="body1" fontWeight="500">
+                              {data?.factory_phone || '-'}
+                            </Typography>
                           </Box>
                           <Box>
-                            <Typography variant="caption" color="text.secondary" display="block">주소</Typography>
-                            <Typography variant="body1" fontWeight="500">{data?.factory_address || '-'}</Typography>
+                            <Typography variant="caption" color="text.secondary" display="block">
+                              주소
+                            </Typography>
+                            <Typography variant="body1" fontWeight="500">
+                              {data?.factory_address || '-'}
+                            </Typography>
                           </Box>
                         </Stack>
                       </Grid>
@@ -273,14 +325,22 @@ export default function InspectionDetailPage() {
                       <Grid size={{ xs: 12, md: 6 }}>
                         <Stack spacing={2.5}>
                           <Box>
-                            <Typography variant="caption" color="text.secondary" display="block">일정 조율 방식</Typography>
+                            <Typography variant="caption" color="text.secondary" display="block">
+                              일정 조율 방식
+                            </Typography>
                             <Typography variant="body1" fontWeight="500">
-                              {data?.schedule_type === 'already_booked' ? '이미 예약됨' : '두리무역이 조율'}
+                              {data?.schedule_type === 'already_booked'
+                                ? '이미 예약됨'
+                                : '두리무역이 조율'}
                             </Typography>
                           </Box>
                           <Box>
-                            <Typography variant="caption" color="text.secondary" display="block">검품 일수</Typography>
-                            <Typography variant="body1" fontWeight="500">{data?.inspection_days || 1}일</Typography>
+                            <Typography variant="caption" color="text.secondary" display="block">
+                              검품 일수
+                            </Typography>
+                            <Typography variant="body1" fontWeight="500">
+                              {data?.inspection_days || 1}일
+                            </Typography>
                           </Box>
                         </Stack>
                       </Grid>
@@ -288,7 +348,9 @@ export default function InspectionDetailPage() {
                         <Stack spacing={2.5}>
                           {data?.confirmed_date && (
                             <Box>
-                              <Typography variant="caption" color="text.secondary" display="block">확정된 검품일</Typography>
+                              <Typography variant="caption" color="text.secondary" display="block">
+                                확정된 검품일
+                              </Typography>
                               <Typography variant="body1" fontWeight="500">
                                 {new Date(data.confirmed_date).toLocaleDateString('ko-KR')}
                               </Typography>
@@ -323,38 +385,40 @@ export default function InspectionDetailPage() {
                             <Paper key={file.id} sx={{ p: 2 }} elevation={0}>
                               <Stack direction="row" alignItems="center" spacing={2}>
                                 {/* 이미지 미리보기 */}
-                                {(file.mime_type?.startsWith('image/') || 
+                                {(file.mime_type?.startsWith('image/') ||
                                   file.original_filename?.match(/\.(jpg|jpeg|png|gif|webp)$/i)) && (
-                                  <Box sx={{ 
-                                    width: 60, 
-                                    height: 60, 
-                                    border: '1px solid rgba(0,0,0,0.1)',
-                                    borderRadius: 1,
-                                    overflow: 'hidden',
-                                    flexShrink: 0
-                                  }}>
-                                    <img 
-                                      src={file.file_url} 
+                                  <Box
+                                    sx={{
+                                      width: 60,
+                                      height: 60,
+                                      border: '1px solid rgba(0,0,0,0.1)',
+                                      borderRadius: 1,
+                                      overflow: 'hidden',
+                                      flexShrink: 0,
+                                    }}
+                                  >
+                                    <img
+                                      src={file.file_url}
                                       alt={file.original_filename}
-                                      style={{ 
+                                      style={{
                                         width: '100%',
                                         height: '100%',
-                                        objectFit: 'cover'
+                                        objectFit: 'cover',
                                       }}
                                     />
                                   </Box>
                                 )}
                                 {/* 파일 아이콘 (이미지가 아닌 경우) */}
-                                {!(file.mime_type?.startsWith('image/') || 
-                                  file.original_filename?.match(/\.(jpg|jpeg|png|gif|webp)$/i)) && (
-                                  <AttachFileIcon color="action" sx={{ fontSize: 40 }} />
-                                )}
+                                {!(
+                                  file.mime_type?.startsWith('image/') ||
+                                  file.original_filename?.match(/\.(jpg|jpeg|png|gif|webp)$/i)
+                                ) && <AttachFileIcon color="action" sx={{ fontSize: 40 }} />}
                                 <Box flex={1}>
                                   <Typography variant="body2" fontWeight="bold">
                                     {file.original_filename}
                                   </Typography>
                                   <Typography variant="caption" color="text.secondary">
-                                    {(file.file_size / 1024 / 1024).toFixed(2)}MB • 
+                                    {(file.file_size / 1024 / 1024).toFixed(2)}MB •
                                     {new Date(file.created_at).toLocaleDateString('ko-KR')}
                                   </Typography>
                                 </Box>
@@ -389,21 +453,31 @@ export default function InspectionDetailPage() {
                     <Grid container spacing={3}>
                       <Grid size={{ xs: 12, md: 4 }}>
                         <Box>
-                          <Typography variant="caption" color="text.secondary" gutterBottom>검품 기간</Typography>
-                          <Typography variant="h5" fontWeight="600" color="primary">{data?.inspection_days || '-'}일</Typography>
-                        </Box>
-                      </Grid>
-                      <Grid size={{ xs: 12, md: 4 }}>
-                        <Box>
-                          <Typography variant="caption" color="text.secondary" gutterBottom>확정 일자</Typography>
-                          <Typography variant="body1" fontWeight="500">
-                            {data?.confirmed_date ? new Date(data.confirmed_date).toLocaleDateString('ko-KR') : '미정'}
+                          <Typography variant="caption" color="text.secondary" gutterBottom>
+                            검품 기간
+                          </Typography>
+                          <Typography variant="h5" fontWeight="600" color="primary">
+                            {data?.inspection_days || '-'}일
                           </Typography>
                         </Box>
                       </Grid>
                       <Grid size={{ xs: 12, md: 4 }}>
                         <Box>
-                          <Typography variant="caption" color="text.secondary" gutterBottom>검품 상태</Typography>
+                          <Typography variant="caption" color="text.secondary" gutterBottom>
+                            확정 일자
+                          </Typography>
+                          <Typography variant="body1" fontWeight="500">
+                            {data?.confirmed_date
+                              ? new Date(data.confirmed_date).toLocaleDateString('ko-KR')
+                              : '미정'}
+                          </Typography>
+                        </Box>
+                      </Grid>
+                      <Grid size={{ xs: 12, md: 4 }}>
+                        <Box>
+                          <Typography variant="caption" color="text.secondary" gutterBottom>
+                            검품 상태
+                          </Typography>
                           <Box sx={{ mt: 0.5 }}>
                             {data?.pass_fail_status === 'pass' ? (
                               <Chip label="합격" color="success" size="small" />
@@ -448,7 +522,9 @@ export default function InspectionDetailPage() {
                     <Grid container spacing={3}>
                       <Grid size={{ xs: 12, md: 4 }}>
                         <Box>
-                          <Typography variant="caption" color="text.secondary" gutterBottom>총 비용</Typography>
+                          <Typography variant="caption" color="text.secondary" gutterBottom>
+                            총 비용
+                          </Typography>
                           <Typography variant="h4" fontWeight="700" color="primary">
                             {data?.total_cost ? `₩${data.total_cost.toLocaleString()}` : '미정'}
                           </Typography>
@@ -456,7 +532,9 @@ export default function InspectionDetailPage() {
                       </Grid>
                       <Grid size={{ xs: 12, md: 4 }}>
                         <Box>
-                          <Typography variant="caption" color="text.secondary" gutterBottom>VAT</Typography>
+                          <Typography variant="caption" color="text.secondary" gutterBottom>
+                            VAT
+                          </Typography>
                           <Typography variant="h5" fontWeight="600">
                             {data?.vat_amount ? `₩${data.vat_amount.toLocaleString()}` : '-'}
                           </Typography>
@@ -464,10 +542,12 @@ export default function InspectionDetailPage() {
                       </Grid>
                       <Grid size={{ xs: 12, md: 4 }}>
                         <Box>
-                          <Typography variant="caption" color="text.secondary" gutterBottom>결제 상태</Typography>
+                          <Typography variant="caption" color="text.secondary" gutterBottom>
+                            결제 상태
+                          </Typography>
                           <Box sx={{ mt: 0.5 }}>
-                            <Chip 
-                              label={data?.payment_status === 'paid' ? '결제완료' : '대기중'} 
+                            <Chip
+                              label={data?.payment_status === 'paid' ? '결제완료' : '대기중'}
                               color={data?.payment_status === 'paid' ? 'success' : 'default'}
                               size="medium"
                               sx={{ fontWeight: 600 }}
@@ -493,18 +573,18 @@ export default function InspectionDetailPage() {
                       <Paper key={file.id} sx={{ p: 2 }} elevation={1}>
                         <Stack spacing={2}>
                           {/* 이미지 파일인 경우 미리보기 표시 */}
-                          {(file.mime_type?.startsWith('image/') || 
+                          {(file.mime_type?.startsWith('image/') ||
                             file.original_filename?.match(/\.(jpg|jpeg|png|gif|webp)$/i)) && (
                             <Box sx={{ mb: 2 }}>
-                              <img 
-                                src={file.file_url} 
+                              <img
+                                src={file.file_url}
                                 alt={file.original_filename}
-                                style={{ 
-                                  maxWidth: '100%', 
-                                  maxHeight: '300px', 
+                                style={{
+                                  maxWidth: '100%',
+                                  maxHeight: '300px',
                                   objectFit: 'contain',
                                   borderRadius: '4px',
-                                  border: '1px solid rgba(0,0,0,0.1)'
+                                  border: '1px solid rgba(0,0,0,0.1)',
                                 }}
                                 onError={(e) => {
                                   console.error('이미지 로드 실패:', file.file_url);
@@ -516,11 +596,9 @@ export default function InspectionDetailPage() {
                           <Stack direction="row" alignItems="center" spacing={2}>
                             <AttachFileIcon color="action" />
                             <Box flex={1}>
-                              <Typography variant="body1">
-                                {file.original_filename}
-                              </Typography>
+                              <Typography variant="body1">{file.original_filename}</Typography>
                               <Typography variant="caption" color="text.secondary">
-                                {file.file_type} • {(file.file_size / 1024 / 1024).toFixed(2)}MB • 
+                                {file.file_type} • {(file.file_size / 1024 / 1024).toFixed(2)}MB •
                                 {new Date(file.created_at).toLocaleDateString('ko-KR')}
                               </Typography>
                             </Box>
@@ -549,10 +627,7 @@ export default function InspectionDetailPage() {
         {/* Desktop - Chat on right side */}
         {!isMobile && (
           <Grid size={{ md: 4 }}>
-            <ChatPanel 
-              reservationNumber={reservationNumber}
-              serviceType="inspection"
-            />
+            <ChatPanel reservationNumber={reservationNumber} serviceType="inspection" />
           </Grid>
         )}
       </Grid>
@@ -567,7 +642,7 @@ export default function InspectionDetailPage() {
               position: 'fixed',
               bottom: 16,
               right: 16,
-              zIndex: 1200
+              zIndex: 1200,
             }}
             onClick={() => setChatDrawerOpen(true)}
           >
@@ -584,7 +659,7 @@ export default function InspectionDetailPage() {
                 height: '80vh',
                 borderTopLeftRadius: 16,
                 borderTopRightRadius: 16,
-              }
+              },
             }}
           >
             <Box sx={{ p: 2 }}>
@@ -595,10 +670,7 @@ export default function InspectionDetailPage() {
                 </IconButton>
               </Stack>
               <Box sx={{ height: 'calc(80vh - 100px)' }}>
-                <ChatPanel 
-                  reservationNumber={reservationNumber}
-                  serviceType="inspection"
-                />
+                <ChatPanel reservationNumber={reservationNumber} serviceType="inspection" />
               </Box>
             </Box>
           </Drawer>

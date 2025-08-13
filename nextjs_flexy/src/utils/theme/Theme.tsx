@@ -1,10 +1,7 @@
-
-
-
 import _ from 'lodash';
 import { createTheme } from '@mui/material/styles';
 import { useEffect, useContext } from 'react';
-import { CustomizerContext } from "@/app/context/customizerContext";
+import { CustomizerContext } from '@/app/context/customizerContext';
 import components from './Components';
 import typography from './Typography';
 import { shadows, darkshadows } from './Shadows';
@@ -36,7 +33,7 @@ export const BuildTheme = (config: any = {}) => {
   const theme = createTheme(
     _.merge({}, baseMode, defaultTheme, locales, themeSelect, {
       direction: config.direction,
-    }),
+    })
   );
 
   // Add components to the theme

@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   IconButton,
   Box,
@@ -8,25 +8,33 @@ import {
   styled,
   Stack,
   Theme,
-} from "@mui/material";
-import Notifications from "../../vertical/header/Notification";
-import Profile from "../../vertical/header/Profile";
-import Search from "../../vertical/header/Search";
-import Logo from "../../shared/logo/Logo";
-import { CustomizerContext } from "@/app/context/customizerContext";
-import config from "@/app/context/config";
-import Language from "../../vertical/header/Language";
-import { IconCategory2, IconMenu2, IconMoon, IconShoppingCart, IconSun, IconX } from "@tabler/icons-react";
+} from '@mui/material';
+import Notifications from '../../vertical/header/Notification';
+import Profile from '../../vertical/header/Profile';
+import Search from '../../vertical/header/Search';
+import Logo from '../../shared/logo/Logo';
+import { CustomizerContext } from '@/app/context/customizerContext';
+import config from '@/app/context/config';
+import Language from '../../vertical/header/Language';
+import {
+  IconCategory2,
+  IconMenu2,
+  IconMoon,
+  IconShoppingCart,
+  IconSun,
+  IconX,
+} from '@tabler/icons-react';
 
 import Navigation from '../../vertical/header/Navigation';
 
 import { useTheme } from '@mui/material/styles';
 
 const Header = () => {
-  const lgDown = useMediaQuery((theme: Theme) => theme.breakpoints.down("lg"));
-  const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("lg"));
+  const lgDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'));
+  const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
 
-  const { isLayout, setIsMobileSidebar, isMobileSidebar, activeMode, setActiveMode } = React.useContext(CustomizerContext);
+  const { isLayout, setIsMobileSidebar, isMobileSidebar, activeMode, setActiveMode } =
+    React.useContext(CustomizerContext);
   const TopbarHeight = config.topbarHeight;
 
   const theme = useTheme();
@@ -34,20 +42,20 @@ const Header = () => {
 
   const AppBarStyled = styled(AppBar)(({ theme }) => ({
     background: theme.palette.background.paper,
-    justifyContent: "center",
-    backdropFilter: "blur(4px)",
+    justifyContent: 'center',
+    backdropFilter: 'blur(4px)',
 
-    [theme.breakpoints.up("lg")]: {
+    [theme.breakpoints.up('lg')]: {
       minHeight: TopbarHeight,
     },
   }));
 
   const ToolbarStyled = styled(Toolbar)(({ theme }) => ({
-    margin: "0 auto",
-    width: "100%",
+    margin: '0 auto',
+    width: '100%',
     color: `${theme.palette.text.primary} !important`,
-    paddingLeft: "16px !important",
-    paddingRight: "16px !important"
+    paddingLeft: '16px !important',
+    paddingRight: '16px !important',
   }));
 
   const CollpaseMenubar = styled(Box)(({ theme }) => ({
@@ -59,107 +67,117 @@ const Header = () => {
     background: theme.palette.background.paper,
     border: `1px solid ${borderColor}`,
     zIndex: 1,
-    borderRadius: '7px'
+    borderRadius: '7px',
   }));
 
   const [isVisible, setIsVisible] = React.useState(false);
 
   return (
-      <AppBarStyled position="sticky" color="default" elevation={8}>
-        <ToolbarStyled
-          sx={{
-            maxWidth: isLayout === "boxed" ? "1300px" : "100%!important",
-          }}
-        >
-          <Box sx={{ width: lgDown ? "40px" : "auto", overflow: "hidden" }}>
-            <Logo />
-          </Box>
-          {/* ------------------------------------------- */}
-          {/* Toggle Button Sidebar */}
-          {/* ------------------------------------------- */}
-          {lgDown ? (
-            <IconButton
-              color="inherit"
-              aria-label="menu"
-              onClick={() => setIsMobileSidebar(!isMobileSidebar)}
-            >
-              <IconMenu2 size="21" />
-            </IconButton>
-          ) : (
-            ""
-          )}
-          {/* ------------------------------------------- */}
-          {/* Search Dropdown */}
-          {/* ------------------------------------------- */}
-          {lgUp ? (<>  <Search /> </>) : null}
-          {lgUp ? <><Navigation /></> : null}
+    <AppBarStyled position="sticky" color="default" elevation={8}>
+      <ToolbarStyled
+        sx={{
+          maxWidth: isLayout === 'boxed' ? '1300px' : '100%!important',
+        }}
+      >
+        <Box sx={{ width: lgDown ? '40px' : 'auto', overflow: 'hidden' }}>
+          <Logo />
+        </Box>
+        {/* ------------------------------------------- */}
+        {/* Toggle Button Sidebar */}
+        {/* ------------------------------------------- */}
+        {lgDown ? (
+          <IconButton
+            color="inherit"
+            aria-label="menu"
+            onClick={() => setIsMobileSidebar(!isMobileSidebar)}
+          >
+            <IconMenu2 size="21" />
+          </IconButton>
+        ) : (
+          ''
+        )}
+        {/* ------------------------------------------- */}
+        {/* Search Dropdown */}
+        {/* ------------------------------------------- */}
+        {lgUp ? (
+          <>
+            {' '}
+            <Search />{' '}
+          </>
+        ) : null}
+        {lgUp ? (
+          <>
+            <Navigation />
+          </>
+        ) : null}
 
-          <Box flexGrow={1} />
-          <Stack direction="row" alignItems="center">
-            <Language />
+        <Box flexGrow={1} />
+        <Stack direction="row" alignItems="center">
+          <Language />
 
-            <IconButton color="inherit">
-              {activeMode === 'light' ? (
-                <IconMoon width="21" height="21" onClick={() => setActiveMode("dark")} />
-              ) : (
-                <IconSun width="21" height="21" onClick={() => setActiveMode("light")} />
-              )}
-            </IconButton>
-
-            <IconButton color="inherit"
-              aria-label="show 11 new notifications"
-              aria-controls="msgs-menu"
-              aria-haspopup="true"
-            >
-              <IconShoppingCart width="21"  />
-            </IconButton>
-
-            
-
-            {/* ------------------------------------------- */}
-            {/* End Ecommerce Dropdown */}
-            {/* ------------------------------------------- */}
-            {lgUp ? (<> <Notifications /> </>) : null}
-            {/* ------------------------------------------- */}
-
-            {lgDown ? <IconButton color="inherit" onClick={() => setIsVisible(!isVisible)}>
-              <IconCategory2 size="21" />
-            </IconButton> : null}
-
-
-            <Box
-              sx={{
-                width: "1px",
-                backgroundColor: "rgba(0,0,0,0.1)",
-                height: "25px",
-                ml: 1,
-                mr: 1,
-              }}
-            />
-
-            <Profile />
-
-            {isVisible && (
-              <CollpaseMenubar>
-                <Stack direction="row" justifyContent='space-between' spacing={1}>
-                  <Box display='flex' gap={1}>
-                    <Notifications />
-                    <Language />
-                    <Search />
-                  </Box>
-                  <IconButton
-                    color="inherit"
-                    onClick={() => setIsVisible(!isVisible)}
-                  >
-                    <IconX size="21" />
-
-                  </IconButton>
-                </Stack>
-              </CollpaseMenubar>
+          <IconButton color="inherit">
+            {activeMode === 'light' ? (
+              <IconMoon width="21" height="21" onClick={() => setActiveMode('dark')} />
+            ) : (
+              <IconSun width="21" height="21" onClick={() => setActiveMode('light')} />
             )}
-          </Stack>
-        </ToolbarStyled>
-      </AppBarStyled>
+          </IconButton>
+
+          <IconButton
+            color="inherit"
+            aria-label="show 11 new notifications"
+            aria-controls="msgs-menu"
+            aria-haspopup="true"
+          >
+            <IconShoppingCart width="21" />
+          </IconButton>
+
+          {/* ------------------------------------------- */}
+          {/* End Ecommerce Dropdown */}
+          {/* ------------------------------------------- */}
+          {lgUp ? (
+            <>
+              {' '}
+              <Notifications />{' '}
+            </>
+          ) : null}
+          {/* ------------------------------------------- */}
+
+          {lgDown ? (
+            <IconButton color="inherit" onClick={() => setIsVisible(!isVisible)}>
+              <IconCategory2 size="21" />
+            </IconButton>
+          ) : null}
+
+          <Box
+            sx={{
+              width: '1px',
+              backgroundColor: 'rgba(0,0,0,0.1)',
+              height: '25px',
+              ml: 1,
+              mr: 1,
+            }}
+          />
+
+          <Profile />
+
+          {isVisible && (
+            <CollpaseMenubar>
+              <Stack direction="row" justifyContent="space-between" spacing={1}>
+                <Box display="flex" gap={1}>
+                  <Notifications />
+                  <Language />
+                  <Search />
+                </Box>
+                <IconButton color="inherit" onClick={() => setIsVisible(!isVisible)}>
+                  <IconX size="21" />
+                </IconButton>
+              </Stack>
+            </CollpaseMenubar>
+          )}
+        </Stack>
+      </ToolbarStyled>
+    </AppBarStyled>
   );
 };
 

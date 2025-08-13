@@ -1,5 +1,5 @@
-"use client";
-import * as React from "react";
+'use client';
+import * as React from 'react';
 import {
   TableContainer,
   Table,
@@ -13,48 +13,41 @@ import {
   Box,
   AvatarGroup,
   Grid,
-} from "@mui/material";
-import { Stack } from "@mui/system";
-import DownloadCard from "@/app/components/shared/DownloadCard";
-import {
-  basicsTableData,
-  EnTableType,
-} from "@/app/components/tables/tableData";
+} from '@mui/material';
+import { Stack } from '@mui/system';
+import DownloadCard from '@/app/components/shared/DownloadCard';
+import { basicsTableData, EnTableType } from '@/app/components/tables/tableData';
 import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
   useReactTable,
-} from "@tanstack/react-table";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+} from '@tanstack/react-table';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 const basics = basicsTableData;
 
 const columnHelper = createColumnHelper<EnTableType>();
 
 const columns = [
-  columnHelper.accessor("actions", {
+  columnHelper.accessor('actions', {
     cell: ({ row }) => (
       <span onClick={() => row.toggleExpanded()}>
         {row.getIsExpanded() ? (
-          <KeyboardArrowDownIcon sx={{ cursor: "pointer" }} />
+          <KeyboardArrowDownIcon sx={{ cursor: 'pointer' }} />
         ) : (
-          <KeyboardArrowRightIcon sx={{ cursor: "pointer" }} />
+          <KeyboardArrowRightIcon sx={{ cursor: 'pointer' }} />
         )}
       </span>
     ),
     header: () => <span></span>,
   }),
-  columnHelper.accessor("imgsrc", {
-    header: () => "Users",
+  columnHelper.accessor('imgsrc', {
+    header: () => 'Users',
     cell: (info) => (
       <Stack direction="row" spacing={2}>
-        <Avatar
-          src={info.getValue()}
-          alt={info.getValue()}
-          sx={{ width: 40, height: 40 }}
-        />
+        <Avatar src={info.getValue()} alt={info.getValue()} sx={{ width: 40, height: 40 }} />
         <Box>
           <Typography variant="h6" fontWeight="600">
             {info.row.original.name}
@@ -66,16 +59,16 @@ const columns = [
       </Stack>
     ),
   }),
-  columnHelper.accessor("pname", {
-    header: () => "Project Name",
+  columnHelper.accessor('pname', {
+    header: () => 'Project Name',
     cell: (info) => (
       <Typography color="textSecondary" variant="h6" fontWeight={400}>
         {info.row.original.pname}
       </Typography>
     ),
   }),
-  columnHelper.accessor("teams", {
-    header: () => "Team",
+  columnHelper.accessor('teams', {
+    header: () => 'Team',
     cell: (info) => (
       <Stack direction="row">
         <AvatarGroup max={4}>
@@ -95,43 +88,41 @@ const columns = [
       </Stack>
     ),
   }),
-  columnHelper.accessor("status", {
-    header: () => "Status",
+  columnHelper.accessor('status', {
+    header: () => 'Status',
     cell: (info) => (
       <Chip
         sx={{
           bgcolor:
-            info.getValue() === "Active"
+            info.getValue() === 'Active'
               ? (theme) => theme.palette.success.light
-              : info.getValue() === "Pending"
+              : info.getValue() === 'Pending'
                 ? (theme) => theme.palette.warning.light
-                : info.getValue() === "Completed"
+                : info.getValue() === 'Completed'
                   ? (theme) => theme.palette.primary.light
-                  : info.getValue() === "Cancel"
+                  : info.getValue() === 'Cancel'
                     ? (theme) => theme.palette.error.light
                     : (theme) => theme.palette.secondary.light,
           color:
-            info.getValue() === "Active"
+            info.getValue() === 'Active'
               ? (theme) => theme.palette.success.main
-              : info.getValue() === "Pending"
+              : info.getValue() === 'Pending'
                 ? (theme) => theme.palette.warning.main
-                : info.getValue() === "Completed"
+                : info.getValue() === 'Completed'
                   ? (theme) => theme.palette.primary.main
-                  : info.getValue() === "Cancel"
+                  : info.getValue() === 'Cancel'
                     ? (theme) => theme.palette.error.main
                     : (theme) => theme.palette.secondary.main,
-          borderRadius: "8px",
+          borderRadius: '8px',
         }}
         size="small"
         label={info.getValue()}
       />
     ),
   }),
-  columnHelper.accessor("budget", {
-    header: () => "Budget",
-    cell: (info) => (
-      <Typography variant="h6">${info.row.original.budget}</Typography>
-    ),
+  columnHelper.accessor('budget', {
+    header: () => 'Budget',
+    cell: (info) => <Typography variant="h6">${info.row.original.budget}</Typography>,
   }),
 ];
 
@@ -145,48 +136,39 @@ const TableExpanding = () => {
   });
 
   const handleDownload = () => {
-    const headers = ["Users", "Project Name", "Team", "Status", "Budget"];
+    const headers = ['Users', 'Project Name', 'Team', 'Status', 'Budget'];
     const rows = data.map(
-      (item: {
-        name: any;
-        pname: any;
-        teams: any[];
-        status: any;
-        budget: any;
-      }) => [
-          item.name,
-          item.pname,
-          item.teams.map((team) => team.text).join(", "),
-          item.status,
-          item.budget,
-        ]
+      (item: { name: any; pname: any; teams: any[]; status: any; budget: any }) => [
+        item.name,
+        item.pname,
+        item.teams.map((team) => team.text).join(', '),
+        item.status,
+        item.budget,
+      ]
     );
 
-    const csvContent = [
-      headers.join(","),
-      ...rows.map((e: any[]) => e.join(",")),
-    ].join("\n");
+    const csvContent = [headers.join(','), ...rows.map((e: any[]) => e.join(','))].join('\n');
 
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
 
-    const link = document.createElement("a");
+    const link = document.createElement('a');
     link.href = url;
-    link.setAttribute("download", "table-data.csv");
+    link.setAttribute('download', 'table-data.csv');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
   return (
-    (<DownloadCard title="Expanding Table" onDownload={handleDownload}>
+    <DownloadCard title="Expanding Table" onDownload={handleDownload}>
       <Grid container spacing={3}>
         <Grid size={12}>
           <Box>
             <TableContainer>
               <Table
                 sx={{
-                  whiteSpace: "nowrap",
+                  whiteSpace: 'nowrap',
                 }}
               >
                 <TableHead>
@@ -197,10 +179,7 @@ const TableExpanding = () => {
                           <Typography variant="h6">
                             {header.isPlaceholder
                               ? null
-                              : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
+                              : flexRender(header.column.columnDef.header, header.getContext())}
                           </Typography>
                         </TableCell>
                       ))}
@@ -213,10 +192,7 @@ const TableExpanding = () => {
                       <TableRow>
                         {row.getVisibleCells().map((cell) => (
                           <TableCell key={cell.id}>
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext()
-                            )}
+                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
                           </TableCell>
                         ))}
                       </TableRow>
@@ -224,7 +200,7 @@ const TableExpanding = () => {
                         <TableRow>
                           <TableCell colSpan={columns.length}>
                             <Box sx={{ p: 2 }}>
-                              <Typography variant="h6" sx={{ fontWeight: "600" }}>
+                              <Typography variant="h6" sx={{ fontWeight: '600' }}>
                                 Details:
                               </Typography>
                               <Box sx={{ mt: 1 }}>
@@ -234,7 +210,9 @@ const TableExpanding = () => {
                               <Box sx={{ mt: 1 }}>
                                 <Typography variant="body1">Name: {row.original.name}</Typography>
                                 <Typography variant="body1">Post: {row.original.post}</Typography>
-                                <Typography variant="body1">Project Name: {row.original.pname}</Typography>
+                                <Typography variant="body1">
+                                  Project Name: {row.original.pname}
+                                </Typography>
                                 <Typography variant="body1">Status: </Typography>
                                 <Chip
                                   sx={{
@@ -268,8 +246,7 @@ const TableExpanding = () => {
                                 <AvatarGroup max={4}>
                                   {row.original.teams.map((team) => (
                                     <Avatar
-                                      key={team.id
-                                      }
+                                      key={team.id}
                                       sx={{
                                         bgcolor: team.color,
                                         width: 35,
@@ -282,7 +259,9 @@ const TableExpanding = () => {
                                 </AvatarGroup>
                               </Box>
                               <Box sx={{ mt: 1 }}>
-                                <Typography variant="body1">Budget: ${row.original.budget}</Typography>
+                                <Typography variant="body1">
+                                  Budget: ${row.original.budget}
+                                </Typography>
                               </Box>
                             </Box>
                           </TableCell>
@@ -296,7 +275,7 @@ const TableExpanding = () => {
           </Box>
         </Grid>
       </Grid>
-    </DownloadCard>)
+    </DownloadCard>
   );
 };
 export default TableExpanding;

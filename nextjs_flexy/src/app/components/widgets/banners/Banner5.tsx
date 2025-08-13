@@ -1,23 +1,23 @@
-"use client";
-import { CardContent, Typography, Button } from "@mui/material";
-import ParentCard from "../../shared/ParentCard";
-import { Box } from "@mui/system";
-import React from "react";
-import Image from "next/image";
+'use client';
+import { CardContent, Typography, Button } from '@mui/material';
+import ParentCard from '../../shared/ParentCard';
+import { Box } from '@mui/system';
+import React from 'react';
+import Image from 'next/image';
 
-import EmptyCartCode from "./code/EmptyCartCode";
+import EmptyCartCode from './code/EmptyCartCode';
 
 const Banner5 = () => {
   return (
     <ParentCard title="Empty Cart" codeModel={<EmptyCartCode />}>
-      <CardContent sx={{ p: "30px" }}>
+      <CardContent sx={{ p: '30px' }}>
         <Box textAlign="center">
           <Image
-            src={"/images/products/empty-shopping-cart.svg"}
+            src={'/images/products/empty-shopping-cart.svg'}
             width={200}
             height={200}
             alt="star"
-            style={{ width: "200px" }}
+            style={{ width: '200px' }}
           />
 
           <Typography variant="h5" mt={3}>

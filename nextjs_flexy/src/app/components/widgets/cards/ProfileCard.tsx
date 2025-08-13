@@ -39,17 +39,17 @@ const profileCard = [
   {
     name: 'Andrew Grant',
     role: 'Technology Director',
-    avatar: "/images/users/1.jpg",
+    avatar: '/images/users/1.jpg',
   },
   {
     name: 'Leo Pratt',
     role: 'Telecom Analyst',
-    avatar: "/images/users/2.jpg",
+    avatar: '/images/users/2.jpg',
   },
   {
     name: 'Charles Nunez',
     role: 'Environmental Specialist',
-    avatar: "/images/users/3.jpg",
+    avatar: '/images/users/3.jpg',
   },
 ];
 
@@ -57,14 +57,15 @@ const ProfileCard = () => {
   const theme = useTheme();
 
   return (
-    (<Grid container spacing={3}>
+    <Grid container spacing={3}>
       {profileCard.map((card, index) => (
         <Grid
           key={index}
           size={{
             xs: 12,
-            sm: 4
-          }}>
+            sm: 4,
+          }}
+        >
           <BlankCard>
             <CardContent>
               <Stack direction={'column'} gap={2} alignItems="center">
@@ -91,7 +92,7 @@ const ProfileCard = () => {
           </BlankCard>
         </Grid>
       ))}
-    </Grid>)
+    </Grid>
   );
 };
 

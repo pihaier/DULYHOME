@@ -51,14 +51,13 @@ export function GlobalProvider({ children }: { children: React.ReactNode }) {
 
   const fetchUserProfile = async (userId: string) => {
     try {
-      
       // RLS가 비활성화되어 있으므로 SDK 직접 사용
       const { data, error } = await supabase
         .from('user_profiles')
         .select('*')
         .eq('user_id', userId)
         .single();
-      
+
       if (error) {
         console.error('Profile fetch error:', error);
         // 프로필이 없으면 null 반환 (빈칸으로 표시)
@@ -68,7 +67,7 @@ export function GlobalProvider({ children }: { children: React.ReactNode }) {
         }
         return null;
       }
-      
+
       return data as UserProfile;
     } catch (error) {
       console.error('Exception in fetchUserProfile:', error);
@@ -81,14 +80,17 @@ export function GlobalProvider({ children }: { children: React.ReactNode }) {
     if (isRefreshingRef.current) {
       return;
     }
-    
+
     isRefreshingRef.current = true;
     setLoading(true);
-    
+
     try {
       // 먼저 세션을 확인하여 인증 상태 체크
-      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-      
+      const {
+        data: { session },
+        error: sessionError,
+      } = await supabase.auth.getSession();
+
       if (sessionError) {
         console.error('Session error:', sessionError);
         setUser(null);
@@ -115,7 +117,7 @@ export function GlobalProvider({ children }: { children: React.ReactNode }) {
         const profile = await fetchUserProfile(session.user.id);
         setUserProfile(profile);
       }
-      
+
       setLoading(false);
     } catch (error) {
       console.error('Error refreshing user:', error);
@@ -135,39 +137,40 @@ export function GlobalProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     let isInitialLoad = true;
-    
+
     // 초기 사용자 상태 확인 - 즉시 실행
     refreshUser();
 
     // 인증 상태 변경 감지
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        
-        // 초기 로드 중에는 모든 이벤트 무시 (refreshUser가 처리함)
-        if (isInitialLoad) {
-          // 첫 이벤트 후에는 초기 로드 플래그를 해제
-          setTimeout(() => { isInitialLoad = false; }, 100);
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      // 초기 로드 중에는 모든 이벤트 무시 (refreshUser가 처리함)
+      if (isInitialLoad) {
+        // 첫 이벤트 후에는 초기 로드 플래그를 해제
+        setTimeout(() => {
+          isInitialLoad = false;
+        }, 100);
+        return;
+      }
+
+      if (event === 'SIGNED_OUT') {
+        setUser(null);
+        setUserProfile(null);
+        setLoading(false);
+      } else if (event === 'SIGNED_IN' && session?.user) {
+        // 이미 로그인된 사용자인지 확인
+        if (userRef.current?.id === session.user.id) {
           return;
         }
-        
-        if (event === 'SIGNED_OUT') {
-          setUser(null);
-          setUserProfile(null);
-          setLoading(false);
-        } else if (event === 'SIGNED_IN' && session?.user) {
-          // 이미 로그인된 사용자인지 확인
-          if (userRef.current?.id === session.user.id) {
-            return;
-          }
-          // SIGNED_IN 이벤트는 실제 로그인 시에만 처리
-          await refreshUser();
-        } else if (event === 'TOKEN_REFRESHED' && session?.user) {
-          // 토큰 갱신 시에는 프로필만 다시 가져옴
-          const profile = await fetchUserProfile(session.user.id);
-          setUserProfile(profile);
-        }
+        // SIGNED_IN 이벤트는 실제 로그인 시에만 처리
+        await refreshUser();
+      } else if (event === 'TOKEN_REFRESHED' && session?.user) {
+        // 토큰 갱신 시에는 프로필만 다시 가져옴
+        const profile = await fetchUserProfile(session.user.id);
+        setUserProfile(profile);
       }
-    );
+    });
 
     return () => {
       subscription.unsubscribe();
@@ -182,11 +185,7 @@ export function GlobalProvider({ children }: { children: React.ReactNode }) {
     supabase,
   };
 
-  return (
-    <GlobalContext.Provider value={value}>
-      {children}
-    </GlobalContext.Provider>
-  );
+  return <GlobalContext.Provider value={value}>{children}</GlobalContext.Provider>;
 }
 
 export function useUser() {

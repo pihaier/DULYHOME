@@ -1,6 +1,6 @@
-'use client'
+'use client';
 import React from 'react';
-import { List, ListItemText,  ListItemButton, Divider, ListItemIcon } from '@mui/material';
+import { List, ListItemText, ListItemButton, Divider, ListItemIcon } from '@mui/material';
 import BlankCard from '../../shared/BlankCard';
 
 import { IconInbox, IconMailOpened } from '@tabler/icons-react';
@@ -10,7 +10,7 @@ const SelectedList = () => {
 
   const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    index: number,
+    index: number
   ) => {
     setSelectedIndex(index);
   };

@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const FABCode = () => {
   return (
     <>
@@ -27,7 +27,7 @@ import { IconClipboard, IconPlus, IconSend } from '@tabler/icons-react';
 </Stack>`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default FABCode
+export default FABCode;

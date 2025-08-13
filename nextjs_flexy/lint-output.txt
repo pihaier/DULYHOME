@@ -1,0 +1,1730 @@
+
+./src/app/api/auth/accept-terms/route.ts
+18:5  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+19:5  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+25:51  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+28:39  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+36:34  Warning: 'userError' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/api/auth/callback/route.ts
+13:7  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+14:7  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+20:53  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+23:41  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/api/auth/custom-signup/route.ts
+25:11  Warning: 'confirmUrl' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+40:5  Warning: Unexpected console statement.  no-console
+
+./src/app/api/auth/customer/login/route.ts
+79:5  Warning: Unexpected console statement.  no-console
+
+./src/app/api/auth/customer/register/route.ts
+7:11  Warning: 'cookieStore' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+121:5  Warning: Unexpected console statement.  no-console
+
+./src/app/api/auth/logout/route.ts
+7:11  Warning: 'cookieStore' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+41:5  Warning: Unexpected console statement.  no-console
+
+./src/app/api/files/batch-upload/route.ts
+26:7  Warning: Unexpected console statement.  no-console
+155:5  Warning: Unexpected console statement.  no-console
+
+./src/app/api/files/prepare-upload/route.ts
+29:42  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+46:7  Warning: Unexpected console statement.  no-console
+57:5  Warning: Unexpected console statement.  no-console
+
+./src/app/api/files/upload/route.ts
+30:11  Warning: 'cookieStore' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+121:27  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+164:5  Warning: Unexpected console statement.  no-console
+
+./src/app/api/globalFetcher.ts
+3:26  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+14:40  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+26:39  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+38:41  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+50:42  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/application/factory-contact/page.tsx
+10:3  Warning: 'Card' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+11:3  Warning: 'CardContent' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+17:3  Warning: 'Alert' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+121:6  Warning: React Hook React.useEffect has a missing dependency: 'formData.company_name'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+145:9  Warning: Unexpected alert.  no-alert
+151:9  Warning: Unexpected alert.  no-alert
+163:20  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+183:28  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+188:9  Warning: Unexpected alert.  no-alert
+198:9  Warning: Unexpected alert.  no-alert
+214:25  Warning: 'uploadData' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+230:28  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+256:20  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+276:7  Warning: Unexpected console statement.  no-console
+277:7  Warning: Unexpected alert.  no-alert
+
+./src/app/application/import-agency/bulk-order/page.tsx
+12:3  Warning: 'FormControl' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+13:3  Warning: 'FormLabel' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+86:7  Warning: Unexpected alert.  no-alert
+92:7  Warning: Unexpected alert.  no-alert
+117:23  Warning: 'uploadData' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+138:25  Warning: 'uploadData' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+160:25  Warning: 'uploadData' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+238:7  Warning: Unexpected console statement.  no-console
+239:7  Warning: Unexpected alert.  no-alert
+
+./src/app/application/import-agency/page.tsx
+4:45  Warning: 'CardMedia' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+4:89  Warning: 'Stack' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+182:45  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/application/import-agency/sampling/page.tsx
+12:3  Warning: 'FormControl' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+13:3  Warning: 'FormLabel' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+86:7  Warning: Unexpected alert.  no-alert
+92:7  Warning: Unexpected alert.  no-alert
+117:23  Warning: 'uploadData' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+138:25  Warning: 'uploadData' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+160:25  Warning: 'uploadData' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+238:7  Warning: Unexpected console statement.  no-console
+239:7  Warning: Unexpected alert.  no-alert
+
+./src/app/application/inspection/page.tsx
+13:3  Warning: 'FormLabel' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+14:3  Warning: 'RadioGroup' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+15:3  Warning: 'FormControlLabel' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+16:3  Warning: 'Radio' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+19:3  Warning: 'Paper' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+44:8  Warning: 'dayjs' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+89:17  Warning: 'userProfile' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+119:7  Warning: Unexpected alert.  no-alert
+126:7  Warning: Unexpected alert.  no-alert
+131:7  Warning: Unexpected alert.  no-alert
+136:7  Warning: Unexpected alert.  no-alert
+141:7  Warning: Unexpected alert.  no-alert
+146:7  Warning: Unexpected alert.  no-alert
+154:13  Warning: 'saveToProfileCheckbox' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+306:15  Warning: Unexpected console statement.  no-console
+324:27  Warning: 'result' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+361:15  Warning: Unexpected console statement.  no-console
+364:13  Warning: Unexpected console statement.  no-console
+372:21  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+373:7  Warning: Unexpected console statement.  no-console
+374:7  Warning: Unexpected alert.  no-alert
+
+./src/app/application/market-research/page.tsx
+12:3  Warning: 'FormControl' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+13:3  Warning: 'FormLabel' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+31:27  Warning: 'useCompanyInfoSubmit' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+33:10  Warning: 'createServiceClient' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+106:7  Warning: Unexpected alert.  no-alert
+112:7  Warning: Unexpected alert.  no-alert
+117:7  Warning: Unexpected alert.  no-alert
+122:7  Warning: Unexpected alert.  no-alert
+127:7  Warning: Unexpected alert.  no-alert
+171:9  Warning: Unexpected console statement.  no-console
+176:9  Warning: Unexpected console statement.  no-console
+242:11  Warning: Unexpected console statement.  no-console
+294:15  Warning: Unexpected console statement.  no-console
+323:15  Warning: Unexpected console statement.  no-console
+328:13  Warning: Unexpected console statement.  no-console
+365:15  Warning: 'uploadedFiles' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+371:21  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+378:7  Warning: Unexpected alert.  no-alert
+
+./src/app/application/sampling/page.tsx
+13:3  Warning: 'FormLabel' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+99:17  Warning: 'userProfile' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+148:6  Warning: React Hook useEffect has a missing dependency: 'fetchSavedShippingAddresses'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+179:7  Warning: Unexpected console statement.  no-console
+241:7  Warning: Unexpected alert.  no-alert
+248:7  Warning: Unexpected alert.  no-alert
+254:7  Warning: Unexpected alert.  no-alert
+259:7  Warning: Unexpected alert.  no-alert
+264:7  Warning: Unexpected alert.  no-alert
+379:15  Warning: Unexpected console statement.  no-console
+406:15  Warning: Unexpected console statement.  no-console
+409:13  Warning: Unexpected console statement.  no-console
+417:21  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+418:7  Warning: Unexpected console statement.  no-console
+419:7  Warning: Unexpected alert.  no-alert
+
+./src/app/apps/sampling/page.tsx
+24:10  Warning: 'isSubmitting' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+24:24  Warning: 'setIsSubmitting' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/apps/sampling/[reservationNumber]/page.tsx
+17:3  Warning: 'Divider' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+61:6  Warning: React Hook useEffect has a missing dependency: 'fetchData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+141:53  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/auth/authForms/AuthLogin.tsx
+106:7  Warning: Unexpected console statement.  no-console
+138:7  Warning: Unexpected console statement.  no-console
+
+./src/app/auth/authForms/AuthRegister.tsx
+3:8  Warning: 'Link' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+88:11  Warning: Unexpected console statement.  no-console
+91:11  Warning: Unexpected alert.  no-alert
+96:11  Warning: Unexpected alert.  no-alert
+100:19  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+101:7  Warning: Unexpected console statement.  no-console
+130:9  Warning: Unexpected console statement.  no-console
+140:7  Warning: Unexpected console statement.  no-console
+168:7  Warning: Unexpected console statement.  no-console
+
+./src/app/auth/callback/page.tsx
+21:9  Warning: Unexpected console statement.  no-console
+
+./src/app/auth/complete-profile/page.tsx
+25:9  Warning: 'router' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+91:7  Warning: Unexpected console statement.  no-console
+
+./src/app/components/apps/chats/ChatContent.tsx
+21:10  Warning: 'ChatsType' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/apps/chats/ChatListing.tsx
+1:29  Warning: 'useEffect' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+1:40  Warning: 'useState' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/apps/chats/ChatMsgSent.tsx
+6:10  Warning: 'EmojiClickData' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/apps/contacts/ContactDetails.tsx
+24:58  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+118:30  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/apps/contacts/ContactFilter.tsx
+107:11  Warning: 'result' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+114:7  Warning: Unexpected console statement.  no-console
+
+./src/app/components/apps/contacts/ContactList.tsx
+1:22  Warning: 'useEffect' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+1:33  Warning: 'useState' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/apps/contacts/ContactListItem.tsx
+33:3  Warning: 'id' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+44:9  Warning: 'br' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/apps/invoice/Add-invoice/index.tsx
+211:7  Warning: Unexpected console statement.  no-console
+
+./src/app/components/apps/invoice/Edit-invoice/index.tsx
+30:10  Warning: 'InvoiceList' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+35:58  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+37:54  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+78:7  Warning: Unexpected console statement.  no-console
+156:59  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/apps/invoice/Invoice-detail/index.tsx
+6:3  Warning: 'Card' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+7:3  Warning: 'CardContent' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+17:3  Warning: 'Badge' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/apps/invoice/Invoice-list/index.tsx
+12:3  Warning: 'Badge' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+15:3  Warning: 'Tabs' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+16:3  Warning: 'Tab' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+29:8  Warning: 'EditIcon' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+30:8  Warning: 'VisibilityIcon' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+31:8  Warning: 'DeleteIcon' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+50:60  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+88:56  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+95:43  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+101:38  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+135:11  Warning: 'result' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+142:7  Warning: Unexpected console statement.  no-console
+306:25  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+383:21  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+384:27  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+385:25  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+386:28  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+387:25  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/apps/notes/NoteContent.tsx
+59:5  Warning: Unexpected console statement.  no-console
+
+./src/app/components/apps/tickets/TicketFilter.tsx
+42:11  Warning: 'result' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/apps/userprofile/followers/FollowerCard.tsx
+12:29  Warning: 'useEffect' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+16:10  Warning: 'userType' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/apps/userprofile/friends/FriendsCard.tsx
+13:29  Warning: 'useEffect' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+24:10  Warning: 'userType' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/apps/userprofile/profile/Post.tsx
+3:22  Warning: 'useEffect' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/apps/userprofile/profile/PostComments.tsx
+26:11  Warning: 'ReplyProps' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/dashboard/dashboard1/TheBlogCard.tsx
+4:3  Warning: 'Card' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/dashboard/dashboard1/TheProductPerformance.tsx
+2:8  Warning: 'Image' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+15:3  Warning: 'Paper' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/dashboard/dashboard1/TheSalesOverview.tsx
+2:34  Warning: 'Avatar' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/dashboard/dashboard1/TheTotalSales.tsx
+2:36  Warning: 'Stack' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/dashboard/dashboard1/TheWelcomeCard.tsx
+2:8  Warning: 'Image' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+3:49  Warning: 'Box' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+10:11  Warning: 'activeDir' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/dashboard/dashboard2/TheEarnings.tsx
+7:3  Warning: 'Box' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+9:3  Warning: 'Avatar' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/dashboard/dashboard2/TheMedicalProBranding.tsx
+14:3  Warning: 'Stack' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+19:8  Warning: 'theme' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/dashboard/dashboard2/TheProductsTable.tsx
+67:9  Warning: 'primary' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+68:9  Warning: 'secondary' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/dashboard/dashboard2/TheYearlySales.tsx
+9:3  Warning: 'Avatar' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/dashboard/dashboard3/Congratulation.tsx
+3:3  Warning: 'Card' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/dashboard/dashboard3/Customers.tsx
+1:46  Warning: 'Stack' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+1:53  Warning: 'Grid' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/dashboard/dashboard3/MonthlyEarnings.tsx
+2:46  Warning: 'Stack' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+2:53  Warning: 'Grid' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/dashboard/dashboard3/ProductPerformance.tsx
+2:8  Warning: 'Image' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/dashboard/MyOrderStatsCards.tsx
+42:6  Warning: React Hook useEffect has a missing dependency: 'fetchMyStats'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+130:7  Warning: Unexpected console statement.  no-console
+
+./src/app/components/dashboard/PendingConfirmations.tsx
+45:13  Warning: 'supabase' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+49:19  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+50:13  Warning: 'error' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+54:7  Warning: Unexpected console statement.  no-console
+
+./src/app/components/dashboard/RecentApplications.tsx
+35:6  Warning: React Hook useEffect has a missing dependency: 'fetchRecentApplications'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+94:7  Warning: Unexpected console statement.  no-console
+
+./src/app/components/dashboard/ServiceOverviewChart.tsx
+30:6  Warning: React Hook useEffect has a missing dependency: 'fetchServiceData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+76:7  Warning: Unexpected console statement.  no-console
+
+./src/app/components/dashboard/ServiceStatsCards.tsx
+74:7  Warning: Unexpected console statement.  no-console
+
+./src/app/components/dashboard/UnreadMessagesWidget.tsx
+10:3  Warning: 'Button' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+41:6  Warning: React Hook useEffect has a missing dependency: 'fetchUnreadMessages'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+56:9  Warning: Unexpected console statement.  no-console
+64:7  Warning: Unexpected console statement.  no-console
+
+./src/app/components/forms/form-elements/CompanyAddressSelector.tsx
+83:6  Warning: React Hook useEffect has a missing dependency: 'fetchAddresses'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+91:24  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+107:7  Warning: Unexpected console statement.  no-console
+140:26  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+148:20  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+176:7  Warning: Unexpected console statement.  no-console
+274:13  Warning: Unexpected alert.  no-alert
+
+./src/app/components/forms/form-elements/CompanyInfoForm.tsx
+12:3  Warning: 'Paper' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+67:5  Warning: Unexpected console statement.  no-console
+68:5  Warning: Unexpected console statement.  no-console
+69:5  Warning: Unexpected console statement.  no-console
+79:7  Warning: Unexpected console statement.  no-console
+82:6  Warning: React Hook useEffect has missing dependencies: 'onChange' and 'value'. Either include them or remove the dependency array. If 'onChange' changes too often, find the parent component that defines it and wrap that definition in useCallback.  react-hooks/exhaustive-deps
+89:6  Warning: React Hook useEffect has a missing dependency: 'fetchSavedAddresses'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+117:9  Warning: Unexpected console statement.  no-console
+125:7  Warning: Unexpected console statement.  no-console
+133:18  Warning: Assignments to the 'onSubmit' variable from inside React Hook useEffect will be lost after each render. To preserve the value over time, store it in a useRef Hook and keep the mutable value in the '.current' property. Otherwise, you can move this variable directly inside useEffect.  react-hooks/exhaustive-deps
+167:7  Warning: Unexpected console statement.  no-console
+336:7  Warning: Unexpected console statement.  no-console
+
+./src/app/components/forms/form-elements/FileUpload.tsx
+11:3  Warning: 'Stack' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+12:3  Warning: 'Chip' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+14:3  Warning: 'LinearProgress' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+20:3  Warning: 'Fab' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+26:3  Warning: 'IconEye' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+132:6  Warning: React Hook React.useEffect has a missing dependency: 'currentFiles'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+138:7  Warning: Unexpected alert.  no-alert
+
+./src/app/components/forms/form-elements/slider/RangeSlider.tsx
+15:34  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/forms/form-elements/slider/VolumeSlider.tsx
+13:32  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/forms/form-layouts/FbBasicHeaderForm.tsx
+53:33  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+59:33  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+65:33  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/forms/form-layouts/FbDefaultForm.tsx
+46:50  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+46:64  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/forms/form-layouts/FbLeftIconForm.tsx
+23:32  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/forms/form-layouts/FbOrdinaryForm.tsx
+14:32  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/forms/form-layouts/FbRightIconForm.tsx
+21:32  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/forms/form-tiptap/Editor.tsx
+7:7  Warning: 'BCrumb' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/forms/form-validation/FVCheckbox.tsx
+19:7  Warning: Unexpected alert.  no-alert
+
+./src/app/components/forms/form-validation/FVLogin.tsx
+41:7  Warning: Unexpected alert.  no-alert
+
+./src/app/components/forms/form-validation/FVOnLeave.tsx
+27:7  Warning: Unexpected alert.  no-alert
+
+./src/app/components/forms/form-validation/FVRadio.tsx
+28:7  Warning: Unexpected alert.  no-alert
+
+./src/app/components/forms/form-validation/FVRegister.tsx
+25:15  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+40:7  Warning: Unexpected alert.  no-alert
+
+./src/app/components/forms/form-validation/FVSelect.tsx
+21:7  Warning: Unexpected alert.  no-alert
+
+./src/app/components/forms/theme-elements/CustomFormLabel.tsx
+6:40  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/forms/theme-elements/CustomOutlinedInput.tsx
+6:44  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/forms/theme-elements/CustomSelect.tsx
+6:37  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/forms/theme-elements/CustomSocialButton.tsx
+6:43  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/forms/theme-elements/CustomSwitch.tsx
+6:37  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/forms/theme-elements/CustomTextField.tsx
+6:40  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/frontend-pages/about/company-intro/index.tsx
+11:3  Warning: 'List' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+12:3  Warning: 'ListItem' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+13:3  Warning: 'ListItemIcon' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+14:3  Warning: 'ListItemText' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+15:3  Warning: 'Button' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+24:3  Warning: 'Download' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/frontend-pages/about/key-metric/index.tsx
+3:15  Warning: 'Stack' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+3:22  Warning: 'Typography' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+3:51  Warning: 'Button' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/frontend-pages/about/service-highlights/index.tsx
+106:35  Warning: 'index' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/frontend-pages/blog/blog-card/BlogCard.tsx
+2:17  Warning: 'FC' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+3:8  Warning: 'Image' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+5:8  Warning: 'Link' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+39:5  Warning: 'excerpt' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/frontend-pages/blog/customer-support/CustomerSupportList.tsx
+18:3  Warning: 'Paper' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+19:3  Warning: 'List' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+20:3  Warning: 'ListItem' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+21:3  Warning: 'ListItemText' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+22:3  Warning: 'Divider' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+29:15  Warning: 'CategoryIcon' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+69:44  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+81:6  Warning: React Hook useEffect has a missing dependency: 'ADMIN_EMAILS'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+110:53  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+125:9  Warning: Unexpected confirm.  no-alert
+285:73  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+346:71  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/frontend-pages/blog/customer-support/CustomerSupportListDB.tsx
+18:3  Warning: 'Paper' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+19:3  Warning: 'List' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+20:3  Warning: 'ListItem' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+21:3  Warning: 'ListItemText' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+22:3  Warning: 'Divider' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+91:11  Warning: 'user' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+106:44  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+114:6  Warning: React Hook useEffect has a missing dependency: 'fetchData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+128:9  Warning: Unexpected console statement.  no-console
+146:9  Warning: Unexpected console statement.  no-console
+156:19  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+157:7  Warning: Unexpected console statement.  no-console
+184:53  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+202:10  Warning: Unexpected confirm.  no-alert
+219:7  Warning: Unexpected console statement.  no-console
+220:7  Warning: Unexpected alert.  no-alert
+293:7  Warning: Unexpected console statement.  no-console
+294:7  Warning: Unexpected alert.  no-alert
+452:73  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+513:71  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/frontend-pages/blog/customer-support/CustomerSupportView.tsx
+81:6  Warning: React Hook useEffect has a missing dependency: 'fetchData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+97:9  Warning: Unexpected console statement.  no-console
+110:9  Warning: Unexpected console statement.  no-console
+114:19  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+115:7  Warning: Unexpected console statement.  no-console
+258:75  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+314:73  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/frontend-pages/blog/customer-support/CustomerSupportWithFallback.tsx
+15:6  Warning: React Hook useEffect has a missing dependency: 'checkDatabaseAvailability'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+27:9  Warning: Unexpected console statement.  no-console
+31:9  Warning: Unexpected console statement.  no-console
+35:7  Warning: Unexpected console statement.  no-console
+
+./src/app/components/frontend-pages/contact/banner/index.tsx
+4:8  Warning: 'Image' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/frontend-pages/contact/form/Address.tsx
+3:27  Warning: 'Container' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+3:38  Warning: 'Grid' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+3:44  Warning: 'MenuItem' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+3:54  Warning: 'Button' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/frontend-pages/contact/form/index.tsx
+16:3  Warning: 'Alert' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+89:9  Warning: Unexpected alert.  no-alert
+101:25  Warning: 'uploadData' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+148:7  Warning: Unexpected console statement.  no-console
+149:7  Warning: Unexpected alert.  no-alert
+
+./src/app/components/frontend-pages/homepage/ai-intelligence/index.tsx
+4:71  Warning: 'Chip' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+115:11  Warning: 'theme' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+116:11  Warning: 'router' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/frontend-pages/homepage/ai-trade-system/index.tsx
+14:3  Warning: 'IconButton' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+15:3  Warning: 'Tooltip' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/frontend-pages/homepage/banner/Banner.tsx
+7:3  Warning: 'AvatarGroup' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+8:3  Warning: 'Avatar' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+12:3  Warning: 'Link' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+15:8  Warning: 'Image' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+16:8  Warning: 'Tooltip' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+17:8  Warning: 'Dialog' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+18:8  Warning: 'DialogActions' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+19:8  Warning: 'DialogContent' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+20:8  Warning: 'DialogContentText' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+21:8  Warning: 'DialogTitle' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+23:7  Warning: 'Services' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+47:9  Warning: 'lgUp' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+49:10  Warning: 'open' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+51:9  Warning: 'handleClickOpen' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+55:9  Warning: 'handleClose' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/frontend-pages/homepage/defend-focus/index.tsx
+3:35  Warning: 'Typography' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+16:10  Warning: 'useState' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+60:32  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/frontend-pages/homepage/defend-focus/TabEmbedding.tsx
+7:10  Warning: 'useTheme' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/frontend-pages/homepage/defend-focus/TabPayments.tsx
+7:10  Warning: 'useTheme' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/frontend-pages/homepage/defend-focus/TabTeamScheduling.tsx
+7:10  Warning: 'useTheme' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/frontend-pages/homepage/faq/index.tsx
+5:3  Warning: 'Divider' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+8:3  Warning: 'Button' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+16:8  Warning: 'Image' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/frontend-pages/homepage/realtime-translation/index.tsx
+13:3  Warning: 'Button' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+16:3  Warning: 'Fade' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+20:3  Warning: 'IconLanguage' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+22:3  Warning: 'IconMessage' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+25:3  Warning: 'IconArrowRight' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+26:3  Warning: 'IconUser' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+63:10  Warning: 'isTyping' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+63:20  Warning: 'setIsTyping' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/frontend-pages/homepage/service-overview/index.tsx
+86:35  Warning: 'index' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/frontend-pages/homepage/shipping-showcase/index.tsx
+13:3  Warning: 'List' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+14:3  Warning: 'ListItem' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+15:3  Warning: 'ListItemIcon' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+16:3  Warning: 'ListItemText' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+20:3  Warning: 'Speed' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+22:3  Warning: 'CheckCircleOutline' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+25:3  Warning: 'Schedule' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+26:3  Warning: 'AccountTree' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+28:8  Warning: 'Image' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/frontend-pages/pricing/Banner.tsx
+4:8  Warning: 'Image' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/frontend-pages/services/content/index.tsx
+24:3  Warning: 'Search' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+25:3  Warning: 'Assessment' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+26:3  Warning: 'ContactPhone' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+27:3  Warning: 'Description' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+239:37  Warning: 'index' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+267:87  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+421:53  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+447:51  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/frontend-pages/shared/c2a/index.tsx
+4:10  Warning: 'styled' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/frontend-pages/shared/footer/index.tsx
+9:3  Warning: 'Stack' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+10:3  Warning: 'Tooltip' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+12:8  Warning: 'Image' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/frontend-pages/shared/header/HeaderAlert.tsx
+2:8  Warning: 'React' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+2:17  Warning: 'useState' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+5:3  Warning: 'Stack' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+6:3  Warning: 'Typography' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+7:3  Warning: 'Link' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+8:3  Warning: 'Chip' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+9:3  Warning: 'Button' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+10:3  Warning: 'IconButton' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+13:8  Warning: 'Image' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+14:8  Warning: 'useMediaQuery' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+15:10  Warning: 'IconX' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+17:7  Warning: 'NotificationBg' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+23:7  Warning: 'NotificationBg2' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+29:7  Warning: 'NotificationBg3' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/frontend-pages/shared/header/HpHeader.tsx
+12:10  Warning: 'Typography' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+20:19  Warning: 'props' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+20:26  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+68:9  Warning: Unexpected console statement.  no-console
+76:7  Warning: Unexpected console statement.  no-console
+
+./src/app/components/frontend-pages/shared/header/MobileSidebar.tsx
+8:10  Warning: 'Chip' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/frontend-pages/shared/header/Navigations.tsx
+6:10  Warning: 'Chip' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/frontend-pages/shared/leadership/Contact.tsx
+16:9  Warning: 'lgUp' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/frontend-pages/shared/leadership/LeaderShipCarousel.tsx
+12:33  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+38:33  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/frontend-pages/shared/pricing/PaymentMethods.tsx
+3:15  Warning: 'Grid' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/frontend-pages/shared/reviews/index.tsx
+3:21  Warning: 'Typography' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+4:8  Warning: 'Image' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/frontend-pages/shared/reviews/ReviewCarousel.tsx
+16:33  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+43:33  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+103:36  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+104:10  Warning: 'oldSlide' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+106:10  Warning: 'activeSlide2' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+120:29  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+120:40  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+124:28  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/frontend-pages/shared/scroll-to-top/index.tsx
+3:8  Warning: 'Button' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/landingpage/demo-slider/DemoSlider.tsx
+39:11  Warning: 'sliderData' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+40:20  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+48:17  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+177:32  Warning: 'theme' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/landingpage/header/DemosDD.tsx
+2:8  Warning: 'Avatar' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+26:17  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/landingpage/header/Header.tsx
+1:17  Warning: 'useContext' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/muicharts/barcharts/BarChartStackedBySignChart.tsx
+50:14  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/muicharts/barcharts/BiaxialBarChart.tsx
+44:22  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/muicharts/barcharts/MixedBarChart.tsx
+34:22  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/muicharts/barcharts/PositiveAndNegativeBarChart.tsx
+44:26  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/muicharts/barcharts/SimpleBarChart.tsx
+38:22  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/muicharts/barcharts/StackedBarChart.tsx
+33:22  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/muicharts/barcharts/TinyBarChart.tsx
+37:14  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/muicharts/linescharts/linechart/LinewithforecastChart.tsx
+11:10  Warning: 'SxProps' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+11:19  Warning: 'Theme' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+85:90  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/muicharts/piecharts/OnSeriesItemClickChart.tsx
+30:33  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+30:54  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+30:65  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/muicharts/scattercharts/ScatterClickNoSnapChart.tsx
+70:14  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+73:44  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+75:37  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+113:46  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+113:54  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/muitrees/simpletree/BasicCustomIcons.tsx
+22:92  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+22:174  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/muitrees/simpletree/TrackitemclicksTree.tsx
+12:66  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/react-table/TableBasicReact.tsx
+23:3  Warning: 'TableType' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+128:43  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+140:15  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+141:16  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+142:16  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+143:17  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+144:17  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+156:23  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/react-table/TableColumnDragDrop.tsx
+146:27  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+146:38  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+146:47  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+153:43  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+159:16  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+182:34  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+187:16  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+208:43  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+209:56  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+226:43  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+226:54  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+229:45  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+247:15  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+248:16  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+249:16  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+250:17  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+251:17  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+263:23  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/react-table/TableColumnVisibility.tsx
+130:43  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+150:42  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+150:54  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+150:66  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+150:81  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+150:94  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+161:23  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/react-table/TableEditable.tsx
+42:10  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+207:52  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+208:54  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+210:9  Warning: 'rerender' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+219:28  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+236:37  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/react-table/TableEmpty.tsx
+66:15  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+67:16  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+68:16  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+69:17  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+70:17  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+82:23  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/react-table/TableExpanding.tsx
+139:43  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+151:15  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+152:16  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+153:16  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+154:17  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+155:17  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+167:23  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/react-table/TableFilter.tsx
+51:7  Warning: 'BCrumb' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+151:29  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+157:40  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+170:25  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+222:60  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+370:54  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+380:52  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/react-table/TablePagination.tsx
+128:60  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+279:54  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+289:52  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/react-table/TableRowDragDrop.tsx
+25:3  Warning: 'DragEndEvent' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+152:32  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+158:16  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+175:37  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+177:17  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+178:54  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+186:29  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+198:43  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+205:43  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+205:54  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+208:27  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+226:15  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+227:16  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+228:16  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+229:17  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+230:17  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+234:41  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+242:23  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+292:51  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/react-table/TableRowSelection.tsx
+47:23  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+177:43  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+196:15  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+197:16  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+198:16  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+199:17  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+200:17  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+212:23  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/react-table/TableSorting.tsx
+50:7  Warning: 'BCrumb' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+152:60  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+301:54  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+311:52  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/react-table/TableSticky.tsx
+127:43  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+139:15  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+140:16  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+141:16  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+142:17  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+143:17  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+155:23  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/shared/BlankCard.tsx
+12:8  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/shared/CodeDialog.tsx
+2:17  Warning: 'useState' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+14:35  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/shared/DownloadCard.tsx
+10:56  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/shared/FileManager.tsx
+76:6  Warning: React Hook React.useEffect has a missing dependency: 'loadFiles'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+113:7  Warning: Unexpected console statement.  no-console
+152:23  Warning: 'uploadData' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+201:7  Warning: Unexpected console statement.  no-console
+210:10  Warning: Unexpected confirm.  no-alert
+229:7  Warning: Unexpected console statement.  no-console
+
+./src/app/components/tables/ExTablePagination.tsx
+194:36  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/tables/TableCollapsible.tsx
+143:49  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/tables/tableData.ts
+7:11  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+27:13  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+28:16  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+29:16  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/tables/TableEnhance.tsx
+51:42  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+63:31  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+79:7  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+247:48  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+335:30  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+392:53  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/ui-components/chip/ChipCommon.tsx
+18:5  Warning: Unexpected console statement.  no-console
+
+./src/app/components/ui-components/dialog/MaxWidthDialog.tsx
+15:3  Warning: 'Breakpoint' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+35:40  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/components/ui-components/rating/Disabled.tsx
+8:17  Warning: 'setValue' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/ui-components/rating/ReadOnly.tsx
+8:17  Warning: 'setValue' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/ui-components/tooltip/TooltipTransition.tsx
+3:10  Warning: 'styled' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/ui-components/transfer-list/BasicTransferList.tsx
+7:3  Warning: 'ListItem' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/ui-components/transfer-list/EnhancedTransferList.tsx
+7:3  Warning: 'ListItem' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/widgets/cards/UpcomingActivity.tsx
+8:24  Warning: 'IconMail' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+21:9  Warning: 'success' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+22:9  Warning: 'successlight' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/components/widgets/charts/CurrentValue.tsx
+93:30  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+164:30  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/context/ChatContext/index.tsx
+70:13  Warning: Unexpected console statement.  no-console
+89:13  Warning: Unexpected console statement.  no-console
+
+./src/app/context/Conatactcontext/index.tsx
+4:18  Warning: 'mutate' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+97:7  Warning: Unexpected console statement.  no-console
+110:7  Warning: Unexpected console statement.  no-console
+119:7  Warning: Unexpected console statement.  no-console
+
+./src/app/context/customizerContext.tsx
+31:73  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/context/InvoiceContext/index.tsx
+2:32  Warning: 'useContext' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+3:23  Warning: 'order' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+44:13  Warning: Unexpected console statement.  no-console
+52:13  Warning: Unexpected console statement.  no-console
+61:13  Warning: Unexpected console statement.  no-console
+
+./src/app/context/NotesContext/index.tsx
+31:18  Warning: 'id' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+32:21  Warning: 'newNote' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+33:24  Warning: 'id' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+33:36  Warning: 'title' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+33:51  Warning: 'color' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+34:24  Warning: 'id' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+81:13  Warning: Unexpected console statement.  no-console
+90:13  Warning: Unexpected console statement.  no-console
+97:19  Warning: 'response' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+99:13  Warning: Unexpected console statement.  no-console
+
+./src/app/context/TicketContext/index.tsx
+51:13  Warning: Unexpected console statement.  no-console
+
+./src/app/context/UserDataContext/index.tsx
+49:25  Warning: 'setProfileData' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+115:9  Warning: Unexpected console statement.  no-console
+123:13  Warning: Unexpected console statement.  no-console
+136:13  Warning: Unexpected console statement.  no-console
+145:13  Warning: Unexpected console statement.  no-console
+154:13  Warning: Unexpected console statement.  no-console
+
+./src/app/dashboard/apps/calendar/page.tsx
+23:8  Warning: 'Breadcrumb' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+82:7  Warning: Unexpected console statement.  no-console
+
+./src/app/dashboard/apps/notes/page.tsx
+42:11  Warning: 'result' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+49:7  Warning: Unexpected console statement.  no-console
+
+./src/app/dashboard/bulk-orders/page.tsx
+79:56  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+91:7  Warning: Unexpected console statement.  no-console
+
+./src/app/dashboard/forms/form-elements/slider/page.tsx
+4:10  Warning: 'SliderValueLabelProps' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+5:10  Warning: 'SliderThumb' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/dashboard/layout/horizontal/navbar/Menudata.ts
+14:3  Warning: 'IconClipboardList' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+15:3  Warning: 'IconLayersIntersect' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/dashboard/layout/horizontal/navbar/NavCollapse/NavCollapse.tsx
+61:38  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+80:46  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/dashboard/layout/horizontal/navbar/Navigation.tsx
+13:11  Warning: 'activeMode' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/dashboard/layout/shared/breadcrumb/Breadcrumb.tsx
+7:3  Warning: 'Theme' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+8:3  Warning: 'Avatar' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/dashboard/layout/shared/customizer/Customizer.tsx
+12:3  Warning: 'Button' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+110:39  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+396:33  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/dashboard/layout/shared/customizer/typings.d.ts
+2:21  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/dashboard/layout/shared/logo/Logo.tsx
+11:39  Warning: 'activeDir' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/dashboard/layout/shared/welcome/Welcome.tsx
+18:29  Warning: 'event' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/dashboard/layout/vertical/header/Header.tsx
+15:36  Warning: 'IconMoon' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+15:46  Warning: 'IconSun' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+24:11  Warning: 'activeMode' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+24:23  Warning: 'setActiveMode' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+73:17  Warning: Expected an assignment or function call and instead saw an expression.  @typescript-eslint/no-unused-expressions
+
+./src/app/dashboard/layout/vertical/header/Navigation.tsx
+2:56  Warning: 'styled' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/dashboard/layout/vertical/header/Profile.tsx
+13:8  Warning: 'Image' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+17:3  Warning: 'IconCreditCard' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+40:9  Warning: Unexpected console statement.  no-console
+46:7  Warning: Unexpected console statement.  no-console
+53:9  Warning: 'error' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+54:9  Warning: 'errorlight' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/dashboard/layout/vertical/sidebar/MenuItems.ts
+5:3  Warning: 'IconChartPie' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+7:3  Warning: 'IconFileText' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+9:3  Warning: 'IconMessage2' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+10:3  Warning: 'IconPackage' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+12:3  Warning: 'IconShoppingCart' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+13:3  Warning: 'IconTruck' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+15:3  Warning: 'IconUsers' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+19:16  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+24:10  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/dashboard/layout/vertical/sidebar/NavCollapse/index.tsx
+93:46  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/dashboard/layout/vertical/sidebar/NavGroup/NavGroup.tsx
+17:11  Warning: 'isCollapse' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+17:23  Warning: 'isSidebarHover' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+20:53  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/dashboard/layout.tsx
+29:11  Warning: 'Props' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+38:10  Warning: 'isSidebarOpen' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+38:25  Warning: 'setSidebarOpen' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+39:10  Warning: 'isMobileSidebarOpen' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+39:31  Warning: 'setMobileSidebarOpen' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+40:35  Warning: 'activeMode' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/dashboard/market-research/[reservationNumber]/page-complete.tsx
+3:8  Warning: 'React' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+3:17  Warning: 'useState' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+3:27  Warning: 'useEffect' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+3:38  Warning: 'use' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+5:3  Warning: 'Box' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+6:3  Warning: 'Typography' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+7:3  Warning: 'CircularProgress' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+8:3  Warning: 'Alert' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+9:3  Warning: 'Button' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+10:3  Warning: 'Tabs' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+11:3  Warning: 'Tab' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+12:3  Warning: 'Table' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+13:3  Warning: 'TableBody' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+14:3  Warning: 'TableRow' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+15:3  Warning: 'TableCell' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+16:3  Warning: 'Card' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+17:3  Warning: 'CardContent' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+19:23  Warning: 'ArrowBackIcon' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+20:10  Warning: 'useRouter' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+21:8  Warning: 'ParentCard' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+22:8  Warning: 'BlankCard' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+23:8  Warning: 'ChatPanel' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+24:8  Warning: 'OrderHeader' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+26:7  Warning: 'SUPABASE_URL' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+27:7  Warning: 'SUPABASE_ANON_KEY' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/dashboard/market-research/[reservationNumber]/page-debug.tsx
+14:36  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+18:5  Warning: Unexpected console statement.  no-console
+52:15  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/dashboard/market-research/[reservationNumber]/page-fetch.tsx
+34:36  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+38:7  Warning: Unexpected console statement.  no-console
+43:9  Warning: Unexpected console statement.  no-console
+51:9  Warning: Unexpected console statement.  no-console
+58:9  Warning: Unexpected console statement.  no-console
+61:9  Warning: Unexpected console statement.  no-console
+64:9  Warning: Unexpected console statement.  no-console
+
+./src/app/dashboard/market-research/[reservationNumber]/page-sdk.tsx
+14:36  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+18:7  Warning: Unexpected console statement.  no-console
+24:9  Warning: Unexpected console statement.  no-console
+26:9  Warning: Unexpected console statement.  no-console
+34:9  Warning: Unexpected console statement.  no-console
+37:11  Warning: Unexpected console statement.  no-console
+46:9  Warning: Unexpected console statement.  no-console
+49:9  Warning: Unexpected console statement.  no-console
+52:9  Warning: Unexpected console statement.  no-console
+
+./src/app/dashboard/market-research/[reservationNumber]/page.tsx
+73:36  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+81:7  Warning: Unexpected console statement.  no-console
+82:7  Warning: Unexpected console statement.  no-console
+85:9  Warning: Unexpected console statement.  no-console
+95:9  Warning: Unexpected console statement.  no-console
+98:9  Warning: Unexpected console statement.  no-console
+105:9  Warning: Unexpected console statement.  no-console
+108:11  Warning: Unexpected console statement.  no-console
+118:9  Warning: Unexpected console statement.  no-console
+
+./src/app/dashboard/orders/bulk-order/page.tsx
+34:16  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+53:6  Warning: React Hook useEffect has a missing dependency: 'fetchBulkOrders'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+70:7  Warning: Unexpected console statement.  no-console
+96:9  Warning: 'getDeliveryMethodLabel' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+111:56  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/dashboard/orders/bulk-order/[reservationNumber]/page.tsx
+72:36  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+78:7  Warning: Unexpected console statement.  no-console
+79:7  Warning: Unexpected console statement.  no-console
+82:9  Warning: Unexpected console statement.  no-console
+92:9  Warning: Unexpected console statement.  no-console
+95:9  Warning: Unexpected console statement.  no-console
+102:9  Warning: Unexpected console statement.  no-console
+105:11  Warning: Unexpected console statement.  no-console
+115:9  Warning: Unexpected console statement.  no-console
+305:54  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+650:47  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/dashboard/orders/factory-contact/page.tsx
+53:11  Warning: 'user' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+64:6  Warning: React Hook useEffect has a missing dependency: 'fetchFactoryContactOrders'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+97:7  Warning: Unexpected console statement.  no-console
+
+./src/app/dashboard/orders/factory-contact/[reservationNumber]/page.tsx
+35:8  Warning: 'InventoryIcon' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+72:12  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+87:11  Warning: 'user' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+92:36  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+93:38  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+135:11  Warning: Unexpected console statement.  no-console
+148:11  Warning: Unexpected console statement.  no-console
+153:9  Warning: Unexpected console statement.  no-console
+161:6  Warning: React Hook useEffect has a missing dependency: 'supabase'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+196:7  Warning: Unexpected alert.  no-alert
+198:7  Warning: Unexpected console statement.  no-console
+199:7  Warning: Unexpected alert.  no-alert
+458:68  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+566:31  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/app/dashboard/orders/inspection/page.tsx
+52:11  Warning: 'user' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+63:6  Warning: React Hook useEffect has a missing dependency: 'fetchInspectionOrders'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+79:7  Warning: Unexpected console statement.  no-console
+80:7  Warning: Unexpected console statement.  no-console
+83:7  Warning: Unexpected console statement.  no-console
+
+./src/app/dashboard/orders/inspection/[reservationNumber]/page.tsx
+14:3  Warning: 'Table' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+15:3  Warning: 'TableBody' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+16:3  Warning: 'TableRow' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+17:3  Warning: 'TableCell' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+33:8  Warning: 'FactoryIcon' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+72:36  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+73:38  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+79:7  Warning: Unexpected console statement.  no-console
+80:7  Warning: Unexpected console statement.  no-console
+83:9  Warning: Unexpected console statement.  no-console
+94:9  Warning: Unexpected console statement.  no-console
+101:9  Warning: Unexpected console statement.  no-console
+104:11  Warning: Unexpected console statement.  no-console
+122:11  Warning: Unexpected console statement.  no-console
+127:9  Warning: Unexpected console statement.  no-console
+336:37  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+499:31  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+510:35  Warning: Unexpected console statement.  no-console
+
+./src/app/dashboard/orders/market-research/page.tsx
+51:11  Warning: 'user' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+62:6  Warning: React Hook useEffect has a missing dependency: 'fetchMarketResearchOrders'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+79:7  Warning: Unexpected console statement.  no-console
+
+./src/app/dashboard/orders/market-research/[reservationNumber]/page.tsx
+74:36  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+75:38  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+110:11  Warning: Unexpected console statement.  no-console
+121:9  Warning: Unexpected console statement.  no-console
+343:82  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+404:79  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+438:123  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+869:39  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/dashboard/orders/page.tsx
+26:3  Warning: 'Divider' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+27:3  Warning: 'Button' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+31:56  Warning: 'ArrowForwardIcon' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+167:7  Warning: Unexpected console statement.  no-console
+189:9  Warning: Unexpected console statement.  no-console
+
+./src/app/dashboard/orders/sampling/page.tsx
+43:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+44:12  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+49:11  Warning: 'user' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+58:6  Warning: React Hook useEffect has a missing dependency: 'fetchSamplingOrders'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+73:7  Warning: Unexpected console statement.  no-console
+82:7  Warning: Unexpected console statement.  no-console
+85:7  Warning: Unexpected console statement.  no-console
+
+./src/app/dashboard/orders/sampling/[reservationNumber]/page.tsx
+76:36  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+79:25  Warning: 'setSelectedImage' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+84:7  Warning: Unexpected console statement.  no-console
+85:7  Warning: Unexpected console statement.  no-console
+88:9  Warning: Unexpected console statement.  no-console
+107:11  Warning: Unexpected console statement.  no-console
+115:9  Warning: Unexpected console statement.  no-console
+118:9  Warning: Unexpected console statement.  no-console
+126:6  Warning: React Hook useEffect has a missing dependency: 'supabase'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+271:55  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+490:44  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/dashboard/orders/[reservationNumber]/components/ChatPanel.tsx
+59:7  Warning: Unexpected console statement.  no-console
+
+./src/app/dashboard/orders/[reservationNumber]/components/FactoryContactTabs.tsx
+130:59  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+239:57  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+267:60  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+343:49  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/dashboard/orders/[reservationNumber]/components/MarketResearchTabs.tsx
+9:3  Warning: 'Grid' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+10:3  Warning: 'Chip' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+15:3  Warning: 'Button' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/dashboard/orders/[reservationNumber]/components/OrderHeader.tsx
+2:52  Warning: 'Grid' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+48:50  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+89:62  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/dashboard/orders/[reservationNumber]/hooks/useChat.tsx
+45:66  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+52:29  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+59:7  Warning: Unexpected console statement.  no-console
+69:9  Warning: Unexpected console statement.  no-console
+73:7  Warning: Unexpected console statement.  no-console
+77:7  Warning: Unexpected console statement.  no-console
+93:9  Warning: Unexpected console statement.  no-console
+100:7  Warning: Unexpected console statement.  no-console
+109:7  Warning: Unexpected console statement.  no-console
+129:9  Warning: Unexpected console statement.  no-console
+133:7  Warning: Unexpected console statement.  no-console
+137:7  Warning: Unexpected console statement.  no-console
+146:5  Warning: Unexpected console statement.  no-console
+153:5  Warning: Unexpected console statement.  no-console
+160:5  Warning: Unexpected console statement.  no-console
+171:9  Warning: Unexpected console statement.  no-console
+184:9  Warning: Unexpected console statement.  no-console
+190:7  Warning: Unexpected console statement.  no-console
+
+./src/app/dashboard/orders/[reservationNumber]/hooks/useOrderData.tsx
+14:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+170:7  Warning: Unexpected console statement.  no-console
+181:6  Warning: React Hook useEffect has a missing dependency: 'fetchOrderDetails'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/dashboard/orders/[reservationNumber]/page.tsx
+6:3  Warning: 'Card' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+25:3  Warning: 'Avatar' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+36:21  Warning: 'HourglassEmptyIcon' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+49:8  Warning: 'ParentCard' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+79:3  Warning: Unexpected console statement.  no-console
+83:52  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+90:3  Warning: Unexpected console statement.  no-console
+92:36  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+93:38  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+125:5  Warning: Unexpected console statement.  no-console
+126:5  Warning: Unexpected console statement.  no-console
+127:5  Warning: Unexpected console statement.  no-console
+128:5  Warning: Unexpected console statement.  no-console
+140:11  Warning: Unexpected console statement.  no-console
+147:11  Warning: Unexpected console statement.  no-console
+159:11  Warning: Unexpected console statement.  no-console
+170:11  Warning: Unexpected console statement.  no-console
+202:11  Warning: Unexpected console statement.  no-console
+234:11  Warning: Unexpected console statement.  no-console
+239:7  Warning: Unexpected console statement.  no-console
+242:9  Warning: Unexpected console statement.  no-console
+252:11  Warning: Unexpected console statement.  no-console
+255:11  Warning: Unexpected console statement.  no-console
+259:9  Warning: Unexpected console statement.  no-console
+263:7  Warning: Unexpected console statement.  no-console
+266:7  Warning: Unexpected console statement.  no-console
+269:6  Warning: React Hook useCallback has missing dependencies: 'getServiceTitle' and 'supabase'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+273:5  Warning: Unexpected console statement.  no-console
+284:9  Warning: Unexpected console statement.  no-console
+286:9  Warning: Unexpected console statement.  no-console
+290:7  Warning: Unexpected console statement.  no-console
+297:9  Warning: 'sendMessage' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+300:5  Warning: Unexpected console statement.  no-console
+332:9  Warning: Unexpected console statement.  no-console
+334:9  Warning: Unexpected console statement.  no-console
+346:7  Warning: Unexpected console statement.  no-console
+354:31  Warning: Unexpected console statement.  no-console
+355:30  Warning: Unexpected console statement.  no-console
+366:9  Warning: Unexpected console statement.  no-console
+368:60  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+377:9  Warning: Unexpected console statement.  no-console
+384:6  Warning: React Hook useEffect has missing dependencies: 'fetchOrderDetails', 'loadChatMessages', and 'supabase'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+403:26  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+405:7  Warning: Unexpected console statement.  no-console
+452:9  Warning: Unexpected console statement.  no-console
+453:9  Warning: Unexpected alert.  no-alert
+458:9  Warning: Unexpected console statement.  no-console
+465:13  Warning: Unexpected console statement.  no-console
+467:13  Warning: Unexpected console statement.  no-console
+470:11  Warning: Unexpected console statement.  no-console
+474:7  Warning: Unexpected console statement.  no-console
+475:7  Warning: Unexpected alert.  no-alert
+491:5  Warning: Unexpected console statement.  no-console
+497:5  Warning: Unexpected console statement.  no-console
+529:9  Warning: 'defaultData' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+1320:43  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+1357:43  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+1358:43  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+1403:58  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+1495:71  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+1972:62  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+1985:53  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+1985:58  Warning: 'index' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+2172:47  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+2229:47  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+2480:41  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+2481:41  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+2549:41  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+2550:41  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+2597:41  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+2598:41  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+2645:41  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+2646:41  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+2733:47  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/dashboard/orders/_components/ChatPanel.tsx
+12:3  Warning: 'Avatar' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+21:31  Warning: 'fetchMessages' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+21:46  Warning: 'insertChatMessage' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+22:10  Warning: 'createSimpleClient' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+65:9  Warning: Unexpected console statement.  no-console
+70:7  Warning: Unexpected console statement.  no-console
+131:9  Warning: Unexpected console statement.  no-console
+132:9  Warning: Unexpected console statement.  no-console
+138:9  Warning: Unexpected alert.  no-alert
+150:13  Warning: Unexpected console statement.  no-console
+153:11  Warning: Unexpected console statement.  no-console
+157:7  Warning: Unexpected console statement.  no-console
+158:7  Warning: Unexpected console statement.  no-console
+163:7  Warning: Unexpected alert.  no-alert
+206:6  Warning: React Hook useEffect has missing dependencies: 'fetchChatMessages' and 'supabase'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/dashboard/orders/_components/OrderHeader.tsx
+9:3  Warning: 'Stepper' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+10:3  Warning: 'Step' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+11:3  Warning: 'StepLabel' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+12:3  Warning: 'StepIcon' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+32:15  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+39:3  Warning: 'createdAt' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+40:3  Warning: 'updatedAt' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/dashboard/profile/ProfileInfoTab.tsx
+2:41  Warning: 'MenuItem' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+2:56  Warning: 'Avatar' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+6:8  Warning: 'CustomSelect' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+49:19  Warning: 'data' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+65:13  Warning: Unexpected console statement.  no-console
+71:11  Warning: Unexpected console statement.  no-console
+86:6  Warning: React Hook useEffect has a missing dependency: 'refreshUser'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+104:15  Warning: 'data' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+138:21  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+139:7  Warning: Unexpected console statement.  no-console
+177:31  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+188:31  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+199:31  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+229:35  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+242:35  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+256:35  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+270:35  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/dashboard/profile/ShippingInfoTab.tsx
+12:3  Warning: 'MenuItem' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+13:3  Warning: 'FormHelperText' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+24:8  Warning: 'CustomSelect' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+25:51  Warning: 'IconStarFilled' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+66:6  Warning: React Hook useEffect has a missing dependency: 'fetchShippingAddresses'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+83:7  Warning: Unexpected console statement.  no-console
+137:17  Warning: 'data' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+147:11  Warning: Unexpected console statement.  no-console
+155:21  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+156:7  Warning: Unexpected console statement.  no-console
+164:10  Warning: Unexpected confirm.  no-alert
+177:21  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+178:7  Warning: Unexpected console statement.  no-console
+203:21  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+204:7  Warning: Unexpected console statement.  no-console
+297:59  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+311:53  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+340:33  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+354:33  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+371:33  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+385:33  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+443:37  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+455:37  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+473:37  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+485:37  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/dashboard/profile/TaxInvoiceTab.tsx
+62:21  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+63:7  Warning: Unexpected console statement.  no-console
+103:37  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+116:37  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+130:37  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+143:37  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+157:37  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+170:37  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+184:37  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+198:37  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+211:37  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/dashboard/staff/bulk-order/page.tsx
+112:17  Warning: 'userProfile' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+157:6  Warning: React Hook useEffect has a missing dependency: 'loadMarketResearchData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+186:7  Warning: Unexpected console statement.  no-console
+211:7  Warning: Unexpected alert.  no-alert
+217:7  Warning: Unexpected alert.  no-alert
+223:7  Warning: Unexpected alert.  no-alert
+229:7  Warning: Unexpected alert.  no-alert
+234:7  Warning: Unexpected alert.  no-alert
+239:7  Warning: Unexpected alert.  no-alert
+350:15  Warning: Unexpected console statement.  no-console
+377:15  Warning: Unexpected console statement.  no-console
+380:13  Warning: Unexpected console statement.  no-console
+387:21  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+388:7  Warning: Unexpected console statement.  no-console
+389:7  Warning: Unexpected alert.  no-alert
+
+./src/app/dashboard/theme-pages/pricing/page.tsx
+134:27  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/dashboard/widgets/charts/page.tsx
+33:10  Warning: 'isLoading' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/frontend-pages/blog/[slug]/page.tsx
+14:44  Warning: 'IconQuote' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+24:52  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+25:11  Warning: 'posts' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+76:48  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+77:11  Warning: 'posts' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/frontend-pages/calculators/components/Container3D.tsx
+4:45  Warning: 'Line' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+4:51  Warning: 'Text' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+61:6  Warning: React Hook useMemo has missing dependencies: 'boxDimensions' and 'container'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/frontend-pages/calculators/components/ExchangeRateDisplay.tsx
+5:47  Warning: 'Divider' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/frontend-pages/calculators/components/HSCodeChatSearch.tsx
+11:3  Warning: 'Alert' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+17:3  Warning: 'ListItemButton' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+68:9  Warning: Unexpected console statement.  no-console
+101:7  Warning: Unexpected console statement.  no-console
+146:20  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+146:25  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+146:28  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+146:32  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+146:35  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+146:39  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+
+./src/app/frontend-pages/calculators/components/HSCodeSimpleSearch.tsx
+103:9  Warning: Unexpected console statement.  no-console
+110:68  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+136:7  Warning: Unexpected console statement.  no-console
+244:37  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+244:45  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+291:15  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+291:23  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+
+./src/app/frontend-pages/calculators/components/HSCodeSmartSearch.tsx
+118:22  Warning: 'setSearchMode' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+156:9  Warning: Unexpected console statement.  no-console
+177:7  Warning: Unexpected console statement.  no-console
+200:9  Warning: Unexpected console statement.  no-console
+214:7  Warning: Unexpected console statement.  no-console
+262:9  Warning: Unexpected console statement.  no-console
+275:7  Warning: Unexpected console statement.  no-console
+305:9  Warning: Unexpected console statement.  no-console
+311:9  Warning: Unexpected console statement.  no-console
+312:9  Warning: Unexpected console statement.  no-console
+318:7  Warning: Unexpected console statement.  no-console
+326:5  Warning: Unexpected console statement.  no-console
+327:5  Warning: Unexpected console statement.  no-console
+328:5  Warning: Unexpected console statement.  no-console
+500:15  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+500:23  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+
+./src/app/frontend-pages/calculators/page.tsx
+22:3  Warning: 'CircularProgress' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+36:3  Warning: 'Zoom' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+50:3  Warning: 'Description' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+51:3  Warning: 'Check' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+54:3  Warning: 'LocalOffer' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+55:3  Warning: 'Inventory' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+56:3  Warning: 'Info' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+57:3  Warning: 'CheckCircle' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+58:3  Warning: 'Warning' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+59:12  Warning: 'ErrorIcon' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+70:10  Warning: 'HSCodeSmartSearch' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+102:9  Warning: 'theme' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+146:54  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+147:50  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+148:46  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+157:56  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+160:56  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+177:7  Warning: Unexpected console statement.  no-console
+189:9  Warning: Unexpected console statement.  no-console
+191:9  Warning: Unexpected console statement.  no-console
+203:7  Warning: Unexpected console statement.  no-console
+216:9  Warning: 'syncExchangeRate' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+233:7  Warning: Unexpected console statement.  no-console
+250:9  Warning: Unexpected console statement.  no-console
+263:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+370:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+1472:76  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+1472:84  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./src/app/frontend-pages/demo/components/DemoOrderHeader.tsx
+2:17  Warning: 'useEffect' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+2:28  Warning: 'useState' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/frontend-pages/demo/factory-contact/page.tsx
+177:6  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+188:49  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+189:39  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/frontend-pages/demo/inspection/page.tsx
+119:6  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+225:49  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+226:39  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/frontend-pages/demo/market-research/page.tsx
+140:6  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+151:49  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+152:39  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/inquiry/bulk-order/[reservationNumber]/page.tsx
+10:3  Warning: 'Tabs' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+50:46  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+56:6  Warning: React Hook useEffect has a missing dependency: 'fetchOrderData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+82:7  Warning: Unexpected console statement.  no-console
+93:25  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+106:25  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+119:19  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+276:65  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+295:86  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/inquiry/inspection/[reservationNumber]/page.tsx
+10:3  Warning: 'Tabs' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+51:56  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+56:6  Warning: React Hook useEffect has a missing dependency: 'fetchInspectionData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+77:7  Warning: Unexpected console statement.  no-console
+88:25  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+100:25  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+112:26  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/legal/marketing/page.tsx
+48:23  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+48:26  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+
+./src/app/legal/privacy/page.tsx
+110:21  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+110:24  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./src/app/legal/terms/page.tsx
+88:29  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+88:32  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+88:65  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+88:69  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+
+./src/app/page.tsx
+10:8  Warning: 'DefendFocus' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/profile/page.tsx
+45:36  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+68:11  Warning: Unexpected console statement.  no-console
+81:9  Warning: Unexpected console statement.  no-console
+
+./src/app/profile/setup/page.tsx
+45:36  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+93:68  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+134:9  Warning: Unexpected console statement.  no-console
+192:9  Warning: Unexpected console statement.  no-console
+200:7  Warning: Unexpected console statement.  no-console
+201:7  Warning: Unexpected console statement.  no-console
+204:9  Warning: Unexpected console statement.  no-console
+230:7  Warning: Unexpected console statement.  no-console
+
+./src/app/staff/customer-support/page.tsx
+95:10  Warning: 'loading' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+139:6  Warning: React Hook useEffect has a missing dependency: 'fetchData'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+162:7  Warning: Unexpected console statement.  no-console
+221:7  Warning: Unexpected console statement.  no-console
+243:7  Warning: Unexpected console statement.  no-console
+259:7  Warning: Unexpected console statement.  no-console
+308:7  Warning: Unexpected console statement.  no-console
+330:7  Warning: Unexpected console statement.  no-console
+346:7  Warning: Unexpected console statement.  no-console
+
+./src/app/staff/layout.tsx
+69:11  Warning: 'user' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/app/staff/page.tsx
+13:3  Warning: 'IconButton' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+37:11  Warning: 'user' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+179:42  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/components/FileUploadCarousel.tsx
+52:10  Warning: 'selectedIndex' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+99:6  Warning: React Hook useEffect has a missing dependency: 'previewUrls'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+105:7  Warning: Unexpected alert.  no-alert
+249:29  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+357:13  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/components/MarketResearchForm.tsx
+31:3  Warning: 'Divider' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+37:13  Warning: 'UploadIcon' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+64:5  Warning: 'setValue' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+85:27  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+159:7  Warning: Unexpected console statement.  no-console
+
+./src/components/SamplingForm.tsx
+31:3  Warning: 'FormHelperText' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+40:13  Warning: 'UploadIcon' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+71:5  Warning: 'setValue' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+99:27  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+185:7  Warning: Unexpected console statement.  no-console
+
+./src/lib/context/GlobalContext.tsx
+63:9  Warning: Unexpected console statement.  no-console
+66:11  Warning: Unexpected console statement.  no-console
+74:7  Warning: Unexpected console statement.  no-console
+93:9  Warning: Unexpected console statement.  no-console
+121:7  Warning: Unexpected console statement.  no-console
+175:6  Warning: React Hook useEffect has missing dependencies: 'fetchUserProfile', 'refreshUser', and 'supabase.auth'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/lib/schemas/market-research.ts
+115:15  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/lib/schemas/sampling.ts
+168:15  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/lib/services/hsCodeSearch.ts
+125:7  Warning: Unexpected console statement.  no-console
+
+./src/lib/supabase/chat-translator.ts
+26:9  Warning: Unexpected console statement.  no-console
+
+./src/lib/supabase/client.ts
+2:15  Warning: 'SupabaseClient' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+31:52  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+66:30  Warning: 'options' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+66:40  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/lib/supabase/middleware.ts
+11:5  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+12:5  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+19:48  Warning: 'options' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./src/lib/supabase/server.ts
+9:51  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+10:60  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+38:63  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+39:72  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+
+./src/lib/supabase/service.ts
+4:51  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+5:34  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+
+./src/lib/utils/supabase-fetch.ts
+27:5  Warning: Unexpected console statement.  no-console
+32:50  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+56:5  Warning: Unexpected console statement.  no-console
+81:5  Warning: Unexpected console statement.  no-console
+
+./src/middleware.ts
+13:5  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+14:5  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+20:51  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+23:39  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/scripts/update-storage-bucket.ts
+13:3  Warning: Unexpected console statement.  no-console
+74:7  Warning: Unexpected console statement.  no-console
+78:5  Warning: Unexpected console statement.  no-console
+79:5  Warning: Unexpected console statement.  no-console
+85:21  Warning: 'bucketData' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+103:9  Warning: Unexpected console statement.  no-console
+105:9  Warning: Unexpected console statement.  no-console
+110:5  Warning: Unexpected console statement.  no-console
+
+./src/utils/markdown.ts
+17:8  Warning: 'Items' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+22:16  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/utils/theme/Components.tsx
+5:72  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/utils/theme/Theme.tsx
+16:36  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/utils/theme/Typography.tsx
+10:19  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules

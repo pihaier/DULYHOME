@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const FormWizardCode = () => {
   return (
     <>
@@ -273,7 +273,7 @@ const [activeStep, setActiveStep] = React.useState(0);
 `}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default FormWizardCode
+export default FormWizardCode;

@@ -1,5 +1,5 @@
-import React from 'react'
-import CodeDialog from '@/app/components/shared/CodeDialog'
+import React from 'react';
+import CodeDialog from '@/app/components/shared/CodeDialog';
 
 function PieChartWithCustomizedLabelCode() {
   return (
@@ -62,7 +62,7 @@ const getArcLabel = (params: { value: number; }) => {
 }
             `}
     </CodeDialog>
-  )
+  );
 }
 
-export default PieChartWithCustomizedLabelCode
+export default PieChartWithCustomizedLabelCode;

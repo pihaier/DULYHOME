@@ -21,7 +21,6 @@ interface Props {
   colors: ColorOption[];
 }
 
-
 const AddNotes = ({ colors }: Props) => {
   const { addNote } = React.useContext(NotesContext);
 
@@ -72,22 +71,23 @@ const AddNotes = ({ colors }: Props) => {
           <Typography variant="h6" my={2}>
             Choose Color
           </Typography>
-          {
-            colors.map((color) => (
-              <Fab
-                color={color.disp as 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning'}
-                sx={{
-                  marginRight: '3px',
-                  transition: '0.1s ease-in',
-                  scale: scolor === color.disp ? '0.9' : '0.7',
-                }}
-                size="small"
-                key={color.disp}
-                onClick={() => setColor(color.disp)}
-              >
-                {scolor === color.disp ? <IconCheck /> : ''}
-              </Fab>
-            ))}
+          {colors.map((color) => (
+            <Fab
+              color={
+                color.disp as 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning'
+              }
+              sx={{
+                marginRight: '3px',
+                transition: '0.1s ease-in',
+                scale: scolor === color.disp ? '0.9' : '0.7',
+              }}
+              size="small"
+              key={color.disp}
+              onClick={() => setColor(color.disp)}
+            >
+              {scolor === color.disp ? <IconCheck /> : ''}
+            </Fab>
+          ))}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

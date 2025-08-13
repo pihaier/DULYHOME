@@ -25,16 +25,14 @@ import { TicketType } from '../../../dashboard/types/apps/ticket';
 import { TicketContext } from '@/app/context/TicketContext';
 
 const TicketListing = () => {
-
   const theme = useTheme();
-  const { tickets, deleteTicket, searchTickets, ticketSearch, filter } =
-    useContext(TicketContext);
+  const { tickets, deleteTicket, searchTickets, ticketSearch, filter } = useContext(TicketContext);
 
   const getVisibleTickets = (tickets: TicketType[], filter: string, ticketSearch: string) => {
     switch (filter) {
       case 'total_tickets':
         return tickets.filter(
-          (c) => !c.deleted && c.ticketTitle.toLocaleLowerCase().includes(ticketSearch),
+          (c) => !c.deleted && c.ticketTitle.toLocaleLowerCase().includes(ticketSearch)
         );
 
       case 'Pending':
@@ -42,7 +40,7 @@ const TicketListing = () => {
           (c) =>
             !c.deleted &&
             c.Status === 'Pending' &&
-            c.ticketTitle.toLocaleLowerCase().includes(ticketSearch),
+            c.ticketTitle.toLocaleLowerCase().includes(ticketSearch)
         );
 
       case 'Closed':
@@ -50,7 +48,7 @@ const TicketListing = () => {
           (c) =>
             !c.deleted &&
             c.Status === 'Closed' &&
-            c.ticketTitle.toLocaleLowerCase().includes(ticketSearch),
+            c.ticketTitle.toLocaleLowerCase().includes(ticketSearch)
         );
 
       case 'Open':
@@ -58,18 +56,14 @@ const TicketListing = () => {
           (c) =>
             !c.deleted &&
             c.Status === 'Open' &&
-            c.ticketTitle.toLocaleLowerCase().includes(ticketSearch),
+            c.ticketTitle.toLocaleLowerCase().includes(ticketSearch)
         );
 
       default:
         throw new Error(`Unknown filter: ${filter}`);
     }
   };
-  const visibleTickets = getVisibleTickets(
-    tickets,
-    filter,
-    ticketSearch.toLowerCase()
-  );
+  const visibleTickets = getVisibleTickets(tickets, filter, ticketSearch.toLowerCase());
 
   const ticketBadge = (ticket: TicketType) => {
     return ticket.Status === 'Open'
@@ -143,7 +137,8 @@ const TicketListing = () => {
                       alt={ticket.thumb}
                       sx={{
                         borderRadius: '100%',
-                        width: '35', height: '35',
+                        width: '35',
+                        height: '35',
                       }}
                     />
 

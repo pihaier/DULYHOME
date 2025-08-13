@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useContext, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -20,23 +20,19 @@ import { Comment as CommentType, PostType } from '../../../../dashboard/types/ap
 import { UserDataContext } from '@/app/context/UserDataContext';
 import { CustomizerContext } from '@/app/context/customizerContext';
 
-
 interface Props {
   post: PostType;
 }
 
 const PostItem = ({ post }: Props) => {
-
   const { likePost, addComment } = useContext(UserDataContext);
   const { isBorderRadius } = useContext(CustomizerContext);
-
 
   const [comText, setComText] = useState<string>('');
 
   const handleLike = async (postId: number | string) => {
     likePost(postId);
   };
-
 
   const onSubmit = async (postId: string, comment: string) => {
     const commentId = uniqueId('#COMMENT_');
@@ -60,12 +56,11 @@ const PostItem = ({ post }: Props) => {
 
     addComment(postId, newComment);
 
-
     setComText('');
   };
 
   return (
-    (<BlankCard>
+    <BlankCard>
       <Box p={3}>
         <Stack direction={'row'} gap={2} alignItems="center">
           <Avatar alt="Remy Sharp" src={post?.profile.avatar} />
@@ -83,12 +78,13 @@ const PostItem = ({ post }: Props) => {
             <Grid container spacing={3} mb={2}>
               {post?.data.images.map((photo) => {
                 return (
-                  (<Grid
+                  <Grid
                     key={photo.img}
                     size={{
                       sm: 12,
-                      lg: photo.featured ? 12 : 6
-                    }}>
+                      lg: photo.featured ? 12 : 6,
+                    }}
+                  >
                     <CardMedia
                       component="img"
                       sx={{ borderRadius: isBorderRadius / 4, height: 360 }}
@@ -96,7 +92,7 @@ const PostItem = ({ post }: Props) => {
                       alt="cover"
                       width={'100%'}
                     />
-                  </Grid>)
+                  </Grid>
                 );
               })}
             </Grid>
@@ -178,19 +174,20 @@ const PostItem = ({ post }: Props) => {
             variant="outlined"
             fullWidth
           />
-          <Button variant="contained" onClick={() => {
-            if (post.id) {
-              onSubmit(post.id, comText);
-
-            }
-          }}>
+          <Button
+            variant="contained"
+            onClick={() => {
+              if (post.id) {
+                onSubmit(post.id, comText);
+              }
+            }}
+          >
             Comment
           </Button>
         </Stack>
       </Box>
-    </BlankCard>)
+    </BlankCard>
   );
 };
-
 
 export default PostItem;

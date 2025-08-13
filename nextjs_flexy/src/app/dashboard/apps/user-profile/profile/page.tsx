@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import { Grid } from '@mui/material';
 import PageContainer from '@/app/components/container/PageContainer';
@@ -11,52 +11,55 @@ import { UserDataProvider } from '@/app/context/UserDataContext';
 
 const UserProfile = () => {
   return (
-    (
-      <UserDataProvider>
-        <PageContainer title="Profile" description="this is Profile">
-          <Grid container spacing={3}>
-            <Grid
-              size={{
-                sm: 12
-              }}>
-              <ProfileBanner />
-            </Grid>
+    <UserDataProvider>
+      <PageContainer title="Profile" description="this is Profile">
+        <Grid container spacing={3}>
+          <Grid
+            size={{
+              sm: 12,
+            }}
+          >
+            <ProfileBanner />
+          </Grid>
 
-            {/* intro and Photos Card */}
-            <Grid
-              size={{
-                sm: 12,
-                lg: 4,
-                xs: 12
-              }}>
-              <Grid container spacing={3}>
-                <Grid
-                  size={{
-                    sm: 12
-                  }}>
-                  <IntroCard />
-                </Grid>
-                <Grid
-                  size={{
-                    sm: 12
-                  }}>
-                  <PhotosCard />
-                </Grid>
+          {/* intro and Photos Card */}
+          <Grid
+            size={{
+              sm: 12,
+              lg: 4,
+              xs: 12,
+            }}
+          >
+            <Grid container spacing={3}>
+              <Grid
+                size={{
+                  sm: 12,
+                }}
+              >
+                <IntroCard />
+              </Grid>
+              <Grid
+                size={{
+                  sm: 12,
+                }}
+              >
+                <PhotosCard />
               </Grid>
             </Grid>
-            {/* Posts Card */}
-            <Grid
-              size={{
-                sm: 12,
-                lg: 8,
-                xs: 12
-              }}>
-              <Post />
-            </Grid>
           </Grid>
-        </PageContainer>
-      </UserDataProvider>
-    )
+          {/* Posts Card */}
+          <Grid
+            size={{
+              sm: 12,
+              lg: 8,
+              xs: 12,
+            }}
+          >
+            <Post />
+          </Grid>
+        </Grid>
+      </PageContainer>
+    </UserDataProvider>
   );
 };
 

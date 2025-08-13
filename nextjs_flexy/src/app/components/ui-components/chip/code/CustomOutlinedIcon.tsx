@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const CustomOutlinedIcon = () => {
   return (
     <>
@@ -27,7 +27,7 @@ import InlineItemCard from "@/app/components/shared/InlineItemCard";
 </InlineItemCard>`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default CustomOutlinedIcon
+export default CustomOutlinedIcon;

@@ -1,39 +1,39 @@
-import React from "react";
-import Box from "@mui/material/Box";
-import { Grid } from '@mui/material'
-import { SliderValueLabelProps } from "@mui/material/Slider";
-import { SliderThumb } from "@mui/material/Slider";
-import { Slider } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import ParentCard from "@/app/components/shared/ParentCard";
-import ChildCard from "@/app/components/shared/ChildCard";
-import Breadcrumb from "@/app/dashboard/layout/shared/breadcrumb/Breadcrumb";
-import PageContainer from "@/app/components/container/PageContainer";
-import CustomSlider from "@/app/components/forms/theme-elements/CustomSlider";
-import { IconVolume, IconVolume2 } from "@tabler/icons-react";
+import React from 'react';
+import Box from '@mui/material/Box';
+import { Grid } from '@mui/material';
+import { SliderValueLabelProps } from '@mui/material/Slider';
+import { SliderThumb } from '@mui/material/Slider';
+import { Slider } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import ParentCard from '@/app/components/shared/ParentCard';
+import ChildCard from '@/app/components/shared/ChildCard';
+import Breadcrumb from '@/app/dashboard/layout/shared/breadcrumb/Breadcrumb';
+import PageContainer from '@/app/components/container/PageContainer';
+import CustomSlider from '@/app/components/forms/theme-elements/CustomSlider';
+import { IconVolume, IconVolume2 } from '@tabler/icons-react';
 
-import VolumeSlider from "@/app/components/forms/form-elements/slider/VolumeSlider";
-import RangeDefault from "@/app/components/forms/form-elements/slider/RangeDefault";
-import DiscreteSlider from "@/app/components/forms/form-elements/slider/DiscreteSlider";
-import RangeSlider from "@/app/components/forms/form-elements/slider/RangeSlider";
-import DisabledSliderCode from "@/app/components/forms/form-elements/slider/code/DisabledSliderCode";
-import DefaultsliderCode from "@/app/components/forms/form-elements/slider/code/DefaultsliderCode";
-import VolumesliderCode from "@/app/components/forms/form-elements/slider/code/VolumesliderCode";
-import CustomSliderCode from "@/app/components/forms/form-elements/slider/code/CustomSliderCode";
+import VolumeSlider from '@/app/components/forms/form-elements/slider/VolumeSlider';
+import RangeDefault from '@/app/components/forms/form-elements/slider/RangeDefault';
+import DiscreteSlider from '@/app/components/forms/form-elements/slider/DiscreteSlider';
+import RangeSlider from '@/app/components/forms/form-elements/slider/RangeSlider';
+import DisabledSliderCode from '@/app/components/forms/form-elements/slider/code/DisabledSliderCode';
+import DefaultsliderCode from '@/app/components/forms/form-elements/slider/code/DefaultsliderCode';
+import VolumesliderCode from '@/app/components/forms/form-elements/slider/code/VolumesliderCode';
+import CustomSliderCode from '@/app/components/forms/form-elements/slider/code/CustomSliderCode';
 
 const BCrumb = [
   {
-    to: "/",
-    title: "Home",
+    to: '/',
+    title: 'Home',
   },
   {
-    title: "Slider",
+    title: 'Slider',
   },
 ];
 
 const MuiSlider = () => {
   return (
-    (<PageContainer title="Slider" description="this is Slider">
+    <PageContainer title="Slider" description="this is Slider">
       {/* breadcrumb */}
       <Breadcrumb title="Slider" items={BCrumb} />
       {/* end breadcrumb */}
@@ -48,8 +48,9 @@ const MuiSlider = () => {
             size={{
               xs: 12,
               lg: 4,
-              sm: 6
-            }}>
+              sm: 6,
+            }}
+          >
             <ChildCard title="Custom" codeModel={<CustomSliderCode />}>
               <CustomSlider defaultValue={[30]} />
             </ChildCard>
@@ -63,8 +64,9 @@ const MuiSlider = () => {
             size={{
               xs: 12,
               lg: 4,
-              sm: 6
-            }}>
+              sm: 6,
+            }}
+          >
             <ChildCard title="Volume" codeModel={<VolumesliderCode />}>
               <CustomSlider defaultValue={30} aria-label="volume slider" />
               <Box display="flex" alignItems="center">
@@ -88,8 +90,9 @@ const MuiSlider = () => {
             size={{
               xs: 12,
               lg: 4,
-              sm: 6
-            }}>
+              sm: 6,
+            }}
+          >
             <RangeDefault />
           </Grid>
           {/* ------------------------------------------------------------------- */}
@@ -101,8 +104,9 @@ const MuiSlider = () => {
             size={{
               xs: 12,
               lg: 4,
-              sm: 6
-            }}>
+              sm: 6,
+            }}
+          >
             <ChildCard title="Default" codeModel={<DefaultsliderCode />}>
               <Slider defaultValue={30} />
             </ChildCard>
@@ -116,8 +120,9 @@ const MuiSlider = () => {
             size={{
               xs: 12,
               lg: 4,
-              sm: 6
-            }}>
+              sm: 6,
+            }}
+          >
             <ChildCard title="Disabled" codeModel={<DisabledSliderCode />}>
               <Slider disabled defaultValue={30} />
             </ChildCard>
@@ -131,8 +136,9 @@ const MuiSlider = () => {
             size={{
               xs: 12,
               lg: 4,
-              sm: 6
-            }}>
+              sm: 6,
+            }}
+          >
             <VolumeSlider />
           </Grid>
           {/* ------------------------------------------------------------------- */}
@@ -144,8 +150,9 @@ const MuiSlider = () => {
             size={{
               xs: 12,
               lg: 4,
-              sm: 6
-            }}>
+              sm: 6,
+            }}
+          >
             <DiscreteSlider />
           </Grid>
           {/* ------------------------------------------------------------------- */}
@@ -157,13 +164,14 @@ const MuiSlider = () => {
             size={{
               xs: 12,
               lg: 4,
-              sm: 6
-            }}>
+              sm: 6,
+            }}
+          >
             <RangeSlider />
           </Grid>
         </Grid>
       </ParentCard>
-    </PageContainer>)
+    </PageContainer>
   );
 };
 

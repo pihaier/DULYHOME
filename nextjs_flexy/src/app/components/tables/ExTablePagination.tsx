@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { useTheme } from "@mui/material/styles";
+import * as React from 'react';
+import { useTheme } from '@mui/material/styles';
 import {
   Typography,
   TableHead,
@@ -16,25 +16,22 @@ import {
   TableFooter,
   IconButton,
   TableContainer,
-} from "@mui/material";
+} from '@mui/material';
 
-import FirstPageIcon from "@mui/icons-material/FirstPage";
-import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-import LastPageIcon from "@mui/icons-material/LastPage";
+import FirstPageIcon from '@mui/icons-material/FirstPage';
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import LastPageIcon from '@mui/icons-material/LastPage';
 
-import ParentCard from "@/app/components/shared/ParentCard";
-import { Stack } from "@mui/system";
-import BlankCard from "@/app/components/shared/BlankCard";
+import ParentCard from '@/app/components/shared/ParentCard';
+import { Stack } from '@mui/system';
+import BlankCard from '@/app/components/shared/BlankCard';
 
 interface TablePaginationActionsProps {
   count: number;
   page: number;
   rowsPerPage: number;
-  onPageChange: (
-    event: React.MouseEvent<HTMLButtonElement>,
-    newPage: number
-  ) => void;
+  onPageChange: (event: React.MouseEvent<HTMLButtonElement>, newPage: number) => void;
 }
 
 function TablePaginationActions(props: TablePaginationActionsProps) {
@@ -64,36 +61,24 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
         disabled={page === 0}
         aria-label="first page"
       >
-        {theme.direction === "rtl" ? <LastPageIcon /> : <FirstPageIcon />}
+        {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
       </IconButton>
-      <IconButton
-        onClick={handleBackButtonClick}
-        disabled={page === 0}
-        aria-label="previous page"
-      >
-        {theme.direction === "rtl" ? (
-          <KeyboardArrowRight />
-        ) : (
-          <KeyboardArrowLeft />
-        )}
+      <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page">
+        {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
       </IconButton>
       <IconButton
         onClick={handleNextButtonClick}
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
         aria-label="next page"
       >
-        {theme.direction === "rtl" ? (
-          <KeyboardArrowLeft />
-        ) : (
-          <KeyboardArrowRight />
-        )}
+        {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
       </IconButton>
       <IconButton
         onClick={handleLastPageButtonClick}
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
         aria-label="last page"
       >
-        {theme.direction === "rtl" ? <FirstPageIcon /> : <LastPageIcon />}
+        {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
       </IconButton>
     </Box>
   );
@@ -101,85 +86,85 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 
 const rows = [
   {
-    orderno: "ORD - 0120145",
-    items: "5",
-    imgsrc: "/images/users/10.jpg",
-    customer: "Sunil Joshi",
-    total: "550,000",
-    status: "Completed",
-    date: "10 Jun, 2021 09:51:40",
+    orderno: 'ORD - 0120145',
+    items: '5',
+    imgsrc: '/images/users/10.jpg',
+    customer: 'Sunil Joshi',
+    total: '550,000',
+    status: 'Completed',
+    date: '10 Jun, 2021 09:51:40',
   },
   {
-    orderno: "ORD - 0120146",
-    items: "1",
-    imgsrc: "/images/users/2.jpg",
-    customer: "John Deo",
-    total: "45,000",
-    status: "Pending",
-    date: "10 Jun, 2021 07:46:00",
+    orderno: 'ORD - 0120146',
+    items: '1',
+    imgsrc: '/images/users/2.jpg',
+    customer: 'John Deo',
+    total: '45,000',
+    status: 'Pending',
+    date: '10 Jun, 2021 07:46:00',
   },
   {
-    orderno: "ORD - 0120460",
-    items: "3",
-    imgsrc: "/images/users/3.jpg",
-    customer: "Mily Peter",
-    total: "57,000",
-    status: "Cancel",
-    date: "10 Jun, 2021 04:19:38",
+    orderno: 'ORD - 0120460',
+    items: '3',
+    imgsrc: '/images/users/3.jpg',
+    customer: 'Mily Peter',
+    total: '57,000',
+    status: 'Cancel',
+    date: '10 Jun, 2021 04:19:38',
   },
   {
-    orderno: "ORD - 0124080",
-    items: "11",
-    imgsrc: "/images/users/4.jpg",
-    customer: "Andrew McDownland",
-    total: "457,000",
-    status: "Completed",
-    date: "10 Jun, 2021 04:12:29",
+    orderno: 'ORD - 0124080',
+    items: '11',
+    imgsrc: '/images/users/4.jpg',
+    customer: 'Andrew McDownland',
+    total: '457,000',
+    status: 'Completed',
+    date: '10 Jun, 2021 04:12:29',
   },
   {
-    orderno: "ORD - 0124568",
-    items: "4",
-    imgsrc: "/images/users/5.jpg",
-    customer: "Christopher Jamil",
-    total: "120,000",
-    status: "Pending",
-    date: "15 Apr, 2021 04:12:50",
+    orderno: 'ORD - 0124568',
+    items: '4',
+    imgsrc: '/images/users/5.jpg',
+    customer: 'Christopher Jamil',
+    total: '120,000',
+    status: 'Pending',
+    date: '15 Apr, 2021 04:12:50',
   },
   {
-    orderno: "ORD - 0120147",
-    items: "1",
-    imgsrc: "/images/users/2.jpg",
-    customer: "John Deo",
-    total: "45,000",
-    status: "Pending",
-    date: "10 Jun, 2021 07:46:00",
+    orderno: 'ORD - 0120147',
+    items: '1',
+    imgsrc: '/images/users/2.jpg',
+    customer: 'John Deo',
+    total: '45,000',
+    status: 'Pending',
+    date: '10 Jun, 2021 07:46:00',
   },
   {
-    orderno: "ORD - 0140460",
-    items: "3",
-    imgsrc: "/images/users/3.jpg",
-    customer: "Mily Peter",
-    total: "57,000",
-    status: "Cancel",
-    date: "10 Jun, 2021 04:19:38",
+    orderno: 'ORD - 0140460',
+    items: '3',
+    imgsrc: '/images/users/3.jpg',
+    customer: 'Mily Peter',
+    total: '57,000',
+    status: 'Cancel',
+    date: '10 Jun, 2021 04:19:38',
   },
   {
-    orderno: "ORD - 0124060",
-    items: "11",
-    imgsrc: "/images/users/4.jpg",
-    customer: "Andrew McDownland",
-    total: "457,000",
-    status: "Completed",
-    date: "10 Jun, 2021 04:12:29",
+    orderno: 'ORD - 0124060',
+    items: '11',
+    imgsrc: '/images/users/4.jpg',
+    customer: 'Andrew McDownland',
+    total: '457,000',
+    status: 'Completed',
+    date: '10 Jun, 2021 04:12:29',
   },
   {
-    orderno: "ORD - 0124578",
-    items: "4",
-    imgsrc: "/images/users/5.jpg",
-    customer: "Christopher Jamil",
-    total: "120,000",
-    status: "Pending",
-    date: "15 Apr, 2021 04:12:50",
+    orderno: 'ORD - 0124578',
+    items: '4',
+    imgsrc: '/images/users/5.jpg',
+    customer: 'Christopher Jamil',
+    total: '120,000',
+    status: 'Pending',
+    date: '15 Apr, 2021 04:12:50',
   },
 ].sort((a, b) => (a.customer < b.customer ? -1 : 1));
 
@@ -188,14 +173,13 @@ const ExTablePagination = () => {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   const handleChangePage = (event: any, newPage: React.SetStateAction<number>) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: { target: { value: string; }; }) => {
+  const handleChangeRowsPerPage = (event: { target: { value: string } }) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -207,7 +191,7 @@ const ExTablePagination = () => {
           <Table
             aria-label="custom pagination table"
             sx={{
-              whiteSpace: "nowrap",
+              whiteSpace: 'nowrap',
             }}
           >
             <TableHead>
@@ -235,10 +219,7 @@ const ExTablePagination = () => {
             </TableHead>
             <TableBody>
               {(rowsPerPage > 0
-                ? rows.slice(
-                  page * rowsPerPage,
-                  page * rowsPerPage + rowsPerPage
-                )
+                ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 : rows
               ).map((row) => (
                 <TableRow key={row.orderno}>
@@ -247,28 +228,20 @@ const ExTablePagination = () => {
                   </TableCell>
                   <TableCell>
                     <Stack direction="row" spacing={2} alignItems="center">
-                      <Avatar src={row.imgsrc} alt={"row.imgsrc"} />
+                      <Avatar src={row.imgsrc} alt={'row.imgsrc'} />
                       <Typography variant="subtitle2" fontWeight="600">
                         {row.customer}
                       </Typography>
                     </Stack>
                   </TableCell>
                   <TableCell>
-                    <Typography
-                      color="textSecondary"
-                      variant="h6"
-                      fontWeight="400"
-                    >
+                    <Typography color="textSecondary" variant="h6" fontWeight="400">
                       {row.items}
                     </Typography>
                   </TableCell>
 
                   <TableCell>
-                    <Typography
-                      color="textSecondary"
-                      variant="h6"
-                      fontWeight="400"
-                    >
+                    <Typography color="textSecondary" variant="h6" fontWeight="400">
                       ${row.total}
                     </Typography>
                   </TableCell>
@@ -279,16 +252,16 @@ const ExTablePagination = () => {
                   <TableCell>
                     <Chip
                       color={
-                        row.status === "Completed"
-                          ? "success"
-                          : row.status === "Pending"
-                            ? "warning"
-                            : row.status === "Cancel"
-                              ? "error"
-                              : "secondary"
+                        row.status === 'Completed'
+                          ? 'success'
+                          : row.status === 'Pending'
+                            ? 'warning'
+                            : row.status === 'Cancel'
+                              ? 'error'
+                              : 'secondary'
                       }
                       sx={{
-                        borderRadius: "6px",
+                        borderRadius: '6px',
                       }}
                       size="small"
                       label={row.status}
@@ -306,7 +279,7 @@ const ExTablePagination = () => {
             <TableFooter>
               <TableRow>
                 <TablePagination
-                  rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+                  rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                   colSpan={6}
                   count={rows.length}
                   rowsPerPage={rowsPerPage}
@@ -317,7 +290,7 @@ const ExTablePagination = () => {
                   slotProps={{
                     select: {
                       native: true,
-                    }
+                    },
                   }}
                 />
               </TableRow>

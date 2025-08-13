@@ -1,21 +1,21 @@
-import { Grid } from "@mui/material";
-import Breadcrumb from "@/app/dashboard/layout/shared/breadcrumb/Breadcrumb";
-import PageContainer from "@/app/components/container/PageContainer";
-import ParentCard from "@/app/components/shared/ParentCard";
-import ChildCard from "@/app/components/shared/ChildCard";
-import BasicTransferList from "@/app/components/ui-components/transfer-list/BasicTransferList";
-import EnhancedTransferList from "@/app/components/ui-components/transfer-list/EnhancedTransferList";
+import { Grid } from '@mui/material';
+import Breadcrumb from '@/app/dashboard/layout/shared/breadcrumb/Breadcrumb';
+import PageContainer from '@/app/components/container/PageContainer';
+import ParentCard from '@/app/components/shared/ParentCard';
+import ChildCard from '@/app/components/shared/ChildCard';
+import BasicTransferList from '@/app/components/ui-components/transfer-list/BasicTransferList';
+import EnhancedTransferList from '@/app/components/ui-components/transfer-list/EnhancedTransferList';
 
-import BasicTransferListCode from "@/app/components/ui-components/transfer-list/code/BasicTransferListCode";
-import EnhancedTransferListCode from "@/app/components/ui-components/transfer-list/code/EnhancedTransferListCode";
+import BasicTransferListCode from '@/app/components/ui-components/transfer-list/code/BasicTransferListCode';
+import EnhancedTransferListCode from '@/app/components/ui-components/transfer-list/code/EnhancedTransferListCode';
 
 const BCrumb = [
   {
-    to: "/",
-    title: "Home",
+    to: '/',
+    title: 'Home',
   },
   {
-    title: "Transfer List",
+    title: 'Transfer List',
   },
 ];
 

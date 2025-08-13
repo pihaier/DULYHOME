@@ -1,9 +1,9 @@
 import React from 'react';
-import { Box, CardContent, Card, Typography, Stack, Grid } from "@mui/material";
-import { IconArrowUpLeft } from "@tabler/icons-react";
-import dynamic from "next/dynamic";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
-import { useTheme } from "@mui/material/styles";
+import { Box, CardContent, Card, Typography, Stack, Grid } from '@mui/material';
+import { IconArrowUpLeft } from '@tabler/icons-react';
+import dynamic from 'next/dynamic';
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
+import { useTheme } from '@mui/material/styles';
 import { ApexOptions } from 'apexcharts';
 
 const MonthlyEarningsChart = () => {
@@ -36,7 +36,7 @@ const MonthlyEarningsChart = () => {
         horizontal: false,
         columnWidth: '30%',
         barHeight: '100%',
-        borderRadius: 2
+        borderRadius: 2,
       },
     },
     dataLabels: {
@@ -72,10 +72,7 @@ const MonthlyEarningsChart = () => {
         }}
       >
         <CardContent>
-          <Typography
-            variant="h4" mb={0}
-            gutterBottom
-          >
+          <Typography variant="h4" mb={0} gutterBottom>
             Monthly Earnings
           </Typography>
           <Box mt={2}>
@@ -86,7 +83,8 @@ const MonthlyEarningsChart = () => {
               height="65px"
             />
           </Box>
-          <Box mt={3}
+          <Box
+            mt={3}
             sx={{
               display: {
                 sm: 'flex',
@@ -95,20 +93,14 @@ const MonthlyEarningsChart = () => {
               alignItems: 'flex-end',
             }}
           >
-            <Typography position='relative' zIndex='9'
-              variant="h2"
-            >
+            <Typography position="relative" zIndex="9" variant="h2">
               $39,358
             </Typography>
             <Box ml="10px">
               <IconArrowUpLeft width={18} height={18} />
             </Box>
 
-            <Typography position='relative' zIndex='9'
-              fontWeight="500"
-              variant="h6"
-              gutterBottom
-            >
+            <Typography position="relative" zIndex="9" fontWeight="500" variant="h6" gutterBottom>
               +9 this week
             </Typography>
           </Box>

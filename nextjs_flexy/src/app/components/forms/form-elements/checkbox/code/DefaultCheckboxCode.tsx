@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const DefaultCheckboxCode = () => {
   return (
     <>
@@ -104,7 +104,7 @@ const handleChange = (event) => {
 </Box>`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default DefaultCheckboxCode
+export default DefaultCheckboxCode;

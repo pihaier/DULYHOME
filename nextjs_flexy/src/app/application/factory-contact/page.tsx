@@ -75,7 +75,7 @@ export default function FactoryContactPage() {
   const [loading, setLoading] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [reservationNumber, setReservationNumber] = useState('');
-  
+
   const [formData, setFormData] = useState<FormData>({
     company_name: '',
     contact_person: '',
@@ -98,7 +98,6 @@ export default function FactoryContactPage() {
     files: [],
   });
 
-
   // 로그인 체크
   React.useEffect(() => {
     if (!authLoading && !user) {
@@ -110,7 +109,7 @@ export default function FactoryContactPage() {
   // 프로필 정보 자동 로드
   React.useEffect(() => {
     if (userProfile && !formData.company_name) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         company_name: userProfile.company_name || '',
         contact_person: userProfile.contact_person || '',
@@ -133,15 +132,20 @@ export default function FactoryContactPage() {
 
   // 파일 업로드 핸들러
   const handleFilesChange = useCallback((files: File[]) => {
-    setFormData(prev => ({ ...prev, files }));
+    setFormData((prev) => ({ ...prev, files }));
   }, []);
 
   const handleSubmit = async () => {
     setLoading(true);
-    
+
     try {
       // 유효성 검사
-      if (!formData.company_name || !formData.contact_person || !formData.contact_phone || !formData.contact_email) {
+      if (
+        !formData.company_name ||
+        !formData.contact_person ||
+        !formData.contact_phone ||
+        !formData.contact_email
+      ) {
         alert('회사 정보를 모두 입력해주세요.');
         setLoading(false);
         return;
@@ -154,11 +158,12 @@ export default function FactoryContactPage() {
       }
 
       // 사용자 프로필이 없거나 정보가 변경된 경우 자동으로 프로필 업데이트
-      if (!userProfile || 
-          userProfile.company_name !== formData.company_name ||
-          userProfile.contact_person !== formData.contact_person ||
-          userProfile.phone !== formData.contact_phone) {
-        
+      if (
+        !userProfile ||
+        userProfile.company_name !== formData.company_name ||
+        userProfile.contact_person !== formData.contact_person ||
+        userProfile.phone !== formData.contact_phone
+      ) {
         const profileData = {
           user_id: user!.id,
           company_name: formData.company_name,
@@ -168,9 +173,7 @@ export default function FactoryContactPage() {
 
         if (!userProfile) {
           // 프로필이 없으면 생성
-          await supabase
-            .from('user_profiles')
-            .insert(profileData);
+          await supabase.from('user_profiles').insert(profileData);
         } else {
           // 프로필이 있으면 업데이트
           await supabase
@@ -191,8 +194,9 @@ export default function FactoryContactPage() {
       }
 
       // 요청 타입 배열로 변환
-      const requestTypes = Object.keys(formData.request_types)
-        .filter(key => formData.request_types[key as keyof typeof formData.request_types]);
+      const requestTypes = Object.keys(formData.request_types).filter(
+        (key) => formData.request_types[key as keyof typeof formData.request_types]
+      );
 
       if (requestTypes.length === 0) {
         alert('최소 하나의 요청 유형을 선택해주세요.');
@@ -210,7 +214,7 @@ export default function FactoryContactPage() {
         for (const file of formData.files) {
           const fileExt = file.name.split('.').pop();
           const fileName = `${newReservationNumber}/${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
-          
+
           const { data: uploadData, error: uploadError } = await supabase.storage
             .from('application-files')
             .upload(fileName, file);
@@ -218,24 +222,22 @@ export default function FactoryContactPage() {
           if (uploadError) throw uploadError;
 
           // Storage URL 가져오기 (인증된 사용자만 접근 가능)
-          const { data: { publicUrl } } = supabase.storage
-            .from('application-files')
-            .getPublicUrl(fileName);
+          const {
+            data: { publicUrl },
+          } = supabase.storage.from('application-files').getPublicUrl(fileName);
 
           // uploaded_files 테이블에 저장
-          const { error: fileError } = await supabase
-            .from('uploaded_files')
-            .insert({
-              reservation_number: newReservationNumber,
-              uploaded_by: user!.id,
-              original_filename: file.name,
-              file_path: fileName,
-              file_size: file.size,
-              file_type: 'document',
-              mime_type: file.type,
-              upload_purpose: 'application',
-              file_url: publicUrl
-            });
+          const { error: fileError } = await supabase.from('uploaded_files').insert({
+            reservation_number: newReservationNumber,
+            uploaded_by: user!.id,
+            original_filename: file.name,
+            file_path: fileName,
+            file_size: file.size,
+            file_type: 'document',
+            mime_type: file.type,
+            upload_purpose: 'application',
+            file_url: publicUrl,
+          });
 
           if (fileError) throw fileError;
 
@@ -243,31 +245,29 @@ export default function FactoryContactPage() {
             filename: file.name,
             url: publicUrl,
             size: file.size,
-            type: file.type
+            type: file.type,
           });
         }
       }
 
       // factory_contact_requests 테이블에 저장
-      const { error: insertError } = await supabase
-        .from('factory_contact_requests')
-        .insert({
-          reservation_number: newReservationNumber,
-          user_id: user!.id,
-          company_name: formData.company_name,
-          contact_person: formData.contact_person,
-          contact_phone: formData.contact_phone,
-          contact_email: formData.contact_email,
-          factory_name: formData.factory_name,
-          factory_contact_person: formData.factory_contact_person,
-          factory_contact_phone: formData.factory_contact_phone,
-          factory_address: formData.factory_address,
-          product_name: formData.product_name,
-          product_description: formData.product_description,
-          request_type: requestTypes,
-          special_requirements: formData.special_requirements,
-          files: uploadedFiles
-        });
+      const { error: insertError } = await supabase.from('factory_contact_requests').insert({
+        reservation_number: newReservationNumber,
+        user_id: user!.id,
+        company_name: formData.company_name,
+        contact_person: formData.contact_person,
+        contact_phone: formData.contact_phone,
+        contact_email: formData.contact_email,
+        factory_name: formData.factory_name,
+        factory_contact_person: formData.factory_contact_person,
+        factory_contact_phone: formData.factory_contact_phone,
+        factory_address: formData.factory_address,
+        product_name: formData.product_name,
+        product_description: formData.product_description,
+        request_type: requestTypes,
+        special_requirements: formData.special_requirements,
+        files: uploadedFiles,
+      });
 
       if (insertError) throw insertError;
 
@@ -300,14 +300,14 @@ export default function FactoryContactPage() {
         <Typography variant="h2" align="center" sx={{ mb: 4, fontWeight: 'bold' }}>
           공장컨택 신청
         </Typography>
-        
+
         <Typography variant="body1" align="center" sx={{ mb: 4, color: 'text.secondary' }}>
           이미 정보를 알고 있는 공장과 샘플제작, 대량주문, 검품, 배송 등의 업무를 진행합니다.
         </Typography>
 
         <Paper elevation={3} sx={{ p: 4 }}>
           {/* 회사 정보 */}
-          <CompanyInfoForm 
+          <CompanyInfoForm
             value={{
               company_name: formData.company_name,
               contact_person: formData.contact_person,
@@ -316,7 +316,6 @@ export default function FactoryContactPage() {
             }}
             onChange={(info) => setFormData({ ...formData, ...info })}
           />
-          
 
           <Divider sx={{ my: 4 }} />
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Typography,
   Box,
@@ -12,13 +12,13 @@ import {
   Divider,
   Tooltip,
   Stack,
-} from "@mui/material";
+} from '@mui/material';
 
-import DashboardCard from "../../shared/DashboardCard";
-import { IconDots } from "@tabler/icons-react";
-import theme from "@/utils/theme";
+import DashboardCard from '../../shared/DashboardCard';
+import { IconDots } from '@tabler/icons-react';
+import theme from '@/utils/theme';
 
-const options = ["Action", "Another Action", "Something else here"];
+const options = ['Action', 'Another Action', 'Something else here'];
 
 const MedicalproBranding = () => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
@@ -31,53 +31,49 @@ const MedicalproBranding = () => {
   };
   return (
     <DashboardCard
-        title="MedicalPro Branding"
-        subtitle="Branding & Website"
-        action={
-          <Box>
-            <Tooltip title="Action">
-              <IconButton
-                aria-expanded={open ? "true" : undefined}
-                aria-haspopup="true"
-                onClick={handleClick}
-                size="small"
-                aria-label="action"
-              >
-                <IconDots width={20} />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              id="long-menu"
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "right",
-              }}
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              slotProps={{
-                list: {
-                  "aria-labelledby": "long-button",
-                }
-              }}
+      title="MedicalPro Branding"
+      subtitle="Branding & Website"
+      action={
+        <Box>
+          <Tooltip title="Action">
+            <IconButton
+              aria-expanded={open ? 'true' : undefined}
+              aria-haspopup="true"
+              onClick={handleClick}
+              size="small"
+              aria-label="action"
             >
-              {options.map((option) => (
-                <MenuItem
-                  key={option}
-                  selected={option === "Pyxis"}
-                  onClick={handleClose}
-                >
-                  {option}
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-        }
-      >
+              <IconDots width={20} />
+            </IconButton>
+          </Tooltip>
+          <Menu
+            id="long-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            slotProps={{
+              list: {
+                'aria-labelledby': 'long-button',
+              },
+            }}
+          >
+            {options.map((option) => (
+              <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>
+                {option}
+              </MenuItem>
+            ))}
+          </Menu>
+        </Box>
+      }
+    >
       <>
         <Chip
           size="small"
@@ -99,8 +95,9 @@ const MedicalproBranding = () => {
               }}
               size={{
                 xs: 4,
-                lg: 4
-              }}>
+                lg: 4,
+              }}
+            >
               <Typography color="textSecondary" variant="h6" fontWeight="400">
                 Due Date
               </Typography>
@@ -116,8 +113,9 @@ const MedicalproBranding = () => {
               }}
               size={{
                 xs: 4,
-                lg: 4
-              }}>
+                lg: 4,
+              }}
+            >
               <Typography color="textSecondary" variant="h6" fontWeight="400">
                 Budget
               </Typography>
@@ -132,8 +130,9 @@ const MedicalproBranding = () => {
               }}
               size={{
                 xs: 4,
-                lg: 4
-              }}>
+                lg: 4,
+              }}
+            >
               <Typography color="textSecondary" variant="h6" fontWeight="400">
                 Expense
               </Typography>
@@ -145,10 +144,10 @@ const MedicalproBranding = () => {
           <Divider />
         </Box>
         <Box pt={2} pb={3}>
-          <Typography variant="h4" fontSize='18px'>Teams</Typography>
-          <Box
-            display="flex"
-            alignItems="center" mt={1} gap={1}>
+          <Typography variant="h4" fontSize="18px">
+            Teams
+          </Typography>
+          <Box display="flex" alignItems="center" mt={1} gap={1}>
             <Chip
               size="small"
               label="Bootstrap"
@@ -175,38 +174,38 @@ const MedicalproBranding = () => {
         </Box>
         <Divider />
         <Box py={2}>
-          <Typography variant="h4" fontSize='18px'> Leaders</Typography>
-          <Box
-            display="flex"
-            alignItems="center" mt={2} gap={1}
-          >
+          <Typography variant="h4" fontSize="18px">
+            {' '}
+            Leaders
+          </Typography>
+          <Box display="flex" alignItems="center" mt={2} gap={1}>
             <Avatar
-              src='/images/users/1.jpg'
-              alt='img1'
+              src="/images/users/1.jpg"
+              alt="img1"
               sx={{
                 width: '35px',
                 height: '35px',
               }}
             />
             <Avatar
-              src='/images/users/2.jpg'
-              alt='img1'
+              src="/images/users/2.jpg"
+              alt="img1"
               sx={{
                 width: '35px',
                 height: '35px',
               }}
             />
             <Avatar
-              src='/images/users/3.jpg'
-              alt='img1'
+              src="/images/users/3.jpg"
+              alt="img1"
               sx={{
                 width: '35px',
                 height: '35px',
               }}
             />
             <Avatar
-              src='/images/users/4.jpg'
-              alt='img1'
+              src="/images/users/4.jpg"
+              alt="img1"
               sx={{
                 width: '35px',
                 height: '35px',
@@ -215,9 +214,7 @@ const MedicalproBranding = () => {
           </Box>
         </Box>
         <Divider />
-        <Box
-          display="flex"
-          alignItems="center" pt={3} justifyContent='space-between'>
+        <Box display="flex" alignItems="center" pt={3} justifyContent="space-between">
           <Button variant="contained" color="secondary">
             Add
           </Button>

@@ -1,11 +1,11 @@
-"use client";
-import React from "react";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import Logo from "@/app/dashboard/layout/shared/logo/Logo";
-import { NavLinks } from "./Navigations";
-import { Chip } from "@mui/material";
+'use client';
+import React from 'react';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import Logo from '@/app/dashboard/layout/shared/logo/Logo';
+import { NavLinks } from './Navigations';
+import { Chip } from '@mui/material';
 
 const MobileSidebar = () => {
   return (
@@ -21,7 +21,7 @@ const MobileSidebar = () => {
               href={navlink.href}
               key={i}
               sx={{
-                justifyContent: "start",
+                justifyContent: 'start',
               }}
             >
               {navlink.title}
@@ -32,7 +32,7 @@ const MobileSidebar = () => {
             color="inherit"
             href="/dashboard"
             sx={{
-              justifyContent: "start",
+              justifyContent: 'start',
             }}
           >
             대시보드

@@ -1,24 +1,24 @@
-import React from "react";
+import React from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
-import FrameworksTitle from "./FrameworksTitle";
+import FrameworksTitle from './FrameworksTitle';
 
 // images
-const sliderImg = "/images/landingpage/ang-flexy-landscape-img.png";
-import Image from "next/image";
+const sliderImg = '/images/landingpage/ang-flexy-landscape-img.png';
+import Image from 'next/image';
 
 const SliderBox = styled(Box)(() => ({
-  "@keyframes slide": {
-    "0%": {
-      transform: "translate3d(0, 0, 0)",
+  '@keyframes slide': {
+    '0%': {
+      transform: 'translate3d(0, 0, 0)',
     },
-    "100% ": {
-      transform: "translate3d(-100%, 0, 0)",
+    '100% ': {
+      transform: 'translate3d(-100%, 0, 0)',
     },
   },
-  animation: "slide 45s linear infinite",
+  animation: 'slide 45s linear infinite',
 }));
 
 const Frameworks = () => {
@@ -27,8 +27,8 @@ const Frameworks = () => {
       bgcolor="action.hover"
       sx={{
         py: {
-          xs: "70px",
-          lg: "80px",
+          xs: '70px',
+          lg: '80px',
         },
       }}
     >
@@ -36,15 +36,15 @@ const Frameworks = () => {
         {/* Title */}
         <FrameworksTitle />
       </Container>
-      <Stack overflow="hidden" mt={6} direction={"row"}>
+      <Stack overflow="hidden" mt={6} direction={'row'}>
         <Box>
           <SliderBox>
-            <Image src={sliderImg} unoptimized={true} alt="slide" style={{ height: "100%" }} />
+            <Image src={sliderImg} unoptimized={true} alt="slide" style={{ height: '100%' }} />
           </SliderBox>
         </Box>
         <Box>
           <SliderBox>
-            <Image src={sliderImg} unoptimized={true} alt="slide" style={{ height: "100%" }} />
+            <Image src={sliderImg} unoptimized={true} alt="slide" style={{ height: '100%' }} />
           </SliderBox>
         </Box>
       </Stack>

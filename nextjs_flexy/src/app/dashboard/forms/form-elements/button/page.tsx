@@ -1,67 +1,67 @@
-import React from "react";
-import { Grid } from "@mui/material";
-import Breadcrumb from "@/app/dashboard/layout/shared/breadcrumb/Breadcrumb";
-import PageContainer from "@/app/components/container/PageContainer";
-import ParentCard from "@/app/components/shared/ParentCard";
-import ChildCard from "@/app/components/shared/ChildCard";
+import React from 'react';
+import { Grid } from '@mui/material';
+import Breadcrumb from '@/app/dashboard/layout/shared/breadcrumb/Breadcrumb';
+import PageContainer from '@/app/components/container/PageContainer';
+import ParentCard from '@/app/components/shared/ParentCard';
+import ChildCard from '@/app/components/shared/ChildCard';
 
-import DefaultButtons from "@/app/components/forms/form-elements/button/DefaultButtons";
-import ColorButtons from "@/app/components/forms/form-elements/button/ColorButtons";
-import IconLoadingButtons from "@/app/components/forms/form-elements/button/IconLoadingButtons";
-import SizeButton from "@/app/components/forms/form-elements/button/SizeButton";
+import DefaultButtons from '@/app/components/forms/form-elements/button/DefaultButtons';
+import ColorButtons from '@/app/components/forms/form-elements/button/ColorButtons';
+import IconLoadingButtons from '@/app/components/forms/form-elements/button/IconLoadingButtons';
+import SizeButton from '@/app/components/forms/form-elements/button/SizeButton';
 
-import OutlinedIconButtons from "@/app/components/forms/form-elements/button/OutlinedIconButtons";
-import OutlinedSizeButton from "@/app/components/forms/form-elements/button/OutlinedSizeButton";
+import OutlinedIconButtons from '@/app/components/forms/form-elements/button/OutlinedIconButtons';
+import OutlinedSizeButton from '@/app/components/forms/form-elements/button/OutlinedSizeButton';
 
-import TextDefaultButtons from "@/app/components/forms/form-elements/button/TextDefaultButtons";
-import TextColorButtons from "@/app/components/forms/form-elements/button/TextColorButtons";
-import TextIconButtons from "@/app/components/forms/form-elements/button/TextIconButtons";
-import TextSizeButton from "@/app/components/forms/form-elements/button/TextSizeButton";
+import TextDefaultButtons from '@/app/components/forms/form-elements/button/TextDefaultButtons';
+import TextColorButtons from '@/app/components/forms/form-elements/button/TextColorButtons';
+import TextIconButtons from '@/app/components/forms/form-elements/button/TextIconButtons';
+import TextSizeButton from '@/app/components/forms/form-elements/button/TextSizeButton';
 
-import IconColorButtons from "@/app/components/forms/form-elements/button/IconColorButtons";
-import IconSizeButtons from "@/app/components/forms/form-elements/button/IconSizeButtons";
+import IconColorButtons from '@/app/components/forms/form-elements/button/IconColorButtons';
+import IconSizeButtons from '@/app/components/forms/form-elements/button/IconSizeButtons';
 
-import FabDefaultButton from "@/app/components/forms/form-elements/button/FabDefaultButton";
-import FabColorButtons from "@/app/components/forms/form-elements/button/FabColorButtons";
-import FabSizeButtons from "@/app/components/forms/form-elements/button/FabSizeButtons";
+import FabDefaultButton from '@/app/components/forms/form-elements/button/FabDefaultButton';
+import FabColorButtons from '@/app/components/forms/form-elements/button/FabColorButtons';
+import FabSizeButtons from '@/app/components/forms/form-elements/button/FabSizeButtons';
 
-import DefaultButtonGroup from "@/app/components/forms/form-elements/button/DefaultButtonGroup";
-import SizeButtonGroup from "@/app/components/forms/form-elements/button/SizeButtonGroup";
-import VerticalButtonGroup from "@/app/components/forms/form-elements/button/VerticalButtonGroup";
-import ColorButtonGroup from "@/app/components/forms/form-elements/button/ColorButtonGroup";
-import TextButtonGroup from "@/app/components/forms/form-elements/button/TextButtonGroup";
-import OutlinedColorButtons from "@/app/components/forms/form-elements/button/OutlinedColorButtons";
+import DefaultButtonGroup from '@/app/components/forms/form-elements/button/DefaultButtonGroup';
+import SizeButtonGroup from '@/app/components/forms/form-elements/button/SizeButtonGroup';
+import VerticalButtonGroup from '@/app/components/forms/form-elements/button/VerticalButtonGroup';
+import ColorButtonGroup from '@/app/components/forms/form-elements/button/ColorButtonGroup';
+import TextButtonGroup from '@/app/components/forms/form-elements/button/TextButtonGroup';
+import OutlinedColorButtons from '@/app/components/forms/form-elements/button/OutlinedColorButtons';
 
 // codeModel
-import DefaultCode from "@/app/components/forms/form-elements/button/code/DefaultCode";
-import ColorsCode from "@/app/components/forms/form-elements/button/code/ColorsCode";
-import LoadingButtonsCode from "@/app/components/forms/form-elements/button/code/LoadingButtonsCode";
-import SizesCode from "@/app/components/forms/form-elements/button/code/SizesCode";
-import OutlinedCode from "@/app/components/forms/form-elements/button/code/OutlinedCode";
-import OutlinedIconCode from "@/app/components/forms/form-elements/button/code/OutlinedIconCode";
-import OutlineSizeCode from "@/app/components/forms/form-elements/button/code/OutlineSizeCode";
-import TextCode from "@/app/components/forms/form-elements/button/code/TextCode";
-import TextColorCode from "@/app/components/forms/form-elements/button/code/TextColorCode";
-import TextIconColor from "@/app/components/forms/form-elements/button/code/TextIconColor";
-import TextSizesCode from "@/app/components/forms/form-elements/button/code/TextSizesCode";
-import IconColorCode from "@/app/components/forms/form-elements/button/code/IconColorCode";
-import IconSizesCode from "@/app/components/forms/form-elements/button/code/IconSizesCode";
-import FABCode from "@/app/components/forms/form-elements/button/code/FABCode";
-import FABColorCode from "@/app/components/forms/form-elements/button/code/FABColorCode";
-import FABSizeCode from "@/app/components/forms/form-elements/button/code/FABSizeCode";
-import DefaultButtonGroupCode from "@/app/components/forms/form-elements/button/code/DefaultButtonGroupCode";
-import SizeButtonGroupCode from "@/app/components/forms/form-elements/button/code/SizeButtonGroupCode";
-import VerticalButtonGroupCode from "@/app/components/forms/form-elements/button/code/VerticalButtonGroupCode";
-import TextButtonGroupCode from "@/app/components/forms/form-elements/button/code/TextButtonGroupCode";
-import ColorButtonGroupCode from "@/app/components/forms/form-elements/button/code/ColorButtonGroupCode";
+import DefaultCode from '@/app/components/forms/form-elements/button/code/DefaultCode';
+import ColorsCode from '@/app/components/forms/form-elements/button/code/ColorsCode';
+import LoadingButtonsCode from '@/app/components/forms/form-elements/button/code/LoadingButtonsCode';
+import SizesCode from '@/app/components/forms/form-elements/button/code/SizesCode';
+import OutlinedCode from '@/app/components/forms/form-elements/button/code/OutlinedCode';
+import OutlinedIconCode from '@/app/components/forms/form-elements/button/code/OutlinedIconCode';
+import OutlineSizeCode from '@/app/components/forms/form-elements/button/code/OutlineSizeCode';
+import TextCode from '@/app/components/forms/form-elements/button/code/TextCode';
+import TextColorCode from '@/app/components/forms/form-elements/button/code/TextColorCode';
+import TextIconColor from '@/app/components/forms/form-elements/button/code/TextIconColor';
+import TextSizesCode from '@/app/components/forms/form-elements/button/code/TextSizesCode';
+import IconColorCode from '@/app/components/forms/form-elements/button/code/IconColorCode';
+import IconSizesCode from '@/app/components/forms/form-elements/button/code/IconSizesCode';
+import FABCode from '@/app/components/forms/form-elements/button/code/FABCode';
+import FABColorCode from '@/app/components/forms/form-elements/button/code/FABColorCode';
+import FABSizeCode from '@/app/components/forms/form-elements/button/code/FABSizeCode';
+import DefaultButtonGroupCode from '@/app/components/forms/form-elements/button/code/DefaultButtonGroupCode';
+import SizeButtonGroupCode from '@/app/components/forms/form-elements/button/code/SizeButtonGroupCode';
+import VerticalButtonGroupCode from '@/app/components/forms/form-elements/button/code/VerticalButtonGroupCode';
+import TextButtonGroupCode from '@/app/components/forms/form-elements/button/code/TextButtonGroupCode';
+import ColorButtonGroupCode from '@/app/components/forms/form-elements/button/code/ColorButtonGroupCode';
 
 const BCrumb = [
   {
-    to: "/",
-    title: "Home",
+    to: '/',
+    title: 'Home',
   },
   {
-    title: "Button",
+    title: 'Button',
   },
 ];
 
@@ -80,8 +80,9 @@ const MuiButton = () => (
               alignItems="stretch"
               size={{
                 xs: 12,
-                lg: 6
-              }}>
+                lg: 6,
+              }}
+            >
               <ChildCard title="Default" codeModel={<DefaultCode />}>
                 <DefaultButtons />
               </ChildCard>
@@ -92,8 +93,9 @@ const MuiButton = () => (
               alignItems="stretch"
               size={{
                 xs: 12,
-                lg: 6
-              }}>
+                lg: 6,
+              }}
+            >
               <ChildCard title="Colors" codeModel={<ColorsCode />}>
                 <ColorButtons />
               </ChildCard>
@@ -104,12 +106,10 @@ const MuiButton = () => (
               alignItems="stretch"
               size={{
                 xs: 12,
-                lg: 6
-              }}>
-              <ChildCard
-                title="Loading Buttons"
-                codeModel={<LoadingButtonsCode />}
-              >
+                lg: 6,
+              }}
+            >
+              <ChildCard title="Loading Buttons" codeModel={<LoadingButtonsCode />}>
                 <IconLoadingButtons />
               </ChildCard>
             </Grid>
@@ -119,8 +119,9 @@ const MuiButton = () => (
               alignItems="stretch"
               size={{
                 xs: 12,
-                lg: 6
-              }}>
+                lg: 6,
+              }}
+            >
               <ChildCard title="Sizes" codeModel={<SizesCode />}>
                 <SizeButton />
               </ChildCard>
@@ -131,8 +132,9 @@ const MuiButton = () => (
               alignItems="stretch"
               size={{
                 xs: 12,
-                lg: 6
-              }}>
+                lg: 6,
+              }}
+            >
               <ChildCard title="Outlined" codeModel={<OutlinedCode />}>
                 <OutlinedColorButtons />
               </ChildCard>
@@ -143,8 +145,9 @@ const MuiButton = () => (
               alignItems="stretch"
               size={{
                 xs: 12,
-                lg: 6
-              }}>
+                lg: 6,
+              }}
+            >
               <ChildCard title="Outlined Icon" codeModel={<OutlinedIconCode />}>
                 <OutlinedIconButtons />
               </ChildCard>
@@ -155,8 +158,9 @@ const MuiButton = () => (
               alignItems="stretch"
               size={{
                 xs: 12,
-                lg: 6
-              }}>
+                lg: 6,
+              }}
+            >
               <ChildCard title="Outline Size" codeModel={<OutlineSizeCode />}>
                 <OutlinedSizeButton />
               </ChildCard>
@@ -167,8 +171,9 @@ const MuiButton = () => (
               alignItems="stretch"
               size={{
                 xs: 12,
-                lg: 6
-              }}>
+                lg: 6,
+              }}
+            >
               <ChildCard title="Text" codeModel={<TextCode />}>
                 <TextDefaultButtons />
               </ChildCard>
@@ -179,8 +184,9 @@ const MuiButton = () => (
               alignItems="stretch"
               size={{
                 xs: 12,
-                lg: 6
-              }}>
+                lg: 6,
+              }}
+            >
               <ChildCard title="Text Color" codeModel={<TextColorCode />}>
                 <TextColorButtons />
               </ChildCard>
@@ -191,8 +197,9 @@ const MuiButton = () => (
               alignItems="stretch"
               size={{
                 xs: 12,
-                lg: 6
-              }}>
+                lg: 6,
+              }}
+            >
               <ChildCard title="Text Icon" codeModel={<TextIconColor />}>
                 <TextIconButtons />
               </ChildCard>
@@ -203,8 +210,9 @@ const MuiButton = () => (
               alignItems="stretch"
               size={{
                 xs: 12,
-                lg: 6
-              }}>
+                lg: 6,
+              }}
+            >
               <ChildCard title="Text Sizes" codeModel={<TextSizesCode />}>
                 <TextSizeButton />
               </ChildCard>
@@ -215,8 +223,9 @@ const MuiButton = () => (
               alignItems="stretch"
               size={{
                 xs: 12,
-                lg: 6
-              }}>
+                lg: 6,
+              }}
+            >
               <ChildCard title="Icon Color" codeModel={<IconColorCode />}>
                 <IconColorButtons />
               </ChildCard>
@@ -227,8 +236,9 @@ const MuiButton = () => (
               alignItems="stretch"
               size={{
                 xs: 12,
-                lg: 6
-              }}>
+                lg: 6,
+              }}
+            >
               <ChildCard title="Icon Sizes" codeModel={<IconSizesCode />}>
                 <IconSizeButtons />
               </ChildCard>
@@ -239,8 +249,9 @@ const MuiButton = () => (
               alignItems="stretch"
               size={{
                 xs: 12,
-                lg: 6
-              }}>
+                lg: 6,
+              }}
+            >
               <ChildCard title="FAB" codeModel={<FABCode />}>
                 <FabDefaultButton />
               </ChildCard>
@@ -251,8 +262,9 @@ const MuiButton = () => (
               alignItems="stretch"
               size={{
                 xs: 12,
-                lg: 6
-              }}>
+                lg: 6,
+              }}
+            >
               <ChildCard title="FAB Color" codeModel={<FABColorCode />}>
                 <FabColorButtons />
               </ChildCard>
@@ -263,8 +275,9 @@ const MuiButton = () => (
               alignItems="stretch"
               size={{
                 xs: 12,
-                lg: 6
-              }}>
+                lg: 6,
+              }}
+            >
               <ChildCard title="FAB Size" codeModel={<FABSizeCode />}>
                 <FabSizeButtons />
               </ChildCard>
@@ -281,8 +294,9 @@ const MuiButton = () => (
               alignItems="stretch"
               size={{
                 xs: 12,
-                lg: 6
-              }}>
+                lg: 6,
+              }}
+            >
               <ChildCard title="Default" codeModel={<DefaultButtonGroupCode />}>
                 <DefaultButtonGroup />
               </ChildCard>
@@ -293,8 +307,9 @@ const MuiButton = () => (
               alignItems="stretch"
               size={{
                 xs: 12,
-                lg: 6
-              }}>
+                lg: 6,
+              }}
+            >
               <ChildCard title="Sizes" codeModel={<SizeButtonGroupCode />}>
                 <SizeButtonGroup />
               </ChildCard>
@@ -305,12 +320,10 @@ const MuiButton = () => (
               alignItems="stretch"
               size={{
                 xs: 12,
-                lg: 6
-              }}>
-              <ChildCard
-                title="Verical"
-                codeModel={<VerticalButtonGroupCode />}
-              >
+                lg: 6,
+              }}
+            >
+              <ChildCard title="Verical" codeModel={<VerticalButtonGroupCode />}>
                 <VerticalButtonGroup />
               </ChildCard>
             </Grid>
@@ -320,8 +333,9 @@ const MuiButton = () => (
               alignItems="stretch"
               size={{
                 xs: 12,
-                lg: 6
-              }}>
+                lg: 6,
+              }}
+            >
               <ChildCard title="Text" codeModel={<TextButtonGroupCode />}>
                 <TextButtonGroup />
               </ChildCard>

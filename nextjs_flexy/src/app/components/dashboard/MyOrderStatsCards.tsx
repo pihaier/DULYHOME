@@ -7,7 +7,7 @@ import {
   IconCircleCheck,
   IconCurrencyDollar,
   IconAlertCircle,
-} from "@tabler/icons-react";
+} from '@tabler/icons-react';
 import { useTheme } from '@mui/material/styles';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
@@ -32,7 +32,7 @@ const MyOrderStatsCards = () => {
     activeOrders: 0,
     completedOrders: 0,
     pendingPayments: 0,
-    pendingConfirmations: 0
+    pendingConfirmations: 0,
   });
 
   useEffect(() => {
@@ -44,7 +44,7 @@ const MyOrderStatsCards = () => {
   const fetchMyStats = async () => {
     try {
       const supabase = createClient();
-      
+
       // 내 진행중 주문 (모든 서비스)
       let activeCount = 0;
       let completedCount = 0;
@@ -55,7 +55,7 @@ const MyOrderStatsCards = () => {
         .select('*', { count: 'exact', head: true })
         .eq('user_id', user?.id)
         .in('status', ['submitted', 'in_progress']);
-      
+
       const { count: completedMR } = await supabase
         .from('market_research_requests')
         .select('*', { count: 'exact', head: true })
@@ -68,7 +68,7 @@ const MyOrderStatsCards = () => {
         .select('*', { count: 'exact', head: true })
         .eq('user_id', user?.id)
         .in('status', ['submitted', 'in_progress']);
-      
+
       const { count: completedFC } = await supabase
         .from('factory_contact_requests')
         .select('*', { count: 'exact', head: true })
@@ -81,7 +81,7 @@ const MyOrderStatsCards = () => {
         .select('*', { count: 'exact', head: true })
         .eq('user_id', user?.id)
         .in('status', ['submitted', 'in_progress']);
-      
+
       const { count: completedIN } = await supabase
         .from('inspection_applications')
         .select('*', { count: 'exact', head: true })
@@ -93,28 +93,28 @@ const MyOrderStatsCards = () => {
 
       // 결제 대기 주문 수
       let pendingPaymentCount = 0;
-      
+
       // 시장조사 결제 대기
       const { count: pendingPayMR } = await supabase
         .from('market_research_requests')
         .select('*', { count: 'exact', head: true })
         .eq('user_id', user?.id)
         .eq('payment_status', 'pending');
-      
+
       // 공장컨택 결제 대기
       const { count: pendingPayFC } = await supabase
         .from('factory_contact_requests')
         .select('*', { count: 'exact', head: true })
         .eq('user_id', user?.id)
         .eq('payment_status', 'pending');
-      
+
       // 검품 결제 대기
       const { count: pendingPayIN } = await supabase
         .from('inspection_applications')
         .select('*', { count: 'exact', head: true })
         .eq('user_id', user?.id)
         .eq('payment_status', 'pending');
-      
+
       pendingPaymentCount = (pendingPayMR || 0) + (pendingPayFC || 0) + (pendingPayIN || 0);
 
       // 내 대기중 확인 요청 (현재 user_id 컬럼이 없으므로 0으로 설정)
@@ -124,7 +124,7 @@ const MyOrderStatsCards = () => {
         activeOrders: activeCount,
         completedOrders: completedCount,
         pendingPayments: pendingPaymentCount,
-        pendingConfirmations: pendingConfirmations || 0
+        pendingConfirmations: pendingConfirmations || 0,
       });
     } catch (error) {
       console.error('Error fetching my stats:', error);
@@ -177,8 +177,9 @@ const MyOrderStatsCards = () => {
             size={{
               xs: 6,
               lg: 3,
-              sm: 3
-            }}>
+              sm: 3,
+            }}
+          >
             <CardContent
               sx={{
                 borderRight: {
@@ -201,11 +202,11 @@ const MyOrderStatsCards = () => {
                   backgroundColor: card.btnbg,
                   color: card.btntext,
                   boxShadow: 'none',
-                  width: 50, 
+                  width: 50,
                   height: 50,
-                  "&:hover": {
+                  '&:hover': {
                     backgroundColor: card.btnbg,
-                  }
+                  },
                 }}
               >
                 {card.icon}

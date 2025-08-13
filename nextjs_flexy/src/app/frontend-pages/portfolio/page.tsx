@@ -10,23 +10,23 @@ import { Box, Container } from '@mui/material';
 import { UserDataProvider } from '@/app/context/UserDataContext';
 
 const PricingPage = () => {
-    return (
-        <UserDataProvider>
-            <PageContainer title="Portfolio" description="this is Portfolio">
-                <HeaderAlert />
-                <HpHeader />
-                <Banner />
-                <Box my={3}>
-                    <Container maxWidth="lg">
-                        <GalleryCard />
-                    </Container>
-                </Box>
-                <C2a />
-                <Footer />
-                <ScrollToTop />
-            </PageContainer>
-        </UserDataProvider>
-    );
+  return (
+    <UserDataProvider>
+      <PageContainer title="Portfolio" description="this is Portfolio">
+        <HeaderAlert />
+        <HpHeader />
+        <Banner />
+        <Box my={3}>
+          <Container maxWidth="lg">
+            <GalleryCard />
+          </Container>
+        </Box>
+        <C2a />
+        <Footer />
+        <ScrollToTop />
+      </PageContainer>
+    </UserDataProvider>
+  );
 };
 
 export default PricingPage;

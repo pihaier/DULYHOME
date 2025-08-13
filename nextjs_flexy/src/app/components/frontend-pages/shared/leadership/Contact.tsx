@@ -1,19 +1,11 @@
-"use client";
-import React from "react";
-import {
-  Box,
-  Stack,
-  Typography,
-  Link,
-  AvatarGroup,
-  Container,
-  Avatar,
-} from "@mui/material";
-import useMediaQuery from "@mui/material/useMediaQuery";
+'use client';
+import React from 'react';
+import { Box, Stack, Typography, Link, AvatarGroup, Container, Avatar } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const Contact = () => {
   //   sidebar
-  const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
+  const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
 
   return (
     <Box
@@ -26,22 +18,14 @@ const Contact = () => {
     >
       <Container maxWidth="lg">
         <Stack
-          direction={{ xs: "column", sm: "row" }}
+          direction={{ xs: 'column', sm: 'row' }}
           spacing="16px"
           justifyContent="center"
           alignItems="center"
         >
           <AvatarGroup>
-            <Avatar
-              alt="Remy Sharp"
-              src="/images/users/1.jpg"
-              sx={{ width: 44, height: 44 }}
-            />
-            <Avatar
-              alt="Travis Howard"
-              src="/images/users/2.jpg"
-              sx={{ width: 44, height: 44 }}
-            />
+            <Avatar alt="Remy Sharp" src="/images/users/1.jpg" sx={{ width: 44, height: 44 }} />
+            <Avatar alt="Travis Howard" src="/images/users/2.jpg" sx={{ width: 44, height: 44 }} />
           </AvatarGroup>
           <Typography variant="body1" color="white" fontSize="16px">
             Save valuable time and effort spent searching for a solution.
@@ -50,15 +34,10 @@ const Contact = () => {
             href="/"
             underline="always"
             sx={{
-              textDecorationColor: "white",
+              textDecorationColor: 'white',
             }}
           >
-            <Typography
-              component="span"
-              fontWeight={600}
-              color="white"
-              fontSize="16px"
-            >
+            <Typography component="span" fontWeight={600} color="white" fontSize="16px">
               Contact us now
             </Typography>
           </Link>

@@ -11,7 +11,6 @@ import { useTheme } from '@mui/material/styles';
 import { IconStar, IconTrash } from '@tabler/icons-react';
 import { CustomizerContext } from '@/app/context/customizerContext';
 
-
 type Props = {
   onContactClick: (event: React.MouseEvent<HTMLElement>) => void;
   onStarredClick: React.MouseEventHandler<SVGElement>;
@@ -25,7 +24,6 @@ type Props = {
   active: boolean;
 };
 
-
 const ContactListItem = ({
   onContactClick,
   onStarredClick,
@@ -38,7 +36,6 @@ const ContactListItem = ({
   starred,
   active,
 }: Props) => {
-
   const { isBorderRadius } = useContext(CustomizerContext);
 
   const br = `${isBorderRadius}px`;
@@ -74,6 +71,5 @@ const ContactListItem = ({
     </ListItemButton>
   );
 };
-
 
 export default ContactListItem;

@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const LoadingButtonsCode = () => {
   return (
     <>
@@ -29,7 +29,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 </Stack>`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default LoadingButtonsCode
+export default LoadingButtonsCode;

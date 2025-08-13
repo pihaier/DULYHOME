@@ -12,30 +12,31 @@ const followerCard = [
   {
     title: 'Andrew Grant',
     location: 'El Salvador',
-    avatar: "/images/users/1.jpg",
+    avatar: '/images/users/1.jpg',
   },
   {
     title: 'Leo Pratt',
     location: 'Bulgaria',
-    avatar: "/images/users/2.jpg",
+    avatar: '/images/users/2.jpg',
   },
   {
     title: 'Charles Nunez',
     location: 'Nepal',
-    avatar: "/images/users/3.jpg",
+    avatar: '/images/users/3.jpg',
   },
 ];
 
 const FollowerCard = () => {
   return (
-    (<Grid container spacing={3}>
+    <Grid container spacing={3}>
       {followerCard.map((card, index) => (
         <Grid
           key={index}
           size={{
             xs: 12,
-            sm: 4
-          }}>
+            sm: 4,
+          }}
+        >
           <BlankCard>
             <CardContent>
               <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
@@ -62,7 +63,7 @@ const FollowerCard = () => {
           </BlankCard>
         </Grid>
       ))}
-    </Grid>)
+    </Grid>
   );
 };
 

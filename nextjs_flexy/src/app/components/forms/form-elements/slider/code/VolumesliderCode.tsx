@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const VolumesliderCode = () => {
   return (
     <>
@@ -44,7 +44,7 @@ const [value, setValue] = React.useState(30);
 `}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default VolumesliderCode
+export default VolumesliderCode;

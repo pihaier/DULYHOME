@@ -1,28 +1,25 @@
-import Breadcrumb from "@/app/dashboard/layout/shared/breadcrumb/Breadcrumb";
-import PageContainer from "@/app/components/container/PageContainer";
-import React from "react";
-import CreateInvoiceApp from "@/app/components/apps/invoice/Add-invoice";
-import BlankCard from "@/app/components/shared/BlankCard";
-import { CardContent } from "@mui/material";
-import { InvoiceProvider } from "@/app/context/InvoiceContext";
+import Breadcrumb from '@/app/dashboard/layout/shared/breadcrumb/Breadcrumb';
+import PageContainer from '@/app/components/container/PageContainer';
+import React from 'react';
+import CreateInvoiceApp from '@/app/components/apps/invoice/Add-invoice';
+import BlankCard from '@/app/components/shared/BlankCard';
+import { CardContent } from '@mui/material';
+import { InvoiceProvider } from '@/app/context/InvoiceContext';
 
 const BCrumb = [
   {
-    to: "/",
-    title: "Home",
+    to: '/',
+    title: 'Home',
   },
   {
-    title: "Invoice Create",
+    title: 'Invoice Create',
   },
 ];
 
 const CreateInvoice = () => {
   return (
     <InvoiceProvider>
-      <PageContainer
-        title="Create Invoice"
-        description="this is Create Invoice"
-      >
+      <PageContainer title="Create Invoice" description="this is Create Invoice">
         <Breadcrumb title="Create Invoice" items={BCrumb} />
 
         <BlankCard>

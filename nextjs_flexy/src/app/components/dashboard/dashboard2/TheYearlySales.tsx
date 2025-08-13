@@ -1,18 +1,11 @@
-import React from "react";
-import dynamic from "next/dynamic";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
-import {
-  Box,
-  CardContent,
-  Typography,
-  Stack,
-  Avatar,
-  Grid,
-} from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import { IconShoppingCart } from "@tabler/icons-react";
-import BlankCard from "../../shared/BlankCard";
-import { ApexOptions } from "apexcharts";
+import React from 'react';
+import dynamic from 'next/dynamic';
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
+import { Box, CardContent, Typography, Stack, Avatar, Grid } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import { IconShoppingCart } from '@tabler/icons-react';
+import BlankCard from '../../shared/BlankCard';
+import { ApexOptions } from 'apexcharts';
 
 const YearlySales = () => {
   // chart color
@@ -72,124 +65,130 @@ const YearlySales = () => {
   };
   const seriesyearlysales = [25, 25, 25, 25];
 
-  return (<>
-    <BlankCard>
-      <CardContent>
-        <Grid container spacing={0}>
-          <Grid
-            size={{
-              xs: 6,
-              xl: 7
-            }}>
-            <Typography
-              fontWeight="500"
-              variant="h1" lineHeight='35px'>
-              43,246
-            </Typography>
-            <Typography color="textSecondary" variant="h6">
-              Yearly sales
-            </Typography>
-
-            <Stack direction='row' gap={2} mb={1} mt={4}>
-              <Stack direction='row' alignItems='center' spacing={1}>
-                <Box
-                  sx={{
-                    backgroundColor: () => theme.palette.primary.main,
-                    borderRadius: '50%',
-                    height: 8,
-                    width: 8,
-                    mr: 1,
-                  }}
-                />
-                <Typography color="textSecondary" variant="body2" fontWeight="400">
-                  2025
-                </Typography>
-              </Stack>
-              <Stack direction='row' alignItems='center' spacing={1}>
-                <Box
-                  sx={{
-                    backgroundColor: () => theme.palette.secondary.main,
-                    borderRadius: '50%',
-                    height: 8,
-                    width: 8,
-                    mr: 1,
-                  }}
-                />
-                <Typography color="textSecondary" variant="body2" fontWeight="400">
-                  2020
-                </Typography>
-              </Stack>
-            </Stack>
-
-            <Stack direction='row' gap={2}>
-              <Stack direction='row' alignItems='center' spacing={1}>
-                <Box
-                  sx={{
-                    backgroundColor: () => theme.palette.warning.main,
-                    borderRadius: '50%',
-                    height: 8,
-                    width: 8,
-                    mr: 1,
-                  }}
-                />
-                <Typography color="textSecondary" variant="body2" fontWeight="400">
-                  2019
-                </Typography>
-              </Stack>
-              <Stack direction='row' alignItems='center' spacing={1}>
-                <Box
-                  sx={{
-                    backgroundColor: () => theme.palette.grey.A200,
-                    borderRadius: '50%',
-                    height: 8,
-                    width: 8,
-                    mr: 1,
-                  }}
-                />
-                <Typography color="textSecondary" variant="body2" fontWeight="400">
-                  2018
-                </Typography>
-              </Stack>
-            </Stack>
-
-          </Grid>
-          <Grid
-            display="flex"
-            alignItems="center"
-            justifyContent="flex-end"
-            size={{
-              xs: 6,
-              xl: 5
-            }}>
-            {/* chart */}
-            <Box display='flex' alignItems='center' justifyContent='center' width='150px'
-              sx={{
-                position: 'relative',
-                mt: 1, ml: 'auto'
+  return (
+    <>
+      <BlankCard>
+        <CardContent>
+          <Grid container spacing={0}>
+            <Grid
+              size={{
+                xs: 6,
+                xl: 7,
               }}
             >
-              <Chart
-                options={optionsyearlysales}
-                series={seriesyearlysales}
-                type="donut"
-                height="145"
-              />
-              <Typography
-                color="textSecondary"
+              <Typography fontWeight="500" variant="h1" lineHeight="35px">
+                43,246
+              </Typography>
+              <Typography color="textSecondary" variant="h6">
+                Yearly sales
+              </Typography>
+
+              <Stack direction="row" gap={2} mb={1} mt={4}>
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <Box
+                    sx={{
+                      backgroundColor: () => theme.palette.primary.main,
+                      borderRadius: '50%',
+                      height: 8,
+                      width: 8,
+                      mr: 1,
+                    }}
+                  />
+                  <Typography color="textSecondary" variant="body2" fontWeight="400">
+                    2025
+                  </Typography>
+                </Stack>
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <Box
+                    sx={{
+                      backgroundColor: () => theme.palette.secondary.main,
+                      borderRadius: '50%',
+                      height: 8,
+                      width: 8,
+                      mr: 1,
+                    }}
+                  />
+                  <Typography color="textSecondary" variant="body2" fontWeight="400">
+                    2020
+                  </Typography>
+                </Stack>
+              </Stack>
+
+              <Stack direction="row" gap={2}>
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <Box
+                    sx={{
+                      backgroundColor: () => theme.palette.warning.main,
+                      borderRadius: '50%',
+                      height: 8,
+                      width: 8,
+                      mr: 1,
+                    }}
+                  />
+                  <Typography color="textSecondary" variant="body2" fontWeight="400">
+                    2019
+                  </Typography>
+                </Stack>
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <Box
+                    sx={{
+                      backgroundColor: () => theme.palette.grey.A200,
+                      borderRadius: '50%',
+                      height: 8,
+                      width: 8,
+                      mr: 1,
+                    }}
+                  />
+                  <Typography color="textSecondary" variant="body2" fontWeight="400">
+                    2018
+                  </Typography>
+                </Stack>
+              </Stack>
+            </Grid>
+            <Grid
+              display="flex"
+              alignItems="center"
+              justifyContent="flex-end"
+              size={{
+                xs: 6,
+                xl: 5,
+              }}
+            >
+              {/* chart */}
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                width="150px"
                 sx={{
-                  position: 'absolute',
-                  left: '42%',
-                  top: '41%',
+                  position: 'relative',
+                  mt: 1,
+                  ml: 'auto',
                 }}
               >
-                <IconShoppingCart height="24" width="24" />
-              </Typography>
-            </Box>
+                <Chart
+                  options={optionsyearlysales}
+                  series={seriesyearlysales}
+                  type="donut"
+                  height="145"
+                />
+                <Typography
+                  color="textSecondary"
+                  sx={{
+                    position: 'absolute',
+                    left: '42%',
+                    top: '41%',
+                  }}
+                >
+                  <IconShoppingCart height="24" width="24" />
+                </Typography>
+              </Box>
+            </Grid>
           </Grid>
-        </Grid>
-      </CardContent>
-    </BlankCard>
-  </>);
+        </CardContent>
+      </BlankCard>
+    </>
+  );
 };
 
 export default YearlySales;

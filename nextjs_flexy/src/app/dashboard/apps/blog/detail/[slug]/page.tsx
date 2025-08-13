@@ -1,4 +1,4 @@
-import BlogDetail from "@/app/components/apps/blog/detail";
+import BlogDetail from '@/app/components/apps/blog/detail';
 import PageContainer from '@/app/components/container/PageContainer';
 import { BlogProvider } from '@/app/context/BlogContext/index';
 const BlogPost = () => {

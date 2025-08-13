@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const CustomIconCode = () => {
   return (
     <>
@@ -30,7 +30,7 @@ import InlineItemCard from "@/app/components/shared/InlineItemCard";
 </InlineItemCard>`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default CustomIconCode
+export default CustomIconCode;

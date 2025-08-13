@@ -1,6 +1,6 @@
-'use client'
-import React, { useContext, useEffect } from "react";
-import { usePathname } from "next/navigation";
+'use client';
+import React, { useContext, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import {
   CardContent,
   Stack,
@@ -14,49 +14,45 @@ import {
   TextField,
   Button,
   Skeleton,
-} from "@mui/material";
-import Breadcrumb from "@/app/dashboard/layout/shared/breadcrumb/Breadcrumb";
-import {
-  IconEye,
-  IconMessage2,
-  IconPoint,
-  IconQuote,
-} from "@tabler/icons-react";
-import { format } from "date-fns";
-import BlogComment from "./BlogComment";
-import { uniqueId } from "lodash";
-import BlankCard from "../../../shared/BlankCard";
+} from '@mui/material';
+import Breadcrumb from '@/app/dashboard/layout/shared/breadcrumb/Breadcrumb';
+import { IconEye, IconMessage2, IconPoint, IconQuote } from '@tabler/icons-react';
+import { format } from 'date-fns';
+import BlogComment from './BlogComment';
+import { uniqueId } from 'lodash';
+import BlankCard from '../../../shared/BlankCard';
 
-import type { BlogType } from "../../../../dashboard/types/apps/blog";
-import { BlogContext, BlogContextProps } from "@/app/context/BlogContext";
-
+import type { BlogType } from '../../../../dashboard/types/apps/blog';
+import { BlogContext, BlogContextProps } from '@/app/context/BlogContext';
 
 const BlogDetail = () => {
-
   const { posts, isLoading, setLoading, addComment }: BlogContextProps = useContext(BlogContext);
-
 
   const pathName = usePathname();
 
   const getTitle = pathName.split('/').pop();
 
-  const [replyTxt, setReplyTxt] = React.useState("");
+  const [replyTxt, setReplyTxt] = React.useState('');
 
-  const post = posts.find((p) => p.title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '') === getTitle);
-
-
+  const post = posts.find(
+    (p) =>
+      p.title
+        .toLowerCase()
+        .replace(/ /g, '-')
+        .replace(/[^\w-]+/g, '') === getTitle
+  );
 
   const BCrumb = [
     {
-      to: "/",
-      title: "Home",
+      to: '/',
+      title: 'Home',
     },
     {
-      to: "/apps/blog/posts",
-      title: "Blog",
+      to: '/apps/blog/posts',
+      title: 'Blog',
     },
     {
-      title: "Blog post",
+      title: 'Blog post',
     },
   ];
 
@@ -142,9 +138,7 @@ const BlogDetail = () => {
 
               <Stack direction="row" ml="auto" alignItems="center">
                 <IconPoint size="16" />
-                <small>
-                  {post?.createdAt ? format(new Date(post.createdAt), 'E, MMM d') : ''}
-                </small>
+                <small>{post?.createdAt ? format(new Date(post.createdAt), 'E, MMM d') : ''}</small>
               </Stack>
             </Stack>
           </CardContent>
@@ -210,9 +204,7 @@ const BlogDetail = () => {
       <Box mt={4}>
         <BlankCard>
           <CardContent>
-            <Typography variant="h4">
-              Post Comments
-            </Typography>
+            <Typography variant="h4">Post Comments</Typography>
             <br />
             <TextField
               rows={4}
@@ -228,9 +220,7 @@ const BlogDetail = () => {
             </Button>
 
             <Stack direction="row" gap={2} alignItems="center" mb={3} mt={5}>
-              <Typography variant="h4">
-                Comments
-              </Typography>
+              <Typography variant="h4">Comments</Typography>
               <Box px={1.5} py={1} color="primary.main" bgcolor={'primary.light'}>
                 <Typography variant="h6" fontWeight={600}>
                   {post?.comments?.length || 0}

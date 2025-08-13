@@ -51,7 +51,7 @@ const LightThemeColors = [
     },
   },
   {
-    name: "PINK_THEME",
+    name: 'PINK_THEME',
     palette: {
       primary: {
         main: '#ff5c8e',

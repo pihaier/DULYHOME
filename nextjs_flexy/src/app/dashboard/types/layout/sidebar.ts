@@ -1,4 +1,4 @@
-import type { MouseEvent, ElementType } from "react";
+import type { MouseEvent, ElementType } from 'react';
 
 export type NavGroup = {
   subtitle?: string;
@@ -23,7 +23,7 @@ export interface ItemType {
   item: NavGroup;
 
   onClick: (event: MouseEvent<HTMLElement>) => void;
-  hideMenu?: boolean | "";
+  hideMenu?: boolean | '';
   level?: number;
   pathDirect: string;
 }
@@ -44,7 +44,7 @@ export interface NavCollapseProps {
   level: number;
   pathWithoutLastPart: string;
   pathDirect: string;
-  hideMenu?: boolean | "";
+  hideMenu?: boolean | '';
 
   onClick: (event: MouseEvent<HTMLElement>) => void;
 }

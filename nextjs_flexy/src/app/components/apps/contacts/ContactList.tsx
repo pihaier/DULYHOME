@@ -1,18 +1,16 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from 'react';
 import List from '@mui/material/List';
 
-
-import Scrollbar from "../../../components/custom-scroll/Scrollbar";
-import ContactListItem from "./ContactListItem";
+import Scrollbar from '../../../components/custom-scroll/Scrollbar';
+import ContactListItem from './ContactListItem';
 import type { ContactType } from '../../../dashboard/types/apps/contact';
-import { ContactContext } from "@/app/context/Conatactcontext";
+import { ContactContext } from '@/app/context/Conatactcontext';
 
 type Props = {
   showrightSidebar: () => void;
 };
 
 const ContactList = ({ showrightSidebar }: Props) => {
-
   const {
     selectedDepartment,
     contacts,
@@ -22,10 +20,7 @@ const ContactList = ({ showrightSidebar }: Props) => {
     setSelectedContact,
     selectedContact,
     searchTerm,
-
   } = useContext(ContactContext);
-
-
 
   // Filter contacts based on selected department and search query
   const filterContacts = (
@@ -34,12 +29,10 @@ const ContactList = ({ showrightSidebar }: Props) => {
     search: string
   ): ContactType[] => {
     let filteredContacts = [...contacts];
-    if (selectedDepartment !== "All") {
-      if (selectedDepartment === "Frequent") {
-        filteredContacts = filteredContacts.filter(
-          (contact) => contact.frequentlycontacted
-        );
-      } else if (selectedDepartment === "Starred") {
+    if (selectedDepartment !== 'All') {
+      if (selectedDepartment === 'Frequent') {
+        filteredContacts = filteredContacts.filter((contact) => contact.frequentlycontacted);
+      } else if (selectedDepartment === 'Starred') {
         filteredContacts = filteredContacts.filter((contact) =>
           starredContacts.includes(contact.id)
         );
@@ -50,7 +43,7 @@ const ContactList = ({ showrightSidebar }: Props) => {
       }
     }
 
-    if (searchTerm.trim() !== "") {
+    if (searchTerm.trim() !== '') {
       const searchTermLower = search.toLowerCase();
       filteredContacts = filteredContacts.filter(
         (contact) =>
@@ -63,22 +56,15 @@ const ContactList = ({ showrightSidebar }: Props) => {
   };
 
   // Get filtered contacts based on selected department and search query
-  const filteredContacts = filterContacts(
-    contacts,
-    selectedDepartment,
-    searchTerm
-  );
+  const filteredContacts = filterContacts(contacts, selectedDepartment, searchTerm);
 
   const handleContactClick = (contact: ContactType) => {
     setSelectedContact(contact);
-
   };
 
   const handleStarredClick = (contactId: number) => {
     toggleStarred(contactId);
   };
-
-
 
   return (
     <List>

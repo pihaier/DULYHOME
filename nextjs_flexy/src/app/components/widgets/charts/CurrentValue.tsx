@@ -1,5 +1,5 @@
-import dynamic from "next/dynamic";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+import dynamic from 'next/dynamic';
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import BlankCard from '../../shared/BlankCard';
 import { Stack } from '@mui/system';
-import { ApexOptions } from "apexcharts";
+import { ApexOptions } from 'apexcharts';
 
 const CurrentValue = () => {
   // chart color
@@ -237,8 +237,9 @@ const CurrentValue = () => {
           <Grid
             size={{
               xs: 12,
-              sm: 4
-            }}>
+              sm: 4,
+            }}
+          >
             <BlankCard>
               <CardContent sx={{ p: '30px' }}>
                 <Box>
@@ -247,7 +248,7 @@ const CurrentValue = () => {
                     series={seriescolumnchart}
                     type="bar"
                     height="200px"
-                    width={"100%"}
+                    width={'100%'}
                   />
                 </Box>
                 <Box mt={4}>
@@ -268,8 +269,9 @@ const CurrentValue = () => {
           <Grid
             size={{
               xs: 12,
-              sm: 4
-            }}>
+              sm: 4,
+            }}
+          >
             <BlankCard>
               <CardContent sx={{ p: '30px' }}>
                 <Box>
@@ -278,7 +280,7 @@ const CurrentValue = () => {
                     series={seriescolumn2chart}
                     type="bar"
                     height="200px"
-                    width={"100%"}
+                    width={'100%'}
                   />
                 </Box>
                 <Box mt={4}>
@@ -299,8 +301,9 @@ const CurrentValue = () => {
           <Grid
             size={{
               xs: 12,
-              sm: 4
-            }}>
+              sm: 4,
+            }}
+          >
             <BlankCard>
               <CardContent sx={{ p: '30px' }}>
                 <Box>
@@ -309,7 +312,7 @@ const CurrentValue = () => {
                     series={seriescolumn3chart}
                     type="donut"
                     height="220px"
-                    width={"100%"}
+                    width={'100%'}
                   />
                 </Box>
                 <Box mt={4}>

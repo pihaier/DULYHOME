@@ -1,5 +1,5 @@
-"use client";
-import * as React from "react";
+'use client';
+import * as React from 'react';
 import {
   TableContainer,
   Table,
@@ -14,20 +14,17 @@ import {
   AvatarGroup,
   Grid,
   CheckboxProps,
-} from "@mui/material";
-import { Stack } from "@mui/system";
-import DownloadCard from "@/app/components/shared/DownloadCard";
-import {
-  basicsTableData,
-  EnTableType,
-} from "@/app/components/tables/tableData";
-import CustomCheckbox from "@/app/components/forms/theme-elements/CustomCheckbox";
+} from '@mui/material';
+import { Stack } from '@mui/system';
+import DownloadCard from '@/app/components/shared/DownloadCard';
+import { basicsTableData, EnTableType } from '@/app/components/tables/tableData';
+import CustomCheckbox from '@/app/components/forms/theme-elements/CustomCheckbox';
 import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
   useReactTable,
-} from "@tanstack/react-table";
+} from '@tanstack/react-table';
 
 const basics = basicsTableData;
 
@@ -48,19 +45,13 @@ const IndeterminateCheckbox: React.FC<IndeterminateCheckboxProps> = ({
     }
   }, [indeterminate, rest.checked]);
 
-  return (
-    <CustomCheckbox
-      ref={ref}
-      className={className + ' cursor-pointer'}
-      {...rest}
-    />
-  );
+  return <CustomCheckbox ref={ref} className={className + ' cursor-pointer'} {...rest} />;
 };
 
 const columnHelper = createColumnHelper<EnTableType>();
 
 const columns = [
-  columnHelper.accessor("checkboxes", {
+  columnHelper.accessor('checkboxes', {
     header: ({ table }) => (
       <IndeterminateCheckbox
         {...{
@@ -84,15 +75,11 @@ const columns = [
     ),
   }),
 
-  columnHelper.accessor("imgsrc", {
-    header: () => "Users",
+  columnHelper.accessor('imgsrc', {
+    header: () => 'Users',
     cell: (info) => (
       <Stack direction="row" spacing={2}>
-        <Avatar
-          src={info.getValue()}
-          alt={info.getValue()}
-          sx={{ width: 40, height: 40 }}
-        />
+        <Avatar src={info.getValue()} alt={info.getValue()} sx={{ width: 40, height: 40 }} />
         <Box>
           <Typography variant="h6" fontWeight="600">
             {info.row.original.name}
@@ -104,16 +91,16 @@ const columns = [
       </Stack>
     ),
   }),
-  columnHelper.accessor("pname", {
-    header: () => "Project Name",
+  columnHelper.accessor('pname', {
+    header: () => 'Project Name',
     cell: (info) => (
       <Typography color="textSecondary" variant="h6" fontWeight={400}>
         {info.row.original.pname}
       </Typography>
     ),
   }),
-  columnHelper.accessor("teams", {
-    header: () => "Team",
+  columnHelper.accessor('teams', {
+    header: () => 'Team',
     cell: (info) => (
       <Stack direction="row">
         <AvatarGroup max={4}>
@@ -133,43 +120,41 @@ const columns = [
       </Stack>
     ),
   }),
-  columnHelper.accessor("status", {
-    header: () => "Status",
+  columnHelper.accessor('status', {
+    header: () => 'Status',
     cell: (info) => (
       <Chip
         sx={{
           bgcolor:
-            info.getValue() === "Active"
+            info.getValue() === 'Active'
               ? (theme) => theme.palette.success.light
-              : info.getValue() === "Pending"
+              : info.getValue() === 'Pending'
                 ? (theme) => theme.palette.warning.light
-                : info.getValue() === "Completed"
+                : info.getValue() === 'Completed'
                   ? (theme) => theme.palette.primary.light
-                  : info.getValue() === "Cancel"
+                  : info.getValue() === 'Cancel'
                     ? (theme) => theme.palette.error.light
                     : (theme) => theme.palette.secondary.light,
           color:
-            info.getValue() === "Active"
+            info.getValue() === 'Active'
               ? (theme) => theme.palette.success.main
-              : info.getValue() === "Pending"
+              : info.getValue() === 'Pending'
                 ? (theme) => theme.palette.warning.main
-                : info.getValue() === "Completed"
+                : info.getValue() === 'Completed'
                   ? (theme) => theme.palette.primary.main
-                  : info.getValue() === "Cancel"
+                  : info.getValue() === 'Cancel'
                     ? (theme) => theme.palette.error.main
                     : (theme) => theme.palette.secondary.main,
-          borderRadius: "8px",
+          borderRadius: '8px',
         }}
         size="small"
         label={info.getValue()}
       />
     ),
   }),
-  columnHelper.accessor("budget", {
-    header: () => "Budget",
-    cell: (info) => (
-      <Typography variant="h6">${info.row.original.budget}k</Typography>
-    ),
+  columnHelper.accessor('budget', {
+    header: () => 'Budget',
+    cell: (info) => <Typography variant="h6">${info.row.original.budget}k</Typography>,
   }),
 ];
 
@@ -190,48 +175,39 @@ const TableRowSelection = () => {
   });
 
   const handleDownload = () => {
-    const headers = ["Users", "Project Name", "Team", "Status", "Budget"];
+    const headers = ['Users', 'Project Name', 'Team', 'Status', 'Budget'];
     const rows = data.map(
-      (item: {
-        name: any;
-        pname: any;
-        teams: any[];
-        status: any;
-        budget: any;
-      }) => [
-          item.name,
-          item.pname,
-          item.teams.map((team) => team.text).join(", "),
-          item.status,
-          item.budget,
-        ]
+      (item: { name: any; pname: any; teams: any[]; status: any; budget: any }) => [
+        item.name,
+        item.pname,
+        item.teams.map((team) => team.text).join(', '),
+        item.status,
+        item.budget,
+      ]
     );
 
-    const csvContent = [
-      headers.join(","),
-      ...rows.map((e: any[]) => e.join(",")),
-    ].join("\n");
+    const csvContent = [headers.join(','), ...rows.map((e: any[]) => e.join(','))].join('\n');
 
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
 
-    const link = document.createElement("a");
+    const link = document.createElement('a');
     link.href = url;
-    link.setAttribute("download", "table-data.csv");
+    link.setAttribute('download', 'table-data.csv');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
   return (
-    (<DownloadCard title="Row Selection Table" onDownload={handleDownload}>
+    <DownloadCard title="Row Selection Table" onDownload={handleDownload}>
       <Grid container spacing={3}>
         <Grid size={12}>
           <Box>
             <TableContainer>
               <Table
                 sx={{
-                  whiteSpace: "nowrap",
+                  whiteSpace: 'nowrap',
                 }}
               >
                 <TableHead>
@@ -242,10 +218,7 @@ const TableRowSelection = () => {
                           <Typography variant="h6">
                             {header.isPlaceholder
                               ? null
-                              : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
+                              : flexRender(header.column.columnDef.header, header.getContext())}
                           </Typography>
                         </TableCell>
                       ))}
@@ -257,10 +230,7 @@ const TableRowSelection = () => {
                     <TableRow key={row.id}>
                       {row.getVisibleCells().map((cell) => (
                         <TableCell key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
+                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
                         </TableCell>
                       ))}
                     </TableRow>
@@ -271,7 +241,7 @@ const TableRowSelection = () => {
           </Box>
         </Grid>
       </Grid>
-    </DownloadCard>)
+    </DownloadCard>
   );
 };
 

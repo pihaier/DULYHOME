@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { Grid, Box, Card, Typography } from '@mui/material';
 import Logo from '@/app/dashboard/layout/shared/logo/Logo';
 import PageContainer from '@/app/components/container/PageContainer';
@@ -6,7 +6,7 @@ import AuthForgotPassword from '../../authForms/AuthForgotPassword';
 
 export default function ForgotPassword2() {
   return (
-    (<PageContainer title="Forgot Password Page" description="this is Sample page">
+    <PageContainer title="Forgot Password Page" description="this is Sample page">
       <Box
         sx={{
           position: 'relative',
@@ -31,10 +31,11 @@ export default function ForgotPassword2() {
               xs: 12,
               sm: 12,
               lg: 4,
-              xl: 3
-            }}>
+              xl: 3,
+            }}
+          >
             <Card elevation={9} sx={{ p: 4, zIndex: 1, width: '100%', maxWidth: '500px' }}>
-              <Box display="flex" alignItems="center" justifyContent="center" textAlign='center'>
+              <Box display="flex" alignItems="center" justifyContent="center" textAlign="center">
                 <Logo />
               </Box>
               <Typography
@@ -51,6 +52,6 @@ export default function ForgotPassword2() {
           </Grid>
         </Grid>
       </Box>
-    </PageContainer>)
+    </PageContainer>
   );
-};
+}

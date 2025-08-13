@@ -1,5 +1,5 @@
-'use client'
-import Card from '@mui/material/Card'
+'use client';
+import Card from '@mui/material/Card';
 import { CustomizerContext } from '@/app/context/customizerContext';
 import { useContext } from 'react';
 

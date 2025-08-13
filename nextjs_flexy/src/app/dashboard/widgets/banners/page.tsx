@@ -1,4 +1,3 @@
-
 import { Grid } from '@mui/material';
 import Breadcrumb from '@/app/dashboard/layout/shared/breadcrumb/Breadcrumb';
 import PageContainer from '@/app/components/container/PageContainer';
@@ -21,7 +20,7 @@ const BCrumb = [
 
 const WidgetBanners = () => {
   return (
-    (<PageContainer title="Banners" description="this is Banners">
+    <PageContainer title="Banners" description="this is Banners">
       {/* breadcrumb */}
       <Breadcrumb title="Banner" items={BCrumb} />
       {/* end breadcrumb */}
@@ -29,8 +28,9 @@ const WidgetBanners = () => {
         <Grid
           size={{
             xs: 12,
-            lg: 8
-          }}>
+            lg: 8,
+          }}
+        >
           <Grid container spacing={3}>
             <Grid size={12}>
               <Banner1 />
@@ -38,15 +38,17 @@ const WidgetBanners = () => {
             <Grid
               size={{
                 xs: 12,
-                sm: 6
-              }}>
+                sm: 6,
+              }}
+            >
               <Banner4 />
             </Grid>
             <Grid
               size={{
                 xs: 12,
-                sm: 6
-              }}>
+                sm: 6,
+              }}
+            >
               <Banner5 />
             </Grid>
           </Grid>
@@ -54,8 +56,9 @@ const WidgetBanners = () => {
         <Grid
           size={{
             xs: 12,
-            lg: 4
-          }}>
+            lg: 4,
+          }}
+        >
           <Grid container spacing={3}>
             <Grid size={12}>
               <Banner2 />
@@ -66,7 +69,7 @@ const WidgetBanners = () => {
           </Grid>
         </Grid>
       </Grid>
-    </PageContainer>)
+    </PageContainer>
   );
 };
 

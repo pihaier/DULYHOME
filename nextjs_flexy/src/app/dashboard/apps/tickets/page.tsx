@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import Breadcrumb from '@/app/dashboard/layout/shared/breadcrumb/Breadcrumb';
 import PageContainer from '@/app/components/container/PageContainer';

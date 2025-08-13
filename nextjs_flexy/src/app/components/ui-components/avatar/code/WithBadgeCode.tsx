@@ -1,10 +1,10 @@
-import CodeDialog from "@/app/components/shared/CodeDialog";
-import React from "react";
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const WithBadgeCode = () => {
-    return (
-        <>
-            <CodeDialog>
-                {`
+  return (
+    <>
+      <CodeDialog>
+        {`
 "use client";
 import * as React from 'react';
 import { Avatar, AvatarGroup, Stack } from '@mui/material';
@@ -47,9 +47,9 @@ import { IconMoodSmile } from '@tabler/icons-react';
         <Avatar alt="Remy Sharp" src={"/images/profile/user-5.jpg"} />
     </Badge>
 </Stack>`}
-            </CodeDialog>
-        </>
-    );
+      </CodeDialog>
+    </>
+  );
 };
 
 export default WithBadgeCode;

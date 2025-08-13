@@ -1,20 +1,20 @@
-"use client"
-import dynamic from "next/dynamic";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
-import { useTheme } from "@mui/material/styles";
+'use client';
+import dynamic from 'next/dynamic';
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
+import { useTheme } from '@mui/material/styles';
 import PageContainer from '@/app/components/container/PageContainer';
 import Breadcrumb from '@/app/dashboard/layout/shared/breadcrumb/Breadcrumb';
 import ParentCard from '@/app/components/shared/ParentCard';
-import React from "react";
-import { ApexOptions } from "apexcharts";
+import React from 'react';
+import { ApexOptions } from 'apexcharts';
 
 const BCrumb = [
   {
-    to: "/",
-    title: "Home",
+    to: '/',
+    title: 'Home',
   },
   {
-    title: "Line Chart",
+    title: 'Line Chart',
   },
 ];
 
@@ -27,11 +27,11 @@ const LineChart = () => {
   const optionslinechart: ApexOptions = {
     chart: {
       height: 350,
-      type: "line",
+      type: 'line',
       fontFamily: "'Plus Jakarta Sans', sans-serif",
-      foreColor: "#adb0bb",
+      foreColor: '#adb0bb',
       zoom: {
-        type: "x",
+        type: 'x',
         enabled: true,
       },
       toolbar: {
@@ -47,9 +47,9 @@ const LineChart = () => {
       // },
     },
     xaxis: {
-      categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
       title: {
-        text: "Month",
+        text: 'Month',
       },
     },
     grid: {
@@ -60,27 +60,27 @@ const LineChart = () => {
       enabled: true,
     },
     stroke: {
-      curve: "straight",
+      curve: 'straight',
       width: 2,
     },
     legend: {
-      position: "top",
-      horizontalAlign: "right",
+      position: 'top',
+      horizontalAlign: 'right',
       floating: true,
       offsetY: -25,
       offsetX: -5,
     },
     tooltip: {
-      theme: "dark",
+      theme: 'dark',
     },
   };
   const serieslinechart: ApexAxisChartSeries = [
     {
-      name: "High - 2013",
+      name: 'High - 2013',
       data: [28, 29, 33, 36, 32, 32, 33],
     },
     {
-      name: "Low - 2013",
+      name: 'Low - 2013',
       data: [12, 11, 14, 18, 17, 13, 13],
     },
   ];
@@ -96,7 +96,7 @@ const LineChart = () => {
           series={serieslinechart}
           type="line"
           height="308px"
-          width={"90%"}
+          width={'90%'}
         />
       </ParentCard>
     </PageContainer>

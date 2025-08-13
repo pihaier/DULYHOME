@@ -4,25 +4,32 @@ import React from 'react';
 
 const StillQuestions = () => {
   return (
-    (<Grid container spacing={3} justifyContent="center">
+    <Grid container spacing={3} justifyContent="center">
       <Grid
         size={{
           xs: 12,
-          lg: 10
-        }}>
+          lg: 10,
+        }}
+      >
         <Box bgcolor="primary.light" p={5} mt={7}>
           <Stack>
             <AvatarGroup sx={{ flexDirection: 'row', justifyContent: 'center' }}>
-              <Avatar alt="Remy Sharp" src={"/images/users/1.jpg"} />
-              <Avatar alt="Travis Howard" src={"/images/users/2.jpg"} />
-              <Avatar alt="Cindy Baker" src={"/images/users/3.jpg"} />
+              <Avatar alt="Remy Sharp" src={'/images/users/1.jpg'} />
+              <Avatar alt="Travis Howard" src={'/images/users/2.jpg'} />
+              <Avatar alt="Cindy Baker" src={'/images/users/3.jpg'} />
             </AvatarGroup>
           </Stack>
 
           <Typography variant="h3" textAlign="center" mt={3} mb={1}>
             Still have questions
           </Typography>
-          <Typography variant="h6" fontWeight={400} lineHeight="23px" color="textSecondary" textAlign="center">
+          <Typography
+            variant="h6"
+            fontWeight={400}
+            lineHeight="23px"
+            color="textSecondary"
+            textAlign="center"
+          >
             Can&apos;t find the answer your&apos;re looking for ? Please chat to our friendly team.
           </Typography>
           <Box textAlign="center" mt={3}>
@@ -32,7 +39,7 @@ const StillQuestions = () => {
           </Box>
         </Box>
       </Grid>
-    </Grid>)
+    </Grid>
   );
 };
 

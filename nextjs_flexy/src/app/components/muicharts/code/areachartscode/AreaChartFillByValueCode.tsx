@@ -1,10 +1,10 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 
 export default function AreaChartFillByValueCode() {
-    return (
-        <CodeDialog>
-            {`
+  return (
+    <CodeDialog>
+      {`
 'use client'
 import * as React from 'react';
 import { green, red } from '@mui/material/colors';
@@ -197,6 +197,6 @@ function ColorPalette({ id }) {
 }
 
 `}
-        </CodeDialog>
-    )
+    </CodeDialog>
+  );
 }

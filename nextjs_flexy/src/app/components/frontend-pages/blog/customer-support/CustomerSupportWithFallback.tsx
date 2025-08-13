@@ -17,11 +17,8 @@ const CustomerSupportWithFallback = () => {
   const checkDatabaseAvailability = async () => {
     try {
       // notices 테이블이 존재하는지 확인
-      const { error } = await supabase
-        .from('notices')
-        .select('id')
-        .limit(1);
-      
+      const { error } = await supabase.from('notices').select('id').limit(1);
+
       if (error && error.code === '42P01') {
         // 테이블이 없는 경우
         console.log('Database tables not found, using local data');

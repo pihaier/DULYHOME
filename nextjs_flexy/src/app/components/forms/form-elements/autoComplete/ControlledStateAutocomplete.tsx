@@ -1,8 +1,8 @@
-'use client'
+'use client';
 import React from 'react';
 import { Typography } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
-import CustomTextField from "../../theme-elements/CustomTextField";
+import CustomTextField from '../../theme-elements/CustomTextField';
 
 const options = ['Option 1', 'Option 2'];
 
@@ -25,11 +25,7 @@ const ControlledStateAutocomplete = () => {
         options={options}
         fullWidth
         renderInput={(params) => (
-          <CustomTextField
-            {...params}
-            placeholder="Controllable"
-            aria-label="Controllable"
-          />
+          <CustomTextField {...params} placeholder="Controllable" aria-label="Controllable" />
         )}
       />
       <Typography

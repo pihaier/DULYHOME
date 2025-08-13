@@ -1,18 +1,18 @@
-import React from "react";
-import Breadcrumb from "@/app/dashboard/layout/shared/breadcrumb/Breadcrumb";
-import PageContainer from "@/app/components/container/PageContainer";
-import InvoiceList from "@/app/components/apps/invoice/Invoice-list/index";
-import { InvoiceProvider } from "@/app/context/InvoiceContext/index";
-import BlankCard from "@/app/components/shared/BlankCard";
-import { CardContent } from "@mui/material";
+import React from 'react';
+import Breadcrumb from '@/app/dashboard/layout/shared/breadcrumb/Breadcrumb';
+import PageContainer from '@/app/components/container/PageContainer';
+import InvoiceList from '@/app/components/apps/invoice/Invoice-list/index';
+import { InvoiceProvider } from '@/app/context/InvoiceContext/index';
+import BlankCard from '@/app/components/shared/BlankCard';
+import { CardContent } from '@mui/material';
 
 const BCrumb = [
   {
-    to: "/",
-    title: "Home",
+    to: '/',
+    title: 'Home',
   },
   {
-    title: "Invoice List",
+    title: 'Invoice List',
   },
 ];
 
@@ -29,5 +29,5 @@ const InvoiceListing = () => {
       </PageContainer>
     </InvoiceProvider>
   );
-}
+};
 export default InvoiceListing;

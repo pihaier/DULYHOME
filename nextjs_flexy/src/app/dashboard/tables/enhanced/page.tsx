@@ -1,16 +1,16 @@
-import React from "react";
-import Breadcrumb from "@/app/dashboard/layout/shared/breadcrumb/Breadcrumb";
-import PageContainer from "@/app/components/container/PageContainer";
+import React from 'react';
+import Breadcrumb from '@/app/dashboard/layout/shared/breadcrumb/Breadcrumb';
+import PageContainer from '@/app/components/container/PageContainer';
 
-import TableEnhance from "@/app/components/tables/TableEnhance";
+import TableEnhance from '@/app/components/tables/TableEnhance';
 
 const BCrumb = [
   {
-    to: "/",
-    title: "Home",
+    to: '/',
+    title: 'Home',
   },
   {
-    title: "Enhanced Table",
+    title: 'Enhanced Table',
   },
 ];
 

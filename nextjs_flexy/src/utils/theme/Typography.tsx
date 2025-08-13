@@ -1,55 +1,55 @@
-import { DM_Sans } from "next/font/google";
+import { DM_Sans } from 'next/font/google';
 
 export const dm = DM_Sans({
-  weight: ["400", "500", "700"],
-  subsets: ["latin"],
-  display: "swap",
-  fallback: ["Helvetica", "Arial", "sans-serif"],
+  weight: ['400', '500', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+  fallback: ['Helvetica', 'Arial', 'sans-serif'],
 });
 
 const typography: any = {
   fontFamily: dm.style.fontFamily,
   h1: {
     fontWeight: 500,
-    fontSize: "1.875rem",
-    lineHeight: "1.5",
+    fontSize: '1.875rem',
+    lineHeight: '1.5',
   },
   h2: {
     fontWeight: 500,
-    fontSize: "1.5rem",
-    lineHeight: "1.5",
+    fontSize: '1.5rem',
+    lineHeight: '1.5',
   },
   h3: {
     fontWeight: 500,
-    fontSize: "1.3125rem",
-    lineHeight: "1.5",
+    fontSize: '1.3125rem',
+    lineHeight: '1.5',
   },
   h4: {
     fontWeight: 500,
-    fontSize: "1.125rem",
-    lineHeight: "1.5",
+    fontSize: '1.125rem',
+    lineHeight: '1.5',
   },
   h5: {
     fontWeight: 500,
-    fontSize: "1rem",
-    lineHeight: "1.5",
+    fontSize: '1rem',
+    lineHeight: '1.5',
   },
   h6: {
     fontWeight: 500,
-    fontSize: "0.875rem",
-    lineHeight: "1.5",
+    fontSize: '0.875rem',
+    lineHeight: '1.5',
   },
   button: {
-    textTransform: "none",
-    fontWeight: "400",
+    textTransform: 'none',
+    fontWeight: '400',
   },
   subtitle1: {
-    fontSize: "1rem",
-    fontWeight: "400",
+    fontSize: '1rem',
+    fontWeight: '400',
   },
   subtitle2: {
-    fontSize: "0.875rem",
-    fontWeight: "400",
+    fontSize: '0.875rem',
+    fontWeight: '400',
   },
 };
 

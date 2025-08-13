@@ -70,7 +70,7 @@ export default function SamplingPage() {
   // userProfile에서 기본값 채우기
   useEffect(() => {
     if (userProfile) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         company_name: userProfile.company_name || prev.company_name,
         contact_person: userProfile.contact_person || prev.contact_person,
@@ -81,7 +81,7 @@ export default function SamplingPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!user) {
       alert('로그인이 필요합니다.');
       router.push('/auth/customer/login');
@@ -97,78 +97,80 @@ export default function SamplingPage() {
 
     try {
       const supabase = createClient();
-      
+
       // 예약번호 생성
-      const { data: reservationData, error: reservationError } = await supabase
-        .rpc('generate_reservation_number', { prefix: 'DLSS' });
-      
+      const { data: reservationData, error: reservationError } = await supabase.rpc(
+        'generate_reservation_number',
+        { prefix: 'DLSS' }
+      );
+
       if (reservationError) throw reservationError;
-      
+
       const reservationNumber = reservationData;
 
       // 모든 파일 업로드
       const uploadedFiles = [];
-      
+
       // 제품 관련 파일
       for (const file of formData.files) {
         const fileExt = file.name.split('.').pop();
         const fileName = `${reservationNumber}/product_${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
-        
+
         const { data: uploadData, error: uploadError } = await supabase.storage
           .from('inspection-files')
           .upload(fileName, file);
-          
+
         if (uploadError) throw uploadError;
-        
+
         uploadedFiles.push({
           original_filename: file.name,
           file_path: fileName,
           file_size: file.size,
           file_type: file.type,
-          upload_type: 'product'
+          upload_type: 'product',
         });
       }
-      
+
       // 로고 파일
       if (formData.logoRequired && formData.logoFiles.length > 0) {
         for (const file of formData.logoFiles) {
           const fileExt = file.name.split('.').pop();
           const fileName = `${reservationNumber}/logo_${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
-          
+
           const { data: uploadData, error: uploadError } = await supabase.storage
             .from('inspection-files')
             .upload(fileName, file);
-            
+
           if (uploadError) throw uploadError;
-          
+
           uploadedFiles.push({
             original_filename: file.name,
             file_path: fileName,
             file_size: file.size,
             file_type: file.type,
-            upload_type: 'logo'
+            upload_type: 'logo',
           });
         }
       }
-      
+
       // 박스 디자인 파일
       if (formData.customBoxRequired && formData.boxDesignFiles.length > 0) {
         for (const file of formData.boxDesignFiles) {
           const fileExt = file.name.split('.').pop();
           const fileName = `${reservationNumber}/box_${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
-          
+
           const { data: uploadData, error: uploadError } = await supabase.storage
             .from('inspection-files')
             .upload(fileName, file);
-            
+
           if (uploadError) throw uploadError;
-          
+
           uploadedFiles.push({
             original_filename: file.name,
             file_path: fileName,
             file_size: file.size,
             file_type: file.type,
-            upload_type: 'box_design'
+            upload_type: 'box_design',
           });
         }
       }
@@ -192,17 +194,19 @@ export default function SamplingPage() {
         custom_box_required: formData.customBoxRequired,
         box_details: formData.customBoxRequired ? formData.boxDetails : null,
         status: 'submitted',
-        payment_status: 'pending'
+        payment_status: 'pending',
       };
 
       const { error: insertError } = await supabase
         .from('inspection_applications')
         .insert(applicationData);
-        
+
       if (insertError) throw insertError;
 
       // 프로필 저장 체크박스가 선택되었으면 프로필 업데이트
-      const saveToProfileCheckbox = document.querySelector('input[name="saveToProfile"]') as HTMLInputElement;
+      const saveToProfileCheckbox = document.querySelector(
+        'input[name="saveToProfile"]'
+      ) as HTMLInputElement;
       if (saveToProfileCheckbox?.checked && user) {
         await supabase
           .from('user_profiles')
@@ -210,30 +214,27 @@ export default function SamplingPage() {
             company_name: formData.company_name,
             contact_person: formData.contact_person,
             phone: formData.contact_phone,
-            updated_at: new Date().toISOString()
+            updated_at: new Date().toISOString(),
           })
           .eq('user_id', user.id);
       }
 
       // 파일 정보 저장
       if (uploadedFiles.length > 0) {
-        const fileRecords = uploadedFiles.map(file => ({
+        const fileRecords = uploadedFiles.map((file) => ({
           reservation_number: reservationNumber,
           uploaded_by: user.id,
           ...file,
-          upload_purpose: 'application'
+          upload_purpose: 'application',
         }));
 
-        const { error: fileError } = await supabase
-          .from('uploaded_files')
-          .insert(fileRecords);
-          
+        const { error: fileError } = await supabase.from('uploaded_files').insert(fileRecords);
+
         if (fileError) throw fileError;
       }
 
       // 신청 완료 후 상세 페이지로 이동
       router.push(`/orders/${reservationNumber}`);
-      
     } catch (error) {
       console.error('Error:', error);
       alert('신청 중 오류가 발생했습니다. 다시 시도해주세요.');
@@ -245,7 +246,7 @@ export default function SamplingPage() {
   return (
     <PageContainer title="샘플링 신청 - 두리무역" description="맞춤형 샘플 제작을 신청하세요">
       <HpHeader />
-      
+
       <Container maxWidth="md" sx={{ py: 5 }}>
         <Card elevation={0} sx={{ border: '1px solid rgba(0,0,0,0.1)' }}>
           <CardContent sx={{ p: 4 }}>
@@ -298,15 +299,10 @@ export default function SamplingPage() {
                       helperText="선택사항 - 입력하지 않으면 로그인 이메일이 사용됩니다"
                     />
                   </Stack>
-                  
+
                   {user && userProfile && (
                     <FormControlLabel
-                      control={
-                        <Checkbox
-                          defaultChecked
-                          name="saveToProfile"
-                        />
-                      }
+                      control={<Checkbox defaultChecked name="saveToProfile" />}
                       label="이 정보를 내 프로필에 저장"
                       sx={{ mt: 1 }}
                     />
@@ -340,7 +336,7 @@ export default function SamplingPage() {
                       helperText="대략적인 주문 예상 수량을 입력해주세요"
                       disabled={formData.moqCheck}
                       InputProps={{
-                        inputProps: { min: 0 }
+                        inputProps: { min: 0 },
                       }}
                     />
                   </Box>
@@ -351,10 +347,10 @@ export default function SamplingPage() {
                           checked={formData.moqCheck}
                           onChange={(e) => {
                             const checked = e.target.checked;
-                            setFormData({ 
-                              ...formData, 
+                            setFormData({
+                              ...formData,
                               moqCheck: checked,
-                              quantity: checked ? '0' : formData.quantity
+                              quantity: checked ? '0' : formData.quantity,
                             });
                           }}
                         />
@@ -362,7 +358,12 @@ export default function SamplingPage() {
                       label="MOQ 확인"
                     />
                     {formData.moqCheck && (
-                      <Typography variant="caption" display="block" color="text.secondary" sx={{ mt: 0.5 }}>
+                      <Typography
+                        variant="caption"
+                        display="block"
+                        color="text.secondary"
+                        sx={{ mt: 0.5 }}
+                      >
                         최소주문수량(MOQ)을 확인하고 싶습니다
                       </Typography>
                     )}
@@ -394,13 +395,17 @@ export default function SamplingPage() {
 
                 {/* 로고 인쇄 및 박스 제작 옵션 */}
                 <Paper sx={{ p: 2, bgcolor: 'grey.50' }}>
-                  <Typography variant="h6" gutterBottom>추가 옵션</Typography>
+                  <Typography variant="h6" gutterBottom>
+                    추가 옵션
+                  </Typography>
                   <Box display="flex" gap={3} flexWrap="wrap">
                     <FormControlLabel
                       control={
                         <Switch
                           checked={formData.logoRequired}
-                          onChange={(e) => setFormData({ ...formData, logoRequired: e.target.checked })}
+                          onChange={(e) =>
+                            setFormData({ ...formData, logoRequired: e.target.checked })
+                          }
                         />
                       }
                       label="로고 인쇄 필요"
@@ -409,7 +414,9 @@ export default function SamplingPage() {
                       control={
                         <Switch
                           checked={formData.customBoxRequired}
-                          onChange={(e) => setFormData({ ...formData, customBoxRequired: e.target.checked })}
+                          onChange={(e) =>
+                            setFormData({ ...formData, customBoxRequired: e.target.checked })
+                          }
                         />
                       }
                       label="맞춤 박스 제작 필요"
@@ -457,7 +464,9 @@ export default function SamplingPage() {
                         description="박스 디자인 AI 파일을 업로드해주세요 (선택사항)"
                         maxFiles={3}
                         currentFiles={formData.boxDesignFiles}
-                        onFilesChange={(files) => setFormData({ ...formData, boxDesignFiles: files })}
+                        onFilesChange={(files) =>
+                          setFormData({ ...formData, boxDesignFiles: files })
+                        }
                       />
                       <TextField
                         fullWidth
@@ -476,10 +485,12 @@ export default function SamplingPage() {
                 {/* 안내 메시지 */}
                 <Alert severity="info">
                   <Typography variant="body2">
-                    • 샘플 제작은 7-10일 정도 소요됩니다.<br />
-                    • 맞춤형 샘플 제작으로 품질을 사전 검증할 수 있습니다.<br />
-                    • 수수료 2만원 + 샘플비 + 중국 배송비가 발생합니다.<br />
-                    • 제작된 샘플은 한국으로 직접 배송해드립니다.
+                    • 샘플 제작은 7-10일 정도 소요됩니다.
+                    <br />
+                    • 맞춤형 샘플 제작으로 품질을 사전 검증할 수 있습니다.
+                    <br />
+                    • 수수료 2만원 + 샘플비 + 중국 배송비가 발생합니다.
+                    <br />• 제작된 샘플은 한국으로 직접 배송해드립니다.
                   </Typography>
                 </Alert>
 
@@ -493,12 +504,7 @@ export default function SamplingPage() {
                   >
                     취소
                   </Button>
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    size="large"
-                    disabled={loading}
-                  >
+                  <Button type="submit" variant="contained" size="large" disabled={loading}>
                     {loading ? '신청 중...' : '신청하기'}
                   </Button>
                 </Box>
@@ -507,7 +513,7 @@ export default function SamplingPage() {
           </CardContent>
         </Card>
       </Container>
-      
+
       <Footer />
     </PageContainer>
   );

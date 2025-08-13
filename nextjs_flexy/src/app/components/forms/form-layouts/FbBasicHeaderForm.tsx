@@ -1,73 +1,65 @@
-"use client";
-import React from "react";
-import {
-  Box,
-  FormControlLabel,
-  Button,
-  Grid,
-  MenuItem,
-  FormControl,
-  Alert,
-} from "@mui/material";
-import CustomTextField from "../theme-elements/CustomTextField";
-import CustomSelect from "../theme-elements/CustomSelect";
-import CustomRadio from "../theme-elements/CustomRadio";
-import CustomFormLabel from "../theme-elements/CustomFormLabel";
-import ParentCard from "../../shared/ParentCard";
+'use client';
+import React from 'react';
+import { Box, FormControlLabel, Button, Grid, MenuItem, FormControl, Alert } from '@mui/material';
+import CustomTextField from '../theme-elements/CustomTextField';
+import CustomSelect from '../theme-elements/CustomSelect';
+import CustomRadio from '../theme-elements/CustomRadio';
+import CustomFormLabel from '../theme-elements/CustomFormLabel';
+import ParentCard from '../../shared/ParentCard';
 
-import BasicHeaderFormCode from "@/app/components/forms/form-layouts/code/BasicHeaderFormCode";
+import BasicHeaderFormCode from '@/app/components/forms/form-layouts/code/BasicHeaderFormCode';
 
 const currencies = [
   {
-    value: "female",
-    label: "Female",
+    value: 'female',
+    label: 'Female',
   },
   {
-    value: "male",
-    label: "Male",
+    value: 'male',
+    label: 'Male',
   },
   {
-    value: "other",
-    label: "Other",
+    value: 'other',
+    label: 'Other',
   },
 ];
 
 const countries = [
   {
-    value: "india",
-    label: "India",
+    value: 'india',
+    label: 'India',
   },
   {
-    value: "uk",
-    label: "United Kingdom",
+    value: 'uk',
+    label: 'United Kingdom',
   },
   {
-    value: "srilanka",
-    label: "Srilanka",
+    value: 'srilanka',
+    label: 'Srilanka',
   },
 ];
 
 const FbBasicHeaderForm = () => {
-  const [currency, setCurrency] = React.useState("");
+  const [currency, setCurrency] = React.useState('');
 
   const handleChange2 = (event: any) => {
     setCurrency(event.target.value);
   };
 
-  const [selectedValue, setSelectedValue] = React.useState("");
+  const [selectedValue, setSelectedValue] = React.useState('');
 
   const handleChange3 = (event: any) => {
     setSelectedValue(event.target.value);
   };
 
-  const [country, setCountry] = React.useState("");
+  const [country, setCountry] = React.useState('');
 
   const handleChange4 = (event: any) => {
     setCountry(event.target.value);
   };
 
   return (
-    (<div>
+    <div>
       {/* ------------------------------------------------------------------------------------------------ */}
       {/* Basic Checkbox */}
       {/* ------------------------------------------------------------------------------------------------ */}
@@ -99,15 +91,12 @@ const FbBasicHeaderForm = () => {
                 size={{
                   lg: 6,
                   md: 12,
-                  sm: 12
-                }}>
-                <CustomFormLabel htmlFor="fname-text">
-                  First Name
-                </CustomFormLabel>
+                  sm: 12,
+                }}
+              >
+                <CustomFormLabel htmlFor="fname-text">First Name</CustomFormLabel>
                 <CustomTextField id="fname-text" variant="outlined" fullWidth />
-                <CustomFormLabel htmlFor="standard-select-currency">
-                  Select Gender
-                </CustomFormLabel>
+                <CustomFormLabel htmlFor="standard-select-currency">Select Gender</CustomFormLabel>
                 <CustomSelect
                   id="standard-select-currency"
                   value={currency}
@@ -125,12 +114,12 @@ const FbBasicHeaderForm = () => {
 
                 <FormControl
                   sx={{
-                    width: "100%",
+                    width: '100%',
                   }}
                 >
                   <Box>
                     <FormControlLabel
-                      checked={selectedValue === "a"}
+                      checked={selectedValue === 'a'}
                       onChange={handleChange3}
                       value="a"
                       label="Free"
@@ -138,7 +127,7 @@ const FbBasicHeaderForm = () => {
                       control={<CustomRadio />}
                     />
                     <FormControlLabel
-                      checked={selectedValue === "b"}
+                      checked={selectedValue === 'b'}
                       onChange={handleChange3}
                       value="b"
                       label="Paid"
@@ -152,11 +141,10 @@ const FbBasicHeaderForm = () => {
                 size={{
                   lg: 6,
                   md: 12,
-                  sm: 12
-                }}>
-                <CustomFormLabel htmlFor="lname-text">
-                  Last Name
-                </CustomFormLabel>
+                  sm: 12,
+                }}
+              >
+                <CustomFormLabel htmlFor="lname-text">Last Name</CustomFormLabel>
 
                 <CustomTextField id="lname-text" variant="outlined" fullWidth />
                 <CustomFormLabel htmlFor="date">Date of Birth</CustomFormLabel>
@@ -180,8 +168,9 @@ const FbBasicHeaderForm = () => {
                 lg: 12,
                 md: 12,
                 sm: 12,
-                xs: 12
-              }}>
+                xs: 12,
+              }}
+            >
               <CustomFormLabel
                 sx={{
                   mt: 0,
@@ -198,8 +187,9 @@ const FbBasicHeaderForm = () => {
                 lg: 6,
                 md: 12,
                 sm: 12,
-                xs: 12
-              }}>
+                xs: 12,
+              }}
+            >
               <CustomFormLabel
                 sx={{
                   mt: 0,
@@ -215,8 +205,9 @@ const FbBasicHeaderForm = () => {
                 lg: 6,
                 md: 12,
                 sm: 12,
-                xs: 12
-              }}>
+                xs: 12,
+              }}
+            >
               <CustomFormLabel
                 sx={{
                   mt: 0,
@@ -232,8 +223,9 @@ const FbBasicHeaderForm = () => {
                 lg: 6,
                 md: 12,
                 sm: 12,
-                xs: 12
-              }}>
+                xs: 12,
+              }}
+            >
               <CustomFormLabel
                 sx={{
                   mt: 0,
@@ -249,8 +241,9 @@ const FbBasicHeaderForm = () => {
                 lg: 6,
                 md: 12,
                 sm: 12,
-                xs: 12
-              }}>
+                xs: 12,
+              }}
+            >
               <CustomFormLabel
                 sx={{
                   mt: 0,
@@ -276,7 +269,7 @@ const FbBasicHeaderForm = () => {
           </Grid>
         </>
       </ParentCard>
-    </div>)
+    </div>
   );
 };
 

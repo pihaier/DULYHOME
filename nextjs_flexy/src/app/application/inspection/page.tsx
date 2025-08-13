@@ -49,26 +49,26 @@ interface FormData {
   contact_person: string;
   contact_phone: string;
   contact_email: string;
-  
+
   // 서비스 타입
   serviceSubType: string;
-  
+
   // 품질검품 전용 필드
   productName: string;
   quantity: number | '';
   inspectionMethod: string;
-  
+
   // 공장 정보
   factoryName: string;
   factoryContact: string;
   factoryPhone: string;
   factoryAddress: string;
-  
+
   // 일정 옵션
   scheduleType: string;
   confirmedDate: Dayjs | null;
   inspectionDays: number | '';
-  
+
   // 요청사항
   inspectionRequest: string;
   requestFiles: File[];
@@ -91,7 +91,7 @@ export default function InspectionApplicationPage() {
   const [loading, setLoading] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [reservationNumber, setReservationNumber] = useState('');
-  
+
   const [formData, setFormData] = useState<FormData>({
     company_name: '',
     contact_person: '',
@@ -114,7 +114,7 @@ export default function InspectionApplicationPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!user) {
       alert('로그인이 필요합니다.');
       router.push('/auth/customer/login');
@@ -151,41 +151,45 @@ export default function InspectionApplicationPage() {
 
     try {
       // 체크박스 상태 확인
-      const saveToProfileCheckbox = document.querySelector('input[name="saveToProfile"]') as HTMLInputElement;
-      const saveAsDefaultCheckbox = document.querySelector('input[name="saveAsDefault"]') as HTMLInputElement;
-      
+      const saveToProfileCheckbox = document.querySelector(
+        'input[name="saveToProfile"]'
+      ) as HTMLInputElement;
+      const saveAsDefaultCheckbox = document.querySelector(
+        'input[name="saveAsDefault"]'
+      ) as HTMLInputElement;
+
       // 예약번호 생성
       const newReservationNumber = generateReservationNumber();
-      
+
       // 신청 데이터 준비
       const applicationData = {
         reservation_number: newReservationNumber,
         user_id: user.id,
-        service_type: formData.serviceSubType,  // 이미 영어로 되어있음
+        service_type: formData.serviceSubType, // 이미 영어로 되어있음
         company_name: formData.company_name,
         contact_person: formData.contact_person,
         contact_phone: formData.contact_phone,
         contact_email: formData.contact_email || user.email,
-        
+
         // 품질검품 전용 필드
         product_name: formData.productName || '검품 신청',
         production_quantity: formData.quantity || null,
         inspection_method: formData.inspectionMethod || null,
-        
+
         // 공장 정보
         factory_name: formData.factoryName || null,
         factory_contact: formData.factoryContact || null,
         factory_phone: formData.factoryPhone,
         factory_address: formData.factoryAddress || null,
-        
+
         // 일정 정보
         schedule_type: formData.scheduleType || 'duly_coordination',
         confirmed_date: formData.confirmedDate ? formData.confirmedDate.format('YYYY-MM-DD') : null,
         inspection_days: formData.inspectionDays || 1,
-        
+
         // 요청사항
         special_requirements: formData.inspectionRequest || null,
-        
+
         status: 'submitted',
         payment_status: 'pending',
       };
@@ -205,18 +209,19 @@ export default function InspectionApplicationPage() {
 
       // 회사 정보 저장 (saveAsDefault 체크된 경우)
       if (saveAsDefaultCheckbox?.checked) {
-        await supabase
-          .from('company_addresses')
-          .upsert({
+        await supabase.from('company_addresses').upsert(
+          {
             user_id: user.id,
             company_name: formData.company_name,
             contact_person: formData.contact_person,
             phone: formData.contact_phone,
             email: formData.contact_email || null,
             is_default: true,
-          }, {
-            onConflict: 'user_id,is_default'
-          });
+          },
+          {
+            onConflict: 'user_id,is_default',
+          }
+        );
       }
 
       // 사용자 프로필이 없거나 정보가 변경된 경우 자동으로 프로필 업데이트
@@ -226,11 +231,12 @@ export default function InspectionApplicationPage() {
         .eq('user_id', user.id)
         .single();
 
-      if (!currentProfile || 
-          currentProfile.company_name !== formData.company_name ||
-          currentProfile.contact_person !== formData.contact_person ||
-          currentProfile.phone !== formData.contact_phone) {
-        
+      if (
+        !currentProfile ||
+        currentProfile.company_name !== formData.company_name ||
+        currentProfile.contact_person !== formData.contact_person ||
+        currentProfile.phone !== formData.contact_phone
+      ) {
         const profileData = {
           user_id: user.id,
           company_name: formData.company_name,
@@ -240,9 +246,7 @@ export default function InspectionApplicationPage() {
 
         if (!currentProfile) {
           // 프로필이 없으면 생성
-          await supabase
-            .from('user_profiles')
-            .insert(profileData);
+          await supabase.from('user_profiles').insert(profileData);
         } else {
           // 프로필이 있으면 업데이트
           await supabase
@@ -272,18 +276,16 @@ export default function InspectionApplicationPage() {
       }
 
       // 활동 로그 기록
-      await supabase
-        .from('activity_logs')
-        .insert({
-          user_id: user.id,
-          action: 'create_inspection_application',
-          entity_type: 'inspection_application',
-          entity_id: application.id,
-          metadata: {
-            reservation_number: newReservationNumber,
-            service_type: formData.serviceSubType,
-          }
-        });
+      await supabase.from('activity_logs').insert({
+        user_id: user.id,
+        action: 'create_inspection_application',
+        entity_type: 'inspection_application',
+        entity_id: application.id,
+        metadata: {
+          reservation_number: newReservationNumber,
+          service_type: formData.serviceSubType,
+        },
+      });
 
       // 파일 업로드 처리 (Storage SDK 사용)
       if (formData.requestFiles.length > 0) {
@@ -293,20 +295,23 @@ export default function InspectionApplicationPage() {
             const fileExt = file.name.split('.').pop() || '';
             const safeFileName = `${Date.now()}_${Math.random().toString(36).substring(2, 8)}.${fileExt}`;
             const filePath = `${newReservationNumber}/inspection_request/${safeFileName}`;
-            
+
             // Storage SDK로 업로드
             const { data: uploadData, error: uploadError } = await supabase.storage
               .from('application-files')
               .upload(filePath, file, {
                 cacheControl: '3600',
-                upsert: false
+                upsert: false,
               });
 
             if (uploadError) {
               console.error(`Storage 업로드 오류: ${file.name}`, uploadError);
-              
+
               // Word 파일 등 지원하지 않는 MIME 타입의 경우 API 폴백 사용
-              if (uploadError.message?.includes('mime type') || uploadError.message?.includes('not supported')) {
+              if (
+                uploadError.message?.includes('mime type') ||
+                uploadError.message?.includes('not supported')
+              ) {
                 const formData = new FormData();
                 formData.append('file', file);
                 formData.append('reservationNumber', newReservationNumber);
@@ -317,7 +322,7 @@ export default function InspectionApplicationPage() {
                   const uploadResponse = await fetch('/api/files/upload', {
                     method: 'POST',
                     body: formData,
-                    credentials: 'include'
+                    credentials: 'include',
                   });
 
                   if (uploadResponse.ok) {
@@ -336,26 +341,24 @@ export default function InspectionApplicationPage() {
             }
 
             // 파일 URL 생성
-            const { data: { publicUrl } } = supabase.storage
-              .from('application-files')
-              .getPublicUrl(uploadData.path);
-            
+            const {
+              data: { publicUrl },
+            } = supabase.storage.from('application-files').getPublicUrl(uploadData.path);
+
             // uploaded_files 테이블에 기록
-            const { error: dbError } = await supabase
-              .from('uploaded_files')
-              .insert({
-                reservation_number: newReservationNumber,
-                uploaded_by: user.id,
-                original_filename: file.name,
-                file_path: uploadData.path,
-                file_size: file.size,
-                file_type: 'inspection_request',
-                mime_type: file.type,
-                upload_purpose: 'application',
-                upload_category: 'inspection_request',
-                upload_status: 'completed',
-                file_url: publicUrl
-              });
+            const { error: dbError } = await supabase.from('uploaded_files').insert({
+              reservation_number: newReservationNumber,
+              uploaded_by: user.id,
+              original_filename: file.name,
+              file_path: uploadData.path,
+              file_size: file.size,
+              file_type: 'inspection_request',
+              mime_type: file.type,
+              upload_purpose: 'application',
+              upload_category: 'inspection_request',
+              upload_status: 'completed',
+              file_url: publicUrl,
+            });
 
             if (dbError) {
               console.error('파일 정보 DB 저장 오류:', dbError);
@@ -368,7 +371,6 @@ export default function InspectionApplicationPage() {
 
       // 신청 완료 모달 표시
       setShowSuccessModal(true);
-      
     } catch (error: any) {
       console.error('신청 오류:', error);
       alert(error.message || '신청 중 오류가 발생했습니다.');
@@ -380,7 +382,10 @@ export default function InspectionApplicationPage() {
   // 인증 로딩 중일 때만 로딩 스피너 표시
   if (authLoading) {
     return (
-      <PageContainer title="검품감사 신청 - 두리무역" description="품질검품, 공장감사, 선적검품 서비스를 신청하세요">
+      <PageContainer
+        title="검품감사 신청 - 두리무역"
+        description="품질검품, 공장감사, 선적검품 서비스를 신청하세요"
+      >
         <HpHeader />
         <Container maxWidth="md" sx={{ py: 5 }}>
           <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
@@ -393,9 +398,12 @@ export default function InspectionApplicationPage() {
   }
 
   return (
-    <PageContainer title="검품감사 신청 - 두리무역" description="품질검품, 공장감사, 선적검품 서비스를 신청하세요">
+    <PageContainer
+      title="검품감사 신청 - 두리무역"
+      description="품질검품, 공장감사, 선적검품 서비스를 신청하세요"
+    >
       <HpHeader />
-      
+
       <Container maxWidth="md" sx={{ py: 5 }}>
         <Card elevation={0} sx={{ border: '1px solid rgba(0,0,0,0.1)' }}>
           <CardContent sx={{ p: 4 }}>
@@ -451,7 +459,15 @@ export default function InspectionApplicationPage() {
                       },
                     }}
                   >
-                    <ToggleButton value="quality_inspection" sx={{ py: 2, flexDirection: 'column', alignItems: 'flex-start', textAlign: 'left' }}>
+                    <ToggleButton
+                      value="quality_inspection"
+                      sx={{
+                        py: 2,
+                        flexDirection: 'column',
+                        alignItems: 'flex-start',
+                        textAlign: 'left',
+                      }}
+                    >
                       <Typography fontWeight={600} gutterBottom>
                         품질검품
                       </Typography>
@@ -459,7 +475,15 @@ export default function InspectionApplicationPage() {
                         제품의 품질, 수량, 규격을 검사합니다
                       </Typography>
                     </ToggleButton>
-                    <ToggleButton value="factory_audit" sx={{ py: 2, flexDirection: 'column', alignItems: 'flex-start', textAlign: 'left' }}>
+                    <ToggleButton
+                      value="factory_audit"
+                      sx={{
+                        py: 2,
+                        flexDirection: 'column',
+                        alignItems: 'flex-start',
+                        textAlign: 'left',
+                      }}
+                    >
                       <Typography fontWeight={600} gutterBottom>
                         공장감사
                       </Typography>
@@ -467,7 +491,15 @@ export default function InspectionApplicationPage() {
                         제조 시설, 생산 능력, 품질 관리 시스템을 평가합니다
                       </Typography>
                     </ToggleButton>
-                    <ToggleButton value="loading_inspection" sx={{ py: 2, flexDirection: 'column', alignItems: 'flex-start', textAlign: 'left' }}>
+                    <ToggleButton
+                      value="loading_inspection"
+                      sx={{
+                        py: 2,
+                        flexDirection: 'column',
+                        alignItems: 'flex-start',
+                        textAlign: 'left',
+                      }}
+                    >
                       <Typography fontWeight={600} gutterBottom>
                         선적검품
                       </Typography>
@@ -496,19 +528,26 @@ export default function InspectionApplicationPage() {
                         label="생산 수량"
                         type="number"
                         value={formData.quantity}
-                        onChange={(e) => setFormData({ ...formData, quantity: e.target.value ? parseInt(e.target.value) : '' })}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            quantity: e.target.value ? parseInt(e.target.value) : '',
+                          })
+                        }
                         required
                         placeholder="1000"
                         InputProps={{
-                          inputProps: { min: 1 }
+                          inputProps: { min: 1 },
                         }}
                       />
-                      
+
                       <FormControl fullWidth required>
                         <InputLabel>검품 방법</InputLabel>
                         <Select
                           value={formData.inspectionMethod}
-                          onChange={(e) => setFormData({ ...formData, inspectionMethod: e.target.value })}
+                          onChange={(e) =>
+                            setFormData({ ...formData, inspectionMethod: e.target.value })
+                          }
                           label="검품 방법"
                         >
                           <MenuItem value="standard">표준검품 (AQL 기준)</MenuItem>
@@ -522,8 +561,10 @@ export default function InspectionApplicationPage() {
                 <Divider />
 
                 {/* 공장 정보 */}
-                <Typography variant="h6" fontWeight={600}>공장 정보</Typography>
-                
+                <Typography variant="h6" fontWeight={600}>
+                  공장 정보
+                </Typography>
+
                 <Box display="grid" gridTemplateColumns="1fr 1fr" gap={2}>
                   <TextField
                     fullWidth
@@ -563,8 +604,10 @@ export default function InspectionApplicationPage() {
 
                 {/* 일정 옵션 */}
                 <Box>
-                  <Typography variant="h6" fontWeight={600} mb={2}>검품 일정</Typography>
-                  
+                  <Typography variant="h6" fontWeight={600} mb={2}>
+                    검품 일정
+                  </Typography>
+
                   <ToggleButtonGroup
                     value={formData.scheduleType}
                     exclusive
@@ -603,7 +646,9 @@ export default function InspectionApplicationPage() {
                       <DatePicker
                         label="예약된 검품일자"
                         value={formData.confirmedDate}
-                        onChange={(newValue) => setFormData({ ...formData, confirmedDate: newValue })}
+                        onChange={(newValue) =>
+                          setFormData({ ...formData, confirmedDate: newValue })
+                        }
                         format="YYYY-MM-DD"
                         slotProps={{
                           textField: {
@@ -614,12 +659,14 @@ export default function InspectionApplicationPage() {
                         }}
                       />
                     </LocalizationProvider>
-                    
+
                     <FormControl fullWidth>
                       <InputLabel>검품 일수</InputLabel>
                       <Select
                         value={formData.inspectionDays}
-                        onChange={(e) => setFormData({ ...formData, inspectionDays: Number(e.target.value) })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, inspectionDays: Number(e.target.value) })
+                        }
                         label="검품 일수"
                         required
                       >
@@ -657,9 +704,10 @@ export default function InspectionApplicationPage() {
                 {/* 안내 메시지 */}
                 <Alert severity="info">
                   <Typography variant="body2">
-                    • 검품 일정은 공장과 협의 후 확정됩니다<br />
-                    • 검품 보고서는 사진과 함께 상세하게 제공됩니다<br />
-                    • 불량품 발견 시 즉시 연락드리고 대응 방안을 협의합니다
+                    • 검품 일정은 공장과 협의 후 확정됩니다
+                    <br />
+                    • 검품 보고서는 사진과 함께 상세하게 제공됩니다
+                    <br />• 불량품 발견 시 즉시 연락드리고 대응 방안을 협의합니다
                   </Typography>
                 </Alert>
 
@@ -673,12 +721,7 @@ export default function InspectionApplicationPage() {
                   >
                     취소
                   </Button>
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    size="large"
-                    disabled={loading}
-                  >
+                  <Button type="submit" variant="contained" size="large" disabled={loading}>
                     {loading ? '신청 중...' : '신청하기'}
                   </Button>
                 </Box>
@@ -687,7 +730,7 @@ export default function InspectionApplicationPage() {
           </CardContent>
         </Card>
       </Container>
-      
+
       {/* 신청 완료 모달 */}
       <Dialog
         open={showSuccessModal}
@@ -696,9 +739,7 @@ export default function InspectionApplicationPage() {
         fullWidth
         disableEscapeKeyDown
       >
-        <DialogTitle sx={{ textAlign: 'center', pb: 2 }}>
-          ✅ 신청 완료!
-        </DialogTitle>
+        <DialogTitle sx={{ textAlign: 'center', pb: 2 }}>✅ 신청 완료!</DialogTitle>
         <DialogContent sx={{ textAlign: 'center', pb: 2 }}>
           <Typography variant="h6" gutterBottom>
             검품감사 신청이 성공적으로 접수되었습니다.
@@ -712,9 +753,10 @@ export default function InspectionApplicationPage() {
             </Typography>
           </Box>
           <Typography variant="body2" color="text.secondary">
-            • 담당자가 곧 연락드릴 예정입니다<br/>
-            • 검품 일정은 공장과 협의 후 확정됩니다<br/>
-            • 진행 상황은 실시간으로 확인하실 수 있습니다
+            • 담당자가 곧 연락드릴 예정입니다
+            <br />
+            • 검품 일정은 공장과 협의 후 확정됩니다
+            <br />• 진행 상황은 실시간으로 확인하실 수 있습니다
           </Typography>
         </DialogContent>
         <DialogActions sx={{ justifyContent: 'center', pb: 3 }}>
@@ -740,7 +782,7 @@ export default function InspectionApplicationPage() {
           </Button>
         </DialogActions>
       </Dialog>
-      
+
       <Footer />
     </PageContainer>
   );

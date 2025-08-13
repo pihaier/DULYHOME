@@ -6,19 +6,19 @@ export async function POST(request: NextRequest) {
   try {
     const cookieStore = await cookies();
     const supabase = await createClient();
-    
+
     const body = await request.json();
     const { email, password, companyName, contactPerson, phone } = body;
 
     // 필수 필드 검증
     if (!email || !password || !companyName || !contactPerson || !phone) {
       return NextResponse.json(
-        { 
-          success: false, 
-          error: { 
-            code: 'VALIDATION_ERROR', 
-            message: '모든 필수 항목을 입력해주세요.' 
-          } 
+        {
+          success: false,
+          error: {
+            code: 'VALIDATION_ERROR',
+            message: '모든 필수 항목을 입력해주세요.',
+          },
         },
         { status: 400 }
       );
@@ -28,12 +28,12 @@ export async function POST(request: NextRequest) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return NextResponse.json(
-        { 
-          success: false, 
-          error: { 
-            code: 'INVALID_EMAIL', 
-            message: '올바른 이메일 형식이 아닙니다.' 
-          } 
+        {
+          success: false,
+          error: {
+            code: 'INVALID_EMAIL',
+            message: '올바른 이메일 형식이 아닙니다.',
+          },
         },
         { status: 400 }
       );
@@ -42,12 +42,12 @@ export async function POST(request: NextRequest) {
     // 비밀번호 길이 검증
     if (password.length < 6) {
       return NextResponse.json(
-        { 
-          success: false, 
-          error: { 
-            code: 'WEAK_PASSWORD', 
-            message: '비밀번호는 최소 6자 이상이어야 합니다.' 
-          } 
+        {
+          success: false,
+          error: {
+            code: 'WEAK_PASSWORD',
+            message: '비밀번호는 최소 6자 이상이어야 합니다.',
+          },
         },
         { status: 400 }
       );
@@ -62,20 +62,20 @@ export async function POST(request: NextRequest) {
           role: 'customer',
           company_name: companyName,
           contact_person: contactPerson,
-          phone: phone
-        }
-      }
+          phone: phone,
+        },
+      },
     });
 
     if (authError) {
       if (authError.message.includes('already registered')) {
         return NextResponse.json(
-          { 
-            success: false, 
-            error: { 
-              code: 'EMAIL_EXISTS', 
-              message: '이미 등록된 이메일입니다.' 
-            } 
+          {
+            success: false,
+            error: {
+              code: 'EMAIL_EXISTS',
+              message: '이미 등록된 이메일입니다.',
+            },
           },
           { status: 400 }
         );
@@ -88,20 +88,18 @@ export async function POST(request: NextRequest) {
     }
 
     // 프로필 생성
-    const { error: profileError } = await supabase
-      .from('user_profiles')
-      .insert({
-        user_id: authData.user.id,
-        email: email,
-        role: 'customer',
-        company_name: companyName,
-        contact_person: contactPerson,
-        phone: phone,
-        language_preference: 'ko',
-        approval_status: 'approved', // 임시로 자동 승인
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
-      });
+    const { error: profileError } = await supabase.from('user_profiles').insert({
+      user_id: authData.user.id,
+      email: email,
+      role: 'customer',
+      company_name: companyName,
+      contact_person: contactPerson,
+      phone: phone,
+      language_preference: 'ko',
+      approval_status: 'approved', // 임시로 자동 승인
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    });
 
     if (profileError) {
       // 프로필 생성 실패 시 사용자 삭제 (롤백)
@@ -113,20 +111,20 @@ export async function POST(request: NextRequest) {
       success: true,
       data: {
         user: authData.user,
-        session: authData.session
+        session: authData.session,
       },
-      message: '회원가입이 완료되었습니다. 로그인해주세요.'
+      message: '회원가입이 완료되었습니다. 로그인해주세요.',
     });
   } catch (error) {
     console.error('Registration error:', error);
     return NextResponse.json(
-      { 
-        success: false, 
-        error: { 
-          code: 'SERVER_ERROR', 
+      {
+        success: false,
+        error: {
+          code: 'SERVER_ERROR',
           message: '회원가입 중 오류가 발생했습니다.',
-          details: error instanceof Error ? error.message : 'Unknown error'
-        } 
+          details: error instanceof Error ? error.message : 'Unknown error',
+        },
       },
       { status: 500 }
     );

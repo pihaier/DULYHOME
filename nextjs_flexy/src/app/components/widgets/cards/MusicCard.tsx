@@ -12,30 +12,31 @@ const musicCard = [
   {
     title: 'Uptown',
     subheader: 'Jon Bon Jovi',
-    img: "/images/blog/blog-img5.jpg",
+    img: '/images/blog/blog-img5.jpg',
   },
   {
     title: 'Blank Space',
     subheader: 'Madonna',
-    img: "/images/blog/blog-img4.jpg",
+    img: '/images/blog/blog-img4.jpg',
   },
   {
     title: 'Lean On',
     subheader: 'Jennifer Lopez',
-    img: "/images/blog/blog-img3.jpg",
+    img: '/images/blog/blog-img3.jpg',
   },
 ];
 
 const MusicCard = () => {
   return (
-    (<Grid container spacing={3}>
+    <Grid container spacing={3}>
       {musicCard.map((card, index) => (
         <Grid
           key={index}
           size={{
             xs: 12,
-            sm: 4
-          }}>
+            sm: 4,
+          }}
+        >
           <Card sx={{ display: 'flex', p: 0 }}>
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
               <CardContent sx={{ flex: '1 0 auto' }}>
@@ -67,7 +68,7 @@ const MusicCard = () => {
           </Card>
         </Grid>
       ))}
-    </Grid>)
+    </Grid>
   );
 };
 

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import Link from 'next/link';
 import { Grid, Box, Card, Stack, Typography } from '@mui/material';
 
@@ -8,9 +8,8 @@ import PageContainer from '@/app/components/container/PageContainer';
 import AuthLogin from '../../authForms/AuthLogin';
 
 export default function Login2() {
-
   return (
-    (<PageContainer title="Login Page" description="this is Sample page">
+    <PageContainer title="Login Page" description="this is Sample page">
       <Box
         sx={{
           position: 'relative',
@@ -35,10 +34,11 @@ export default function Login2() {
               xs: 12,
               sm: 12,
               lg: 5,
-              xl: 4
-            }}>
+              xl: 4,
+            }}
+          >
             <Card elevation={9} sx={{ p: 4, zIndex: 1, width: '100%', maxWidth: '450px' }}>
-              <Box display="flex" alignItems="center" justifyContent="center" textAlign='center'>
+              <Box display="flex" alignItems="center" justifyContent="center" textAlign="center">
                 <Logo />
               </Box>
               <AuthLogin
@@ -65,6 +65,6 @@ export default function Login2() {
           </Grid>
         </Grid>
       </Box>
-    </PageContainer>)
+    </PageContainer>
   );
-};
+}

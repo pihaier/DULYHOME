@@ -1,11 +1,11 @@
-import React from "react";
-import dynamic from "next/dynamic";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
-import { useTheme } from "@mui/material/styles";
+import React from 'react';
+import dynamic from 'next/dynamic';
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
+import { useTheme } from '@mui/material/styles';
 
-import DashboardWidgetCard from "../../shared/DashboardWidgetCard";
+import DashboardWidgetCard from '../../shared/DashboardWidgetCard';
 import Box from '@mui/material/Box';
-import { ApexOptions } from "apexcharts";
+import { ApexOptions } from 'apexcharts';
 
 const YearlySales = () => {
   // chart color
@@ -16,28 +16,20 @@ const YearlySales = () => {
   // chart
   const optionscolumnchart: ApexOptions = {
     chart: {
-      type: "bar",
+      type: 'bar',
       fontFamily: "'Plus Jakarta Sans', sans-serif;",
-      foreColor: "#adb0bb",
+      foreColor: '#adb0bb',
       toolbar: {
         show: false,
       },
       height: 295,
     },
-    colors: [
-      primarylight,
-      primarylight,
-      primary,
-      primarylight,
-      primarylight,
-      primarylight,
-    ],
+    colors: [primarylight, primarylight, primary, primarylight, primarylight, primarylight],
     plotOptions: {
       bar: {
         borderRadius: 4,
-        columnWidth: "45%",
+        columnWidth: '45%',
         distributed: true,
-
       },
     },
     dataLabels: {
@@ -54,7 +46,7 @@ const YearlySales = () => {
       },
     },
     xaxis: {
-      categories: [["Apr"], ["May"], ["June"], ["July"], ["Aug"], ["Sept"]],
+      categories: [['Apr'], ['May'], ['June'], ['July'], ['Aug'], ['Sept']],
       axisBorder: {
         show: false,
       },
@@ -65,12 +57,12 @@ const YearlySales = () => {
       },
     },
     tooltip: {
-      theme: theme.palette.mode === "dark" ? "dark" : "light",
+      theme: theme.palette.mode === 'dark' ? 'dark' : 'light',
     },
   };
   const seriescolumnchart = [
     {
-      name: "",
+      name: '',
       data: [20, 15, 30, 25, 10, 15],
     },
   ];
@@ -92,7 +84,7 @@ const YearlySales = () => {
               series={seriescolumnchart}
               type="bar"
               height="295px"
-              width={"100%"}
+              width={'100%'}
             />
           </Box>
         </>

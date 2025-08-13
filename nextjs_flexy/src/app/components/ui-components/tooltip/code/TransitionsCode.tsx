@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const TransitionsCode = () => {
   return (
     <>
@@ -30,7 +30,7 @@ import Zoom from '@mui/material/Zoom';
 </Stack>`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default TransitionsCode
+export default TransitionsCode;

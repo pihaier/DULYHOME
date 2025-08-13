@@ -1,14 +1,14 @@
-import dynamic from "next/dynamic";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
-import { useTheme } from "@mui/material/styles";
+import dynamic from 'next/dynamic';
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
+import { useTheme } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { IconArrowUpLeft } from "@tabler/icons-react";
+import { IconArrowUpLeft } from '@tabler/icons-react';
 
-import DashboardCard from "../../shared/DashboardCard";
-import { ApexOptions } from "apexcharts";
+import DashboardCard from '../../shared/DashboardCard';
+import { ApexOptions } from 'apexcharts';
 
 const YearlyBreakup = () => {
   // chart color
@@ -20,27 +20,27 @@ const YearlyBreakup = () => {
   // chart
   const optionscolumnchart: ApexOptions = {
     chart: {
-      type: "donut",
+      type: 'donut',
       fontFamily: "'Plus Jakarta Sans', sans-serif;",
-      foreColor: "#adb0bb",
+      foreColor: '#adb0bb',
       toolbar: {
         show: false,
       },
       height: 155,
     },
-    colors: [primary, primarylight, "#F9F9FD"],
+    colors: [primary, primarylight, '#F9F9FD'],
     plotOptions: {
       pie: {
         startAngle: 0,
         endAngle: 360,
         donut: {
-          size: "75%",
-          background: "transparent",
+          size: '75%',
+          background: 'transparent',
         },
       },
     },
     tooltip: {
-      theme: theme.palette.mode === "dark" ? "dark" : "light",
+      theme: theme.palette.mode === 'dark' ? 'dark' : 'light',
       fillSeriesColor: false,
     },
     stroke: {
@@ -73,8 +73,9 @@ const YearlyBreakup = () => {
           <Grid
             size={{
               xs: 7,
-              sm: 7
-            }}>
+              sm: 7,
+            }}
+          >
             <Typography variant="h3" fontWeight="700">
               $36,358
             </Typography>
@@ -96,7 +97,7 @@ const YearlyBreakup = () => {
                     width: 9,
                     height: 9,
                     bgcolor: primary,
-                    svg: { display: "none" },
+                    svg: { display: 'none' },
                   }}
                 ></Avatar>
                 <Typography variant="subtitle2" color="textSecondary">
@@ -109,7 +110,7 @@ const YearlyBreakup = () => {
                     width: 9,
                     height: 9,
                     bgcolor: primarylight,
-                    svg: { display: "none" },
+                    svg: { display: 'none' },
                   }}
                 ></Avatar>
                 <Typography variant="subtitle2" color="textSecondary">
@@ -122,14 +123,15 @@ const YearlyBreakup = () => {
           <Grid
             size={{
               xs: 5,
-              sm: 5
-            }}>
+              sm: 5,
+            }}
+          >
             <Chart
               options={optionscolumnchart}
               series={seriescolumnchart}
               type="donut"
               height={150}
-              width={"100%"}
+              width={'100%'}
             />
           </Grid>
         </Grid>

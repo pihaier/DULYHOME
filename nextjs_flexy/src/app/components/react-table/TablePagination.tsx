@@ -1,5 +1,5 @@
-"use client";
-import * as React from "react";
+'use client';
+import * as React from 'react';
 import {
   TableContainer,
   Table,
@@ -17,14 +17,14 @@ import {
   Divider,
   IconButton,
   AvatarGroup,
-} from "@mui/material";
-import { Stack } from "@mui/system";
+} from '@mui/material';
+import { Stack } from '@mui/system';
 
-import DownloadCard from "@/app/components/shared/DownloadCard";
+import DownloadCard from '@/app/components/shared/DownloadCard';
 import {
   basicsTableData,
   PaginationDataType,
-} from "@/app/dashboard/react-tables/pagination/PaginationData";
+} from '@/app/dashboard/react-tables/pagination/PaginationData';
 
 import {
   flexRender,
@@ -34,23 +34,23 @@ import {
   getSortedRowModel,
   useReactTable,
   createColumnHelper,
-} from "@tanstack/react-table";
-import CustomTextField from "@/app/components/forms/theme-elements/CustomTextField";
-import CustomSelect from "@/app/components/forms/theme-elements/CustomSelect";
+} from '@tanstack/react-table';
+import CustomTextField from '@/app/components/forms/theme-elements/CustomTextField';
+import CustomSelect from '@/app/components/forms/theme-elements/CustomSelect';
 import {
   IconChevronLeft,
   IconChevronRight,
   IconChevronsLeft,
   IconChevronsRight,
-} from "@tabler/icons-react";
+} from '@tabler/icons-react';
 
 const basics = basicsTableData;
 
 const columnHelper = createColumnHelper<PaginationDataType>();
 
 const columns = [
-  columnHelper.accessor("name", {
-    header: () => "User",
+  columnHelper.accessor('name', {
+    header: () => 'User',
     cell: (info) => (
       <Stack direction="row" alignItems="center" spacing={2}>
         <Avatar
@@ -64,58 +64,53 @@ const columns = [
       </Stack>
     ),
   }),
-  columnHelper.accessor("project", {
-    header: () => "Project Name",
+  columnHelper.accessor('project', {
+    header: () => 'Project Name',
     cell: (info) => (
       <Typography variant="subtitle1" color="textSecondary">
         {info.getValue()}
       </Typography>
     ),
   }),
-  columnHelper.accessor("users", {
-    header: () => "Users",
+  columnHelper.accessor('users', {
+    header: () => 'Users',
     cell: (info) => (
-      <AvatarGroup sx={{ justifyContent: "start" }}>
+      <AvatarGroup sx={{ justifyContent: 'start' }}>
         {info.getValue().map((user, i) => (
-          <Avatar
-            src={user.img}
-            alt={user.img}
-            key={i}
-            sx={{ width: 35, height: 35 }}
-          />
+          <Avatar src={user.img} alt={user.img} key={i} sx={{ width: 35, height: 35 }} />
         ))}
       </AvatarGroup>
     ),
   }),
-  columnHelper.accessor("status", {
-    header: () => "Status",
+  columnHelper.accessor('status', {
+    header: () => 'Status',
     meta: {
-      filterVariant: "select",
+      filterVariant: 'select',
     },
     cell: (info) => (
       <Chip
         sx={{
           bgcolor:
-            info.getValue() === "active"
+            info.getValue() === 'active'
               ? (theme) => theme.palette.success.light
-              : info.getValue() === "pending"
+              : info.getValue() === 'pending'
                 ? (theme) => theme.palette.warning.light
-                : info.getValue() === "completed"
+                : info.getValue() === 'completed'
                   ? (theme) => theme.palette.primary.light
-                  : info.getValue() === "cancel"
+                  : info.getValue() === 'cancel'
                     ? (theme) => theme.palette.error.light
                     : (theme) => theme.palette.secondary.light,
           color:
-            info.getValue() === "active"
+            info.getValue() === 'active'
               ? (theme) => theme.palette.success.main
-              : info.getValue() === "pending"
+              : info.getValue() === 'pending'
                 ? (theme) => theme.palette.warning.main
-                : info.getValue() === "completed"
+                : info.getValue() === 'completed'
                   ? (theme) => theme.palette.primary.main
-                  : info.getValue() === "cancel"
+                  : info.getValue() === 'cancel'
                     ? (theme) => theme.palette.error.main
                     : (theme) => theme.palette.secondary.main,
-          borderRadius: "8px",
+          borderRadius: '8px',
         }}
         label={info.getValue()}
       />
@@ -146,41 +141,38 @@ const TablePagination = () => {
   });
 
   const handleDownload = () => {
-    const headers = ["avatar", "name", "project", "percent", "status", "users"];
+    const headers = ['avatar', 'name', 'project', 'percent', 'status', 'users'];
     const rows = data.map((item) => [
       item.name,
       item.project,
       item.percent,
       item.status,
       item.avatar,
-      item.users.map((user) => user.img).join(","),
+      item.users.map((user) => user.img).join(','),
     ]);
 
-    const csvContent = [
-      headers.join(","),
-      ...rows.map((e) => e.join(",")),
-    ].join("\n");
+    const csvContent = [headers.join(','), ...rows.map((e) => e.join(','))].join('\n');
 
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
 
-    const link = document.createElement("a");
+    const link = document.createElement('a');
     link.href = url;
-    link.setAttribute("download", "table-data.csv");
+    link.setAttribute('download', 'table-data.csv');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
   return (
-    (<DownloadCard title="Pagination Table" onDownload={handleDownload}>
+    <DownloadCard title="Pagination Table" onDownload={handleDownload}>
       <Grid container spacing={3}>
         <Grid size={12}>
           <Box>
             <TableContainer>
               <Table
                 sx={{
-                  whiteSpace: "nowrap",
+                  whiteSpace: 'nowrap',
                 }}
               >
                 <TableHead>
@@ -192,22 +184,17 @@ const TablePagination = () => {
                             variant="h6"
                             mb={1}
                             className={
-                              header.column.getCanSort()
-                                ? "cursor-pointer select-none"
-                                : ""
+                              header.column.getCanSort() ? 'cursor-pointer select-none' : ''
                             }
                             onClick={header.column.getToggleSortingHandler()}
                           >
                             {header.isPlaceholder
                               ? null
-                              : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
+                              : flexRender(header.column.columnDef.header, header.getContext())}
                             {(() => {
                               const sortState = header.column.getIsSorted();
-                              if (sortState === "asc") return " 🔼";
-                              if (sortState === "desc") return " 🔽";
+                              if (sortState === 'asc') return ' 🔼';
+                              if (sortState === 'desc') return ' 🔽';
                               return null;
                             })()}
                           </Typography>
@@ -221,10 +208,7 @@ const TablePagination = () => {
                     <TableRow key={row.id}>
                       {row.getVisibleCells().map((cell) => (
                         <TableCell key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
+                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
                         </TableCell>
                       ))}
                     </TableRow>
@@ -237,15 +221,11 @@ const TablePagination = () => {
               gap={1}
               p={3}
               alignItems="center"
-              direction={{ xs: "column", sm: "row" }}
+              direction={{ xs: 'column', sm: 'row' }}
               justifyContent="space-between"
             >
               <Box display="flex" alignItems="center" gap={1}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => rerender()}
-                >
+                <Button variant="contained" color="primary" onClick={() => rerender()}>
                   Force Rerender
                 </Button>
                 <Typography variant="body1">
@@ -255,8 +235,8 @@ const TablePagination = () => {
               <Box
                 sx={{
                   display: {
-                    xs: "block",
-                    sm: "flex",
+                    xs: 'block',
+                    sm: 'flex',
                   },
                 }}
                 alignItems="center"
@@ -265,8 +245,7 @@ const TablePagination = () => {
                 <Stack direction="row" alignItems="center" gap={1}>
                   <Typography variant="body1">Page</Typography>
                   <Typography variant="body1" fontWeight={600}>
-                    {table.getState().pagination.pageIndex + 1} of{" "}
-                    {table.getPageCount()}
+                    {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
                   </Typography>
                 </Stack>
                 <Stack direction="row" alignItems="center" gap={1}>
@@ -277,9 +256,7 @@ const TablePagination = () => {
                     max={table.getPageCount()}
                     defaultValue={table.getState().pagination.pageIndex + 1}
                     onChange={(e: { target: { value: any } }) => {
-                      const page = e.target.value
-                        ? Number(e.target.value) - 1
-                        : 0;
+                      const page = e.target.value ? Number(e.target.value) - 1 : 0;
                       table.setPageIndex(page);
                     }}
                   />
@@ -330,7 +307,7 @@ const TablePagination = () => {
           </Box>
         </Grid>
       </Grid>
-    </DownloadCard>)
+    </DownloadCard>
   );
 };
 

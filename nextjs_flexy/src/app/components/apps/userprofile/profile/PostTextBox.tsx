@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import Button from '@mui/material/Button';
 import Fab from '@mui/material/Fab';
 import Stack from '@mui/material/Stack';

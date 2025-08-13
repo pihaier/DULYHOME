@@ -73,13 +73,9 @@ type AppAbility = Ability<[string, string]>;
 const RollbaseCASL = () => {
   const [userId, setUserId] = React.useState<keyof typeof users>('Admin');
 
-  const userPermissions = users[userId].permissions.map(
-    (permKey) => permissions[permKey]
-  );
+  const userPermissions = users[userId].permissions.map((permKey) => permissions[permKey]);
 
-  const actions = Array.from(
-    new Set(userPermissions.map((perm) => perm.action))
-  );
+  const actions = Array.from(new Set(userPermissions.map((perm) => perm.action)));
 
   const ability = defineAbility<AppAbility>((can) => {
     userPermissions.forEach((perm) => {

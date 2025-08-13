@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const AlertCode = () => {
   return (
     <>
@@ -58,7 +58,7 @@ return (
 );`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default AlertCode
+export default AlertCode;

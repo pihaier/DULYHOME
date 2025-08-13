@@ -1,13 +1,13 @@
-import React from "react";
-import dynamic from "next/dynamic";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
-import { useTheme } from "@mui/material/styles";
+import React from 'react';
+import dynamic from 'next/dynamic';
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
+import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { IconGridDots } from "@tabler/icons-react";
-import DashboardCard from "../../shared/DashboardCard";
-import { ApexOptions } from "apexcharts";
+import { IconGridDots } from '@tabler/icons-react';
+import DashboardCard from '../../shared/DashboardCard';
+import { ApexOptions } from 'apexcharts';
 
 const SalesOverview = () => {
   // chart color
@@ -15,13 +15,12 @@ const SalesOverview = () => {
   const primary = theme.palette.primary.main;
   const secondary = theme.palette.secondary.main;
   const primarylight = theme.palette.primary.light;
-  const textColor =
-    theme.palette.mode === "dark" ? "rgba(255,255,255,0.8)" : "#2A3547";
+  const textColor = theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.8)' : '#2A3547';
 
   // chart
   const optionscolumnchart: ApexOptions = {
     chart: {
-      type: "donut",
+      type: 'donut',
       fontFamily: "'Plus Jakarta Sans', sans-serif;",
 
       toolbar: {
@@ -29,13 +28,13 @@ const SalesOverview = () => {
       },
       height: 275,
     },
-    labels: ["Profit", "Revenue", "Expance"],
+    labels: ['Profit', 'Revenue', 'Expance'],
     colors: [primary, primarylight, secondary],
     plotOptions: {
       pie: {
         donut: {
-          size: "89%",
-          background: "transparent",
+          size: '89%',
+          background: 'transparent',
 
           labels: {
             show: true,
@@ -49,9 +48,9 @@ const SalesOverview = () => {
             total: {
               show: true,
               color: textColor,
-              fontSize: "20px",
-              fontWeight: "600",
-              label: "$500,458",
+              fontSize: '20px',
+              fontWeight: '600',
+              label: '$500,458',
             },
           },
         },
@@ -67,7 +66,7 @@ const SalesOverview = () => {
       show: false,
     },
     tooltip: {
-      theme: theme.palette.mode === "dark" ? "dark" : "light",
+      theme: theme.palette.mode === 'dark' ? 'dark' : 'light',
       fillSeriesColor: false,
     },
   };
@@ -83,16 +82,11 @@ const SalesOverview = () => {
               series={seriescolumnchart}
               type="donut"
               height="275px"
-              width={"100%"}
+              width={'100%'}
             />
           </Box>
 
-          <Stack
-            direction="row"
-            spacing={2}
-            justifyContent="space-between"
-            mt={7}
-          >
+          <Stack direction="row" spacing={2} justifyContent="space-between" mt={7}>
             <Stack direction="row" spacing={2} alignItems="center">
               <Box
                 width={38}

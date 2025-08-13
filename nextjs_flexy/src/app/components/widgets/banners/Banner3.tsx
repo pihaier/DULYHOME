@@ -1,24 +1,20 @@
-"use client";
-import { CardContent, Typography, Button, Avatar, Badge } from "@mui/material";
-import ParentCard from "../../shared/ParentCard";
-import { Box, Stack } from "@mui/system";
+'use client';
+import { CardContent, Typography, Button, Avatar, Badge } from '@mui/material';
+import ParentCard from '../../shared/ParentCard';
+import { Box, Stack } from '@mui/system';
 
-import FriendCardCode from "./code/FriendCardCode";
+import FriendCardCode from './code/FriendCardCode';
 
 const Banner3 = () => {
   return (
     <ParentCard title="Friend Card" codeModel={<FriendCardCode />}>
-      <CardContent sx={{ p: "30px" }}>
+      <CardContent sx={{ p: '30px' }}>
         <Typography variant="h5" textAlign="center" mb={3}>
           Mutual Friend Revealed
         </Typography>
         <Box textAlign="center">
           <Badge badgeContent={1} color="error" overlap="circular">
-            <Avatar
-              src={"/images/users/3.jpg"}
-              alt="userBg"
-              sx={{ width: 140, height: 140 }}
-            />
+            <Avatar src={'/images/users/3.jpg'} alt="userBg" sx={{ width: 140, height: 140 }} />
           </Badge>
 
           <Typography variant="h5" mt={3}>

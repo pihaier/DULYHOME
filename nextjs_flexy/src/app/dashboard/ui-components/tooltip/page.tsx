@@ -1,24 +1,24 @@
-"use client";
-import { Grid } from "@mui/material";
+'use client';
+import { Grid } from '@mui/material';
 
 // common component
-import Breadcrumb from "@/app/dashboard/layout/shared/breadcrumb/Breadcrumb";
-import PageContainer from "@/app/components/container/PageContainer";
-import ParentCard from "@/app/components/shared/ParentCard";
+import Breadcrumb from '@/app/dashboard/layout/shared/breadcrumb/Breadcrumb';
+import PageContainer from '@/app/components/container/PageContainer';
+import ParentCard from '@/app/components/shared/ParentCard';
 
-import TooltipArrow from "@/app/components/ui-components/tooltip/TooltipArrow";
-import TooltipPosition from "@/app/components/ui-components/tooltip/TooltipPosition";
-import TooltipSimple from "@/app/components/ui-components/tooltip/TooltipSimple";
-import TooltipTransition from "@/app/components/ui-components/tooltip/TooltipTransition";
-import TooltipVariableWidth from "@/app/components/ui-components/tooltip/TooltipVariableWidth";
+import TooltipArrow from '@/app/components/ui-components/tooltip/TooltipArrow';
+import TooltipPosition from '@/app/components/ui-components/tooltip/TooltipPosition';
+import TooltipSimple from '@/app/components/ui-components/tooltip/TooltipSimple';
+import TooltipTransition from '@/app/components/ui-components/tooltip/TooltipTransition';
+import TooltipVariableWidth from '@/app/components/ui-components/tooltip/TooltipVariableWidth';
 
 const BCrumb = [
   {
-    to: "/",
-    title: "Home",
+    to: '/',
+    title: 'Home',
   },
   {
-    title: "Tooltip",
+    title: 'Tooltip',
   },
 ];
 
@@ -35,8 +35,9 @@ const MuiTooltip = () => (
           alignItems="stretch"
           size={{
             xs: 12,
-            sm: 6
-          }}>
+            sm: 6,
+          }}
+        >
           <TooltipSimple />
         </Grid>
         <Grid
@@ -44,8 +45,9 @@ const MuiTooltip = () => (
           alignItems="stretch"
           size={{
             xs: 12,
-            sm: 6
-          }}>
+            sm: 6,
+          }}
+        >
           <TooltipArrow />
         </Grid>
 
@@ -54,8 +56,9 @@ const MuiTooltip = () => (
           alignItems="stretch"
           size={{
             xs: 12,
-            sm: 6
-          }}>
+            sm: 6,
+          }}
+        >
           <TooltipVariableWidth />
         </Grid>
 
@@ -64,8 +67,9 @@ const MuiTooltip = () => (
           alignItems="stretch"
           size={{
             xs: 12,
-            sm: 6
-          }}>
+            sm: 6,
+          }}
+        >
           <TooltipTransition />
         </Grid>
         <Grid display="flex" alignItems="stretch" size={12}>

@@ -13,7 +13,7 @@ import {
 
 import { IconUser, IconPlus } from '@tabler/icons-react';
 
-import ListItemButton from "@mui/material/ListItemButton";
+import ListItemButton from '@mui/material/ListItemButton';
 
 const emails = ['JohnDeo@gmail.com', 'SmithRocky@gmail.com'];
 
@@ -30,38 +30,40 @@ const SimpleDialog = () => {
     setSelectedValue(value);
   };
 
-  return (<>
-    <Button variant="contained" color="primary" fullWidth onClick={handleClickOpen}>
-      Open Simple Dialog
-    </Button>
-    <Typography variant="subtitle1" component="div" mb={1} textAlign="center">
-      Selected: {selectedValue}
-    </Typography>
-    <Dialog onClose={() => handleClose(selectedValue)} open={open}>
-      <DialogTitle>Set backup account</DialogTitle>
-      <List sx={{ pt: 0 }}>
-        {emails.map((email) => (
-          <ListItemButton onClick={() => handleClose(email)} key={email}>
+  return (
+    <>
+      <Button variant="contained" color="primary" fullWidth onClick={handleClickOpen}>
+        Open Simple Dialog
+      </Button>
+      <Typography variant="subtitle1" component="div" mb={1} textAlign="center">
+        Selected: {selectedValue}
+      </Typography>
+      <Dialog onClose={() => handleClose(selectedValue)} open={open}>
+        <DialogTitle>Set backup account</DialogTitle>
+        <List sx={{ pt: 0 }}>
+          {emails.map((email) => (
+            <ListItemButton onClick={() => handleClose(email)} key={email}>
+              <ListItemAvatar>
+                <Avatar sx={{ bgcolor: 'primary.light', color: 'primary.main' }}>
+                  <IconUser width={20} height={20} />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary={email} />
+            </ListItemButton>
+          ))}
+
+          <ListItemButton autoFocus onClick={() => handleClose('addAccount')}>
             <ListItemAvatar>
-              <Avatar sx={{ bgcolor: 'primary.light', color: 'primary.main' }}>
-                <IconUser width={20} height={20} />
+              <Avatar>
+                <IconPlus width={20} height={20} />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary={email} />
+            <ListItemText primary="Add account" />
           </ListItemButton>
-        ))}
-
-        <ListItemButton autoFocus onClick={() => handleClose('addAccount')}>
-          <ListItemAvatar>
-            <Avatar>
-              <IconPlus width={20} height={20} />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary="Add account" />
-        </ListItemButton>
-      </List>
-    </Dialog>
-  </>);
+        </List>
+      </Dialog>
+    </>
+  );
 };
 
 export default SimpleDialog;

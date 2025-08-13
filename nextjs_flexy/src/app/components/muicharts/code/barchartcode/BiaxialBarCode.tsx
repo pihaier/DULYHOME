@@ -1,11 +1,10 @@
-import React from 'react'
-import CodeDialog from "@/app/components/shared/CodeDialog";
-
+import React from 'react';
+import CodeDialog from '@/app/components/shared/CodeDialog';
 
 function BiaxialBarCode() {
-    return (
-        <CodeDialog>
-            {`
+  return (
+    <CodeDialog>
+      {`
   
 'use client'
 import React from 'react';
@@ -68,8 +67,8 @@ function BiaxialBarChart() {
 export default BiaxialBarChart;
 
 `}
-        </CodeDialog>
-    )
+    </CodeDialog>
+  );
 }
 
-export default BiaxialBarCode
+export default BiaxialBarCode;

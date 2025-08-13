@@ -1,20 +1,11 @@
-import React, { useContext } from "react";
-import {
-  Card,
-  CardContent,
-  Typography,
-  Box,
-  Button,
-  Stack,
-  Avatar,
-} from "@mui/material";
-import BlankCard from "../../shared/BlankCard";
-import { IconArrowUpLeft } from "@tabler/icons-react";
-import { CustomizerContext } from "@/app/context/customizerContext";
+import React, { useContext } from 'react';
+import { Card, CardContent, Typography, Box, Button, Stack, Avatar } from '@mui/material';
+import BlankCard from '../../shared/BlankCard';
+import { IconArrowUpLeft } from '@tabler/icons-react';
+import { CustomizerContext } from '@/app/context/customizerContext';
 
 const Congratulation = () => {
   const { activeDir } = useContext(CustomizerContext);
-
 
   return (
     <BlankCard>
@@ -25,10 +16,10 @@ const Congratulation = () => {
             borderRadius: 0,
             height: 178,
             width: 190,
-            position: "absolute",
+            position: 'absolute',
             right: 0,
-            top: "10px",
-            transform: activeDir === "rtl" ? "scaleX(-1)" : "unset",
+            top: '10px',
+            transform: activeDir === 'rtl' ? 'scaleX(-1)' : 'unset',
           }}
         />
       </Box>
@@ -37,7 +28,7 @@ const Congratulation = () => {
           <Typography variant="h4" mt={1} gutterBottom>
             Congratulation Johnathan
           </Typography>
-          <Stack direction="row" alignItems='center' spacing={2}>
+          <Stack direction="row" alignItems="center" spacing={2}>
             <Typography variant="h2" fontWeight="600" mb={0} mt={1}>
               $39,358
             </Typography>
@@ -54,10 +45,10 @@ const Congratulation = () => {
           mb={2}
           sx={{
             display: {
-              sm: "flex",
-              xs: "block",
+              sm: 'flex',
+              xs: 'block',
             },
-            alignItems: "flex-end",
+            alignItems: 'flex-end',
           }}
         ></Box>
         <Box mb={1}>

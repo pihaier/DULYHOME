@@ -1,13 +1,13 @@
-"use client"
-import dynamic from "next/dynamic";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+'use client';
+import dynamic from 'next/dynamic';
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 import { useTheme } from '@mui/material/styles';
 import { Grid } from '@mui/material';
 import PageContainer from '@/app/components/container/PageContainer';
 import Breadcrumb from '@/app/dashboard/layout/shared/breadcrumb/Breadcrumb';
 import ParentCard from '@/app/components/shared/ParentCard';
-import React from "react";
-import { ApexOptions } from "apexcharts";
+import React from 'react';
+import { ApexOptions } from 'apexcharts';
 
 const BCrumb = [
   {
@@ -20,7 +20,6 @@ const BCrumb = [
 ];
 
 const DoughnutChart = () => {
-
   // chart color
   const theme = useTheme();
   const primary = theme.palette.primary.main;
@@ -49,7 +48,6 @@ const DoughnutChart = () => {
     legend: {
       show: true,
       position: 'bottom',
-
     },
     colors: [primary, primarylight, secondary, secondarylight, warning],
     tooltip: {
@@ -82,7 +80,6 @@ const DoughnutChart = () => {
     legend: {
       show: true,
       position: 'bottom',
-
     },
     colors: [primary, primarylight, secondary, secondarylight, warning],
     tooltip: {
@@ -92,7 +89,7 @@ const DoughnutChart = () => {
   const seriespiechart = [45, 15, 27, 18, 35];
 
   return (
-    (<PageContainer title="Doughnut Chart" description="this is Doughnut Chart">
+    <PageContainer title="Doughnut Chart" description="this is Doughnut Chart">
       {/* breadcrumb */}
       <Breadcrumb title="Doughtnut Chart" items={BCrumb} />
       {/* end breadcrumb */}
@@ -101,15 +98,16 @@ const DoughnutChart = () => {
           size={{
             lg: 6,
             md: 12,
-            xs: 12
-          }}>
+            xs: 12,
+          }}
+        >
           <ParentCard title="Doughnut Charts">
             <Chart
               options={optionsdoughnutchart}
               series={seriesdoughnutchart}
               type="donut"
               height="300px"
-              width={"100%"}
+              width={'100%'}
             />
           </ParentCard>
         </Grid>
@@ -117,14 +115,21 @@ const DoughnutChart = () => {
           size={{
             lg: 6,
             md: 12,
-            xs: 12
-          }}>
-          <ParentCard title='Pie Charts'>
-            <Chart options={optionspiechart} series={seriespiechart} type="pie" height="300px" width={"100%"} />
+            xs: 12,
+          }}
+        >
+          <ParentCard title="Pie Charts">
+            <Chart
+              options={optionspiechart}
+              series={seriespiechart}
+              type="pie"
+              height="300px"
+              width={'100%'}
+            />
           </ParentCard>
         </Grid>
       </Grid>
-    </PageContainer>)
+    </PageContainer>
   );
 };
 

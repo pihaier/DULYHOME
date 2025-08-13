@@ -1,5 +1,5 @@
-import React from 'react'
-import CodeDialog from '@/app/components/shared/CodeDialog'
+import React from 'react';
+import CodeDialog from '@/app/components/shared/CodeDialog';
 
 function SimpleLineCode() {
   return (
@@ -49,7 +49,7 @@ function SimpleLineChart() {
 export default SimpleLineChart
 `}
     </CodeDialog>
-  )
+  );
 }
 
-export default SimpleLineCode
+export default SimpleLineCode;

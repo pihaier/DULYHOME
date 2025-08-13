@@ -1,5 +1,5 @@
-import React from "react";
-import Image from "next/image";
+import React from 'react';
+import Image from 'next/image';
 import {
   Typography,
   Box,
@@ -11,55 +11,59 @@ import {
   Avatar,
   Chip,
   Stack,
-} from "@mui/material";
-import DashboardCard from "../../shared/DashboardCard";
-import ThemeSelect from "../dashboard1/ThemeSelect";
+} from '@mui/material';
+import DashboardCard from '../../shared/DashboardCard';
+import ThemeSelect from '../dashboard1/ThemeSelect';
 
 const products = [
   {
-    imgsrc: "/images/users/1.jpg",
-    name: "Sunil Joshi",
-    post: "Web Designer",
-    pname: "Elite Admin",
-    priority: "Low",
-    budget: "3.9",
+    imgsrc: '/images/users/1.jpg',
+    name: 'Sunil Joshi',
+    post: 'Web Designer',
+    pname: 'Elite Admin',
+    priority: 'Low',
+    budget: '3.9',
   },
   {
-    imgsrc: "/images/users/2.jpg",
-    name: "Andrew McDownland",
-    post: "Project Manager",
-    pname: "Real Homes WP Theme",
-    priority: "Medium",
-    budget: "24.5",
+    imgsrc: '/images/users/2.jpg',
+    name: 'Andrew McDownland',
+    post: 'Project Manager',
+    pname: 'Real Homes WP Theme',
+    priority: 'Medium',
+    budget: '24.5',
   },
   {
-    imgsrc: "/images/users/3.jpg",
-    name: "Christopher Jamil",
-    post: "Project Manager",
-    pname: "MedicalPro WP Theme",
-    priority: "High",
-    budget: "12.8",
+    imgsrc: '/images/users/3.jpg',
+    name: 'Christopher Jamil',
+    post: 'Project Manager',
+    pname: 'MedicalPro WP Theme',
+    priority: 'High',
+    budget: '12.8',
   },
   {
-    imgsrc: "/images/users/4.jpg",
-    name: "Nirav Joshi",
-    post: "Frontend Engineer",
-    pname: "Hosting Press HTML",
-    priority: "Critical",
-    budget: "2.4",
+    imgsrc: '/images/users/4.jpg',
+    name: 'Nirav Joshi',
+    post: 'Frontend Engineer',
+    pname: 'Hosting Press HTML',
+    priority: 'Critical',
+    budget: '2.4',
   },
   {
-    imgsrc: "/images/users/5.jpg",
-    name: "Micheal Doe",
-    post: "Content Writer",
-    pname: "Helping Hands Theme",
-    priority: "Moderate",
-    budget: "9.3",
+    imgsrc: '/images/users/5.jpg',
+    name: 'Micheal Doe',
+    post: 'Content Writer',
+    pname: 'Helping Hands Theme',
+    priority: 'Moderate',
+    budget: '9.3',
   },
 ];
 
 const ProductPerformance = () => (
-  <DashboardCard title="Product Performance" subtitle="Ample Admin Vs Pixel Admin" action={<ThemeSelect />}>
+  <DashboardCard
+    title="Product Performance"
+    subtitle="Ample Admin Vs Pixel Admin"
+    action={<ThemeSelect />}
+  >
     <Box overflow="auto">
       <Table
         aria-label="simple table"
@@ -117,19 +121,19 @@ const ProductPerformance = () => (
                 <Chip
                   sx={{
                     backgroundColor:
-                      product.priority === "Low"
+                      product.priority === 'Low'
                         ? (theme) => theme.palette.primary.main
-                        : product.priority === "Medium"
-                        ? (theme) => theme.palette.secondary.main
-                        : product.priority === "High"
-                        ? (theme) => theme.palette.warning.main
-                        : product.priority === "Moderate"
-                        ? (theme) => theme.palette.success.main
-                        : product.priority === "Critical"
-                        ? (theme) => theme.palette.error.main
-                        : (theme) => theme.palette.secondary.main,
-                    color: "#fff",
-                    borderRadius: "6px",
+                        : product.priority === 'Medium'
+                          ? (theme) => theme.palette.secondary.main
+                          : product.priority === 'High'
+                            ? (theme) => theme.palette.warning.main
+                            : product.priority === 'Moderate'
+                              ? (theme) => theme.palette.success.main
+                              : product.priority === 'Critical'
+                                ? (theme) => theme.palette.error.main
+                                : (theme) => theme.palette.secondary.main,
+                    color: '#fff',
+                    borderRadius: '6px',
                   }}
                   size="small"
                   label={product.priority}

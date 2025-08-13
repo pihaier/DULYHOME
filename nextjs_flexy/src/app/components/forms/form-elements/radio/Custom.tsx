@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React from 'react';
 import { Box } from '@mui/material';
 
@@ -8,7 +8,9 @@ const CustomExRadio = () => {
   // 2
   const [checked, setChecked] = React.useState(true);
 
-  const handleChange = (event: { target: { checked: boolean | ((prevState: boolean) => boolean); }; }) => {
+  const handleChange = (event: {
+    target: { checked: boolean | ((prevState: boolean) => boolean) };
+  }) => {
     setChecked(event.target.checked);
   };
 

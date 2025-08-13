@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -9,38 +9,31 @@ import { Theme } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { styled } from '@mui/material/styles';
-import Logo from "@/app/dashboard/layout/shared/logo/Logo";
+import Logo from '@/app/dashboard/layout/shared/logo/Logo';
 
-
-import Navigations from "./Navigations";
-import MobileSidebar from "./MobileSidebar";
-import { IconMenu2 } from "@tabler/icons-react";
-
-
+import Navigations from './Navigations';
+import MobileSidebar from './MobileSidebar';
+import { IconMenu2 } from '@tabler/icons-react';
 
 const LpHeader = () => {
   const AppBarStyled = styled(AppBar)(({ theme }) => ({
-    justifyContent: "center",
-    [theme.breakpoints.up("lg")]: {
-      minHeight: "80px",
+    justifyContent: 'center',
+    [theme.breakpoints.up('lg')]: {
+      minHeight: '80px',
     },
     backgroundColor: theme.palette.background.paper,
-
-
-
-
   }));
 
   const ToolbarStyled = styled(Toolbar)(({ theme }) => ({
-    width: "100%",
-    paddingLeft: "0 !important",
-    paddingRight: "0 !important",
+    width: '100%',
+    paddingLeft: '0 !important',
+    paddingRight: '0 !important',
     color: theme.palette.text.secondary,
   }));
 
   //   sidebar
-  const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up("lg"));
-  const lgDown = useMediaQuery((theme: Theme) => theme.breakpoints.down("lg"));
+  const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
+  const lgDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'));
 
   const [open, setOpen] = React.useState(false);
 
@@ -52,22 +45,15 @@ const LpHeader = () => {
     setOpen(newOpen);
   };
 
-
-
   return (
     <AppBarStyled position="sticky" elevation={8}>
       <Container maxWidth="lg">
         <ToolbarStyled>
-
           <Logo />
 
           <Box flexGrow={1} />
           {lgDown ? (
-            <IconButton
-              color="inherit"
-              aria-label="menu"
-              onClick={handleDrawerOpen}
-            >
+            <IconButton color="inherit" aria-label="menu" onClick={handleDrawerOpen}>
               <IconMenu2 size="20" />
             </IconButton>
           ) : null}
@@ -87,10 +73,10 @@ const LpHeader = () => {
           paper: {
             sx: {
               width: 270,
-              border: "0 !important",
+              border: '0 !important',
               boxShadow: (theme) => theme.shadows[8],
             },
-          }
+          },
         }}
       >
         <MobileSidebar />

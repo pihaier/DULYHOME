@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const TextCode = () => {
   return (
     <>
@@ -19,7 +19,7 @@ import { Button, Stack } from '@mui/material';
 </Stack>`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default TextCode
+export default TextCode;

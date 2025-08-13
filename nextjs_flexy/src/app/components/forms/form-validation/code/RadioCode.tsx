@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const RadioCode = () => {
   return (
     <>
@@ -102,7 +102,7 @@ const formik = useFormik({
 `}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default RadioCode
+export default RadioCode;

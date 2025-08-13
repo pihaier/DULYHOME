@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import * as React from 'react';
 import PageContainer from '@/app/components/container/PageContainer';
@@ -60,7 +60,7 @@ const AccountSetting = () => {
   };
 
   return (
-    (<PageContainer title="Account Setting" description="this is Account Setting">
+    <PageContainer title="Account Setting" description="this is Account Setting">
       {/* breadcrumb */}
       <Breadcrumb title="Account Setting" items={BCrumb} />
       {/* end breadcrumb */}
@@ -119,7 +119,7 @@ const AccountSetting = () => {
           </BlankCard>
         </Grid>
       </Grid>
-    </PageContainer>)
+    </PageContainer>
   );
 };
 

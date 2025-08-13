@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { Rating } from "@mui/material";
-import ChildCard from "@/app/components/shared/ChildCard";
-import { IconContainerProps } from "@mui/material/Rating";
-import { styled } from "@mui/material/styles";
-import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
-import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
-import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
-import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAltOutlined";
-import SentimentVerySatisfiedIcon from "@mui/icons-material/SentimentVerySatisfied";
+import * as React from 'react';
+import { Rating } from '@mui/material';
+import ChildCard from '@/app/components/shared/ChildCard';
+import { IconContainerProps } from '@mui/material/Rating';
+import { styled } from '@mui/material/styles';
+import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
+import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
+import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
+import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAltOutlined';
+import SentimentVerySatisfiedIcon from '@mui/icons-material/SentimentVerySatisfied';
 
 const RadioRating = styled(Rating)(({ theme }) => ({
-  "& .MuiRating-iconEmpty .MuiSvgIcon-root": {
+  '& .MuiRating-iconEmpty .MuiSvgIcon-root': {
     color: theme.palette.action.disabled,
   },
 }));
@@ -24,23 +24,23 @@ const customIcons: {
 } = {
   1: {
     icon: <SentimentVeryDissatisfiedIcon color="error" />,
-    label: "Very Dissatisfied",
+    label: 'Very Dissatisfied',
   },
   2: {
     icon: <SentimentDissatisfiedIcon color="error" />,
-    label: "Dissatisfied",
+    label: 'Dissatisfied',
   },
   3: {
     icon: <SentimentSatisfiedIcon color="warning" />,
-    label: "Neutral",
+    label: 'Neutral',
   },
   4: {
     icon: <SentimentSatisfiedAltIcon color="success" />,
-    label: "Satisfied",
+    label: 'Satisfied',
   },
   5: {
     icon: <SentimentVerySatisfiedIcon color="success" />,
-    label: "Very Satisfied",
+    label: 'Very Satisfied',
   },
 };
 function IconContainer(props: IconContainerProps) {

@@ -1,29 +1,29 @@
-import { Grid } from "@mui/material";
-import ParentCard from "@/app/components/shared/ParentCard";
-import ChildCard from "@/app/components/shared/ChildCard";
-import Breadcrumb from "@/app/dashboard/layout/shared/breadcrumb/Breadcrumb";
-import PageContainer from "@/app/components/container/PageContainer";
-import CustomExSwitch from "@/app/components/forms/form-elements/switch/Custom";
-import DefaultSwitch from "@/app/components/forms/form-elements/switch/Default";
-import DefaultLabelSwitch from "@/app/components/forms/form-elements/switch/DefaultLabel";
-import SizesSwitch from "@/app/components/forms/form-elements/switch/Sizes";
-import ColorsSwitch from "@/app/components/forms/form-elements/switch/Colors";
-import PositionSwitch from "@/app/components/forms/form-elements/switch/Position";
+import { Grid } from '@mui/material';
+import ParentCard from '@/app/components/shared/ParentCard';
+import ChildCard from '@/app/components/shared/ChildCard';
+import Breadcrumb from '@/app/dashboard/layout/shared/breadcrumb/Breadcrumb';
+import PageContainer from '@/app/components/container/PageContainer';
+import CustomExSwitch from '@/app/components/forms/form-elements/switch/Custom';
+import DefaultSwitch from '@/app/components/forms/form-elements/switch/Default';
+import DefaultLabelSwitch from '@/app/components/forms/form-elements/switch/DefaultLabel';
+import SizesSwitch from '@/app/components/forms/form-elements/switch/Sizes';
+import ColorsSwitch from '@/app/components/forms/form-elements/switch/Colors';
+import PositionSwitch from '@/app/components/forms/form-elements/switch/Position';
 
-import CustomSwitchCode from "@/app/components/forms/form-elements/switch/code/CustomSwitchCode";
-import DefaultSwitchCode from "@/app/components/forms/form-elements/switch/code/DefaultSwitchCode";
-import DefaultLabelSwitchCode from "@/app/components/forms/form-elements/switch/code/DefaultLabelSwitchCode";
-import SizesSwitchCode from "@/app/components/forms/form-elements/switch/code/SizesSwitchCode";
-import ColorsSwitchCode from "@/app/components/forms/form-elements/switch/code/ColorsSwitchCode";
-import PositionSwitchCode from "@/app/components/forms/form-elements/switch/code/PositionSwitchCode";
+import CustomSwitchCode from '@/app/components/forms/form-elements/switch/code/CustomSwitchCode';
+import DefaultSwitchCode from '@/app/components/forms/form-elements/switch/code/DefaultSwitchCode';
+import DefaultLabelSwitchCode from '@/app/components/forms/form-elements/switch/code/DefaultLabelSwitchCode';
+import SizesSwitchCode from '@/app/components/forms/form-elements/switch/code/SizesSwitchCode';
+import ColorsSwitchCode from '@/app/components/forms/form-elements/switch/code/ColorsSwitchCode';
+import PositionSwitchCode from '@/app/components/forms/form-elements/switch/code/PositionSwitchCode';
 
 const BCrumb = [
   {
-    to: "/",
-    title: "Home",
+    to: '/',
+    title: 'Home',
   },
   {
-    title: "Switch",
+    title: 'Switch',
   },
 ];
 
@@ -43,8 +43,9 @@ const MuiSwitch = () => (
           size={{
             xs: 12,
             lg: 6,
-            sm: 6
-          }}>
+            sm: 6,
+          }}
+        >
           <ChildCard title="Custom" codeModel={<CustomSwitchCode />}>
             <CustomExSwitch />
           </ChildCard>
@@ -58,8 +59,9 @@ const MuiSwitch = () => (
           size={{
             xs: 12,
             lg: 6,
-            sm: 6
-          }}>
+            sm: 6,
+          }}
+        >
           <ChildCard title="Default" codeModel={<DefaultSwitchCode />}>
             <DefaultSwitch />
           </ChildCard>
@@ -73,12 +75,10 @@ const MuiSwitch = () => (
           size={{
             xs: 12,
             lg: 6,
-            sm: 6
-          }}>
-          <ChildCard
-            title="Default with Label"
-            codeModel={<DefaultLabelSwitchCode />}
-          >
+            sm: 6,
+          }}
+        >
+          <ChildCard title="Default with Label" codeModel={<DefaultLabelSwitchCode />}>
             <DefaultLabelSwitch />
           </ChildCard>
         </Grid>
@@ -91,8 +91,9 @@ const MuiSwitch = () => (
           size={{
             xs: 12,
             lg: 6,
-            sm: 6
-          }}>
+            sm: 6,
+          }}
+        >
           <ChildCard title="Sizes" codeModel={<SizesSwitchCode />}>
             <SizesSwitch />
           </ChildCard>
@@ -106,8 +107,9 @@ const MuiSwitch = () => (
           size={{
             xs: 12,
             lg: 6,
-            sm: 6
-          }}>
+            sm: 6,
+          }}
+        >
           <ChildCard title="Default Colors" codeModel={<ColorsSwitchCode />}>
             <ColorsSwitch />
           </ChildCard>
@@ -121,8 +123,9 @@ const MuiSwitch = () => (
           size={{
             xs: 12,
             lg: 6,
-            sm: 6
-          }}>
+            sm: 6,
+          }}
+        >
           <ChildCard title="Placement" codeModel={<PositionSwitchCode />}>
             <PositionSwitch />
           </ChildCard>

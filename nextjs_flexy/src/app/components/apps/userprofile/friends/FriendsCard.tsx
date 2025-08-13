@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import CardContent from '@mui/material/CardContent';
@@ -12,7 +12,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import React, { useContext, useEffect } from 'react';
 import BlankCard from '../../../../components/shared/BlankCard';
-import { UserDataContext } from "@/app/context/UserDataContext/index";
+import { UserDataContext } from '@/app/context/UserDataContext/index';
 
 import {
   IconBrandFacebook,
@@ -51,8 +51,9 @@ const FriendsCard = () => {
         <Grid
           size={{
             sm: 12,
-            lg: 12
-          }}>
+            lg: 12,
+          }}
+        >
           <Stack direction="row" alignItems={'center'} mt={2}>
             <Box>
               <Typography variant="h3">
@@ -78,19 +79,21 @@ const FriendsCard = () => {
                     ),
                   },
 
-                  htmlInput: { 'aria-label': 'Search Followers' }
-                }} />
+                  htmlInput: { 'aria-label': 'Search Followers' },
+                }}
+              />
             </Box>
           </Stack>
         </Grid>
         {followers.map((profile) => {
           return (
-            (<Grid
+            <Grid
               key={profile.id}
               size={{
                 xs: 12,
-                lg: 4
-              }}>
+                lg: 4,
+              }}
+            >
               <BlankCard className="hoverCard">
                 <CardContent>
                   <Stack direction={'column'} gap={2} alignItems="center">
@@ -101,7 +104,9 @@ const FriendsCard = () => {
                     />
                     <Box textAlign={'center'}>
                       <Typography variant="h4">{profile.name}</Typography>
-                      <Typography variant="subtitle1" color='textSecondary'>{profile.role}</Typography>
+                      <Typography variant="subtitle1" color="textSecondary">
+                        {profile.role}
+                      </Typography>
                     </Box>
                   </Stack>
                 </CardContent>
@@ -112,7 +117,7 @@ const FriendsCard = () => {
                   })}
                 </Box>
               </BlankCard>
-            </Grid>)
+            </Grid>
           );
         })}
       </Grid>

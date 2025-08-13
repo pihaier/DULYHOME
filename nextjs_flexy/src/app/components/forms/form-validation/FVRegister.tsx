@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import Link from 'next/link';
@@ -40,7 +40,7 @@ const FVRegister = () => {
       alert(JSON.stringify(values, null, 2));
     },
   });
-  
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <Stack>

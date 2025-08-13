@@ -21,14 +21,11 @@ export interface colorsType {
 }
 
 interface Props {
-  toggleNoteSidebar: (event: React.MouseEvent<HTMLElement>) => void,
+  toggleNoteSidebar: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 const NoteContent = ({ toggleNoteSidebar }: Props) => {
-
   const theme = useTheme();
-
-
 
   const { notes, updateNote, selectedNoteId } = useContext(NotesContext);
   const noteDetails = notes.find((note: NotesType) => note.id === selectedNoteId);
@@ -36,7 +33,6 @@ const NoteContent = ({ toggleNoteSidebar }: Props) => {
   const [initialTitle, setInitialTitle] = useState('');
   const [updatedTitle, setUpdatedTitle] = useState('');
   const [isEditing, setIsEditing] = useState(false); // State to track whether editing is in progress
-
 
   // Effect to update initialTitle when noteDetails changes
   useEffect(() => {
@@ -47,7 +43,7 @@ const NoteContent = ({ toggleNoteSidebar }: Props) => {
   }, [noteDetails]);
 
   // Function to handle changes in the title text field
-  const handleTitleChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+  const handleTitleChange = (e: { target: { value: React.SetStateAction<string> } }) => {
     setUpdatedTitle(e.target.value);
     setIsEditing(true); // Set editing state to true when user starts editing
   };
@@ -58,8 +54,6 @@ const NoteContent = ({ toggleNoteSidebar }: Props) => {
     updateNote(selectedNoteId, titleToUse, color);
     console.log(color);
   };
-
-
 
   const handleBlur = () => {
     setIsEditing(false);
@@ -142,12 +136,12 @@ const NoteContent = ({ toggleNoteSidebar }: Props) => {
                 boxShadow: 'none',
                 transition: '0.1s ease-in',
                 scale: noteDetails.color === color1.disp ? '0.9' : '0.7',
-
               }}
               size="small"
               key={color1.id}
-              color={color1?.disp as 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning'}
-
+              color={
+                color1?.disp as 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning'
+              }
               onClick={() => handleColorChange(color1.disp)}
             >
               {noteDetails.color === color1.disp ? <IconCheck width="16" /> : ''}
@@ -160,6 +154,5 @@ const NoteContent = ({ toggleNoteSidebar }: Props) => {
     </Box>
   );
 };
-
 
 export default NoteContent;

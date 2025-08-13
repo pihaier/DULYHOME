@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const ControlledCode = () => {
   return (
     <>
@@ -115,7 +115,7 @@ const [expanded, setExpanded] = React.useState<string | false>(false);
     </Accordion>`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default ControlledCode
+export default ControlledCode;

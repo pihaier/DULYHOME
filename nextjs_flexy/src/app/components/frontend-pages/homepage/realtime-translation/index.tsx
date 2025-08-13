@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Grid,
@@ -13,9 +13,9 @@ import {
   Button,
   Paper,
   IconButton,
-  Fade
-} from "@mui/material";
-import { styled, useTheme } from "@mui/material/styles";
+  Fade,
+} from '@mui/material';
+import { styled, useTheme } from '@mui/material/styles';
 import {
   IconLanguage,
   IconBrain,
@@ -26,8 +26,8 @@ import {
   IconUser,
   IconBrandOpenai,
   IconRefresh,
-  IconHeadset
-} from "@tabler/icons-react";
+  IconHeadset,
+} from '@tabler/icons-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const ChatBubble = styled(Paper, {
@@ -36,7 +36,7 @@ const ChatBubble = styled(Paper, {
   padding: theme.spacing(2, 3),
   maxWidth: '70%',
   borderRadius: isUser ? '20px 20px 4px 20px' : '20px 20px 20px 4px',
-  background: isUser 
+  background: isUser
     ? `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`
     : theme.palette.background.paper,
   color: isUser ? 'white' : theme.palette.text.primary,
@@ -54,30 +54,30 @@ const FeatureCard = styled(Card)(({ theme }) => ({
   '&:hover': {
     transform: 'translateY(-5px)',
     boxShadow: theme.shadows[10],
-  }
+  },
 }));
 
 const RealtimeTranslation = () => {
   const theme = useTheme();
   const [currentLang, setCurrentLang] = useState('ko');
   const [isTyping, setIsTyping] = useState(false);
-  
+
   const messages = {
     ko: [
-      { text: "안녕하세요, 이번 주문 건에 대해 논의하고 싶습니다.", isUser: true },
-      { text: "네, 어떤 부분을 논의하시겠습니까?", isUser: false },
-      { text: "품질 검사 기준과 배송 일정을 확인하고 싶습니다.", isUser: true },
+      { text: '안녕하세요, 이번 주문 건에 대해 논의하고 싶습니다.', isUser: true },
+      { text: '네, 어떤 부분을 논의하시겠습니까?', isUser: false },
+      { text: '품질 검사 기준과 배송 일정을 확인하고 싶습니다.', isUser: true },
     ],
     zh: [
-      { text: "您好，我想讨论一下这次订单的事情。", isUser: true },
-      { text: "好的，您想讨论哪个部分？", isUser: false },
-      { text: "我想确认质量检验标准和配送日程。", isUser: true },
-    ]
+      { text: '您好，我想讨论一下这次订单的事情。', isUser: true },
+      { text: '好的，您想讨论哪个部分？', isUser: false },
+      { text: '我想确认质量检验标准和配送日程。', isUser: true },
+    ],
   };
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentLang(prev => prev === 'ko' ? 'zh' : 'ko');
+      setCurrentLang((prev) => (prev === 'ko' ? 'zh' : 'ko'));
     }, 3000);
     return () => clearInterval(interval);
   }, []);
@@ -88,41 +88,40 @@ const RealtimeTranslation = () => {
       title: 'GPT 기반',
       description: '최신 AI 모델로 문맥을 완벽히 이해하는 번역',
       stat: '99.9%',
-      statLabel: '정확도'
+      statLabel: '정확도',
     },
     {
       icon: <IconClock size={30} />,
       title: '실시간 번역',
       description: '0.5초 이내 즉시 번역 제공',
       stat: '0.5초',
-      statLabel: '응답속도'
+      statLabel: '응답속도',
     },
     {
       icon: <IconHeadset size={30} />,
       title: '중국 구매팀 실시간 문의',
       description: '전담 중국 구매팀과 24시간 실시간 상담',
       stat: '24시간',
-      statLabel: '상담가능'
+      statLabel: '상담가능',
     },
     {
       icon: <IconShieldCheck size={30} />,
       title: '전문 용어 DB',
       description: '10만개+ 무역 전문 용어 데이터베이스',
       stat: '10만+',
-      statLabel: '전문용어'
+      statLabel: '전문용어',
     },
     {
       icon: <IconBrain size={30} />,
       title: '컨텍스트 유지',
       description: '대화 맥락을 이해하는 스마트 번역',
       stat: '100%',
-      statLabel: '맥락이해'
+      statLabel: '맥락이해',
     },
   ];
 
-
   return (
-    <Box 
+    <Box
       sx={{
         py: { xs: 8, sm: 10, lg: 12 },
         background: 'linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)',
@@ -142,7 +141,7 @@ const RealtimeTranslation = () => {
           background: `radial-gradient(circle, ${theme.palette.primary.light}20 0%, transparent 70%)`,
         }}
       />
-      
+
       <Container maxWidth="lg">
         {/* 헤더 */}
         <motion.div
@@ -150,9 +149,9 @@ const RealtimeTranslation = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <Typography 
-            variant="h2" 
-            textAlign="center" 
+          <Typography
+            variant="h2"
+            textAlign="center"
             fontWeight={700}
             sx={{
               fontSize: { xs: '32px', sm: '40px', lg: '48px' },
@@ -165,13 +164,9 @@ const RealtimeTranslation = () => {
           >
             실시간 AI 통번역 시스템
           </Typography>
-          <Typography 
-            variant="h6" 
-            textAlign="center" 
-            color="text.secondary"
-            sx={{ mb: 8 }}
-          >
-            GPT 기반 한중 비즈니스 전문 통번역으로 언어 장벽 없는 무역<br />
+          <Typography variant="h6" textAlign="center" color="text.secondary" sx={{ mb: 8 }}>
+            GPT 기반 한중 비즈니스 전문 통번역으로 언어 장벽 없는 무역
+            <br />
             중국 구매팀 담당자와 실시간 소통
           </Typography>
         </motion.div>
@@ -190,12 +185,15 @@ const RealtimeTranslation = () => {
                     실시간 번역 채팅
                   </Typography>
                   <Stack direction="row" spacing={1}>
-                    <Chip 
+                    <Chip
                       label={currentLang === 'ko' ? '한국어' : '中文'}
                       color="primary"
                       size="small"
                     />
-                    <IconButton size="small" onClick={() => setCurrentLang(prev => prev === 'ko' ? 'zh' : 'ko')}>
+                    <IconButton
+                      size="small"
+                      onClick={() => setCurrentLang((prev) => (prev === 'ko' ? 'zh' : 'ko'))}
+                    >
                       <IconRefresh size={18} />
                     </IconButton>
                   </Stack>
@@ -225,9 +223,7 @@ const RealtimeTranslation = () => {
                             transition={{ delay: index * 0.2 }}
                           >
                             <ChatBubble isUser={msg.isUser}>
-                              <Typography variant="body1">
-                                {msg.text}
-                              </Typography>
+                              <Typography variant="body1">{msg.text}</Typography>
                             </ChatBubble>
                           </motion.div>
                         </Box>
@@ -237,19 +233,21 @@ const RealtimeTranslation = () => {
                 </Box>
 
                 {/* AI 번역 인디케이터 */}
-                <Box sx={{ 
-                  position: 'absolute', 
-                  bottom: 20, 
-                  left: '50%', 
-                  transform: 'translateX(-50%)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 1,
-                  px: 2,
-                  py: 1,
-                  borderRadius: 20,
-                  bgcolor: theme.palette.primary.light,
-                }}>
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    bottom: 20,
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 1,
+                    px: 2,
+                    py: 1,
+                    borderRadius: 20,
+                    bgcolor: theme.palette.primary.light,
+                  }}
+                >
                   <IconBrandOpenai size={20} />
                   <Typography variant="caption" fontWeight={600}>
                     AI 실시간 번역 중
@@ -271,12 +269,14 @@ const RealtimeTranslation = () => {
                   <FeatureCard>
                     <CardContent>
                       <Stack direction="row" spacing={2} alignItems="center">
-                        <Avatar sx={{ 
-                          bgcolor: theme.palette.primary.light,
-                          color: theme.palette.primary.main,
-                          width: 56,
-                          height: 56
-                        }}>
+                        <Avatar
+                          sx={{
+                            bgcolor: theme.palette.primary.light,
+                            color: theme.palette.primary.main,
+                            width: 56,
+                            height: 56,
+                          }}
+                        >
                           {feature.icon}
                         </Avatar>
                         <Box flex={1}>
@@ -316,10 +316,12 @@ const RealtimeTranslation = () => {
                 <FeatureCard>
                   <CardContent>
                     <Stack direction="row" spacing={2} alignItems="center">
-                      <Avatar sx={{ 
-                        bgcolor: theme.palette.info.light,
-                        color: theme.palette.info.main 
-                      }}>
+                      <Avatar
+                        sx={{
+                          bgcolor: theme.palette.info.light,
+                          color: theme.palette.info.main,
+                        }}
+                      >
                         {feature.icon}
                       </Avatar>
                       <Box flex={1}>
@@ -330,7 +332,7 @@ const RealtimeTranslation = () => {
                           {feature.description}
                         </Typography>
                       </Box>
-                      <Chip 
+                      <Chip
                         label={feature.stat}
                         color="primary"
                         variant="outlined"

@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const TextColorCode = () => {
   return (
     <>
@@ -18,7 +18,7 @@ import { Button, Stack } from '@mui/material';
 </Stack>`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default TextColorCode
+export default TextColorCode;

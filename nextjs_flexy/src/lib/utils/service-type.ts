@@ -1,11 +1,11 @@
 // Service type detection and routing utilities
 
-export type ServiceType = 
-  | 'inspection' 
-  | 'market-research' 
-  | 'sampling' 
-  | 'bulk-order' 
-  | 'purchasing' 
+export type ServiceType =
+  | 'inspection'
+  | 'market-research'
+  | 'sampling'
+  | 'bulk-order'
+  | 'purchasing'
   | 'shipping'
   | 'unknown';
 
@@ -21,7 +21,7 @@ export interface ServiceTypeInfo {
  */
 export function getServiceTypeFromReservationNumber(reservationNumber: string): ServiceType {
   const prefix = reservationNumber.split('-')[0];
-  
+
   switch (prefix) {
     case 'DLKP':
     case 'IN':
@@ -47,50 +47,50 @@ export function getServiceTypeFromReservationNumber(reservationNumber: string): 
  */
 export function getServiceTypeInfo(serviceType: ServiceType): ServiceTypeInfo {
   const serviceMap: Record<ServiceType, ServiceTypeInfo> = {
-    'inspection': {
+    inspection: {
       type: 'inspection',
       tableName: 'inspection_applications',
       displayName: '검품감사',
-      path: 'inspection'
+      path: 'inspection',
     },
     'market-research': {
       type: 'market-research',
       tableName: 'market_research_requests',
       displayName: '시장조사',
-      path: 'market-research'
+      path: 'market-research',
     },
-    'sampling': {
+    sampling: {
       type: 'sampling',
       tableName: 'sample_orders',
       displayName: '샘플링',
-      path: 'sampling'
+      path: 'sampling',
     },
     'bulk-order': {
       type: 'bulk-order',
       tableName: 'bulk_orders',
       displayName: '대량주문',
-      path: 'bulk-order'
+      path: 'bulk-order',
     },
-    'purchasing': {
+    purchasing: {
       type: 'purchasing',
       tableName: 'purchasing_orders',
       displayName: '구매대행',
-      path: 'purchasing'
+      path: 'purchasing',
     },
-    'shipping': {
+    shipping: {
       type: 'shipping',
       tableName: 'shipping_agency_orders',
       displayName: '배송대행',
-      path: 'shipping'
+      path: 'shipping',
     },
-    'unknown': {
+    unknown: {
       type: 'unknown',
       tableName: '',
       displayName: '알 수 없음',
-      path: ''
-    }
+      path: '',
+    },
   };
-  
+
   return serviceMap[serviceType];
 }
 
@@ -104,7 +104,7 @@ export function getAllServiceTables(): ServiceTypeInfo[] {
     getServiceTypeInfo('sampling'),
     getServiceTypeInfo('bulk-order'),
     getServiceTypeInfo('purchasing'),
-    getServiceTypeInfo('shipping')
+    getServiceTypeInfo('shipping'),
   ];
 }
 
@@ -114,10 +114,10 @@ export function getAllServiceTables(): ServiceTypeInfo[] {
 export function buildServiceDetailUrl(reservationNumber: string): string {
   const serviceType = getServiceTypeFromReservationNumber(reservationNumber);
   const serviceInfo = getServiceTypeInfo(serviceType);
-  
+
   if (serviceType === 'unknown') {
     return `/dashboard/orders/${reservationNumber}`;
   }
-  
+
   return `/dashboard/${serviceInfo.path}/${reservationNumber}`;
 }

@@ -1,5 +1,5 @@
 'use client';
-import React from 'react'
+import React from 'react';
 import { useTheme } from '@mui/material/styles';
 import { Card, CardContent, Typography, Stack, Box } from '@mui/material';
 import { CustomizerContext } from '@/app/context/customizerContext';
@@ -30,7 +30,6 @@ const DashboardCard = ({
 }: Props) => {
   const { isCardShadow } = useContext(CustomizerContext);
 
-
   const theme = useTheme();
   const borderColor = theme.palette.divider;
 
@@ -48,7 +47,7 @@ const DashboardCard = ({
           </Typography>
         </CardContent>
       ) : (
-        <CardContent sx={{ p: "30px" }}>
+        <CardContent sx={{ p: '30px' }}>
           {title ? (
             <Stack
               direction="row"

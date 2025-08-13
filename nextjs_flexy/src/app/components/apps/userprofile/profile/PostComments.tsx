@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useContext, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -38,12 +38,7 @@ const PostComments = ({ comment, post }: CommentProps) => {
     likeReply(postId, commentId);
   };
 
-
-  const onSubmit = async (
-    postId: string,
-    commentId: string,
-    replyText: string
-  ) => {
+  const onSubmit = async (postId: string, commentId: string, replyText: string) => {
     const replyId = uniqueId('#REPLY_');
 
     const newReply: Reply = {
@@ -69,10 +64,17 @@ const PostComments = ({ comment, post }: CommentProps) => {
     setShowReply(false);
   };
 
-
   return (
     <>
-      <Box mt={2} p={3} sx={{ borderColor: (theme) => theme.palette.divider, borderWidth: '1px', borderStyle: 'solid' }}>
+      <Box
+        mt={2}
+        p={3}
+        sx={{
+          borderColor: (theme) => theme.palette.divider,
+          borderWidth: '1px',
+          borderStyle: 'solid',
+        }}
+      >
         <Stack direction={'row'} gap={2} alignItems="center">
           <Avatar
             alt="Remy Sharp"
@@ -86,7 +88,9 @@ const PostComments = ({ comment, post }: CommentProps) => {
           </Typography>
         </Stack>
         <Box py={2}>
-          <Typography color="textSecondary" variant='body2'>{comment?.data?.comment}</Typography>
+          <Typography color="textSecondary" variant="body2">
+            {comment?.data?.comment}
+          </Typography>
         </Box>
         <Stack direction="row" gap={1} alignItems="center">
           <Tooltip title="Like" placement="top">
@@ -97,14 +101,15 @@ const PostComments = ({ comment, post }: CommentProps) => {
                   ? 'primary'
                   : 'inherit'
               }
-
             >
-              <IconThumbUp size="16" onClick={() => {
-
-                if (post.id) {
-                  handleLikeReply(post.id, comment.id);
-                }
-              }} />
+              <IconThumbUp
+                size="16"
+                onClick={() => {
+                  if (post.id) {
+                    handleLikeReply(post.id, comment.id);
+                  }
+                }}
+              />
             </Fab>
           </Tooltip>
           <Typography variant="body1" fontWeight={600}>
@@ -126,7 +131,11 @@ const PostComments = ({ comment, post }: CommentProps) => {
                 <Box
                   mt={2}
                   p={3}
-                  sx={{ borderColor: (theme) => theme.palette.grey[100], borderWidth: '1px', borderStyle: 'solid' }}
+                  sx={{
+                    borderColor: (theme) => theme.palette.grey[100],
+                    borderWidth: '1px',
+                    borderStyle: 'solid',
+                  }}
                 >
                   <Stack direction={'row'} gap={2} alignItems="center">
                     <Avatar alt="Remy Sharp" src={reply?.profile?.avatar} />
@@ -137,7 +146,9 @@ const PostComments = ({ comment, post }: CommentProps) => {
                     </Typography>
                   </Stack>
                   <Box py={2}>
-                    <Typography color="textSecondary" variant='body2'>{reply.data.comment}</Typography>
+                    <Typography color="textSecondary" variant="body2">
+                      {reply.data.comment}
+                    </Typography>
                   </Box>
                 </Box>
               </Box>
@@ -162,11 +173,14 @@ const PostComments = ({ comment, post }: CommentProps) => {
               variant="outlined"
               fullWidth
             />
-            <Button variant="contained" onClick={() => {
-              if (post.id) {
-                onSubmit(post.id, comment.id, replyTxt);
-              }
-            }}>
+            <Button
+              variant="contained"
+              onClick={() => {
+                if (post.id) {
+                  onSubmit(post.id, comment.id, replyTxt);
+                }
+              }}
+            >
               Reply
             </Button>
           </Stack>

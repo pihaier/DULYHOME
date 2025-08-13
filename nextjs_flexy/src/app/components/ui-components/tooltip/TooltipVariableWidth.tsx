@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { styled } from "@mui/material/styles";
-import { Button, Stack } from "@mui/material";
-import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from '@mui/material/styles';
+import { Button, Stack } from '@mui/material';
+import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
 
 // common component
-import ChildCard from "@/app/components/shared/ChildCard";
-import VariableWidthCode from "@/app/components/ui-components/tooltip/code/VariableWidthCode";
+import ChildCard from '@/app/components/shared/ChildCard';
+import VariableWidthCode from '@/app/components/ui-components/tooltip/code/VariableWidthCode';
 
 // variable width
 const CustomWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
@@ -21,7 +21,7 @@ const NoMaxWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))({
   [`& .${tooltipClasses.tooltip}`]: {
-    maxWidth: "none",
+    maxWidth: 'none',
   },
 });
 

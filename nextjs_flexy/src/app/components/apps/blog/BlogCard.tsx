@@ -18,15 +18,12 @@ import { IconEye, IconMessage2, IconPoint } from '@tabler/icons-react';
 import BlankCard from '../../shared/BlankCard';
 import { BlogPostType } from '../../../dashboard/types/apps/blog';
 
-
 interface Btype {
   post: BlogPostType;
   index?: number;
 }
 
-
 const BlogCard = ({ post }: Btype) => {
-
   const { coverImg, title, view, comments, category, author, createdAt } = post;
 
   const linkTo = title
@@ -35,22 +32,19 @@ const BlogCard = ({ post }: Btype) => {
     .replace(/[^\w-]+/g, '');
 
   return (
-    (<Grid
+    <Grid
       display="flex"
       alignItems="stretch"
       size={{
         xs: 12,
         lg: 4,
         md: 4,
-        sm: 6
-      }}>
+        sm: 6,
+      }}
+    >
       <BlankCard className="hoverCard">
         <>
-          <Typography
-            component={NextLink}
-            href={`/apps/blog/detail/${linkTo}`}
-
-          >
+          <Typography component={NextLink} href={`/apps/blog/detail/${linkTo}`}>
             <CardMedia component="img" height="240" image={coverImg} alt="green iguana" />
           </Typography>
           <CardContent>
@@ -60,8 +54,9 @@ const BlogCard = ({ post }: Btype) => {
               </Tooltip>
               <Chip
                 sx={{
-                  marginLeft: 'auto', marginTop: '-21px',
-                  backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#262e3f' : 'white'
+                  marginLeft: 'auto',
+                  marginTop: '-21px',
+                  backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#262e3f' : 'white'),
                 }}
                 label="2 min Read"
                 size="small"
@@ -71,12 +66,12 @@ const BlogCard = ({ post }: Btype) => {
             <Box my={3}>
               <Typography
                 gutterBottom
-                variant="h4" fontSize='18px'
+                variant="h4"
+                fontSize="18px"
                 color="inherit"
                 sx={{ textDecoration: 'none' }}
                 component={NextLink}
                 href={`/apps/blog/detail/${linkTo}`}
-
               >
                 {title}
               </Typography>
@@ -93,13 +88,12 @@ const BlogCard = ({ post }: Btype) => {
                 <IconPoint size="16" />
 
                 <small>{format(new Date(createdAt ?? new Date()), 'E, MMM d')}</small>
-
               </Stack>
             </Stack>
           </CardContent>
         </>
       </BlankCard>
-    </Grid>)
+    </Grid>
   );
 };
 

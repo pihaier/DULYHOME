@@ -72,10 +72,10 @@ const CustomerSupportView = () => {
   const [expandedFAQ, setExpandedFAQ] = useState<string | false>(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
+
   const [notices, setNotices] = useState<Notice[]>([]);
   const [faqs, setFaqs] = useState<FAQ[]>([]);
-  
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -83,7 +83,7 @@ const CustomerSupportView = () => {
   const fetchData = async () => {
     setLoading(true);
     setError(null);
-    
+
     try {
       // 공지사항 조회 (visible만)
       const { data: noticesData, error: noticesError } = await supabase
@@ -92,20 +92,20 @@ const CustomerSupportView = () => {
         .eq('is_visible', true)
         .order('is_important', { ascending: false })
         .order('created_at', { ascending: false });
-      
+
       if (noticesError) {
         console.error('Error fetching notices:', noticesError);
         throw noticesError;
       }
       setNotices(noticesData || []);
-      
+
       // FAQ 조회 (visible만)
       const { data: faqsData, error: faqsError } = await supabase
         .from('faqs')
         .select('*')
         .eq('is_visible', true)
         .order('sort_order', { ascending: true });
-      
+
       if (faqsError) {
         console.error('Error fetching FAQs:', faqsError);
         throw faqsError;
@@ -123,9 +123,10 @@ const CustomerSupportView = () => {
     setTabValue(newValue);
   };
 
-  const handleNoticeChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-    setExpandedNotice(isExpanded ? panel : false);
-  };
+  const handleNoticeChange =
+    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+      setExpandedNotice(isExpanded ? panel : false);
+    };
 
   const handleFAQChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
     setExpandedFAQ(isExpanded ? panel : false);
@@ -198,14 +199,14 @@ const CustomerSupportView = () => {
             <CardContent>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={tabValue} onChange={handleTabChange} variant="fullWidth">
-                  <Tab 
-                    label={`공지사항 (${notices.length})`} 
-                    icon={<AnnouncementIcon />} 
+                  <Tab
+                    label={`공지사항 (${notices.length})`}
+                    icon={<AnnouncementIcon />}
                     iconPosition="start"
                   />
-                  <Tab 
-                    label={`자주 묻는 질문 (${faqs.length})`} 
-                    icon={<HelpIcon />} 
+                  <Tab
+                    label={`자주 묻는 질문 (${faqs.length})`}
+                    icon={<HelpIcon />}
                     iconPosition="start"
                   />
                 </Tabs>
@@ -253,8 +254,8 @@ const CustomerSupportView = () => {
                             )}
                           </Box>
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                            <Chip 
-                              label={notice.category} 
+                            <Chip
+                              label={notice.category}
                               color={getCategoryColor(notice.category) as any}
                               size="small"
                               variant="outlined"
@@ -268,7 +269,10 @@ const CustomerSupportView = () => {
                           </Box>
                         </AccordionSummary>
                         <AccordionDetails>
-                          <Typography variant="body1" sx={{ whiteSpace: 'pre-line', lineHeight: 1.8 }}>
+                          <Typography
+                            variant="body1"
+                            sx={{ whiteSpace: 'pre-line', lineHeight: 1.8 }}
+                          >
                             {notice.content}
                           </Typography>
                         </AccordionDetails>
@@ -309,8 +313,8 @@ const CustomerSupportView = () => {
                             },
                           }}
                         >
-                          <Chip 
-                            label={faq.category} 
+                          <Chip
+                            label={faq.category}
                             color={getFAQCategoryColor(faq.category) as any}
                             size="small"
                             sx={{ minWidth: 80 }}
@@ -320,7 +324,10 @@ const CustomerSupportView = () => {
                           </Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                          <Typography variant="body1" sx={{ lineHeight: 1.8, whiteSpace: 'pre-line' }}>
+                          <Typography
+                            variant="body1"
+                            sx={{ lineHeight: 1.8, whiteSpace: 'pre-line' }}
+                          >
                             {faq.answer}
                           </Typography>
                         </AccordionDetails>

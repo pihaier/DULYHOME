@@ -1,5 +1,5 @@
-"use client";
-import * as React from "react";
+'use client';
+import * as React from 'react';
 import {
   TableContainer,
   Table,
@@ -11,42 +11,42 @@ import {
   Box,
   Grid,
   FormLabel,
-} from "@mui/material";
-import CustomTextField from "@/app/components/forms/theme-elements/CustomTextField";
-import DownloadCard from "@/app/components/shared/DownloadCard";
+} from '@mui/material';
+import CustomTextField from '@/app/components/forms/theme-elements/CustomTextField';
+import DownloadCard from '@/app/components/shared/DownloadCard';
 
 import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
   useReactTable,
-} from "@tanstack/react-table";
-import { TableType } from "@/app/components/tables/tableData";
-import Image from 'next/image'
+} from '@tanstack/react-table';
+import { TableType } from '@/app/components/tables/tableData';
+import Image from 'next/image';
 
 const columnHelper = createColumnHelper<TableType>();
 
 const columns = [
-  columnHelper.accessor("imgsrc", {
-    header: () => "Users",
+  columnHelper.accessor('imgsrc', {
+    header: () => 'Users',
   }),
-  columnHelper.accessor("name", {
-    header: () => " Name",
+  columnHelper.accessor('name', {
+    header: () => ' Name',
   }),
-  columnHelper.accessor("post", {
-    header: () => "Post",
+  columnHelper.accessor('post', {
+    header: () => 'Post',
   }),
-  columnHelper.accessor("pname", {
-    header: () => "Project Name",
+  columnHelper.accessor('pname', {
+    header: () => 'Project Name',
   }),
-  columnHelper.accessor("teams", {
-    header: () => "Teams",
+  columnHelper.accessor('teams', {
+    header: () => 'Teams',
   }),
-  columnHelper.accessor("status", {
-    header: () => "Status",
+  columnHelper.accessor('status', {
+    header: () => 'Status',
   }),
-  columnHelper.accessor("budget", {
-    header: () => "Budget",
+  columnHelper.accessor('budget', {
+    header: () => 'Budget',
   }),
 ];
 
@@ -60,41 +60,32 @@ const TableEmpty = () => {
   });
 
   const handleDownload = () => {
-    const headers = ["Users", "Project Name", "Team", "Status", "Budget"];
+    const headers = ['Users', 'Project Name', 'Team', 'Status', 'Budget'];
     const rows = data.map(
-      (item: {
-        name: any;
-        pname: any;
-        teams: any[];
-        status: any;
-        budget: any;
-      }) => [
-          item.name,
-          item.pname,
-          item.teams.map((team) => team.text).join(", "),
-          item.status,
-          item.budget,
-        ]
+      (item: { name: any; pname: any; teams: any[]; status: any; budget: any }) => [
+        item.name,
+        item.pname,
+        item.teams.map((team) => team.text).join(', '),
+        item.status,
+        item.budget,
+      ]
     );
 
-    const csvContent = [
-      headers.join(","),
-      ...rows.map((e: any[]) => e.join(",")),
-    ].join("\n");
+    const csvContent = [headers.join(','), ...rows.map((e: any[]) => e.join(','))].join('\n');
 
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
 
-    const link = document.createElement("a");
+    const link = document.createElement('a');
     link.href = url;
-    link.setAttribute("download", "table-data.csv");
+    link.setAttribute('download', 'table-data.csv');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
   return (
-    (<DownloadCard title="Empty Table" onDownload={handleDownload}>
+    <DownloadCard title="Empty Table" onDownload={handleDownload}>
       <Grid container spacing={3}>
         <Grid size={12}>
           <Box>
@@ -102,14 +93,14 @@ const TableEmpty = () => {
               type="text"
               placeholder="search 0 records..."
               sx={{
-                marginLeft: "10px",
-                marginTop: "13px",
+                marginLeft: '10px',
+                marginTop: '13px',
               }}
             />
             <TableContainer>
               <Table
                 sx={{
-                  whiteSpace: "nowrap",
+                  whiteSpace: 'nowrap',
                 }}
               >
                 <TableHead>
@@ -122,19 +113,13 @@ const TableEmpty = () => {
                               <>
                                 <FormLabel
                                   sx={{
-                                    marginBottom: "7px",
-                                    display: "block",
+                                    marginBottom: '7px',
+                                    display: 'block',
                                   }}
                                 >
-                                  {flexRender(
-                                    header.column.columnDef.header,
-                                    header.getContext()
-                                  )}
+                                  {flexRender(header.column.columnDef.header, header.getContext())}
                                 </FormLabel>
-                                <CustomTextField
-                                  type="text"
-                                  placeholder={`Search ${header.id}`}
-                                />
+                                <CustomTextField type="text" placeholder={`Search ${header.id}`} />
                               </>
                             )}
                           </Typography>
@@ -148,22 +133,21 @@ const TableEmpty = () => {
                     <TableCell colSpan={columns.length}>
                       <Box
                         sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          height: "200px",
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          height: '200px',
                         }}
                       >
                         <Image
                           src="/images/svgs/no-data.webp"
                           alt="No data"
                           style={{
-                            maxWidth: "100%",
-                            maxHeight: "100%",
+                            maxWidth: '100%',
+                            maxHeight: '100%',
                           }}
                           width={200}
                           height={200}
-
                         />
                       </Box>
                     </TableCell>
@@ -175,10 +159,7 @@ const TableEmpty = () => {
                           <Typography variant="h6">
                             {header.isPlaceholder
                               ? null
-                              : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
+                              : flexRender(header.column.columnDef.header, header.getContext())}
                           </Typography>
                         </TableCell>
                       ))}
@@ -190,7 +171,7 @@ const TableEmpty = () => {
           </Box>
         </Grid>
       </Grid>
-    </DownloadCard>)
+    </DownloadCard>
   );
 };
 

@@ -1,7 +1,7 @@
-"use client";
-import React, { useContext, useState, useEffect, ChangeEvent } from "react";
-import { InvoiceContext } from "@/app/context/InvoiceContext/index";
-import { usePathname, useRouter } from "next/navigation";
+'use client';
+import React, { useContext, useState, useEffect, ChangeEvent } from 'react';
+import { InvoiceContext } from '@/app/context/InvoiceContext/index';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   Button,
   MenuItem,
@@ -21,13 +21,13 @@ import {
   Divider,
   Grid,
   SelectChangeEvent,
-} from "@mui/material";
-import { format, isValid } from "date-fns";
-import CustomFormLabel from "@/app/components/forms/theme-elements/CustomFormLabel";
-import CustomSelect from "@/app/components/forms/theme-elements/CustomSelect";
-import CustomTextField from "@/app/components/forms/theme-elements/CustomTextField";
-import { IconSquareRoundedPlus, IconTrash } from "@tabler/icons-react";
-import { InvoiceList, order } from "@/app/dashboard/types/apps/invoice";
+} from '@mui/material';
+import { format, isValid } from 'date-fns';
+import CustomFormLabel from '@/app/components/forms/theme-elements/CustomFormLabel';
+import CustomSelect from '@/app/components/forms/theme-elements/CustomSelect';
+import CustomTextField from '@/app/components/forms/theme-elements/CustomTextField';
+import { IconSquareRoundedPlus, IconTrash } from '@tabler/icons-react';
+import { InvoiceList, order } from '@/app/dashboard/types/apps/invoice';
 
 const EditInvoicePage = () => {
   const { invoices, updateInvoice } = useContext(InvoiceContext);
@@ -87,11 +87,7 @@ const EditInvoicePage = () => {
     setEditing(false);
   };
 
-  const handleOrderChange = (
-    index: number,
-    field: keyof order,
-    value: string | number
-  ) => {
+  const handleOrderChange = (index: number, field: keyof order, value: string | number) => {
     if (!editedInvoice) return;
 
     const updatedOrders = [...editedInvoice.orders];
@@ -119,14 +115,12 @@ const EditInvoicePage = () => {
       vat: calculateVAT(updatedOrders),
       grandTotal: calculateGrandTotal(
         calculateTotalCost(updatedOrders),
-        calculateVAT(updatedOrders),
+        calculateVAT(updatedOrders)
       ),
     };
 
     setEditedInvoice(updatedInvoice);
   };
-
-
 
   const handleAddItem = () => {
     const newItem = {
@@ -146,7 +140,7 @@ const EditInvoicePage = () => {
       vat: calculateVAT(updatedOrders),
       grandTotal: calculateGrandTotal(
         calculateTotalCost(updatedOrders),
-        calculateVAT(updatedOrders),
+        calculateVAT(updatedOrders)
       ),
     };
     setEditedInvoice(updatedInvoice);
@@ -162,13 +156,11 @@ const EditInvoicePage = () => {
       vat: calculateVAT(updatedOrders),
       grandTotal: calculateGrandTotal(
         calculateTotalCost(updatedOrders),
-        calculateVAT(updatedOrders),
+        calculateVAT(updatedOrders)
       ),
     };
     setEditedInvoice(updatedInvoice);
   };
-
-
 
   const calculateTotalCost = (orders: order[]) => {
     return orders.reduce((total, order) => total + order.unitTotalPrice, 0);
@@ -191,7 +183,7 @@ const EditInvoicePage = () => {
   const formattedOrderDate = format(parsedDate, 'EEEE, MMMM dd, yyyy');
 
   return (
-    (<Box>
+    <Box>
       <Stack
         direction="row"
         spacing={{ xs: 1, sm: 2, md: 4 }}
@@ -229,7 +221,9 @@ const EditInvoicePage = () => {
           <CustomFormLabel htmlFor="demo-simple-select">Order Status</CustomFormLabel>
           <CustomSelect
             value={editedInvoice.status}
-            onChange={(e: SelectChangeEvent<string>) => setEditedInvoice({ ...editedInvoice, status: e.target.value })}
+            onChange={(e: SelectChangeEvent<string>) =>
+              setEditedInvoice({ ...editedInvoice, status: e.target.value })
+            }
           >
             <MenuItem value="Pending">Pending</MenuItem>
             <MenuItem value="Delivered">Delivered</MenuItem>
@@ -246,20 +240,24 @@ const EditInvoicePage = () => {
         <Grid
           size={{
             xs: 12,
-            sm: 6
-          }}>
+            sm: 6,
+          }}
+        >
           <CustomFormLabel>Bill From</CustomFormLabel>
           <CustomTextField
             value={editedInvoice.billFrom}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => setEditedInvoice({ ...editedInvoice, billFrom: e.target.value })}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setEditedInvoice({ ...editedInvoice, billFrom: e.target.value })
+            }
             fullWidth
           />
         </Grid>
         <Grid
           size={{
             xs: 12,
-            sm: 6
-          }}>
+            sm: 6,
+          }}
+        >
           <CustomFormLabel
             sx={{
               mt: {
@@ -272,15 +270,18 @@ const EditInvoicePage = () => {
           </CustomFormLabel>
           <CustomTextField
             value={editedInvoice.billTo}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => setEditedInvoice({ ...editedInvoice, billTo: e.target.value })}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setEditedInvoice({ ...editedInvoice, billTo: e.target.value })
+            }
             fullWidth
           />
         </Grid>
         <Grid
           size={{
             xs: 12,
-            sm: 6
-          }}>
+            sm: 6,
+          }}
+        >
           <CustomFormLabel
             sx={{
               mt: 0,
@@ -302,8 +303,9 @@ const EditInvoicePage = () => {
         <Grid
           size={{
             xs: 12,
-            sm: 6
-          }}>
+            sm: 6,
+          }}
+        >
           <CustomFormLabel
             sx={{
               mt: 0,
@@ -362,7 +364,9 @@ const EditInvoicePage = () => {
                     <CustomTextField
                       type="text"
                       value={order.itemName}
-                      onChange={(e: ChangeEvent<HTMLInputElement>) => handleOrderChange(index, 'itemName', e.target.value)}
+                      onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                        handleOrderChange(index, 'itemName', e.target.value)
+                      }
                       fullWidth
                     />
                   </TableCell>
@@ -438,9 +442,8 @@ const EditInvoicePage = () => {
           Invoice data updated successfully.
         </Alert>
       )}
-    </Box>)
+    </Box>
   );
 };
 
 export default EditInvoicePage;
-

@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const ArrowTooltipCode = () => {
   return (
     <>
@@ -23,7 +23,7 @@ import { IconPlus } from '@tabler/icons-react';
 `}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default ArrowTooltipCode
+export default ArrowTooltipCode;

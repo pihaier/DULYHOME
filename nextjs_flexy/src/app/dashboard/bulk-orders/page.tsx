@@ -24,7 +24,10 @@ import {
   useMediaQuery,
   Divider,
 } from '@mui/material';
-import { Visibility as VisibilityIcon, ArrowForward as ArrowForwardIcon } from '@mui/icons-material';
+import {
+  Visibility as VisibilityIcon,
+  ArrowForward as ArrowForwardIcon,
+} from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
 
 interface BulkOrder {
@@ -59,16 +62,18 @@ export default function BulkOrdersListPage() {
       // Supabase SDK로 직접 조회
       const { createClient } = await import('@/lib/supabase/client');
       const supabase = createClient();
-      
+
       const { data, error } = await supabase
         .from('bulk_order_requests')
-        .select(`
+        .select(
+          `
           *,
           market_research_requests (
             product_name,
             research_quantity
           )
-        `)
+        `
+        )
         .order('created_at', { ascending: false });
 
       if (error) {
@@ -137,19 +142,24 @@ export default function BulkOrdersListPage() {
     if (!orderItems || orderItems.length === 0) {
       return { name: '-', quantity: 0 };
     }
-    
+
     const firstItem = orderItems[0];
     const totalQuantity = orderItems.reduce((sum, item) => sum + (item.order_quantity || 0), 0);
-    
+
     return {
-      name: orderItems.length > 1 ? `${firstItem.product_name} 외 ${orderItems.length - 1}개` : firstItem.product_name,
-      quantity: totalQuantity
+      name:
+        orderItems.length > 1
+          ? `${firstItem.product_name} 외 ${orderItems.length - 1}개`
+          : firstItem.product_name,
+      quantity: totalQuantity,
     };
   };
 
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <Box
+        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}
+      >
         <CircularProgress />
       </Box>
     );
@@ -167,19 +177,19 @@ export default function BulkOrdersListPage() {
   const renderOrderCard = (order: BulkOrder) => {
     const status = getStatusLabel(order.status);
     const productInfo = getFirstProductInfo(order.order_items);
-    
+
     return (
-      <Card 
-        key={order.id} 
-        elevation={1} 
-        sx={{ 
+      <Card
+        key={order.id}
+        elevation={1}
+        sx={{
           mb: 2,
           cursor: 'pointer',
           transition: 'all 0.3s',
-          '&:hover': { 
+          '&:hover': {
             boxShadow: 3,
-            transform: 'translateY(-2px)'
-          }
+            transform: 'translateY(-2px)',
+          },
         }}
         onClick={() => handleViewOrder(order.reservation_number)}
       >
@@ -196,23 +206,19 @@ export default function BulkOrdersListPage() {
                     {order.reservation_number}
                   </Typography>
                 </Box>
-                <Chip 
-                  label={status.label} 
-                  color={status.color} 
-                  size="small" 
-                />
+                <Chip label={status.label} color={status.color} size="small" />
               </Box>
             </Grid>
-            
+
             {/* 중단: 제품 정보 */}
             <Grid size={12}>
-              <Typography 
-                variant="body1" 
+              <Typography
+                variant="body1"
                 fontWeight="medium"
-                sx={{ 
+                sx={{
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap'
+                  whiteSpace: 'nowrap',
                 }}
               >
                 {productInfo.name}
@@ -221,20 +227,20 @@ export default function BulkOrdersListPage() {
                 수량: {productInfo.quantity.toLocaleString()}개
               </Typography>
               {order.market_research_id && (
-                <Chip 
-                  label="시장조사 연계" 
-                  size="small" 
-                  color="primary" 
+                <Chip
+                  label="시장조사 연계"
+                  size="small"
+                  color="primary"
                   variant="outlined"
                   sx={{ mt: 1 }}
                 />
               )}
             </Grid>
-            
+
             <Grid size={12}>
               <Divider sx={{ my: 1 }} />
             </Grid>
-            
+
             {/* 하단: 배송방법과 날짜 */}
             <Grid size={6}>
               <Typography variant="caption" color="text.secondary" display="block">
@@ -244,7 +250,7 @@ export default function BulkOrdersListPage() {
                 {getDeliveryMethodLabel(order.delivery_method)}
               </Typography>
             </Grid>
-            
+
             <Grid size={6}>
               <Typography variant="caption" color="text.secondary" display="block">
                 신청일시
@@ -262,7 +268,7 @@ export default function BulkOrdersListPage() {
                 })}
               </Typography>
             </Grid>
-            
+
             {/* 상세보기 버튼 */}
             <Grid size={12}>
               <Button
@@ -290,16 +296,16 @@ export default function BulkOrdersListPage() {
       <Stack spacing={{ xs: 2, sm: 3 }}>
         <Card>
           <CardContent sx={{ p: { xs: 2, sm: 3, md: 4 } }}>
-            <Typography 
-              variant={isMobile ? "h5" : "h4"} 
-              gutterBottom 
+            <Typography
+              variant={isMobile ? 'h5' : 'h4'}
+              gutterBottom
               fontWeight="bold"
               sx={{ fontSize: { xs: '1.5rem', sm: '2rem', md: '2.125rem' } }}
             >
               대량주문 목록
             </Typography>
-            <Typography 
-              variant="body2" 
+            <Typography
+              variant="body2"
               color="text.secondary"
               sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}
             >
@@ -312,7 +318,7 @@ export default function BulkOrdersListPage() {
           {isMobile ? (
             <Box sx={{ p: 2 }}>
               {orders.length > 0 ? (
-                orders.map(order => renderOrderCard(order))
+                orders.map((order) => renderOrderCard(order))
               ) : (
                 <Typography color="text.secondary" align="center" sx={{ py: 4 }}>
                   신청된 대량주문이 없습니다
@@ -335,94 +341,91 @@ export default function BulkOrdersListPage() {
                         <TableCell align="center">상세</TableCell>
                       </TableRow>
                     </TableHead>
-                <TableBody>
-                  {orders.length > 0 ? (
-                    orders.map((order) => {
-                      const status = getStatusLabel(order.status);
-                      const productInfo = getFirstProductInfo(order.order_items);
-                      return (
-                        <TableRow 
-                          key={order.id} 
-                          hover
-                          sx={{ cursor: 'pointer' }}
-                          onClick={() => handleViewOrder(order.reservation_number)}
-                        >
-                          <TableCell sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}>
-                            {order.reservation_number}
-                          </TableCell>
-                          <TableCell sx={{ 
-                            maxWidth: isTablet ? '150px' : 'auto',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis'
-                          }}>
-                            <Typography variant="body2" noWrap>
-                              {productInfo.name}
-                            </Typography>
-                            {order.market_research_id && !isTablet && (
-                              <Chip 
-                                label="시장조사 연계" 
-                                size="small" 
-                                color="primary" 
-                                variant="outlined"
-                                sx={{ mt: 0.5 }}
-                              />
-                            )}
-                          </TableCell>
-                          {!isTablet && (
-                            <TableCell align="right">
-                              {productInfo.quantity.toLocaleString()}개
-                            </TableCell>
-                          )}
-                          {!isTablet && (
-                            <TableCell align="center">
-                              <Typography variant="body2" color="text.secondary">
-                                {getDeliveryMethodLabel(order.delivery_method)}
-                              </Typography>
-                            </TableCell>
-                          )}
-                          <TableCell align="center">
-                            <Chip 
-                              label={status.label} 
-                              color={status.color} 
-                              size="small" 
-                            />
-                          </TableCell>
-                          <TableCell sx={{ fontSize: { xs: '0.75rem', sm: '0.875rem' } }}>
-                            {new Date(order.created_at).toLocaleDateString('ko-KR', {
-                              year: isTablet ? '2-digit' : 'numeric',
-                              month: '2-digit',
-                              day: '2-digit',
-                              ...(isTablet ? {} : {
-                                hour: '2-digit',
-                                minute: '2-digit',
-                              })
-                            })}
-                          </TableCell>
-                          <TableCell align="center">
-                            <IconButton 
-                              color="primary" 
-                              size="small"
+                    <TableBody>
+                      {orders.length > 0 ? (
+                        orders.map((order) => {
+                          const status = getStatusLabel(order.status);
+                          const productInfo = getFirstProductInfo(order.order_items);
+                          return (
+                            <TableRow
+                              key={order.id}
+                              hover
+                              sx={{ cursor: 'pointer' }}
+                              onClick={() => handleViewOrder(order.reservation_number)}
                             >
-                              <VisibilityIcon fontSize="small" />
-                            </IconButton>
+                              <TableCell sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}>
+                                {order.reservation_number}
+                              </TableCell>
+                              <TableCell
+                                sx={{
+                                  maxWidth: isTablet ? '150px' : 'auto',
+                                  overflow: 'hidden',
+                                  textOverflow: 'ellipsis',
+                                }}
+                              >
+                                <Typography variant="body2" noWrap>
+                                  {productInfo.name}
+                                </Typography>
+                                {order.market_research_id && !isTablet && (
+                                  <Chip
+                                    label="시장조사 연계"
+                                    size="small"
+                                    color="primary"
+                                    variant="outlined"
+                                    sx={{ mt: 0.5 }}
+                                  />
+                                )}
+                              </TableCell>
+                              {!isTablet && (
+                                <TableCell align="right">
+                                  {productInfo.quantity.toLocaleString()}개
+                                </TableCell>
+                              )}
+                              {!isTablet && (
+                                <TableCell align="center">
+                                  <Typography variant="body2" color="text.secondary">
+                                    {getDeliveryMethodLabel(order.delivery_method)}
+                                  </Typography>
+                                </TableCell>
+                              )}
+                              <TableCell align="center">
+                                <Chip label={status.label} color={status.color} size="small" />
+                              </TableCell>
+                              <TableCell sx={{ fontSize: { xs: '0.75rem', sm: '0.875rem' } }}>
+                                {new Date(order.created_at).toLocaleDateString('ko-KR', {
+                                  year: isTablet ? '2-digit' : 'numeric',
+                                  month: '2-digit',
+                                  day: '2-digit',
+                                  ...(isTablet
+                                    ? {}
+                                    : {
+                                        hour: '2-digit',
+                                        minute: '2-digit',
+                                      }),
+                                })}
+                              </TableCell>
+                              <TableCell align="center">
+                                <IconButton color="primary" size="small">
+                                  <VisibilityIcon fontSize="small" />
+                                </IconButton>
+                              </TableCell>
+                            </TableRow>
+                          );
+                        })
+                      ) : (
+                        <TableRow>
+                          <TableCell colSpan={isTablet ? 5 : 7} align="center" sx={{ py: 4 }}>
+                            <Typography color="text.secondary">
+                              신청된 대량주문이 없습니다
+                            </Typography>
                           </TableCell>
                         </TableRow>
-                      );
-                    })
-                    ) : (
-                      <TableRow>
-                        <TableCell colSpan={isTablet ? 5 : 7} align="center" sx={{ py: 4 }}>
-                          <Typography color="text.secondary">
-                            신청된 대량주문이 없습니다
-                          </Typography>
-                        </TableCell>
-                      </TableRow>
-                    )}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Box>
-          </CardContent>
+                      )}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Box>
+            </CardContent>
           )}
         </Card>
       </Stack>

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Radio, { RadioProps } from '@mui/material/Radio';

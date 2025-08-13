@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React from 'react';
 import {
   TableContainer,
@@ -32,7 +32,7 @@ const rows = [
   {
     no: 3066,
     status: 'paid',
-    avatar: "/images/users/2.jpg",
+    avatar: '/images/users/2.jpg',
     cname: 'Olivia Rhye',
     email: 'olivia@ui.com',
     percent: 60,
@@ -40,7 +40,7 @@ const rows = [
   {
     no: 3067,
     status: 'cancelled',
-    avatar: "/images/users/3.jpg",
+    avatar: '/images/users/3.jpg',
     cname: 'Barbara Steele',
     email: 'steele@ui.com',
     percent: 30,
@@ -48,7 +48,7 @@ const rows = [
   {
     no: 3068,
     status: 'paid',
-    avatar: "/images/users/4.jpg",
+    avatar: '/images/users/4.jpg',
     cname: 'Leonard Gordon',
     email: 'olivia@ui.com',
     percent: 45,
@@ -56,7 +56,7 @@ const rows = [
   {
     no: 3069,
     status: 'refunded',
-    avatar: "/images/users/5.jpg",
+    avatar: '/images/users/5.jpg',
     cname: 'Evelyn Pope',
     email: 'steele@ui.com',
     percent: 37,
@@ -64,7 +64,7 @@ const rows = [
   {
     no: 3070,
     status: 'cancelled',
-    avatar: "/images/users/7.jpg",
+    avatar: '/images/users/7.jpg',
     cname: 'Tommy Garza',
     email: 'olivia@ui.com',
     percent: 87,
@@ -72,7 +72,7 @@ const rows = [
   {
     no: 3071,
     status: 'refunded',
-    avatar: "/images/users/8.jpg",
+    avatar: '/images/users/8.jpg',
     cname: 'Isabel Vasquez',
     email: 'steele@ui.com',
     percent: 32,
@@ -135,14 +135,14 @@ const Table1 = () => {
                         row.status == 'paid'
                           ? (theme) => theme.palette.primary.light
                           : row.status == 'cancelled'
-                          ? (theme) => theme.palette.error.light
-                          : (theme) => theme.palette.secondary.light,
+                            ? (theme) => theme.palette.error.light
+                            : (theme) => theme.palette.secondary.light,
                       color:
                         row.status == 'paid'
                           ? (theme) => theme.palette.primary.main
                           : row.status == 'cancelled'
-                          ? (theme) => theme.palette.error.main
-                          : (theme) => theme.palette.secondary.main,
+                            ? (theme) => theme.palette.error.main
+                            : (theme) => theme.palette.secondary.main,
                       '.MuiChip-icon': {
                         color: 'inherit !important',
                       },
@@ -188,7 +188,7 @@ const Table1 = () => {
                     slotProps={{
                       list: {
                         'aria-labelledby': 'basic-button',
-                      }
+                      },
                     }}
                   >
                     <MenuItem onClick={handleClose}>

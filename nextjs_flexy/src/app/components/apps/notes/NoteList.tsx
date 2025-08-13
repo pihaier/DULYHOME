@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from 'react';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
@@ -7,36 +7,30 @@ import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 
-import Scrollbar from "../../custom-scroll/Scrollbar";
+import Scrollbar from '../../custom-scroll/Scrollbar';
 
-import { IconTrash } from "@tabler/icons-react";
+import { IconTrash } from '@tabler/icons-react';
 import { NotesType } from '../../../dashboard/types/apps/notes';
-import { NotesContext } from "@/app/context/NotesContext";
-
+import { NotesContext } from '@/app/context/NotesContext';
 
 const NoteList = () => {
-
   const { notes, selectNote, deleteNote } = useContext(NotesContext);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [activeNoteId, setActiveNoteId] = useState<number | null>(null);
   useEffect(() => {
     if (notes.length > 0) {
-      // Set the first note as active 
+      // Set the first note as active
       const firstNoteId = notes[0].id;
       setActiveNoteId(firstNoteId);
     }
   }, [notes]);
 
-
   const filterNotes = (notes: NotesType[], nSearch: string) => {
-    if (nSearch !== "")
+    if (nSearch !== '')
       return notes.filter(
         (t) =>
           !t.deleted &&
-          (t.title ?? '')
-            .toLocaleLowerCase()
-            .concat(" ")
-            .includes(nSearch.toLocaleLowerCase())
+          (t.title ?? '').toLocaleLowerCase().concat(' ').includes(nSearch.toLocaleLowerCase())
       );
 
     return notes.filter((t) => !t.deleted);
@@ -48,8 +42,6 @@ const NoteList = () => {
     setActiveNoteId(noteId);
     selectNote(noteId);
   };
-
-
 
   return (
     <>
@@ -64,7 +56,7 @@ const NoteList = () => {
           fullWidth
           onChange={(e) => setSearchTerm(e.target.value)}
           slotProps={{
-            htmlInput: { 'aria-label': 'Search Notes' }
+            htmlInput: { 'aria-label': 'Search Notes' },
           }}
         />
         <Typography variant="h6" mb={0} mt={4} pl={1}>
@@ -85,7 +77,6 @@ const NoteList = () => {
                     transition: '0.1s ease-in',
                     transform: activeNoteId === note.id ? 'scale(1)' : 'scale(0.95)',
                     backgroundColor: `${note.color}.light`,
-
                   }}
                   onClick={() => handleNoteClick(note.id)}
                 >
@@ -95,7 +86,6 @@ const NoteList = () => {
                   <Stack direction="row" justifyContent="space-between" alignItems="center">
                     <Typography variant="caption">
                       {note.datef ? new Date(note.datef).toLocaleDateString() : ''}
-
                     </Typography>
                     <Tooltip title="Delete">
                       <IconButton

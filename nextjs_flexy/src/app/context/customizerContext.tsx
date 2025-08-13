@@ -1,7 +1,7 @@
-'use client'
+'use client';
 import { createContext, useState, ReactNode, useEffect } from 'react';
-import config from './config'
-import React from "react";
+import config from './config';
+import React from 'react';
 
 // Define the shape of the context state
 interface CustomizerContextState {
@@ -23,8 +23,8 @@ interface CustomizerContextState {
   setIsCollapse: (collapse: string) => void;
   isSidebarHover: boolean;
   setIsSidebarHover: (isHover: boolean) => void;
-  isMobileSidebar: boolean;  // Add this
-  setIsMobileSidebar: (isMobileSidebar: boolean) => void
+  isMobileSidebar: boolean; // Add this
+  setIsMobileSidebar: (isMobileSidebar: boolean) => void;
 }
 
 // Create the context with an initial value
@@ -36,7 +36,6 @@ interface CustomizerContextProps {
 }
 // Create the provider component
 export const CustomizerContextProvider: React.FC<CustomizerContextProps> = ({ children }) => {
-
   const [activeDir, setActiveDir] = useState<string>(config.activeDir);
   const [activeMode, setActiveMode] = useState<string>(config.activeMode);
   const [activeTheme, setActiveTheme] = useState<string>(config.activeTheme);
@@ -50,19 +49,17 @@ export const CustomizerContextProvider: React.FC<CustomizerContextProps> = ({ ch
   const [isMobileSidebar, setIsMobileSidebar] = useState<boolean>(false);
   // Set attributes immediately
   useEffect(() => {
-    document.documentElement.setAttribute("class", activeMode);
-    document.documentElement.setAttribute("dir", activeDir);
+    document.documentElement.setAttribute('class', activeMode);
+    document.documentElement.setAttribute('dir', activeDir);
     document.documentElement.setAttribute('data-color-theme', activeTheme);
-    document.documentElement.setAttribute("data-layout", activeLayout);
-    document.documentElement.setAttribute("data-boxed-layout", isLayout);
-    document.documentElement.setAttribute("data-sidebar-type", isCollapse);
-
+    document.documentElement.setAttribute('data-layout', activeLayout);
+    document.documentElement.setAttribute('data-boxed-layout', isLayout);
+    document.documentElement.setAttribute('data-sidebar-type', isCollapse);
   }, [activeMode, activeDir, activeTheme, activeLayout, isLayout, isCollapse]);
 
   return (
     <CustomizerContext.Provider
       value={{
-
         activeDir,
         setActiveDir,
         activeMode,
@@ -84,11 +81,10 @@ export const CustomizerContextProvider: React.FC<CustomizerContextProps> = ({ ch
         isSidebarHover,
         setIsSidebarHover,
         isMobileSidebar,
-        setIsMobileSidebar
+        setIsMobileSidebar,
       }}
     >
       {children}
     </CustomizerContext.Provider>
   );
 };
-

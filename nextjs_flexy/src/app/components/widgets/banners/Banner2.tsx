@@ -1,15 +1,15 @@
-"use client";
-import { CardContent, Typography, Button } from "@mui/material";
-import ParentCard from "../../shared/ParentCard";
-import { Box } from "@mui/system";
-import Image from "next/image";
+'use client';
+import { CardContent, Typography, Button } from '@mui/material';
+import ParentCard from '../../shared/ParentCard';
+import { Box } from '@mui/system';
+import Image from 'next/image';
 
-import NotificationCode from "./code/NotificationCode";
+import NotificationCode from './code/NotificationCode';
 
 const Banner2 = () => {
   return (
     <ParentCard title="Notification" codeModel={<NotificationCode />}>
-      <CardContent sx={{ p: "30px" }}>
+      <CardContent sx={{ p: '30px' }}>
         <Typography
           variant="subtitle1"
           textAlign="center"
@@ -21,11 +21,11 @@ const Banner2 = () => {
         </Typography>
         <Box textAlign="center">
           <Image
-            src={"/images/backgrounds/gold.png"}
+            src={'/images/backgrounds/gold.png'}
             width={150}
             height={150}
             alt="star"
-            style={{ width: "150px" }}
+            style={{ width: '150px' }}
           />
 
           <Typography variant="h5">You reach all Notifications</Typography>

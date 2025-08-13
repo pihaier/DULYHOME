@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React from 'react';
 import { Button } from '@mui/material';
 import CustomTextField from '../theme-elements/CustomTextField';

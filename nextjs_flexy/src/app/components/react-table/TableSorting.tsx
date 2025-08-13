@@ -1,5 +1,5 @@
-"use client";
-import * as React from "react";
+'use client';
+import * as React from 'react';
 import {
   TableContainer,
   Table,
@@ -17,14 +17,14 @@ import {
   Divider,
   IconButton,
   LinearProgress,
-} from "@mui/material";
-import { Stack } from "@mui/system";
+} from '@mui/material';
+import { Stack } from '@mui/system';
 
-import DownloadCard from "@/app/components/shared/DownloadCard";
+import DownloadCard from '@/app/components/shared/DownloadCard';
 import {
   basicsTableData,
   BasicsTableDataType,
-} from "@/app/dashboard/react-tables/filter/FilterTableData";
+} from '@/app/dashboard/react-tables/filter/FilterTableData';
 
 import {
   flexRender,
@@ -34,9 +34,9 @@ import {
   getSortedRowModel,
   useReactTable,
   createColumnHelper,
-} from "@tanstack/react-table";
-import CustomTextField from "@/app/components/forms/theme-elements/CustomTextField";
-import CustomSelect from "@/app/components/forms/theme-elements/CustomSelect";
+} from '@tanstack/react-table';
+import CustomTextField from '@/app/components/forms/theme-elements/CustomTextField';
+import CustomSelect from '@/app/components/forms/theme-elements/CustomSelect';
 import {
   IconChevronLeft,
   IconChevronRight,
@@ -45,15 +45,15 @@ import {
   IconArrowBackUp,
   IconCheck,
   IconX,
-} from "@tabler/icons-react";
+} from '@tabler/icons-react';
 
 const BCrumb = [
   {
-    to: "/",
-    title: "Home",
+    to: '/',
+    title: 'Home',
   },
   {
-    title: "Sorting React Table",
+    title: 'Sorting React Table',
   },
 ];
 
@@ -62,26 +62,26 @@ const basics = basicsTableData;
 const columnHelper = createColumnHelper<BasicsTableDataType>();
 
 const columns = [
-  columnHelper.accessor("invoiceno", {
-    header: () => "Invoice",
+  columnHelper.accessor('invoiceno', {
+    header: () => 'Invoice',
     cell: (info) => (
       <Typography variant="subtitle1" color="textPrimary" fontWeight={600}>
         INV- {info.getValue()}
       </Typography>
     ),
   }),
-  columnHelper.accessor("status", {
-    header: () => "Status",
+  columnHelper.accessor('status', {
+    header: () => 'Status',
     meta: {
-      filterVariant: "select",
+      filterVariant: 'select',
     },
     cell: (info) => (
       <Chip
         label={info.getValue()}
         icon={
-          info.getValue() == "Paid" ? (
+          info.getValue() == 'Paid' ? (
             <IconCheck width={16} />
-          ) : info.getValue() == "Cancelled" ? (
+          ) : info.getValue() == 'Cancelled' ? (
             <IconX width={16} />
           ) : (
             <IconArrowBackUp width={16} />
@@ -89,26 +89,26 @@ const columns = [
         }
         sx={{
           backgroundColor:
-            info.getValue() == "Paid"
+            info.getValue() == 'Paid'
               ? (theme) => theme.palette.primary.light
-              : info.getValue() == "Cancelled"
+              : info.getValue() == 'Cancelled'
                 ? (theme) => theme.palette.error.light
                 : (theme) => theme.palette.secondary.light,
           color:
-            info.getValue() == "Paid"
+            info.getValue() == 'Paid'
               ? (theme) => theme.palette.primary.main
-              : info.getValue() == "Cancelled"
+              : info.getValue() == 'Cancelled'
                 ? (theme) => theme.palette.error.main
                 : (theme) => theme.palette.secondary.main,
-          ".MuiChip-icon": {
-            color: "inherit !important",
+          '.MuiChip-icon': {
+            color: 'inherit !important',
           },
         }}
       />
     ),
   }),
-  columnHelper.accessor("name", {
-    header: () => "Customer",
+  columnHelper.accessor('name', {
+    header: () => 'Customer',
     cell: (info) => (
       <Stack direction="row" spacing={2}>
         <Avatar
@@ -128,16 +128,12 @@ const columns = [
     ),
   }),
 
-  columnHelper.accessor("progress", {
-    header: () => "Progress",
+  columnHelper.accessor('progress', {
+    header: () => 'Progress',
     cell: (info) => (
       <Stack direction="row" alignItems="center" spacing={2}>
         <Box width="50%">
-          <LinearProgress
-            variant="determinate"
-            value={info.getValue()}
-            color="primary"
-          />
+          <LinearProgress variant="determinate" value={info.getValue()} color="primary" />
         </Box>
         <Typography variant="subtitle2" color="textSecondary">
           {info.getValue()}%
@@ -170,39 +166,31 @@ const TableSorting = () => {
   });
 
   const handleDownload = () => {
-    const headers = ["Invoice", "Status", "Customer", "Progress"];
-    const rows = data.map((item) => [
-      item.invoiceno,
-      item.status,
-      item.name,
-      item.progress,
-    ]);
+    const headers = ['Invoice', 'Status', 'Customer', 'Progress'];
+    const rows = data.map((item) => [item.invoiceno, item.status, item.name, item.progress]);
 
-    const csvContent = [
-      headers.join(","),
-      ...rows.map((e) => e.join(",")),
-    ].join("\n");
+    const csvContent = [headers.join(','), ...rows.map((e) => e.join(','))].join('\n');
 
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
 
-    const link = document.createElement("a");
+    const link = document.createElement('a');
     link.href = url;
-    link.setAttribute("download", "table-data.csv");
+    link.setAttribute('download', 'table-data.csv');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
   return (
-    (<DownloadCard title="Sorting Table" onDownload={handleDownload}>
+    <DownloadCard title="Sorting Table" onDownload={handleDownload}>
       <Grid container spacing={3}>
         <Grid size={12}>
           <Box>
             <TableContainer>
               <Table
                 sx={{
-                  whiteSpace: "nowrap",
+                  whiteSpace: 'nowrap',
                 }}
               >
                 <TableHead>
@@ -214,22 +202,17 @@ const TableSorting = () => {
                             variant="h6"
                             mb={1}
                             className={
-                              header.column.getCanSort()
-                                ? "cursor-pointer select-none"
-                                : ""
+                              header.column.getCanSort() ? 'cursor-pointer select-none' : ''
                             }
                             onClick={header.column.getToggleSortingHandler()}
                           >
                             {header.isPlaceholder
                               ? null
-                              : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
+                              : flexRender(header.column.columnDef.header, header.getContext())}
                             {(() => {
                               const sortState = header.column.getIsSorted();
-                              if (sortState === "asc") return " 🔼";
-                              if (sortState === "desc") return " 🔽";
+                              if (sortState === 'asc') return ' 🔼';
+                              if (sortState === 'desc') return ' 🔽';
                               return null;
                             })()}
                           </Typography>
@@ -243,10 +226,7 @@ const TableSorting = () => {
                     <TableRow key={row.id}>
                       {row.getVisibleCells().map((cell) => (
                         <TableCell key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
+                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
                         </TableCell>
                       ))}
                     </TableRow>
@@ -259,15 +239,11 @@ const TableSorting = () => {
               gap={1}
               p={3}
               alignItems="center"
-              direction={{ xs: "column", sm: "row" }}
+              direction={{ xs: 'column', sm: 'row' }}
               justifyContent="space-between"
             >
               <Box display="flex" alignItems="center" gap={1}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => rerender()}
-                >
+                <Button variant="contained" color="primary" onClick={() => rerender()}>
                   Force Rerender
                 </Button>
                 <Typography variant="body1">
@@ -277,8 +253,8 @@ const TableSorting = () => {
               <Box
                 sx={{
                   display: {
-                    xs: "block",
-                    sm: "flex",
+                    xs: 'block',
+                    sm: 'flex',
                   },
                 }}
                 alignItems="center"
@@ -287,8 +263,7 @@ const TableSorting = () => {
                 <Stack direction="row" alignItems="center" gap={1}>
                   <Typography variant="body1">Page</Typography>
                   <Typography variant="body1" fontWeight={600}>
-                    {table.getState().pagination.pageIndex + 1} of{" "}
-                    {table.getPageCount()}
+                    {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
                   </Typography>
                 </Stack>
                 <Stack direction="row" alignItems="center" gap={1}>
@@ -299,9 +274,7 @@ const TableSorting = () => {
                     max={table.getPageCount()}
                     defaultValue={table.getState().pagination.pageIndex + 1}
                     onChange={(e: { target: { value: any } }) => {
-                      const page = e.target.value
-                        ? Number(e.target.value) - 1
-                        : 0;
+                      const page = e.target.value ? Number(e.target.value) - 1 : 0;
                       table.setPageIndex(page);
                     }}
                   />
@@ -352,7 +325,7 @@ const TableSorting = () => {
           </Box>
         </Grid>
       </Grid>
-    </DownloadCard>)
+    </DownloadCard>
   );
 };
 

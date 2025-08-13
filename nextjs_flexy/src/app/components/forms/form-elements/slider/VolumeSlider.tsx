@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import React from "react";
-import { Slider } from "@mui/material";
-import ChildCard from "@/app/components/shared/ChildCard";
-import { IconVolume, IconVolume2 } from "@tabler/icons-react";
-import { Stack } from "@mui/system";
+import React from 'react';
+import { Slider } from '@mui/material';
+import ChildCard from '@/app/components/shared/ChildCard';
+import { IconVolume, IconVolume2 } from '@tabler/icons-react';
+import { Stack } from '@mui/system';
 
-import VolumesliderCode from "@/app/components/forms/form-elements/slider/code/VolumesliderCode";
+import VolumesliderCode from '@/app/components/forms/form-elements/slider/code/VolumesliderCode';
 
 const VolumeSlider = () => {
   const [value, setValue] = React.useState(30);

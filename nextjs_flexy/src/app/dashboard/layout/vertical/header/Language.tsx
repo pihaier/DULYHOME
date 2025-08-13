@@ -8,23 +8,23 @@ import { CustomizerContext } from '@/app/context/customizerContext';
 const Languages = [
   {
     flagname: 'English (UK)',
-    icon: "/images/flag/icon-flag-en.svg",
+    icon: '/images/flag/icon-flag-en.svg',
     value: 'en',
   },
   {
     flagname: '中国人 (Chinese)',
-    icon: "/images/flag/icon-flag-cn.svg",
+    icon: '/images/flag/icon-flag-cn.svg',
     value: 'ch',
   },
   {
     flagname: 'français (French)',
-    icon: "/images/flag/icon-flag-fr.svg",
+    icon: '/images/flag/icon-flag-fr.svg',
     value: 'fr',
   },
 
   {
     flagname: 'عربي (Arabic)',
-    icon: "/images/flag/icon-flag-sa.svg",
+    icon: '/images/flag/icon-flag-sa.svg',
     value: 'ar',
   },
 ];
@@ -34,8 +34,7 @@ const Language = () => {
   const open = Boolean(anchorEl);
   const { isLanguage, setIsLanguage } = useContext(CustomizerContext);
 
-  const currentLang =
-    Languages.find((_lang) => _lang.value === isLanguage) || Languages[1];
+  const currentLang = Languages.find((_lang) => _lang.value === isLanguage) || Languages[1];
   const { i18n } = useTranslation();
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -72,12 +71,7 @@ const Language = () => {
         }}
       >
         {Languages.map((option, index) => (
-          <MenuItem
-            key={index}
-            sx={{ py: 2, px: 3 }}
-            onClick={() => setIsLanguage(option.value)}
-
-          >
+          <MenuItem key={index} sx={{ py: 2, px: 3 }} onClick={() => setIsLanguage(option.value)}>
             <Stack direction="row" spacing={1} alignItems="center">
               <Avatar src={option.icon} alt={option.icon} sx={{ width: 20, height: 20 }} />
               <Typography> {option.flagname}</Typography>

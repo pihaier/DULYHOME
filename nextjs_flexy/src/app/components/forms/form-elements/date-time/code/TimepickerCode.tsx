@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const TimepickerCode = () => {
   return (
     <>
@@ -61,7 +61,7 @@ const [value2, setValue2] = React.useState<Dayjs | null>(null);
 `}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default TimepickerCode
+export default TimepickerCode;

@@ -1,11 +1,10 @@
-import React from 'react'
-import CodeDialog from "@/app/components/shared/CodeDialog";
-
+import React from 'react';
+import CodeDialog from '@/app/components/shared/CodeDialog';
 
 function PositiveAndNegativeBarCode() {
-    return (
-        <CodeDialog>
-            {`
+  return (
+    <CodeDialog>
+      {`
             
 'use client'
 import React from 'react';
@@ -68,8 +67,8 @@ function PositiveAndNegativeBarChart() {
 export default PositiveAndNegativeBarChart
 
 `}
-        </CodeDialog>
-    )
+    </CodeDialog>
+  );
 }
 
-export default PositiveAndNegativeBarCode
+export default PositiveAndNegativeBarCode;

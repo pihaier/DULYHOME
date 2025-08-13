@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react'
+import React from 'react';
 import { useTheme } from '@mui/material/styles';
 import { Card, CardContent, Typography, Box, Stack } from '@mui/material';
 import { IconGridDots } from '@tabler/icons-react';
@@ -27,7 +27,6 @@ const DashboardWidgetCard = ({
   dataItem2,
 }: Props) => {
   const { isCardShadow } = useContext(CustomizerContext);
-
 
   const theme = useTheme();
   const borderColor = theme.palette.grey[100];

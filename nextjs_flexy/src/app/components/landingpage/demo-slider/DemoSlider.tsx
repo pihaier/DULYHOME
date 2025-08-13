@@ -1,40 +1,39 @@
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Chip from "@mui/material/Chip";
-import Container from "@mui/material/Container";
-import { Grid } from '@mui/material'
-import Typography from "@mui/material/Typography";
-import { styled } from "@mui/material/styles";
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Chip from '@mui/material/Chip';
+import Container from '@mui/material/Container';
+import { Grid } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import { styled } from '@mui/material/styles';
 // images
-const mainDemo = "/images/landingpage/demo-main.jpg";
-const darkDemo = "/images/landingpage/demo-dark.jpg";
-const horizontalDemo = "/images/landingpage/demo-horizontal.jpg";
-const rtlDemo = "/images/landingpage/demo-rtl.jpg";
-const minidemo = '/images/landingpage/demo-minisidebar.jpg'
-const nextauth = '/images/landingpage/demo-firebase.jpg'
+const mainDemo = '/images/landingpage/demo-main.jpg';
+const darkDemo = '/images/landingpage/demo-dark.jpg';
+const horizontalDemo = '/images/landingpage/demo-horizontal.jpg';
+const rtlDemo = '/images/landingpage/demo-rtl.jpg';
+const minidemo = '/images/landingpage/demo-minisidebar.jpg';
+const nextauth = '/images/landingpage/demo-firebase.jpg';
 
-
-const app1 = "/images/landingpage/app-calendar.jpg";
-const app2 = "/images/landingpage/app-chat.jpg";
-const app3 = "/images/landingpage/app-contact.jpg";
-const app4 = "/images/landingpage/app-email.jpg";
-const app5 = "/images/landingpage/app-notes.jpg";
-const app6 = "/images/landingpage/app-userprofile.jpg";
-const app7 = "/images/landingpage/app-blog.jpg";
+const app1 = '/images/landingpage/app-calendar.jpg';
+const app2 = '/images/landingpage/app-chat.jpg';
+const app3 = '/images/landingpage/app-contact.jpg';
+const app4 = '/images/landingpage/app-email.jpg';
+const app5 = '/images/landingpage/app-notes.jpg';
+const app6 = '/images/landingpage/app-userprofile.jpg';
+const app7 = '/images/landingpage/app-blog.jpg';
 const app9 = '/images/landingpage/app-ecomproducts.jpg';
 const app10 = '/images/landingpage/app-ecomproduct-details.jpg';
 const app13 = '/images/landingpage/app-blogdetail.jpg';
 const app14 = '/images/landingpage/app-kanban.jpg';
 const app15 = '/images/landingpage/app-invoice.jpg';
 
-const Page1 = "/images/landingpage/front-homepage.jpg";
-const Page2 = "/images/landingpage/front-aboutus.jpg";
-const Page3 = "/images/landingpage/front-portfolio.jpg";
-const Page4 = "/images/landingpage/front-pricing.jpg";
+const Page1 = '/images/landingpage/front-homepage.jpg';
+const Page2 = '/images/landingpage/front-aboutus.jpg';
+const Page3 = '/images/landingpage/front-portfolio.jpg';
+const Page4 = '/images/landingpage/front-pricing.jpg';
 
-import DemoTitle from "./DemoTitle";
-import Image from "next/image";
-import React from "react";
+import DemoTitle from './DemoTitle';
+import Image from 'next/image';
+import React from 'react';
 
 interface sliderData {
   avatar: string | any;
@@ -52,57 +51,57 @@ interface DemoTypes {
 
 const demos: DemoTypes[] = [
   {
-    link: "https://flexy-next-js-dashboard.vercel.app/",
+    link: 'https://flexy-next-js-dashboard.vercel.app/',
     img: mainDemo,
-    title: "Main",
+    title: 'Main',
   },
   {
-    link: "https://flexy-nextjs-dark.vercel.app/",
+    link: 'https://flexy-nextjs-dark.vercel.app/',
     img: darkDemo,
-    title: "Dark",
+    title: 'Dark',
   },
   {
-    link: "https://flexy-nextjs-horizontal.vercel.app/",
+    link: 'https://flexy-nextjs-horizontal.vercel.app/',
     img: horizontalDemo,
-    title: "Horizontal",
+    title: 'Horizontal',
   },
   {
-    link: "https://flexy-nextjs-rtl.vercel.app/",
+    link: 'https://flexy-nextjs-rtl.vercel.app/',
     img: rtlDemo,
-    title: "RTL",
+    title: 'RTL',
   },
   {
-    link: "https://flexy-nextjs-minisidebar.vercel.app/",
+    link: 'https://flexy-nextjs-minisidebar.vercel.app/',
     img: minidemo,
-    title: "Minisidebar",
+    title: 'Minisidebar',
   },
   {
-    link: "https://flexy-nextjs-nextauth.vercel.app/auth/auth1/login",
+    link: 'https://flexy-nextjs-nextauth.vercel.app/auth/auth1/login',
     img: nextauth,
-    title: "NextAuth",
+    title: 'NextAuth',
   },
 ];
 
 const pages: DemoTypes[] = [
   {
-    link: "https://flexy-next-js-dashboard.vercel.app/frontend-pages/homepage",
+    link: 'https://flexy-next-js-dashboard.vercel.app/frontend-pages/homepage',
     img: Page1,
-    title: "Homepage",
+    title: 'Homepage',
   },
   {
-    link: "https://flexy-next-js-dashboard.vercel.app/frontend-pages/about",
+    link: 'https://flexy-next-js-dashboard.vercel.app/frontend-pages/about',
     img: Page2,
-    title: "About us",
+    title: 'About us',
   },
   {
-    link: "https://flexy-next-js-dashboard.vercel.app/frontend-pages/portfolio",
+    link: 'https://flexy-next-js-dashboard.vercel.app/frontend-pages/portfolio',
     img: Page3,
-    title: "Portfolio",
+    title: 'Portfolio',
   },
   {
-    link: "https://flexy-next-js-dashboard.vercel.app/frontend-pages/pricing",
+    link: 'https://flexy-next-js-dashboard.vercel.app/frontend-pages/pricing',
     img: Page4,
-    title: "Pricing",
+    title: 'Pricing',
   },
 ];
 
@@ -175,48 +174,48 @@ const apps: DemoTypes[] = [
 ];
 
 const StyledBox = styled(Box)((theme) => ({
-  overflow: "auto",
-  position: "relative",
+  overflow: 'auto',
+  position: 'relative',
 
-  ".MuiButton-root": {
-    display: "none",
+  '.MuiButton-root': {
+    display: 'none',
   },
-  "&:hover": {
-    ".MuiButton-root": {
-      display: "block",
-      transform: "translate(-50%,-50%)",
-      position: "absolute",
-      left: "50%",
-      right: "50%",
-      top: "50%",
-      minWidth: "110px",
-      zIndex: "9",
+  '&:hover': {
+    '.MuiButton-root': {
+      display: 'block',
+      transform: 'translate(-50%,-50%)',
+      position: 'absolute',
+      left: '50%',
+      right: '50%',
+      top: '50%',
+      minWidth: '110px',
+      zIndex: '9',
     },
-    "&:before": {
+    '&:before': {
       content: '""',
-      position: "absolute",
-      top: "0",
-      left: " 0",
-      width: "100%",
-      height: "100%",
-      zIndex: "8",
-      backgroundColor: "rgba(55,114,255,.2)",
+      position: 'absolute',
+      top: '0',
+      left: ' 0',
+      width: '100%',
+      height: '100%',
+      zIndex: '8',
+      backgroundColor: 'rgba(55,114,255,.2)',
     },
   },
 }));
 
 const DemoSlider = () => {
   return (
-    (<Box
+    <Box
       id="demos"
       pb={10}
       overflow="hidden"
       sx={{
         pt: {
-          sm: "60px",
-          lg: "0",
+          sm: '60px',
+          lg: '0',
         },
-        backgroundColor: (theme) => theme.palette.background.paper
+        backgroundColor: (theme) => theme.palette.background.paper,
       }}
     >
       <Container maxWidth="lg">
@@ -232,17 +231,19 @@ const DemoSlider = () => {
                 size={{
                   xs: 12,
                   sm: 4,
-                  lg: 4
-                }}>
+                  lg: 4,
+                }}
+              >
                 <Box>
                   <StyledBox>
                     <Image
                       src={demo.img}
-                      alt="demo" unoptimized={true}
+                      alt="demo"
+                      unoptimized={true}
                       style={{
-                        borderRadius: "8px",
-                        width: "100%",
-                        height: "100%",
+                        borderRadius: '8px',
+                        width: '100%',
+                        height: '100%',
                       }}
                     />
                     <Button
@@ -280,19 +281,21 @@ const DemoSlider = () => {
                 key={index}
                 size={{
                   xs: 12,
-                  lg: 3
-                }}>
+                  lg: 3,
+                }}
+              >
                 <Box>
                   <StyledBox>
                     <Image
                       src={page.img}
-                      width={500} unoptimized={true}
+                      width={500}
+                      unoptimized={true}
                       height={500}
                       alt="app"
                       style={{
-                        borderRadius: "8px",
-                        width: "100%",
-                        height: "100%",
+                        borderRadius: '8px',
+                        width: '100%',
+                        height: '100%',
                       }}
                     />
                     <Button
@@ -312,10 +315,7 @@ const DemoSlider = () => {
                     fontWeight={500}
                     mt={2}
                   >
-                    {page.title}{" "}
-                    {page.hot ? (
-                      <Chip label="New" color="error" size="small" />
-                    ) : null}
+                    {page.title} {page.hot ? <Chip label="New" color="error" size="small" /> : null}
                   </Typography>
                 </Box>
               </Grid>
@@ -333,17 +333,19 @@ const DemoSlider = () => {
                 key={index}
                 size={{
                   xs: 12,
-                  lg: 3
-                }}>
+                  lg: 3,
+                }}
+              >
                 <Box>
                   <StyledBox>
                     <Image
                       src={app.img}
-                      alt="app" unoptimized={true}
+                      alt="app"
+                      unoptimized={true}
                       style={{
-                        borderRadius: "8px",
-                        width: "100%",
-                        height: "100%",
+                        borderRadius: '8px',
+                        width: '100%',
+                        height: '100%',
                       }}
                     />
                     <Button
@@ -363,10 +365,7 @@ const DemoSlider = () => {
                     fontWeight={500}
                     mt={2}
                   >
-                    {app.title}{" "}
-                    {app.hot ? (
-                      <Chip label="New" color="error" size="small" />
-                    ) : null}
+                    {app.title} {app.hot ? <Chip label="New" color="error" size="small" /> : null}
                   </Typography>
                 </Box>
               </Grid>
@@ -374,7 +373,7 @@ const DemoSlider = () => {
           </Grid>
         </Box>
       </Container>
-    </Box>)
+    </Box>
   );
 };
 

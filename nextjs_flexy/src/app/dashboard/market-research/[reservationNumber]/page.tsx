@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { 
-  Box, 
-  Typography, 
-  CircularProgress, 
-  Alert, 
+import {
+  Box,
+  Typography,
+  CircularProgress,
+  Alert,
   Button,
   Stack,
   Tabs,
@@ -22,7 +22,7 @@ import {
   Fab,
   useMediaQuery,
   useTheme,
-  Drawer
+  Drawer,
 } from '@mui/material';
 import { useRouter, useParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
@@ -67,7 +67,7 @@ export default function MarketResearchDetailPage() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const reservationNumber = params.reservationNumber as string;
-  
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<any>(null);
@@ -80,39 +80,39 @@ export default function MarketResearchDetailPage() {
     const fetchData = async () => {
       console.log('=== MarketResearch fetchData started ===');
       console.log('Reservation Number:', reservationNumber);
-      
+
       if (!reservationNumber) {
         console.log('No reservation number provided');
         setLoading(false);
         return;
       }
-      
+
       setLoading(true);
       setError(null);
-      
+
       try {
         // Supabase SDK 사용
         console.log('Creating Supabase client...');
         const supabase = createClient();
-        
+
         console.log('Querying market_research_requests...');
         const { data, error } = await supabase
           .from('market_research_requests')
           .select('*')
           .eq('reservation_number', reservationNumber)
           .single();
-        
+
         console.log('Query result:', { data, error });
-        
+
         if (error) {
           console.error('Supabase error:', error);
           throw new Error(error.message);
         }
-        
+
         if (!data) {
           throw new Error('데이터를 찾을 수 없습니다.');
         }
-        
+
         setData(data);
       } catch (err) {
         console.error('Fetch error:', err);
@@ -131,7 +131,9 @@ export default function MarketResearchDetailPage() {
 
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <Box
+        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}
+      >
         <CircularProgress />
         <Typography sx={{ ml: 2 }}>Loading...</Typography>
       </Box>
@@ -152,7 +154,11 @@ export default function MarketResearchDetailPage() {
   return (
     <Box sx={{ p: 3 }}>
       {/* Header */}
-      <OrderHeader orderData={data} serviceType="market_research" reservationNumber={reservationNumber} />
+      <OrderHeader
+        orderData={data}
+        serviceType="market_research"
+        reservationNumber={reservationNumber}
+      />
 
       {/* Main Content with Chat */}
       <Grid container spacing={isMobile ? 0 : 3} sx={{ mt: 2 }}>
@@ -160,24 +166,44 @@ export default function MarketResearchDetailPage() {
         <Grid size={{ xs: 12, md: 8 }}>
           <Paper elevation={3} sx={{ mb: isMobile ? 8 : 0 }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs 
-                value={tabValue} 
-                onChange={handleTabChange} 
-                aria-label="order details tabs" 
-                variant={isMobile ? "scrollable" : "fullWidth"}
-                scrollButtons={isMobile ? "auto" : false}
+              <Tabs
+                value={tabValue}
+                onChange={handleTabChange}
+                aria-label="order details tabs"
+                variant={isMobile ? 'scrollable' : 'fullWidth'}
+                scrollButtons={isMobile ? 'auto' : false}
                 sx={{
                   '& .MuiTab-root': {
                     minWidth: isMobile ? 'auto' : 120,
                     fontSize: isMobile ? '0.75rem' : '0.875rem',
-                  }
+                  },
                 }}
               >
-                <Tab icon={<BusinessIcon sx={{ fontSize: isMobile ? 20 : 24 }} />} label={isMobile ? "신청" : "신청정보"} iconPosition="start" />
-                <Tab icon={<LocalShippingIcon sx={{ fontSize: isMobile ? 20 : 24 }} />} label={isMobile ? "공장" : "공장정보"} iconPosition="start" />
-                <Tab icon={<InventoryIcon sx={{ fontSize: isMobile ? 20 : 24 }} />} label={isMobile ? "제품" : "제품정보"} iconPosition="start" />
-                <Tab icon={<AttachMoneyIcon sx={{ fontSize: isMobile ? 20 : 24 }} />} label={isMobile ? "가격" : "가격정보"} iconPosition="start" />
-                <Tab icon={<AttachFileIcon sx={{ fontSize: isMobile ? 20 : 24 }} />} label={isMobile ? "자료" : "관련자료"} iconPosition="start" />
+                <Tab
+                  icon={<BusinessIcon sx={{ fontSize: isMobile ? 20 : 24 }} />}
+                  label={isMobile ? '신청' : '신청정보'}
+                  iconPosition="start"
+                />
+                <Tab
+                  icon={<LocalShippingIcon sx={{ fontSize: isMobile ? 20 : 24 }} />}
+                  label={isMobile ? '공장' : '공장정보'}
+                  iconPosition="start"
+                />
+                <Tab
+                  icon={<InventoryIcon sx={{ fontSize: isMobile ? 20 : 24 }} />}
+                  label={isMobile ? '제품' : '제품정보'}
+                  iconPosition="start"
+                />
+                <Tab
+                  icon={<AttachMoneyIcon sx={{ fontSize: isMobile ? 20 : 24 }} />}
+                  label={isMobile ? '가격' : '가격정보'}
+                  iconPosition="start"
+                />
+                <Tab
+                  icon={<AttachFileIcon sx={{ fontSize: isMobile ? 20 : 24 }} />}
+                  label={isMobile ? '자료' : '관련자료'}
+                  iconPosition="start"
+                />
               </Tabs>
             </Box>
 
@@ -195,46 +221,61 @@ export default function MarketResearchDetailPage() {
                         <Table>
                           <TableBody>
                             <TableRow>
-                              <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                              <TableCell
+                                component="th"
+                                sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}
+                              >
                                 품명
                               </TableCell>
                               <TableCell>{data?.product_name || '-'}</TableCell>
                             </TableRow>
                             <TableRow>
-                              <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                              <TableCell
+                                component="th"
+                                sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}
+                              >
                                 조사수량
                               </TableCell>
-                              <TableCell>{data?.research_quantity?.toLocaleString() || '-'}개</TableCell>
+                              <TableCell>
+                                {data?.research_quantity?.toLocaleString() || '-'}개
+                              </TableCell>
                             </TableRow>
                           </TableBody>
                         </Table>
-                        
+
                         {/* 제품 사진 */}
                         {data?.research_photos && data.research_photos.length > 0 && (
                           <Box sx={{ mt: 2 }}>
-                            <Typography variant="subtitle2" fontWeight="bold" gutterBottom sx={{ color: 'success.main' }}>
+                            <Typography
+                              variant="subtitle2"
+                              fontWeight="bold"
+                              gutterBottom
+                              sx={{ color: 'success.main' }}
+                            >
                               제품 사진 ({data.research_photos.length}개)
                             </Typography>
-                            <Box sx={{ 
-                              display: 'flex', 
-                              gap: 1, 
-                              overflowX: 'auto',
-                              pb: 1,
-                              '&::-webkit-scrollbar': {
-                                height: 4,
-                              },
-                              '&::-webkit-scrollbar-track': {
-                                background: '#f1f1f1',
-                                borderRadius: 10,
-                              },
-                              '&::-webkit-scrollbar-thumb': {
-                                background: '#888',
-                                borderRadius: 10,
-                              },
-                              '&::-webkit-scrollbar-thumb:hover': {
-                                background: '#555',
-                              }
-                            }}>
+                            <Box
+                              sx={{
+                                display: 'flex',
+                                gap: 1,
+                                overflowX: 'auto',
+                                pb: 1,
+                                '&::-webkit-scrollbar': {
+                                  height: 4,
+                                },
+                                '&::-webkit-scrollbar-track': {
+                                  background: '#f1f1f1',
+                                  borderRadius: 10,
+                                },
+                                '&::-webkit-scrollbar-thumb': {
+                                  background: '#888',
+                                  borderRadius: 10,
+                                },
+                                '&::-webkit-scrollbar-thumb:hover': {
+                                  background: '#555',
+                                },
+                              }}
+                            >
                               {data.research_photos.map((photoUrl: string, index: number) => (
                                 <Box
                                   key={index}
@@ -251,8 +292,8 @@ export default function MarketResearchDetailPage() {
                                     '&:hover': {
                                       borderColor: 'success.main',
                                       transform: 'scale(1.05)',
-                                      transition: 'all 0.3s ease'
-                                    }
+                                      transition: 'all 0.3s ease',
+                                    },
                                   }}
                                   onClick={() => {
                                     setSelectedImage(photoUrl);
@@ -266,7 +307,7 @@ export default function MarketResearchDetailPage() {
                                     sx={{
                                       width: '100%',
                                       height: '100%',
-                                      objectFit: 'cover'
+                                      objectFit: 'cover',
                                     }}
                                   />
                                 </Box>
@@ -279,39 +320,60 @@ export default function MarketResearchDetailPage() {
                         <Table>
                           <TableBody>
                             <TableRow>
-                              <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                              <TableCell
+                                component="th"
+                                sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}
+                              >
                                 신청일시
                               </TableCell>
                               <TableCell>
-                                {data?.created_at ? new Date(data.created_at).toLocaleString('ko-KR') : '-'}
+                                {data?.created_at
+                                  ? new Date(data.created_at).toLocaleString('ko-KR')
+                                  : '-'}
                               </TableCell>
                             </TableRow>
                             <TableRow>
-                              <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                              <TableCell
+                                component="th"
+                                sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}
+                              >
                                 상세 페이지 URL
                               </TableCell>
                               <TableCell>
                                 {data?.detail_page ? (
-                                  <a href={data.detail_page} target="_blank" rel="noopener noreferrer" style={{ color: '#1976d2', textDecoration: 'underline' }}>
+                                  <a
+                                    href={data.detail_page}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ color: '#1976d2', textDecoration: 'underline' }}
+                                  >
                                     {data.detail_page}
                                   </a>
-                                ) : '없음'}
+                                ) : (
+                                  '없음'
+                                )}
                               </TableCell>
                             </TableRow>
                             <TableRow>
-                              <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                              <TableCell
+                                component="th"
+                                sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}
+                              >
                                 MOQ 확인 여부
                               </TableCell>
                               <TableCell>
-                                <Chip 
-                                  label={data?.moq_check ? '확인 필요' : '미확인'} 
+                                <Chip
+                                  label={data?.moq_check ? '확인 필요' : '미확인'}
                                   color={data?.moq_check ? 'warning' : 'default'}
                                   size="small"
                                 />
                               </TableCell>
                             </TableRow>
                             <TableRow>
-                              <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                              <TableCell
+                                component="th"
+                                sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}
+                              >
                                 로고 인쇄
                               </TableCell>
                               <TableCell>
@@ -319,18 +381,26 @@ export default function MarketResearchDetailPage() {
                                   <>
                                     <Chip label="로고 인쇄 필요" color="warning" size="small" />
                                     {data?.logo_details && (
-                                      <Typography variant="body2" sx={{ mt: 1, color: 'text.secondary' }}>
+                                      <Typography
+                                        variant="body2"
+                                        sx={{ mt: 1, color: 'text.secondary' }}
+                                      >
                                         {data.logo_details}
                                       </Typography>
                                     )}
                                   </>
                                 ) : (
-                                  <Typography variant="body2" color="text.secondary">요청 없음</Typography>
+                                  <Typography variant="body2" color="text.secondary">
+                                    요청 없음
+                                  </Typography>
                                 )}
                               </TableCell>
                             </TableRow>
                             <TableRow>
-                              <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                              <TableCell
+                                component="th"
+                                sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}
+                              >
                                 커스텀 박스
                               </TableCell>
                               <TableCell>
@@ -338,13 +408,18 @@ export default function MarketResearchDetailPage() {
                                   <>
                                     <Chip label="커스텀 박스 제작" color="warning" size="small" />
                                     {data?.box_details && (
-                                      <Typography variant="body2" sx={{ mt: 1, color: 'text.secondary' }}>
+                                      <Typography
+                                        variant="body2"
+                                        sx={{ mt: 1, color: 'text.secondary' }}
+                                      >
                                         {data.box_details}
                                       </Typography>
                                     )}
                                   </>
                                 ) : (
-                                  <Typography variant="body2" color="text.secondary">요청 없음</Typography>
+                                  <Typography variant="body2" color="text.secondary">
+                                    요청 없음
+                                  </Typography>
                                 )}
                               </TableCell>
                             </TableRow>
@@ -373,7 +448,10 @@ export default function MarketResearchDetailPage() {
                     <Typography variant="subtitle1" fontWeight="bold" gutterBottom sx={{ mb: 2 }}>
                       업로드된 로고 파일
                     </Typography>
-                    <Paper sx={{ p: 2, textAlign: 'center', cursor: 'pointer' }} onClick={() => window.open(data.logo_file, '_blank')}>
+                    <Paper
+                      sx={{ p: 2, textAlign: 'center', cursor: 'pointer' }}
+                      onClick={() => window.open(data.logo_file, '_blank')}
+                    >
                       <Box sx={{ py: 3 }}>
                         <ImageIcon sx={{ fontSize: 40, color: 'text.secondary' }} />
                       </Box>
@@ -439,14 +517,24 @@ export default function MarketResearchDetailPage() {
                     <Table>
                       <TableBody>
                         <TableRow>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}>
+                          <TableCell
+                            component="th"
+                            sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}
+                          >
                             제품번호
                           </TableCell>
-                          <TableCell sx={{ width: '35%' }}>{data?.product_code || '조사중'}</TableCell>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}>
+                          <TableCell sx={{ width: '35%' }}>
+                            {data?.product_code || '조사중'}
+                          </TableCell>
+                          <TableCell
+                            component="th"
+                            sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}
+                          >
                             견적수량
                           </TableCell>
-                          <TableCell sx={{ width: '35%' }}>{data?.quoted_quantity?.toLocaleString() || '조사중'}개</TableCell>
+                          <TableCell sx={{ width: '35%' }}>
+                            {data?.quoted_quantity?.toLocaleString() || '조사중'}개
+                          </TableCell>
                         </TableRow>
                         <TableRow>
                           <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
@@ -462,17 +550,23 @@ export default function MarketResearchDetailPage() {
                           <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
                             박스 길이
                           </TableCell>
-                          <TableCell>{data?.box_length ? `${data.box_length}cm` : '조사중'}</TableCell>
+                          <TableCell>
+                            {data?.box_length ? `${data.box_length}cm` : '조사중'}
+                          </TableCell>
                           <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
                             박스 너비
                           </TableCell>
-                          <TableCell>{data?.box_width ? `${data.box_width}cm` : '조사중'}</TableCell>
+                          <TableCell>
+                            {data?.box_width ? `${data.box_width}cm` : '조사중'}
+                          </TableCell>
                         </TableRow>
                         <TableRow>
                           <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
                             박스 높이
                           </TableCell>
-                          <TableCell>{data?.box_height ? `${data.box_height}cm` : '조사중'}</TableCell>
+                          <TableCell>
+                            {data?.box_height ? `${data.box_height}cm` : '조사중'}
+                          </TableCell>
                           <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
                             총 박스수
                           </TableCell>
@@ -500,32 +594,48 @@ export default function MarketResearchDetailPage() {
                     <Table>
                       <TableBody>
                         <TableRow>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}>
+                          <TableCell
+                            component="th"
+                            sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}
+                          >
                             샘플재고 유무
                           </TableCell>
                           <TableCell sx={{ width: '35%' }}>
                             {data?.sample_available !== undefined ? (
-                              <Chip 
-                                label={data.sample_available ? '재고 있음' : '재고 없음'} 
+                              <Chip
+                                label={data.sample_available ? '재고 있음' : '재고 없음'}
                                 color={data.sample_available ? 'success' : 'default'}
                                 size="small"
                               />
-                            ) : '조사중'}
+                            ) : (
+                              '조사중'
+                            )}
                           </TableCell>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}>
+                          <TableCell
+                            component="th"
+                            sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}
+                          >
                             샘플 단가
                           </TableCell>
-                          <TableCell sx={{ width: '35%' }}>{data?.sample_unit_price ? `${data.sample_unit_price.toLocaleString()}원` : '조사중'}</TableCell>
+                          <TableCell sx={{ width: '35%' }}>
+                            {data?.sample_unit_price
+                              ? `${data.sample_unit_price.toLocaleString()}원`
+                              : '조사중'}
+                          </TableCell>
                         </TableRow>
                         <TableRow>
                           <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
                             주문 가능 수량
                           </TableCell>
-                          <TableCell>{data?.sample_order_qty ? `${data.sample_order_qty}개` : '조사중'}</TableCell>
+                          <TableCell>
+                            {data?.sample_order_qty ? `${data.sample_order_qty}개` : '조사중'}
+                          </TableCell>
                           <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
                             샘플 무게
                           </TableCell>
-                          <TableCell>{data?.sample_weight ? `${data.sample_weight}kg` : '조사중'}</TableCell>
+                          <TableCell>
+                            {data?.sample_weight ? `${data.sample_weight}kg` : '조사중'}
+                          </TableCell>
                         </TableRow>
                         <TableRow>
                           <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
@@ -556,14 +666,24 @@ export default function MarketResearchDetailPage() {
                     <Table>
                       <TableBody>
                         <TableRow>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}>
+                          <TableCell
+                            component="th"
+                            sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}
+                          >
                             중국단가
                           </TableCell>
-                          <TableCell sx={{ width: '35%' }}>{data?.china_unit_price || '조사중'}</TableCell>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}>
+                          <TableCell sx={{ width: '35%' }}>
+                            {data?.china_unit_price || '조사중'}
+                          </TableCell>
+                          <TableCell
+                            component="th"
+                            sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}
+                          >
                             환율
                           </TableCell>
-                          <TableCell sx={{ width: '35%' }}>{data?.exchange_rate || '조사중'}</TableCell>
+                          <TableCell sx={{ width: '35%' }}>
+                            {data?.exchange_rate || '조사중'}
+                          </TableCell>
                         </TableRow>
                         <TableRow>
                           <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
@@ -573,13 +693,17 @@ export default function MarketResearchDetailPage() {
                           <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
                             중국 운송료
                           </TableCell>
-                          <TableCell>{data?.china_shipping_fee?.toLocaleString() || '조사중'}</TableCell>
+                          <TableCell>
+                            {data?.china_shipping_fee?.toLocaleString() || '조사중'}
+                          </TableCell>
                         </TableRow>
                         <TableRow>
                           <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
                             수수료(5%)
                           </TableCell>
-                          <TableCell>{data?.commission_amount?.toLocaleString() || '조사중'}</TableCell>
+                          <TableCell>
+                            {data?.commission_amount?.toLocaleString() || '조사중'}
+                          </TableCell>
                           <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
                             1차 상세비용
                           </TableCell>
@@ -609,20 +733,32 @@ export default function MarketResearchDetailPage() {
                     <Table>
                       <TableBody>
                         <TableRow>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}>
+                          <TableCell
+                            component="th"
+                            sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}
+                          >
                             CIF 단가
                           </TableCell>
-                          <TableCell sx={{ width: '35%' }}>{data?.cif_unit_price || '조사중'}</TableCell>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}>
+                          <TableCell sx={{ width: '35%' }}>
+                            {data?.cif_unit_price || '조사중'}
+                          </TableCell>
+                          <TableCell
+                            component="th"
+                            sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}
+                          >
                             관부가세
                           </TableCell>
-                          <TableCell sx={{ width: '35%' }}>{data?.customs_tax?.toLocaleString() || '조사중'}</TableCell>
+                          <TableCell sx={{ width: '35%' }}>
+                            {data?.customs_tax?.toLocaleString() || '조사중'}
+                          </TableCell>
                         </TableRow>
                         <TableRow>
                           <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
                             국내운송료
                           </TableCell>
-                          <TableCell>{data?.domestic_shipping_fee?.toLocaleString() || '조사중'}</TableCell>
+                          <TableCell>
+                            {data?.domestic_shipping_fee?.toLocaleString() || '조사중'}
+                          </TableCell>
                           <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
                             2차 상세비용
                           </TableCell>
@@ -634,7 +770,9 @@ export default function MarketResearchDetailPage() {
                           </TableCell>
                           <TableCell colSpan={3}>
                             <Typography variant="h6" color="primary">
-                              {data?.second_payment ? `₩${data.second_payment.toLocaleString()}` : '조사중'}
+                              {data?.second_payment
+                                ? `₩${data.second_payment.toLocaleString()}`
+                                : '조사중'}
                             </Typography>
                           </TableCell>
                         </TableRow>
@@ -652,14 +790,24 @@ export default function MarketResearchDetailPage() {
                     <Table>
                       <TableBody>
                         <TableRow>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}>
+                          <TableCell
+                            component="th"
+                            sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}
+                          >
                             제품상세단가
                           </TableCell>
-                          <TableCell sx={{ width: '35%' }}>{data?.product_detail_price || '조사중'}</TableCell>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}>
+                          <TableCell sx={{ width: '35%' }}>
+                            {data?.product_detail_price || '조사중'}
+                          </TableCell>
+                          <TableCell
+                            component="th"
+                            sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}
+                          >
                             평균 무게
                           </TableCell>
-                          <TableCell sx={{ width: '35%' }}>{data?.avg_weight ? `${data.avg_weight}kg` : '조사중'}</TableCell>
+                          <TableCell sx={{ width: '35%' }}>
+                            {data?.avg_weight ? `${data.avg_weight}kg` : '조사중'}
+                          </TableCell>
                         </TableRow>
                         <TableRow>
                           <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
@@ -696,8 +844,8 @@ export default function MarketResearchDetailPage() {
         {/* Desktop - Chat on right side */}
         {!isMobile && (
           <Grid size={{ md: 4 }}>
-            <ChatPanel 
-              reservationNumber={reservationNumber} 
+            <ChatPanel
+              reservationNumber={reservationNumber}
               currentUserRole="customer"
               currentUserId="test-user-id"
               currentUserName="테스트 사용자"
@@ -716,7 +864,7 @@ export default function MarketResearchDetailPage() {
               position: 'fixed',
               bottom: 16,
               right: 16,
-              zIndex: 1200
+              zIndex: 1200,
             }}
             onClick={() => setChatDrawerOpen(true)}
           >
@@ -733,7 +881,7 @@ export default function MarketResearchDetailPage() {
                 height: '80vh',
                 borderTopLeftRadius: 16,
                 borderTopRightRadius: 16,
-              }
+              },
             }}
           >
             <Box sx={{ p: 2 }}>
@@ -744,8 +892,8 @@ export default function MarketResearchDetailPage() {
                 </IconButton>
               </Stack>
               <Box sx={{ height: 'calc(80vh - 100px)' }}>
-                <ChatPanel 
-                  reservationNumber={reservationNumber} 
+                <ChatPanel
+                  reservationNumber={reservationNumber}
                   currentUserRole="customer"
                   currentUserId="test-user-id"
                   currentUserName="테스트 사용자"
@@ -757,23 +905,21 @@ export default function MarketResearchDetailPage() {
       )}
 
       {/* Image Modal */}
-      <Modal
-        open={modalOpen}
-        onClose={() => setModalOpen(false)}
-        aria-labelledby="image-modal"
-      >
-        <Box sx={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          maxWidth: '90vw',
-          maxHeight: '90vh',
-          bgcolor: 'background.paper',
-          boxShadow: 24,
-          p: 2,
-          borderRadius: 2,
-        }}>
+      <Modal open={modalOpen} onClose={() => setModalOpen(false)} aria-labelledby="image-modal">
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            maxWidth: '90vw',
+            maxHeight: '90vh',
+            bgcolor: 'background.paper',
+            boxShadow: 24,
+            p: 2,
+            borderRadius: 2,
+          }}
+        >
           <IconButton
             onClick={() => setModalOpen(false)}
             sx={{

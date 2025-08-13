@@ -1,10 +1,10 @@
-import CodeDialog from "@/app/components/shared/CodeDialog";
-import React from "react";
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const GroupedCode = () => {
-    return (
-        <>
-            <CodeDialog>
-                {`
+  return (
+    <>
+      <CodeDialog>
+        {`
 "use client";
 import * as React from 'react';
 import { Avatar, AvatarGroup, Stack } from '@mui/material';
@@ -17,9 +17,9 @@ import { IconMoodSmile } from '@tabler/icons-react';
         <Avatar alt="Cindy Baker" src={"/images/profile/user-3.jpg"} />
     </AvatarGroup>
 </Stack>`}
-            </CodeDialog>
-        </>
-    );
+      </CodeDialog>
+    </>
+  );
 };
 
 export default GroupedCode;

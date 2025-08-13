@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
-import Image from "next/image";
-import { Card, CardContent, Button, Typography, Box, Stack } from "@mui/material";
-import { CustomizerContext } from "@/app/context/customizerContext";
-import { useUser } from "@/lib/context/GlobalContext";
-import { useRouter } from "next/navigation";
-import { IconClipboardList, IconMessage, IconPlus } from "@tabler/icons-react";
+import React, { useContext } from 'react';
+import Image from 'next/image';
+import { Card, CardContent, Button, Typography, Box, Stack } from '@mui/material';
+import { CustomizerContext } from '@/app/context/customizerContext';
+import { useUser } from '@/lib/context/GlobalContext';
+import { useRouter } from 'next/navigation';
+import { IconClipboardList, IconMessage, IconPlus } from '@tabler/icons-react';
 
 const WelcomeCard = () => {
   const { activeDir } = useContext(CustomizerContext);
@@ -17,13 +17,12 @@ const WelcomeCard = () => {
     <Card
       elevation={0}
       sx={{
-        position: "relative",
+        position: 'relative',
         backgroundColor: (theme) => theme.palette.primary.main,
         color: 'white',
         borderWidth: '0px',
       }}
     >
-
       <CardContent>
         <Typography
           sx={{
@@ -33,7 +32,8 @@ const WelcomeCard = () => {
             position: 'relative',
             zIndex: 9,
           }}
-          variant="h3" fontSize='20px'
+          variant="h3"
+          fontSize="20px"
           gutterBottom
         >
           안녕하세요 {userName}님, <br /> 오늘도 좋은 하루 되세요!
@@ -49,8 +49,8 @@ const WelcomeCard = () => {
               backgroundColor: 'white',
               color: 'primary.main',
               '&:hover': {
-                backgroundColor: 'grey.100'
-              }
+                backgroundColor: 'grey.100',
+              },
             }}
           >
             신규 신청
@@ -60,13 +60,13 @@ const WelcomeCard = () => {
             variant="outlined"
             startIcon={<IconClipboardList size={16} />}
             onClick={() => router.push('/dashboard/orders')}
-            sx={{ 
+            sx={{
               borderColor: 'rgba(255,255,255,0.8)',
               color: 'white',
               '&:hover': {
                 borderColor: 'white',
-                backgroundColor: 'rgba(255,255,255,0.1)'
-              }
+                backgroundColor: 'rgba(255,255,255,0.1)',
+              },
             }}
           >
             주문 조회
@@ -76,13 +76,13 @@ const WelcomeCard = () => {
             variant="outlined"
             startIcon={<IconMessage size={16} />}
             onClick={() => router.push('/dashboard/chat')}
-            sx={{ 
+            sx={{
               borderColor: 'rgba(255,255,255,0.8)',
               color: 'white',
               '&:hover': {
                 borderColor: 'white',
-                backgroundColor: 'rgba(255,255,255,0.1)'
-              }
+                backgroundColor: 'rgba(255,255,255,0.1)',
+              },
             }}
           >
             메시지

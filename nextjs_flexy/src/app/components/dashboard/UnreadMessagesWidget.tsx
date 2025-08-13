@@ -1,16 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import {
-  Typography,
-  Box,
-  Stack,
-  Avatar,
-  Chip,
-  Button,
-  Skeleton,
-  Alert
-} from '@mui/material';
+import { Typography, Box, Stack, Avatar, Chip, Button, Skeleton, Alert } from '@mui/material';
 import DashboardCard from '../shared/DashboardCard';
 import { IconMessage, IconMessageCircle } from '@tabler/icons-react';
 import { createClient } from '@/lib/supabase/client';
@@ -43,7 +34,7 @@ const UnreadMessagesWidget = () => {
   const fetchUnreadMessages = async () => {
     try {
       const supabase = createClient();
-      
+
       // 최근 메시지 조회 (service_type 직접 사용)
       const { data: messages, error } = await supabase
         .from('chat_messages')
@@ -97,7 +88,7 @@ const UnreadMessagesWidget = () => {
     if (diffMins < 60) return `${diffMins}분 전`;
     if (diffHours < 24) return `${diffHours}시간 전`;
     if (diffDays < 7) return `${diffDays}일 전`;
-    
+
     return date.toLocaleDateString('ko-KR');
   };
 
@@ -135,10 +126,7 @@ const UnreadMessagesWidget = () => {
   }
 
   return (
-    <DashboardCard 
-      title="최근 메시지" 
-      subtitle={`최근 메시지 ${totalUnread}개`}
-    >
+    <DashboardCard title="최근 메시지" subtitle={`최근 메시지 ${totalUnread}개`}>
       <Box>
         {messages.length > 0 ? (
           <>
@@ -157,16 +145,16 @@ const UnreadMessagesWidget = () => {
                     borderRadius: 1,
                     '&:hover': {
                       backgroundColor: 'action.hover',
-                    }
+                    },
                   }}
                   onClick={() => handleViewMessage(message)}
                 >
-                  <Avatar 
-                    sx={{ 
+                  <Avatar
+                    sx={{
                       bgcolor: 'primary.light',
                       color: 'primary.main',
                       width: 40,
-                      height: 40
+                      height: 40,
                     }}
                   >
                     <IconMessageCircle size={20} />
@@ -176,9 +164,9 @@ const UnreadMessagesWidget = () => {
                       <Typography variant="subtitle2" fontWeight={600}>
                         {message.sender_name}
                       </Typography>
-                      <Chip 
-                        label={roleInfo.label} 
-                        size="small" 
+                      <Chip
+                        label={roleInfo.label}
+                        size="small"
                         color={roleInfo.color}
                         sx={{ height: 20 }}
                       />
@@ -205,11 +193,7 @@ const UnreadMessagesWidget = () => {
             )}
           </>
         ) : (
-          <Alert 
-            severity="info" 
-            icon={<IconMessage />}
-            sx={{ borderRadius: 1 }}
-          >
+          <Alert severity="info" icon={<IconMessage />} sx={{ borderRadius: 1 }}>
             최근 메시지가 없습니다
           </Alert>
         )}

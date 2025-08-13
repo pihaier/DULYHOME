@@ -1,6 +1,6 @@
-import React from 'react'
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import { markElementClasses } from '@mui/x-charts'
+import React from 'react';
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import { markElementClasses } from '@mui/x-charts';
 
 function DashedLineCode() {
   return (
@@ -64,7 +64,7 @@ title: 'DashedLineChart ',
 }
   `}
     </CodeDialog>
-  )
+  );
 }
 
-export default DashedLineCode
+export default DashedLineCode;

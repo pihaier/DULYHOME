@@ -1,5 +1,5 @@
-import React from 'react'
-import CodeDialog from '@/app/components/shared/CodeDialog'
+import React from 'react';
+import CodeDialog from '@/app/components/shared/CodeDialog';
 
 function TinyAreaCode() {
   return (
@@ -61,7 +61,7 @@ export default function TinyAreaChart() {
 
 `}
     </CodeDialog>
-  )
+  );
 }
 
-export default TinyAreaCode
+export default TinyAreaCode;

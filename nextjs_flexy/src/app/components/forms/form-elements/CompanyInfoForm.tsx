@@ -46,14 +46,14 @@ interface CompanyInfoFormProps {
   onSubmit?: () => void; // 제출 시 호출할 콜백
 }
 
-export default function CompanyInfoForm({ 
-  value, 
-  onChange, 
-  showSaveOption = false, 
-  saveToProfile = false, 
+export default function CompanyInfoForm({
+  value,
+  onChange,
+  showSaveOption = false,
+  saveToProfile = false,
   onSaveOptionChange,
   updateProfile = true, // 기본적으로 프로필 업데이트
-  onSubmit
+  onSubmit,
 }: CompanyInfoFormProps) {
   const { user, userProfile, refreshUser } = useUser();
   const supabase = createClient();
@@ -67,7 +67,7 @@ export default function CompanyInfoForm({
     console.log('CompanyInfoForm useEffect - user:', user);
     console.log('CompanyInfoForm useEffect - userProfile:', userProfile);
     console.log('CompanyInfoForm useEffect - value:', value);
-    
+
     if (user && !value.company_name) {
       // userProfile이 있으면 그 값 사용, 없으면 빈 값
       const newValues = {
@@ -91,7 +91,7 @@ export default function CompanyInfoForm({
   // 값이 변경되었는지 추적
   useEffect(() => {
     if (userProfile && user) {
-      const profileChanged = 
+      const profileChanged =
         value.company_name !== userProfile.company_name ||
         value.contact_person !== userProfile.contact_person ||
         value.contact_phone !== userProfile.phone;
@@ -193,10 +193,8 @@ export default function CompanyInfoForm({
   return (
     <Box>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={2}>
-        <Typography variant="h6">
-          신청자 정보
-        </Typography>
-        
+        <Typography variant="h6">신청자 정보</Typography>
+
         {user && savedAddresses.length > 0 && (
           <Button
             size="small"
@@ -210,11 +208,7 @@ export default function CompanyInfoForm({
         )}
       </Stack>
 
-      <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={() => setAnchorEl(null)}
-      >
+      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={() => setAnchorEl(null)}>
         {savedAddresses.map((address) => (
           <MenuItem
             key={address.id}
@@ -230,9 +224,7 @@ export default function CompanyInfoForm({
                 {address.contact_person} | {address.phone}
               </Typography>
             </Box>
-            {address.is_default && (
-              <Chip label="기본" size="small" color="primary" />
-            )}
+            {address.is_default && <Chip label="기본" size="small" color="primary" />}
           </MenuItem>
         ))}
         <MenuItem onClick={handleNewAddress}>

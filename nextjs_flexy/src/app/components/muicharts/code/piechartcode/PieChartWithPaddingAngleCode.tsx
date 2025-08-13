@@ -1,10 +1,10 @@
-import React from 'react'
-import CodeDialog from "@/app/components/shared/CodeDialog";
+import React from 'react';
+import CodeDialog from '@/app/components/shared/CodeDialog';
 
 function PieChartWithPaddingAngleCode() {
-    return (
-        <CodeDialog>
-            {`
+  return (
+    <CodeDialog>
+      {`
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import { PieChart } from '@mui/x-charts/PieChart';
@@ -70,8 +70,8 @@ export default function PieChartWithPaddingAngleChart() {
 }
 
             `}
-        </CodeDialog>
-    )
+    </CodeDialog>
+  );
 }
 
-export default PieChartWithPaddingAngleCode
+export default PieChartWithPaddingAngleCode;

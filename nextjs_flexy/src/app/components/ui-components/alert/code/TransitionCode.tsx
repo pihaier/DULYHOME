@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const TransitionCode = () => {
   return (
     <>
@@ -50,7 +50,7 @@ import {
 </Button>`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default TransitionCode
+export default TransitionCode;

@@ -1,5 +1,5 @@
-import React from 'react'
-import CodeDialog from '@/app/components/shared/CodeDialog'
+import React from 'react';
+import CodeDialog from '@/app/components/shared/CodeDialog';
 
 function CustomTreeItemCode() {
   return (
@@ -102,7 +102,7 @@ const CustomTreeItemContent = styled(TreeItem2Content)(({ theme }) => ({
   }
                  `}
     </CodeDialog>
-  )
+  );
 }
 
-export default CustomTreeItemCode
+export default CustomTreeItemCode;

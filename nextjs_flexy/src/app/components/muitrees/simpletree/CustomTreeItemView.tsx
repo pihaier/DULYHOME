@@ -1,5 +1,4 @@
-
-'use client'
+'use client';
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -25,10 +24,12 @@ const CustomTreeItemContent = styled(TreeItem2Content)(({ theme }) => ({
 
 interface CustomTreeItemProps
   extends Omit<UseTreeItem2Parameters, 'rootRef'>,
-  Omit<React.HTMLAttributes<HTMLLIElement>, 'onFocus'> { }
+    Omit<React.HTMLAttributes<HTMLLIElement>, 'onFocus'> {}
 
-const CustomTreeItem = React.forwardRef(function CustomTreeItem(props: CustomTreeItemProps,
-  ref: React.Ref<HTMLLIElement>,) {
+const CustomTreeItem = React.forwardRef(function CustomTreeItem(
+  props: CustomTreeItemProps,
+  ref: React.Ref<HTMLLIElement>
+) {
   const { id, itemId, label, disabled, children, ...other } = props;
 
   const {
@@ -71,11 +72,7 @@ const CustomTreeItem = React.forwardRef(function CustomTreeItem(props: CustomTre
 
 export default function CustomTreeItemView() {
   return (
-    <ParentCard
-      title="CustomTreeItem"
-      codeModel={<CustomTreeItemCode />}
-    >
-
+    <ParentCard title="CustomTreeItem" codeModel={<CustomTreeItemCode />}>
       <Box sx={{ minHeight: 200, minWidth: 250 }}>
         <SimpleTreeView defaultExpandedItems={['3']}>
           <CustomTreeItem itemId="1" label="Amelia Hart">

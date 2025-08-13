@@ -2,12 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 import { Typography, Box, Fab, Stack, Chip, Skeleton } from '@mui/material';
-import DashboardCard from "../shared/DashboardCard";
-import {
-  IconSearch,
-  IconBuildingFactory,
-  IconClipboardList,
-} from "@tabler/icons-react";
+import DashboardCard from '../shared/DashboardCard';
+import { IconSearch, IconBuildingFactory, IconClipboardList } from '@tabler/icons-react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@/lib/context/GlobalContext';
@@ -46,12 +42,14 @@ const RecentApplications = () => {
         .eq('user_id', user?.id)
         .order('created_at', { ascending: false })
         .limit(5);
-      
+
       if (marketResearch) {
-        allApplications.push(...marketResearch.map(app => ({
-          ...app,
-          service_type: 'market_research' as const
-        })));
+        allApplications.push(
+          ...marketResearch.map((app) => ({
+            ...app,
+            service_type: 'market_research' as const,
+          }))
+        );
       }
 
       // 공장컨택 신청 (내 것만)
@@ -61,12 +59,14 @@ const RecentApplications = () => {
         .eq('user_id', user?.id)
         .order('created_at', { ascending: false })
         .limit(5);
-      
+
       if (factoryContact) {
-        allApplications.push(...factoryContact.map(app => ({
-          ...app,
-          service_type: 'factory_contact' as const
-        })));
+        allApplications.push(
+          ...factoryContact.map((app) => ({
+            ...app,
+            service_type: 'factory_contact' as const,
+          }))
+        );
       }
 
       // 검품 신청 (내 것만)
@@ -76,12 +76,14 @@ const RecentApplications = () => {
         .eq('user_id', user?.id)
         .order('created_at', { ascending: false })
         .limit(5);
-      
+
       if (inspection) {
-        allApplications.push(...inspection.map(app => ({
-          ...app,
-          service_type: 'inspection' as const
-        })));
+        allApplications.push(
+          ...inspection.map((app) => ({
+            ...app,
+            service_type: 'inspection' as const,
+          }))
+        );
       }
 
       // 시간순 정렬 후 최근 10개만
@@ -139,8 +141,8 @@ const RecentApplications = () => {
   const handleClick = (app: Application) => {
     const prefix = app.reservation_number.split('-')[0];
     let serviceRoute = '';
-    
-    switch(prefix) {
+
+    switch (prefix) {
       case 'MR':
         serviceRoute = 'market-research';
         break;
@@ -151,7 +153,7 @@ const RecentApplications = () => {
         serviceRoute = 'inspection';
         break;
     }
-    
+
     if (serviceRoute) {
       router.push(`/dashboard/orders/${serviceRoute}/${app.reservation_number}`);
     }
@@ -162,7 +164,7 @@ const RecentApplications = () => {
       <Box>
         {loading ? (
           Array.from({ length: 5 }).map((_, index) => (
-            <Stack key={index} direction='row' alignItems='center' mt={2} pt={1}>
+            <Stack key={index} direction="row" alignItems="center" mt={2} pt={1}>
               <Skeleton variant="circular" width={45} height={45} />
               <Box ml={2} flex={1}>
                 <Skeleton variant="text" width="60%" />
@@ -175,17 +177,17 @@ const RecentApplications = () => {
           applications.map((app) => {
             const serviceInfo = getServiceInfo(app.service_type);
             return (
-              <Stack 
-                key={app.id} 
-                direction='row' 
-                alignItems='center' 
-                mt={2} 
+              <Stack
+                key={app.id}
+                direction="row"
+                alignItems="center"
+                mt={2}
                 pt={1}
-                sx={{ 
+                sx={{
                   cursor: 'pointer',
                   '&:hover': { backgroundColor: 'action.hover' },
                   borderRadius: 1,
-                  px: 1
+                  px: 1,
                 }}
                 onClick={() => handleClick(app)}
               >
@@ -197,9 +199,9 @@ const RecentApplications = () => {
                     height: '45px',
                     width: '45px',
                     borderRadius: '10px',
-                    "&:hover": {
+                    '&:hover': {
                       backgroundColor: serviceInfo.bg,
-                    }
+                    },
                   }}
                   aria-label={serviceInfo.name}
                 >
@@ -211,9 +213,7 @@ const RecentApplications = () => {
                     {app.reservation_number} • {serviceInfo.name}
                   </Typography>
                 </Box>
-                <Box>
-                  {getStatusChip(app.status)}
-                </Box>
+                <Box>{getStatusChip(app.status)}</Box>
               </Stack>
             );
           })

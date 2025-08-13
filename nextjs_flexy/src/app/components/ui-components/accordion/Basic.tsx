@@ -1,16 +1,10 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import {
-  Accordion,
-  AccordionSummary,
-  Typography,
-  AccordionDetails,
-  Divider,
-} from "@mui/material";
-import ChildCard from "@/app/components/shared/ChildCard";
-import { IconChevronDown } from "@tabler/icons-react";
-import BasicCode from "@/app/components/ui-components/accordion/code/BasicCode";
+import * as React from 'react';
+import { Accordion, AccordionSummary, Typography, AccordionDetails, Divider } from '@mui/material';
+import ChildCard from '@/app/components/shared/ChildCard';
+import { IconChevronDown } from '@tabler/icons-react';
+import BasicCode from '@/app/components/ui-components/accordion/code/BasicCode';
 
 const Basic = () => {
   return (
@@ -25,8 +19,8 @@ const Basic = () => {
         </AccordionSummary>
         <AccordionDetails>
           <Typography variant="subtitle1" color="textSecondary">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+            sit amet blandit leo lobortis eget.
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -41,8 +35,8 @@ const Basic = () => {
         </AccordionSummary>
         <AccordionDetails>
           <Typography variant="subtitle1" color="textSecondary">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+            sit amet blandit leo lobortis eget.
           </Typography>
         </AccordionDetails>
       </Accordion>

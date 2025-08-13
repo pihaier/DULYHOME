@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const DifferentDesignCode = () => {
   return (
     <>
@@ -56,7 +56,7 @@ const [value, setValue] = React.useState<Dayjs | null>(null);
 `}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default DifferentDesignCode
+export default DifferentDesignCode;

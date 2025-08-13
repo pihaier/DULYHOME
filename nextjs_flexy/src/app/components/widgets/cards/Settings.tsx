@@ -16,16 +16,14 @@ const Settings = () => {
   const handleChange6 = (event: Event, newValue: number | number[]) => {
     if (Array.isArray(newValue)) {
       setValue3(newValue[0]);
-    }
-    else {
+    } else {
       setValue3(newValue);
     }
   };
 
-
   return (
     <BlankCard>
-      <CardContent sx={{ p: "30px" }}>
+      <CardContent sx={{ p: '30px' }}>
         <Typography variant="h5">Settings</Typography>
         <Stack spacing={2} mt={3}>
           <Stack direction="row" spacing={2}>
@@ -49,7 +47,9 @@ const Settings = () => {
             </Avatar>
             <Box display="flex" alignItems="center" justifyContent="space-between" width="100%">
               <Box>
-                <Typography variant="h6" mb={1}>Chat</Typography>
+                <Typography variant="h6" mb={1}>
+                  Chat
+                </Typography>
                 <Typography variant="subtitle2" color="textSecondary">
                   Turn on chat during call
                 </Typography>
@@ -62,8 +62,12 @@ const Settings = () => {
           <Divider />
         </Stack>
         <Stack direction="row" justifyContent="end" spacing={2} mt={2}>
-          <Button variant="outlined" color="error">Cancel</Button>
-          <Button variant="contained" color="primary">Save</Button>
+          <Button variant="outlined" color="error">
+            Cancel
+          </Button>
+          <Button variant="contained" color="primary">
+            Save
+          </Button>
         </Stack>
       </CardContent>
     </BlankCard>

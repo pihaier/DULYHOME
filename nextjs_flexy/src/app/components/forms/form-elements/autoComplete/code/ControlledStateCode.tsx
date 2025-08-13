@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const ControlledStateCode = () => {
   return (
     <>
@@ -65,7 +65,7 @@ const [inputValue, setInputValue] = React.useState('');
 </Typography>`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default ControlledStateCode
+export default ControlledStateCode;

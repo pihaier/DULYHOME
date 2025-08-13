@@ -1,5 +1,5 @@
-import React from 'react'
-import CodeDialog from '@/app/components/shared/CodeDialog'
+import React from 'react';
+import CodeDialog from '@/app/components/shared/CodeDialog';
 
 function ScatterDatasetCode() {
   return (
@@ -123,7 +123,7 @@ export default function ScatterDataset() {
 
             `}
     </CodeDialog>
-  )
+  );
 }
 
-export default ScatterDatasetCode
+export default ScatterDatasetCode;

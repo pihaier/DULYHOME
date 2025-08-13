@@ -21,10 +21,7 @@ import {
   TextField,
   InputAdornment,
 } from '@mui/material';
-import { 
-  Visibility as VisibilityIcon,
-  Search as SearchIcon 
-} from '@mui/icons-material';
+import { Visibility as VisibilityIcon, Search as SearchIcon } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@/lib/context/GlobalContext';
 import { createClient } from '@/lib/supabase/client';
@@ -60,25 +57,25 @@ export default function SamplingListPage() {
   const fetchSamplingOrders = async () => {
     setLoading(true);
     setError(null);
-    
+
     try {
       // sampling_applications 조회
       const { data: sampleOrders, error: sampleError } = await supabase
         .from('sampling_applications')
         .select('*')
         .order('created_at', { ascending: false });
-      
+
       if (sampleError) throw sampleError;
-      
+
       console.log('Sample orders:', sampleOrders);
-      
+
       // sampling_applications 데이터를 사용
-      const formattedOrders = (sampleOrders || []).map(sample => ({
+      const formattedOrders = (sampleOrders || []).map((sample) => ({
         ...sample,
         product_name: sample.sample_items?.[0]?.productName || '제품명 없음',
-        sample_quantity: sample.sample_items?.[0]?.quantity || 0
+        sample_quantity: sample.sample_items?.[0]?.quantity || 0,
       }));
-      
+
       console.log('Fetched sampling orders:', formattedOrders.length);
       setOrders(formattedOrders);
     } catch (error) {
@@ -110,7 +107,7 @@ export default function SamplingListPage() {
     }
   };
 
-  const filteredOrders = orders.filter(order => {
+  const filteredOrders = orders.filter((order) => {
     const searchLower = searchTerm.toLowerCase();
     return (
       order.reservation_number?.toLowerCase().includes(searchLower) ||
@@ -122,7 +119,9 @@ export default function SamplingListPage() {
 
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <Box
+        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}
+      >
         <CircularProgress />
       </Box>
     );
@@ -167,7 +166,7 @@ export default function SamplingListPage() {
               }}
               sx={{ mb: 2 }}
             />
-            
+
             <TableContainer component={Paper} elevation={0}>
               <Table>
                 <TableHead>
@@ -187,16 +186,16 @@ export default function SamplingListPage() {
                     filteredOrders.map((order) => {
                       const status = getStatusLabel(order.status);
                       return (
-                        <TableRow 
-                          key={order.id} 
+                        <TableRow
+                          key={order.id}
                           hover
                           sx={{ cursor: order.reservation_number ? 'pointer' : 'default' }}
                           onClick={() => order.reservation_number && handleViewOrder(order)}
                         >
                           <TableCell>
                             {order.reservation_number ? (
-                              <Chip 
-                                label={order.reservation_number} 
+                              <Chip
+                                label={order.reservation_number}
                                 size="small"
                                 color="secondary"
                                 variant="outlined"
@@ -208,11 +207,7 @@ export default function SamplingListPage() {
                             )}
                           </TableCell>
                           <TableCell align="center">
-                            <Chip 
-                              label={status.label} 
-                              color={status.color} 
-                              size="small" 
-                            />
+                            <Chip label={status.label} color={status.color} size="small" />
                           </TableCell>
                           <TableCell>
                             {new Date(order.created_at).toLocaleDateString('ko-KR')}
@@ -223,11 +218,17 @@ export default function SamplingListPage() {
                             </Typography>
                           </TableCell>
                           <TableCell align="right">
-                            {order.sample_quantity ? `${order.sample_quantity.toLocaleString()}개` : '-'}
+                            {order.sample_quantity
+                              ? `${order.sample_quantity.toLocaleString()}개`
+                              : '-'}
                           </TableCell>
                           <TableCell>
                             <Typography variant="body2" color="text.secondary">
-                              {order.shipping_method === 'air' ? '항공' : order.shipping_method === 'sea' ? '해운' : '-'}
+                              {order.shipping_method === 'air'
+                                ? '항공'
+                                : order.shipping_method === 'sea'
+                                  ? '해운'
+                                  : '-'}
                             </Typography>
                           </TableCell>
                           <TableCell>
@@ -237,8 +238,8 @@ export default function SamplingListPage() {
                           </TableCell>
                           <TableCell align="center">
                             {order.reservation_number ? (
-                              <IconButton 
-                                color="primary" 
+                              <IconButton
+                                color="primary"
                                 size="small"
                                 onClick={(e) => {
                                   e.stopPropagation();
@@ -248,10 +249,7 @@ export default function SamplingListPage() {
                                 <VisibilityIcon />
                               </IconButton>
                             ) : (
-                              <IconButton 
-                                size="small"
-                                disabled
-                              >
+                              <IconButton size="small" disabled>
                                 <VisibilityIcon />
                               </IconButton>
                             )}

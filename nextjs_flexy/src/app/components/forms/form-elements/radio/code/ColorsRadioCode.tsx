@@ -1,10 +1,10 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const ColorsRadioCode = () => {
-    return (
-        <>
-            <CodeDialog>
-                {`
+  return (
+    <>
+      <CodeDialog>
+        {`
 "use client";
 import React from 'react';
 import { Box, Radio } from '@mui/material';
@@ -62,9 +62,9 @@ const handleChange = (event) => {
         }}
     />
 </Box>`}
-            </CodeDialog>
-        </>
-    )
-}
+      </CodeDialog>
+    </>
+  );
+};
 
-export default ColorsRadioCode
+export default ColorsRadioCode;

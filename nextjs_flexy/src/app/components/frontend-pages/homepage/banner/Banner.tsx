@@ -1,5 +1,5 @@
-"use client";
-import React from "react";
+'use client';
+import React from 'react';
 import {
   Box,
   Stack,
@@ -10,41 +10,41 @@ import {
   Grid,
   Button,
   Link,
-} from "@mui/material";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import Image from "next/image";
-import Tooltip from "@mui/material/Tooltip";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
+} from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import Image from 'next/image';
+import Tooltip from '@mui/material/Tooltip';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 const Services = [
   {
-    name: "수입대행",
-    icon: "/images/services/import-agency.svg",
-    code: "수입",
+    name: '수입대행',
+    icon: '/images/services/import-agency.svg',
+    code: '수입',
   },
   {
-    name: "구매대행",
-    icon: "/images/services/market-research.svg",
-    code: "구매",
+    name: '구매대행',
+    icon: '/images/services/market-research.svg',
+    code: '구매',
   },
   {
-    name: "검품감사",
-    icon: "/images/services/quality-inspection.svg",
-    code: "검품",
+    name: '검품감사',
+    icon: '/images/services/quality-inspection.svg',
+    code: '검품',
   },
   {
-    name: "배송대행",
-    icon: "/images/services/factory-audit.svg",
-    code: "배송",
+    name: '배송대행',
+    icon: '/images/services/factory-audit.svg',
+    code: '배송',
   },
 ];
 const Banner = () => {
   //   sidebar
-  const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
+  const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
 
   const [open, setOpen] = React.useState(false);
 
@@ -57,39 +57,40 @@ const Banner = () => {
   };
 
   return (
-    (<Box 
+    <Box
       sx={{
-        position: "relative",
+        position: 'relative',
         pt: 7,
         pb: 7,
-        bgcolor: "#fafafa",
-        overflow: "hidden",
-        minHeight: "600px",
-        "&::before": {
+        bgcolor: '#fafafa',
+        overflow: 'hidden',
+        minHeight: '600px',
+        '&::before': {
           content: '""',
-          position: "absolute",
+          position: 'absolute',
           top: 0,
           left: 0,
           right: 0,
           bottom: 0,
-          background: "linear-gradient(135deg, rgba(25,118,210,0.1) 0%, rgba(156,39,176,0.05) 50%, rgba(255,193,7,0.1) 100%)",
-          zIndex: 1
-        }
+          background:
+            'linear-gradient(135deg, rgba(25,118,210,0.1) 0%, rgba(156,39,176,0.05) 50%, rgba(255,193,7,0.1) 100%)',
+          zIndex: 1,
+        },
       }}
     >
       {/* Background Video - Optimized */}
       <Box
         component="video"
         sx={{
-          position: "absolute",
+          position: 'absolute',
           top: 0,
           left: 0,
-          width: "100%", 
-          height: "100%",
-          objectFit: "cover",
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
           opacity: 0.2,
           zIndex: 0,
-          display: { xs: "none", md: "block" } // 모바일에서는 숨김
+          display: { xs: 'none', md: 'block' }, // 모바일에서는 숨김
         }}
         autoPlay
         muted
@@ -99,55 +100,55 @@ const Banner = () => {
       >
         <source src="/images/WeChat_20250625002234.mp4" type="video/mp4" />
       </Box>
-      
+
       {/* Mobile Background Gradient */}
       <Box
         sx={{
-          position: "absolute",
+          position: 'absolute',
           top: 0,
           left: 0,
           right: 0,
           bottom: 0,
-          background: "linear-gradient(135deg, rgba(25,118,210,0.1) 0%, rgba(156,39,176,0.05) 50%, rgba(255,193,7,0.1) 100%)",
+          background:
+            'linear-gradient(135deg, rgba(25,118,210,0.1) 0%, rgba(156,39,176,0.05) 50%, rgba(255,193,7,0.1) 100%)',
           zIndex: 0,
-          display: { xs: "block", md: "none" } // 모바일에서만 표시
+          display: { xs: 'block', md: 'none' }, // 모바일에서만 표시
         }}
       />
-      
+
       <Container
         sx={{
-          maxWidth: "1400px !important",
-          position: "relative",
-          zIndex: 2
+          maxWidth: '1400px !important',
+          position: 'relative',
+          zIndex: 2,
         }}
       >
         <Grid container spacing={3} justifyContent="center" mb={4}>
-
-
           <Grid
             textAlign="center"
             size={{
               xs: 12,
-              lg: 7
-            }}>
+              lg: 7,
+            }}
+          >
             <Typography
               variant="h1"
               fontWeight={700}
               lineHeight="1.2"
               sx={{
                 fontSize: {
-                  xs: "40px",
-                  sm: "56px",
+                  xs: '40px',
+                  sm: '56px',
                 },
               }}
             >
-              한-중 무역의 모든 것{" "}
+              한-중 무역의 모든 것{' '}
               <Typography
                 variant="h1"
                 sx={{
                   fontSize: {
-                    xs: "40px",
-                    sm: "56px",
+                    xs: '40px',
+                    sm: '56px',
                   },
                 }}
                 fontWeight={700}
@@ -159,12 +160,12 @@ const Banner = () => {
             </Typography>
             <Stack
               my={3}
-              direction={{ xs: "column", sm: "row" }}
+              direction={{ xs: 'column', sm: 'row' }}
               spacing="20px"
               alignItems="center"
               justifyContent="center"
             >
-              <Box 
+              <Box
                 sx={{
                   display: 'flex',
                   alignItems: 'center',
@@ -173,7 +174,7 @@ const Banner = () => {
                   px: 3,
                   py: 1,
                   borderRadius: '20px',
-                  backdropFilter: 'blur(10px)'
+                  backdropFilter: 'blur(10px)',
                 }}
               >
                 <Box
@@ -182,7 +183,7 @@ const Banner = () => {
                     height: 8,
                     borderRadius: '50%',
                     bgcolor: 'success.main',
-                    animation: 'pulse 2s infinite'
+                    animation: 'pulse 2s infinite',
                   }}
                 />
                 <Typography variant="h6" fontWeight={500}>
@@ -191,7 +192,7 @@ const Banner = () => {
               </Box>
             </Stack>
             <Stack
-              direction={{ xs: "column", sm: "row" }}
+              direction={{ xs: 'column', sm: 'row' }}
               alignItems="center"
               spacing={3}
               mb={4}
@@ -238,15 +239,13 @@ const Banner = () => {
                 이용 문의
               </Button>
             </Stack>
-
           </Grid>
-
         </Grid>
 
         {/* 서비스 요약 섹션 추가 */}
-        <Stack 
-          direction={{ xs: 'column', md: 'row' }} 
-          spacing={4} 
+        <Stack
+          direction={{ xs: 'column', md: 'row' }}
+          spacing={4}
           justifyContent="center"
           alignItems="center"
           sx={{ mt: 6 }}
@@ -260,21 +259,22 @@ const Banner = () => {
               제품 가격 조사
             </Typography>
           </Box>
-          
+
           <Box sx={{ width: { xs: 40, md: 60 }, height: 2, bgcolor: 'divider' }} />
-          
+
           <Box textAlign="center">
             <Typography variant="h3" fontWeight={700} color="primary.main" gutterBottom>
               공장컨택
             </Typography>
             <Typography variant="body1" color="text.secondary">
-              알고 있는 공장과<br />
+              알고 있는 공장과
+              <br />
               직접 업무 진행
             </Typography>
           </Box>
-          
+
           <Box sx={{ width: { xs: 40, md: 60 }, height: 2, bgcolor: 'divider' }} />
-          
+
           <Box textAlign="center">
             <Typography variant="h3" fontWeight={700} color="primary.main" gutterBottom>
               검품감사
@@ -286,7 +286,7 @@ const Banner = () => {
           </Box>
         </Stack>
       </Container>
-    </Box>)
+    </Box>
   );
 };
 

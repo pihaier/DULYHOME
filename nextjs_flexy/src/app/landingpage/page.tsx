@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import React from 'react';
 import PageContainer from '@/app/components/container/PageContainer';
@@ -14,7 +14,7 @@ import Frameworks from '@/app/components/landingpage/frameworks/Frameworks';
 import LpHeader from '@/app/components/landingpage/header/Header';
 import Testimonial from '@/app/components/landingpage/testimonial/Testimonial';
 
-export default function Landingpage () {
+export default function Landingpage() {
   return (
     <PageContainer title="Landingpage" description="this is Landingpage">
       <LpHeader />
@@ -28,6 +28,6 @@ export default function Landingpage () {
       <Footer />
     </PageContainer>
   );
-};
+}
 
-Landingpage.layout = "Blank";
+Landingpage.layout = 'Blank';

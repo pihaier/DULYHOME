@@ -1,24 +1,24 @@
-'use client'
+'use client';
 
-import React from 'react'
-import dayjs, { Dayjs } from 'dayjs'
-import ChildCard from '@/app/components/shared/ChildCard'
-import { LocalizationProvider } from '@mui/x-date-pickers'
-import { TimePicker } from '@mui/x-date-pickers/TimePicker'
-import TimepickerCode from '@/app/components/forms/form-elements/date-time/code/TimepickerCode'
-import { renderTimeViewClock } from '@mui/x-date-pickers/timeViewRenderers'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import React from 'react';
+import dayjs, { Dayjs } from 'dayjs';
+import ChildCard from '@/app/components/shared/ChildCard';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import TimepickerCode from '@/app/components/forms/form-elements/date-time/code/TimepickerCode';
+import { renderTimeViewClock } from '@mui/x-date-pickers/timeViewRenderers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 const MuiDateTimePicker = () => {
-  const [value2, setValue2] = React.useState<Dayjs | null>(dayjs())
+  const [value2, setValue2] = React.useState<Dayjs | null>(dayjs());
 
   return (
-    <ChildCard title='Timepicker' codeModel={<TimepickerCode />}>
+    <ChildCard title="Timepicker" codeModel={<TimepickerCode />}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <TimePicker
           value={value2}
           onChange={(newValue) => {
-            setValue2(newValue)
+            setValue2(newValue);
           }}
           viewRenderers={{
             hours: renderTimeViewClock,
@@ -43,7 +43,7 @@ const MuiDateTimePicker = () => {
         />
       </LocalizationProvider>
     </ChildCard>
-  )
-}
+  );
+};
 
-export default MuiDateTimePicker
+export default MuiDateTimePicker;

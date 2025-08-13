@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { 
-  Box, 
-  Typography, 
-  CircularProgress, 
-  Alert, 
+import {
+  Box,
+  Typography,
+  CircularProgress,
+  Alert,
   Button,
   Stack,
   Tabs,
@@ -86,7 +86,7 @@ export default function FactoryContactDetailPage() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'), { noSsr: true });
   const { user } = useUser();
   const reservationNumber = params.reservationNumber as string;
-  
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<any>(null);
@@ -94,7 +94,9 @@ export default function FactoryContactDetailPage() {
   const [confirmations, setConfirmations] = useState<ConfirmationRequest[]>([]);
   const [tabValue, setTabValue] = useState(0);
   const [chatDrawerOpen, setChatDrawerOpen] = useState(false);
-  const [selectedConfirmation, setSelectedConfirmation] = useState<ConfirmationRequest | null>(null);
+  const [selectedConfirmation, setSelectedConfirmation] = useState<ConfirmationRequest | null>(
+    null
+  );
   const [selectedOption, setSelectedOption] = useState('');
   const [confirmComment, setConfirmComment] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -107,10 +109,10 @@ export default function FactoryContactDetailPage() {
         setLoading(false);
         return;
       }
-      
+
       setLoading(true);
       setError(null);
-      
+
       try {
         // 공장컨택 정보 조회
         const { data, error } = await supabase
@@ -118,19 +120,19 @@ export default function FactoryContactDetailPage() {
           .select('*')
           .eq('reservation_number', reservationNumber)
           .maybeSingle();
-        
+
         if (error) throw new Error(error.message);
         if (!data) throw new Error('데이터를 찾을 수 없습니다.');
-        
+
         setData(data);
-        
+
         // 업로드된 파일들 가져오기
         const { data: filesData, error: filesError } = await supabase
           .from('uploaded_files')
           .select('*')
           .eq('reservation_number', reservationNumber)
           .order('created_at', { ascending: false });
-        
+
         if (filesError) {
           console.error('Files fetch error:', filesError);
         } else {
@@ -164,9 +166,12 @@ export default function FactoryContactDetailPage() {
     setTabValue(newValue);
   };
 
-  const handleConfirmationResponse = async (confirmation: ConfirmationRequest, response: 'approved' | 'rejected' | 'need_alternative') => {
+  const handleConfirmationResponse = async (
+    confirmation: ConfirmationRequest,
+    response: 'approved' | 'rejected' | 'need_alternative'
+  ) => {
     setSubmitting(true);
-    
+
     try {
       const { error } = await supabase
         .from('confirmation_requests')
@@ -175,7 +180,7 @@ export default function FactoryContactDetailPage() {
           selected_option_id: selectedOption,
           customer_comment: confirmComment,
           responded_at: new Date().toISOString(),
-          status: 'responded'
+          status: 'responded',
         })
         .eq('id', confirmation.id);
 
@@ -192,7 +197,7 @@ export default function FactoryContactDetailPage() {
       setSelectedConfirmation(null);
       setSelectedOption('');
       setConfirmComment('');
-      
+
       alert('응답이 전송되었습니다.');
     } catch (error) {
       console.error('Error responding to confirmation:', error);
@@ -211,7 +216,7 @@ export default function FactoryContactDetailPage() {
       design_approval: '디자인 승인',
       schedule_confirm: '일정 확인',
       price_negotiation: '가격 협상',
-      custom: '기타'
+      custom: '기타',
     };
     return typeMap[type] || type;
   };
@@ -222,15 +227,17 @@ export default function FactoryContactDetailPage() {
       bulk_order: '대량 주문',
       inspection: '검품 요청',
       shipping: '배송 문의',
-      other: '기타'
+      other: '기타',
     };
-    
-    return types.map(type => typeMap[type] || type);
+
+    return types.map((type) => typeMap[type] || type);
   };
 
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <Box
+        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}
+      >
         <CircularProgress />
         <Typography sx={{ ml: 2 }}>Loading...</Typography>
       </Box>
@@ -251,7 +258,11 @@ export default function FactoryContactDetailPage() {
   return (
     <Box sx={{ p: 3 }}>
       {/* Header */}
-      <OrderHeader orderData={data} serviceType="factory_contact" reservationNumber={reservationNumber} />
+      <OrderHeader
+        orderData={data}
+        serviceType="factory_contact"
+        reservationNumber={reservationNumber}
+      />
 
       {/* Main Content with Chat */}
       <Grid container spacing={isMobile ? 0 : 3} sx={{ mt: 2 }}>
@@ -259,23 +270,26 @@ export default function FactoryContactDetailPage() {
         <Grid size={{ xs: 12, md: 8 }}>
           <Paper elevation={3} sx={{ mb: isMobile ? 8 : 0 }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs 
-                value={tabValue} 
-                onChange={handleTabChange} 
-                aria-label="order details tabs" 
-                variant={isMobile ? "scrollable" : "fullWidth"}
-                scrollButtons={isMobile ? "auto" : false}
+              <Tabs
+                value={tabValue}
+                onChange={handleTabChange}
+                aria-label="order details tabs"
+                variant={isMobile ? 'scrollable' : 'fullWidth'}
+                scrollButtons={isMobile ? 'auto' : false}
               >
                 <Tab icon={<BusinessIcon />} label="신청정보" iconPosition="start" />
                 <Tab icon={<FactoryIcon />} label="공장정보" iconPosition="start" />
-                <Tab 
+                <Tab
                   icon={
-                    <Badge badgeContent={confirmations.filter(c => c.status === 'pending').length} color="error">
+                    <Badge
+                      badgeContent={confirmations.filter((c) => c.status === 'pending').length}
+                      color="error"
+                    >
                       <AssignmentIcon />
                     </Badge>
-                  } 
-                  label="컨펌대기" 
-                  iconPosition="start" 
+                  }
+                  label="컨펌대기"
+                  iconPosition="start"
                 />
                 <Tab icon={<AttachFileIcon />} label="첨부파일" iconPosition="start" />
               </Tabs>
@@ -293,24 +307,40 @@ export default function FactoryContactDetailPage() {
                       <Grid size={{ xs: 12, md: 6 }}>
                         <Stack spacing={2}>
                           <Box>
-                            <Typography variant="caption" color="text.secondary">회사명</Typography>
-                            <Typography variant="body1" fontWeight="medium">{data?.company_name || '-'}</Typography>
+                            <Typography variant="caption" color="text.secondary">
+                              회사명
+                            </Typography>
+                            <Typography variant="body1" fontWeight="medium">
+                              {data?.company_name || '-'}
+                            </Typography>
                           </Box>
                           <Box>
-                            <Typography variant="caption" color="text.secondary">담당자</Typography>
-                            <Typography variant="body1" fontWeight="medium">{data?.contact_person || '-'}</Typography>
+                            <Typography variant="caption" color="text.secondary">
+                              담당자
+                            </Typography>
+                            <Typography variant="body1" fontWeight="medium">
+                              {data?.contact_person || '-'}
+                            </Typography>
                           </Box>
                         </Stack>
                       </Grid>
                       <Grid size={{ xs: 12, md: 6 }}>
                         <Stack spacing={2}>
                           <Box>
-                            <Typography variant="caption" color="text.secondary">연락처</Typography>
-                            <Typography variant="body1" fontWeight="medium">{data?.contact_phone || '-'}</Typography>
+                            <Typography variant="caption" color="text.secondary">
+                              연락처
+                            </Typography>
+                            <Typography variant="body1" fontWeight="medium">
+                              {data?.contact_phone || '-'}
+                            </Typography>
                           </Box>
                           <Box>
-                            <Typography variant="caption" color="text.secondary">이메일</Typography>
-                            <Typography variant="body1" fontWeight="medium">{data?.contact_email || '-'}</Typography>
+                            <Typography variant="caption" color="text.secondary">
+                              이메일
+                            </Typography>
+                            <Typography variant="body1" fontWeight="medium">
+                              {data?.contact_email || '-'}
+                            </Typography>
                           </Box>
                         </Stack>
                       </Grid>
@@ -323,11 +353,17 @@ export default function FactoryContactDetailPage() {
                     </Typography>
                     <Stack spacing={2}>
                       <Box>
-                        <Typography variant="caption" color="text.secondary">제품명</Typography>
-                        <Typography variant="body1" fontWeight="medium">{data?.product_name || '-'}</Typography>
+                        <Typography variant="caption" color="text.secondary">
+                          제품명
+                        </Typography>
+                        <Typography variant="body1" fontWeight="medium">
+                          {data?.product_name || '-'}
+                        </Typography>
                       </Box>
                       <Box>
-                        <Typography variant="caption" color="text.secondary">제품 설명</Typography>
+                        <Typography variant="caption" color="text.secondary">
+                          제품 설명
+                        </Typography>
                         <Typography variant="body1" sx={{ whiteSpace: 'pre-wrap' }}>
                           {data?.product_description || '-'}
                         </Typography>
@@ -346,7 +382,9 @@ export default function FactoryContactDetailPage() {
                     </Box>
                     {data?.special_requirements && (
                       <Box>
-                        <Typography variant="caption" color="text.secondary">상세 요청사항</Typography>
+                        <Typography variant="caption" color="text.secondary">
+                          상세 요청사항
+                        </Typography>
                         <Paper sx={{ p: 2, bgcolor: 'grey.100', mt: 1 }} elevation={0}>
                           <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }}>
                             {data.special_requirements}
@@ -371,24 +409,40 @@ export default function FactoryContactDetailPage() {
                       <Grid size={{ xs: 12, md: 6 }}>
                         <Stack spacing={2}>
                           <Box>
-                            <Typography variant="caption" color="text.secondary">공장명</Typography>
-                            <Typography variant="body1" fontWeight="medium">{data?.factory_name || '-'}</Typography>
+                            <Typography variant="caption" color="text.secondary">
+                              공장명
+                            </Typography>
+                            <Typography variant="body1" fontWeight="medium">
+                              {data?.factory_name || '-'}
+                            </Typography>
                           </Box>
                           <Box>
-                            <Typography variant="caption" color="text.secondary">담당자</Typography>
-                            <Typography variant="body1" fontWeight="medium">{data?.factory_contact_person || '-'}</Typography>
+                            <Typography variant="caption" color="text.secondary">
+                              담당자
+                            </Typography>
+                            <Typography variant="body1" fontWeight="medium">
+                              {data?.factory_contact_person || '-'}
+                            </Typography>
                           </Box>
                         </Stack>
                       </Grid>
                       <Grid size={{ xs: 12, md: 6 }}>
                         <Stack spacing={2}>
                           <Box>
-                            <Typography variant="caption" color="text.secondary">연락처</Typography>
-                            <Typography variant="body1" fontWeight="medium">{data?.factory_contact_phone || '-'}</Typography>
+                            <Typography variant="caption" color="text.secondary">
+                              연락처
+                            </Typography>
+                            <Typography variant="body1" fontWeight="medium">
+                              {data?.factory_contact_phone || '-'}
+                            </Typography>
                           </Box>
                           <Box>
-                            <Typography variant="caption" color="text.secondary">주소</Typography>
-                            <Typography variant="body1" fontWeight="medium">{data?.factory_address || '-'}</Typography>
+                            <Typography variant="caption" color="text.secondary">
+                              주소
+                            </Typography>
+                            <Typography variant="body1" fontWeight="medium">
+                              {data?.factory_address || '-'}
+                            </Typography>
                           </Box>
                         </Stack>
                       </Grid>
@@ -408,12 +462,20 @@ export default function FactoryContactDetailPage() {
                 ) : (
                   <Stack spacing={2}>
                     {confirmations.map((confirmation) => (
-                      <Card key={confirmation.id} sx={{ 
-                        border: confirmation.is_urgent ? '2px solid' : '1px solid',
-                        borderColor: confirmation.is_urgent ? 'error.main' : 'divider'
-                      }}>
+                      <Card
+                        key={confirmation.id}
+                        sx={{
+                          border: confirmation.is_urgent ? '2px solid' : '1px solid',
+                          borderColor: confirmation.is_urgent ? 'error.main' : 'divider',
+                        }}
+                      >
                         <CardContent>
-                          <Stack direction="row" justifyContent="space-between" alignItems="flex-start" sx={{ mb: 2 }}>
+                          <Stack
+                            direction="row"
+                            justifyContent="space-between"
+                            alignItems="flex-start"
+                            sx={{ mb: 2 }}
+                          >
                             <Box>
                               <Stack direction="row" spacing={1} alignItems="center">
                                 <Typography variant="h6" fontWeight="bold">
@@ -424,19 +486,26 @@ export default function FactoryContactDetailPage() {
                                 )}
                               </Stack>
                               <Typography variant="caption" color="text.secondary">
-                                {getRequestTypeLabel(confirmation.request_type)} • 
+                                {getRequestTypeLabel(confirmation.request_type)} •
                                 {new Date(confirmation.created_at).toLocaleDateString('ko-KR')}
                               </Typography>
                             </Box>
-                            <Chip 
+                            <Chip
                               label={
-                                confirmation.status === 'pending' ? '대기중' : 
-                                confirmation.customer_response === 'approved' ? '승인됨' :
-                                confirmation.customer_response === 'rejected' ? '거절됨' : '응답됨'
+                                confirmation.status === 'pending'
+                                  ? '대기중'
+                                  : confirmation.customer_response === 'approved'
+                                    ? '승인됨'
+                                    : confirmation.customer_response === 'rejected'
+                                      ? '거절됨'
+                                      : '응답됨'
                               }
                               color={
-                                confirmation.status === 'pending' ? 'warning' : 
-                                confirmation.customer_response === 'approved' ? 'success' : 'error'
+                                confirmation.status === 'pending'
+                                  ? 'warning'
+                                  : confirmation.customer_response === 'approved'
+                                    ? 'success'
+                                    : 'error'
                               }
                               size="small"
                             />
@@ -451,15 +520,21 @@ export default function FactoryContactDetailPage() {
                               <Typography variant="subtitle2" fontWeight="bold" sx={{ mb: 1 }}>
                                 선택 옵션
                               </Typography>
-                              <RadioGroup 
-                                value={selectedConfirmation?.id === confirmation.id ? selectedOption : confirmation.selected_option_id || ''}
+                              <RadioGroup
+                                value={
+                                  selectedConfirmation?.id === confirmation.id
+                                    ? selectedOption
+                                    : confirmation.selected_option_id || ''
+                                }
                                 onChange={(e) => setSelectedOption(e.target.value)}
                               >
                                 {confirmation.options.map((option: any) => (
                                   <Paper key={option.id} sx={{ p: 2, mb: 1 }} elevation={0}>
                                     <FormControlLabel
                                       value={option.id}
-                                      control={<Radio disabled={confirmation.status !== 'pending'} />}
+                                      control={
+                                        <Radio disabled={confirmation.status !== 'pending'} />
+                                      }
                                       label={
                                         <Box>
                                           <Typography variant="body2" fontWeight="bold">
@@ -489,7 +564,9 @@ export default function FactoryContactDetailPage() {
                                 multiline
                                 rows={2}
                                 label="추가 의견"
-                                value={selectedConfirmation?.id === confirmation.id ? confirmComment : ''}
+                                value={
+                                  selectedConfirmation?.id === confirmation.id ? confirmComment : ''
+                                }
                                 onChange={(e) => setConfirmComment(e.target.value)}
                                 sx={{ mb: 2 }}
                               />
@@ -525,7 +602,10 @@ export default function FactoryContactDetailPage() {
                                     setSelectedConfirmation(confirmation);
                                     handleConfirmationResponse(confirmation, 'approved');
                                   }}
-                                  disabled={submitting || (confirmation.options?.length > 0 && !selectedOption)}
+                                  disabled={
+                                    submitting ||
+                                    (confirmation.options?.length > 0 && !selectedOption)
+                                  }
                                 >
                                   승인
                                 </Button>
@@ -560,18 +640,18 @@ export default function FactoryContactDetailPage() {
                       <Paper key={file.id} sx={{ p: 2 }} elevation={1}>
                         <Stack spacing={2}>
                           {/* 이미지 파일인 경우 미리보기 표시 */}
-                          {(file.mime_type?.startsWith('image/') || 
+                          {(file.mime_type?.startsWith('image/') ||
                             file.original_filename?.match(/\.(jpg|jpeg|png|gif|webp)$/i)) && (
                             <Box sx={{ mb: 2 }}>
-                              <img 
-                                src={file.file_url} 
+                              <img
+                                src={file.file_url}
                                 alt={file.original_filename}
-                                style={{ 
-                                  maxWidth: '100%', 
-                                  maxHeight: '300px', 
+                                style={{
+                                  maxWidth: '100%',
+                                  maxHeight: '300px',
                                   objectFit: 'contain',
                                   borderRadius: '4px',
-                                  border: '1px solid rgba(0,0,0,0.1)'
+                                  border: '1px solid rgba(0,0,0,0.1)',
                                 }}
                               />
                             </Box>
@@ -579,11 +659,9 @@ export default function FactoryContactDetailPage() {
                           <Stack direction="row" alignItems="center" spacing={2}>
                             <AttachFileIcon color="action" />
                             <Box flex={1}>
-                              <Typography variant="body1">
-                                {file.original_filename}
-                              </Typography>
+                              <Typography variant="body1">{file.original_filename}</Typography>
                               <Typography variant="caption" color="text.secondary">
-                                {(file.file_size / 1024 / 1024).toFixed(2)}MB • 
+                                {(file.file_size / 1024 / 1024).toFixed(2)}MB •
                                 {new Date(file.created_at).toLocaleDateString('ko-KR')}
                               </Typography>
                             </Box>
@@ -614,10 +692,7 @@ export default function FactoryContactDetailPage() {
         {/* Desktop - Chat on right side */}
         {!isMobile && (
           <Grid size={{ md: 4 }}>
-            <ChatPanel 
-              reservationNumber={reservationNumber}
-              serviceType="factory-contact"
-            />
+            <ChatPanel reservationNumber={reservationNumber} serviceType="factory-contact" />
           </Grid>
         )}
       </Grid>
@@ -632,7 +707,7 @@ export default function FactoryContactDetailPage() {
               position: 'fixed',
               bottom: 16,
               right: 16,
-              zIndex: 1200
+              zIndex: 1200,
             }}
             onClick={() => setChatDrawerOpen(true)}
           >
@@ -649,7 +724,7 @@ export default function FactoryContactDetailPage() {
                 height: '80vh',
                 borderTopLeftRadius: 16,
                 borderTopRightRadius: 16,
-              }
+              },
             }}
           >
             <Box sx={{ p: 2 }}>
@@ -660,10 +735,7 @@ export default function FactoryContactDetailPage() {
                 </IconButton>
               </Stack>
               <Box sx={{ height: 'calc(80vh - 100px)' }}>
-                <ChatPanel 
-                  reservationNumber={reservationNumber}
-                  serviceType="factory-contact"
-                />
+                <ChatPanel reservationNumber={reservationNumber} serviceType="factory-contact" />
               </Box>
             </Box>
           </Drawer>
@@ -674,9 +746,17 @@ export default function FactoryContactDetailPage() {
 }
 
 // Badge 컴포넌트 추가
-const Badge = ({ badgeContent, color, children }: { badgeContent: number, color: string, children: React.ReactNode }) => {
+const Badge = ({
+  badgeContent,
+  color,
+  children,
+}: {
+  badgeContent: number;
+  color: string;
+  children: React.ReactNode;
+}) => {
   if (badgeContent === 0) return <>{children}</>;
-  
+
   return (
     <Box sx={{ position: 'relative', display: 'inline-flex' }}>
       {children}

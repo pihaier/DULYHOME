@@ -1,24 +1,23 @@
 const DarkThemeColors = [
   {
-    name: "BLUE_THEME",
+    name: 'BLUE_THEME',
     palette: {
       primary: {
-        main: "#1e4db7",
-        light: "#1d2742",
-        dark: "#05255b",
-        contrastText: "#ffffff",
+        main: '#1e4db7',
+        light: '#1d2742',
+        dark: '#05255b',
+        contrastText: '#ffffff',
       },
       secondary: {
         main: '#1a97f5',
-        light: "#1C455D",
+        light: '#1C455D',
         dark: '#1682d4',
-        contrastText: "#ffffff",
+        contrastText: '#ffffff',
       },
-     
     },
   },
   {
-    name: "AQUA_THEME",
+    name: 'AQUA_THEME',
     palette: {
       primary: {
         main: '#0074BA',
@@ -35,7 +34,7 @@ const DarkThemeColors = [
     },
   },
   {
-    name: "PURPLE_THEME",
+    name: 'PURPLE_THEME',
     palette: {
       primary: {
         main: '#763EBD',
@@ -52,7 +51,7 @@ const DarkThemeColors = [
     },
   },
   {
-    name: "PINK_THEME",
+    name: 'PINK_THEME',
     palette: {
       primary: {
         main: '#ff5c8e',
@@ -66,11 +65,10 @@ const DarkThemeColors = [
         dark: '#4a163b',
         contrastText: '#ffffff',
       },
-
     },
   },
   {
-    name: "CYAN_THEME",
+    name: 'CYAN_THEME',
     palette: {
       primary: {
         main: '#01C0C8',
@@ -87,7 +85,7 @@ const DarkThemeColors = [
     },
   },
   {
-    name: "ORANGE_THEME",
+    name: 'ORANGE_THEME',
     palette: {
       primary: {
         main: '#FA896B',

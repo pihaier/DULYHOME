@@ -7,7 +7,7 @@ import {
   IconClipboardList,
   IconSearch,
   IconBuildingFactory,
-} from "@tabler/icons-react";
+} from '@tabler/icons-react';
 import { useTheme } from '@mui/material/styles';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
@@ -30,7 +30,7 @@ const ServiceStatsCards = () => {
     unreadMessages: 0,
     activeInspections: 0,
     activeMarketResearch: 0,
-    pendingFactoryContacts: 0
+    pendingFactoryContacts: 0,
   });
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const ServiceStatsCards = () => {
   const fetchStats = async () => {
     try {
       const supabase = createClient();
-      
+
       // 전체 메시지 수 (is_read 컬럼이 없으므로 전체 카운트)
       const { count: unreadMessages } = await supabase
         .from('chat_messages')
@@ -68,7 +68,7 @@ const ServiceStatsCards = () => {
         unreadMessages: unreadMessages || 0,
         activeInspections: activeInspections || 0,
         activeMarketResearch: activeMarketResearch || 0,
-        pendingFactoryContacts: pendingFactoryContacts || 0
+        pendingFactoryContacts: pendingFactoryContacts || 0,
       });
     } catch (error) {
       console.error('Error fetching stats:', error);
@@ -121,8 +121,9 @@ const ServiceStatsCards = () => {
             size={{
               xs: 6,
               lg: 3,
-              sm: 3
-            }}>
+              sm: 3,
+            }}
+          >
             <CardContent
               sx={{
                 borderRight: {
@@ -145,11 +146,11 @@ const ServiceStatsCards = () => {
                   backgroundColor: card.btnbg,
                   color: card.btntext,
                   boxShadow: 'none',
-                  width: 50, 
+                  width: 50,
                   height: 50,
-                  "&:hover": {
+                  '&:hover': {
                     backgroundColor: card.btnbg,
-                  }
+                  },
                 }}
               >
                 {card.icon}

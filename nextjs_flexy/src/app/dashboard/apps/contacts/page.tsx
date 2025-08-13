@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import { useState } from 'react';
 import { Button, Box, Drawer, useMediaQuery, Theme } from '@mui/material';
@@ -9,7 +9,7 @@ import ContactList from '@/app/components/apps/contacts/ContactList';
 import ContactSearch from '@/app/components/apps/contacts/ContactSearch';
 import ContactFilter from '@/app/components/apps/contacts/ContactFilter';
 import AppCard from '@/app/components/shared/AppCard';
-import { ContactContextProvider } from '@/app/context/Conatactcontext/index'
+import { ContactContextProvider } from '@/app/context/Conatactcontext/index';
 
 const drawerWidth = 240;
 const secdrawerWidth = 320;

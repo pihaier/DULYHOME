@@ -1,20 +1,20 @@
-"use client";
-import React, { FC } from "react";
-import Image from "next/image";
-import { format } from "date-fns";
-import Link from "next/link";
-import BlankCard from "../../../shared/BlankCard";
-import NextLink from "next/link";
-import Typography from "@mui/material/Typography";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Stack from "@mui/material/Stack";
-import Tooltip from "@mui/material/Tooltip";
-import Avatar from "@mui/material/Avatar";
-import Box from "@mui/material/Box";
-import Chip from "@mui/material/Chip";
-import { IconEye, IconMessage2, IconPoint } from "@tabler/icons-react";
-import { useTheme } from "@mui/material/styles";
+'use client';
+import React, { FC } from 'react';
+import Image from 'next/image';
+import { format } from 'date-fns';
+import Link from 'next/link';
+import BlankCard from '../../../shared/BlankCard';
+import NextLink from 'next/link';
+import Typography from '@mui/material/Typography';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Stack from '@mui/material/Stack';
+import Tooltip from '@mui/material/Tooltip';
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import Chip from '@mui/material/Chip';
+import { IconEye, IconMessage2, IconPoint } from '@tabler/icons-react';
+import { useTheme } from '@mui/material/styles';
 
 type Blog = {
   id?: number;
@@ -33,46 +33,26 @@ type Blog = {
 const BlogCard = ({ blog }: { blog: Blog }) => {
   const theme = useTheme();
 
-  const {
-    title,
-    coverImage,
-    excerpt,
-    date,
-    slug,
-    author,
-    authorImage,
-    views,
-    comments,
-    category,
-  } = blog;
+  const { title, coverImage, excerpt, date, slug, author, authorImage, views, comments, category } =
+    blog;
   return (
     <>
       <BlankCard className="hoverCard">
         <>
-          <Typography
-            component={NextLink}
-            href={`/frontend-pages/blog/${slug}`}
-          >
-            <CardMedia
-              component="img"
-              height="240"
-              image={coverImage}
-              alt="green iguana"
-            />
+          <Typography component={NextLink} href={`/frontend-pages/blog/${slug}`}>
+            <CardMedia component="img" height="240" image={coverImage} alt="green iguana" />
           </Typography>
           <CardContent>
-            <Stack direction="row" sx={{ marginTop: "-45px" }}>
+            <Stack direction="row" sx={{ marginTop: '-45px' }}>
               <Tooltip title={author} placement="top">
                 <Avatar aria-label="recipe" src={authorImage}></Avatar>
               </Tooltip>
               <Chip
                 sx={{
-                  marginLeft: "auto",
-                  marginTop: "-21px",
+                  marginLeft: 'auto',
+                  marginTop: '-21px',
                   backgroundColor:
-                    theme.palette.mode === "dark"
-                      ? theme.palette.background.default
-                      : "white",
+                    theme.palette.mode === 'dark' ? theme.palette.background.default : 'white',
                 }}
                 label="2 min Read"
                 size="small"
@@ -84,7 +64,7 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
                 gutterBottom
                 variant="h5"
                 color="inherit"
-                sx={{ textDecoration: "none" }}
+                sx={{ textDecoration: 'none' }}
                 component={NextLink}
                 href={`/frontend-pages/blog/${slug}`}
               >
@@ -101,7 +81,7 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
 
               <Stack direction="row" ml="auto" alignItems="center">
                 <IconPoint size="16" />
-                <small>{format(new Date(date), "dd MMM yyyy")}</small>
+                <small>{format(new Date(date), 'dd MMM yyyy')}</small>
               </Stack>
             </Stack>
           </CardContent>

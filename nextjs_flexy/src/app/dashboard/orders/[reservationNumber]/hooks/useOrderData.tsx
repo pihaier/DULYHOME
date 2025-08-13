@@ -22,13 +22,18 @@ export function useOrderData(reservationNumber: string) {
 
   const getServiceType = (reservationNumber: string) => {
     const prefix = reservationNumber.split('-')[0];
-    switch(prefix) {
-      case 'DLSY': return 'market_research';
-      case 'IN': return 'inspection';
-      case 'DLSP': return 'sampling';
+    switch (prefix) {
+      case 'DLSY':
+        return 'market_research';
+      case 'IN':
+        return 'inspection';
+      case 'DLSP':
+        return 'sampling';
       case 'BO':
-      case 'DLBO': return 'bulk_order';
-      default: return null;
+      case 'DLBO':
+        return 'bulk_order';
+      default:
+        return null;
     }
   };
 
@@ -36,7 +41,7 @@ export function useOrderData(reservationNumber: string) {
     try {
       setLoading(true);
       setError(null);
-      
+
       const serviceType = getServiceType(reservationNumber);
       if (!serviceType) {
         throw new Error('유효하지 않은 예약번호입니다.');
@@ -49,13 +54,15 @@ export function useOrderData(reservationNumber: string) {
         case 'market_research': {
           const { data, error } = await supabase
             .from('market_research_requests')
-            .select(`
+            .select(
+              `
               *,
               market_research_info!inner(*),
               market_research_suppliers!inner(*),
               market_research_products!inner(*),
               market_research_samples!inner(*)
-            `)
+            `
+            )
             .eq('reservation_number', reservationNumber)
             .single();
 
@@ -103,15 +110,17 @@ export function useOrderData(reservationNumber: string) {
           // orders 테이블과 sample_orders 테이블 조인
           const { data: samplingData, error: orderError } = await supabase
             .from('orders')
-            .select(`
+            .select(
+              `
               *,
               sample_orders!inner(*)
-            `)
+            `
+            )
             .eq('reservation_number', reservationNumber)
             .single();
 
           if (orderError) throw orderError;
-          
+
           orderData = {
             ...samplingData,
             serviceType: 'sampling',
@@ -123,10 +132,12 @@ export function useOrderData(reservationNumber: string) {
         case 'bulk_order': {
           const { data, error } = await supabase
             .from('bulk_orders')
-            .select(`
+            .select(
+              `
               *,
               orders!inner(*)
-            `)
+            `
+            )
             .eq('reservation_number', reservationNumber)
             .single();
 
@@ -141,7 +152,9 @@ export function useOrderData(reservationNumber: string) {
       }
 
       // 사용자 권한 확인
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (user) {
         const { data: profile } = await supabase
           .from('user_profiles')
@@ -155,7 +168,7 @@ export function useOrderData(reservationNumber: string) {
           delete orderData.contactPerson;
           delete orderData.contactPhone;
           delete orderData.contactEmail;
-          
+
           if (orderData.applicationInfo) {
             delete orderData.applicationInfo.companyName;
             delete orderData.applicationInfo.contactPerson;

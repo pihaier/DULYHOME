@@ -3,11 +3,13 @@
 ## 📧 Supabase 이메일 템플릿 설정 방법
 
 ### 1. Supabase Dashboard 접속
+
 1. [Supabase Dashboard](https://app.supabase.com) 로그인
 2. 프로젝트 선택
 3. 왼쪽 메뉴에서 **Authentication** 클릭
 
 ### 2. Email Templates 설정
+
 1. **Authentication** → **Email Templates** 이동
 2. **Magic Link** 템플릿 선택
 3. `otp-template.html` 파일의 내용 복사
@@ -15,6 +17,7 @@
 5. **Save** 클릭
 
 ### 3. Email Provider 설정
+
 1. **Authentication** → **Providers** → **Email** 이동
 2. 다음 설정 적용:
    - ✅ Enable Email provider
@@ -22,7 +25,9 @@
    - Email OTP Length: `6` (6자리)
 
 ### 4. SMTP 설정 (선택사항)
+
 고급 이메일 설정을 원한다면:
+
 1. **Settings** → **Auth** 이동
 2. **SMTP Settings** 섹션에서:
    ```
@@ -37,6 +42,7 @@
 ## 📝 템플릿 파일 설명
 
 ### otp-template.html
+
 - **용도**: OTP(6자리 인증번호) 이메일 템플릿
 - **특징**:
   - 홈페이지와 동일한 디자인 언어 사용
@@ -47,6 +53,7 @@
 ## 🎨 템플릿 커스터마이징
 
 ### 색상 변경
+
 ```html
 <!-- 메인 컬러 -->
 color: #1976d2; → 원하는 색상으로 변경
@@ -56,12 +63,14 @@ background: linear-gradient(135deg, rgba(25,118,210,0.1) 0%, ...);
 ```
 
 ### 로고 추가
+
 ```html
 <!-- 텍스트 대신 이미지 로고 사용 -->
-<img src="https://your-cdn.com/logo.png" alt="두리무역" style="height: 40px;">
+<img src="https://your-cdn.com/logo.png" alt="두리무역" style="height: 40px;" />
 ```
 
 ### 문구 수정
+
 - `{{ .Token }}`: Supabase가 자동으로 6자리 코드로 대체
 - `{{ .ConfirmationURL }}`: Magic Link URL (숨김 처리됨)
 
@@ -79,8 +88,8 @@ background: linear-gradient(135deg, rgba(25,118,210,0.1) 0%, ...);
 const { data, error } = await supabase.auth.signInWithOtp({
   email: 'test@example.com',
   options: {
-    shouldCreateUser: false
-  }
+    shouldCreateUser: false,
+  },
 });
 ```
 

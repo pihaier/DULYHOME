@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { IconButton, Button, Stack, Fab } from "@mui/material";
-import Tooltip from "@mui/material/Tooltip";
+import { IconButton, Button, Stack, Fab } from '@mui/material';
+import Tooltip from '@mui/material/Tooltip';
 
 // common component
-import ChildCard from "@/app/components/shared/ChildCard";
+import ChildCard from '@/app/components/shared/ChildCard';
 
-import SimpleTooltipCode from "@/app/components/ui-components/tooltip/code/SimpleTooltipCode";
+import SimpleTooltipCode from '@/app/components/ui-components/tooltip/code/SimpleTooltipCode';
 
-import { IconPlus, IconTrash } from "@tabler/icons-react";
+import { IconPlus, IconTrash } from '@tabler/icons-react';
 
 const TooltipSimple = () => (
   <ChildCard title="Simple" codeModel={<SimpleTooltipCode />}>

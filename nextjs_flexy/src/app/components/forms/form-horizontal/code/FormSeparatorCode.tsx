@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const FormSeparatorCode = () => {
   return (
     <>
@@ -294,7 +294,7 @@ const [country, setCountry] = React.useState('');
 `}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default FormSeparatorCode
+export default FormSeparatorCode;

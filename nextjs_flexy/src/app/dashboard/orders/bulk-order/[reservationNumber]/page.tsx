@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { 
-  Box, 
-  Typography, 
-  CircularProgress, 
-  Alert, 
+import {
+  Box,
+  Typography,
+  CircularProgress,
+  Alert,
   Button,
   Stack,
   Tabs,
@@ -22,7 +22,7 @@ import {
   useMediaQuery,
   useTheme,
   Drawer,
-  IconButton
+  IconButton,
 } from '@mui/material';
 import { useRouter, useParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
@@ -66,7 +66,7 @@ export default function BulkOrderDetailPage() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'), { noSsr: true });
   const reservationNumber = params.reservationNumber as string;
-  
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<any>(null);
@@ -77,39 +77,39 @@ export default function BulkOrderDetailPage() {
     const fetchData = async () => {
       console.log('=== BulkOrder fetchData started ===');
       console.log('Reservation Number:', reservationNumber);
-      
+
       if (!reservationNumber) {
         console.log('No reservation number provided');
         setLoading(false);
         return;
       }
-      
+
       setLoading(true);
       setError(null);
-      
+
       try {
         // Supabase SDK 사용
         console.log('Creating Supabase client...');
         const supabase = createClient();
-        
+
         console.log('Querying bulk_orders...');
         const { data, error } = await supabase
           .from('bulk_orders')
           .select('*')
           .eq('reservation_number', reservationNumber)
           .maybeSingle();
-        
+
         console.log('Query result:', { data, error });
-        
+
         if (error) {
           console.error('Supabase error:', error);
           throw new Error(error.message);
         }
-        
+
         if (!data) {
           throw new Error('데이터를 찾을 수 없습니다.');
         }
-        
+
         setData(data);
       } catch (err) {
         console.error('Fetch error:', err);
@@ -128,7 +128,9 @@ export default function BulkOrderDetailPage() {
 
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <Box
+        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}
+      >
         <CircularProgress />
         <Typography sx={{ ml: 2 }}>Loading...</Typography>
       </Box>
@@ -149,7 +151,11 @@ export default function BulkOrderDetailPage() {
   return (
     <Box sx={{ p: 3 }}>
       {/* Header */}
-      <OrderHeader orderData={data} serviceType="bulk_order" reservationNumber={reservationNumber} />
+      <OrderHeader
+        orderData={data}
+        serviceType="bulk_order"
+        reservationNumber={reservationNumber}
+      />
 
       {/* Main Content with Chat */}
       <Grid container spacing={isMobile ? 0 : 3} sx={{ mt: 2 }}>
@@ -157,24 +163,44 @@ export default function BulkOrderDetailPage() {
         <Grid size={{ xs: 12, md: 8 }}>
           <Paper elevation={3} sx={{ mb: isMobile ? 8 : 0 }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs 
-                value={tabValue} 
-                onChange={handleTabChange} 
-                aria-label="order details tabs" 
-                variant={isMobile ? "scrollable" : "fullWidth"}
-                scrollButtons={isMobile ? "auto" : false}
+              <Tabs
+                value={tabValue}
+                onChange={handleTabChange}
+                aria-label="order details tabs"
+                variant={isMobile ? 'scrollable' : 'fullWidth'}
+                scrollButtons={isMobile ? 'auto' : false}
                 sx={{
                   '& .MuiTab-root': {
                     minWidth: isMobile ? 'auto' : 120,
                     fontSize: isMobile ? '0.75rem' : '0.875rem',
-                  }
+                  },
                 }}
               >
-                <Tab icon={<BusinessIcon sx={{ fontSize: isMobile ? 20 : 24 }} />} label={isMobile ? "발주" : "발주정보"} iconPosition="start" />
-                <Tab icon={<InventoryIcon sx={{ fontSize: isMobile ? 20 : 24 }} />} label={isMobile ? "제품" : "제품상세"} iconPosition="start" />
-                <Tab icon={<LocalShippingIcon sx={{ fontSize: isMobile ? 20 : 24 }} />} label={isMobile ? "배송" : "배송정보"} iconPosition="start" />
-                <Tab icon={<AttachMoneyIcon sx={{ fontSize: isMobile ? 20 : 24 }} />} label={isMobile ? "결제" : "결제정보"} iconPosition="start" />
-                <Tab icon={<AttachFileIcon sx={{ fontSize: isMobile ? 20 : 24 }} />} label={isMobile ? "자료" : "관련자료"} iconPosition="start" />
+                <Tab
+                  icon={<BusinessIcon sx={{ fontSize: isMobile ? 20 : 24 }} />}
+                  label={isMobile ? '발주' : '발주정보'}
+                  iconPosition="start"
+                />
+                <Tab
+                  icon={<InventoryIcon sx={{ fontSize: isMobile ? 20 : 24 }} />}
+                  label={isMobile ? '제품' : '제품상세'}
+                  iconPosition="start"
+                />
+                <Tab
+                  icon={<LocalShippingIcon sx={{ fontSize: isMobile ? 20 : 24 }} />}
+                  label={isMobile ? '배송' : '배송정보'}
+                  iconPosition="start"
+                />
+                <Tab
+                  icon={<AttachMoneyIcon sx={{ fontSize: isMobile ? 20 : 24 }} />}
+                  label={isMobile ? '결제' : '결제정보'}
+                  iconPosition="start"
+                />
+                <Tab
+                  icon={<AttachFileIcon sx={{ fontSize: isMobile ? 20 : 24 }} />}
+                  label={isMobile ? '자료' : '관련자료'}
+                  iconPosition="start"
+                />
               </Tabs>
             </Box>
 
@@ -190,18 +216,26 @@ export default function BulkOrderDetailPage() {
                     <Table>
                       <TableBody>
                         <TableRow>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}>
+                          <TableCell
+                            component="th"
+                            sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}
+                          >
                             발주일자
                           </TableCell>
                           <TableCell sx={{ width: '35%' }}>
-                            {data?.created_at ? new Date(data.created_at).toLocaleString('ko-KR') : '-'}
+                            {data?.created_at
+                              ? new Date(data.created_at).toLocaleString('ko-KR')
+                              : '-'}
                           </TableCell>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}>
+                          <TableCell
+                            component="th"
+                            sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}
+                          >
                             발주상태
                           </TableCell>
                           <TableCell sx={{ width: '35%' }}>
-                            <Chip 
-                              label={data?.status || '진행중'} 
+                            <Chip
+                              label={data?.status || '진행중'}
                               color={data?.status === 'completed' ? 'success' : 'primary'}
                               size="small"
                             />
@@ -222,16 +256,16 @@ export default function BulkOrderDetailPage() {
                             예상 납기일
                           </TableCell>
                           <TableCell>
-                            {data?.expected_delivery_date ? 
-                              new Date(data.expected_delivery_date).toLocaleDateString('ko-KR') : 
-                              '협의중'}
+                            {data?.expected_delivery_date
+                              ? new Date(data.expected_delivery_date).toLocaleDateString('ko-KR')
+                              : '협의중'}
                           </TableCell>
                           <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
                             긴급도
                           </TableCell>
                           <TableCell>
-                            <Chip 
-                              label={data?.urgency || '일반'} 
+                            <Chip
+                              label={data?.urgency || '일반'}
                               color={data?.urgency === '긴급' ? 'error' : 'default'}
                               size="small"
                             />
@@ -251,14 +285,24 @@ export default function BulkOrderDetailPage() {
                     <Table>
                       <TableBody>
                         <TableRow>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}>
+                          <TableCell
+                            component="th"
+                            sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}
+                          >
                             공급업체명
                           </TableCell>
-                          <TableCell sx={{ width: '35%' }}>{data?.supplier_name || '선정중'}</TableCell>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}>
+                          <TableCell sx={{ width: '35%' }}>
+                            {data?.supplier_name || '선정중'}
+                          </TableCell>
+                          <TableCell
+                            component="th"
+                            sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}
+                          >
                             담당자
                           </TableCell>
-                          <TableCell sx={{ width: '35%' }}>{data?.supplier_contact || '미정'}</TableCell>
+                          <TableCell sx={{ width: '35%' }}>
+                            {data?.supplier_contact || '미정'}
+                          </TableCell>
                         </TableRow>
                         <TableRow>
                           <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
@@ -299,48 +343,75 @@ export default function BulkOrderDetailPage() {
                     <Typography variant="h6" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
                       발주 제품 상세
                     </Typography>
-                    
+
                     {data?.order_items && data.order_items.length > 0 ? (
                       <Box>
                         {data.order_items.map((item: any, index: number) => (
                           <Box key={index} sx={{ mb: 3 }}>
-                            <Typography variant="subtitle2" fontWeight="bold" color="primary" sx={{ mb: 2 }}>
+                            <Typography
+                              variant="subtitle2"
+                              fontWeight="bold"
+                              color="primary"
+                              sx={{ mb: 2 }}
+                            >
                               제품 {index + 1}
                             </Typography>
                             <Table>
                               <TableBody>
                                 <TableRow>
-                                  <TableCell component="th" sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50' }}>
+                                  <TableCell
+                                    component="th"
+                                    sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50' }}
+                                  >
                                     제품명
                                   </TableCell>
                                   <TableCell>{item.product_name || '-'}</TableCell>
                                 </TableRow>
                                 <TableRow>
-                                  <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                                  <TableCell
+                                    component="th"
+                                    sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}
+                                  >
                                     제품코드
                                   </TableCell>
                                   <TableCell>{item.product_code || '-'}</TableCell>
                                 </TableRow>
                                 <TableRow>
-                                  <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                                  <TableCell
+                                    component="th"
+                                    sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}
+                                  >
                                     규격/사양
                                   </TableCell>
                                   <TableCell>{item.specifications || '-'}</TableCell>
                                 </TableRow>
                                 <TableRow>
-                                  <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                                  <TableCell
+                                    component="th"
+                                    sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}
+                                  >
                                     발주수량
                                   </TableCell>
                                   <TableCell>{item.quantity?.toLocaleString() || 0}개</TableCell>
                                 </TableRow>
                                 <TableRow>
-                                  <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                                  <TableCell
+                                    component="th"
+                                    sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}
+                                  >
                                     단가
                                   </TableCell>
-                                  <TableCell>{item.unit_price ? `${item.unit_price.toLocaleString()}원` : '-'}</TableCell>
+                                  <TableCell>
+                                    {item.unit_price
+                                      ? `${item.unit_price.toLocaleString()}원`
+                                      : '-'}
+                                  </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                  <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                                  <TableCell
+                                    component="th"
+                                    sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}
+                                  >
                                     소계
                                   </TableCell>
                                   <TableCell>
@@ -370,7 +441,10 @@ export default function BulkOrderDetailPage() {
                     <Table>
                       <TableBody>
                         <TableRow>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50' }}>
+                          <TableCell
+                            component="th"
+                            sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50' }}
+                          >
                             총 박스수
                           </TableCell>
                           <TableCell>{data?.total_boxes || '산정중'}박스</TableCell>
@@ -379,13 +453,17 @@ export default function BulkOrderDetailPage() {
                           <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
                             총 CBM
                           </TableCell>
-                          <TableCell>{data?.total_cbm ? `${data.total_cbm}㎥` : '산정중'}</TableCell>
+                          <TableCell>
+                            {data?.total_cbm ? `${data.total_cbm}㎥` : '산정중'}
+                          </TableCell>
                         </TableRow>
                         <TableRow>
                           <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
                             총 중량
                           </TableCell>
-                          <TableCell>{data?.total_weight ? `${data.total_weight}kg` : '산정중'}</TableCell>
+                          <TableCell>
+                            {data?.total_weight ? `${data.total_weight}kg` : '산정중'}
+                          </TableCell>
                         </TableRow>
                       </TableBody>
                     </Table>
@@ -405,12 +483,15 @@ export default function BulkOrderDetailPage() {
                     <Table>
                       <TableBody>
                         <TableRow>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50' }}>
+                          <TableCell
+                            component="th"
+                            sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50' }}
+                          >
                             배송방법
                           </TableCell>
                           <TableCell>
-                            <Chip 
-                              label={data?.shipping_method || 'LCL'} 
+                            <Chip
+                              label={data?.shipping_method || 'LCL'}
                               color={data?.shipping_method === 'FCL' ? 'primary' : 'default'}
                               size="small"
                             />
@@ -461,35 +542,45 @@ export default function BulkOrderDetailPage() {
                       <Table>
                         <TableBody>
                           <TableRow>
-                            <TableCell component="th" sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50' }}>
+                            <TableCell
+                              component="th"
+                              sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50' }}
+                            >
                               B/L 번호
                             </TableCell>
                             <TableCell>{data?.bl_number || '-'}</TableCell>
                           </TableRow>
                           <TableRow>
-                            <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                            <TableCell
+                              component="th"
+                              sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}
+                            >
                               컨테이너 번호
                             </TableCell>
                             <TableCell>{data?.container_number || '-'}</TableCell>
                           </TableRow>
                           <TableRow>
-                            <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                            <TableCell
+                              component="th"
+                              sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}
+                            >
                               선적일
                             </TableCell>
                             <TableCell>
-                              {data?.shipping_date ? 
-                                new Date(data.shipping_date).toLocaleDateString('ko-KR') : 
-                                '-'}
+                              {data?.shipping_date
+                                ? new Date(data.shipping_date).toLocaleDateString('ko-KR')
+                                : '-'}
                             </TableCell>
                           </TableRow>
                           <TableRow>
-                            <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                            <TableCell
+                              component="th"
+                              sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}
+                            >
                               도착예정일
                             </TableCell>
                             <TableCell>
-                              {data?.eta ? 
-                                new Date(data.eta).toLocaleDateString('ko-KR') : 
-                                '-'}
+                              {data?.eta ? new Date(data.eta).toLocaleDateString('ko-KR') : '-'}
                             </TableCell>
                           </TableRow>
                         </TableBody>
@@ -512,12 +603,17 @@ export default function BulkOrderDetailPage() {
                     <Table>
                       <TableBody>
                         <TableRow>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50' }}>
+                          <TableCell
+                            component="th"
+                            sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50' }}
+                          >
                             계약금액
                           </TableCell>
                           <TableCell>
                             <Typography variant="h6" color="primary">
-                              {data?.deposit_amount ? `₩${data.deposit_amount.toLocaleString()}` : '산정중'}
+                              {data?.deposit_amount
+                                ? `₩${data.deposit_amount.toLocaleString()}`
+                                : '산정중'}
                             </Typography>
                           </TableCell>
                         </TableRow>
@@ -526,8 +622,8 @@ export default function BulkOrderDetailPage() {
                             결제상태
                           </TableCell>
                           <TableCell>
-                            <Chip 
-                              label={data?.deposit_status || '대기'} 
+                            <Chip
+                              label={data?.deposit_status || '대기'}
                               color={data?.deposit_status === '완료' ? 'success' : 'default'}
                               size="small"
                             />
@@ -538,9 +634,9 @@ export default function BulkOrderDetailPage() {
                             결제일
                           </TableCell>
                           <TableCell>
-                            {data?.deposit_date ? 
-                              new Date(data.deposit_date).toLocaleDateString('ko-KR') : 
-                              '-'}
+                            {data?.deposit_date
+                              ? new Date(data.deposit_date).toLocaleDateString('ko-KR')
+                              : '-'}
                           </TableCell>
                         </TableRow>
                       </TableBody>
@@ -557,12 +653,17 @@ export default function BulkOrderDetailPage() {
                     <Table>
                       <TableBody>
                         <TableRow>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50' }}>
+                          <TableCell
+                            component="th"
+                            sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50' }}
+                          >
                             잔금액
                           </TableCell>
                           <TableCell>
                             <Typography variant="h6" color="primary">
-                              {data?.balance_amount ? `₩${data.balance_amount.toLocaleString()}` : '산정중'}
+                              {data?.balance_amount
+                                ? `₩${data.balance_amount.toLocaleString()}`
+                                : '산정중'}
                             </Typography>
                           </TableCell>
                         </TableRow>
@@ -571,8 +672,8 @@ export default function BulkOrderDetailPage() {
                             결제상태
                           </TableCell>
                           <TableCell>
-                            <Chip 
-                              label={data?.balance_status || '대기'} 
+                            <Chip
+                              label={data?.balance_status || '대기'}
                               color={data?.balance_status === '완료' ? 'success' : 'default'}
                               size="small"
                             />
@@ -583,9 +684,9 @@ export default function BulkOrderDetailPage() {
                             예정일
                           </TableCell>
                           <TableCell>
-                            {data?.balance_due_date ? 
-                              new Date(data.balance_due_date).toLocaleDateString('ko-KR') : 
-                              '선적 후 결정'}
+                            {data?.balance_due_date
+                              ? new Date(data.balance_due_date).toLocaleDateString('ko-KR')
+                              : '선적 후 결정'}
                           </TableCell>
                         </TableRow>
                       </TableBody>
@@ -602,28 +703,39 @@ export default function BulkOrderDetailPage() {
                     <Table>
                       <TableBody>
                         <TableRow>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50' }}>
+                          <TableCell
+                            component="th"
+                            sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50' }}
+                          >
                             상품대금
                           </TableCell>
-                          <TableCell>{data?.product_cost ? `₩${data.product_cost.toLocaleString()}` : '-'}</TableCell>
+                          <TableCell>
+                            {data?.product_cost ? `₩${data.product_cost.toLocaleString()}` : '-'}
+                          </TableCell>
                         </TableRow>
                         <TableRow>
                           <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
                             운송비
                           </TableCell>
-                          <TableCell>{data?.shipping_cost ? `₩${data.shipping_cost.toLocaleString()}` : '-'}</TableCell>
+                          <TableCell>
+                            {data?.shipping_cost ? `₩${data.shipping_cost.toLocaleString()}` : '-'}
+                          </TableCell>
                         </TableRow>
                         <TableRow>
                           <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
                             관세/부가세
                           </TableCell>
-                          <TableCell>{data?.tax_amount ? `₩${data.tax_amount.toLocaleString()}` : '-'}</TableCell>
+                          <TableCell>
+                            {data?.tax_amount ? `₩${data.tax_amount.toLocaleString()}` : '-'}
+                          </TableCell>
                         </TableRow>
                         <TableRow>
                           <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
                             수수료
                           </TableCell>
-                          <TableCell>{data?.commission ? `₩${data.commission.toLocaleString()}` : '-'}</TableCell>
+                          <TableCell>
+                            {data?.commission ? `₩${data.commission.toLocaleString()}` : '-'}
+                          </TableCell>
                         </TableRow>
                         <TableRow>
                           <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
@@ -631,7 +743,9 @@ export default function BulkOrderDetailPage() {
                           </TableCell>
                           <TableCell>
                             <Typography variant="h5" color="error">
-                              {data?.total_amount ? `₩${data.total_amount.toLocaleString()}` : '산정중'}
+                              {data?.total_amount
+                                ? `₩${data.total_amount.toLocaleString()}`
+                                : '산정중'}
                             </Typography>
                           </TableCell>
                         </TableRow>
@@ -648,7 +762,11 @@ export default function BulkOrderDetailPage() {
                 {data?.documents && data.documents.length > 0 ? (
                   <Stack spacing={2}>
                     {data.documents.map((doc: any, index: number) => (
-                      <Paper key={index} sx={{ p: 2, cursor: 'pointer' }} onClick={() => window.open(doc.url, '_blank')}>
+                      <Paper
+                        key={index}
+                        sx={{ p: 2, cursor: 'pointer' }}
+                        onClick={() => window.open(doc.url, '_blank')}
+                      >
                         <Typography>{doc.name}</Typography>
                         <Typography variant="caption" color="text.secondary">
                           {doc.type} - {new Date(doc.uploaded_at).toLocaleDateString('ko-KR')}
@@ -667,8 +785,8 @@ export default function BulkOrderDetailPage() {
         {/* Desktop - Chat on right side */}
         {!isMobile && (
           <Grid size={{ md: 4 }}>
-            <ChatPanel 
-              reservationNumber={reservationNumber} 
+            <ChatPanel
+              reservationNumber={reservationNumber}
               currentUserRole="customer"
               currentUserId="test-user-id"
               currentUserName="테스트 사용자"
@@ -687,7 +805,7 @@ export default function BulkOrderDetailPage() {
               position: 'fixed',
               bottom: 16,
               right: 16,
-              zIndex: 1200
+              zIndex: 1200,
             }}
             onClick={() => setChatDrawerOpen(true)}
           >
@@ -704,7 +822,7 @@ export default function BulkOrderDetailPage() {
                 height: '80vh',
                 borderTopLeftRadius: 16,
                 borderTopRightRadius: 16,
-              }
+              },
             }}
           >
             <Box sx={{ p: 2 }}>
@@ -715,8 +833,8 @@ export default function BulkOrderDetailPage() {
                 </IconButton>
               </Stack>
               <Box sx={{ height: 'calc(80vh - 100px)' }}>
-                <ChatPanel 
-                  reservationNumber={reservationNumber} 
+                <ChatPanel
+                  reservationNumber={reservationNumber}
                   currentUserRole="customer"
                   currentUserId="test-user-id"
                   currentUserName="테스트 사용자"

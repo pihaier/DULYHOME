@@ -1,7 +1,17 @@
 'use client';
 
 import React from 'react';
-import { Box, Container, Card, CardContent, CardMedia, Typography, Button, CardActions, Stack } from '@mui/material';
+import {
+  Box,
+  Container,
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  Button,
+  CardActions,
+  Stack,
+} from '@mui/material';
 import { useRouter } from 'next/navigation';
 import PageContainer from '@/app/components/container/PageContainer';
 import HpHeader from '@/app/components/frontend-pages/shared/header/HpHeader';
@@ -18,57 +28,62 @@ const services = [
       '커스터마이징 가능 여부 확인',
       '박스제작/로고인쇄 등 부가서비스',
       '인증서류/품질검증 지원',
-      '통관서류 및 관세율 안내'
+      '통관서류 및 관세율 안내',
     ],
     price: '무료',
     period: '3-5일',
     image: '/images/services/market-research.jpg',
     route: '/application/import-agency/market-research',
-    color: 'primary'
+    color: 'primary',
   },
   {
     id: 'sampling',
     title: '샘플링',
-    description: '제조 단계부터 관여하여 고객 요구사항에 맞는 맞춤형 샘플을 제작하고 품질을 검증합니다.',
+    description:
+      '제조 단계부터 관여하여 고객 요구사항에 맞는 맞춤형 샘플을 제작하고 품질을 검증합니다.',
     features: [
       '맞춤형 샘플 제작 요청',
       '제조 공장과 직접 협의',
       '특별 요청사항 반영',
       '품질 비교 분석 리포트',
-      '한국 배송 및 검수'
+      '한국 배송 및 검수',
     ],
     price: '수수료 2만원 + 샘플비 + 중국 배송비',
     period: '7-10일',
     image: '/images/services/sampling.jpg',
     route: '/application/import-agency/sampling',
-    color: 'secondary'
+    color: 'secondary',
   },
   {
     id: 'bulk-order',
     title: '대량발주',
-    description: '제조 공장과 직접 계약하여 대량 생산을 진행하고, 품질관리부터 통관까지 전 과정을 관리합니다.',
+    description:
+      '제조 공장과 직접 계약하여 대량 생산을 진행하고, 품질관리부터 통관까지 전 과정을 관리합니다.',
     features: [
       '제조 공장 직접 계약',
       '생산 과정 품질 관리',
       '맞춤 제작 및 특별 요청 반영',
       '선적 및 통관 서류 대행',
-      '관세 최적화 및 A/S 지원'
+      '관세 최적화 및 A/S 지원',
     ],
     price: '주문금액의 5%',
     period: '제품별 상이',
     image: '/images/services/bulk-order.jpg',
     route: '/application/import-agency/bulk-order',
-    color: 'success'
-  }
+    color: 'success',
+  },
 ];
 
 export default function ImportAgencyPage() {
   const router = useRouter();
 
   return (
-    <PageContainer title="수입대행 서비스 - 두리무역" description="두리무역의 수입대행 서비스를 신청하세요">
+    <PageContainer
+      title="수입대행 서비스 - 두리무역"
+      description="두리무역의 수입대행 서비스를 신청하세요"
+    >
       <HpHeader />
-      
+
       <Container maxWidth="lg" sx={{ py: 5 }}>
         {/* 헤더 섹션 */}
         <Box textAlign="center" mb={6}>
@@ -79,13 +94,15 @@ export default function ImportAgencyPage() {
             제조 공장과 직접 소통하는 맞춤형 제조 수입
           </Typography>
           <Typography variant="body1" color="text.secondary" maxWidth="900px" mx="auto" mb={2}>
-            <strong>구매대행과 다른 차별화된 서비스</strong><br/>
-            구매대행이 중간 도매상을 통한 단순 구매라면, 수입대행은 제조 공장과 직접 컨택하여 
+            <strong>구매대행과 다른 차별화된 서비스</strong>
+            <br />
+            구매대행이 중간 도매상을 통한 단순 구매라면, 수입대행은 제조 공장과 직접 컨택하여
             커스터마이징이 가능한 맞춤형 제조 서비스입니다.
           </Typography>
           <Typography variant="body1" color="text.secondary" maxWidth="900px" mx="auto">
-            박스제작, 로고인쇄, 특별요청 반영부터 인증서류, 통관서류, 관세율 최적화까지 
-            제조 단계부터 한국 도착까지 전 과정을 관리합니다. 한 제품을 대량으로 구매할 때 최적의 선택입니다.
+            박스제작, 로고인쇄, 특별요청 반영부터 인증서류, 통관서류, 관세율 최적화까지 제조
+            단계부터 한국 도착까지 전 과정을 관리합니다. 한 제품을 대량으로 구매할 때 최적의
+            선택입니다.
           </Typography>
         </Box>
 
@@ -124,7 +141,7 @@ export default function ImportAgencyPage() {
                   <Typography variant="h4" fontWeight={600} gutterBottom>
                     {service.title}
                   </Typography>
-                  
+
                   <Typography variant="body1" color="text.secondary" paragraph>
                     {service.description}
                   </Typography>
@@ -136,7 +153,7 @@ export default function ImportAgencyPage() {
                         key={index}
                         variant="body2"
                         color="text.secondary"
-                        sx={{ 
+                        sx={{
                           display: 'flex',
                           alignItems: 'center',
                           mb: 0.5,
@@ -145,7 +162,7 @@ export default function ImportAgencyPage() {
                             color: 'success.main',
                             fontWeight: 'bold',
                             marginRight: 1,
-                          }
+                          },
                         }}
                       >
                         {feature}
@@ -198,8 +215,13 @@ export default function ImportAgencyPage() {
           <Typography variant="body1" color="text.secondary" textAlign="center" mb={4}>
             제조 공장과 직접 소통하여 고객의 요구사항에 맞는 제품을 제작합니다
           </Typography>
-          
-          <Box display="grid" gridTemplateColumns={{ xs: '1fr', md: 'repeat(4, 1fr)' }} gap={3} mt={2}>
+
+          <Box
+            display="grid"
+            gridTemplateColumns={{ xs: '1fr', md: 'repeat(4, 1fr)' }}
+            gap={3}
+            mt={2}
+          >
             <Box textAlign="center">
               <Box
                 sx={{
@@ -331,7 +353,7 @@ export default function ImportAgencyPage() {
           </Button>
         </Box>
       </Container>
-      
+
       <Footer />
     </PageContainer>
   );

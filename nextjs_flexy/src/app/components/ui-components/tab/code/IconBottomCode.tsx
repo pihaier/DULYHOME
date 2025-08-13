@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const IconBottomCode = () => {
   return (
     <>
@@ -44,7 +44,7 @@ const handleChange = (event: React.SyntheticEvent, newValue: string) => {
 </TabContext>`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default IconBottomCode
+export default IconBottomCode;

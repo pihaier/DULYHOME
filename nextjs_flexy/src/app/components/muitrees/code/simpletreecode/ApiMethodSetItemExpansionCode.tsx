@@ -1,5 +1,5 @@
-import React from 'react'
-import CodeDialog from '@/app/components/shared/CodeDialog'
+import React from 'react';
+import CodeDialog from '@/app/components/shared/CodeDialog';
 
 function ApiMethodSetItemExpansionCode() {
   return (
@@ -71,7 +71,7 @@ export default function ApiMethodSetItemExpansion() {
 
 `}
     </CodeDialog>
-  )
+  );
 }
 
-export default ApiMethodSetItemExpansionCode
+export default ApiMethodSetItemExpansionCode;

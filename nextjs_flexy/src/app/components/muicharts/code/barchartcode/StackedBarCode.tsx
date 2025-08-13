@@ -1,5 +1,5 @@
-import React from 'react'
-import CodeDialog from '@/app/components/shared/CodeDialog'
+import React from 'react';
+import CodeDialog from '@/app/components/shared/CodeDialog';
 
 function StackedBarCode() {
   return (
@@ -54,7 +54,7 @@ function StackedBarChart() {
 export default StackedBarChart;
 `}
     </CodeDialog>
-  )
+  );
 }
 
-export default StackedBarCode
+export default StackedBarCode;

@@ -1,5 +1,5 @@
-import React from 'react'
-import CodeDialog from '@/app/components/shared/CodeDialog'
+import React from 'react';
+import CodeDialog from '@/app/components/shared/CodeDialog';
 
 function CheckboxSelectionCode() {
   return (
@@ -47,7 +47,7 @@ export default function CheckboxSelection() {
 
                 `}
     </CodeDialog>
-  )
+  );
 }
 
-export default CheckboxSelectionCode
+export default CheckboxSelectionCode;

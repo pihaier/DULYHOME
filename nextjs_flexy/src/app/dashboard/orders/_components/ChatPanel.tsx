@@ -44,7 +44,14 @@ interface ChatPanelProps {
   onFileUpload?: () => void;
 }
 
-export default function ChatPanel({ reservationNumber, currentUserId, currentUserRole, currentUserName, serviceType, onFileUpload }: ChatPanelProps) {
+export default function ChatPanel({
+  reservationNumber,
+  currentUserId,
+  currentUserRole,
+  currentUserName,
+  serviceType,
+  onFileUpload,
+}: ChatPanelProps) {
   const [chatMessage, setChatMessage] = useState('');
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [loadingChat, setLoadingChat] = useState(false);
@@ -83,16 +90,18 @@ export default function ChatPanel({ reservationNumber, currentUserId, currentUse
 
     try {
       // 사용자 정보 가져오기
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       let userProfile = null;
-      
+
       if (user?.id) {
         const { data: profile, error: profileError } = await supabase
           .from('user_profiles')
           .select('*')
           .eq('user_id', user.id)
           .maybeSingle();
-        
+
         if (!profileError) {
           userProfile = profile;
         }
@@ -109,9 +118,14 @@ export default function ChatPanel({ reservationNumber, currentUserId, currentUse
 
       // 메시지 저장 - 테스트용으로 currentUserId 사용
       const senderId = user?.id || currentUserId || '93c87ed3-a25d-4838-acd5-6e082ed56478'; // 테스트 user ID
-      const senderName = currentUserName || userProfile?.contact_person || userProfile?.company_name || user?.email || 'Unknown';
+      const senderName =
+        currentUserName ||
+        userProfile?.contact_person ||
+        userProfile?.company_name ||
+        user?.email ||
+        'Unknown';
       const senderRole = currentUserRole || userProfile?.role || 'customer';
-      
+
       const { data, error } = await supabase
         .from('chat_messages')
         .insert({
@@ -133,19 +147,19 @@ export default function ChatPanel({ reservationNumber, currentUserId, currentUse
           message: error.message,
           details: error.details,
           hint: error.hint,
-          code: error.code
+          code: error.code,
         });
         alert(`메시지 전송에 실패했습니다: ${error.message}`);
       } else {
         // 메시지 즉시 추가 (실시간 구독이 작동하지 않을 경우를 대비)
-        setChatMessages(prev => [...prev, data]);
-        
+        setChatMessages((prev) => [...prev, data]);
+
         // 번역 함수 호출
         try {
           const { error: functionError } = await supabase.functions.invoke('translate-message', {
-            body: { record: data }
+            body: { record: data },
           });
-          
+
           if (functionError) {
             console.error('Translation function error:', functionError);
           }
@@ -158,9 +172,11 @@ export default function ChatPanel({ reservationNumber, currentUserId, currentUse
       console.error('Catch block error details:', {
         error: error,
         message: error instanceof Error ? error.message : 'Unknown error',
-        stack: error instanceof Error ? error.stack : undefined
+        stack: error instanceof Error ? error.stack : undefined,
       });
-      alert(`메시지 전송 중 오류가 발생했습니다: ${error instanceof Error ? error.message : '알 수 없는 오류'}`);
+      alert(
+        `메시지 전송 중 오류가 발생했습니다: ${error instanceof Error ? error.message : '알 수 없는 오류'}`
+      );
     } finally {
       setSendingMessage(false);
     }
@@ -184,20 +200,24 @@ export default function ChatPanel({ reservationNumber, currentUserId, currentUse
     // Realtime 구독
     const channel = supabase
       .channel(`chat:${reservationNumber}`)
-      .on('postgres_changes', {
-        event: '*',
-        schema: 'public',
-        table: 'chat_messages',
-        filter: `reservation_number=eq.${reservationNumber}`
-      }, (payload) => {
-        if (payload.eventType === 'INSERT') {
-          setChatMessages(prev => [...prev, payload.new as ChatMessage]);
-        } else if (payload.eventType === 'UPDATE') {
-          setChatMessages(prev => 
-            prev.map(msg => msg.id === payload.new.id ? payload.new as ChatMessage : msg)
-          );
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'chat_messages',
+          filter: `reservation_number=eq.${reservationNumber}`,
+        },
+        (payload) => {
+          if (payload.eventType === 'INSERT') {
+            setChatMessages((prev) => [...prev, payload.new as ChatMessage]);
+          } else if (payload.eventType === 'UPDATE') {
+            setChatMessages((prev) =>
+              prev.map((msg) => (msg.id === payload.new.id ? (payload.new as ChatMessage) : msg))
+            );
+          }
         }
-      })
+      )
       .subscribe();
 
     return () => {
@@ -214,26 +234,39 @@ export default function ChatPanel({ reservationNumber, currentUserId, currentUse
   }, [chatMessages]);
 
   return (
-    <Box sx={{ width: '100%', height: '100%', bgcolor: 'grey.50', display: 'flex', flexDirection: 'column' }}>
+    <Box
+      sx={{
+        width: '100%',
+        height: '100%',
+        bgcolor: 'grey.50',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
       <Box sx={{ p: 2, height: '100%', display: 'flex', flexDirection: 'column' }}>
-        <Typography variant="h6" fontWeight="bold" gutterBottom sx={{
-          borderBottom: '1px solid',
-          borderColor: 'divider',
-          pb: 1,
-          mb: 2
-        }}>
+        <Typography
+          variant="h6"
+          fontWeight="bold"
+          gutterBottom
+          sx={{
+            borderBottom: '1px solid',
+            borderColor: 'divider',
+            pb: 1,
+            mb: 2,
+          }}
+        >
           채팅
         </Typography>
 
         <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
           <Box
             ref={chatScrollRef}
-            sx={{ 
-              flex: 1, 
-              overflow: 'auto', 
-              bgcolor: 'white', 
-              p: 2, 
-              borderRadius: 1, 
+            sx={{
+              flex: 1,
+              overflow: 'auto',
+              bgcolor: 'white',
+              p: 2,
+              borderRadius: 1,
               mb: 2,
               display: 'flex',
               flexDirection: 'column',
@@ -249,7 +282,7 @@ export default function ChatPanel({ reservationNumber, currentUserId, currentUse
               },
               '&::-webkit-scrollbar-thumb:hover': {
                 backgroundColor: '#555',
-              }
+              },
             }}
           >
             {loadingChat ? (
@@ -272,14 +305,14 @@ export default function ChatPanel({ reservationNumber, currentUserId, currentUse
                     key={msg.id}
                     sx={{
                       display: 'flex',
-                      justifyContent: msg.sender_id === currentUserId ? 'flex-end' : 'flex-start'
+                      justifyContent: msg.sender_id === currentUserId ? 'flex-end' : 'flex-start',
                     }}
                   >
                     <Paper
                       sx={{
                         p: 2,
                         maxWidth: '80%',
-                        bgcolor: msg.sender_id === currentUserId ? 'primary.light' : 'grey.100'
+                        bgcolor: msg.sender_id === currentUserId ? 'primary.light' : 'grey.100',
                       }}
                     >
                       <Typography variant="caption" fontWeight="bold">
@@ -287,11 +320,15 @@ export default function ChatPanel({ reservationNumber, currentUserId, currentUse
                       </Typography>
                       <Typography variant="body2" sx={{ mt: 0.5 }}>
                         {/* 고객은 한글만 보기 - 원문이 중국어면 번역본 표시 */}
-                        {msg.original_language === 'zh' && msg.translated_message 
-                          ? msg.translated_message 
+                        {msg.original_language === 'zh' && msg.translated_message
+                          ? msg.translated_message
                           : msg.original_message}
                       </Typography>
-                      <Typography variant="caption" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
+                      <Typography
+                        variant="caption"
+                        color="text.secondary"
+                        sx={{ display: 'flex', alignItems: 'center', mt: 1 }}
+                      >
                         <AccessTimeIcon sx={{ fontSize: 14, mr: 0.5 }} />
                         {new Date(msg.created_at).toLocaleString('ko-KR')}
                       </Typography>

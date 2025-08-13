@@ -1,5 +1,5 @@
-import React from 'react'
-import CodeDialog from '@/app/components/shared/CodeDialog'
+import React from 'react';
+import CodeDialog from '@/app/components/shared/CodeDialog';
 
 function MultiSelectTreeViewCode() {
   return (
@@ -50,7 +50,7 @@ export default MultiSelectTreeView
 
               `}
     </CodeDialog>
-  )
+  );
 }
 
-export default MultiSelectTreeViewCode
+export default MultiSelectTreeViewCode;

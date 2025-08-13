@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 import { Typography, Chip, Box, Grid, Button, Stack, Avatar } from '@mui/material';
-import { useTheme } from "@mui/material/styles";
-import dynamic from "next/dynamic";
-import DashboardCard from "../../shared/DashboardCard";
-import { ApexOptions } from "apexcharts";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+import { useTheme } from '@mui/material/styles';
+import dynamic from 'next/dynamic';
+import DashboardCard from '../../shared/DashboardCard';
+import { ApexOptions } from 'apexcharts';
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 const ProductPerformance = () => {
   const theme = useTheme();
@@ -69,11 +69,11 @@ const ProductPerformance = () => {
   };
   const seriesproductperformance = [
     {
-      name: "Expence",
+      name: 'Expence',
       data: [300, 300, 180, 320, 250, 300, 300],
     },
     {
-      name: "Budget",
+      name: 'Budget',
       data: [60, 90, 80, 60, 70, 100, 80],
     },
   ];
@@ -118,7 +118,7 @@ const ProductPerformance = () => {
   };
 
   return (
-    (<DashboardCard
+    <DashboardCard
       title="Products Performance"
       subtitle="Latest new products"
       action={
@@ -129,7 +129,7 @@ const ProductPerformance = () => {
                 width: 9,
                 height: 9,
                 bgcolor: primary,
-                svg: { display: "none" },
+                svg: { display: 'none' },
               }}
             ></Avatar>
             <Typography variant="subtitle2" color="primary.main">
@@ -142,7 +142,7 @@ const ProductPerformance = () => {
                 width: 9,
                 height: 9,
                 bgcolor: secondary,
-                svg: { display: "none" },
+                svg: { display: 'none' },
               }}
             ></Avatar>
             <Typography variant="subtitle2" color="secondary.main">
@@ -155,14 +155,15 @@ const ProductPerformance = () => {
       <Grid container mt={6}>
         <Grid
           sx={{
-            borderRight: "1px solid" + theme.palette.divider,
+            borderRight: '1px solid' + theme.palette.divider,
             pr: 2,
           }}
           size={{
             xs: 12,
             lg: 5,
-            sm: 5
-          }}>
+            sm: 5,
+          }}
+        >
           <Box display="flex" alignItems="center">
             <Typography fontWeight="500" variant="h1" mr={1}>
               $93,438.78
@@ -174,7 +175,7 @@ const ProductPerformance = () => {
                 borderRadius: '6px',
               }}
               size="small"
-              label='23%'
+              label="23%"
             />
           </Box>
           <Typography color="textSecondary" variant="h5" fontWeight="400">
@@ -194,7 +195,7 @@ const ProductPerformance = () => {
               series={seriesreport}
               type="line"
               height={30}
-              width={"100%"}
+              width={'100%'}
             />
           </Box>
           <Button variant="contained" color="secondary">
@@ -205,20 +206,21 @@ const ProductPerformance = () => {
           size={{
             xs: 12,
             lg: 7,
-            sm: 7
-          }}>
+            sm: 7,
+          }}
+        >
           <Box height="280px" className="rounded-bars">
             <Chart
               options={optionsproductperformance}
               series={seriesproductperformance}
               type="bar"
               height={280}
-              width={"100%"}
+              width={'100%'}
             />
           </Box>
         </Grid>
       </Grid>
-    </DashboardCard>)
+    </DashboardCard>
   );
 };
 

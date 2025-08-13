@@ -26,10 +26,7 @@ class HSCodeSearchService {
   /**
    * 제품명으로 HS 코드 검색
    */
-  async searchHSCode(
-    productName: string,
-    options: SearchOptions = {}
-  ): Promise<HSCodeResult[]> {
+  async searchHSCode(productName: string, options: SearchOptions = {}): Promise<HSCodeResult[]> {
     const { useGPT = true, skipLevel2 = true, maxResults = 5 } = options;
 
     // 1. 먼저 별칭 테이블에서 정확히 매칭되는지 확인
@@ -67,12 +64,12 @@ class HSCodeSearchService {
       return [];
     }
 
-    return data.map(item => ({
+    return data.map((item) => ({
       hs_code: item.hs_code,
       level: item.level,
       name_ko: item.name_ko,
       name_en: item.name_en,
-      confidence: 1.0 // 별칭 매칭은 100% 신뢰
+      confidence: 1.0, // 별칭 매칭은 100% 신뢰
     }));
   }
 
@@ -91,12 +88,12 @@ class HSCodeSearchService {
       return [];
     }
 
-    return data.map(item => ({
+    return data.map((item) => ({
       hs_code: item.hs_code,
       level: item.level,
       name_ko: item.name_ko,
       name_en: item.name_en,
-      confidence: 0.9 // 키워드 매칭은 90% 신뢰
+      confidence: 0.9, // 키워드 매칭은 90% 신뢰
     }));
   }
 
@@ -112,7 +109,7 @@ class HSCodeSearchService {
       const response = await fetch('/api/hs-code/classify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ productName, skipLevel2 })
+        body: JSON.stringify({ productName, skipLevel2 }),
       });
 
       if (!response.ok) {
@@ -131,10 +128,7 @@ class HSCodeSearchService {
   /**
    * 텍스트 검색 (폴백)
    */
-  private async searchByText(
-    productName: string,
-    maxResults: number = 5
-  ): Promise<HSCodeResult[]> {
+  private async searchByText(productName: string, maxResults: number = 5): Promise<HSCodeResult[]> {
     const { data, error } = await this.supabase
       .from('hs_codes_hierarchy')
       .select('*')
@@ -146,12 +140,12 @@ class HSCodeSearchService {
       return [];
     }
 
-    return data.map(item => ({
+    return data.map((item) => ({
       hs_code: item.hs_code,
       level: item.level,
       name_ko: item.name_ko,
       name_en: item.name_en,
-      confidence: 0.5 // 텍스트 매칭은 50% 신뢰
+      confidence: 0.5, // 텍스트 매칭은 50% 신뢰
     }));
   }
 
@@ -160,14 +154,9 @@ class HSCodeSearchService {
    */
   async getHSCodePath(hsCode: string): Promise<HSCodeResult[]> {
     const path: HSCodeResult[] = [];
-    
+
     // 10자리 → 6자리 → 4자리 → 2자리
-    const codes = [
-      hsCode.substring(0, 2),
-      hsCode.substring(0, 4),
-      hsCode.substring(0, 6),
-      hsCode
-    ];
+    const codes = [hsCode.substring(0, 2), hsCode.substring(0, 4), hsCode.substring(0, 6), hsCode];
 
     for (const code of codes) {
       const { data } = await this.supabase
@@ -182,7 +171,7 @@ class HSCodeSearchService {
           level: data.level,
           name_ko: data.name_ko,
           name_en: data.name_en,
-          confidence: 1.0
+          confidence: 1.0,
         });
       }
     }
@@ -193,15 +182,11 @@ class HSCodeSearchService {
   /**
    * 검색 로그 저장 (학습용)
    */
-  async logSearch(
-    searchTerm: string,
-    selectedHSCode?: string,
-    userId?: string
-  ): Promise<void> {
+  async logSearch(searchTerm: string, selectedHSCode?: string, userId?: string): Promise<void> {
     await this.supabase.from('hs_search_logs').insert({
       search_term: searchTerm,
       selected_hs_code: selectedHSCode,
-      user_id: userId
+      user_id: userId,
     });
   }
 }

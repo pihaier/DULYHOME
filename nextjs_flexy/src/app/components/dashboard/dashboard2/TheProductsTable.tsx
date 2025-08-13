@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Typography,
   Box,
@@ -10,47 +10,47 @@ import {
   IconButton,
   Avatar,
   Tooltip,
-} from "@mui/material";
+} from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import DashboardCard from "../../shared/DashboardCard";
-import { IconTrash } from "@tabler/icons-react";
+import DashboardCard from '../../shared/DashboardCard';
+import { IconTrash } from '@tabler/icons-react';
 
 const items = [
   {
     id: 1,
-    imgsrc: "/images/products/1.jpg",
-    name: "Is it good butterscotch ice-cream?",
-    tags: "Ice-Cream, Milk, Powder",
-    review: "good",
+    imgsrc: '/images/products/1.jpg',
+    name: 'Is it good butterscotch ice-cream?',
+    tags: 'Ice-Cream, Milk, Powder',
+    review: 'good',
     percent: 65,
-    earnings: "546,000",
+    earnings: '546,000',
   },
   {
     id: 2,
-    imgsrc: "/images/products/2.jpg",
-    name: "Supreme fresh tomato available",
-    tags: "Market, Mall",
-    review: "excellent",
+    imgsrc: '/images/products/2.jpg',
+    name: 'Supreme fresh tomato available',
+    tags: 'Market, Mall',
+    review: 'excellent',
     percent: 98,
-    earnings: "780,000",
+    earnings: '780,000',
   },
   {
     id: 3,
-    imgsrc: "/images/products/3.jpg",
-    name: "Red color candy from Gucci",
-    tags: "Chocolate, Yummy",
-    review: "average",
+    imgsrc: '/images/products/3.jpg',
+    name: 'Red color candy from Gucci',
+    tags: 'Chocolate, Yummy',
+    review: 'average',
     percent: 46,
-    earnings: "457,000",
+    earnings: '457,000',
   },
   {
     id: 4,
-    imgsrc: "/images/products/4.jpg",
-    name: "Stylish night lamp for night",
-    tags: "Elecric, Wire, Current",
-    review: "poor",
+    imgsrc: '/images/products/4.jpg',
+    name: 'Stylish night lamp for night',
+    tags: 'Elecric, Wire, Current',
+    review: 'poor',
     percent: 23,
-    earnings: "125,000",
+    earnings: '125,000',
   },
 ];
 
@@ -116,8 +116,7 @@ const PerformanceTable = () => {
                     pl: 0,
                   }}
                 >
-                  <Typography
-                    variant="h6" mb={1}>
+                  <Typography variant="h6" mb={1}>
                     {Capitalize(product.review)}
                   </Typography>
                   <LinearProgress
@@ -141,7 +140,10 @@ const PerformanceTable = () => {
                   <Typography
                     color="textSecondary"
                     variant="h6"
-                    fontWeight="400" mt={1} whiteSpace='nowrap'>
+                    fontWeight="400"
+                    mt={1}
+                    whiteSpace="nowrap"
+                  >
                     {product.percent}% sold
                   </Typography>
                 </TableCell>

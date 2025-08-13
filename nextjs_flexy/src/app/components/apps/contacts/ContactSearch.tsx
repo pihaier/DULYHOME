@@ -14,10 +14,10 @@ const ContactSearch = ({ onClick }: Props) => {
   const { updateSearchTerm, searchTerm } = useContext(ContactContext);
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     updateSearchTerm(e.target.value);
-  }
+  };
 
   return (
-    (<Box display="flex" sx={{ p: 2 }}>
+    <Box display="flex" sx={{ p: 2 }}>
       <Fab
         onClick={onClick}
         color="primary"
@@ -41,10 +41,10 @@ const ContactSearch = ({ onClick }: Props) => {
                 <IconSearch size={'16'} />
               </InputAdornment>
             ),
-          }
+          },
         }}
       />
-    </Box>)
+    </Box>
   );
 };
 

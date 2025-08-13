@@ -33,64 +33,72 @@ const FormLayouts = () => (
         size={{
           lg: 12,
           md: 12,
-          xs: 12
-        }}>
+          xs: 12,
+        }}
+      >
         <FbOrdinaryForm />
       </Grid>
       <Grid
         size={{
           lg: 12,
           md: 12,
-          xs: 12
-        }}>
+          xs: 12,
+        }}
+      >
         <FbInputVariants />
       </Grid>
       <Grid
         size={{
           lg: 12,
           md: 12,
-          xs: 12
-        }}>
+          xs: 12,
+        }}
+      >
         <FbDefaultForm />
       </Grid>
       <Grid
         size={{
           lg: 12,
           md: 12,
-          xs: 12
-        }}>
+          xs: 12,
+        }}
+      >
         <FbBasicHeaderForm />
       </Grid>
       <Grid
         size={{
           lg: 12,
           md: 12,
-          xs: 12
-        }}>
+          xs: 12,
+        }}
+      >
         <FbReadonlyForm />
       </Grid>
       <Grid
         size={{
           lg: 12,
           md: 12,
-          xs: 12
-        }}>
+          xs: 12,
+        }}
+      >
         <FbDisabledForm />
       </Grid>
       <Grid
         size={{
           lg: 6,
           md: 12,
-          xs: 12
-        }}>
+          xs: 12,
+        }}
+      >
         <FbLeftIconForm />
       </Grid>
       <Grid
         size={{
           lg: 6,
           md: 12,
-          xs: 12
-        }}>
+          xs: 12,
+        }}
+      >
         <FbRightIconForm />
       </Grid>
     </Grid>

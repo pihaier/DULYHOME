@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const TextSecondaryCode = () => {
   return (
     <>
@@ -18,7 +18,7 @@ import { Typography } from '@mui/material';
 </Typography>`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default TextSecondaryCode
+export default TextSecondaryCode;

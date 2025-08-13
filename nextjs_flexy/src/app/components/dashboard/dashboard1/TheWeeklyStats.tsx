@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Typography,
   Box,
@@ -10,45 +10,45 @@ import {
   Tooltip,
   Stack,
 } from '@mui/material';
-import dynamic from "next/dynamic";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
-import { useTheme } from "@mui/material/styles";
-import DashboardCard from "../../shared/DashboardCard";
-import { IconDots, IconMessage2 } from "@tabler/icons-react";
-import { IconShoppingCart } from "@tabler/icons-react";
-import { IconStar } from "@tabler/icons-react";
-import { ApexOptions } from "apexcharts";
+import dynamic from 'next/dynamic';
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
+import { useTheme } from '@mui/material/styles';
+import DashboardCard from '../../shared/DashboardCard';
+import { IconDots, IconMessage2 } from '@tabler/icons-react';
+import { IconShoppingCart } from '@tabler/icons-react';
+import { IconStar } from '@tabler/icons-react';
+import { ApexOptions } from 'apexcharts';
 
-const options = ["Action", "Another Action", "Something else here"];
+const options = ['Action', 'Another Action', 'Something else here'];
 
 const weeks = [
   {
-    avatarbg: "primary.main",
+    avatarbg: 'primary.main',
     icon: <IconShoppingCart width="20" height="20" />,
-    title: "Top Sales",
-    subtitle: "Johnathan Doe",
-    profit: "+68%",
+    title: 'Top Sales',
+    subtitle: 'Johnathan Doe',
+    profit: '+68%',
   },
   {
-    avatarbg: "warning.main",
+    avatarbg: 'warning.main',
     icon: <IconStar width="20" height="20" />,
-    title: "Best Seller",
-    subtitle: "MaterialPro Admin",
-    profit: "+68%",
+    title: 'Best Seller',
+    subtitle: 'MaterialPro Admin',
+    profit: '+68%',
   },
   {
-    avatarbg: "success.main",
+    avatarbg: 'success.main',
     icon: <IconMessage2 width="20" height="20" />,
-    title: "Most Commented",
-    subtitle: "Ample Admin",
-    profit: "+68%",
+    title: 'Most Commented',
+    subtitle: 'Ample Admin',
+    profit: '+68%',
   },
 ];
 
 const WeeklyStats = () => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event: { currentTarget: React.SetStateAction<HTMLElement | null>; }) => {
+  const handleClick = (event: { currentTarget: React.SetStateAction<HTMLElement | null> }) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -109,7 +109,7 @@ const WeeklyStats = () => {
         <Box>
           <Tooltip title="Action">
             <IconButton
-              aria-expanded={open ? "true" : undefined}
+              aria-expanded={open ? 'true' : undefined}
               aria-haspopup="true"
               onClick={handleClick}
               size="large"
@@ -124,25 +124,21 @@ const WeeklyStats = () => {
             open={open}
             onClose={handleClose}
             anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "right",
+              vertical: 'bottom',
+              horizontal: 'right',
             }}
             transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
+              vertical: 'top',
+              horizontal: 'right',
             }}
             slotProps={{
               list: {
-                "aria-labelledby": "long-button",
-              }
+                'aria-labelledby': 'long-button',
+              },
             }}
           >
             {options.map((option) => (
-              <MenuItem
-                key={option}
-                selected={option === "Pyxis"}
-                onClick={handleClose}
-              >
+              <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>
                 {option}
               </MenuItem>
             ))}
@@ -158,12 +154,21 @@ const WeeklyStats = () => {
       {/* List */}
       <Box>
         {weeks.map((week) => (
-          <Stack direction='row' mb={3} spacing={2} justifyContent='space-between' alignItems='center' key={week.title}>
-            <Box display='flex' alignItems='center' gap={2}>
+          <Stack
+            direction="row"
+            mb={3}
+            spacing={2}
+            justifyContent="space-between"
+            alignItems="center"
+            key={week.title}
+          >
+            <Box display="flex" alignItems="center" gap={2}>
               <Avatar
                 sx={{
                   backgroundColor: week.avatarbg,
-                  color: '#fff', width: 48, height: 48
+                  color: '#fff',
+                  width: 48,
+                  height: 48,
                 }}
               >
                 {week.icon}

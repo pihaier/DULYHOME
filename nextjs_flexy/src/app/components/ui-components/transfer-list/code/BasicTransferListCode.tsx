@@ -1,10 +1,10 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const BasicTransferListCode = () => {
-    return (
-        <>
-            <CodeDialog>
-                {`
+  return (
+    <>
+      <CodeDialog>
+        {`
 "use client";
 import React from 'react';
 import { useTheme } from '@mui/material/styles';
@@ -153,9 +153,9 @@ return (
     </Grid>
     );
 };`}
-            </CodeDialog>
-        </>
-    )
-}
+      </CodeDialog>
+    </>
+  );
+};
 
-export default BasicTransferListCode
+export default BasicTransferListCode;

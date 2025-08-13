@@ -29,9 +29,7 @@ const StyledButton2 = styled(Button)(({ theme }) => ({
 
 const C2a = () => {
   return (
-    (<Box
-      py={10}
-    >
+    <Box py={10}>
       <Container maxWidth="lg">
         <AnimationFadeIn>
           <Grid container justifyContent="center" spacing={3}>
@@ -39,8 +37,9 @@ const C2a = () => {
               size={{
                 xs: 12,
                 sm: 10,
-                lg: 6
-              }}>
+                lg: 6,
+              }}
+            >
               <ImgCard>
                 <CardContent sx={{ py: 5 }}>
                   <Box textAlign="center">
@@ -79,7 +78,7 @@ const C2a = () => {
           </Grid>
         </AnimationFadeIn>
       </Container>
-    </Box>)
+    </Box>
   );
 };
 

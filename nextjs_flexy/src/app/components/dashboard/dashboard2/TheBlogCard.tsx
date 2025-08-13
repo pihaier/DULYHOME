@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Typography,
   Box,
@@ -7,13 +7,13 @@ import {
   MenuItem,
   Button,
   Tooltip,
-  Avatar
-} from "@mui/material";
+  Avatar,
+} from '@mui/material';
 
-import DashboardCard from "../../shared/DashboardCard";
-import { IconDots } from "@tabler/icons-react";
+import DashboardCard from '../../shared/DashboardCard';
+import { IconDots } from '@tabler/icons-react';
 
-const options = ["Action", "Another Action", "Something else here"];
+const options = ['Action', 'Another Action', 'Something else here'];
 
 const BlogCard = () => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
@@ -32,7 +32,7 @@ const BlogCard = () => {
         <Box>
           <Tooltip title="Action">
             <IconButton
-              aria-expanded={open ? "true" : undefined}
+              aria-expanded={open ? 'true' : undefined}
               aria-haspopup="true"
               onClick={handleClick}
               size="small"
@@ -47,25 +47,21 @@ const BlogCard = () => {
             open={open}
             onClose={handleClose}
             anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "right",
+              vertical: 'bottom',
+              horizontal: 'right',
             }}
             transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
+              vertical: 'top',
+              horizontal: 'right',
             }}
             slotProps={{
               list: {
-                "aria-labelledby": "long-button",
-              }
+                'aria-labelledby': 'long-button',
+              },
             }}
           >
             {options.map((option) => (
-              <MenuItem
-                key={option}
-                selected={option === "Pyxis"}
-                onClick={handleClose}
-              >
+              <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>
                 {option}
               </MenuItem>
             ))}
@@ -76,15 +72,16 @@ const BlogCard = () => {
       <>
         <Avatar
           src="/images/backgrounds/blog-bg-2x.jpg"
-          sx={{ width: "100%", height: 180, borderRadius: 0 }}
+          sx={{ width: '100%', height: 180, borderRadius: 0 }}
         />
-        <Typography variant="h4" mt={3}>React 19 coming soon!</Typography>
+        <Typography variant="h4" mt={3}>
+          React 19 coming soon!
+        </Typography>
         <Typography color="textSecondary" variant="subtitle1">
           By Johnathan Doe
         </Typography>
         <Typography variant="body2" mt={2} mb={3}>
-          This will be the small description for the news you have.
-          There could be some great info.
+          This will be the small description for the news you have. There could be some great info.
         </Typography>
 
         <Button variant="contained" color="secondary">

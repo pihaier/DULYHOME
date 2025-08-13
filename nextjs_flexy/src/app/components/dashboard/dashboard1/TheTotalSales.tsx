@@ -1,12 +1,12 @@
-import React from "react";
-import { Typography, Box, Divider, Stack } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import dynamic from "next/dynamic";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
-import ThemeSelect from "./ThemeSelect";
-import DashboardCard from "../../shared/DashboardCard";
-import { IconShoppingCart } from "@tabler/icons-react";
-import { ApexOptions } from "apexcharts";
+import React from 'react';
+import { Typography, Box, Divider, Stack } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import dynamic from 'next/dynamic';
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
+import ThemeSelect from './ThemeSelect';
+import DashboardCard from '../../shared/DashboardCard';
+import { IconShoppingCart } from '@tabler/icons-react';
+import { ApexOptions } from 'apexcharts';
 
 const TotalSales = () => {
   const theme = useTheme();
@@ -15,8 +15,7 @@ const TotalSales = () => {
   const warning = theme.palette.warning.main;
   const grey = theme.palette.grey.A100;
   const optionstotalsales: ApexOptions = {
-
-    labels: ["2025", "2024", "2023", "2022"],
+    labels: ['2025', '2024', '2023', '2022'],
 
     chart: {
       height: 280,
@@ -69,13 +68,9 @@ const TotalSales = () => {
   return (
     <DashboardCard title="Total Sales" subtitle="Overview of Years" action={<ThemeSelect />}>
       <>
-        <Divider style={{ marginTop: "0px" }} />
+        <Divider style={{ marginTop: '0px' }} />
 
-        <Box
-          display="flex"
-          alignItems="center"
-          mt={2}
-        >
+        <Box display="flex" alignItems="center" mt={2}>
           <Typography
             color="textSecondary"
             variant="body1"

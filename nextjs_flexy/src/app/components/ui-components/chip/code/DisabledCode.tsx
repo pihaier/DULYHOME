@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const DisabledCode = () => {
   return (
     <>
@@ -25,7 +25,7 @@ import InlineItemCard from "@/app/components/shared/InlineItemCard";
 </InlineItemCard>`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default DisabledCode
+export default DisabledCode;

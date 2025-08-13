@@ -1,30 +1,30 @@
-import React from "react";
-import { Grid, Stack, Button, Alert, AlertTitle } from "@mui/material";
+import React from 'react';
+import { Grid, Stack, Button, Alert, AlertTitle } from '@mui/material';
 
-import Breadcrumb from "@/app/dashboard/layout/shared/breadcrumb/Breadcrumb";
-import PageContainer from "@/app/components/container/PageContainer";
-import ParentCard from "@/app/components/shared/ParentCard";
-import ChildCard from "@/app/components/shared/ChildCard";
-import AlertTransition from "@/app/components/ui-components/alert/AlertTransition";
+import Breadcrumb from '@/app/dashboard/layout/shared/breadcrumb/Breadcrumb';
+import PageContainer from '@/app/components/container/PageContainer';
+import ParentCard from '@/app/components/shared/ParentCard';
+import ChildCard from '@/app/components/shared/ChildCard';
+import AlertTransition from '@/app/components/ui-components/alert/AlertTransition';
 
-import FilledCode from "@/app/components/ui-components/alert/code/FilledCode";
-import OutlinedCode from "@/app/components/ui-components/alert/code/OutlinedCode";
-import DescriptionCode from "@/app/components/ui-components/alert/code/DescriptionCode";
-import ActionCode from "@/app/components/ui-components/alert/code/ActionCode";
+import FilledCode from '@/app/components/ui-components/alert/code/FilledCode';
+import OutlinedCode from '@/app/components/ui-components/alert/code/OutlinedCode';
+import DescriptionCode from '@/app/components/ui-components/alert/code/DescriptionCode';
+import ActionCode from '@/app/components/ui-components/alert/code/ActionCode';
 
 const BCrumb = [
   {
-    to: "/",
-    title: "Home",
+    to: '/',
+    title: 'Home',
   },
   {
-    title: "Alert",
+    title: 'Alert',
   },
 ];
 
 const ExAlert = () => {
   return (
-    (<PageContainer title="Alert" description="this is Alert">
+    <PageContainer title="Alert" description="this is Alert">
       {/* breadcrumb */}
       <Breadcrumb title="Alert" items={BCrumb} />
       {/* end breadcrumb */}
@@ -129,7 +129,7 @@ const ExAlert = () => {
           </Grid>
         </Grid>
       </ParentCard>
-    </PageContainer>)
+    </PageContainer>
   );
 };
 

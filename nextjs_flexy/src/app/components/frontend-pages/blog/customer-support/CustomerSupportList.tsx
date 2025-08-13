@@ -33,7 +33,19 @@ import {
 } from '@mui/icons-material';
 import { customerSupportData } from '../../../../frontend-pages/blog/customer-support-data';
 import { useUser } from '@/lib/context/GlobalContext';
-import { IconButton, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import {
+  IconButton,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from '@mui/material';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -69,10 +81,10 @@ const CustomerSupportList = () => {
   const [editData, setEditData] = useState<any>(null);
   const [notices, setNotices] = useState(customerSupportData.notices);
   const [faqs, setFaqs] = useState(customerSupportData.faqs);
-  
+
   // 관리자 이메일 설정 (여기에 관리자 이메일을 입력하세요)
   const ADMIN_EMAILS = ['admin@duly.co.kr']; // 여기에 당신의 이메일을 넣으세요
-  
+
   useEffect(() => {
     // 로그인한 사용자가 관리자인지 확인
     if (user?.email && ADMIN_EMAILS.includes(user.email)) {
@@ -84,9 +96,10 @@ const CustomerSupportList = () => {
     setTabValue(newValue);
   };
 
-  const handleNoticeChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-    setExpandedNotice(isExpanded ? panel : false);
-  };
+  const handleNoticeChange =
+    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+      setExpandedNotice(isExpanded ? panel : false);
+    };
 
   const handleFAQChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
     setExpandedFAQ(isExpanded ? panel : false);
@@ -113,24 +126,24 @@ const CustomerSupportList = () => {
     setEditData(item);
     setEditDialogOpen(true);
   };
-  
+
   const handleAdd = (type: 'notice' | 'faq') => {
     setEditMode('add');
     setEditType(type);
     setEditData(null);
     setEditDialogOpen(true);
   };
-  
+
   const handleDelete = (type: 'notice' | 'faq', id: number) => {
     if (confirm('정말 삭제하시겠습니까?')) {
       if (type === 'notice') {
-        setNotices(notices.filter(n => n.id !== id));
+        setNotices(notices.filter((n) => n.id !== id));
       } else {
-        setFaqs(faqs.filter(f => f.id !== id));
+        setFaqs(faqs.filter((f) => f.id !== id));
       }
     }
   };
-  
+
   const handleSave = () => {
     // 여기서 실제로는 서버에 저장해야 하지만, 일단 로컬 상태만 업데이트
     if (editType === 'notice') {
@@ -145,7 +158,7 @@ const CustomerSupportList = () => {
         };
         setNotices([newNotice, ...notices]);
       } else {
-        setNotices(notices.map(n => n.id === editData.id ? editData : n));
+        setNotices(notices.map((n) => (n.id === editData.id ? editData : n)));
       }
     } else {
       if (editMode === 'add') {
@@ -157,12 +170,12 @@ const CustomerSupportList = () => {
         };
         setFaqs([...faqs, newFaq]);
       } else {
-        setFaqs(faqs.map(f => f.id === editData.id ? editData : f));
+        setFaqs(faqs.map((f) => (f.id === editData.id ? editData : f)));
       }
     }
     setEditDialogOpen(false);
   };
-  
+
   const getFAQCategoryColor = (category: string) => {
     switch (category) {
       case '회원가입':
@@ -197,16 +210,8 @@ const CustomerSupportList = () => {
             <CardContent>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={tabValue} onChange={handleTabChange} variant="fullWidth">
-                  <Tab 
-                    label="공지사항" 
-                    icon={<AnnouncementIcon />} 
-                    iconPosition="start"
-                  />
-                  <Tab 
-                    label="자주 묻는 질문 (FAQ)" 
-                    icon={<HelpIcon />} 
-                    iconPosition="start"
-                  />
+                  <Tab label="공지사항" icon={<AnnouncementIcon />} iconPosition="start" />
+                  <Tab label="자주 묻는 질문 (FAQ)" icon={<HelpIcon />} iconPosition="start" />
                 </Tabs>
               </Box>
 
@@ -253,9 +258,7 @@ const CustomerSupportList = () => {
                           <Typography variant="h6" fontWeight={500}>
                             {notice.title}
                           </Typography>
-                          {notice.important && (
-                            <Chip label="중요" color="error" size="small" />
-                          )}
+                          {notice.important && <Chip label="중요" color="error" size="small" />}
                           {isAdmin && (
                             <Box sx={{ ml: 'auto', display: 'flex', gap: 1 }}>
                               <IconButton
@@ -280,8 +283,8 @@ const CustomerSupportList = () => {
                           )}
                         </Box>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                          <Chip 
-                            label={notice.category} 
+                          <Chip
+                            label={notice.category}
                             color={getCategoryColor(notice.category) as any}
                             size="small"
                             variant="outlined"
@@ -295,7 +298,10 @@ const CustomerSupportList = () => {
                         </Box>
                       </AccordionSummary>
                       <AccordionDetails>
-                        <Typography variant="body1" sx={{ whiteSpace: 'pre-line', lineHeight: 1.8 }}>
+                        <Typography
+                          variant="body1"
+                          sx={{ whiteSpace: 'pre-line', lineHeight: 1.8 }}
+                        >
                           {notice.content.trim()}
                         </Typography>
                       </AccordionDetails>
@@ -341,8 +347,8 @@ const CustomerSupportList = () => {
                           },
                         }}
                       >
-                        <Chip 
-                          label={faq.category} 
+                        <Chip
+                          label={faq.category}
                           color={getFAQCategoryColor(faq.category) as any}
                           size="small"
                           sx={{ minWidth: 80 }}
@@ -385,11 +391,15 @@ const CustomerSupportList = () => {
             </CardContent>
           </Card>
         </Grid>
-
       </Grid>
-      
+
       {/* 편집 다이얼로그 */}
-      <Dialog open={editDialogOpen} onClose={() => setEditDialogOpen(false)} maxWidth="md" fullWidth>
+      <Dialog
+        open={editDialogOpen}
+        onClose={() => setEditDialogOpen(false)}
+        maxWidth="md"
+        fullWidth
+      >
         <DialogTitle>
           {editMode === 'add' ? '추가' : '수정'} - {editType === 'notice' ? '공지사항' : 'FAQ'}
         </DialogTitle>
@@ -462,7 +472,9 @@ const CustomerSupportList = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setEditDialogOpen(false)}>취소</Button>
-          <Button onClick={handleSave} variant="contained">저장</Button>
+          <Button onClick={handleSave} variant="contained">
+            저장
+          </Button>
         </DialogActions>
       </Dialog>
     </Container>

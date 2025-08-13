@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const BasicLayoutCode = () => {
   return (
     <>
@@ -176,7 +176,7 @@ const CustomOutlinedInput = styled((props) => <OutlinedInput {...props} />)(({ t
 `}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default BasicLayoutCode
+export default BasicLayoutCode;

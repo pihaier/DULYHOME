@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import React, { useState } from 'react';
 import { Divider, Box } from '@mui/material';
@@ -8,8 +8,7 @@ import ChatSidebar from '@/app/components/apps/chats/ChatSidebar';
 import ChatContent from '@/app/components/apps/chats/ChatContent';
 import ChatMsgSent from '@/app/components/apps/chats/ChatMsgSent';
 import AppCard from '@/app/components/shared/AppCard';
-import { ChatProvider } from '@/app/context/ChatContext/index'
-
+import { ChatProvider } from '@/app/context/ChatContext/index';
 
 const Chats = () => {
   const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false);

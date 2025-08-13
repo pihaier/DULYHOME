@@ -14,7 +14,7 @@ const ecoCard = [
   {
     title: 'Boat Headphone',
     subheader: 'September 14, 2023',
-    photo: "/images/products/s4.jpg",
+    photo: '/images/products/s4.jpg',
     salesPrice: 375,
     price: 285,
     rating: 4,
@@ -22,7 +22,7 @@ const ecoCard = [
   {
     title: 'MacBook Air Pro',
     subheader: 'September 14, 2023',
-    photo: "/images/products/s5.jpg",
+    photo: '/images/products/s5.jpg',
     salesPrice: 650,
     price: 900,
     rating: 5,
@@ -30,7 +30,7 @@ const ecoCard = [
   {
     title: 'Red Valvet Dress',
     subheader: 'September 14, 2023',
-    photo: "/images/products/s7.jpg",
+    photo: '/images/products/s7.jpg',
     salesPrice: 150,
     price: 200,
     rating: 3,
@@ -38,7 +38,7 @@ const ecoCard = [
   {
     title: 'Cute Soft Teddybear',
     subheader: 'September 14, 2023',
-    photo: "/images/products/s11.jpg",
+    photo: '/images/products/s11.jpg',
     salesPrice: 285,
     price: 345,
     rating: 2,
@@ -47,18 +47,25 @@ const ecoCard = [
 
 const EcommerceCard = () => {
   return (
-    (<Grid container spacing={3}>
+    <Grid container spacing={3}>
       {ecoCard.map((product, index) => (
         <Grid
           key={index}
           size={{
             xs: 12,
             sm: 4,
-            lg: 3
-          }}>
+            lg: 3,
+          }}
+        >
           <BlankCard>
             <Typography component={Link} href="/">
-              <Image src={product.photo} alt="img" width={250} height={268} style={{ width: '100%' }} />
+              <Image
+                src={product.photo}
+                alt="img"
+                width={250}
+                height={268}
+                style={{ width: '100%' }}
+              />
             </Typography>
             <Tooltip title="Add To Cart">
               <Fab
@@ -84,7 +91,7 @@ const EcommerceCard = () => {
           </BlankCard>
         </Grid>
       ))}
-    </Grid>)
+    </Grid>
   );
 };
 

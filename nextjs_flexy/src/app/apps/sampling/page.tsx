@@ -24,14 +24,11 @@ export default function SamplingPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSuccess = (data: { reservationNumber: string; orderId: string }) => {
-    toast.success(
-      `샘플링 신청이 완료되었습니다!\n예약번호: ${data.reservationNumber}`,
-      {
-        position: "top-center",
-        autoClose: 5000,
-      }
-    );
-    
+    toast.success(`샘플링 신청이 완료되었습니다!\n예약번호: ${data.reservationNumber}`, {
+      position: 'top-center',
+      autoClose: 5000,
+    });
+
     // 신청 완료 후 상세 페이지로 이동
     setTimeout(() => {
       router.push(`/apps/sampling/${data.reservationNumber}`);
@@ -41,7 +38,7 @@ export default function SamplingPage() {
   return (
     <PageContainer title="샘플링 신청" description="중국 제품 샘플링 서비스 신청">
       <Breadcrumb title="샘플링 신청" items={BCrumb} />
-      
+
       <Paper elevation={0} sx={{ p: 4, maxWidth: 1200, mx: 'auto' }}>
         <Box sx={{ mb: 4 }}>
           <Typography variant="h4" gutterBottom>

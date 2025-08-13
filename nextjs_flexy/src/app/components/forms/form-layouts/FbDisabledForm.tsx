@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React from 'react';
 import { Box, Button } from '@mui/material';
 import CustomTextField from '../theme-elements/CustomTextField';
@@ -16,12 +16,7 @@ const FbDisabledForm = () => (
       >
         Name
       </CustomFormLabel>
-      <CustomTextField
-        id="df-name"
-        variant="outlined"
-        fullWidth
-        disabled
-      />
+      <CustomTextField id="df-name" variant="outlined" fullWidth disabled />
       <CustomFormLabel htmlFor="df-email-address">Email</CustomFormLabel>
       <CustomTextField
         id="df-email-address"

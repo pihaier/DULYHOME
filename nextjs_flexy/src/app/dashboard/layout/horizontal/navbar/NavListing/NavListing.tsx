@@ -1,5 +1,5 @@
 import Menudata from '../Menudata';
-import { usePathname } from "next/navigation";
+import { usePathname } from 'next/navigation';
 import { Box, List, Theme, useMediaQuery } from '@mui/material';
 import NavItem from '../NavItem/NavItem';
 import NavCollapse from '../NavCollapse/NavCollapse';
@@ -12,11 +12,9 @@ const NavListing = () => {
   const pathWithoutLastPart = pathname.slice(0, pathname.lastIndexOf('/'));
   const { isCollapse, isSidebarHover } = useContext(CustomizerContext);
 
-
   const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
 
-  const hideMenu = lgUp ? isCollapse == "mini-sidebar" && !isSidebarHover : '';
-
+  const hideMenu = lgUp ? isCollapse == 'mini-sidebar' && !isSidebarHover : '';
 
   return (
     <Box>
@@ -30,15 +28,23 @@ const NavListing = () => {
                 hideMenu={hideMenu}
                 pathWithoutLastPart={pathWithoutLastPart}
                 level={1}
-                key={item.id} onClick={() => { }} />
+                key={item.id}
+                onClick={() => {}}
+              />
             );
 
             // {/********If Sub No Menu**********/}
           } else {
             return (
-              <NavItem item={item} key={item.id} pathDirect={pathDirect} hideMenu={hideMenu} onClick={function (): void {
-                throw new Error('Function not implemented.');
-              }} />
+              <NavItem
+                item={item}
+                key={item.id}
+                pathDirect={pathDirect}
+                hideMenu={hideMenu}
+                onClick={function (): void {
+                  throw new Error('Function not implemented.');
+                }}
+              />
             );
           }
         })}

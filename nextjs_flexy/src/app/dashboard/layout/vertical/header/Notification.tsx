@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   IconButton,
   Box,
@@ -10,12 +10,12 @@ import {
   Button,
   Chip,
   Divider,
-} from "@mui/material";
-import * as dropdownData from "./data";
-import Scrollbar from "@/app/components/custom-scroll/Scrollbar";
-import { Stack } from "@mui/system";
-import Link from "next/link";
-import { IconBell } from "@tabler/icons-react";
+} from '@mui/material';
+import * as dropdownData from './data';
+import Scrollbar from '@/app/components/custom-scroll/Scrollbar';
+import { Stack } from '@mui/system';
+import Link from 'next/link';
+import { IconBell } from '@tabler/icons-react';
 
 const Notifications = () => {
   const [anchorEl2, setAnchorEl2] = useState<HTMLElement | null>(null);
@@ -36,7 +36,7 @@ const Notifications = () => {
         aria-controls="msgs-menu"
         aria-haspopup="true"
         sx={{
-          color: anchorEl2 ? "primary.main" : "text.primary",
+          color: anchorEl2 ? 'primary.main' : 'text.primary',
         }}
         onClick={handleClick2}
       >
@@ -53,18 +53,18 @@ const Notifications = () => {
         keepMounted
         open={Boolean(anchorEl2)}
         onClose={handleClose2}
-        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-        transformOrigin={{ horizontal: "right", vertical: "top" }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         sx={{
-          "& .MuiMenu-paper": {
-            width: "385px",
+          '& .MuiMenu-paper': {
+            width: '385px',
           },
-          "& .MuiList-padding": {
-            p: "30px",
+          '& .MuiList-padding': {
+            p: '30px',
           },
         }}
       >
-        <Stack direction="row" pb={2} alignItems="center" justifyContent='space-between'>
+        <Stack direction="row" pb={2} alignItems="center" justifyContent="space-between">
           <Typography variant="h4">Notification</Typography>
           <Box ml={2}>
             <Chip
@@ -72,14 +72,14 @@ const Notifications = () => {
               label="5 new"
               color="primary"
               sx={{
-                borderRadius: "6px",
-                pl: "5px",
-                pr: "5px",
+                borderRadius: '6px',
+                pl: '5px',
+                pr: '5px',
               }}
             />
           </Box>
         </Stack>
-        <Scrollbar sx={{ height: "385px" }}>
+        <Scrollbar sx={{ height: '385px' }}>
           {dropdownData.notifications.map((notification, index) => (
             <Box key={index}>
               <MenuItem sx={{ py: 2, px: 0 }}>
@@ -97,7 +97,7 @@ const Notifications = () => {
                       variant="h5"
                       noWrap
                       sx={{
-                        width: "240px",
+                        width: '240px',
                       }}
                     >
                       {notification.title}
@@ -108,7 +108,7 @@ const Notifications = () => {
                       noWrap
                       fontWeight="400"
                       sx={{
-                        width: "240px",
+                        width: '240px',
                       }}
                     >
                       {notification.subtitle}

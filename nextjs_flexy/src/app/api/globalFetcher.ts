@@ -2,59 +2,59 @@
 
 const getFetcher = (url: any) =>
   fetch(url, {
-    method: "GET",
-    headers: { browserrefreshed: "false" },
+    method: 'GET',
+    headers: { browserrefreshed: 'false' },
   }).then((res) => {
     if (!res.ok) {
-      throw new Error("Failed to fetch the data");
+      throw new Error('Failed to fetch the data');
     }
     return res.json();
   });
 
 const postFetcher = (url: string, arg: any) =>
   fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(arg),
   }).then((res) => {
     if (!res.ok) {
-      throw new Error("Failed to post data");
+      throw new Error('Failed to post data');
     }
     return res.json();
   });
 
 const putFetcher = (url: string, arg: any) =>
   fetch(url, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(arg),
   }).then((res) => {
     if (!res.ok) {
-      throw new Error("Failed to updated data");
+      throw new Error('Failed to updated data');
     }
     return res.json();
   });
 
 const patchFetcher = (url: string, arg: any) =>
   fetch(url, {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(arg),
   }).then((res) => {
     if (!res.ok) {
-      throw new Error("Failed to updated data");
+      throw new Error('Failed to updated data');
     }
     return res.json();
   });
 
 const deleteFetcher = (url: string, arg: any) =>
   fetch(url, {
-    method: "DELETE",
-    headers: { "Content-Type": "application/json" },
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(arg),
   }).then((res) => {
     if (!res.ok) {
-      throw new Error("Failed to delete data");
+      throw new Error('Failed to delete data');
     }
     return res.json();
   });

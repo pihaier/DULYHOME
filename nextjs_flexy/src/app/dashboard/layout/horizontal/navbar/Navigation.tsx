@@ -10,7 +10,8 @@ import React from 'react';
 
 const Navigation = () => {
   const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
-  const { activeMode, isLayout, isMobileSidebar, setIsMobileSidebar } = useContext(CustomizerContext);
+  const { activeMode, isLayout, isMobileSidebar, setIsMobileSidebar } =
+    useContext(CustomizerContext);
   const SidebarWidth = config.sidebarWidth;
 
   if (lgUp) {
@@ -43,7 +44,7 @@ const Navigation = () => {
             border: '0 !important',
             boxShadow: (theme) => theme.shadows[8],
           },
-        }
+        },
       }}
     >
       {/* ------------------------------------------- */}

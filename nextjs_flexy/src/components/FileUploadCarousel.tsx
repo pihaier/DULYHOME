@@ -12,7 +12,7 @@ import {
   XMarkIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
-  PlusIcon
+  PlusIcon,
 } from '@heroicons/react/24/outline';
 
 interface FileUploadCarouselProps {
@@ -38,7 +38,7 @@ export default function FileUploadCarousel({
     'application/msword': ['.doc'],
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
     'application/vnd.ms-excel': ['.xls'],
-    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx']
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'],
   },
   maxFiles = 5,
   maxSize = 10 * 1024 * 1024, // 10MB
@@ -46,7 +46,7 @@ export default function FileUploadCarousel({
   description,
   required = false,
   error,
-  currentFiles = []
+  currentFiles = [],
 }: FileUploadCarouselProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false });
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -61,7 +61,7 @@ export default function FileUploadCarousel({
     const pdfExts = ['pdf'];
     const docExts = ['doc', 'docx'];
     const excelExts = ['xls', 'xlsx'];
-    
+
     if (imageExts.includes(ext || '')) return 'image';
     if (pdfExts.includes(ext || '')) return 'pdf';
     if (docExts.includes(ext || '')) return 'word';
@@ -72,7 +72,7 @@ export default function FileUploadCarousel({
   // 파일 변경 시 미리보기 URL 생성
   useEffect(() => {
     // 기존 URL 정리
-    previewUrls.forEach(url => {
+    previewUrls.forEach((url) => {
       if (url && url.startsWith('blob:')) {
         URL.revokeObjectURL(url);
       }
@@ -90,7 +90,7 @@ export default function FileUploadCarousel({
 
     // Cleanup
     return () => {
-      newUrls.forEach(url => {
+      newUrls.forEach((url) => {
         if (url && url.startsWith('blob:')) {
           URL.revokeObjectURL(url);
         }
@@ -99,25 +99,28 @@ export default function FileUploadCarousel({
   }, [currentFiles]);
 
   // Dropzone 설정
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    const newFiles = [...currentFiles, ...acceptedFiles];
-    if (newFiles.length > maxFiles) {
-      alert(`최대 ${maxFiles}개의 파일만 업로드할 수 있습니다.`);
-      return;
-    }
-    onFilesChange(newFiles);
-    
-    // 새로 추가된 파일로 이동
-    setTimeout(() => {
-      emblaApi?.scrollTo(currentFiles.length);
-    }, 100);
-  }, [currentFiles, maxFiles, onFilesChange, emblaApi]);
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      const newFiles = [...currentFiles, ...acceptedFiles];
+      if (newFiles.length > maxFiles) {
+        alert(`최대 ${maxFiles}개의 파일만 업로드할 수 있습니다.`);
+        return;
+      }
+      onFilesChange(newFiles);
+
+      // 새로 추가된 파일로 이동
+      setTimeout(() => {
+        emblaApi?.scrollTo(currentFiles.length);
+      }, 100);
+    },
+    [currentFiles, maxFiles, onFilesChange, emblaApi]
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept,
     maxSize,
-    multiple: true
+    multiple: true,
   });
 
   // 파일 삭제
@@ -139,7 +142,7 @@ export default function FileUploadCarousel({
   };
 
   // 파일 타입별 아이콘
-  const getFileIcon = (fileType: string, className: string = "w-24 h-24") => {
+  const getFileIcon = (fileType: string, className: string = 'w-24 h-24') => {
     switch (fileType) {
       case 'pdf':
         return (
@@ -205,9 +208,7 @@ export default function FileUploadCarousel({
           {label}
           {required && <span className="text-red-500 ml-1">*</span>}
         </label>
-        {description && (
-          <p className="mt-1 text-sm/6 text-neutral-600">{description}</p>
-        )}
+        {description && <p className="mt-1 text-sm/6 text-neutral-600">{description}</p>}
 
         <div className="mt-4">
           {currentFiles.length === 0 ? (
@@ -241,10 +242,13 @@ export default function FileUploadCarousel({
                   {currentFiles.map((file, index) => {
                     const fileType = getFileType(file.name);
                     const isImage = fileType === 'image';
-                    
+
                     return (
                       <div key={index} className="flex-[0_0_100%] min-w-0">
-                        <div className="relative bg-gray-100 rounded-lg flex items-center justify-center" style={{ height: '200px' }}>
+                        <div
+                          className="relative bg-gray-100 rounded-lg flex items-center justify-center"
+                          style={{ height: '200px' }}
+                        >
                           {isImage && previewUrls[index] ? (
                             <img
                               src={previewUrls[index]}
@@ -258,7 +262,7 @@ export default function FileUploadCarousel({
                             />
                           ) : (
                             <div className="flex flex-col items-center justify-center p-8">
-                              {getFileIcon(fileType, "w-32 h-32")}
+                              {getFileIcon(fileType, 'w-32 h-32')}
                               <p className="mt-4 text-sm text-gray-600 text-center max-w-xs truncate">
                                 {file.name}
                               </p>
@@ -272,7 +276,7 @@ export default function FileUploadCarousel({
                               </button>
                             </div>
                           )}
-                          
+
                           {/* 삭제 버튼 */}
                           <button
                             type="button"
@@ -285,7 +289,7 @@ export default function FileUploadCarousel({
                       </div>
                     );
                   })}
-                  
+
                   {/* 추가 버튼 슬라이드 */}
                   {currentFiles.length < maxFiles && (
                     <div className="flex-[0_0_100%] min-w-0">
@@ -297,9 +301,7 @@ export default function FileUploadCarousel({
                         <input {...getInputProps()} />
                         <div className="text-center">
                           <PlusIcon className="mx-auto h-12 w-12 text-gray-400" />
-                          <p className="mt-2 text-sm font-semibold text-gray-600">
-                            파일 추가
-                          </p>
+                          <p className="mt-2 text-sm font-semibold text-gray-600">파일 추가</p>
                           <p className="text-xs text-gray-500">
                             {maxFiles - currentFiles.length}개 더 추가 가능
                           </p>
@@ -342,14 +344,12 @@ export default function FileUploadCarousel({
           </p>
         )}
 
-        {error && (
-          <p className="mt-2 text-sm text-red-600">{error}</p>
-        )}
+        {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
       </div>
 
       {/* 이미지 모달 */}
       {showModal && modalImage && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4"
           onClick={() => setShowModal(false)}
         >

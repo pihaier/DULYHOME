@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -39,7 +39,7 @@ interface UserProfile {
 export default function ProfilePage() {
   const router = useRouter();
   const supabase = createClient();
-  
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [user, setUser] = useState<any>(null);
@@ -48,8 +48,11 @@ export default function ProfilePage() {
   useEffect(() => {
     const getProfileData = async () => {
       try {
-        const { data: { user }, error: userError } = await supabase.auth.getUser();
-        
+        const {
+          data: { user },
+          error: userError,
+        } = await supabase.auth.getUser();
+
         if (userError || !user) {
           router.push('/auth/customer/login');
           return;
@@ -131,13 +134,8 @@ export default function ProfilePage() {
       <Box py={4}>
         <Paper elevation={3} sx={{ p: 4, maxWidth: 800, mx: 'auto' }}>
           <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-            <Typography variant="h4">
-              내 프로필
-            </Typography>
-            <Button
-              variant="outlined"
-              onClick={handleEditProfile}
-            >
+            <Typography variant="h4">내 프로필</Typography>
+            <Button variant="outlined" onClick={handleEditProfile}>
               프로필 수정
             </Button>
           </Box>
@@ -155,9 +153,13 @@ export default function ProfilePage() {
                   <CustomFormLabel>역할</CustomFormLabel>
                   <CustomTextField
                     value={
-                      profile.role === 'customer' ? '고객' :
-                      profile.role === 'chinese_staff' ? '중국 직원' :
-                      profile.role === 'korean_team' ? '한국 팀' : profile.role
+                      profile.role === 'customer'
+                        ? '고객'
+                        : profile.role === 'chinese_staff'
+                          ? '중국 직원'
+                          : profile.role === 'korean_team'
+                            ? '한국 팀'
+                            : profile.role
                     }
                     fullWidth
                     disabled
@@ -166,29 +168,17 @@ export default function ProfilePage() {
 
                 <Box>
                   <CustomFormLabel>이메일</CustomFormLabel>
-                  <CustomTextField
-                    value={user?.email || ''}
-                    fullWidth
-                    disabled
-                  />
+                  <CustomTextField value={user?.email || ''} fullWidth disabled />
                 </Box>
 
                 <Box>
                   <CustomFormLabel>담당자명</CustomFormLabel>
-                  <CustomTextField
-                    value={profile.contact_person}
-                    fullWidth
-                    disabled
-                  />
+                  <CustomTextField value={profile.contact_person} fullWidth disabled />
                 </Box>
 
                 <Box>
                   <CustomFormLabel>연락처</CustomFormLabel>
-                  <CustomTextField
-                    value={profile.phone}
-                    fullWidth
-                    disabled
-                  />
+                  <CustomTextField value={profile.phone} fullWidth disabled />
                 </Box>
               </Stack>
             </Box>
@@ -203,43 +193,27 @@ export default function ProfilePage() {
               <Stack spacing={2}>
                 <Box>
                   <CustomFormLabel>회사명</CustomFormLabel>
-                  <CustomTextField
-                    value={profile.company_name}
-                    fullWidth
-                    disabled
-                  />
+                  <CustomTextField value={profile.company_name} fullWidth disabled />
                 </Box>
 
                 {profile.company_name_chinese && (
                   <Box>
                     <CustomFormLabel>회사명 (중국어)</CustomFormLabel>
-                    <CustomTextField
-                      value={profile.company_name_chinese}
-                      fullWidth
-                      disabled
-                    />
+                    <CustomTextField value={profile.company_name_chinese} fullWidth disabled />
                   </Box>
                 )}
 
                 {profile.business_number && (
                   <Box>
                     <CustomFormLabel>사업자등록번호</CustomFormLabel>
-                    <CustomTextField
-                      value={profile.business_number}
-                      fullWidth
-                      disabled
-                    />
+                    <CustomTextField value={profile.business_number} fullWidth disabled />
                   </Box>
                 )}
 
                 {profile.personal_customs_code && (
                   <Box>
                     <CustomFormLabel>통관고유번호</CustomFormLabel>
-                    <CustomTextField
-                      value={profile.personal_customs_code}
-                      fullWidth
-                      disabled
-                    />
+                    <CustomTextField value={profile.personal_customs_code} fullWidth disabled />
                   </Box>
                 )}
               </Stack>
@@ -257,22 +231,14 @@ export default function ProfilePage() {
                     {profile.department && (
                       <Box>
                         <CustomFormLabel>부서</CustomFormLabel>
-                        <CustomTextField
-                          value={profile.department}
-                          fullWidth
-                          disabled
-                        />
+                        <CustomTextField value={profile.department} fullWidth disabled />
                       </Box>
                     )}
 
                     {profile.position && (
                       <Box>
                         <CustomFormLabel>직급</CustomFormLabel>
-                        <CustomTextField
-                          value={profile.position}
-                          fullWidth
-                          disabled
-                        />
+                        <CustomTextField value={profile.position} fullWidth disabled />
                       </Box>
                     )}
                   </Stack>
@@ -292,9 +258,13 @@ export default function ProfilePage() {
                   <CustomFormLabel>로그인 방식</CustomFormLabel>
                   <CustomTextField
                     value={
-                      profile.provider === 'email' ? '이메일/비밀번호' :
-                      profile.provider === 'google' ? 'Google OAuth' :
-                      profile.provider === 'kakao' ? 'Kakao OAuth' : profile.provider
+                      profile.provider === 'email'
+                        ? '이메일/비밀번호'
+                        : profile.provider === 'google'
+                          ? 'Google OAuth'
+                          : profile.provider === 'kakao'
+                            ? 'Kakao OAuth'
+                            : profile.provider
                     }
                     fullWidth
                     disabled

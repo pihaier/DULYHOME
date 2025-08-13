@@ -33,10 +33,10 @@ import {
 import { styled } from '@mui/material/styles';
 
 const UploadBox = styled(Box, {
-  shouldForwardProp: (prop) => prop !== 'isDragActive'
+  shouldForwardProp: (prop) => prop !== 'isDragActive',
 })<{ isDragActive?: boolean }>(({ theme, isDragActive }) => ({
   border: `2px dashed ${isDragActive ? theme.palette.primary.main : theme.palette.divider}`,
-  borderRadius: (theme.shape.borderRadius as number),
+  borderRadius: theme.shape.borderRadius as number,
   padding: theme.spacing(4),
   textAlign: 'center',
   cursor: 'pointer',
@@ -80,7 +80,7 @@ export default function FileUpload({
   description,
   required = false,
   error,
-  currentFiles = []
+  currentFiles = [],
 }: FileUploadProps) {
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const [showModal, setShowModal] = useState(false);
@@ -94,7 +94,7 @@ export default function FileUpload({
     const docExts = ['doc', 'docx'];
     const excelExts = ['xls', 'xlsx'];
     const designExts = ['ai', 'psd'];
-    
+
     if (imageExts.includes(ext || '')) return 'image';
     if (pdfExts.includes(ext || '')) return 'pdf';
     if (docExts.includes(ext || '')) return 'word';
@@ -123,7 +123,7 @@ export default function FileUpload({
 
     // Cleanup
     return () => {
-      newUrls.forEach(url => {
+      newUrls.forEach((url) => {
         if (url && url.startsWith('blob:')) {
           URL.revokeObjectURL(url);
         }
@@ -132,20 +132,23 @@ export default function FileUpload({
   }, [currentFiles.length]); // length만 의존성으로 사용
 
   // Dropzone 설정
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    const newFiles = [...currentFiles, ...acceptedFiles];
-    if (newFiles.length > maxFiles) {
-      alert(`최대 ${maxFiles}개의 파일만 업로드할 수 있습니다.`);
-      return;
-    }
-    onFilesChange(newFiles);
-  }, [currentFiles, maxFiles, onFilesChange]);
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      const newFiles = [...currentFiles, ...acceptedFiles];
+      if (newFiles.length > maxFiles) {
+        alert(`최대 ${maxFiles}개의 파일만 업로드할 수 있습니다.`);
+        return;
+      }
+      onFilesChange(newFiles);
+    },
+    [currentFiles, maxFiles, onFilesChange]
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept,
     maxSize,
-    multiple: true
+    multiple: true,
   });
 
   // 파일 삭제
@@ -218,7 +221,7 @@ export default function FileUpload({
               {currentFiles.map((file, index) => {
                 const fileType = getFileType(file.name);
                 const isImage = fileType === 'image';
-                
+
                 return (
                   <ImageListItem key={index}>
                     <Card
@@ -250,7 +253,12 @@ export default function FileUpload({
                       ) : (
                         <Box textAlign="center" p={2}>
                           {getFileIcon(fileType)}
-                          <Typography variant="caption" display="block" noWrap sx={{ maxWidth: 100 }}>
+                          <Typography
+                            variant="caption"
+                            display="block"
+                            noWrap
+                            sx={{ maxWidth: 100 }}
+                          >
                             {file.name}
                           </Typography>
                           <Typography variant="caption" color="text.secondary">
@@ -258,7 +266,7 @@ export default function FileUpload({
                           </Typography>
                         </Box>
                       )}
-                      
+
                       {/* 액션 버튼 */}
                       <Box
                         sx={{
@@ -285,7 +293,7 @@ export default function FileUpload({
                   </ImageListItem>
                 );
               })}
-              
+
               {/* 추가 버튼 */}
               {currentFiles.length < maxFiles && (
                 <ImageListItem>
@@ -324,11 +332,7 @@ export default function FileUpload({
                 {currentFiles.length}/{maxFiles} 파일
               </Typography>
               {currentFiles.length > 0 && (
-                <Button
-                  size="small"
-                  color="error"
-                  onClick={() => onFilesChange([])}
-                >
+                <Button size="small" color="error" onClick={() => onFilesChange([])}>
                   모두 제거
                 </Button>
               )}
@@ -344,12 +348,7 @@ export default function FileUpload({
       </Box>
 
       {/* 이미지 모달 */}
-      <Dialog
-        open={showModal}
-        onClose={() => setShowModal(false)}
-        maxWidth="lg"
-        fullWidth
-      >
+      <Dialog open={showModal} onClose={() => setShowModal(false)} maxWidth="lg" fullWidth>
         <DialogContent sx={{ p: 0, position: 'relative' }}>
           <IconButton
             onClick={() => setShowModal(false)}

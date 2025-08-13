@@ -1,11 +1,11 @@
-import dynamic from "next/dynamic";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+import dynamic from 'next/dynamic';
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 import { useTheme } from '@mui/material/styles';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import BlankCard from '../../shared/BlankCard';
 import { Stack } from '@mui/system';
-import { ApexOptions } from "apexcharts";
+import { ApexOptions } from 'apexcharts';
 
 const Followers = () => {
   // chart color
@@ -74,7 +74,13 @@ const Followers = () => {
           </Typography>
         </Stack>
       </CardContent>
-      <Chart options={optionscolumnchart} series={seriescolumnchart} type="area" height="90px" width={"100%"} />
+      <Chart
+        options={optionscolumnchart}
+        series={seriescolumnchart}
+        type="area"
+        height="90px"
+        width={'100%'}
+      />
     </BlankCard>
   );
 };

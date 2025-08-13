@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import Breadcrumb from "@/app/dashboard/layout/shared/breadcrumb/Breadcrumb";
-import PageContainer from "@/app/components/container/PageContainer";
-import TypographyCommon from "@/app/components/ui-components/typography/TypographyCommon";
+import Breadcrumb from '@/app/dashboard/layout/shared/breadcrumb/Breadcrumb';
+import PageContainer from '@/app/components/container/PageContainer';
+import TypographyCommon from '@/app/components/ui-components/typography/TypographyCommon';
 
 const BCrumb = [
   {
-    to: "/",
-    title: "Home",
+    to: '/',
+    title: 'Home',
   },
   {
-    title: "Typography",
+    title: 'Typography',
   },
 ];
 

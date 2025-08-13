@@ -13,14 +13,14 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     fontSize: 15,
     padding: '8px 33px 8px 16px',
     transition: theme.transitions.create(['border-color', 'box-shadow']),
-    border: "1px solid" + theme.palette.divider,
+    border: '1px solid' + theme.palette.divider,
   },
 }));
 
 const ThemeSelect = () => {
   const [age, setAge] = React.useState<string>('10');
 
-  const handleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+  const handleChange = (event: { target: { value: React.SetStateAction<string> } }) => {
     setAge(event.target.value);
   };
 

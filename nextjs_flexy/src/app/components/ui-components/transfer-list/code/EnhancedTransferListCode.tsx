@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const EnhancedTransferListCode = () => {
   return (
     <>
@@ -168,7 +168,7 @@ const EnhancedTransferList = () => {
 };`}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default EnhancedTransferListCode
+export default EnhancedTransferListCode;

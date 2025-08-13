@@ -1,33 +1,26 @@
-import { useMediaQuery, Box, Drawer, useTheme } from "@mui/material";
-import SidebarItems from "./SidebarItems";
-import Logo from "../../shared/logo/Logo";
-import config from '@/app/context/config'
-import Scrollbar from "@/app/components/custom-scroll/Scrollbar";
-import { CustomizerContext } from "@/app/context/customizerContext";
-import { useContext } from "react";
+import { useMediaQuery, Box, Drawer, useTheme } from '@mui/material';
+import SidebarItems from './SidebarItems';
+import Logo from '../../shared/logo/Logo';
+import config from '@/app/context/config';
+import Scrollbar from '@/app/components/custom-scroll/Scrollbar';
+import { CustomizerContext } from '@/app/context/customizerContext';
+import { useContext } from 'react';
 
-import React from "react";
+import React from 'react';
 
 const Sidebar = () => {
-  const lgUp = useMediaQuery((theme) => theme.breakpoints.down("lg"));
-  const {
-    isCollapse,
-    isSidebarHover,
-    setIsSidebarHover,
-    isMobileSidebar,
-    setIsMobileSidebar,
-  } = useContext(CustomizerContext);
+  const lgUp = useMediaQuery((theme) => theme.breakpoints.down('lg'));
+  const { isCollapse, isSidebarHover, setIsSidebarHover, isMobileSidebar, setIsMobileSidebar } =
+    useContext(CustomizerContext);
 
   const MiniSidebarWidth = config.miniSidebarWidth;
   const SidebarWidth = config.sidebarWidth;
   const theme = useTheme();
   const toggleWidth =
-    isCollapse == "mini-sidebar" && !isSidebarHover
-      ? MiniSidebarWidth
-      : SidebarWidth;
+    isCollapse == 'mini-sidebar' && !isSidebarHover ? MiniSidebarWidth : SidebarWidth;
 
   const onHoverEnter = () => {
-    if (isCollapse == "mini-sidebar") {
+    if (isCollapse == 'mini-sidebar') {
       setIsSidebarHover(true);
     }
   };
@@ -44,8 +37,8 @@ const Sidebar = () => {
             zIndex: 100,
             width: toggleWidth,
             flexShrink: 0,
-            ...(isCollapse == "mini-sidebar" && {
-              position: "absolute",
+            ...(isCollapse == 'mini-sidebar' && {
+              position: 'absolute',
             }),
           }}
         >
@@ -61,12 +54,12 @@ const Sidebar = () => {
             slotProps={{
               paper: {
                 sx: {
-                  transition: theme.transitions.create("width", {
+                  transition: theme.transitions.create('width', {
                     duration: theme.transitions.duration.shortest,
                   }),
                   width: toggleWidth,
                 },
-              }
+              },
             }}
           >
             {/* ------------------------------------------- */}
@@ -74,7 +67,7 @@ const Sidebar = () => {
             {/* ------------------------------------------- */}
             <Box
               sx={{
-                height: "100%",
+                height: '100%',
               }}
             >
               {/* ------------------------------------------- */}
@@ -83,16 +76,16 @@ const Sidebar = () => {
               <Box
                 px={3}
                 sx={{
-                  ...(isCollapse == "mini-sidebar" && {
-                    [theme.breakpoints.up("lg")]: {
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center"
+                  ...(isCollapse == 'mini-sidebar' && {
+                    [theme.breakpoints.up('lg')]: {
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
                     },
                   }),
                   ...(!isSidebarHover && {
-                    [theme.breakpoints.up("lg")]: {
-                      justifyContent: "start",
+                    [theme.breakpoints.up('lg')]: {
+                      justifyContent: 'start',
                     },
                   }),
                 }}
@@ -105,7 +98,6 @@ const Sidebar = () => {
                 {/* ------------------------------------------- */}
                 <SidebarItems />
               </Scrollbar>
-
             </Box>
           </Drawer>
         </Box>
@@ -119,10 +111,10 @@ const Sidebar = () => {
             paper: {
               sx: {
                 width: SidebarWidth,
-                border: "0 !important",
+                border: '0 !important',
                 boxShadow: (theme) => theme.shadows[8],
               },
-            }
+            },
           }}
         >
           {/* ------------------------------------------- */}

@@ -1,41 +1,37 @@
-"use client";
-import Link from "next/link";
-import { Grid, Box, Typography, Stack } from "@mui/material";
-import PageContainer from "@/app/components/container/PageContainer";
-import Logo from "@/app/dashboard/layout/shared/logo/Logo";
+'use client';
+import Link from 'next/link';
+import { Grid, Box, Typography, Stack } from '@mui/material';
+import PageContainer from '@/app/components/container/PageContainer';
+import Logo from '@/app/dashboard/layout/shared/logo/Logo';
 
-import AuthRegister from "../../authForms/AuthRegister";
-import Image from "next/image";
+import AuthRegister from '../../authForms/AuthRegister';
+import Image from 'next/image';
 
 export default function Register() {
   return (
-    (<PageContainer title="Register Page" description="this is Sample page">
-      <Grid
-        container
-        spacing={0}
-        justifyContent="center"
-        sx={{ overflowX: "hidden" }}
-      >
+    <PageContainer title="Register Page" description="this is Sample page">
+      <Grid container spacing={0} justifyContent="center" sx={{ overflowX: 'hidden' }}>
         <Grid
           sx={{
-            position: "relative",
-            "&:before": {
+            position: 'relative',
+            '&:before': {
               content: '""',
-              background: "radial-gradient(#d2f1df, #d3d7fa, #bad8f4)",
-              backgroundSize: "400% 400%",
-              animation: "gradient 15s ease infinite",
-              position: "absolute",
-              height: "100%",
-              width: "100%",
-              opacity: "0.3",
+              background: 'radial-gradient(#d2f1df, #d3d7fa, #bad8f4)',
+              backgroundSize: '400% 400%',
+              animation: 'gradient 15s ease infinite',
+              position: 'absolute',
+              height: '100%',
+              width: '100%',
+              opacity: '0.3',
             },
           }}
           size={{
             xs: 12,
             sm: 12,
             lg: 7,
-            xl: 8
-          }}>
+            xl: 8,
+          }}
+        >
           <Box position="relative">
             <Box px={3}>
               <Logo />
@@ -43,20 +39,23 @@ export default function Register() {
             <Box
               alignItems="center"
               justifyContent="center"
-              height={"calc(100vh - 75px)"}
+              height={'calc(100vh - 75px)'}
               sx={{
                 display: {
-                  xs: "none",
-                  lg: "flex",
+                  xs: 'none',
+                  lg: 'flex',
                 },
               }}
             >
               <Image
-                src={"/images/backgrounds/login-bg.svg"}
-                alt="bg" width={500} height={500}
+                src={'/images/backgrounds/login-bg.svg'}
+                alt="bg"
+                width={500}
+                height={500}
                 style={{
-                  width: "100%",
-                  maxWidth: "500px", maxHeight: '500px',
+                  width: '100%',
+                  maxWidth: '500px',
+                  maxHeight: '500px',
                 }}
               />
             </Box>
@@ -70,8 +69,9 @@ export default function Register() {
             xs: 12,
             sm: 12,
             lg: 5,
-            xl: 4
-          }}>
+            xl: 4,
+          }}
+        >
           <Box p={4}>
             <AuthRegister
               title="두리무역 ERP 회원가입"
@@ -90,8 +90,8 @@ export default function Register() {
                     href="/auth/auth1/login"
                     fontWeight="500"
                     sx={{
-                      textDecoration: "none",
-                      color: "primary.main",
+                      textDecoration: 'none',
+                      color: 'primary.main',
                     }}
                   >
                     로그인하기
@@ -102,6 +102,6 @@ export default function Register() {
           </Box>
         </Grid>
       </Grid>
-    </PageContainer>)
+    </PageContainer>
   );
-};
+}

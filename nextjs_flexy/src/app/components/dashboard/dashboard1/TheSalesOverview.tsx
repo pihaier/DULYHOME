@@ -1,11 +1,11 @@
-import React from "react";
-import { Typography, Box, Stack, Avatar } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import dynamic from "next/dynamic";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
-import DashboardCard from "../../shared/DashboardCard";
+import React from 'react';
+import { Typography, Box, Stack, Avatar } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import dynamic from 'next/dynamic';
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
+import DashboardCard from '../../shared/DashboardCard';
 import { IconCircleFilled } from '@tabler/icons-react';
-import { ApexOptions } from "apexcharts";
+import { ApexOptions } from 'apexcharts';
 
 const SalesOverview = () => {
   const theme = useTheme();
@@ -130,7 +130,7 @@ const SalesOverview = () => {
         </Stack>
       }
     >
-      <Box height='290px' className="rounded-bars">
+      <Box height="290px" className="rounded-bars">
         <Chart
           options={optionssalesoverview}
           series={seriessalesoverview}

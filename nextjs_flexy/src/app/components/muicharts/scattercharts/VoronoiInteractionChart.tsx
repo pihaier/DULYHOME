@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -8,7 +8,7 @@ import Slider from '@mui/material/Slider';
 import { ScatterChart } from '@mui/x-charts/ScatterChart';
 import ParentCard from '../../shared/ParentCard';
 import VoronoiInteractionCode from '../code/scatterchartscode/VoronoiInteractionCode';
-import { useTheme } from "@mui/material";
+import { useTheme } from '@mui/material';
 
 const data = [
   { x1: 529.39, y1: 643.28, x2: 191.29, y2: -46.1, id: 'data-0' },
@@ -53,7 +53,6 @@ export default function VoronoiInteractionChart() {
 
   return (
     <ParentCard title="VoronoiInteraction Chart" codeModel={<VoronoiInteractionCode />}>
-
       <Stack direction="column" sx={{ width: '100%' }}>
         <ScatterChart
           height={300}
@@ -64,12 +63,12 @@ export default function VoronoiInteractionChart() {
             {
               label: 'Series A',
               data: data.map((v) => ({ x: v.x1, y: v.y1, id: v.id })),
-              color: primary
+              color: primary,
             },
             {
               label: 'Series B',
               data: data.map((v) => ({ x: v.x2, y: v.y2, id: v.id })),
-              color: secondary
+              color: secondary,
             },
           ]}
         />
@@ -90,21 +89,13 @@ export default function VoronoiInteractionChart() {
         <Stack direction="row">
           <FormControlLabel
             checked={disableVoronoi}
-            control={
-              <Checkbox
-                onChange={(event) => setDisableVoronoi(event.target.checked)}
-              />
-            }
+            control={<Checkbox onChange={(event) => setDisableVoronoi(event.target.checked)} />}
             label="disableVoronoi"
             labelPlacement="end"
           />
           <FormControlLabel
             checked={undefinedRadius}
-            control={
-              <Checkbox
-                onChange={(event) => setUndefinedRadius(event.target.checked)}
-              />
-            }
+            control={<Checkbox onChange={(event) => setUndefinedRadius(event.target.checked)} />}
             label="undefined radius"
             labelPlacement="end"
           />

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React from 'react';
 import {
   List,
@@ -6,7 +6,6 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  
   IconButton,
   Checkbox,
 } from '@mui/material';

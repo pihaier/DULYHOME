@@ -1,11 +1,10 @@
-import React from 'react'
-import CodeDialog from "@/app/components/shared/CodeDialog";
-
+import React from 'react';
+import CodeDialog from '@/app/components/shared/CodeDialog';
 
 function ScatterClickNoSnapCode() {
-    return (
-        <CodeDialog>
-            {`
+  return (
+    <CodeDialog>
+      {`
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
@@ -155,8 +154,8 @@ export default function ScatterClickNoSnapChart() {
 
 
             `}
-        </CodeDialog>
-    )
+    </CodeDialog>
+  );
 }
 
-export default ScatterClickNoSnapCode
+export default ScatterClickNoSnapCode;

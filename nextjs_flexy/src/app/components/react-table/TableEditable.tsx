@@ -1,5 +1,5 @@
-"use client";
-import * as React from "react";
+'use client';
+import * as React from 'react';
 import {
   TableContainer,
   Table,
@@ -18,19 +18,19 @@ import {
   IconButton,
   TextField,
   Select,
-} from "@mui/material";
-import { Stack } from "@mui/system";
-import DownloadCard from "@/app/components/shared/DownloadCard";
-import EditIcon from "@mui/icons-material/Edit";
-import CheckIcon from "@mui/icons-material/Check";
-import CloseIcon from "@mui/icons-material/Close";
+} from '@mui/material';
+import { Stack } from '@mui/system';
+import DownloadCard from '@/app/components/shared/DownloadCard';
+import EditIcon from '@mui/icons-material/Edit';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
 
 import {
   flexRender,
   getCoreRowModel,
   useReactTable,
   createColumnHelper,
-} from "@tanstack/react-table";
+} from '@tanstack/react-table';
 
 export interface EditableDataType {
   id?: number;
@@ -45,97 +45,97 @@ export interface EditableDataType {
 export const basicsTableData: EditableDataType[] = [
   {
     id: 1,
-    status: "active",
-    avatar: "/images/users/1.jpg",
-    name: "Olivia Rhye",
-    project: "Xtreme admin",
+    status: 'active',
+    avatar: '/images/users/1.jpg',
+    name: 'Olivia Rhye',
+    project: 'Xtreme admin',
     percent: 60,
   },
   {
     id: 2,
-    status: "cancel",
-    avatar: "/images/users/2.jpg",
-    name: "Barbara Steele",
-    project: "Adminpro admin",
+    status: 'cancel',
+    avatar: '/images/users/2.jpg',
+    name: 'Barbara Steele',
+    project: 'Adminpro admin',
     percent: 30,
   },
   {
     id: 3,
-    status: "pending",
-    avatar: "/images/users/6.jpg",
-    name: "Isabel Vasquez",
-    project: "Modernize admin",
+    status: 'pending',
+    avatar: '/images/users/6.jpg',
+    name: 'Isabel Vasquez',
+    project: 'Modernize admin',
     percent: 32,
   },
   {
     id: 4,
-    status: "active",
-    avatar: "/images/users/1.jpg",
-    name: "Olivia Rhye",
-    project: "Xtreme admin",
+    status: 'active',
+    avatar: '/images/users/1.jpg',
+    name: 'Olivia Rhye',
+    project: 'Xtreme admin',
     percent: 60,
   },
   {
     id: 5,
-    status: "cancel",
-    avatar: "/images/users/2.jpg",
-    name: "Barbara Steele",
-    project: "Adminpro admin",
+    status: 'cancel',
+    avatar: '/images/users/2.jpg',
+    name: 'Barbara Steele',
+    project: 'Adminpro admin',
     percent: 30,
   },
   {
     id: 6,
-    status: "active",
-    avatar: "/images/users/3.jpg",
-    name: "Leonard Gordon",
-    project: "Monster admin",
+    status: 'active',
+    avatar: '/images/users/3.jpg',
+    name: 'Leonard Gordon',
+    project: 'Monster admin',
     percent: 45,
   },
   {
     id: 7,
-    status: "pending",
-    avatar: "/images/users/4.jpg",
-    name: "Evelyn Pope",
-    project: "Materialpro admin",
+    status: 'pending',
+    avatar: '/images/users/4.jpg',
+    name: 'Evelyn Pope',
+    project: 'Materialpro admin',
     percent: 37,
   },
   {
     id: 8,
-    status: "active",
-    avatar: "/images/users/3.jpg",
-    name: "Leonard Gordon",
-    project: "Monster admin",
+    status: 'active',
+    avatar: '/images/users/3.jpg',
+    name: 'Leonard Gordon',
+    project: 'Monster admin',
     percent: 45,
   },
   {
     id: 9,
-    status: "pending",
-    avatar: "/images/users/4.jpg",
-    name: "Evelyn Pope",
-    project: "Materialpro admin",
+    status: 'pending',
+    avatar: '/images/users/4.jpg',
+    name: 'Evelyn Pope',
+    project: 'Materialpro admin',
     percent: 37,
   },
   {
     id: 10,
-    status: "cancel",
-    avatar: "/images/users/5.jpg",
-    name: "Tommy Garza",
-    project: "Elegant admin",
+    status: 'cancel',
+    avatar: '/images/users/5.jpg',
+    name: 'Tommy Garza',
+    project: 'Elegant admin',
     percent: 87,
   },
 ];
 
 const statusOptions = [
-  { value: "active", label: "Active" },
-  { value: "cancel", label: "Cancel" },
-  { value: "pending", label: "Pending" },
+  { value: 'active', label: 'Active' },
+  { value: 'cancel', label: 'Cancel' },
+  { value: 'pending', label: 'Pending' },
 ];
 
 const columnHelper = createColumnHelper<EditableDataType>();
 
 const columns = [
-  columnHelper.accessor("name", {
-    header: () => "User",
+  columnHelper.accessor('name', {
+    header: () => 'User',
     cell: (info) => (
       <Stack direction="row" alignItems="center" spacing={2}>
         <Avatar
@@ -149,8 +149,8 @@ const columns = [
       </Stack>
     ),
   }),
-  columnHelper.accessor("project", {
-    header: () => "Project Name",
+  columnHelper.accessor('project', {
+    header: () => 'Project Name',
     cell: (info) => (
       <Typography variant="subtitle1" color="textSecondary">
         {info.getValue()}
@@ -158,42 +158,42 @@ const columns = [
     ),
   }),
 
-  columnHelper.accessor("status", {
-    header: () => "Status",
+  columnHelper.accessor('status', {
+    header: () => 'Status',
     meta: {
-      filterVariant: "select",
+      filterVariant: 'select',
     },
     cell: (info) => (
       <Chip
         sx={{
           bgcolor:
-            info.getValue() === "active"
+            info.getValue() === 'active'
               ? (theme) => theme.palette.success.light
-              : info.getValue() === "pending"
+              : info.getValue() === 'pending'
                 ? (theme) => theme.palette.warning.light
-                : info.getValue() === "completed"
+                : info.getValue() === 'completed'
                   ? (theme) => theme.palette.primary.light
-                  : info.getValue() === "cancel"
+                  : info.getValue() === 'cancel'
                     ? (theme) => theme.palette.error.light
                     : (theme) => theme.palette.secondary.light,
           color:
-            info.getValue() === "active"
+            info.getValue() === 'active'
               ? (theme) => theme.palette.success.main
-              : info.getValue() === "pending"
+              : info.getValue() === 'pending'
                 ? (theme) => theme.palette.warning.main
-                : info.getValue() === "completed"
+                : info.getValue() === 'completed'
                   ? (theme) => theme.palette.primary.main
-                  : info.getValue() === "cancel"
+                  : info.getValue() === 'cancel'
                     ? (theme) => theme.palette.error.main
                     : (theme) => theme.palette.secondary.main,
-          borderRadius: "8px",
+          borderRadius: '8px',
         }}
         label={info.getValue()}
       />
     ),
   }),
-  columnHelper.accessor("edit", {
-    header: () => "edit",
+  columnHelper.accessor('edit', {
+    header: () => 'edit',
     cell: ({ row }) => (
       <Button onClick={() => row.getToggleExpandedHandler()}>
         <EditIcon />
@@ -223,9 +223,7 @@ const TableEditable = () => {
 
   const handleSave = () => {
     if (editedData) {
-      _setData(
-        data.map((item) => (item.id === editedData.id ? editedData : item))
-      );
+      _setData(data.map((item) => (item.id === editedData.id ? editedData : item)));
       setEditRowId(null);
       setEditedData(null);
     }
@@ -233,7 +231,7 @@ const TableEditable = () => {
 
   const handleChange = (
     e:
-      | (Event & { target: { value: any; } })
+      | (Event & { target: { value: any } })
       | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: string
   ) => {
@@ -246,38 +244,30 @@ const TableEditable = () => {
   };
 
   const handleDownload = () => {
-    const headers = ["Users", "Project Name", "Status", "percent"];
-    const rows = data.map((item) => [
-      item.name,
-      item.project,
-      item.status,
-      item.percent,
-    ]);
+    const headers = ['Users', 'Project Name', 'Status', 'percent'];
+    const rows = data.map((item) => [item.name, item.project, item.status, item.percent]);
 
-    const csvContent = [
-      headers.join(","),
-      ...rows.map((e) => e.join(",")),
-    ].join("\n");
+    const csvContent = [headers.join(','), ...rows.map((e) => e.join(','))].join('\n');
 
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
 
-    const link = document.createElement("a");
+    const link = document.createElement('a');
     link.href = url;
-    link.setAttribute("download", "table-data.csv");
+    link.setAttribute('download', 'table-data.csv');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
   return (
-    (<DownloadCard title="Editable Table" onDownload={handleDownload}>
+    <DownloadCard title="Editable Table" onDownload={handleDownload}>
       <Grid container spacing={3}>
         <Grid size={12}>
           <Box>
             <TableContainer>
               <Table
                 sx={{
-                  whiteSpace: "nowrap",
+                  whiteSpace: 'nowrap',
                 }}
               >
                 <TableHead>
@@ -288,10 +278,7 @@ const TableEditable = () => {
                           <Typography variant="h6">
                             {header.isPlaceholder
                               ? null
-                              : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
+                              : flexRender(header.column.columnDef.header, header.getContext())}
                           </Typography>
                         </TableCell>
                       ))}
@@ -303,43 +290,31 @@ const TableEditable = () => {
                     <TableRow key={row.id}>
                       {row.getVisibleCells().map((cell) => (
                         <TableCell key={cell.id}>
-                          {cell.column.id === "edit" ? (
+                          {cell.column.id === 'edit' ? (
                             editRowId === row.original.id ? (
                               <>
-                                <IconButton
-                                  onClick={handleSave}
-                                  color="primary"
-                                >
+                                <IconButton onClick={handleSave} color="primary">
                                   <CheckIcon />
                                 </IconButton>
-                                <IconButton
-                                  onClick={() => setEditRowId(null)}
-                                  color="error"
-                                >
+                                <IconButton onClick={() => setEditRowId(null)} color="error">
                                   <CloseIcon />
                                 </IconButton>
                               </>
                             ) : (
-                              <IconButton
-                                onClick={() => handleEdit(row.original)}
-                                color="primary"
-                              >
+                              <IconButton onClick={() => handleEdit(row.original)} color="primary">
                                 <EditIcon />
                               </IconButton>
                             )
                           ) : editRowId === row.original.id ? (
-                            cell.column.id === "status" ? (
+                            cell.column.id === 'status' ? (
                               <Select
-                                value={editedData?.status || ""}
-                                onChange={(e) => handleChange(e, "status")}
+                                value={editedData?.status || ''}
+                                onChange={(e) => handleChange(e, 'status')}
                                 variant="outlined"
                                 fullWidth
                               >
                                 {statusOptions.map((option) => (
-                                  <MenuItem
-                                    key={option.value}
-                                    value={option.value}
-                                  >
+                                  <MenuItem key={option.value} value={option.value}>
                                     {option.label}
                                   </MenuItem>
                                 ))}
@@ -347,18 +322,13 @@ const TableEditable = () => {
                             ) : (
                               <TextField
                                 variant="outlined"
-                                value={editedData?.[cell.column.id] || ""}
-                                onChange={(e) =>
-                                  handleChange(e, cell.column.id)
-                                }
+                                value={editedData?.[cell.column.id] || ''}
+                                onChange={(e) => handleChange(e, cell.column.id)}
                                 fullWidth
                               />
                             )
                           ) : (
-                            flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext()
-                            )
+                            flexRender(cell.column.columnDef.cell, cell.getContext())
                           )}
                         </TableCell>
                       ))}
@@ -371,7 +341,7 @@ const TableEditable = () => {
           </Box>
         </Grid>
       </Grid>
-    </DownloadCard>)
+    </DownloadCard>
   );
 };
 export default TableEditable;

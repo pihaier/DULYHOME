@@ -1,10 +1,10 @@
-import React from 'react'
-import CodeDialog from "@/app/components/shared/CodeDialog";
+import React from 'react';
+import CodeDialog from '@/app/components/shared/CodeDialog';
 
 function GaugePointerCode() {
-    return (
-        <CodeDialog>
-            {`
+  return (
+    <CodeDialog>
+      {`
 import React from 'react'
 import {
     GaugeContainer,
@@ -68,8 +68,8 @@ export default function GaugePointerChart() {
     );
 }
 `}
-        </CodeDialog>
-    )
+    </CodeDialog>
+  );
 }
 
-export default GaugePointerCode
+export default GaugePointerCode;

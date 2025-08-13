@@ -19,7 +19,7 @@ const TaxInvoiceTab = () => {
     tax_business_item: '',
     tax_email: '',
     tax_phone: '',
-    tax_fax: ''
+    tax_fax: '',
   });
 
   useEffect(() => {
@@ -27,14 +27,15 @@ const TaxInvoiceTab = () => {
       // user_profiles 테이블에서 세금계산서 정보 가져오기
       setTaxData({
         tax_company_name: userProfile.tax_company_name || userProfile.company_name || '',
-        tax_registration_number: userProfile.tax_registration_number || userProfile.business_number || '',
+        tax_registration_number:
+          userProfile.tax_registration_number || userProfile.business_number || '',
         tax_representative: userProfile.tax_representative || '',
         tax_address: userProfile.tax_address || '',
         tax_business_type: userProfile.tax_business_type || '',
         tax_business_item: userProfile.tax_business_item || '',
         tax_email: userProfile.tax_email || '',
         tax_phone: userProfile.tax_phone || '',
-        tax_fax: userProfile.tax_fax || ''
+        tax_fax: userProfile.tax_fax || '',
       });
       setLoading(false);
     }
@@ -42,17 +43,17 @@ const TaxInvoiceTab = () => {
 
   const handleSave = async () => {
     if (!user || !supabase) return;
-    
+
     setSaving(true);
     setMessage(null);
-    
+
     try {
       // user_profiles 테이블 업데이트
       const { error } = await supabase
         .from('user_profiles')
         .update({
           ...taxData,
-          updated_at: new Date().toISOString()
+          updated_at: new Date().toISOString(),
         })
         .eq('user_id', user.id);
 
@@ -72,11 +73,7 @@ const TaxInvoiceTab = () => {
   return (
     <>
       {message && (
-        <Alert 
-          severity={message.type} 
-          onClose={() => setMessage(null)} 
-          sx={{ mb: 3 }}
-        >
+        <Alert severity={message.type} onClose={() => setMessage(null)} sx={{ mb: 3 }}>
           {message.text}
         </Alert>
       )}
@@ -100,12 +97,14 @@ const TaxInvoiceTab = () => {
                     <CustomTextField
                       id="tax-company"
                       value={taxData.tax_company_name}
-                      onChange={(e: any) => setTaxData({ ...taxData, tax_company_name: e.target.value })}
+                      onChange={(e: any) =>
+                        setTaxData({ ...taxData, tax_company_name: e.target.value })
+                      }
                       variant="outlined"
                       fullWidth
                     />
                   </Grid>
-                  
+
                   <Grid size={{ xs: 12, sm: 6 }}>
                     <CustomFormLabel sx={{ mt: 0 }} htmlFor="tax-registration">
                       사업자등록번호
@@ -113,7 +112,9 @@ const TaxInvoiceTab = () => {
                     <CustomTextField
                       id="tax-registration"
                       value={taxData.tax_registration_number}
-                      onChange={(e: any) => setTaxData({ ...taxData, tax_registration_number: e.target.value })}
+                      onChange={(e: any) =>
+                        setTaxData({ ...taxData, tax_registration_number: e.target.value })
+                      }
                       variant="outlined"
                       fullWidth
                       placeholder="000-00-00000"
@@ -127,7 +128,9 @@ const TaxInvoiceTab = () => {
                     <CustomTextField
                       id="tax-representative"
                       value={taxData.tax_representative}
-                      onChange={(e: any) => setTaxData({ ...taxData, tax_representative: e.target.value })}
+                      onChange={(e: any) =>
+                        setTaxData({ ...taxData, tax_representative: e.target.value })
+                      }
                       variant="outlined"
                       fullWidth
                     />
@@ -167,7 +170,9 @@ const TaxInvoiceTab = () => {
                     <CustomTextField
                       id="tax-type"
                       value={taxData.tax_business_type}
-                      onChange={(e: any) => setTaxData({ ...taxData, tax_business_type: e.target.value })}
+                      onChange={(e: any) =>
+                        setTaxData({ ...taxData, tax_business_type: e.target.value })
+                      }
                       variant="outlined"
                       fullWidth
                       placeholder="예: 도소매업"
@@ -181,7 +186,9 @@ const TaxInvoiceTab = () => {
                     <CustomTextField
                       id="tax-item"
                       value={taxData.tax_business_item}
-                      onChange={(e: any) => setTaxData({ ...taxData, tax_business_item: e.target.value })}
+                      onChange={(e: any) =>
+                        setTaxData({ ...taxData, tax_business_item: e.target.value })
+                      }
                       variant="outlined"
                       fullWidth
                       placeholder="예: 무역업"
@@ -218,14 +225,13 @@ const TaxInvoiceTab = () => {
             </CardContent>
           </BlankCard>
         </Grid>
-
       </Grid>
 
       <Stack direction="row" spacing={2} sx={{ justifyContent: 'end' }} mt={3}>
-        <Button 
-          size="large" 
-          variant="contained" 
-          color="primary" 
+        <Button
+          size="large"
+          variant="contained"
+          color="primary"
           onClick={handleSave}
           disabled={saving}
         >

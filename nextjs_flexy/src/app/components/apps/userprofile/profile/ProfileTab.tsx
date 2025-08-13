@@ -1,11 +1,11 @@
-'use client'
-import React from "react";
+'use client';
+import React from 'react';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
-import { IconHeart, IconPhoto, IconUserCircle } from "@tabler/icons-react";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
+import { IconHeart, IconPhoto, IconUserCircle } from '@tabler/icons-react';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 
 const ProfileTab = () => {
   const location = usePathname();
@@ -15,37 +15,30 @@ const ProfileTab = () => {
   };
   const ProfileTabs = [
     {
-      label: "Profile",
+      label: 'Profile',
       icon: <IconUserCircle size="20" />,
-      to: "/apps/user-profile/profile",
+      to: '/apps/user-profile/profile',
     },
     {
-      label: "Followers",
+      label: 'Followers',
       icon: <IconHeart size="20" />,
-      to: "/apps/user-profile/followers",
+      to: '/apps/user-profile/followers',
     },
     {
-      label: "Friends",
+      label: 'Friends',
       icon: <IconUserCircle size="20" />,
-      to: "/apps/user-profile/friends",
+      to: '/apps/user-profile/friends',
     },
     {
-      label: "Gallery",
+      label: 'Gallery',
       icon: <IconPhoto size="20" />,
-      to: "/apps/user-profile/gallery",
+      to: '/apps/user-profile/gallery',
     },
   ];
 
   return (
-    <Box
-      mt={1}
-      sx={{ mt: 1, backgroundColor: (theme) => theme.palette.grey[100] }}
-    >
-      <Box
-        justifyContent={"end"}
-        display="flex"
-        sx={{ maxWidth: { xs: 320, sm: "100%" } }}
-      >
+    <Box mt={1} sx={{ mt: 1, backgroundColor: (theme) => theme.palette.grey[100] }}>
+      <Box justifyContent={'end'} display="flex" sx={{ maxWidth: { xs: 320, sm: '100%' } }}>
         <Tabs
           value={value}
           onChange={handleChange}
@@ -58,7 +51,7 @@ const ProfileTab = () => {
               <Tab
                 iconPosition="start"
                 label={tab.label}
-                sx={{ minHeight: "50px" }}
+                sx={{ minHeight: '50px' }}
                 icon={tab.icon}
                 component={Link}
                 href={tab.to}

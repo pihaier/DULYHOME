@@ -1,15 +1,15 @@
-import React from "react";
-import dynamic from "next/dynamic";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
-import { useTheme } from "@mui/material/styles";
+import React from 'react';
+import dynamic from 'next/dynamic';
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
+import { useTheme } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { IconArrowUpLeft } from "@tabler/icons-react";
+import { IconArrowUpLeft } from '@tabler/icons-react';
 
-import DashboardCard from "../../shared/DashboardCard";
-import { ApexOptions } from "apexcharts";
+import DashboardCard from '../../shared/DashboardCard';
+import { ApexOptions } from 'apexcharts';
 
 const MonthlyEarnings = () => {
   // chart color
@@ -21,9 +21,9 @@ const MonthlyEarnings = () => {
   // chart
   const optionscolumnchart: ApexOptions = {
     chart: {
-      type: "area",
+      type: 'area',
       fontFamily: "'Plus Jakarta Sans', sans-serif;",
-      foreColor: "#adb0bb",
+      foreColor: '#adb0bb',
       toolbar: {
         show: false,
       },
@@ -31,22 +31,22 @@ const MonthlyEarnings = () => {
       sparkline: {
         enabled: true,
       },
-      group: "sparklines",
+      group: 'sparklines',
     },
     stroke: {
-      curve: "smooth",
+      curve: 'smooth',
       width: 2,
     },
     fill: {
       colors: [primarylight],
-      type: "solid",
+      type: 'solid',
       opacity: 0.05,
     },
     markers: {
       size: 0,
     },
     tooltip: {
-      theme: theme.palette.mode === "dark" ? "dark" : "light",
+      theme: theme.palette.mode === 'dark' ? 'dark' : 'light',
       x: {
         show: false,
       },
@@ -54,7 +54,7 @@ const MonthlyEarnings = () => {
   };
   const seriescolumnchart = [
     {
-      name: "",
+      name: '',
       color: primary,
       data: [25, 66, 20, 40, 12, 58, 20],
     },
@@ -86,7 +86,7 @@ const MonthlyEarnings = () => {
               options={optionscolumnchart}
               series={seriescolumnchart}
               type="area"
-              width={"100%"}
+              width={'100%'}
               height="70px"
             />
           </Box>
@@ -97,13 +97,7 @@ const MonthlyEarnings = () => {
             <Typography variant="h3" fontWeight="700">
               $6,820
             </Typography>
-            <Stack
-              direction="row"
-              spacing={1}
-              mt={1}
-              mb={2}
-              alignItems="center"
-            >
+            <Stack direction="row" spacing={1} mt={1} mb={2} alignItems="center">
               <Avatar sx={{ bgcolor: successlight, width: 20, height: 20 }}>
                 <IconArrowUpLeft width={18} color="#13DEB9" />
               </Avatar>

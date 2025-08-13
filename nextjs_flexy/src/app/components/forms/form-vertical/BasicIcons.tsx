@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { Grid, InputAdornment, Button } from '@mui/material';
 import CustomFormLabel from '../theme-elements/CustomFormLabel';
 import CustomOutlinedInput from '../theme-elements/CustomOutlinedInput';
@@ -6,7 +6,7 @@ import { IconBuildingArch, IconMail, IconMessage2, IconPhone, IconUser } from '@
 
 const BasicIcons = () => {
   return (
-    (<div>
+    <div>
       {/* ------------------------------------------------------------------------------------------------ */}
       {/* Basic Layout */}
       {/* ------------------------------------------------------------------------------------------------ */}
@@ -31,9 +31,7 @@ const BasicIcons = () => {
         </Grid>
         {/* 2 */}
         <Grid size={12}>
-          <CustomFormLabel htmlFor="bi-company">
-            Company
-          </CustomFormLabel>
+          <CustomFormLabel htmlFor="bi-company">Company</CustomFormLabel>
         </Grid>
         <Grid size={12}>
           <CustomOutlinedInput
@@ -49,9 +47,7 @@ const BasicIcons = () => {
         </Grid>
         {/* 3 */}
         <Grid size={12}>
-          <CustomFormLabel htmlFor="bi-email">
-            Email
-          </CustomFormLabel>
+          <CustomFormLabel htmlFor="bi-email">Email</CustomFormLabel>
         </Grid>
         <Grid size={12}>
           <CustomOutlinedInput
@@ -67,9 +63,7 @@ const BasicIcons = () => {
         </Grid>
         {/* 4 */}
         <Grid size={12}>
-          <CustomFormLabel htmlFor="bi-phone">
-            Phone No
-          </CustomFormLabel>
+          <CustomFormLabel htmlFor="bi-phone">Phone No</CustomFormLabel>
         </Grid>
         <Grid size={12}>
           <CustomOutlinedInput
@@ -85,9 +79,7 @@ const BasicIcons = () => {
         </Grid>
         {/* 5 */}
         <Grid size={12}>
-          <CustomFormLabel htmlFor="bi-message">
-            Message
-          </CustomFormLabel>
+          <CustomFormLabel htmlFor="bi-message">Message</CustomFormLabel>
         </Grid>
         <Grid size={12}>
           <CustomOutlinedInput
@@ -108,7 +100,7 @@ const BasicIcons = () => {
           </Button>
         </Grid>
       </Grid>
-    </div>)
+    </div>
   );
 };
 

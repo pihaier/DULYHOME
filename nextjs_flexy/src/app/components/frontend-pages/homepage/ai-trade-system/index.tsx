@@ -1,5 +1,5 @@
 'use client';
-import React from "react";
+import React from 'react';
 import {
   Box,
   Grid,
@@ -12,12 +12,12 @@ import {
   Stack,
   LinearProgress,
   IconButton,
-  Tooltip
-} from "@mui/material";
-import { styled, useTheme } from "@mui/material/styles";
-import dynamic from "next/dynamic";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
-import { ApexOptions } from "apexcharts";
+  Tooltip,
+} from '@mui/material';
+import { styled, useTheme } from '@mui/material/styles';
+import dynamic from 'next/dynamic';
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
+import { ApexOptions } from 'apexcharts';
 import {
   IconBrain,
   IconChartLine,
@@ -26,8 +26,8 @@ import {
   IconArrowUpRight,
   IconDatabase,
   IconRobot,
-  IconTrendingUp
-} from "@tabler/icons-react";
+  IconTrendingUp,
+} from '@tabler/icons-react';
 import CountUp from 'react-countup';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
@@ -42,12 +42,12 @@ const StatsCard = styled(Card)(({ theme }) => ({
   '&:hover': {
     transform: 'translateY(-5px)',
     boxShadow: theme.shadows[20],
-  }
+  },
 }));
 
 const MetricCard = styled(Box)(({ theme }) => ({
   padding: theme.spacing(3),
-  borderRadius: (theme.shape.borderRadius as number),
+  borderRadius: theme.shape.borderRadius as number,
   background: `linear-gradient(135deg, ${theme.palette.primary.light} 0%, ${theme.palette.primary.main} 100%)`,
   color: 'white',
   position: 'relative',
@@ -61,7 +61,7 @@ const MetricCard = styled(Box)(({ theme }) => ({
     height: 150,
     borderRadius: '50%',
     background: 'rgba(255,255,255,0.1)',
-  }
+  },
 }));
 
 const AITradeSystem = () => {
@@ -89,7 +89,7 @@ const AITradeSystem = () => {
         shadeIntensity: 1,
         opacityFrom: 0.4,
         opacityTo: 0.1,
-      }
+      },
     },
     colors: [theme.palette.primary.main],
     tooltip: {
@@ -97,10 +97,12 @@ const AITradeSystem = () => {
     },
   };
 
-  const chartSeries = [{
-    name: 'HS 코드 매칭 정확도',
-    data: [82, 85, 87, 89, 90, 92, 94, 94, 95, 96, 96, 97]
-  }];
+  const chartSeries = [
+    {
+      name: 'HS 코드 매칭 정확도',
+      data: [82, 85, 87, 89, 90, 92, 94, 94, 95, 96, 96, 97],
+    },
+  ];
 
   const tradeStats = [
     {
@@ -111,7 +113,7 @@ const AITradeSystem = () => {
       label: '검증 항목',
       color: theme.palette.primary.main,
       bgColor: theme.palette.primary.light,
-      description: '머신러닝 기반 리스크 분석'
+      description: '머신러닝 기반 리스크 분석',
     },
     {
       icon: <IconChartLine />,
@@ -121,7 +123,7 @@ const AITradeSystem = () => {
       label: '성공률',
       color: theme.palette.success.main,
       bgColor: theme.palette.success.light,
-      description: '10년 데이터 학습 결과'
+      description: '10년 데이터 학습 결과',
     },
     {
       icon: <IconShieldLock />,
@@ -131,7 +133,7 @@ const AITradeSystem = () => {
       label: '안전 거래',
       color: theme.palette.info.main,
       bgColor: theme.palette.info.light,
-      description: '블록체인 검증 시스템'
+      description: '블록체인 검증 시스템',
     },
     {
       icon: <IconClock24 />,
@@ -141,7 +143,7 @@ const AITradeSystem = () => {
       label: '무중단 서비스',
       color: theme.palette.warning.main,
       bgColor: theme.palette.warning.light,
-      description: '자동 알림 시스템'
+      description: '자동 알림 시스템',
     },
   ];
 
@@ -150,38 +152,39 @@ const AITradeSystem = () => {
       title: 'HS 코드 추정',
       value: 95,
       icon: <IconDatabase size={20} />,
-      description: '상품 설명·스펙 기반 자동 분류(자신감 점수 제공)'
+      description: '상품 설명·스펙 기반 자동 분류(자신감 점수 제공)',
     },
     {
       title: '세금 자동 계산',
       value: 100,
       icon: <IconRobot size={20} />,
-      description: '관세·부가세·통관수수료·물류비 예측'
+      description: '관세·부가세·통관수수료·물류비 예측',
     },
     {
       title: '리스크 관리',
       value: 92,
       icon: <IconShieldLock size={20} />,
-      description: '금지/제한 품목·인증 필요 여부 사전 점검'
+      description: '금지/제한 품목·인증 필요 여부 사전 점검',
     },
     {
       title: 'ROI 최적화',
       value: 470,
       icon: <IconTrendingUp size={20} />,
-      description: '데이터 기반 수익 극대화 전략'
+      description: '데이터 기반 수익 극대화 전략',
     },
   ];
 
   return (
-    <Box 
+    <Box
       ref={ref}
       sx={{
         py: { xs: 10, sm: 12, lg: 16 },
         mt: { xs: 4, lg: 6 },
         mb: { xs: 4, lg: 6 },
-        background: theme.palette.mode === 'light' 
-          ? 'linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)'
-          : theme.palette.background.default,
+        background:
+          theme.palette.mode === 'light'
+            ? 'linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)'
+            : theme.palette.background.default,
       }}
     >
       <Container maxWidth="lg">
@@ -191,9 +194,9 @@ const AITradeSystem = () => {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <Typography 
-            variant="h2" 
-            textAlign="center" 
+          <Typography
+            variant="h2"
+            textAlign="center"
             fontWeight={700}
             sx={{
               fontSize: { xs: '28px', sm: '36px', lg: '44px' },
@@ -206,12 +209,7 @@ const AITradeSystem = () => {
           >
             AI HS 코드·관세 인텔리전스
           </Typography>
-          <Typography 
-            variant="h6" 
-            textAlign="center" 
-            color="text.secondary"
-            sx={{ mb: 6 }}
-          >
+          <Typography variant="h6" textAlign="center" color="text.secondary" sx={{ mb: 6 }}>
             상품 설명 → HS 코드 추정 → 관세/부가세/통관비 자동 계산까지 원클릭
           </Typography>
         </motion.div>
@@ -228,18 +226,18 @@ const AITradeSystem = () => {
                 <StatsCard>
                   <CardContent>
                     <Stack direction="row" justifyContent="space-between" alignItems="start" mb={2}>
-                      <Avatar 
-                        sx={{ 
+                      <Avatar
+                        sx={{
                           bgcolor: stat.bgColor,
                           color: stat.color,
                           width: 48,
-                          height: 48
+                          height: 48,
                         }}
                       >
                         {stat.icon}
                       </Avatar>
-                      <Chip 
-                        label="LIVE" 
+                      <Chip
+                        label="LIVE"
                         size="small"
                         sx={{
                           bgcolor: theme.palette.success.light,
@@ -250,29 +248,24 @@ const AITradeSystem = () => {
                             '0%': { opacity: 1 },
                             '50%': { opacity: 0.6 },
                             '100%': { opacity: 1 },
-                          }
+                          },
                         }}
                       />
                     </Stack>
-                    
+
                     <Typography variant="h6" fontWeight={600} mb={1}>
                       {stat.title}
                     </Typography>
-                    
+
                     <Box display="flex" alignItems="baseline" mb={1}>
                       <Typography variant="h3" fontWeight={700} color={stat.color}>
-                        <CountUp 
-                          end={stat.value} 
-                          duration={2} 
-                          separator="," 
-                          suffix={stat.suffix}
-                        />
+                        <CountUp end={stat.value} duration={2} separator="," suffix={stat.suffix} />
                       </Typography>
                       <Typography variant="body2" color="text.secondary" ml={1}>
                         {stat.label}
                       </Typography>
                     </Box>
-                    
+
                     <Typography variant="caption" color="text.secondary">
                       {stat.description}
                     </Typography>
@@ -309,21 +302,16 @@ const AITradeSystem = () => {
                       </Typography>
                     </Stack>
                   </Stack>
-                  
+
                   {/* 성능/SEO: inView일 때만 차트 렌더 */}
                   {inView && (
-                    <Chart 
-                      options={chartOptions}
-                      series={chartSeries}
-                      type="area"
-                      height={180}
-                    />
+                    <Chart options={chartOptions} series={chartSeries} type="area" height={180} />
                   )}
                 </CardContent>
               </StatsCard>
             </motion.div>
           </Grid>
-          
+
           <Grid size={{ xs: 12, lg: 4 }}>
             <Stack spacing={3} height="100%">
               {systemFeatures.slice(0, 2).map((feature, index) => (
@@ -345,11 +333,12 @@ const AITradeSystem = () => {
                       <Box display="flex" justifyContent="space-between" mb={1}>
                         <Typography variant="caption">성능 지표</Typography>
                         <Typography variant="h6" fontWeight={700}>
-                          {feature.value}{feature.value > 100 ? '%' : '%'}
+                          {feature.value}
+                          {feature.value > 100 ? '%' : '%'}
                         </Typography>
                       </Box>
-                      <LinearProgress 
-                        variant="determinate" 
+                      <LinearProgress
+                        variant="determinate"
                         value={feature.value > 100 ? 100 : feature.value}
                         sx={{
                           height: 8,
@@ -358,7 +347,7 @@ const AITradeSystem = () => {
                           '& .MuiLinearProgress-bar': {
                             bgcolor: 'white',
                             borderRadius: 4,
-                          }
+                          },
                         }}
                       />
                     </Box>
@@ -384,7 +373,12 @@ const AITradeSystem = () => {
                 <StatsCard>
                   <CardContent>
                     <Stack direction="row" spacing={2} alignItems="center" mb={2}>
-                      <Avatar sx={{ bgcolor: theme.palette.primary.light, color: theme.palette.primary.main }}>
+                      <Avatar
+                        sx={{
+                          bgcolor: theme.palette.primary.light,
+                          color: theme.palette.primary.main,
+                        }}
+                      >
                         {feature.icon}
                       </Avatar>
                       <Box flex={1}>
@@ -396,11 +390,12 @@ const AITradeSystem = () => {
                         </Typography>
                       </Box>
                       <Typography variant="h4" fontWeight={700} color="primary">
-                        {feature.value}{feature.value > 100 ? '%' : '%'}
+                        {feature.value}
+                        {feature.value > 100 ? '%' : '%'}
                       </Typography>
                     </Stack>
-                    <LinearProgress 
-                      variant="determinate" 
+                    <LinearProgress
+                      variant="determinate"
                       value={feature.value > 100 ? 100 : feature.value}
                       sx={{
                         height: 6,
@@ -409,7 +404,7 @@ const AITradeSystem = () => {
                         '& .MuiLinearProgress-bar': {
                           background: 'linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%)',
                           borderRadius: 3,
-                        }
+                        },
                       }}
                     />
                   </CardContent>

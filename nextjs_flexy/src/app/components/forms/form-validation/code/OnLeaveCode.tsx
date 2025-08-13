@@ -1,5 +1,5 @@
-import CodeDialog from '@/app/components/shared/CodeDialog'
-import React from 'react'
+import CodeDialog from '@/app/components/shared/CodeDialog';
+import React from 'react';
 const OnLeaveCode = () => {
   return (
     <>
@@ -105,7 +105,7 @@ const validationSchema = yup.object({
 `}
       </CodeDialog>
     </>
-  )
-}
+  );
+};
 
-export default OnLeaveCode
+export default OnLeaveCode;

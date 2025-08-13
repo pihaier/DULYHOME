@@ -11,23 +11,23 @@ const ALLOWED_FILE_TYPES = [
   'application/msword',
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
   'application/vnd.ms-excel',
-  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
 ];
 
 export async function POST(request: NextRequest) {
   try {
     // 서버 클라이언트로 인증 확인
     const supabase = await createClient();
-    
+
     // 현재 사용자 확인
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
-    
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
+
     if (authError || !user) {
       console.error('인증 오류:', authError);
-      return NextResponse.json(
-        { success: false, error: '인증이 필요합니다.' },
-        { status: 401 }
-      );
+      return NextResponse.json({ success: false, error: '인증이 필요합니다.' }, { status: 401 });
     }
 
     const formData = await request.formData();
@@ -43,10 +43,7 @@ export async function POST(request: NextRequest) {
     }
 
     if (files.length === 0) {
-      return NextResponse.json(
-        { success: false, error: '파일을 선택해주세요.' },
-        { status: 400 }
-      );
+      return NextResponse.json({ success: false, error: '파일을 선택해주세요.' }, { status: 400 });
     }
 
     const uploadedFiles = [];
@@ -62,7 +59,7 @@ export async function POST(request: NextRequest) {
         if (file.size > MAX_FILE_SIZE) {
           errors.push({
             filename: file.name,
-            error: `파일 크기는 ${MAX_FILE_SIZE / 1024 / 1024}MB를 초과할 수 없습니다.`
+            error: `파일 크기는 ${MAX_FILE_SIZE / 1024 / 1024}MB를 초과할 수 없습니다.`,
           });
           continue;
         }
@@ -71,7 +68,7 @@ export async function POST(request: NextRequest) {
         if (!ALLOWED_FILE_TYPES.includes(file.type)) {
           errors.push({
             filename: file.name,
-            error: '지원하지 않는 파일 형식입니다.'
+            error: '지원하지 않는 파일 형식입니다.',
           });
           continue;
         }
@@ -85,19 +82,19 @@ export async function POST(request: NextRequest) {
         // Supabase Storage에 업로드
         const arrayBuffer = await file.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
-        
+
         const { data, error } = await supabase.storage
           .from('inspection-files')
           .upload(fileName, buffer, {
             contentType: file.type,
             cacheControl: '3600',
-            upsert: false
+            upsert: false,
           });
 
         if (error) {
           errors.push({
             filename: file.name,
-            error: error.message
+            error: error.message,
           });
           continue;
         }
@@ -114,7 +111,7 @@ export async function POST(request: NextRequest) {
             file_type: fileExt,
             mime_type: file.type,
             upload_purpose: 'application',
-            created_at: new Date().toISOString()
+            created_at: new Date().toISOString(),
           })
           .select()
           .single();
@@ -124,7 +121,7 @@ export async function POST(request: NextRequest) {
           await supabase.storage.from('inspection-files').remove([fileName]);
           errors.push({
             filename: file.name,
-            error: '파일 정보 저장 실패'
+            error: '파일 정보 저장 실패',
           });
           continue;
         }
@@ -133,13 +130,12 @@ export async function POST(request: NextRequest) {
           id: fileRecord.id,
           filename: file.name,
           path: data.path,
-          type: type
+          type: type,
         });
-
       } catch (error) {
         errors.push({
           filename: file.name,
-          error: error instanceof Error ? error.message : '알 수 없는 오류'
+          error: error instanceof Error ? error.message : '알 수 없는 오류',
         });
       }
     }
@@ -148,16 +144,15 @@ export async function POST(request: NextRequest) {
       success: true,
       uploadedFiles,
       errors,
-      message: `${uploadedFiles.length}개 파일 업로드 성공${errors.length > 0 ? `, ${errors.length}개 실패` : ''}`
+      message: `${uploadedFiles.length}개 파일 업로드 성공${errors.length > 0 ? `, ${errors.length}개 실패` : ''}`,
     });
-
   } catch (error) {
     console.error('Batch file upload error:', error);
     return NextResponse.json(
-      { 
-        success: false, 
+      {
+        success: false,
         error: '파일 업로드에 실패했습니다.',
-        details: error instanceof Error ? error.message : 'Unknown error'
+        details: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: 500 }
     );

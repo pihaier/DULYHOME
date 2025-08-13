@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import PageContainer from '@/app/components/container/PageContainer';
 import Breadcrumb from '@/app/dashboard/layout/shared/breadcrumb/Breadcrumb';
@@ -18,7 +18,7 @@ const BCrumb = [
 
 const Faq = () => {
   return (
-    (<PageContainer title="FAQ" description="this is FAQ">
+    <PageContainer title="FAQ" description="this is FAQ">
       {/* breadcrumb */}
       <Breadcrumb title="FAQ" items={BCrumb} />
       {/* end breadcrumb */}
@@ -28,7 +28,7 @@ const Faq = () => {
           <StillQuestions />
         </Grid>
       </Grid>
-    </PageContainer>)
+    </PageContainer>
   );
 };
 

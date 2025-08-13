@@ -67,5 +67,4 @@ const CustomCheckbox = React.forwardRef<HTMLButtonElement, CheckboxProps>((props
 // Set displayName to help with debugging
 CustomCheckbox.displayName = 'CustomCheckbox';
 
-
 export default CustomCheckbox;

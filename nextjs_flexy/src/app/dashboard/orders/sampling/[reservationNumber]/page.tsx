@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { 
-  Box, 
-  Typography, 
-  CircularProgress, 
-  Alert, 
+import {
+  Box,
+  Typography,
+  CircularProgress,
+  Alert,
   Button,
   Stack,
   Tabs,
@@ -19,7 +19,7 @@ import {
   CardContent,
   Modal,
   IconButton,
-  Divider
+  Divider,
 } from '@mui/material';
 import { useRouter, useParams } from 'next/navigation';
 import { useUser } from '@/lib/context/GlobalContext';
@@ -34,12 +34,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import ChatIcon from '@mui/icons-material/Chat';
 import { Grid } from '@mui/material';
-import {
-  Fab,
-  useMediaQuery,
-  useTheme,
-  Drawer
-} from '@mui/material';
+import { Fab, useMediaQuery, useTheme, Drawer } from '@mui/material';
 
 // Tab Panel Component
 interface TabPanelProps {
@@ -70,7 +65,7 @@ export default function SamplingDetailPage() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'), { noSsr: true });
   const reservationNumber = params.reservationNumber as string;
   const { supabase } = useUser();
-  
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<any>(null);
@@ -83,35 +78,35 @@ export default function SamplingDetailPage() {
     const fetchData = async () => {
       console.log('=== Sampling fetchData started ===');
       console.log('Reservation Number:', reservationNumber);
-      
+
       if (!reservationNumber) {
         console.log('No reservation number provided');
         setLoading(false);
         return;
       }
-      
+
       setLoading(true);
       setError(null);
-      
+
       try {
         // Supabase SDK 사용 - 목록 페이지처럼 간단하게
-        
+
         // sample_request_items 테이블에서 직접 조회
         const { data: sampleData, error: sampleError } = await supabase
           .from('sample_request_items')
           .select('*')
           .eq('reservation_number', reservationNumber)
           .maybeSingle();
-        
+
         if (sampleError) {
           console.error('Sample order query error:', sampleError);
           throw new Error(sampleError.message);
         }
-        
+
         if (!sampleData) {
           throw new Error('샘플링 데이터를 찾을 수 없습니다.');
         }
-        
+
         console.log('Sample data:', sampleData);
         setData(sampleData);
       } catch (err) {
@@ -131,7 +126,9 @@ export default function SamplingDetailPage() {
 
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <Box
+        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}
+      >
         <CircularProgress />
         <Typography sx={{ ml: 2 }}>Loading...</Typography>
       </Box>
@@ -160,24 +157,44 @@ export default function SamplingDetailPage() {
         <Grid size={{ xs: 12, md: 8 }}>
           <Paper elevation={3} sx={{ mb: isMobile ? 8 : 0 }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs 
-                value={tabValue} 
-                onChange={handleTabChange} 
-                aria-label="order details tabs" 
-                variant={isMobile ? "scrollable" : "fullWidth"}
-                scrollButtons={isMobile ? "auto" : false}
+              <Tabs
+                value={tabValue}
+                onChange={handleTabChange}
+                aria-label="order details tabs"
+                variant={isMobile ? 'scrollable' : 'fullWidth'}
+                scrollButtons={isMobile ? 'auto' : false}
                 sx={{
                   '& .MuiTab-root': {
                     minWidth: isMobile ? 'auto' : 120,
                     fontSize: isMobile ? '0.75rem' : '0.875rem',
-                  }
+                  },
                 }}
               >
-                <Tab icon={<InfoIcon sx={{ fontSize: isMobile ? 20 : 24 }} />} label={isMobile ? "샘플" : "샘플정보"} iconPosition="start" />
-                <Tab icon={<ShoppingCartIcon sx={{ fontSize: isMobile ? 20 : 24 }} />} label={isMobile ? "발주" : "발주내역"} iconPosition="start" />
-                <Tab icon={<LocalShippingIcon sx={{ fontSize: isMobile ? 20 : 24 }} />} label={isMobile ? "배송" : "배송정보"} iconPosition="start" />
-                <Tab icon={<AttachMoneyIcon sx={{ fontSize: isMobile ? 20 : 24 }} />} label={isMobile ? "비용" : "비용정보"} iconPosition="start" />
-                <Tab icon={<AttachFileIcon sx={{ fontSize: isMobile ? 20 : 24 }} />} label={isMobile ? "자료" : "관련자료"} iconPosition="start" />
+                <Tab
+                  icon={<InfoIcon sx={{ fontSize: isMobile ? 20 : 24 }} />}
+                  label={isMobile ? '샘플' : '샘플정보'}
+                  iconPosition="start"
+                />
+                <Tab
+                  icon={<ShoppingCartIcon sx={{ fontSize: isMobile ? 20 : 24 }} />}
+                  label={isMobile ? '발주' : '발주내역'}
+                  iconPosition="start"
+                />
+                <Tab
+                  icon={<LocalShippingIcon sx={{ fontSize: isMobile ? 20 : 24 }} />}
+                  label={isMobile ? '배송' : '배송정보'}
+                  iconPosition="start"
+                />
+                <Tab
+                  icon={<AttachMoneyIcon sx={{ fontSize: isMobile ? 20 : 24 }} />}
+                  label={isMobile ? '비용' : '비용정보'}
+                  iconPosition="start"
+                />
+                <Tab
+                  icon={<AttachFileIcon sx={{ fontSize: isMobile ? 20 : 24 }} />}
+                  label={isMobile ? '자료' : '관련자료'}
+                  iconPosition="start"
+                />
               </Tabs>
             </Box>
 
@@ -193,18 +210,26 @@ export default function SamplingDetailPage() {
                     <Table>
                       <TableBody>
                         <TableRow>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}>
+                          <TableCell
+                            component="th"
+                            sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}
+                          >
                             샘플 신청일
                           </TableCell>
                           <TableCell sx={{ width: '35%' }}>
-                            {data?.created_at ? new Date(data.created_at).toLocaleString('ko-KR') : '-'}
+                            {data?.created_at
+                              ? new Date(data.created_at).toLocaleString('ko-KR')
+                              : '-'}
                           </TableCell>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}>
+                          <TableCell
+                            component="th"
+                            sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}
+                          >
                             진행상태
                           </TableCell>
                           <TableCell sx={{ width: '35%' }}>
-                            <Chip 
-                              label={data?.status || '접수'} 
+                            <Chip
+                              label={data?.status || '접수'}
                               color={data?.status === 'completed' ? 'success' : 'primary'}
                               size="small"
                             />
@@ -225,8 +250,8 @@ export default function SamplingDetailPage() {
                             배송방법
                           </TableCell>
                           <TableCell>
-                            <Chip 
-                              label={data?.shipping_method || '해운'} 
+                            <Chip
+                              label={data?.shipping_method || '해운'}
                               color={data?.shipping_method === '항공' ? 'warning' : 'default'}
                               size="small"
                             />
@@ -265,42 +290,66 @@ export default function SamplingDetailPage() {
                     <Typography variant="h6" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
                       샘플 발주내역
                     </Typography>
-                    
+
                     {data?.sample_items && data.sample_items.length > 0 ? (
                       <Box>
                         {data.sample_items.map((item: any, index: number) => (
                           <Box key={index} sx={{ mb: 3 }}>
-                            <Typography variant="subtitle2" fontWeight="bold" color="primary" sx={{ mb: 2 }}>
+                            <Typography
+                              variant="subtitle2"
+                              fontWeight="bold"
+                              color="primary"
+                              sx={{ mb: 2 }}
+                            >
                               샘플 {index + 1}
                             </Typography>
                             <Table>
                               <TableBody>
                                 <TableRow>
-                                  <TableCell component="th" sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50' }}>
+                                  <TableCell
+                                    component="th"
+                                    sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50' }}
+                                  >
                                     제품명
                                   </TableCell>
                                   <TableCell>{item.product_name || '-'}</TableCell>
                                 </TableRow>
                                 <TableRow>
-                                  <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                                  <TableCell
+                                    component="th"
+                                    sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}
+                                  >
                                     규격
                                   </TableCell>
                                   <TableCell>{item.specifications || '-'}</TableCell>
                                 </TableRow>
                                 <TableRow>
-                                  <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                                  <TableCell
+                                    component="th"
+                                    sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}
+                                  >
                                     수량
                                   </TableCell>
                                   <TableCell>{item.quantity || 0}개</TableCell>
                                 </TableRow>
                                 <TableRow>
-                                  <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                                  <TableCell
+                                    component="th"
+                                    sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}
+                                  >
                                     샘플단가
                                   </TableCell>
-                                  <TableCell>{item.unit_price ? `${item.unit_price.toLocaleString()}원` : '-'}</TableCell>
+                                  <TableCell>
+                                    {item.unit_price
+                                      ? `${item.unit_price.toLocaleString()}원`
+                                      : '-'}
+                                  </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                  <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                                  <TableCell
+                                    component="th"
+                                    sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}
+                                  >
                                     샘플무게
                                   </TableCell>
                                   <TableCell>{item.weight ? `${item.weight}kg` : '-'}</TableCell>
@@ -331,7 +380,10 @@ export default function SamplingDetailPage() {
                     <Table>
                       <TableBody>
                         <TableRow>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50' }}>
+                          <TableCell
+                            component="th"
+                            sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50' }}
+                          >
                             공장 샘플 송장
                           </TableCell>
                           <TableCell>{data?.factory_sample_invoice || '대기중'}</TableCell>
@@ -342,10 +394,15 @@ export default function SamplingDetailPage() {
                           </TableCell>
                           <TableCell>
                             {data?.factory_delivery_tracking ? (
-                              <a href={`#${data.factory_delivery_tracking}`} style={{ color: '#1976d2', textDecoration: 'underline' }}>
+                              <a
+                                href={`#${data.factory_delivery_tracking}`}
+                                style={{ color: '#1976d2', textDecoration: 'underline' }}
+                              >
                                 {data.factory_delivery_tracking}
                               </a>
-                            ) : '대기중'}
+                            ) : (
+                              '대기중'
+                            )}
                           </TableCell>
                         </TableRow>
                       </TableBody>
@@ -362,7 +419,10 @@ export default function SamplingDetailPage() {
                     <Table>
                       <TableBody>
                         <TableRow>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50' }}>
+                          <TableCell
+                            component="th"
+                            sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50' }}
+                          >
                             광저우 샘플 송장번호
                           </TableCell>
                           <TableCell>{data?.gz_sample_invoice_number || '대기중'}</TableCell>
@@ -373,10 +433,15 @@ export default function SamplingDetailPage() {
                           </TableCell>
                           <TableCell>
                             {data?.gz_delivery_tracking ? (
-                              <a href={`#${data.gz_delivery_tracking}`} style={{ color: '#1976d2', textDecoration: 'underline' }}>
+                              <a
+                                href={`#${data.gz_delivery_tracking}`}
+                                style={{ color: '#1976d2', textDecoration: 'underline' }}
+                              >
                                 {data.gz_delivery_tracking}
                               </a>
-                            ) : '대기중'}
+                            ) : (
+                              '대기중'
+                            )}
                           </TableCell>
                         </TableRow>
                         <TableRow>
@@ -385,10 +450,15 @@ export default function SamplingDetailPage() {
                           </TableCell>
                           <TableCell>
                             {data?.international_tracking ? (
-                              <a href={`#${data.international_tracking}`} style={{ color: '#1976d2', textDecoration: 'underline' }}>
+                              <a
+                                href={`#${data.international_tracking}`}
+                                style={{ color: '#1976d2', textDecoration: 'underline' }}
+                              >
                                 {data.international_tracking}
                               </a>
-                            ) : '대기중'}
+                            ) : (
+                              '대기중'
+                            )}
                           </TableCell>
                         </TableRow>
                       </TableBody>
@@ -406,19 +476,25 @@ export default function SamplingDetailPage() {
                       <Table>
                         <TableBody>
                           <TableRow>
-                            <TableCell component="th" sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50' }}>
+                            <TableCell
+                              component="th"
+                              sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50' }}
+                            >
                               통관상태
                             </TableCell>
                             <TableCell>
-                              <Chip 
-                                label={data.customs_info.status || '대기중'} 
+                              <Chip
+                                label={data.customs_info.status || '대기중'}
                                 color={data.customs_info.status === '완료' ? 'success' : 'default'}
                                 size="small"
                               />
                             </TableCell>
                           </TableRow>
                           <TableRow>
-                            <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                            <TableCell
+                              component="th"
+                              sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}
+                            >
                               통관번호
                             </TableCell>
                             <TableCell>{data.customs_info.number || '-'}</TableCell>
@@ -442,12 +518,17 @@ export default function SamplingDetailPage() {
                     <Table>
                       <TableBody>
                         <TableRow>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50' }}>
+                          <TableCell
+                            component="th"
+                            sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50' }}
+                          >
                             샘플제작비용
                           </TableCell>
                           <TableCell>
                             <Typography variant="h6" color="primary">
-                              {data?.total_sample_cost ? `₩${data.total_sample_cost.toLocaleString()}` : '산정중'}
+                              {data?.total_sample_cost
+                                ? `₩${data.total_sample_cost.toLocaleString()}`
+                                : '산정중'}
                             </Typography>
                           </TableCell>
                         </TableRow>
@@ -455,21 +536,29 @@ export default function SamplingDetailPage() {
                           <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
                             打样费
                           </TableCell>
-                          <TableCell>{data?.sample_making_cost ? `¥${data.sample_making_cost.toLocaleString()}` : '산정중'}</TableCell>
+                          <TableCell>
+                            {data?.sample_making_cost
+                              ? `¥${data.sample_making_cost.toLocaleString()}`
+                              : '산정중'}
+                          </TableCell>
                         </TableRow>
                         <TableRow>
                           <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
                             배송비
                           </TableCell>
-                          <TableCell>{data?.shipping_cost ? `₩${data.shipping_cost.toLocaleString()}` : '산정중'}</TableCell>
+                          <TableCell>
+                            {data?.shipping_cost
+                              ? `₩${data.shipping_cost.toLocaleString()}`
+                              : '산정중'}
+                          </TableCell>
                         </TableRow>
                         <TableRow>
                           <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
                             결제상태
                           </TableCell>
                           <TableCell>
-                            <Chip 
-                              label={data?.payment_status || '대기'} 
+                            <Chip
+                              label={data?.payment_status || '대기'}
                               color={data?.payment_status === 'paid' ? 'success' : 'default'}
                               size="small"
                             />
@@ -488,7 +577,11 @@ export default function SamplingDetailPage() {
                 {data?.files && data.files.length > 0 ? (
                   <Stack spacing={2}>
                     {data.files.map((file: any, index: number) => (
-                      <Paper key={index} sx={{ p: 2, cursor: 'pointer' }} onClick={() => window.open(file.url, '_blank')}>
+                      <Paper
+                        key={index}
+                        sx={{ p: 2, cursor: 'pointer' }}
+                        onClick={() => window.open(file.url, '_blank')}
+                      >
                         <Typography>{file.name}</Typography>
                       </Paper>
                     ))}
@@ -504,8 +597,8 @@ export default function SamplingDetailPage() {
         {/* Desktop - Chat on right side */}
         {!isMobile && (
           <Grid size={{ md: 4 }}>
-            <ChatPanel 
-              reservationNumber={reservationNumber} 
+            <ChatPanel
+              reservationNumber={reservationNumber}
               currentUserRole="customer"
               currentUserId="test-user-id"
               currentUserName="테스트 사용자"
@@ -524,7 +617,7 @@ export default function SamplingDetailPage() {
               position: 'fixed',
               bottom: 16,
               right: 16,
-              zIndex: 1200
+              zIndex: 1200,
             }}
             onClick={() => setChatDrawerOpen(true)}
           >
@@ -541,7 +634,7 @@ export default function SamplingDetailPage() {
                 height: '80vh',
                 borderTopLeftRadius: 16,
                 borderTopRightRadius: 16,
-              }
+              },
             }}
           >
             <Box sx={{ p: 2 }}>
@@ -552,8 +645,8 @@ export default function SamplingDetailPage() {
                 </IconButton>
               </Stack>
               <Box sx={{ height: 'calc(80vh - 100px)' }}>
-                <ChatPanel 
-                  reservationNumber={reservationNumber} 
+                <ChatPanel
+                  reservationNumber={reservationNumber}
                   currentUserRole="customer"
                   currentUserId="test-user-id"
                   currentUserName="테스트 사용자"
@@ -565,23 +658,21 @@ export default function SamplingDetailPage() {
       )}
 
       {/* Image Modal */}
-      <Modal
-        open={modalOpen}
-        onClose={() => setModalOpen(false)}
-        aria-labelledby="image-modal"
-      >
-        <Box sx={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          maxWidth: '90vw',
-          maxHeight: '90vh',
-          bgcolor: 'background.paper',
-          boxShadow: 24,
-          p: 2,
-          borderRadius: 2,
-        }}>
+      <Modal open={modalOpen} onClose={() => setModalOpen(false)} aria-labelledby="image-modal">
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            maxWidth: '90vw',
+            maxHeight: '90vh',
+            bgcolor: 'background.paper',
+            boxShadow: 24,
+            p: 2,
+            borderRadius: 2,
+          }}
+        >
           <IconButton
             onClick={() => setModalOpen(false)}
             sx={{
