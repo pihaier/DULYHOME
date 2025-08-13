@@ -139,7 +139,7 @@ export default function InspectionListPage() {
         <CardContent>
           {/* 필터 섹션 */}
           <Grid container spacing={2} sx={{ mb: 3 }}>
-            <Grid item xs={12} md={3}>
+            <Grid size={{ xs: 12, md: 3 }}>
               <TextField
                 fullWidth
                 size="small"
@@ -155,7 +155,7 @@ export default function InspectionListPage() {
                 }}
               />
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <FormControl fullWidth size="small">
                 <InputLabel>{isChineseStaff ? '状态' : '상태'}</InputLabel>
                 <Select
@@ -170,7 +170,7 @@ export default function InspectionListPage() {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <FormControl fullWidth size="small">
                 <InputLabel>{isChineseStaff ? '分配' : '담당'}</InputLabel>
                 <Select
@@ -183,7 +183,7 @@ export default function InspectionListPage() {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12} md={3}>
+            <Grid size={{ xs: 12, md: 3 }}>
               <Button
                 fullWidth
                 variant="contained"
