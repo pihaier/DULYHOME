@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import {
   Box,
-  Card,
   CardContent,
   Typography,
   Table,
@@ -15,7 +14,6 @@ import {
   Paper,
   Chip,
   IconButton,
-  Stack,
   CircularProgress,
   Alert,
   Button,
@@ -31,7 +29,6 @@ import {
   Visibility as VisibilityIcon,
   Search as SearchIcon,
   Refresh as RefreshIcon,
-  CheckCircle as CheckCircleIcon,
 } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
@@ -90,9 +87,9 @@ export default function InspectionListPage() {
       }
 
       setOrders(filteredData);
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error fetching orders:', error);
-      setError(error.message);
+      setError(error instanceof Error ? error.message : 'An error occurred');
     } finally {
       setLoading(false);
     }

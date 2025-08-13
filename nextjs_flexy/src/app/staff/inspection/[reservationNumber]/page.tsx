@@ -11,10 +11,6 @@ import {
   Tabs,
   Tab,
   Paper,
-  Table,
-  TableBody,
-  TableRow,
-  TableCell,
   Chip,
   CardContent,
   Fab,
@@ -155,8 +151,8 @@ export default function StaffInspectionDetailPage() {
       
       setEditMode(false);
       alert(isChineseStaff ? '保存成功' : '저장되었습니다');
-    } catch (error: any) {
-      alert(error.message);
+    } catch (error) {
+      alert(error instanceof Error ? error.message : 'An error occurred');
     } finally {
       setSaving(false);
     }

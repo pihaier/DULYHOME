@@ -371,9 +371,9 @@ export default function InspectionApplicationPage() {
 
       // 신청 완료 모달 표시
       setShowSuccessModal(true);
-    } catch (error: any) {
+    } catch (error) {
       console.error('신청 오류:', error);
-      alert(error.message || '신청 중 오류가 발생했습니다.');
+      alert(error instanceof Error ? error.message : '신청 중 오류가 발생했습니다.');
     } finally {
       setLoading(false);
     }

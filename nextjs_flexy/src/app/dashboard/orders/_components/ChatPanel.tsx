@@ -355,8 +355,6 @@ export default function ChatPanel({
           .not('original_message', 'is', null);
         
         if (untranslated && untranslated.length > 0) {
-          console.log(`Found ${untranslated.length} untranslated messages`);
-          
           for (const msg of untranslated) {
             await supabase.functions.invoke('translate-message', {
               body: { record: msg }
@@ -369,7 +367,6 @@ export default function ChatPanel({
     });
 
     // Realtime 구독 - 더 간단한 방식으로
-    console.log('Setting up Realtime subscription for:', reservationNumber);
     
     const channel = supabase
       .channel(`chat_messages_${reservationNumber}`)
@@ -382,7 +379,6 @@ export default function ChatPanel({
           filter: `reservation_number=eq.${reservationNumber}`,
         },
         (payload) => {
-          console.log('Realtime event received:', payload);
           
           if (payload.eventType === 'INSERT') {
             const newMessage = payload.new as ChatMessage;
@@ -391,42 +387,32 @@ export default function ChatPanel({
             setChatMessages((prev) => {
               const exists = prev.some(msg => msg.id === newMessage.id);
               if (exists) {
-                console.log('Message already exists, skipping');
                 return prev;
               }
-              console.log('Adding new message:', newMessage.id);
               return [...prev, newMessage];
             });
             
             // 번역 요청
             if (!newMessage.translated_message && newMessage.original_message) {
-              console.log('Requesting translation for message:', newMessage.id);
               supabase.functions.invoke('translate-message', {
                 body: { record: newMessage }
               });
             }
           } else if (payload.eventType === 'UPDATE') {
             const updatedMessage = payload.new as ChatMessage;
-            console.log('Updating message:', updatedMessage.id);
             setChatMessages((prev) =>
               prev.map((msg) => (msg.id === updatedMessage.id ? updatedMessage : msg))
             );
           } else if (payload.eventType === 'DELETE') {
             const deletedMessage = payload.old as ChatMessage;
-            console.log('Deleting message:', deletedMessage.id);
             setChatMessages((prev) =>
               prev.filter((msg) => msg.id !== deletedMessage.id)
             );
           }
         }
       )
-      .subscribe((status, error) => {
-        if (status === 'SUBSCRIBED') {
-          console.log('✅ Successfully subscribed to realtime updates');
-        } else if (status === 'CHANNEL_ERROR') {
-          // 채널 에러는 조용히 처리 (이미 Realtime 활성화됨)
-          console.warn('Realtime channel reconnecting...');
-        }
+      .subscribe(() => {
+        // 채널 상태 처리 (조용히)
       });
 
     return () => {
