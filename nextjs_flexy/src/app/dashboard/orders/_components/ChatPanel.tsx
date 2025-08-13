@@ -38,6 +38,9 @@ interface ChatMessage {
   translated_message?: string;
   translated_language?: string;
   message_type: string;
+  file_url?: string;
+  file_name?: string;
+  file_size?: number;
   created_at: string;
 }
 
