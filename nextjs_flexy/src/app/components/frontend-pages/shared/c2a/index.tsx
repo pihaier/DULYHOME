@@ -26,7 +26,7 @@ const C2a = () => {
                 },
                 backgroundColor: theme.palette.mode == 'light' ? 'primary.light' : 'background.paper'
             }}>
-                <Container maxWidth="lg">
+                <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
                     <Grid container spacing={3} alignItems="center">
                         <Grid
                             size={{
@@ -62,7 +62,7 @@ const C2a = () => {
 
                 {lgUp ?
                     <Image 
-                        src="/images/services/cta-side.png" 
+                        src="/images/services/home2.jpg" 
                         alt="두리무역 서비스 비주얼" 
                         width={1200} 
                         height={365} 
@@ -70,9 +70,10 @@ const C2a = () => {
                             position: 'absolute', 
                             right: 0,
                             top: 0, 
-                            width: 'auto', 
+                            width: '50%', 
                             height: '100%',
-                            objectFit: 'cover'
+                            objectFit: 'cover',
+                            zIndex: 0
                         }} 
                     /> : null
                 }
