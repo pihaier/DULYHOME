@@ -44,7 +44,7 @@ const WelcomeCard = () => {
             variant="contained"
             color="inherit"
             startIcon={<IconPlus size={16} />}
-            onClick={() => router.push('/application/inspection/quality-inspection')}
+            onClick={() => router.push('/frontend-pages/services')}
             sx={{
               backgroundColor: 'white',
               color: 'primary.main',
