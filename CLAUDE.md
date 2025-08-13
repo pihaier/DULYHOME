@@ -714,6 +714,29 @@ function displayMessage(message: ChatMessage, userRole: string) {
 .env.production
 ```
 
+## 🔒 Security & Backup Policy
+
+### Data Backup Strategy
+**⚠️ CRITICAL SECURITY NOTICE**:
+- **NEVER** store production data in GitHub (Actions, Artifacts, or repositories)
+- **NEVER** create scripts that export customer data to external services
+- **ALWAYS** use Supabase's built-in backup features for production data
+
+#### Approved Backup Methods:
+1. **Production Database**: 
+   - Use Supabase Dashboard → Settings → Database → Backups
+   - Enable Point-in-time Recovery (PITR)
+   - Automatic daily backups (30-day retention)
+   
+2. **Development Database**:
+   - Local backups only with test data
+   - Use `pg_dump` for local development snapshots
+   
+3. **Compliance**:
+   - All backups must comply with 개인정보보호법 (PIPA)
+   - Customer data must remain within Supabase's secure infrastructure
+   - No customer data in version control or CI/CD pipelines
+
 ### CI/CD Pipeline (GitHub Actions)
 ```yaml
 name: Deploy
