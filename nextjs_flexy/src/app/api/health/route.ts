@@ -35,8 +35,8 @@ export async function GET() {
     try {
       const supabase = createClient();
       const { data, error } = await supabase
-        .from('_prisma_migrations')
-        .select('id')
+        .from('user_profiles')
+        .select('user_id')
         .limit(1);
       
       checks.checks.database = {
