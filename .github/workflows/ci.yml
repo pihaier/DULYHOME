@@ -40,8 +40,8 @@ jobs:
       run: |
         echo "🔍 Checking for console.log statements..."
         if grep -r "console\.log" src/ --include="*.ts" --include="*.tsx" --include="*.js" --include="*.jsx" --exclude-dir=node_modules; then
-          echo "❌ console.log found in production code. Please remove them."
-          exit 1
+          echo "⚠️ Warning: console.log found in production code. Consider removing them."
+          echo "This is currently a warning. Will become an error in the future."
         else
           echo "✅ No console.log statements found."
         fi

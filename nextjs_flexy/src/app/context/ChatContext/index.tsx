@@ -58,9 +58,9 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     useEffect(() => {
         if (ChatsData) {
             setLoading(isChatsLoading);
-            let chatsData = ChatsData.data;
+            const chatsData = ChatsData.data;
             if (chatData.length === 0) {
-                let specificChat = chatsData[0];
+                const specificChat = chatsData[0];
                 setSelectedChat(specificChat);
             }
             setChatData(chatsData);

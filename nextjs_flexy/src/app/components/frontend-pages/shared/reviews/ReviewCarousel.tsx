@@ -105,7 +105,7 @@ const ReviewCarousel = ({ isRTL }: any) => {
   const [activeSlide, setActiveSlide] = useState(1);
   const [activeSlide2, setActiveSlide2] = useState(1);
 
-  let sliderRef = useRef<Slider | null>(null); 
+  const sliderRef = useRef<Slider | null>(null); 
 
   const settings = {
     dots: false,

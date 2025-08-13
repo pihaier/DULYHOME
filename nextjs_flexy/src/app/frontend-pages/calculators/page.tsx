@@ -494,7 +494,7 @@ const CalculatorsPage = () => {
     }
     
     // 가장 낮은 세율 자동 선택
-    let appliedTariff = rates.length > 0 
+    const appliedTariff = rates.length > 0 
       ? rates.reduce((min, current) => current.rate < min.rate ? current : min)
       : { rate: 8, typeName: '기본세율', type: 'basic' };
     

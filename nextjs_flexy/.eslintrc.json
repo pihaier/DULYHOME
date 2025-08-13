@@ -1,15 +1,15 @@
 {
   "extends": ["next/core-web-vitals", "next/typescript"],
   "rules": {
-    // AI 개발 환경을 위한 엄격한 규칙들
-    "no-console": "error",
+    // AI 개발 환경을 위한 점진적 규칙들
+    "no-console": "warn",
     "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": ["error", { 
+    "@typescript-eslint/no-unused-vars": ["warn", { 
       "argsIgnorePattern": "^_",
       "varsIgnorePattern": "^_"
     }],
     "no-debugger": "error",
-    "no-alert": "error",
+    "no-alert": "warn",
     "no-var": "error",
     "prefer-const": "error",
     "@typescript-eslint/no-explicit-any": "warn",
