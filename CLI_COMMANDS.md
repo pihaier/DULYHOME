@@ -75,3 +75,5 @@ npx supabase gen types typescript --db-url "postgresql://postgres.fzpyfzpmwyvqum
   - 해결: `npx supabase migration repair --status reverted 20250828` 실행 후 `--include-all` 플래그로 push
   
   
+
+  

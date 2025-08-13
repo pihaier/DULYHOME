@@ -221,7 +221,7 @@ export default function FactoryContactDetailPage() {
     return typeMap[type] || type;
   };
 
-  const getRequestTypeLabels = (types: string[]) => {
+  const getRequestTypeLabels = (types: string | string[] | null) => {
     const typeMap: { [key: string]: string } = {
       sample: '샘플 제작',
       bulk_order: '대량 주문',
@@ -230,7 +230,13 @@ export default function FactoryContactDetailPage() {
       other: '기타',
     };
 
-    return types.map((type) => typeMap[type] || type);
+    // types가 없거나 null인 경우 빈 배열 반환
+    if (!types) return [];
+    
+    // 문자열인 경우 배열로 변환
+    const typeArray = Array.isArray(types) ? types : [types];
+    
+    return typeArray.map((type) => typeMap[type] || type);
   };
 
   if (loading) {
@@ -376,7 +382,7 @@ export default function FactoryContactDetailPage() {
                       요청 사항
                     </Typography>
                     <Box sx={{ mb: 2 }}>
-                      {getRequestTypeLabels(data?.request_type || []).map((type) => (
+                      {getRequestTypeLabels(data?.request_type).map((type) => (
                         <Chip key={type} label={type} sx={{ mr: 1, mb: 1 }} />
                       ))}
                     </Box>

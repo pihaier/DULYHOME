@@ -11,11 +11,17 @@ import {
   CircularProgress,
   Avatar,
   Paper,
+  Button,
 } from '@mui/material';
 import {
   Send as SendIcon,
   AttachFile as AttachFileIcon,
   AccessTime as AccessTimeIcon,
+  InsertDriveFile as InsertDriveFileIcon,
+  Image as ImageIcon,
+  PictureAsPdf as PdfIcon,
+  Description as WordIcon,
+  TableChart as ExcelIcon,
 } from '@mui/icons-material';
 import { useUser } from '@/lib/context/GlobalContext';
 import { fetchChatMessages as fetchMessages, insertChatMessage } from '@/lib/utils/supabase-fetch';
@@ -44,6 +50,41 @@ interface ChatPanelProps {
   onFileUpload?: () => void;
 }
 
+// 파일 타입 헬퍼 함수들
+const isImageFile = (filename?: string) => {
+  if (!filename) return false;
+  return /\.(jpg|jpeg|png|gif|webp|bmp|svg)$/i.test(filename);
+};
+
+const isPdfFile = (filename?: string) => {
+  if (!filename) return false;
+  return /\.pdf$/i.test(filename);
+};
+
+const isWordFile = (filename?: string) => {
+  if (!filename) return false;
+  return /\.(doc|docx|rtf)$/i.test(filename);
+};
+
+const isExcelFile = (filename?: string) => {
+  if (!filename) return false;
+  return /\.(xls|xlsx|csv)$/i.test(filename);
+};
+
+const isDesignFile = (filename?: string) => {
+  if (!filename) return false;
+  return /\.(ai|psd|sketch|fig|xd)$/i.test(filename);
+};
+
+const getFileIcon = (filename?: string) => {
+  if (isImageFile(filename)) return <ImageIcon color="action" />;
+  if (isPdfFile(filename)) return <PdfIcon color="error" />;
+  if (isWordFile(filename)) return <WordIcon color="primary" />;
+  if (isExcelFile(filename)) return <ExcelIcon color="success" />;
+  if (isDesignFile(filename)) return <ImageIcon color="secondary" />;
+  return <InsertDriveFileIcon color="action" />;
+};
+
 export default function ChatPanel({
   reservationNumber,
   currentUserId,
@@ -56,6 +97,8 @@ export default function ChatPanel({
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [loadingChat, setLoadingChat] = useState(false);
   const [sendingMessage, setSendingMessage] = useState(false);
+  const [uploadingFile, setUploadingFile] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const chatScrollRef = useRef<HTMLDivElement>(null);
   const { supabase, user } = useUser();
   const effectiveUserId = user?.id || currentUserId || '93c87ed3-a25d-4838-acd5-6e082ed56478';
@@ -192,6 +235,110 @@ export default function ChatPanel({
     }
   };
 
+  // 파일 업로드 핸들러
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingFile(true);
+
+    try {
+      // 사용자 정보 가져오기
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      
+      let userProfile = null;
+      if (user?.id) {
+        const { data: profile } = await supabase
+          .from('user_profiles')
+          .select('*')
+          .eq('user_id', user.id)
+          .maybeSingle();
+        userProfile = profile;
+      }
+
+      // 파일명 안전하게 처리
+      const fileExt = file.name.split('.').pop() || '';
+      const safeFileName = `${Date.now()}_${Math.random().toString(36).substring(2, 8)}.${fileExt}`;
+      const filePath = `${reservationNumber}/chat/${safeFileName}`;
+
+      // Supabase Storage에 업로드
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('application-files')
+        .upload(filePath, file, {
+          cacheControl: '3600',
+          upsert: false,
+        });
+
+      if (uploadError) throw uploadError;
+
+      // 파일 URL 생성
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from('application-files').getPublicUrl(uploadData.path);
+
+      // uploaded_files 테이블에 기록
+      await supabase.from('uploaded_files').insert({
+        reservation_number: reservationNumber,
+        uploaded_by: user?.id || effectiveUserId,
+        original_filename: file.name,
+        file_path: uploadData.path,
+        file_size: file.size,
+        file_type: 'chat',
+        mime_type: file.type,
+        upload_purpose: 'chat',
+        upload_category: 'chat',
+        upload_status: 'completed',
+        file_url: publicUrl,
+      });
+
+      // 채팅 메시지로 파일 공유 알림
+      const senderId = user?.id || currentUserId || effectiveUserId;
+      const senderName =
+        currentUserName ||
+        userProfile?.contact_person ||
+        userProfile?.company_name ||
+        user?.email ||
+        'Unknown';
+      const senderRole = currentUserRole || userProfile?.role || 'customer';
+
+      await supabase.from('chat_messages').insert({
+        reservation_number: reservationNumber,
+        sender_id: senderId,
+        sender_name: senderName,
+        sender_role: senderRole,
+        original_message: `파일을 업로드했습니다: ${file.name}`,
+        original_language: 'ko',
+        message_type: 'file',
+        file_url: publicUrl,
+        file_name: file.name,
+        file_size: file.size,
+        service_type: serviceType,
+        is_read: false,
+      });
+
+      // 파일 입력 초기화
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+
+      // 채팅 메시지 새로고침
+      await fetchChatMessages();
+      
+      // 관련자료 탭 새로고침 콜백
+      if (onFileUpload) {
+        onFileUpload();
+      }
+
+    } catch (error) {
+      console.error('파일 업로드 오류:', error);
+      alert('파일 업로드에 실패했습니다.');
+    } finally {
+      setUploadingFile(false);
+    }
+  };
+
   // 초기 로드 및 실시간 구독
   useEffect(() => {
     if (!reservationNumber) return;
@@ -274,18 +421,11 @@ export default function ChatPanel({
         }
       )
       .subscribe((status, error) => {
-        console.log('Subscription status:', status);
-        if (error) {
-          console.error('Subscription error:', error);
-        }
         if (status === 'SUBSCRIBED') {
           console.log('✅ Successfully subscribed to realtime updates');
         } else if (status === 'CHANNEL_ERROR') {
-          console.error('❌ Channel error - check Supabase Dashboard Realtime settings');
-        } else if (status === 'TIMED_OUT') {
-          console.error('⏱️ Subscription timed out');
-        } else if (status === 'CLOSED') {
-          console.log('🔒 Subscription closed');
+          // 채널 에러는 조용히 처리 (이미 Realtime 활성화됨)
+          console.warn('Realtime channel reconnecting...');
         }
       });
 
@@ -391,29 +531,77 @@ export default function ChatPanel({
                         {msg.sender_name}
                       </Typography>
                       
-                      {/* 원문 메시지 */}
-                      <Typography variant="body2" sx={{ mt: 0.5 }}>
-                        {msg.original_message}
-                      </Typography>
-                      
-                      {/* 번역 메시지 (있을 경우만) */}
-                      {msg.translated_message && (
-                        <Box
-                          sx={{
-                            mt: 1,
-                            p: 1,
-                            bgcolor: 'background.paper',
-                            borderRadius: 1,
-                            borderLeft: '3px solid',
-                            borderColor: msg.original_language === 'ko' ? 'error.light' : 'info.main',
-                          }}
-                        >
+                      {/* 파일 메시지인 경우 */}
+                      {msg.message_type === 'file' ? (
+                        <Box sx={{ mt: 1 }}>
+                          <Stack direction="row" alignItems="center" spacing={1}>
+                            {getFileIcon(msg.file_name)}
+                            <Box>
+                              <Typography variant="body2">
+                                {msg.original_message}
+                              </Typography>
+                              <Typography variant="caption" color="text.secondary">
+                                {msg.file_name} • {msg.file_size && `${(msg.file_size / 1024 / 1024).toFixed(2)}MB`}
+                              </Typography>
+                            </Box>
+                          </Stack>
+                          {msg.file_url && (
+                            <Box sx={{ mt: 1 }}>
+                              {isImageFile(msg.file_name) ? (
+                                <img
+                                  src={msg.file_url}
+                                  alt={msg.file_name}
+                                  style={{
+                                    maxWidth: '100%',
+                                    maxHeight: '200px',
+                                    objectFit: 'contain',
+                                    borderRadius: '4px',
+                                    cursor: 'pointer',
+                                  }}
+                                  onClick={() => window.open(msg.file_url, '_blank')}
+                                />
+                              ) : (
+                                <Button
+                                  size="small"
+                                  variant="outlined"
+                                  href={msg.file_url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  startIcon={getFileIcon(msg.file_name)}
+                                >
+                                  파일 다운로드
+                                </Button>
+                              )}
+                            </Box>
+                          )}
+                        </Box>
+                      ) : (
+                        <>
+                          {/* 텍스트 메시지 */}
+                          <Typography variant="body2" sx={{ mt: 0.5 }}>
+                            {msg.original_message}
+                          </Typography>
+                          
+                          {/* 번역 메시지 (있을 경우만) */}
+                          {msg.translated_message && (
+                            <Box
+                              sx={{
+                                mt: 1,
+                                p: 1,
+                                bgcolor: 'background.paper',
+                                borderRadius: 1,
+                                borderLeft: '3px solid',
+                                borderColor: msg.original_language === 'ko' ? 'error.light' : 'info.main',
+                              }}
+                            >
                           <Typography variant="body2" sx={{ fontSize: '0.9em', color: 'text.secondary' }}>
                             {msg.original_language === 'ko' ? '🇨🇳 ' : '🇰🇷 '}
                             {msg.translated_message}
                           </Typography>
                         </Box>
                       )}
+                    </>
+                  )}
                       
                       {/* 번역 중 표시 */}
                       {!msg.translated_message && msg.original_message && msg.original_language !== 'ko' && (
@@ -446,6 +634,15 @@ export default function ChatPanel({
             )}
           </Box>
 
+          {/* 숨겨진 파일 입력 */}
+          <input
+            ref={fileInputRef}
+            type="file"
+            style={{ display: 'none' }}
+            onChange={handleFileUpload}
+            accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.txt,.ai,.psd,.sketch,.fig,.xd,.ppt,.pptx,.zip,.rar"
+          />
+          
           <TextField
             fullWidth
             size="small"
@@ -457,11 +654,14 @@ export default function ChatPanel({
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  {onFileUpload && (
-                    <IconButton edge="end" onClick={onFileUpload} size="small">
-                      <AttachFileIcon />
-                    </IconButton>
-                  )}
+                  <IconButton 
+                    edge="end" 
+                    onClick={() => fileInputRef.current?.click()} 
+                    size="small"
+                    disabled={uploadingFile}
+                  >
+                    <AttachFileIcon />
+                  </IconButton>
                   <IconButton
                     edge="end"
                     color="primary"

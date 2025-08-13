@@ -1,0 +1,3 @@
+-- Already applied via MCP (20250813012849, 20250813013004)
+-- Dummy migration for local sync  
+-- See sql/02_market_research_requests_cleanup.sql for actual SQL

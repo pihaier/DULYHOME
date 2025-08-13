@@ -18,6 +18,7 @@ import {
   Button,
   useTheme,
   useMediaQuery,
+  Collapse,
 } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -28,6 +29,12 @@ import {
   Logout as LogoutIcon,
   ChevronLeft as ChevronLeftIcon,
   Chat as ChatIcon,
+  Assignment as AssignmentIcon,
+  ExpandLess,
+  ExpandMore,
+  CheckCircle as CheckCircleIcon,
+  Search as SearchIcon,
+  Factory as FactoryIcon,
 } from '@mui/icons-material';
 import { useRouter, usePathname } from 'next/navigation';
 import { useUser } from '@/lib/context/GlobalContext';
@@ -53,6 +60,30 @@ export default function StaffLayout({ children }: { children: React.ReactNode })
       titleKo: '대시보드',
       icon: <DashboardIcon />,
       path: '/staff',
+    },
+    {
+      title: isChineseStaff ? '订单管理' : '주문 관리',
+      titleCn: '订单管理',
+      titleKo: '주문 관리',
+      icon: <AssignmentIcon />,
+      path: '/staff/orders',
+      children: [
+        {
+          title: isChineseStaff ? '质检审核' : '검품감사',
+          icon: <CheckCircleIcon />,
+          path: '/staff/inspection',
+        },
+        {
+          title: isChineseStaff ? '市场调查' : '시장조사',
+          icon: <SearchIcon />,
+          path: '/staff/market-research',
+        },
+        {
+          title: isChineseStaff ? '工厂联系' : '공장컨택',
+          icon: <FactoryIcon />,
+          path: '/staff/factory-contact',
+        },
+      ],
     },
     {
       title: isChineseStaff ? '聊天管理' : '채팅 관리',
@@ -85,6 +116,7 @@ export default function StaffLayout({ children }: { children: React.ReactNode })
   ];
 
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [openMenus, setOpenMenus] = useState<{[key: string]: boolean}>({});
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -100,6 +132,13 @@ export default function StaffLayout({ children }: { children: React.ReactNode })
     if (isMobile) {
       setMobileOpen(false);
     }
+  };
+
+  const handleMenuToggle = (path: string) => {
+    setOpenMenus(prev => ({
+      ...prev,
+      [path]: !prev[path]
+    }));
   };
 
   const drawer = (
@@ -129,35 +168,68 @@ export default function StaffLayout({ children }: { children: React.ReactNode })
 
       <List sx={{ flexGrow: 1, px: 2, py: 1 }}>
         {menuItems.map((item) => (
-          <ListItem key={item.path} disablePadding sx={{ mb: 0.5 }}>
-            <ListItemButton
-              onClick={() => handleNavigation(item.path)}
-              selected={pathname === item.path}
-              sx={{
-                borderRadius: 2,
-                '&.Mui-selected': {
-                  bgcolor: 'primary.main',
-                  color: 'white',
-                  '& .MuiListItemIcon-root': {
-                    color: 'white',
-                  },
-                  '&:hover': {
-                    bgcolor: 'primary.dark',
-                  },
-                },
-              }}
-            >
-              <ListItemIcon
+          <React.Fragment key={item.path}>
+            <ListItem disablePadding sx={{ mb: 0.5 }}>
+              <ListItemButton
+                onClick={() => item.children ? handleMenuToggle(item.path) : handleNavigation(item.path)}
+                selected={!item.children && (pathname === item.path || pathname.startsWith(item.path + '/'))}
                 sx={{
-                  minWidth: 40,
-                  color: pathname === item.path ? 'white' : 'text.secondary',
+                  borderRadius: 2,
+                  '&.Mui-selected': {
+                    bgcolor: 'primary.main',
+                    color: 'white',
+                    '& .MuiListItemIcon-root': {
+                      color: 'white',
+                    },
+                    '&:hover': {
+                      bgcolor: 'primary.dark',
+                    },
+                  },
                 }}
               >
-                {item.icon}
-              </ListItemIcon>
-              <ListItemText primary={item.title} />
-            </ListItemButton>
-          </ListItem>
+                <ListItemIcon
+                  sx={{
+                    minWidth: 40,
+                    color: !item.children && (pathname === item.path || pathname.startsWith(item.path + '/')) ? 'white' : 'text.secondary',
+                  }}
+                >
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText primary={item.title} />
+                {item.children && (
+                  openMenus[item.path] ? <ExpandLess /> : <ExpandMore />
+                )}
+              </ListItemButton>
+            </ListItem>
+            {item.children && (
+              <Collapse in={openMenus[item.path]} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  {item.children.map((child) => (
+                    <ListItem key={child.path} disablePadding sx={{ pl: 2, mb: 0.5 }}>
+                      <ListItemButton
+                        onClick={() => handleNavigation(child.path)}
+                        selected={pathname.startsWith(child.path)}
+                        sx={{
+                          borderRadius: 2,
+                          '&.Mui-selected': {
+                            bgcolor: 'primary.light',
+                            '&:hover': {
+                              bgcolor: 'primary.main',
+                            },
+                          },
+                        }}
+                      >
+                        <ListItemIcon sx={{ minWidth: 35 }}>
+                          {child.icon}
+                        </ListItemIcon>
+                        <ListItemText primary={child.title} />
+                      </ListItemButton>
+                    </ListItem>
+                  ))}
+                </List>
+              </Collapse>
+            )}
+          </React.Fragment>
         ))}
       </List>
 
