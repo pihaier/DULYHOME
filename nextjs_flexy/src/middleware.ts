@@ -9,6 +9,44 @@ export async function middleware(request: NextRequest) {
     },
   });
 
+  // 환경별 보호 설정
+  const environment = process.env.VERCEL_ENV || 'development';
+  
+  // 프리뷰 환경 보호
+  if (environment === 'preview') {
+    // 검색 엔진 크롤링 차단
+    response.headers.set('X-Robots-Tag', 'noindex, nofollow, noarchive, nosnippet');
+    response.headers.set('X-Environment', 'preview');
+    
+    // API 경로는 인증 제외
+    if (!request.nextUrl.pathname.startsWith('/api/')) {
+      const basicAuth = request.headers.get('authorization');
+      const username = process.env.PREVIEW_AUTH_USERNAME || 'duly';
+      const password = process.env.PREVIEW_AUTH_PASSWORD || 'preview2025';
+      const expectedAuth = 'Basic ' + Buffer.from(`${username}:${password}`).toString('base64');
+      
+      if (!basicAuth || basicAuth !== expectedAuth) {
+        return new Response('🔒 Preview Environment - Team Access Only', {
+          status: 401,
+          headers: {
+            'WWW-Authenticate': 'Basic realm="Preview Environment"',
+            'Content-Type': 'text/plain; charset=utf-8',
+          },
+        });
+      }
+    }
+  }
+  
+  // 프로덕션 환경 보안 헤더
+  if (environment === 'production') {
+    response.headers.set('X-Environment', 'production');
+    response.headers.set('X-Frame-Options', 'SAMEORIGIN');
+    response.headers.set('X-Content-Type-Options', 'nosniff');
+    response.headers.set('X-XSS-Protection', '1; mode=block');
+    response.headers.set('Referrer-Policy', 'origin-when-cross-origin');
+    response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  }
+
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,

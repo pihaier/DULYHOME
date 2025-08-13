@@ -1,6 +1,8 @@
 import React from 'react';
 import { CustomizerContextProvider } from './context/customizerContext';
 import { GlobalProvider } from '@/lib/context/GlobalContext';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 import MyApp from './app';
 import './global.css';
@@ -27,6 +29,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <MyApp>{children}</MyApp>
           </CustomizerContextProvider>
         </GlobalProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

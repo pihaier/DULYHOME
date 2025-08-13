@@ -1,0 +1,106 @@
+name: Security Checks
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  # 시크릿 스캔
+  gitleaks:
+    name: Secret Scanning
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # 전체 히스토리 검사
+
+    - name: Run Gitleaks
+      uses: gitleaks/gitleaks-action@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITLEAKS_ENABLE_SUMMARY: true
+
+  # 환경변수 검증
+  env-validation:
+    name: Environment Variables Check
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Validate Required Environment Variables
+      run: |
+        echo "🔍 Checking required environment variables..."
+        
+        # 필수 환경변수 목록
+        REQUIRED_VARS=(
+          "NEXT_PUBLIC_SUPABASE_URL"
+          "NEXT_PUBLIC_SUPABASE_ANON_KEY"
+          "SUPABASE_SERVICE_ROLE_KEY"
+          "OPENAI_API_KEY"
+          "EMAIL_SERVICE_API_KEY"
+        )
+        
+        MISSING_VARS=()
+        
+        # GitHub Secrets/Variables 체크
+        for var in "${REQUIRED_VARS[@]}"; do
+          # Check if var exists in secrets or variables
+          if [[ -z "${{ secrets[var] }}" ]] && [[ -z "${{ vars[var] }}" ]]; then
+            if [[ "$var" != "OPENAI_API_KEY" ]] && [[ "$var" != "EMAIL_SERVICE_API_KEY" ]]; then
+              # Non-critical vars are warnings
+              echo "⚠️ Warning: $var is not configured"
+            else
+              # Critical vars cause failure
+              MISSING_VARS+=("$var")
+              echo "❌ Critical: $var is missing!"
+            fi
+          else
+            echo "✅ $var is configured"
+          fi
+        done
+        
+        if [ ${#MISSING_VARS[@]} -gt 0 ]; then
+          echo "❌ Missing critical environment variables: ${MISSING_VARS[*]}"
+          echo "Please configure these in GitHub Secrets or Variables"
+          exit 1
+        fi
+        
+        echo "✅ All critical environment variables are configured"
+
+  # Supabase RLS 검증 (프로덕션 배포 시)
+  rls-check:
+    name: Database Security Check
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Supabase CLI
+      uses: supabase/setup-cli@v1
+      with:
+        version: latest
+
+    - name: Check RLS Policies
+      env:
+        SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        SUPABASE_PROJECT_ID: ${{ vars.SUPABASE_PROJECT_ID }}
+      run: |
+        echo "🔍 Checking Row Level Security policies..."
+        
+        # Supabase 프로젝트가 설정되어 있는지 확인
+        if [ -z "$SUPABASE_PROJECT_ID" ]; then
+          echo "⚠️ Supabase project not configured. Skipping RLS check."
+          exit 0
+        fi
+        
+        # RLS 체크 (실제 구현 시 supabase CLI 명령어 사용)
+        echo "✅ RLS check placeholder - implement with actual Supabase CLI commands"
+        
+        # 예시:
+        # supabase db lint --linked
+        # supabase inspect db --linked | grep "RLS disabled" && exit 1

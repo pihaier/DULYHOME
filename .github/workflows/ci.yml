@@ -56,3 +56,54 @@ jobs:
 
   # Vercel 자동 배포는 Vercel GitHub Integration이 처리하므로 여기서는 제거
   # Supabase 마이그레이션도 Supabase GitHub Integration이 처리
+
+  # 배포 후 스모크 테스트
+  smoke-test:
+    name: Post-Deploy Smoke Tests
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Wait for Vercel deployment
+      run: sleep 60  # Vercel 배포 완료 대기
+      
+    - name: Health Check
+      run: |
+        echo "🔍 Running smoke tests..."
+        
+        # 프로덕션 URL (환경변수로 설정 가능)
+        URL="https://nextjs-xi-sandy-93.vercel.app"
+        
+        # 1. 홈페이지 체크
+        echo "Checking homepage..."
+        STATUS=$(curl -s -o /dev/null -w "%{http_code}" $URL)
+        if [ $STATUS -eq 200 ]; then
+          echo "✅ Homepage: OK ($STATUS)"
+        else
+          echo "❌ Homepage: Failed (HTTP $STATUS)"
+          exit 1
+        fi
+        
+        # 2. Health API 체크
+        echo "Checking health API..."
+        HEALTH=$(curl -s "$URL/api/health")
+        if echo $HEALTH | grep -q '"status":"healthy"'; then
+          echo "✅ Health API: OK"
+        else
+          echo "⚠️ Health API: Degraded"
+          echo "$HEALTH"
+        fi
+        
+        # 3. 주요 페이지 체크
+        PAGES=("/dashboard" "/auth/customer/login" "/application/inspection")
+        for PAGE in "${PAGES[@]}"; do
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$URL$PAGE")
+          if [ $STATUS -eq 200 ] || [ $STATUS -eq 307 ] || [ $STATUS -eq 308 ]; then
+            echo "✅ $PAGE: OK ($STATUS)"
+          else
+            echo "⚠️ $PAGE: Warning (HTTP $STATUS)"
+          fi
+        done
+        
+        echo "✅ Smoke tests completed"

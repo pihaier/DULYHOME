@@ -55,6 +55,8 @@
     "@tiptap/react": "^2.9.1",
     "@tiptap/starter-kit": "^2.9.1",
     "@types/lodash.debounce": "^4.0.9",
+    "@vercel/analytics": "^1.5.0",
+    "@vercel/speed-insights": "^1.2.0",
     "apexcharts": "3.48.0",
     "chance": "^1.1.11",
     "csv-parse": "^6.1.0",
