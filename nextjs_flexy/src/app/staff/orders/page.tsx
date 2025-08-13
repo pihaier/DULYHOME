@@ -258,7 +258,7 @@ export default function StaffOrdersPage() {
         <CardContent>
           {/* 필터 섹션 */}
           <Grid container spacing={2} sx={{ mb: 3 }}>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <FormControl fullWidth size="small">
                 <InputLabel>
                   {isChineseStaff ? '状态' : '상태'}
@@ -275,7 +275,7 @@ export default function StaffOrdersPage() {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <FormControl fullWidth size="small">
                 <InputLabel>
                   {isChineseStaff ? '分配' : '담당'}
@@ -290,7 +290,7 @@ export default function StaffOrdersPage() {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={12} md={6}>
+            <Grid size={{ xs: 12, sm: 12, md: 6 }}>
               <Box sx={{ textAlign: 'right' }}>
                 <Button
                   variant="contained"
