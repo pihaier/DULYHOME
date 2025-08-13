@@ -7,16 +7,19 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "lint:fix": "next lint --fix",
     "type-check": "tsc --noEmit",
     "prepare": "husky",
-    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,scss,md}\""
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,scss,md}\"",
+    "format:check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,css,scss,md}\"",
+    "check-all": "npm run type-check && npm run lint && npm run format:check"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx}": [
-      "next lint --fix",
+    "nextjs_flexy/src/**/*.{js,jsx,ts,tsx}": [
+      "cd nextjs_flexy && next lint --fix",
       "prettier --write"
     ],
-    "src/**/*.{css,scss,md}": [
+    "nextjs_flexy/src/**/*.{css,scss,md}": [
       "prettier --write"
     ]
   },
