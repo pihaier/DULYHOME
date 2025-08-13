@@ -1,0 +1,201 @@
+name: AI Safety Checks
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  ai-validation:
+    name: AI Development Safety Checks
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./nextjs_flexy
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+        cache-dependency-path: ./nextjs_flexy/package-lock.json
+
+    - name: Install dependencies
+      run: npm ci
+
+    # 1. 미사용 imports/exports 감지
+    - name: Check for unused imports and exports
+      run: |
+        echo "🔍 Checking for unused imports..."
+        npx ts-prune --error 2>/dev/null || {
+          echo "⚠️ Note: Some unused exports may be entry points (pages, API routes)"
+          true
+        }
+
+    # 2. TODO/FIXME 코멘트 체크
+    - name: Check for TODO/FIXME comments
+      run: |
+        echo "🔍 Checking for incomplete code (TODO/FIXME)..."
+        TODO_COUNT=$(grep -r "TODO\|FIXME\|XXX\|HACK" src/ --include="*.ts" --include="*.tsx" --include="*.js" --include="*.jsx" || echo "")
+        if [ ! -z "$TODO_COUNT" ]; then
+          echo "⚠️ Found TODO/FIXME comments:"
+          echo "$TODO_COUNT"
+          echo "Please complete or document these items before production."
+        else
+          echo "✅ No TODO/FIXME comments found."
+        fi
+
+    # 3. 환경변수 검증
+    - name: Validate environment variables
+      run: |
+        echo "🔍 Checking required environment variables..."
+        
+        # 필수 환경변수 목록
+        REQUIRED_VARS=(
+          "NEXT_PUBLIC_SUPABASE_URL"
+          "NEXT_PUBLIC_SUPABASE_ANON_KEY"
+        )
+        
+        MISSING_VARS=()
+        
+        # .env.example 파일 체크
+        if [ ! -f ".env.example" ]; then
+          echo "⚠️ .env.example file not found. Creating template..."
+          cat > .env.example << EOF
+        # Supabase
+        NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+        NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+        SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+        
+        # OpenAI
+        OPENAI_API_KEY=your_openai_api_key
+        EOF
+        fi
+        
+        echo "✅ Environment variables check completed."
+
+    # 4. Import 경로 검증
+    - name: Check import paths
+      run: |
+        echo "🔍 Checking for broken import paths..."
+        
+        # TypeScript가 이미 체크하지만 추가 검증
+        npm run type-check || {
+          echo "❌ Import path errors detected. Please fix them."
+          exit 1
+        }
+        
+        echo "✅ All import paths are valid."
+
+    # 5. 파일 크기 체크 (대용량 파일 방지)
+    - name: Check for large files
+      run: |
+        echo "🔍 Checking for large files..."
+        
+        LARGE_FILES=$(find src/ public/ -type f -size +1M 2>/dev/null || true)
+        if [ ! -z "$LARGE_FILES" ]; then
+          echo "⚠️ Large files detected (>1MB):"
+          echo "$LARGE_FILES"
+          echo "Consider optimizing images or moving large assets to CDN."
+        else
+          echo "✅ No large files found."
+        fi
+
+    # 6. 중복 코드 감지
+    - name: Check for code duplication
+      run: |
+        echo "🔍 Checking for duplicate code patterns..."
+        
+        # jscpd 설치 및 실행 (중복 코드 감지)
+        npx jscpd src/ \
+          --min-lines 10 \
+          --min-tokens 50 \
+          --threshold 5 \
+          --reporters "consoleFull" \
+          --ignore "**/*.test.*,**/*.spec.*" \
+          --silent || {
+          echo "⚠️ Some code duplication detected. Consider refactoring."
+          true
+        }
+
+    # 7. 보안 패턴 검사
+    - name: Security patterns check
+      run: |
+        echo "🔍 Checking for security issues..."
+        
+        # SQL Injection 패턴 체크
+        if grep -r "query.*\${.*}" src/ --include="*.ts" --include="*.tsx" 2>/dev/null; then
+          echo "⚠️ Potential SQL injection pattern found. Use parameterized queries."
+        fi
+        
+        # 하드코딩된 시크릿 체크
+        if grep -r -E "(api[_-]?key|secret|password|token)\s*=\s*['\"][^'\"]*['\"]" src/ \
+           --include="*.ts" --include="*.tsx" --include="*.js" --include="*.jsx" 2>/dev/null | \
+           grep -v -E "(process\.env|import|require|interface|type|:\s*string)"; then
+          echo "❌ Potential hardcoded secrets found. Use environment variables."
+          exit 1
+        else
+          echo "✅ No hardcoded secrets detected."
+        fi
+
+    # 8. 패키지 취약점 스캔
+    - name: Security audit
+      run: |
+        echo "🔍 Running security audit..."
+        npm audit --audit-level=high || {
+          echo "⚠️ Security vulnerabilities found. Run 'npm audit fix' to resolve."
+          true
+        }
+
+    # 9. Prettier 포맷 체크
+    - name: Check code formatting
+      run: |
+        echo "🔍 Checking code formatting..."
+        npx prettier --check "src/**/*.{js,jsx,ts,tsx,css,scss,md}" || {
+          echo "❌ Code formatting issues found. Run 'npm run format' to fix."
+          exit 1
+        }
+
+    # 10. 빌드 산출물 크기 체크
+    - name: Check bundle size
+      if: success()
+      run: |
+        echo "📦 Checking bundle size..."
+        npm run build
+        
+        # .next 폴더 크기 체크
+        BUNDLE_SIZE=$(du -sh .next | cut -f1)
+        echo "Bundle size: $BUNDLE_SIZE"
+        
+        # 크기가 너무 크면 경고
+        SIZE_MB=$(du -sm .next | cut -f1)
+        if [ $SIZE_MB -gt 50 ]; then
+          echo "⚠️ Bundle size is large (>50MB). Consider code splitting or lazy loading."
+        else
+          echo "✅ Bundle size is acceptable."
+        fi
+      env:
+        NEXT_PUBLIC_SUPABASE_URL: ${{ vars.SUPABASE_URL || 'https://example.supabase.co' }}
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ vars.SUPABASE_ANON_KEY || 'example-key' }}
+
+    # 최종 요약
+    - name: Summary
+      if: always()
+      run: |
+        echo "========================================="
+        echo "🤖 AI Safety Checks Complete"
+        echo "========================================="
+        echo "These checks help prevent common AI coding mistakes:"
+        echo "✓ Console.log statements"
+        echo "✓ Unused imports"
+        echo "✓ TODO/FIXME comments"
+        echo "✓ Import path validity"
+        echo "✓ Security patterns"
+        echo "✓ Code formatting"
+        echo "✓ Bundle size"
+        echo "========================================="

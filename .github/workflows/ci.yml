@@ -34,7 +34,17 @@ jobs:
 
     - name: Run ESLint
       run: npm run lint
-      continue-on-error: true  # 린트 에러가 있어도 계속 진행
+      # AI 개발 환경: 린트 에러 시 배포 차단
+
+    - name: Check for console.log statements
+      run: |
+        echo "🔍 Checking for console.log statements..."
+        if grep -r "console\.log" src/ --include="*.ts" --include="*.tsx" --include="*.js" --include="*.jsx" --exclude-dir=node_modules; then
+          echo "❌ console.log found in production code. Please remove them."
+          exit 1
+        else
+          echo "✅ No console.log statements found."
+        fi
 
     - name: Build application
       run: npm run build

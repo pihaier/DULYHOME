@@ -1,0 +1,1 @@
+cd nextjs_flexy && npx lint-staged

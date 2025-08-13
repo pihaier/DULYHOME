@@ -7,7 +7,18 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "prepare": "husky",
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,scss,md}\""
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "src/**/*.{css,scss,md}": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@casl/ability": "^6.3.3",
@@ -100,6 +111,9 @@
     "dotenv": "^17.2.1",
     "eslint": "latest",
     "eslint-config-next": "latest",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.5",
+    "prettier": "^3.6.2",
     "tsx": "^4.20.3",
     "typescript": "5.6.2"
   }
