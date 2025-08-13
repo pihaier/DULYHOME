@@ -105,6 +105,13 @@ const AuthLogin = ({
         // 세션이 제대로 설정될 때까지 잠시 대기
         await new Promise((resolve) => setTimeout(resolve, 100));
 
+        // 사용자 프로필 확인하여 직원인지 체크
+        const { data: profile } = await supabase
+          .from('user_profiles')
+          .select('role')
+          .eq('user_id', data.user.id)
+          .single();
+
         // 로그인 성공 - 리다이렉트 처리
         const redirectTo = searchParams.get('redirectTo');
         const returnUrl = searchParams.get('returnUrl');
@@ -116,8 +123,12 @@ const AuthLogin = ({
           // 기존 returnUrl 파라미터
           router.push(decodeURIComponent(returnUrl));
         } else {
-          // 이전 페이지가 없으면 대시보드로 이동
-          router.push('/dashboard');
+          // 직원인지 확인하여 적절한 대시보드로 이동
+          if (profile && ['korean_team', 'chinese_staff', 'admin'].includes(profile.role)) {
+            router.push('/staff');
+          } else {
+            router.push('/dashboard');
+          }
         }
 
         // 페이지 새로고침을 강제로 수행하여 세션 업데이트
