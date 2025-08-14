@@ -17,6 +17,35 @@ const supabaseUrl = Deno.env.get('SUPABASE_URL');
 const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
+// 간단한 메모리 기반 rate limiting (IP당 분당 10회)
+const requestCounts = new Map();
+const RATE_LIMIT = 10; // 분당 최대 요청 수
+const WINDOW_MS = 60000; // 1분
+
+function checkRateLimit(clientIp: string): boolean {
+  const now = Date.now();
+  const userRequests = requestCounts.get(clientIp) || [];
+  
+  // 1분 이내의 요청만 필터링
+  const recentRequests = userRequests.filter((timestamp: number) => now - timestamp < WINDOW_MS);
+  
+  if (recentRequests.length >= RATE_LIMIT) {
+    return false; // rate limit 초과
+  }
+  
+  // 새 요청 추가
+  recentRequests.push(now);
+  requestCounts.set(clientIp, recentRequests);
+  
+  // 오래된 엔트리 정리 (메모리 관리)
+  if (requestCounts.size > 1000) {
+    const oldestKey = requestCounts.keys().next().value;
+    requestCounts.delete(oldestKey);
+  }
+  
+  return true;
+}
+
 // SSE 메시지 전송 헬퍼
 function sendSSEMessage(encoder: TextEncoder, type: string, data: any) {
   const message = `data: ${JSON.stringify({ type, data })}\n\n`;
@@ -33,6 +62,25 @@ Deno.serve(async (req) => {
   }
 
   try {
+    // IP 주소 추출 (Edge Function에서는 제한적)
+    const clientIp = req.headers.get('x-forwarded-for') || 
+                     req.headers.get('x-real-ip') || 
+                     'unknown';
+    
+    // Rate limit 체크
+    if (!checkRateLimit(clientIp)) {
+      return new Response(JSON.stringify({
+        error: '요청이 너무 많습니다. 잠시 후 다시 시도해주세요.'
+      }), {
+        status: 429, // Too Many Requests
+        headers: {
+          ...corsHeaders,
+          'Content-Type': 'application/json; charset=utf-8',
+          'Retry-After': '60'
+        }
+      });
+    }
+    
     const { productName, stream = true } = await req.json();  // 기본값을 true로 변경
     
     if (!productName) {
@@ -53,7 +101,6 @@ Deno.serve(async (req) => {
       const body = new ReadableStream({
         async start(controller) {
           try {
-            console.log(`\n=== [스트리밍 모드] HS 코드 단계별 분류 시작: ${productName} ===`);
             
             // 시작 메시지
             controller.enqueue(sendSSEMessage(encoder, 'start', { 
@@ -82,11 +129,6 @@ ${hs2Data.map(item => `${item.hs_code}: ${item.description_ko}`).join('\n')}
 
 답: `;
 
-            console.log('=== 1단계 GPT에게 보내는 프롬프트 ===');
-            console.log(`제품: ${productName}`);
-            console.log(`2자리 류 개수: ${hs2Data.length}개`);
-            console.log('2자리 목록 (처음 10개):', hs2Data.slice(0, 10).map(d => `${d.hs_code}: ${d.description_ko}`).join('\n'));
-            console.log('=== 프롬프트 끝 ===');
 
             const step1Messages = [{
               role: 'user',
@@ -149,12 +191,6 @@ ${hs4Data.map(item => `${item.hs_code}: ${item.description_ko}`).join('\n')}
 
 답: `;
 
-            console.log('=== 2단계 GPT에게 보내는 프롬프트 ===');
-            console.log(`제품: ${productName}`);
-            console.log(`선택된 류: ${chapter}`);
-            console.log(`4자리 호 개수: ${hs4Data.length}개`);
-            console.log('4자리 목록 (처음 5개):', hs4Data.slice(0, 5).map(d => `${d.hs_code}: ${d.description_ko}`).join('\n'));
-            console.log('=== 프롬프트 끝 ===');
             
             const step2Messages = [{
               role: 'user',
@@ -229,7 +265,6 @@ ${hs4Data.map(item => `${item.hs_code}: ${item.description_ko}`).join('\n')}
             
             // 모든 10자리 코드 처리 (6자리 설명이 있으면 추가)
             let hs10Data = [];
-            console.log(`4자리 ${heading}에 대한 10자리 코드: ${hs10DataRaw.length}개`);
             
             for (const item of hs10DataRaw) {
               // 해당 10자리의 6자리 코드 찾기
@@ -246,8 +281,6 @@ ${hs4Data.map(item => `${item.hs_code}: ${item.description_ko}`).join('\n')}
                 description_ko: enrichedDescription
               });
             }
-            
-            console.log(`최종 10자리 코드: ${hs10Data.length}개`, hs10Data.map(d => d.hs_code));
             
             if (!hs10Data || hs10Data.length === 0) {
               controller.enqueue(sendSSEMessage(encoder, 'complete', { 
@@ -283,13 +316,6 @@ ${hs10Data.map(item => `${item.hs_code}: ${item.description_ko}`).join('\n')}
 
 답:`;
 
-            console.log('=== 3단계 GPT에게 보내는 프롬프트 ===');
-            console.log(`제품: ${productName}`);
-            console.log(`선택된 류: ${chapter}`);
-            console.log(`선택된 호: ${heading} - ${headingDesc}`);
-            console.log(`10자리 코드 개수: ${hs10Data.length}개`);
-            console.log('10자리 목록 (처음 5개):', hs10Data.slice(0, 5).map(d => `${d.hs_code}: ${d.description_ko}`).join('\n'));
-            console.log('=== 프롬프트 끝 ===');
 
             
             const step3Messages = [{
@@ -304,12 +330,9 @@ ${hs10Data.map(item => `${item.hs_code}: ${item.description_ko}`).join('\n')}
             });
             
             const rankingResponse = step3Completion.choices[0]?.message?.content?.trim() || '';
-            console.log('3단계 순위 응답 길이:', rankingResponse.length);
-            console.log('3단계 순위 응답:', rankingResponse);
             
             // 최종 응답 
             const itemResponse = rankingResponse;
-            console.log('3단계 최종 응답:', itemResponse);
             
             // 응답 파싱
             let allCandidates = [];
@@ -319,8 +342,6 @@ ${hs10Data.map(item => `${item.hs_code}: ${item.description_ko}`).join('\n')}
             let selectionReason = '';
             
             if (itemResponse) {
-              console.log('3단계 응답 파싱 시작');
-              
               // 순위 파싱
               if (itemResponse.includes('순위:')) {
                 const lines = itemResponse.split('\n').filter(line => line.trim());
@@ -361,7 +382,6 @@ ${hs10Data.map(item => `${item.hs_code}: ${item.description_ko}`).join('\n')}
                                 line.includes('3순위') ? 3 :
                                 line.includes('4순위') ? 4 : 5
                         };
-                        console.log(`파싱된 후보: ${candidate.hsCode} - 이유: "${candidate.reason}" (원본: "${line}")`);
                         
                         if (line.includes('1순위')) {
                           finalHsCode = item.hs_code;
@@ -522,7 +542,6 @@ ${hs10Data.map(item => `${item.hs_code}: ${item.description_ko}`).join('\n')}
     }
     
   } catch (error) {
-    console.error('HS 코드 분류 오류:', error);
     return new Response(JSON.stringify({
       error: 'HS 코드 분류 중 오류가 발생했습니다',
       details: error?.message

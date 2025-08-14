@@ -100,7 +100,6 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
 
     // 이미 로딩 중이면 무시
     if (loading) {
-      console.log('이미 검색 중입니다.');
       return;
     }
 
@@ -168,7 +167,7 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
               
               switch (data.type) {
                 case 'start':
-                  console.log('분류 시작:', data.data);
+                  // 분류 시작
                   break;
                   
                 case 'step':
@@ -185,17 +184,24 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
                 case 'progress':
                   if (data.data && typeof data.data.step === 'number') {
                     const progressData = data.data as StepProgress;
-                    setStepProgress(prev => [...prev, progressData]);
+                    // 중복 방지 - 같은 step이 이미 있으면 업데이트만
+                    setStepProgress(prev => {
+                      const existing = prev.findIndex(p => p.step === progressData.step);
+                      if (existing >= 0) {
+                        const updated = [...prev];
+                        updated[existing] = progressData;
+                        return updated;
+                      }
+                      return [...prev, progressData];
+                    });
                     setActiveStep(progressData.step);
                     
                     // 3단계에서 전체 10자리 목록 저장
                     if (progressData.step === 3 && data.data.allItems) {
                       setAllItems(data.data.allItems);
-                      console.log('3단계 전체 10자리 목록:', data.data.allItems);
                     }
                     if (progressData.step === 3 && data.data.evaluations) {
                       setEvaluations(data.data.evaluations);
-                      console.log('3단계 평가:', data.data.evaluations);
                     }
                     
                     onNotify?.(progressData.message || `${progressData.step}단계 완료`, 'info');
@@ -204,9 +210,6 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
                   
                 case 'complete':
                   // 최종 결과 처리
-                  console.log('Complete 이벤트 데이터:', data.data);
-                  console.log('allItems 있나?:', data.data.allItems);
-                  console.log('evaluations 있나?:', data.data.evaluations);
                   handleCompleteResult(data.data);
                   break;
                   
@@ -214,7 +217,7 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
                   throw new Error(data.data.message);
               }
             } catch (err) {
-              console.error('데이터 파싱 오류:', err);
+              // 데이터 파싱 오류
             }
           }
         }
@@ -222,7 +225,6 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
     } catch (error: any) {
       // AbortError는 무시
       if (error?.name !== 'AbortError') {
-        console.error('Search error:', error);
         onNotify?.('검색 중 오류가 발생했습니다', 'error');
       }
     } finally {
@@ -270,12 +272,10 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
       // 모든 10자리 코드와 평가 저장 (있는 경우)
       if (data.allItems) {
         setAllItems(data.allItems);
-        console.log('전체 10자리 코드:', data.allItems);
       }
       
       if (data.evaluations) {
         setEvaluations(data.evaluations);
-        console.log('전체 평가:', data.evaluations);
       }
 
       setRecommendations(formattedRecommendations);
