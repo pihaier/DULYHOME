@@ -18,7 +18,6 @@ export default function AreaSparkLineChart() {
             data={[3, -10, -2, 5, 7, -2, 4, 6]}
             height={100}
             area
-            colors={[primary]}
           />
         </Box>
         <Box sx={{ flexGrow: 1 }}>
@@ -26,7 +25,6 @@ export default function AreaSparkLineChart() {
             data={[3, -10, -2, 5, 7, -2, 4, 6]}
             height={100}
             curve="natural"
-            colors={[primary]}
             area
           />
         </Box>

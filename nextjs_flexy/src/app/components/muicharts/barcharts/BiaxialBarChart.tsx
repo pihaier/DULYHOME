@@ -17,7 +17,6 @@ function BiaxialBarChart() {
   return (
     <ParentCard title="Biaxial Chart" codeModel={<BiaxialBarCode />}>
       <BarChart
-        borderRadius={6}
         height={300}
         series={[
           {
@@ -44,7 +43,6 @@ function BiaxialBarChart() {
           } as any,
         ]}
         yAxis={[{ id: 'leftAxisId' }, { id: 'rightAxisId' }]}
-        rightAxis="rightAxisId"
       />
     </ParentCard>
   );
