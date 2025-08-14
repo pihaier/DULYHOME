@@ -33,7 +33,7 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { productName, stream = false } = await req.json();
+    const { productName, stream = true } = await req.json();  // 기본값을 true로 변경
     
     if (!productName) {
       return new Response(JSON.stringify({
@@ -47,13 +47,13 @@ Deno.serve(async (req) => {
       });
     }
 
-    // SSE 스트리밍 모드
-    if (stream) {
+    // SSE 스트리밍 모드 (항상 실행)
+    {
       const encoder = new TextEncoder();
       const body = new ReadableStream({
         async start(controller) {
           try {
-            console.log(`\n=== HS 코드 단계별 분류 시작 (스트리밍): ${productName} ===`);
+            console.log(`\n=== [스트리밍 모드] HS 코드 단계별 분류 시작: ${productName} ===`);
             
             // 시작 메시지
             controller.enqueue(sendSSEMessage(encoder, 'start', { 
@@ -75,14 +75,22 @@ Deno.serve(async (req) => {
             
             if (hs2Error) throw new Error('HS2 테이블 조회 실패');
             
-            const step1Messages = [{
-              role: 'user',
-              content: `제품 "${productName}"에 해당하는 HS 코드를 선택하세요.
+            const step1Content = `제품 "${productName}"에 해당하는 HS 코드를 선택하세요.
 아래 목록에서 가장 적합한 2자리 코드 하나만 답하세요 (예: 04):
 
 ${hs2Data.map(item => `${item.hs_code}: ${item.description_ko}`).join('\n')}
 
-답: `
+답: `;
+
+            console.log('=== 1단계 GPT에게 보내는 프롬프트 ===');
+            console.log(`제품: ${productName}`);
+            console.log(`2자리 류 개수: ${hs2Data.length}개`);
+            console.log('2자리 목록 (처음 10개):', hs2Data.slice(0, 10).map(d => `${d.hs_code}: ${d.description_ko}`).join('\n'));
+            console.log('=== 프롬프트 끝 ===');
+
+            const step1Messages = [{
+              role: 'user',
+              content: step1Content
             }];
             
             const step1Completion = await openai.chat.completions.create({
@@ -132,16 +140,25 @@ ${hs2Data.map(item => `${item.hs_code}: ${item.description_ko}`).join('\n')}
               message: `${hs4Data.length}개 후보 중 선택 중...`
             }));
 
-            const step2Messages = [{
-              role: 'user',
-              content: `제품: ${productName}
-선택된 류: ${chapter} - ${chapterDesc}
+            const step2Content = `제품: ${productName}
+선택된 류: ${chapter}
 
 아래 목록에서 가장 적합한 4자리 호를 선택하세요 (예: 0401):
 
 ${hs4Data.map(item => `${item.hs_code}: ${item.description_ko}`).join('\n')}
 
-답: `
+답: `;
+
+            console.log('=== 2단계 GPT에게 보내는 프롬프트 ===');
+            console.log(`제품: ${productName}`);
+            console.log(`선택된 류: ${chapter}`);
+            console.log(`4자리 호 개수: ${hs4Data.length}개`);
+            console.log('4자리 목록 (처음 5개):', hs4Data.slice(0, 5).map(d => `${d.hs_code}: ${d.description_ko}`).join('\n'));
+            console.log('=== 프롬프트 끝 ===');
+            
+            const step2Messages = [{
+              role: 'user',
+              content: step2Content
             }];
             
             const step2Completion = await openai.chat.completions.create({
@@ -172,19 +189,67 @@ ${hs4Data.map(item => `${item.hs_code}: ${item.description_ko}`).join('\n')}
               message: `✅ 2단계 완료: ${heading}호 - ${headingDesc}`
             }));
 
-            // 3단계: 6자리 소호 선택
+            // 3단계: 10자리 세번 직접 선택 (6자리는 내부적으로만 사용)
             controller.enqueue(sendSSEMessage(encoder, 'step', { 
               step: 3,
-              description: `${heading}호 내에서 6자리 소호(Subheading) 선택 중...`
+              description: '10자리 세번(Item) 최종 선택 중...'
             }));
+            
+            // 먼저 4자리로 직접 모든 10자리 코드 가져오기
+            const { data: hs10DataRaw } = await supabase
+              .from('hs_codes_10digit')
+              .select('hs_code, description_ko')
+              .like('hs_code', `${heading}%`)
+              .order('hs_code');
+            
+            if (!hs10DataRaw || hs10DataRaw.length === 0) {
+              controller.enqueue(sendSSEMessage(encoder, 'complete', { 
+                hsCode: heading,
+                level: 'heading',
+                description: headingDesc
+              }));
+              controller.close();
+              return;
+            }
 
+            // 6자리 코드도 가져와서 설명 enrichment용으로 사용
             const { data: hs6Data } = await supabase
               .from('hs_codes_6digit')
               .select('hs_code, description_ko')
               .like('hs_code', `${heading}%`)
               .order('hs_code');
             
-            if (!hs6Data || hs6Data.length === 0) {
+            // 6자리 설명을 맵으로 저장
+            const hs6Map = new Map();
+            if (hs6Data) {
+              for (const item of hs6Data) {
+                hs6Map.set(item.hs_code, item.description_ko);
+              }
+            }
+            
+            // 모든 10자리 코드 처리 (6자리 설명이 있으면 추가)
+            let hs10Data = [];
+            console.log(`4자리 ${heading}에 대한 10자리 코드: ${hs10DataRaw.length}개`);
+            
+            for (const item of hs10DataRaw) {
+              // 해당 10자리의 6자리 코드 찾기
+              const hs6Code = item.hs_code.substring(0, 6);
+              const hs6Description = hs6Map.get(hs6Code);
+              
+              // 6자리 설명이 있고 중복되지 않으면 추가
+              const enrichedDescription = hs6Description && !item.description_ko.includes(hs6Description)
+                ? `${item.description_ko} [${hs6Description}]`
+                : item.description_ko;
+              
+              hs10Data.push({
+                hs_code: item.hs_code,
+                description_ko: enrichedDescription
+              });
+            }
+            
+            console.log(`최종 10자리 코드: ${hs10Data.length}개`, hs10Data.map(d => d.hs_code));
+            
+            if (!hs10Data || hs10Data.length === 0) {
               controller.enqueue(sendSSEMessage(encoder, 'complete', { 
                 hsCode: heading,
                 level: 'heading',
@@ -195,22 +260,41 @@ ${hs4Data.map(item => `${item.hs_code}: ${item.description_ko}`).join('\n')}
             }
 
             controller.enqueue(sendSSEMessage(encoder, 'info', { 
-              message: `${hs6Data.length}개 후보 중 선택 중...`
+              message: `${hs10Data.length}개 최종 후보 중 선택 중...`
             }));
 
-            const step3Messages = [{
-              role: 'user',
-              content: `제품: ${productName}
-선택된 류: ${chapter} - ${chapterDesc}
+            // 3단계: 10자리 선택 (평가와 순위를 한번에)
+            const step3Content = `제품: ${productName}
+선택된 류: ${chapter}
 선택된 호: ${heading} - ${headingDesc}
 
-아래 목록에서 가장 적합한 6자리 소호를 선택하고 이유를 설명하세요.
-불확실한 경우 최대 3개까지 선택 가능 (콤마로 구분):
+가능한 10자리 코드들:
+${hs10Data.map(item => `${item.hs_code}: ${item.description_ko}`).join('\n')}
 
-${hs6Data.map(item => `${item.hs_code}: ${item.description_ko}`).join('\n')}
+위 코드들 중에서 "${productName}"에 가장 적합한 코드를 순위대로 나열하세요.
+최대 5개까지 선택하세요.
 
-형식: [코드] | [선택 이유]
-답: `
+답변 형식 (반드시 이 형식을 따르세요):
+1순위: [10자리코드] | [해당 코드가 가장 적합한 구체적 이유]
+2순위: [10자리코드] | [대안으로 고려할 만한 이유]
+3순위: [10자리코드] | [추가 대안으로 고려할 만한 이유]
+4순위: [10자리코드] | [추가 대안으로 고려할 만한 이유]
+5순위: [10자리코드] | [추가 대안으로 고려할 만한 이유]
+
+답:`;
+
+            console.log('=== 3단계 GPT에게 보내는 프롬프트 ===');
+            console.log(`제품: ${productName}`);
+            console.log(`선택된 류: ${chapter}`);
+            console.log(`선택된 호: ${heading} - ${headingDesc}`);
+            console.log(`10자리 코드 개수: ${hs10Data.length}개`);
+            console.log('10자리 목록 (처음 5개):', hs10Data.slice(0, 5).map(d => `${d.hs_code}: ${d.description_ko}`).join('\n'));
+            console.log('=== 프롬프트 끝 ===');
+
+            
+            const step3Messages = [{
+              role: 'user',
+              content: step3Content
             }];
             
             const step3Completion = await openai.chat.completions.create({
@@ -219,151 +303,79 @@ ${hs6Data.map(item => `${item.hs_code}: ${item.description_ko}`).join('\n')}
               max_completion_tokens: 1500
             });
             
-            const subheadingResponse = step3Completion.choices[0]?.message?.content?.trim();
-            console.log('3단계 GPT 응답 (이유 포함):', subheadingResponse);
+            const rankingResponse = step3Completion.choices[0]?.message?.content?.trim() || '';
+            console.log('3단계 순위 응답 길이:', rankingResponse.length);
+            console.log('3단계 순위 응답:', rankingResponse);
             
-            // 3단계 이유 추출
-            let step3Reason = '';
-            if (subheadingResponse && subheadingResponse.includes('|')) {
-              const parts = subheadingResponse.split('|');
-              if (parts.length >= 2) {
-                step3Reason = parts[1].trim();
-              }
-            }
-            
-            // 중복 제거를 위해 Set 사용 (5자리 또는 6자리 코드 찾기)
-            const rawCandidates = subheadingResponse?.match(/\d{5,6}/g) || [];
-            const subheadingCandidates = [...new Set(rawCandidates)];
-            
-            if (subheadingCandidates.length === 0) {
-              const firstSubheading = hs6Data[0];
-              controller.enqueue(sendSSEMessage(encoder, 'complete', { 
-                hsCode: firstSubheading.hs_code,
-                level: 'subheading',
-                description: firstSubheading.description_ko
-              }));
-              controller.close();
-              return;
-            }
-
-            const subheading = subheadingCandidates[0];
-            const subheadingDesc = hs6Data.find(item => item.hs_code === subheading)?.description_ko;
-            
-            // 3단계 완료 메시지
-            controller.enqueue(sendSSEMessage(encoder, 'progress', { 
-              step: 3,
-              selected: subheading,
-              description: subheadingDesc,
-              reason: step3Reason,
-              candidates: subheadingCandidates.length > 1 ? subheadingCandidates : undefined,
-              candidateCount: subheadingCandidates.length,
-              message: `✅ 3단계 완료: ${subheading} - ${subheadingDesc}`
-            }));
-
-            // 4단계: 10자리 세번 선택
-            controller.enqueue(sendSSEMessage(encoder, 'step', { 
-              step: 4,
-              description: '10자리 세번(Item) 최종 선택 중...'
-            }));
-
-            let hs10Data = [];
-            const seenCodes = new Set();
-            
-            for (const candidate of subheadingCandidates) {
-              const { data } = await supabase
-                .from('hs_codes_10digit')
-                .select('hs_code, description_ko')
-                .like('hs_code', `${candidate}%`)
-                .order('hs_code');
-              
-              if (data) {
-                // 중복 제거
-                for (const item of data) {
-                  if (!seenCodes.has(item.hs_code)) {
-                    seenCodes.add(item.hs_code);
-                    hs10Data.push(item);
-                  }
-                }
-              }
-            }
-            
-            if (!hs10Data || hs10Data.length === 0) {
-              controller.enqueue(sendSSEMessage(encoder, 'complete', { 
-                hsCode: subheading,
-                level: 'subheading',
-                description: subheadingDesc
-              }));
-              controller.close();
-              return;
-            }
-
-            controller.enqueue(sendSSEMessage(encoder, 'info', { 
-              message: `${hs10Data.length}개 최종 후보 중 선택 중...`
-            }));
-
-            const step4Messages = [{
-              role: 'user',
-              content: `제품: ${productName}
-선택된 류: ${chapter} - ${chapterDesc}
-선택된 호: ${heading} - ${headingDesc}
-선택된 소호: ${subheading} - ${subheadingDesc}
-
-아래 목록에서 제품 "${productName}"에 가장 적합한 10자리 세번을 추천하세요.
-
-${hs10Data.map(item => `${item.hs_code}: ${item.description_ko}`).join('\n')}
-
-반드시 아래 형식으로 답하세요 (각 줄마다 이유 포함):
-최종추천: [코드] | [해당 코드 선택 이유]
-대안1: [코드] | [대안으로 제시하는 이유]
-대안2: [코드] | [대안으로 제시하는 이유]
-
-답: `
-            }];
-            
-            const step4Completion = await openai.chat.completions.create({
-              model: 'gpt-5-mini',
-              messages: step4Messages,
-              max_completion_tokens: 1500
-            });
-            
-            const itemResponse = step4Completion.choices[0]?.message?.content?.trim();
-            console.log('4단계 GPT 응답 (이유 포함):', itemResponse);
+            // 최종 응답 
+            const itemResponse = rankingResponse;
+            console.log('3단계 최종 응답:', itemResponse);
             
             // 응답 파싱
             let allCandidates = [];
+            let allEvaluations = [];
             let finalHsCode = '';
             let finalDescription = '';
             let selectionReason = '';
             
             if (itemResponse) {
-              // 먼저 "최종추천:", "대안" 형식 확인
-              if (itemResponse.includes('최종추천:') || itemResponse.includes('대안')) {
+              console.log('3단계 응답 파싱 시작');
+              
+              // 순위 파싱
+              if (itemResponse.includes('순위:')) {
                 const lines = itemResponse.split('\n').filter(line => line.trim());
                 
                 for (const line of lines) {
-                  if (line.includes('최종추천:') || line.includes('대안')) {
-                    const parts = line.split('|').map(p => p.trim());
-                    const codeMatch = parts[0]?.match(/\d{10}/);
+                  if (line.includes('순위:')) {
+                    // | 구분자가 있으면 그걸로 파싱
+                    let code = '';
+                    let reason = '';
                     
-                    if (codeMatch) {
-                      const code = codeMatch[0];
-                      const reason = parts[1] || '';
+                    if (line.includes('|')) {
+                      const parts = line.split('|').map(p => p.trim());
+                      const codeMatch = parts[0]?.match(/\d{10}/);
+                      if (codeMatch) {
+                        code = codeMatch[0];
+                        reason = parts[1] || '';
+                      }
+                    } else {
+                      // | 구분자가 없으면 코드 뒤의 모든 텍스트를 이유로
+                      const codeMatch = line.match(/\d{10}/);
+                      if (codeMatch) {
+                        code = codeMatch[0];
+                        const codeIndex = line.indexOf(code);
+                        reason = line.substring(codeIndex + 10).replace(/^\s*[:：]\s*/, '').trim();
+                      }
+                    }
+                    
+                    if (code) {
                       const item = hs10Data.find(i => i.hs_code === code);
                       
                       if (item) {
                         const candidate = {
                           hsCode: item.hs_code,
                           description: item.description_ko,
-                          reason: reason
+                          reason: reason || '적합한 분류',
+                          rank: line.includes('1순위') ? 1 : 
+                                line.includes('2순위') ? 2 : 
+                                line.includes('3순위') ? 3 :
+                                line.includes('4순위') ? 4 : 5
                         };
+                        console.log(`파싱된 후보: ${candidate.hsCode} - 이유: "${candidate.reason}" (원본: "${line}")`);
                         
-                        if (line.includes('최종추천:')) {
+                        if (line.includes('1순위')) {
                           finalHsCode = item.hs_code;
                           finalDescription = item.description_ko;
                           selectionReason = reason;
-                          allCandidates.unshift(candidate); // 최종 추천을 맨 앞에
+                          // 중복 체크 후 추가
+                          if (!allCandidates.some(c => c.hsCode === item.hs_code)) {
+                            allCandidates.unshift(candidate); // 1순위를 맨 앞에
+                          }
                         } else {
-                          allCandidates.push(candidate);
+                          // 중복 체크 후 추가
+                          if (!allCandidates.some(c => c.hsCode === item.hs_code)) {
+                            allCandidates.push(candidate);
+                          }
                         }
                       }
                     }
@@ -450,13 +462,15 @@ ${hs10Data.map(item => `${item.hs_code}: ${item.description_ko}`).join('\n')}
               }
             }
 
-            // 4단계 완료 메시지
+            // 3단계 완료 메시지
             controller.enqueue(sendSSEMessage(encoder, 'progress', { 
-              step: 4,
+              step: 3,
               selected: finalHsCode,
               description: finalDescription,
               reason: selectionReason,
-              message: `✅ 4단계 완료: ${finalHsCode} - ${finalDescription}`
+              allItems: hs10Data,  // 모든 10자리 코드 전달
+              evaluations: allEvaluations,  // 전체 평가 전달
+              message: `✅ 3단계 완료: ${finalHsCode} - ${finalDescription}`
             }));
 
             // 최종 결과
@@ -466,27 +480,24 @@ ${hs10Data.map(item => `${item.hs_code}: ${item.description_ko}`).join('\n')}
               description: finalDescription,
               reason: selectionReason,
               candidates: allCandidates,
+              allItems: hs10Data,  // 모든 10자리 코드 전달
+              evaluations: allEvaluations,  // 전체 평가 전달
               hierarchy: {
                 chapter: chapter,
                 heading: heading,
-                subheading: subheading,
-                subheadingCandidates: subheadingCandidates,
                 item: finalHsCode
               },
               model: 'gpt-5-mini',
               usage: {
                 prompt_tokens: (step1Completion.usage?.prompt_tokens || 0) + 
                                (step2Completion.usage?.prompt_tokens || 0) + 
-                               (step3Completion.usage?.prompt_tokens || 0) + 
-                               (step4Completion.usage?.prompt_tokens || 0),
+                               (step3Completion.usage?.prompt_tokens || 0),
                 completion_tokens: (step1Completion.usage?.completion_tokens || 0) + 
                                   (step2Completion.usage?.completion_tokens || 0) + 
-                                  (step3Completion.usage?.completion_tokens || 0) + 
-                                  (step4Completion.usage?.completion_tokens || 0),
+                                  (step3Completion.usage?.completion_tokens || 0),
                 total_tokens: (step1Completion.usage?.total_tokens || 0) + 
                              (step2Completion.usage?.total_tokens || 0) + 
-                             (step3Completion.usage?.total_tokens || 0) + 
-                             (step4Completion.usage?.total_tokens || 0)
+                             (step3Completion.usage?.total_tokens || 0)
               }
             }));
 
@@ -509,345 +520,6 @@ ${hs10Data.map(item => `${item.hs_code}: ${item.description_ko}`).join('\n')}
         }
       });
     }
-
-    // 기존 논스트리밍 모드 (하위 호환성)
-    console.log(`\n=== HS 코드 단계별 분류 시작: ${productName} ===`);
-    
-    // 1단계: 97개 류에서 선택 (hs2 테이블)
-    const { data: hs2Data, error: hs2Error } = await supabase
-      .from('hs2')
-      .select('hs_code, description_ko')
-      .order('hs_code');
-    
-    if (hs2Error) {
-      throw new Error('HS2 테이블 조회 실패');
-    }
-    
-    console.log('1단계: 97개 류 중 선택');
-    
-    const step1Messages = [
-      {
-        role: 'user',
-        content: `제품 "${productName}"에 해당하는 HS 코드를 선택하세요.
-아래 목록에서 가장 적합한 2자리 코드 하나만 답하세요 (예: 04):
-
-${hs2Data.map(item => `${item.hs_code}: ${item.description_ko}`).join('\n')}
-
-답: `
-      }
-    ];
-    
-    // 1단계: 2자리 류 선택
-    console.log('GPT-5-mini에 요청 중...');
-    const step1Completion = await openai.chat.completions.create({
-      model: 'gpt-5-mini',
-      messages: step1Messages,
-      max_completion_tokens: 2000
-    });
-    
-    const chapterResponse = step1Completion.choices[0]?.message?.content?.trim();
-    console.log(`GPT 응답 내용: ${chapterResponse}`);
-    
-    if (!chapterResponse) {
-      console.error('GPT 응답이 비어있음');
-      throw new Error(`GPT 응답이 비어있습니다`);
-    }
-    
-    const chapter = chapterResponse.match(/\d{2}/)?.[0];
-    if (!chapter) {
-      throw new Error(`2자리 류를 선택할 수 없습니다`);
-    }
-    console.log(`선택된 류: ${chapter}`);
-    
-    // 2단계: 4자리 호 선택 (hs_codes_4digit 테이블)
-    const { data: hs4Data, error: hs4Error } = await supabase
-      .from('hs_codes_4digit')
-      .select('hs_code, description_ko')
-      .like('hs_code', `${chapter}%`)
-      .order('hs_code');
-    
-    if (hs4Error || !hs4Data || hs4Data.length === 0) {
-      // 4자리가 없으면 2자리만 반환
-      return new Response(JSON.stringify({
-        hsCode: chapter,
-        level: 'chapter',
-        description: hs2Data.find(item => item.hs_code === chapter)?.description_ko
-      }), {
-        headers: {
-          ...corsHeaders,
-          'Content-Type': 'application/json; charset=utf-8'
-        }
-      });
-    }
-    
-    console.log(`2단계: ${hs4Data.length}개 호 중 선택`);
-    
-    // 선택된 류의 설명 찾기
-    const chapterDescription = hs2Data.find(item => item.hs_code === chapter)?.description_ko || '';
-    
-    const step2Messages = [
-      {
-        role: 'user',
-        content: `제품: ${productName}
-선택된 류: ${chapter} - ${chapterDescription}
-
-아래 목록에서 가장 적합한 4자리 호를 선택하세요 (예: 0401):
-
-${hs4Data.map(item => `${item.hs_code}: ${item.description_ko}`).join('\n')}
-
-답: `
-      }
-    ];
-    
-    const step2Completion = await openai.chat.completions.create({
-      model: 'gpt-5-mini',
-      messages: step2Messages,
-      max_completion_tokens: 1500
-    });
-    
-    console.log('2단계 GPT 응답:', step2Completion.choices[0]?.message?.content);
-    const heading = step2Completion.choices[0]?.message?.content?.trim().match(/\d{4}/)?.[0];
-    if (!heading) {
-      // 4자리 선택 실패시 첫 번째 항목 선택
-      const firstHeading = hs4Data[0].hs_code;
-      return new Response(JSON.stringify({
-        hsCode: firstHeading,
-        level: 'heading',
-        description: hs4Data[0].description_ko
-      }), {
-        headers: {
-          ...corsHeaders,
-          'Content-Type': 'application/json; charset=utf-8'
-        }
-      });
-    }
-    console.log(`선택된 호: ${heading}`);
-    
-    // 3단계: 6자리 소호 선택 (hs_codes_6digit 테이블)
-    const { data: hs6Data, error: hs6Error } = await supabase
-      .from('hs_codes_6digit')
-      .select('hs_code, description_ko')
-      .like('hs_code', `${heading}%`)
-      .order('hs_code');
-    
-    if (hs6Error || !hs6Data || hs6Data.length === 0) {
-      // 6자리가 없으면 4자리만 반환
-      return new Response(JSON.stringify({
-        hsCode: heading,
-        level: 'heading',
-        description: hs4Data.find(item => item.hs_code === heading)?.description_ko
-      }), {
-        headers: {
-          ...corsHeaders,
-          'Content-Type': 'application/json; charset=utf-8'
-        }
-      });
-    }
-    
-    console.log(`3단계: ${hs6Data.length}개 소호 중 선택`);
-    
-    // 선택된 호의 설명 찾기
-    const headingDescription = hs4Data.find(item => item.hs_code === heading)?.description_ko || '';
-    
-    const step3Messages = [
-      {
-        role: 'user',
-        content: `제품: ${productName}
-선택된 류: ${chapter} - ${chapterDescription}
-선택된 호: ${heading} - ${headingDescription}
-
-아래 목록에서 가장 적합한 6자리 소호를 선택하세요.
-불확실한 경우 최대 3개까지 선택 가능 (콤마로 구분):
-
-${hs6Data.map(item => `${item.hs_code}: ${item.description_ko}`).join('\n')}
-
-답: `
-      }
-    ];
-    
-    const step3Completion = await openai.chat.completions.create({
-      model: 'gpt-5-mini',
-      messages: step3Messages,
-      max_completion_tokens: 1500
-    });
-    
-    // 여러 개 선택 가능 (콤마로 구분)
-    const subheadingResponse = step3Completion.choices[0]?.message?.content?.trim();
-    console.log('3단계 GPT 응답:', subheadingResponse);
-    // 중복 제거를 위해 Set 사용 (5자리 또는 6자리 코드 찾기)
-    const rawCandidates = subheadingResponse?.match(/\d{5,6}/g) || [];
-    const subheadingCandidates = [...new Set(rawCandidates)];
-    
-    if (subheadingCandidates.length === 0) {
-      // 6자리 선택 실패시 첫 번째 항목 선택
-      const firstSubheading = hs6Data[0].hs_code;
-      return new Response(JSON.stringify({
-        hsCode: firstSubheading,
-        level: 'subheading',
-        description: hs6Data[0].description_ko
-      }), {
-        headers: {
-          ...corsHeaders,
-          'Content-Type': 'application/json; charset=utf-8'
-        }
-      });
-    }
-    
-    const subheading = subheadingCandidates[0]; // 첫 번째 후보를 메인으로 사용
-    console.log(`선택된 소호 후보: ${subheadingCandidates.join(', ')}`);
-    
-    // 4단계: 10자리 세번 선택 (여러 후보에서 검색)
-    let hs10Data = [];
-    let hs10Error = null;
-    const seenCodes = new Set();
-    
-    // 모든 6자리 후보에서 10자리 검색
-    for (const candidate of subheadingCandidates) {
-      const { data, error } = await supabase
-        .from('hs_codes_10digit')
-        .select('hs_code, description_ko')
-        .like('hs_code', `${candidate}%`)
-        .order('hs_code');
-      
-      if (!error && data) {
-        // 중복 제거
-        for (const item of data) {
-          if (!seenCodes.has(item.hs_code)) {
-            seenCodes.add(item.hs_code);
-            hs10Data.push(item);
-          }
-        }
-      }
-      if (error) hs10Error = error;
-    }
-    
-    if (hs10Error || !hs10Data || hs10Data.length === 0) {
-      // 10자리가 없으면 6자리만 반환
-      return new Response(JSON.stringify({
-        hsCode: subheading,
-        level: 'subheading',
-        description: hs6Data.find(item => item.hs_code === subheading)?.description_ko
-      }), {
-        headers: {
-          ...corsHeaders,
-          'Content-Type': 'application/json; charset=utf-8'
-        }
-      });
-    }
-    
-    console.log(`4단계: ${hs10Data.length}개 세번 중 선택`);
-    
-    // 선택된 소호의 설명 찾기
-    const subheadingDescription = hs6Data.find(item => item.hs_code === subheading)?.description_ko || '';
-    
-    const step4Messages = [
-      {
-        role: 'user',
-        content: `제품: ${productName}
-선택된 류: ${chapter} - ${chapterDescription}
-선택된 호: ${heading} - ${headingDescription}
-선택된 소호: ${subheading} - ${subheadingDescription}
-
-아래 목록에서 가장 적합한 10자리 세번을 선택하세요.
-불확실한 경우 최대 3개까지 선택 가능 (콤마로 구분):
-정확한 일치가 없으면 "기타" 항목을 선택하세요.
-
-${hs10Data.map(item => `${item.hs_code}: ${item.description_ko}`).join('\n')}
-
-답: `
-      }
-    ];
-    
-    const step4Completion = await openai.chat.completions.create({
-      model: 'gpt-5-mini',
-      messages: step4Messages,
-      max_completion_tokens: 1500
-    });
-    
-    // 여러 개 선택 가능 (콤마로 구분)
-    const itemResponse = step4Completion.choices[0]?.message?.content?.trim();
-    console.log('4단계 GPT 응답:', itemResponse);
-    const itemCandidates = itemResponse?.match(/\d{10}/g) || [];
-    
-    let finalHsCode = '';
-    let finalDescription = '';
-    let allCandidates = [];
-    
-    if (itemCandidates.length > 0) {
-      // 후보들의 상세 정보 수집
-      console.log(`선택된 세번 후보: ${itemCandidates.join(', ')}`);
-      for (const candidate of itemCandidates) {
-        const item = hs10Data.find(i => i.hs_code === candidate);
-        if (item) {
-          console.log(`  - ${item.hs_code}: ${item.description_ko}`);
-          allCandidates.push({
-            hsCode: item.hs_code,
-            description: item.description_ko
-          });
-        }
-      }
-      
-      // 첫 번째 후보를 메인으로 사용
-      if (allCandidates.length > 0) {
-        finalHsCode = allCandidates[0].hsCode;
-        finalDescription = allCandidates[0].description;
-        console.log(`최종 선택: ${finalHsCode} - ${finalDescription}`);
-      }
-    }
-    
-    if (!finalHsCode) {
-      // 10자리 선택 실패시 "기타" 항목 찾기
-      const otherItem = hs10Data.find(item => 
-        item.description_ko?.includes('기타') || 
-        item.description_ko?.includes('그 밖의')
-      );
-      
-      if (otherItem) {
-        finalHsCode = otherItem.hs_code;
-        finalDescription = otherItem.description_ko;
-      } else if (hs10Data.length > 0) {
-        // 기타도 없으면 첫 번째 항목 선택
-        finalHsCode = hs10Data[0].hs_code;
-        finalDescription = hs10Data[0].description_ko;
-      }
-    }
-    
-    console.log(`\n=== 분류 완료: ${finalHsCode} ===\n`);
-    
-    return new Response(JSON.stringify({
-      hsCode: finalHsCode,
-      level: 'item',
-      description: finalDescription,
-      reason: '제품 특성과 가장 부합하는 세번',
-      candidates: allCandidates,  // 모든 후보 반환
-      hierarchy: {
-        chapter: chapter,
-        heading: heading,
-        subheading: subheading,
-        subheadingCandidates: subheadingCandidates,  // 6자리 후보들
-        item: finalHsCode
-      },
-      model: 'gpt-5-mini',
-      usage: {
-        prompt_tokens: (step1Completion.usage?.prompt_tokens || 0) + 
-                       (step2Completion.usage?.prompt_tokens || 0) + 
-                       (step3Completion.usage?.prompt_tokens || 0) + 
-                       (step4Completion.usage?.prompt_tokens || 0),
-        completion_tokens: (step1Completion.usage?.completion_tokens || 0) + 
-                          (step2Completion.usage?.completion_tokens || 0) + 
-                          (step3Completion.usage?.completion_tokens || 0) + 
-                          (step4Completion.usage?.completion_tokens || 0),
-        total_tokens: (step1Completion.usage?.total_tokens || 0) + 
-                     (step2Completion.usage?.total_tokens || 0) + 
-                     (step3Completion.usage?.total_tokens || 0) + 
-                     (step4Completion.usage?.total_tokens || 0)
-      }
-    }), {
-      headers: {
-        ...corsHeaders,
-        'Content-Type': 'application/json; charset=utf-8'
-      }
-    });
     
   } catch (error) {
     console.error('HS 코드 분류 오류:', error);

@@ -78,13 +78,16 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
   const [stepProgress, setStepProgress] = useState<StepProgress[]>([]);
   const [currentStepInfo, setCurrentStepInfo] = useState<string>('');
   
+  // 전체 10자리 코드 목록과 평가
+  const [allItems, setAllItems] = useState<any[]>([]);
+  const [evaluations, setEvaluations] = useState<any[]>([]);
+  
   // AbortController를 위한 ref
   const abortControllerRef = React.useRef<AbortController | null>(null);
 
   const steps = [
     '97개 류(Chapter) 선택',
     '4자리 호(Heading) 선택',
-    '6자리 소호(Subheading) 선택',
     '10자리 세번(Item) 최종 선택',
   ];
 
@@ -92,6 +95,12 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
   const handleSearchWithSSE = async () => {
     if (query.length < 2) {
       onNotify?.('검색어를 2자 이상 입력해주세요', 'error');
+      return;
+    }
+
+    // 이미 로딩 중이면 무시
+    if (loading) {
+      console.log('이미 검색 중입니다.');
       return;
     }
 
@@ -109,6 +118,8 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
     setActiveStep(0);
     setStepProgress([]);
     setCurrentStepInfo('');
+    setAllItems([]);
+    setEvaluations([]);
 
     try {
       const supabase = createClient();
@@ -138,12 +149,17 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
         throw new Error('스트림 읽기 실패');
       }
 
+      let buffer = '';
+      
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
 
-        const chunk = decoder.decode(value);
-        const lines = chunk.split('\n');
+        const chunk = decoder.decode(value, { stream: true });
+        buffer += chunk;
+        
+        const lines = buffer.split('\n');
+        buffer = lines.pop() || ''; // 마지막 불완전한 줄은 버퍼에 남김
 
         for (const line of lines) {
           if (line.startsWith('data: ')) {
@@ -171,12 +187,26 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
                     const progressData = data.data as StepProgress;
                     setStepProgress(prev => [...prev, progressData]);
                     setActiveStep(progressData.step);
+                    
+                    // 3단계에서 전체 10자리 목록 저장
+                    if (progressData.step === 3 && data.data.allItems) {
+                      setAllItems(data.data.allItems);
+                      console.log('3단계 전체 10자리 목록:', data.data.allItems);
+                    }
+                    if (progressData.step === 3 && data.data.evaluations) {
+                      setEvaluations(data.data.evaluations);
+                      console.log('3단계 평가:', data.data.evaluations);
+                    }
+                    
                     onNotify?.(progressData.message || `${progressData.step}단계 완료`, 'info');
                   }
                   break;
                   
                 case 'complete':
                   // 최종 결과 처리
+                  console.log('Complete 이벤트 데이터:', data.data);
+                  console.log('allItems 있나?:', data.data.allItems);
+                  console.log('evaluations 있나?:', data.data.evaluations);
                   handleCompleteResult(data.data);
                   break;
                   
@@ -202,74 +232,67 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
     }
   };
 
-  // 기존 검색 (폴백)
-  const handleSearch = async () => {
-    if (query.length < 2) {
-      onNotify?.('검색어를 2자 이상 입력해주세요', 'error');
-      return;
-    }
-
-    setLoading(true);
-    setRecommendations([]);
-    setSelectedCode(null);
-
-    try {
-      const supabase = createClient();
-
-      // hs-code-classifier Edge Function 호출
-      const { data, error } = await supabase.functions.invoke('hs-code-classifier', {
-        body: { productName: query },
-      });
-
-      if (error) {
-        console.error('Search error:', error);
-        onNotify?.('검색 중 오류가 발생했습니다', 'error');
-        return;
-      }
-
-      handleCompleteResult(data);
-    } catch (error) {
-      console.error('Search error:', error);
-      onNotify?.('검색 중 오류가 발생했습니다', 'error');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   // 완료 결과 처리
   const handleCompleteResult = (data: any) => {
     if (data?.hsCode) {
       let formattedRecommendations = [];
       
+      // 상위 5개 추천 (중복 제거)
+      const seenCodes = new Set<string>();
       if (data.candidates && data.candidates.length > 0) {
-        formattedRecommendations = data.candidates.map((candidate: any, index: number) => ({
-          hs_code: candidate.hsCode,
-          name_ko: candidate.description || '',
-          name_en: '',
-          category_name: '',
-          reason: candidate.reason || (index === 0 ? (data.reason || '최우선 추천') : `대안 ${index}`),
-          rank: index + 1,
-        }));
+        formattedRecommendations = data.candidates
+          .filter((candidate: any) => {
+            if (seenCodes.has(candidate.hsCode)) return false;
+            seenCodes.add(candidate.hsCode);
+            return true;
+          })
+          .slice(0, 5) // 최대 5개만
+          .map((candidate: any, index: number) => ({
+            hs_code: candidate.hsCode,
+            name_ko: candidate.description || '',
+            name_en: '',
+            category_name: candidate.rank === 1 ? '1순위' : candidate.rank === 2 ? '2순위' : candidate.rank === 3 ? '3순위' : `대안 ${index}`,
+            reason: candidate.reason || (index === 0 ? '최우선 추천' : '대체 가능'),
+            rank: candidate.rank || (index + 1),
+          }));
       } else {
         formattedRecommendations = [{
           hs_code: data.hsCode,
           name_ko: data.description || '',
           name_en: '',
-          category_name: `${data.level === 'item' ? '10자리 세번' : data.level}`,
+          category_name: '1순위',
           reason: data.reason || '최적 매칭',
           rank: 1,
         }];
+      }
+      
+      // 모든 10자리 코드와 평가 저장 (있는 경우)
+      if (data.allItems) {
+        setAllItems(data.allItems);
+        console.log('전체 10자리 코드:', data.allItems);
+      }
+      
+      if (data.evaluations) {
+        setEvaluations(data.evaluations);
+        console.log('전체 평가:', data.evaluations);
       }
 
       setRecommendations(formattedRecommendations);
 
       if (data.hierarchy) {
         const hierarchy = data.hierarchy;
+        // 3단계 분류로 업데이트
+        const pathParts = [
+          `${hierarchy.chapter}류`,
+          `${hierarchy.heading}호`,
+          `${data.hsCode}`
+        ];
         setExplanation({
           exact_match: false,
-          difference: `분류 경로: ${hierarchy.chapter}류 → ${hierarchy.heading}호 → ${hierarchy.subheading}소호 → ${data.hsCode}`,
-          tip: `GPT-5 모델이 4단계 분류를 수행했습니다`,
-          similar_products: data.hierarchy.subheadingCandidates || [],
+          difference: `분류 경로: ${pathParts.join(' → ')}`,
+          tip: `GPT-5 모델이 3단계 분류를 수행했습니다`,
+          similar_products: [],
         });
       }
 
@@ -302,6 +325,8 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
     setSelectedCode(null);
     setActiveStep(0);
     setStepProgress([]);
+    setAllItems([]);
+    setEvaluations([]);
     if (onReset) {
       onReset();
     }
@@ -424,28 +449,7 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
                         <strong>{step.selected}</strong> - {step.description}
                       </Typography>
                     </Stack>
-                    {step.step === 3 && (
-                      <>
-                        {step.reason && (
-                          <Typography variant="caption" color="text.secondary" sx={{ ml: 8 }}>
-                            💡 선택 이유: {step.reason}
-                          </Typography>
-                        )}
-                        {step.candidateCount && step.candidateCount > 1 && (
-                          <>
-                            <Typography variant="caption" color="info.main" sx={{ ml: 8 }}>
-                              🔍 후보 {step.candidateCount}개 선택됨
-                            </Typography>
-                            {step.candidates && (
-                              <Typography variant="caption" color="text.secondary" sx={{ ml: 8, display: 'block' }}>
-                                선택된 후보: {step.candidates.join(', ')}
-                              </Typography>
-                            )}
-                          </>
-                        )}
-                      </>
-                    )}
-                    {step.step === 4 && step.reason && (
+                    {step.step === 3 && step.reason && (
                       <Typography variant="caption" color="text.secondary" sx={{ ml: 8 }}>
                         💡 최종 선택 이유: {step.reason}
                       </Typography>
@@ -458,39 +462,18 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
         </Card>
       )}
 
+
       {/* 검색 결과 */}
       {recommendations.length > 0 && (
         <Box>
           <Alert severity="success" sx={{ mb: 3 }} icon={<CheckCircleIcon />}>
             <Typography variant="body2" fontWeight={600}>
-              "{query}"에 대한 추천 HS코드 {recommendations.length}개
+              "{query}"에 대한 상위 추천 HS코드 {recommendations.length}개
             </Typography>
           </Alert>
 
-          {/* 차이점 설명 */}
-          {explanation && !explanation.exact_match && explanation.difference && (
-            <Alert severity="info" sx={{ mb: 3 }}>
-              <Typography variant="body2" fontWeight={600} sx={{ mb: 1 }}>
-                💡 AI 분석 결과
-              </Typography>
-              <Typography variant="body2" sx={{ mb: 1 }}>
-                {explanation.difference}
-              </Typography>
-              {explanation.similar_products && explanation.similar_products.length > 0 && (
-                <Typography variant="caption" color="text.secondary">
-                  유사 제품: {explanation.similar_products.join(', ')}
-                </Typography>
-              )}
-            </Alert>
-          )}
 
           <Card variant="outlined" sx={{ boxShadow: 2 }}>
-            <CardContent sx={{ p: 2, bgcolor: 'primary.50' }}>
-              <Typography variant="subtitle1" fontWeight={600} color="primary">
-                추천 HS코드 (클릭하여 선택)
-              </Typography>
-            </CardContent>
-
             <List sx={{ p: 0 }}>
               {recommendations.map((rec, idx) => (
                 <React.Fragment key={`${rec.hs_code}-${idx}`}>
@@ -515,11 +498,12 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
                       primary={
                         <Stack direction="row" spacing={2} alignItems="center">
                           <Chip
-                            label={rec.rank === 1 ? '🏆 최고추천' : `#${rec.rank}`}
+                            label={rec.rank === 1 ? '🏆 최종추천' : rec.rank === 2 ? '🥈 대안1' : rec.rank === 3 ? '🥉 대안2' : `대안${rec.rank-1}`}
                             size="small"
-                            color={rec.rank === 1 ? 'success' : 'primary'}
+                            color={rec.rank === 1 ? 'success' : rec.rank === 2 ? 'primary' : rec.rank === 3 ? 'secondary' : 'default'}
+                            variant={rec.rank === 1 ? 'filled' : 'outlined'}
                             sx={{
-                              minWidth: rec.rank === 1 ? 80 : 40,
+                              minWidth: rec.rank <= 3 ? 90 : 60,
                               fontWeight: 'bold',
                               animation: rec.rank === 1 ? 'pulse 2s infinite' : 'none',
                               '@keyframes pulse': {
@@ -529,18 +513,17 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
                               },
                             }}
                           />
-                          <Box>
+                          <Box sx={{ flex: 1 }}>
                             <Typography variant="h6" component="span" fontWeight={600}>
-                              {rec.name_ko}
+                              {rec.hs_code}
                             </Typography>
-                            {rec.category_name && (
+                            {rec.name_ko && (
                               <Typography
-                                variant="body2"
-                                color="text.secondary"
+                                variant="body1"
                                 component="span"
-                                sx={{ ml: 1 }}
+                                sx={{ ml: 2 }}
                               >
-                                ({rec.category_name})
+                                {rec.name_ko}
                               </Typography>
                             )}
                           </Box>
@@ -549,43 +532,23 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
                       secondaryTypographyProps={{ component: 'div' }}
                       secondary={
                         <Box sx={{ mt: 1 }}>
-                          <Stack direction="row" spacing={2} alignItems="center">
-                            <Box
-                              sx={{
-                                bgcolor: selectedCode === rec.hs_code ? 'primary.main' : 'grey.800',
-                                color: 'white',
-                                px: 2,
-                                py: 0.5,
-                                borderRadius: 1,
-                                display: 'inline-block',
-                              }}
-                            >
-                              <Typography
-                                variant="h6"
-                                component="span"
-                                sx={{
-                                  fontFamily: 'monospace',
-                                  fontWeight: 700,
-                                  letterSpacing: 1,
-                                }}
-                              >
-                                {rec.hs_code}
-                              </Typography>
-                            </Box>
-                            {rec.name_en && (
-                              <Typography variant="caption" color="text.secondary">
-                                {rec.name_en}
-                              </Typography>
-                            )}
-                          </Stack>
                           {rec.reason && (
                             <Typography
-                              variant="caption"
-                              color="info.main"
-                              sx={{ mt: 0.5, display: 'block' }}
+                              variant="body2"
+                              color="text.secondary"
+                              sx={{ mb: 0.5, fontStyle: 'italic' }}
                             >
-                              💡 {rec.reason}
+                              💡 선택 이유: {rec.reason}
                             </Typography>
+                          )}
+                          {selectedCode === rec.hs_code && (
+                            <Chip
+                              label="✓ 선택됨"
+                              size="small"
+                              color="success"
+                              variant="outlined"
+                              sx={{ mt: 0.5 }}
+                            />
                           )}
                         </Box>
                       }
