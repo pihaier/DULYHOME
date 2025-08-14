@@ -20,10 +20,17 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
+  Fab,
+  useMediaQuery,
+  useTheme,
+  Drawer,
 } from '@mui/material';
 import { useRouter, useParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
+import { translateStaffInput } from '@/lib/utils/auto-translate';
 import BlankCard from '@/app/components/shared/BlankCard';
+import StaffOrderHeader from '@/app/staff/_components/StaffOrderHeader';
+import ChatPanel from '@/app/dashboard/orders/_components/ChatPanel';
 import BusinessIcon from '@mui/icons-material/Business';
 import FactoryIcon from '@mui/icons-material/Factory';
 import InventoryIcon from '@mui/icons-material/Inventory';
@@ -35,6 +42,8 @@ import TranslateIcon from '@mui/icons-material/Translate';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
+import ChatIcon from '@mui/icons-material/Chat';
+import CloseIcon from '@mui/icons-material/Close';
 import { Grid } from '@mui/material';
 import { useUser } from '@/lib/context/GlobalContext';
 
@@ -85,7 +94,9 @@ interface ConfirmationRequest {
 export default function StaffFactoryContactDetailPage() {
   const router = useRouter();
   const params = useParams();
+  const theme = useTheme();
   const { user, userProfile } = useUser();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'), { noSsr: true });
   const reservationNumber = params.reservationNumber as string;
 
   const [loading, setLoading] = useState(true);
@@ -97,6 +108,7 @@ export default function StaffFactoryContactDetailPage() {
   const [editMode, setEditMode] = useState(false);
   const [editData, setEditData] = useState<any>({});
   const [saving, setSaving] = useState(false);
+  const [chatDrawerOpen, setChatDrawerOpen] = useState(false);
 
   const supabase = createClient();
   const isChineseStaff = userProfile?.role === 'chinese_staff';
@@ -164,12 +176,23 @@ export default function StaffFactoryContactDetailPage() {
         special_requirements_chinese: editData.special_requirements_chinese || editData.special_requirements,
       };
 
-      const { error } = await supabase
+      const { data: updatedData, error } = await supabase
         .from('factory_contact_requests')
         .update(updates)
-        .eq('reservation_number', reservationNumber);
+        .eq('reservation_number', reservationNumber)
+        .select()
+        .single();
 
       if (error) throw error;
+
+      // 백그라운드에서 자동 번역 실행 (실패해도 무시)
+      if (updatedData?.id) {
+        translateStaffInput({
+          table: 'factory_contact_requests',
+          recordId: updatedData.id,
+          delay: 500 // 0.5초 후 실행
+        });
+      }
 
       setData(updates);
       setEditMode(false);
@@ -228,55 +251,54 @@ export default function StaffFactoryContactDetailPage() {
 
   return (
     <Box sx={{ flexGrow: 1, p: 3 }}>
-      {/* Header - Dashboard와 동일한 구조 */}
-      <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 3 }}>
-        <Box>
-          <Typography variant="h4" fontWeight="bold">
-            {reservationNumber}
-          </Typography>
-          <Stack direction="row" spacing={1} sx={{ mt: 1 }}>
-            <Chip 
-              label={data.status} 
-              size="small" 
-              color={data.status === 'completed' ? 'success' : 'warning'}
-            />
-            <Chip label={isChineseStaff ? '工厂联系' : '공장컨택'} size="small" variant="outlined" />
-          </Stack>
-        </Box>
-        <Stack direction="row" spacing={2}>
-          {!editMode && data.status === 'in_progress' ? (
-            <Button
-              variant="contained"
-              startIcon={<EditIcon />}
-              onClick={() => setEditMode(true)}
-            >
-              {isChineseStaff ? '编辑' : '편집'}
-            </Button>
-          ) : editMode ? (
-            <>
-              <Button
-                variant="contained"
-                color="success"
-                startIcon={<SaveIcon />}
-                onClick={handleSave}
-                disabled={saving}
-              >
-                {isChineseStaff ? '保存' : '저장'}
-              </Button>
-              <Button
-                variant="outlined"
-                startIcon={<CancelIcon />}
-                onClick={() => {
-                  setEditData(data);
-                  setEditMode(false);
-                }}
-              >
-                {isChineseStaff ? '取消' : '취소'}
-              </Button>
-            </>
-          ) : null}
-        </Stack>
-      </Stack>
+      {/* Header */}
+      <StaffOrderHeader
+        orderData={data}
+        serviceType="factory-contact"
+        reservationNumber={reservationNumber}
+        status={data?.status}
+      />
+
+      {/* Main Content with Chat */}
+      <Grid container spacing={isMobile ? 0 : 3} sx={{ mt: 2 }}>
+        {/* Main Content - Full width on mobile */}
+        <Grid size={{ xs: 12, md: 8 }}>
+          {/* Edit buttons */}
+          <Box sx={{ mb: 3, display: 'flex', justifyContent: 'flex-end' }}>
+            <Stack direction="row" spacing={2}>
+              {!editMode && data.status === 'in_progress' ? (
+                <Button
+                  variant="contained"
+                  startIcon={<EditIcon />}
+                  onClick={() => setEditMode(true)}
+                >
+                  {isChineseStaff ? '编辑' : '편집'}
+                </Button>
+              ) : editMode ? (
+                <>
+                  <Button
+                    variant="contained"
+                    color="success"
+                    startIcon={<SaveIcon />}
+                    onClick={handleSave}
+                    disabled={saving}
+                  >
+                    {isChineseStaff ? '保存' : '저장'}
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    startIcon={<CancelIcon />}
+                    onClick={() => {
+                      setEditData(data);
+                      setEditMode(false);
+                    }}
+                  >
+                    {isChineseStaff ? '取消' : '취소'}
+                  </Button>
+                </>
+              ) : null}
+            </Stack>
+          </Box>
 
       {/* Tabs - Dashboard와 동일 */}
       <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}>
@@ -309,7 +331,8 @@ export default function StaffFactoryContactDetailPage() {
         </Tabs>
       </Box>
 
-      {/* 신청정보 탭 */}
+      <Paper elevation={3} sx={{ mb: isMobile ? 8 : 0 }}>
+        {/* 신청정보 탭 */}
       <TabPanel value={tabValue} index={0}>
         <Stack spacing={3}>
           <BlankCard sx={{ bgcolor: 'info.lighter' }}>
@@ -587,6 +610,63 @@ export default function StaffFactoryContactDetailPage() {
           </CardContent>
         </BlankCard>
       </TabPanel>
+      </Paper>
+        </Grid>
+
+        {/* Desktop - Chat on right side */}
+        {!isMobile && (
+          <Grid size={{ md: 4 }}>
+            <Box sx={{ height: 'calc(100vh - 250px)', overflow: 'hidden' }}>
+              <ChatPanel reservationNumber={reservationNumber} serviceType="factory-contact" />
+            </Box>
+          </Grid>
+        )}
+      </Grid>
+
+      {/* Mobile - Floating Chat Button */}
+      {isMobile && (
+        <>
+          <Fab
+            color="primary"
+            aria-label="chat"
+            sx={{
+              position: 'fixed',
+              bottom: 16,
+              right: 16,
+              zIndex: 1200,
+            }}
+            onClick={() => setChatDrawerOpen(true)}
+          >
+            <ChatIcon />
+          </Fab>
+
+          {/* Mobile Chat Drawer */}
+          <Drawer
+            anchor="bottom"
+            open={chatDrawerOpen}
+            onClose={() => setChatDrawerOpen(false)}
+            sx={{
+              '& .MuiDrawer-paper': {
+                height: '80vh',
+                borderTopLeftRadius: 16,
+                borderTopRightRadius: 16,
+              },
+            }}
+          >
+            <Box sx={{ p: 2 }}>
+              <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2}>
+                <Typography variant="h6">{isChineseStaff ? '聊天' : '채팅'}</Typography>
+                <IconButton onClick={() => setChatDrawerOpen(false)}>
+                  <CloseIcon />
+                </IconButton>
+              </Stack>
+              <Box sx={{ height: 'calc(80vh - 100px)' }}>
+                <ChatPanel reservationNumber={reservationNumber} serviceType="factory-contact" />
+              </Box>
+            </Box>
+          </Drawer>
+        </>
+      )}
     </Box>
   );
 }

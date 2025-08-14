@@ -13,7 +13,7 @@
 - **상태**: ✅ 완료
 
 ### 2️⃣ 검품감사 (Inspection)
-- **신청 페이지**: `/application/inspection`
+- **신청 페이지**: `/application/inspection
 - **조회 페이지**: `/dashboard/orders/inspection`
 - **예약번호 형식**: `IN-YYYYMMDD-XXXXXX`
 - **DB 테이블**: `inspection_applications`

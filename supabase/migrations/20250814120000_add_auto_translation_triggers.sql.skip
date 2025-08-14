@@ -1,0 +1,115 @@
+-- 자동 번역 트리거 함수 생성
+CREATE OR REPLACE FUNCTION trigger_auto_translate_fields()
+RETURNS trigger AS $$
+DECLARE
+  edge_function_url text;
+  auth_header text;
+  request_body jsonb;
+  response text;
+BEGIN
+  -- Edge Function URL 설정
+  edge_function_url := 'https://fzpyfzpmwyvqumvftfbr.supabase.co/functions/v1/auto-translate-fields';
+  
+  -- 인증 헤더 설정 (Service Role Key 사용)
+  auth_header := 'Bearer ' || current_setting('app.supabase_service_role_key', true);
+  
+  -- 요청 본문 구성
+  request_body := jsonb_build_object(
+    'table', TG_TABLE_NAME,
+    'record', row_to_json(NEW),
+    'event', TG_OP
+  );
+  
+  -- Edge Function 호출 (비동기)
+  -- 주의: 실제 프로덕션에서는 pg_net 또는 별도의 백그라운드 작업 사용 권장
+  PERFORM net.http_post(
+    url := edge_function_url,
+    headers := jsonb_build_object(
+      'Authorization', auth_header,
+      'Content-Type', 'application/json'
+    ),
+    body := request_body
+  );
+  
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- market_research_requests 테이블 트리거
+DROP TRIGGER IF EXISTS auto_translate_market_research ON market_research_requests;
+CREATE TRIGGER auto_translate_market_research
+  AFTER INSERT OR UPDATE ON market_research_requests
+  FOR EACH ROW
+  WHEN (
+    -- 한국어 필드가 변경되고 중국어 번역이 없을 때
+    (NEW.product_name IS DISTINCT FROM OLD.product_name AND NEW.product_name_chinese IS NULL) OR
+    (NEW.product_description IS DISTINCT FROM OLD.product_description AND NEW.product_description_chinese IS NULL) OR
+    (NEW.sample_requirements IS DISTINCT FROM OLD.sample_requirements AND NEW.sample_requirements_chinese IS NULL) OR
+    (NEW.requirements IS DISTINCT FROM OLD.requirements AND NEW.requirements_chinese IS NULL) OR
+    (NEW.logo_details IS DISTINCT FROM OLD.logo_details AND NEW.logo_details_chinese IS NULL) OR
+    (NEW.box_details IS DISTINCT FROM OLD.box_details AND NEW.box_details_chinese IS NULL) OR
+    -- 중국어 필드가 변경되고 한국어 번역이 없을 때
+    (NEW.industry_cn IS DISTINCT FROM OLD.industry_cn AND NEW.industry_kr IS NULL) OR
+    (NEW.factory_name_cn IS DISTINCT FROM OLD.factory_name_cn AND NEW.factory_name_kr IS NULL) OR
+    (NEW.factory_address_cn IS DISTINCT FROM OLD.factory_address_cn AND NEW.factory_address_kr IS NULL) OR
+    (NEW.main_products_cn IS DISTINCT FROM OLD.main_products_cn AND NEW.main_products_kr IS NULL) OR
+    (NEW.factory_certification_cn IS DISTINCT FROM OLD.factory_certification_cn AND NEW.factory_certification_kr IS NULL) OR
+    (NEW.main_export_countries_cn IS DISTINCT FROM OLD.main_export_countries_cn AND NEW.main_export_countries_kr IS NULL) OR
+    (NEW.quality_certification_cn IS DISTINCT FROM OLD.quality_certification_cn AND NEW.quality_certification_kr IS NULL) OR
+    (NEW.legal_type_cn IS DISTINCT FROM OLD.legal_type_cn AND NEW.legal_type_kr IS NULL) OR
+    (NEW.company_size_cn IS DISTINCT FROM OLD.company_size_cn AND NEW.company_size_kr IS NULL) OR
+    (NEW.oem_odm_availability_cn IS DISTINCT FROM OLD.oem_odm_availability_cn AND NEW.oem_odm_availability_kr IS NULL) OR
+    (NEW.rnd_capability_cn IS DISTINCT FROM OLD.rnd_capability_cn AND NEW.rnd_capability_kr IS NULL) OR
+    (NEW.rnd_team_size_cn IS DISTINCT FROM OLD.rnd_team_size_cn AND NEW.rnd_team_size_kr IS NULL) OR
+    (NEW.supply_capability_cn IS DISTINCT FROM OLD.supply_capability_cn AND NEW.supply_capability_kr IS NULL) OR
+    (NEW.moq_cn IS DISTINCT FROM OLD.moq_cn AND NEW.moq_kr IS NULL) OR
+    (NEW.payment_terms_cn IS DISTINCT FROM OLD.payment_terms_cn AND NEW.payment_terms_kr IS NULL)
+  )
+  EXECUTE FUNCTION trigger_auto_translate_fields();
+
+-- factory_contact_requests 테이블 트리거
+DROP TRIGGER IF EXISTS auto_translate_factory_contact ON factory_contact_requests;
+CREATE TRIGGER auto_translate_factory_contact
+  AFTER INSERT OR UPDATE ON factory_contact_requests
+  FOR EACH ROW
+  WHEN (
+    -- 한국어 필드가 변경되고 중국어 번역이 없을 때
+    (NEW.product_description IS DISTINCT FROM OLD.product_description AND NEW.product_description_chinese IS NULL) OR
+    (NEW.special_requirements IS DISTINCT FROM OLD.special_requirements AND NEW.special_requirements_chinese IS NULL) OR
+    -- 중국어 필드가 변경되고 한국어 번역이 없을 때
+    (NEW.quality_certification_cn IS DISTINCT FROM OLD.quality_certification_cn AND NEW.quality_certification_kr IS NULL) OR
+    (NEW.production_capacity_cn IS DISTINCT FROM OLD.production_capacity_cn AND NEW.production_capacity_kr IS NULL) OR
+    (NEW.special_notes_cn IS DISTINCT FROM OLD.special_notes_cn AND NEW.special_notes_kr IS NULL)
+  )
+  EXECUTE FUNCTION trigger_auto_translate_fields();
+
+-- confirmation_requests 테이블 트리거
+DROP TRIGGER IF EXISTS auto_translate_confirmation ON confirmation_requests;
+CREATE TRIGGER auto_translate_confirmation
+  AFTER INSERT OR UPDATE ON confirmation_requests
+  FOR EACH ROW
+  WHEN (
+    -- 중국어 필드가 변경되고 한국어 번역이 없을 때
+    (NEW.factory_name_cn IS DISTINCT FROM OLD.factory_name_cn AND NEW.factory_name_kr IS NULL) OR
+    (NEW.factory_address_cn IS DISTINCT FROM OLD.factory_address_cn AND NEW.factory_address_kr IS NULL) OR
+    (NEW.production_capacity_cn IS DISTINCT FROM OLD.production_capacity_cn AND NEW.production_capacity_kr IS NULL) OR
+    (NEW.quality_certification_cn IS DISTINCT FROM OLD.quality_certification_cn AND NEW.quality_certification_kr IS NULL) OR
+    (NEW.special_notes_cn IS DISTINCT FROM OLD.special_notes_cn AND NEW.special_notes_kr IS NULL)
+  )
+  EXECUTE FUNCTION trigger_auto_translate_fields();
+
+-- inspection_applications 테이블 트리거
+DROP TRIGGER IF EXISTS auto_translate_inspection ON inspection_applications;
+CREATE TRIGGER auto_translate_inspection
+  AFTER INSERT OR UPDATE ON inspection_applications
+  FOR EACH ROW
+  WHEN (
+    -- 한국어 필드가 변경되고 중국어 번역이 없을 때
+    (NEW.product_name IS DISTINCT FROM OLD.product_name AND NEW.product_name_chinese IS NULL) OR
+    (NEW.inspection_summary IS DISTINCT FROM OLD.inspection_summary AND NEW.inspection_summary_chinese IS NULL) OR
+    (NEW.improvement_items IS DISTINCT FROM OLD.improvement_items AND NEW.improvement_items_chinese IS NULL) OR
+    (NEW.special_requirements IS DISTINCT FROM OLD.special_requirements AND NEW.special_requirements_chinese IS NULL) OR
+    -- 중국어 필드가 변경되고 한국어 번역이 없을 때
+    (NEW.factory_info_cn IS DISTINCT FROM OLD.factory_info_cn AND NEW.factory_info_kr IS NULL)
+  )
+  EXECUTE FUNCTION trigger_auto_translate_fields();

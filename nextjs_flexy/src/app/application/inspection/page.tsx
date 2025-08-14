@@ -38,6 +38,7 @@ import FileUpload from '@/app/components/forms/form-elements/FileUpload';
 import CompanyInfoForm from '@/app/components/forms/form-elements/CompanyInfoForm';
 import { useUser } from '@/lib/context/GlobalContext';
 import { createClient } from '@/lib/supabase/client';
+import { translateInBackground } from '@/lib/utils/auto-translate';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -206,6 +207,15 @@ export default function InspectionApplicationPage() {
       }
 
       setReservationNumber(newReservationNumber);
+
+      // 백그라운드에서 자동 번역 실행 (실패해도 무시)
+      if (application?.id) {
+        translateInBackground({
+          table: 'inspection_applications',
+          recordId: application.id,
+          delay: 1000 // 1초 후 실행
+        });
+      }
 
       // 회사 정보 저장 (saveAsDefault 체크된 경우)
       if (saveAsDefaultCheckbox?.checked) {

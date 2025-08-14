@@ -19,6 +19,11 @@ import {
   InputAdornment,
   LinearProgress,
   Fade,
+  Paper,
+  Stepper,
+  Step,
+  StepLabel,
+  StepContent,
 } from '@mui/material';
 import {
   Search as SearchIcon,
@@ -52,29 +57,152 @@ interface SearchExplanation {
   similar_products?: string[];
 }
 
+interface StepProgress {
+  step: number;
+  selected?: string;
+  description?: string;
+  message?: string;
+  reason?: string;
+  candidates?: string[];
+}
+
 export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props) {
   const [query, setQuery] = useState('');
   const [recommendations, setRecommendations] = useState<HSCodeRecommendation[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectedCode, setSelectedCode] = useState<string | null>(null);
-  const [thinkingStep, setThinkingStep] = useState(0);
-  const [thinkingMessage, setThinkingMessage] = useState('');
   const [explanation, setExplanation] = useState<SearchExplanation | null>(null);
+  
+  // 단계별 진행 상황 state
+  const [activeStep, setActiveStep] = useState(0);
+  const [stepProgress, setStepProgress] = useState<StepProgress[]>([]);
+  const [currentStepInfo, setCurrentStepInfo] = useState<string>('');
+  
+  // AbortController를 위한 ref
+  const abortControllerRef = React.useRef<AbortController | null>(null);
 
-  // AI 생각 메시지 업데이트
-  useEffect(() => {
-    if (loading && thinkingStep > 0) {
-      const messages = [
-        '🤔 제품명을 분석하고 있습니다... (약 5초)',
-        '🔍 관세청 데이터베이스를 검색하고 있습니다... (약 10초)',
-        '🎯 가장 적합한 HS코드를 매칭하고 있습니다... (약 15초)',
-        '✨ 결과를 검증하고 정리하고 있습니다... (약 20초)',
-      ];
-      setThinkingMessage(messages[Math.min(thinkingStep - 1, messages.length - 1)]);
+  const steps = [
+    '97개 류(Chapter) 선택',
+    '4자리 호(Heading) 선택',
+    '6자리 소호(Subheading) 선택',
+    '10자리 세번(Item) 최종 선택',
+  ];
+
+  // SSE를 사용한 검색 실행
+  const handleSearchWithSSE = async () => {
+    if (query.length < 2) {
+      onNotify?.('검색어를 2자 이상 입력해주세요', 'error');
+      return;
     }
-  }, [loading, thinkingStep]);
 
-  // 검색 실행 (GPT-5 Tool Calling 사용)
+    // 이전 요청 취소
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+
+    // 새 AbortController 생성
+    abortControllerRef.current = new AbortController();
+
+    setLoading(true);
+    setRecommendations([]);
+    setSelectedCode(null);
+    setActiveStep(0);
+    setStepProgress([]);
+    setCurrentStepInfo('');
+
+    try {
+      const supabase = createClient();
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/hs-code-classifier`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session?.access_token || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
+        },
+        body: JSON.stringify({ 
+          productName: query,
+          stream: true // SSE 스트리밍 모드 활성화
+        }),
+        signal: abortControllerRef.current.signal
+      });
+
+      if (!response.ok) {
+        throw new Error('검색 요청 실패');
+      }
+
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+
+      if (!reader) {
+        throw new Error('스트림 읽기 실패');
+      }
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value);
+        const lines = chunk.split('\n');
+
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            try {
+              const data = JSON.parse(line.slice(6));
+              
+              switch (data.type) {
+                case 'start':
+                  console.log('분류 시작:', data.data);
+                  break;
+                  
+                case 'step':
+                  if (data.data && typeof data.data.step === 'number') {
+                    setActiveStep(data.data.step - 1);
+                    setCurrentStepInfo(data.data.description || '');
+                  }
+                  break;
+                  
+                case 'info':
+                  setCurrentStepInfo(prev => `${prev} - ${data.data.message}`);
+                  break;
+                  
+                case 'progress':
+                  if (data.data && typeof data.data.step === 'number') {
+                    const progressData = data.data as StepProgress;
+                    setStepProgress(prev => [...prev, progressData]);
+                    setActiveStep(progressData.step);
+                    onNotify?.(progressData.message || `${progressData.step}단계 완료`, 'info');
+                  }
+                  break;
+                  
+                case 'complete':
+                  // 최종 결과 처리
+                  handleCompleteResult(data.data);
+                  break;
+                  
+                case 'error':
+                  throw new Error(data.data.message);
+              }
+            } catch (err) {
+              console.error('데이터 파싱 오류:', err);
+            }
+          }
+        }
+      }
+    } catch (error: any) {
+      // AbortError는 무시
+      if (error?.name !== 'AbortError') {
+        console.error('Search error:', error);
+        onNotify?.('검색 중 오류가 발생했습니다', 'error');
+      }
+    } finally {
+      setLoading(false);
+      setCurrentStepInfo('');
+      abortControllerRef.current = null;
+    }
+  };
+
+  // 기존 검색 (폴백)
   const handleSearch = async () => {
     if (query.length < 2) {
       onNotify?.('검색어를 2자 이상 입력해주세요', 'error');
@@ -84,17 +212,11 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
     setLoading(true);
     setRecommendations([]);
     setSelectedCode(null);
-    setThinkingStep(1);
-
-    // AI 생각 단계 시뮬레이션 (실제 처리 시간에 맞춤)
-    const stepInterval = setInterval(() => {
-      setThinkingStep((prev) => (prev < 4 ? prev + 1 : prev));
-    }, 500); // 더 빠른 업데이트
 
     try {
       const supabase = createClient();
 
-      // hs-code-classifier Edge Function 호출 (GPT-5 Tool Calling)
+      // hs-code-classifier Edge Function 호출
       const { data, error } = await supabase.functions.invoke('hs-code-classifier', {
         body: { productName: query },
       });
@@ -105,48 +227,62 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
         return;
       }
 
-      // GPT-5 응답을 기존 포맷으로 변환
-      if (data?.results && data.results.length > 0) {
-        const formattedRecommendations = data.results.map((result: any, index: number) => ({
-          hs_code: result.hs_code,
-          name_ko: result.name_ko,
-          name_en: result.name_en || '',
-          category_name: result.category_name || '',
-          reason: `신뢰도: ${(result.confidence * 100).toFixed(0)}%`,
-          rank: index + 1,
-        }));
-
-        setRecommendations(formattedRecommendations);
-
-        // GPT 응답을 설명으로 표시
-        if (data.gptResponse) {
-          setExplanation({
-            exact_match: false,
-            difference: data.gptResponse,
-            tip: `GPT-5가 ${data.toolCalls || 0}번의 DB 검색을 수행했습니다`,
-            similar_products: [],
-          });
-        }
-
-        onNotify?.(`${formattedRecommendations.length}개의 HS코드를 찾았습니다`, 'success');
-      } else {
-        onNotify?.('검색 결과가 없습니다. 다른 검색어를 시도해보세요.', 'info');
-      }
+      handleCompleteResult(data);
     } catch (error) {
       console.error('Search error:', error);
       onNotify?.('검색 중 오류가 발생했습니다', 'error');
     } finally {
-      clearInterval(stepInterval);
       setLoading(false);
-      setThinkingStep(0);
-      setThinkingMessage('');
+    }
+  };
+
+  // 완료 결과 처리
+  const handleCompleteResult = (data: any) => {
+    if (data?.hsCode) {
+      let formattedRecommendations = [];
+      
+      if (data.candidates && data.candidates.length > 0) {
+        formattedRecommendations = data.candidates.map((candidate: any, index: number) => ({
+          hs_code: candidate.hsCode,
+          name_ko: candidate.description || '',
+          name_en: '',
+          category_name: '',
+          reason: candidate.reason || (index === 0 ? (data.reason || '최우선 추천') : `대안 ${index}`),
+          rank: index + 1,
+        }));
+      } else {
+        formattedRecommendations = [{
+          hs_code: data.hsCode,
+          name_ko: data.description || '',
+          name_en: '',
+          category_name: `${data.level === 'item' ? '10자리 세번' : data.level}`,
+          reason: data.reason || '최적 매칭',
+          rank: 1,
+        }];
+      }
+
+      setRecommendations(formattedRecommendations);
+
+      if (data.hierarchy) {
+        const hierarchy = data.hierarchy;
+        setExplanation({
+          exact_match: false,
+          difference: `분류 경로: ${hierarchy.chapter}류 → ${hierarchy.heading}호 → ${hierarchy.subheading}소호 → ${data.hsCode}`,
+          tip: `GPT-5 모델이 4단계 분류를 수행했습니다`,
+          similar_products: data.hierarchy.subheadingCandidates || [],
+        });
+      }
+
+      onNotify?.(`HS코드 ${data.hsCode}를 찾았습니다`, 'success');
+    } else {
+      onNotify?.('검색 결과가 없습니다. 다른 검색어를 시도해보세요.', 'info');
     }
   };
 
   // Enter 키 처리
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !loading) {
-      handleSearch();
+      handleSearchWithSSE();
     }
   };
 
@@ -164,6 +300,8 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
     setQuery('');
     setRecommendations([]);
     setSelectedCode(null);
+    setActiveStep(0);
+    setStepProgress([]);
     if (onReset) {
       onReset();
     }
@@ -193,7 +331,7 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
         <Stack direction="row" spacing={2}>
           <Button
             variant="contained"
-            onClick={handleSearch}
+            onClick={handleSearchWithSSE}
             disabled={loading || query.length < 2}
             startIcon={loading ? <CircularProgress size={20} color="inherit" /> : <SearchIcon />}
             size="large"
@@ -201,7 +339,7 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
           >
             {loading ? 'AI 분석 중...' : 'HS코드 검색'}
           </Button>
-          {recommendations.length > 0 && (
+          {(recommendations.length > 0 || stepProgress.length > 0) && (
             <Button
               variant="outlined"
               onClick={handleReset}
@@ -214,91 +352,110 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
         </Stack>
       </Box>
 
-      {/* AI 생각 중 표시 */}
+      {/* 실시간 단계별 진행 상황 표시 */}
       {loading && (
         <Fade in={loading}>
           <Card variant="outlined" sx={{ mb: 3, bgcolor: 'background.paper', boxShadow: 1 }}>
             <CardContent>
-              <Stack spacing={2}>
+              <Stack spacing={3}>
                 <Stack direction="row" spacing={1} alignItems="center">
                   <PsychologyIcon color="primary" sx={{ animation: 'pulse 2s infinite' }} />
                   <Typography variant="h6" color="primary">
-                    GPT-5 AI가 제품을 분석 중입니다
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary" sx={{ ml: 1 }}>
-                    (약 10-30초 소요)
+                    GPT-5 AI가 제품 "{query}"를 분석 중입니다
                   </Typography>
                 </Stack>
 
-                <LinearProgress
-                  variant="determinate"
-                  value={(thinkingStep / 4) * 100}
-                  sx={{ height: 8, borderRadius: 1 }}
-                />
-
-                <Stack spacing={1}>
-                  <Fade in={thinkingStep >= 1}>
-                    <Stack direction="row" spacing={1} alignItems="center">
-                      <AutoFixHighIcon
-                        fontSize="small"
-                        color={thinkingStep > 1 ? 'success' : 'action'}
-                      />
-                      <Typography
-                        variant="body2"
-                        color={thinkingStep > 1 ? 'success.main' : 'text.secondary'}
-                      >
-                        제품명 분석 중... "{query}"
-                      </Typography>
-                    </Stack>
-                  </Fade>
-
-                  <Fade in={thinkingStep >= 2}>
-                    <Stack direction="row" spacing={1} alignItems="center">
-                      <StorageIcon
-                        fontSize="small"
-                        color={thinkingStep > 2 ? 'success' : 'action'}
-                      />
-                      <Typography
-                        variant="body2"
-                        color={thinkingStep > 2 ? 'success.main' : 'text.secondary'}
-                      >
-                        데이터베이스 검색 중...
-                      </Typography>
-                    </Stack>
-                  </Fade>
-
-                  <Fade in={thinkingStep >= 3}>
-                    <Stack direction="row" spacing={1} alignItems="center">
-                      <PsychologyIcon
-                        fontSize="small"
-                        color={thinkingStep > 3 ? 'success' : 'action'}
-                      />
-                      <Typography
-                        variant="body2"
-                        color={thinkingStep > 3 ? 'success.main' : 'text.secondary'}
-                      >
-                        최적 HS코드 매칭 중...
-                      </Typography>
-                    </Stack>
-                  </Fade>
-
-                  <Fade in={thinkingStep >= 4}>
-                    <Stack direction="row" spacing={1} alignItems="center">
-                      <CheckCircleIcon fontSize="small" color="success" />
-                      <Typography variant="body2" color="success.main">
-                        결과 정리 중...
-                      </Typography>
-                    </Stack>
-                  </Fade>
-                </Stack>
-
-                <Typography variant="caption" color="text.secondary" sx={{ fontStyle: 'italic' }}>
-                  {thinkingMessage}
-                </Typography>
+                {/* 단계별 진행 표시 */}
+                <Stepper activeStep={activeStep} orientation="vertical">
+                  {steps.map((label, index) => {
+                    const stepData = stepProgress.find(p => p && p.step === index + 1);
+                    return (
+                      <Step key={label}>
+                        <StepLabel
+                          optional={
+                            stepData && (
+                              <Typography variant="caption" color="success.main">
+                                ✅ {stepData.selected} - {stepData.description}
+                              </Typography>
+                            )
+                          }
+                        >
+                          {label}
+                        </StepLabel>
+                        <StepContent>
+                          <Typography variant="body2" color="text.secondary">
+                            {index === activeStep - 1 && currentStepInfo}
+                          </Typography>
+                          {stepData?.candidates && Array.isArray(stepData.candidates) && stepData.candidates.length > 1 && (
+                            <Typography variant="caption" color="info.main">
+                              후보: {stepData.candidates.join(', ')}
+                            </Typography>
+                          )}
+                        </StepContent>
+                      </Step>
+                    );
+                  })}
+                </Stepper>
               </Stack>
             </CardContent>
           </Card>
         </Fade>
+      )}
+
+      {/* 검색 완료 후 진행 경로 표시 */}
+      {!loading && stepProgress.length > 0 && (
+        <Card variant="outlined" sx={{ mb: 3, bgcolor: 'grey.50' }}>
+          <CardContent>
+            <Typography variant="h6" gutterBottom>
+              🎯 AI 분류 경로
+            </Typography>
+            <Stack spacing={1}>
+              {stepProgress.map((step, index) => (
+                step && step.step ? (
+                  <Stack key={index} direction="column" spacing={0.5}>
+                    <Stack direction="row" spacing={1} alignItems="center">
+                      <Chip 
+                        label={`${step.step}단계`} 
+                        size="small" 
+                        color="primary" 
+                        variant="outlined"
+                      />
+                      <Typography variant="body2">
+                        <strong>{step.selected}</strong> - {step.description}
+                      </Typography>
+                    </Stack>
+                    {step.step === 3 && (
+                      <>
+                        {step.reason && (
+                          <Typography variant="caption" color="text.secondary" sx={{ ml: 8 }}>
+                            💡 선택 이유: {step.reason}
+                          </Typography>
+                        )}
+                        {step.candidateCount && step.candidateCount > 1 && (
+                          <>
+                            <Typography variant="caption" color="info.main" sx={{ ml: 8 }}>
+                              🔍 후보 {step.candidateCount}개 선택됨
+                            </Typography>
+                            {step.candidates && (
+                              <Typography variant="caption" color="text.secondary" sx={{ ml: 8, display: 'block' }}>
+                                선택된 후보: {step.candidates.join(', ')}
+                              </Typography>
+                            )}
+                          </>
+                        )}
+                      </>
+                    )}
+                    {step.step === 4 && step.reason && (
+                      <Typography variant="caption" color="text.secondary" sx={{ ml: 8 }}>
+                        💡 최종 선택 이유: {step.reason}
+                      </Typography>
+                    )}
+                  </Stack>
+                ) : null
+              ))}
+            </Stack>
+          </CardContent>
+        </Card>
       )}
 
       {/* 검색 결과 */}
@@ -336,7 +493,7 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
 
             <List sx={{ p: 0 }}>
               {recommendations.map((rec, idx) => (
-                <React.Fragment key={rec.hs_code}>
+                <React.Fragment key={`${rec.hs_code}-${idx}`}>
                   <ListItemButton
                     onClick={() => handleSelect(rec)}
                     selected={selectedCode === rec.hs_code}

@@ -25,6 +25,7 @@ import {
 import { useRouter, useParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { useUser } from '@/lib/context/GlobalContext';
+import { translateStaffInput } from '@/lib/utils/auto-translate';
 import BlankCard from '@/app/components/shared/BlankCard';
 import StaffOrderHeader from '@/app/staff/_components/StaffOrderHeader';
 import ChatPanel from '@/app/dashboard/orders/_components/ChatPanel';
@@ -137,7 +138,7 @@ export default function StaffInspectionDetailPage() {
     setSaving(true);
     try {
       const supabase = createClient();
-      const { error } = await supabase
+      const { data: updatedData, error } = await supabase
         .from('inspection_applications')
         .update({
           inspection_summary: staffData.inspection_summary,
@@ -145,9 +146,16 @@ export default function StaffInspectionDetailPage() {
           improvement_items: staffData.improvement_items,
           updated_at: new Date().toISOString(),
         })
-        .eq('reservation_number', reservationNumber);
+        .eq('reservation_number', reservationNumber)
+        .select()
+        .single();
 
       if (error) throw error;
+      
+      // 백그라운드에서 자동 번역 실행 (실패해도 무시)
+      // inspection_summary, pass_fail_status, improvement_items 필드는
+      // 중국 직원이 입력하면 한국어로 번역되어야 함 (현재 번역 필드 없음)
+      // 향후 번역 필드 추가 시 여기에 translateStaffInput 호출 추가 필요
       
       setEditMode(false);
       alert(isChineseStaff ? '保存成功' : '저장되었습니다');

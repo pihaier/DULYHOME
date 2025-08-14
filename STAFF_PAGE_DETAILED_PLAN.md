@@ -183,8 +183,8 @@ const columns = [
 ```
 
 ## 6. 📝 상세 페이지 구조붙하고 연동필드값참고 해서 C:\Users\bishi\Desktop\💻_개발_프로그램\개발자료\erp-custom\supabase_tables_documentation.md 여기를 참고해서 필드 만 바꿔놔
-  그리고 연동 하면 되자나시발   그대로 !!!! 중국직원이 입력 해야되는거는 중국직원 입력 전용으로다가 시발년아 중국직원이 한글 보면 어떡해해 시발아 
-  
+  그리고 연동 하면 되자나   그대로 !!!! 중국직원이 입력 해야되는거는 중국직원 입력 전용으로다가 중국직원이 한글 보면 
+
 
 ### 검품감사 상세 (/staff/orders/inspection/[reservationNumber])
 ```typescript
@@ -347,6 +347,13 @@ export const LanguageToggle = () => {
 
 ### Phase 2 (상세 페이지)
 1. `/staff/orders/inspection/[reservationNumber]/page.tsx`
+
+
+
+
+
+
+
 2. `/staff/orders/market-research/[reservationNumber]/page.tsx`
 3. `/staff/orders/factory-contact/[reservationNumber]/page.tsx`
 

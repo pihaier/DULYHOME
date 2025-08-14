@@ -34,7 +34,7 @@
 | **confirmed_date** | date | YES | - | 확정일자 |
 | **inspection_days** | integer | YES | - | 검품일수 |
 | **inspection_report** | text | YES | - | 검품리포트 |
-| **inspection_summary** | text | YES | - | 검품요약 (Staff 입력) |
+| **inspection_summary** | text | YES | - | 검품요약 (Staff 입력) 
 | **pass_fail_status** | text | YES | - | 합격/불합격 (Staff 입력) |
 | **improvement_items** | jsonb | YES | - | 개선사항 (Staff 입력) |
 | **total_cost** | numeric | YES | - | 총비용 |

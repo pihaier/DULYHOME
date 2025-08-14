@@ -34,6 +34,7 @@ import CompanyInfoForm, {
 import { createClient } from '@/lib/supabase/client';
 import { createServiceClient } from '@/lib/supabase/service';
 import { useUser } from '@/lib/context/GlobalContext';
+import { translateInBackground } from '@/lib/utils/auto-translate';
 
 interface FormData {
   company_name: string;
@@ -185,6 +186,13 @@ export default function MarketResearchPage() {
       }
 
       setReservationNumber(newReservationNumber);
+
+      // 백그라운드에서 자동 번역 실행 (실패해도 무시)
+      translateInBackground({
+        table: 'market_research_requests',
+        recordId: application.id,
+        delay: 1000 // 1초 후 실행
+      });
 
       // 회사 정보 저장 (saveAsDefault 체크된 경우)
       if (saveAsDefaultCheckbox?.checked) {

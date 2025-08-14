@@ -538,13 +538,10 @@ export default function MarketResearchDetailPage() {
                         </TableRow>
                         <TableRow>
                           <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
-                            작업소요기간
-                          </TableCell>
-                          <TableCell>{data?.work_period || '조사중'}</TableCell>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
                             박스당 제품개수
                           </TableCell>
                           <TableCell>{data?.units_per_box || '조사중'}개</TableCell>
+                          <TableCell colSpan={2}></TableCell>
                         </TableRow>
                         <TableRow>
                           <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>

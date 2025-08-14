@@ -32,6 +32,7 @@ import FileUpload from '@/app/components/forms/form-elements/FileUpload';
 import CompanyInfoForm from '@/app/components/forms/form-elements/CompanyInfoForm';
 import { createClient } from '@/lib/supabase/client';
 import { useUser } from '@/lib/context/GlobalContext';
+import { translateInBackground } from '@/lib/utils/auto-translate';
 
 interface FormData {
   company_name: string;
@@ -251,25 +252,38 @@ export default function FactoryContactPage() {
       }
 
       // factory_contact_requests 테이블에 저장
-      const { error: insertError } = await supabase.from('factory_contact_requests').insert({
-        reservation_number: newReservationNumber,
-        user_id: user!.id,
-        company_name: formData.company_name,
-        contact_person: formData.contact_person,
-        contact_phone: formData.contact_phone,
-        contact_email: formData.contact_email,
-        factory_name: formData.factory_name,
-        factory_contact_person: formData.factory_contact_person,
-        factory_contact_phone: formData.factory_contact_phone,
-        factory_address: formData.factory_address,
-        product_name: formData.product_name,
-        product_description: formData.product_description,
-        request_type: requestTypes,
-        special_requirements: formData.special_requirements,
-        files: uploadedFiles,
-      });
+      const { data: application, error: insertError } = await supabase
+        .from('factory_contact_requests')
+        .insert({
+          reservation_number: newReservationNumber,
+          user_id: user!.id,
+          company_name: formData.company_name,
+          contact_person: formData.contact_person,
+          contact_phone: formData.contact_phone,
+          contact_email: formData.contact_email,
+          factory_name: formData.factory_name,
+          factory_contact_person: formData.factory_contact_person,
+          factory_contact_phone: formData.factory_contact_phone,
+          factory_address: formData.factory_address,
+          product_name: formData.product_name,
+          product_description: formData.product_description,
+          request_type: requestTypes,
+          special_requirements: formData.special_requirements,
+          files: uploadedFiles,
+        })
+        .select()
+        .single();
 
       if (insertError) throw insertError;
+
+      // 백그라운드에서 자동 번역 실행 (실패해도 무시)
+      if (application?.id) {
+        translateInBackground({
+          table: 'factory_contact_requests',
+          recordId: application.id,
+          delay: 1000 // 1초 후 실행
+        });
+      }
 
       setShowSuccessModal(true);
     } catch (error) {
