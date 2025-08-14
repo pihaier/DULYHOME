@@ -72,24 +72,20 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
   const [loading, setLoading] = useState(false);
   const [selectedCode, setSelectedCode] = useState<string | null>(null);
   const [explanation, setExplanation] = useState<SearchExplanation | null>(null);
-  
+
   // 단계별 진행 상황 state
   const [activeStep, setActiveStep] = useState(0);
   const [stepProgress, setStepProgress] = useState<StepProgress[]>([]);
   const [currentStepInfo, setCurrentStepInfo] = useState<string>('');
-  
+
   // 전체 10자리 코드 목록과 평가
   const [allItems, setAllItems] = useState<any[]>([]);
   const [evaluations, setEvaluations] = useState<any[]>([]);
-  
+
   // AbortController를 위한 ref
   const abortControllerRef = React.useRef<AbortController | null>(null);
 
-  const steps = [
-    '97개 류(Chapter) 선택',
-    '4자리 호(Heading) 선택',
-    '10자리 세번(Item) 최종 선택',
-  ];
+  const steps = ['97개 류(Chapter) 선택', '4자리 호(Heading) 선택', '10자리 세번(Item) 최종 선택'];
 
   // SSE를 사용한 검색 실행
   const handleSearchWithSSE = async () => {
@@ -122,20 +118,25 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
 
     try {
       const supabase = createClient();
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      const response = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/hs-code-classifier`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session?.access_token || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
-        },
-        body: JSON.stringify({ 
-          productName: query,
-          stream: true // SSE 스트리밍 모드 활성화
-        }),
-        signal: abortControllerRef.current.signal
-      });
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/hs-code-classifier`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${session?.access_token || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
+          },
+          body: JSON.stringify({
+            productName: query,
+            stream: true, // SSE 스트리밍 모드 활성화
+          }),
+          signal: abortControllerRef.current.signal,
+        }
+      );
 
       if (!response.ok) {
         throw new Error('검색 요청 실패');
@@ -149,14 +150,14 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
       }
 
       let buffer = '';
-      
+
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
 
         const chunk = decoder.decode(value, { stream: true });
         buffer += chunk;
-        
+
         const lines = buffer.split('\n');
         buffer = lines.pop() || ''; // 마지막 불완전한 줄은 버퍼에 남김
 
@@ -164,29 +165,29 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
           if (line.startsWith('data: ')) {
             try {
               const data = JSON.parse(line.slice(6));
-              
+
               switch (data.type) {
                 case 'start':
                   // 분류 시작
                   break;
-                  
+
                 case 'step':
                   if (data.data && typeof data.data.step === 'number') {
                     setActiveStep(data.data.step - 1);
                     setCurrentStepInfo(data.data.description || '');
                   }
                   break;
-                  
+
                 case 'info':
-                  setCurrentStepInfo(prev => `${prev} - ${data.data.message}`);
+                  setCurrentStepInfo((prev) => `${prev} - ${data.data.message}`);
                   break;
-                  
+
                 case 'progress':
                   if (data.data && typeof data.data.step === 'number') {
                     const progressData = data.data as StepProgress;
                     // 중복 방지 - 같은 step이 이미 있으면 업데이트만
-                    setStepProgress(prev => {
-                      const existing = prev.findIndex(p => p.step === progressData.step);
+                    setStepProgress((prev) => {
+                      const existing = prev.findIndex((p) => p.step === progressData.step);
                       if (existing >= 0) {
                         const updated = [...prev];
                         updated[existing] = progressData;
@@ -195,7 +196,7 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
                       return [...prev, progressData];
                     });
                     setActiveStep(progressData.step);
-                    
+
                     // 3단계에서 전체 10자리 목록 저장
                     if (progressData.step === 3 && data.data.allItems) {
                       setAllItems(data.data.allItems);
@@ -203,16 +204,16 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
                     if (progressData.step === 3 && data.data.evaluations) {
                       setEvaluations(data.data.evaluations);
                     }
-                    
+
                     onNotify?.(progressData.message || `${progressData.step}단계 완료`, 'info');
                   }
                   break;
-                  
+
                 case 'complete':
                   // 최종 결과 처리
                   handleCompleteResult(data.data);
                   break;
-                  
+
                 case 'error':
                   throw new Error(data.data.message);
               }
@@ -234,12 +235,11 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
     }
   };
 
-
   // 완료 결과 처리
   const handleCompleteResult = (data: any) => {
     if (data?.hsCode) {
       let formattedRecommendations = [];
-      
+
       // 상위 5개 추천 (중복 제거)
       const seenCodes = new Set<string>();
       if (data.candidates && data.candidates.length > 0) {
@@ -254,26 +254,35 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
             hs_code: candidate.hsCode,
             name_ko: candidate.description || '',
             name_en: '',
-            category_name: candidate.rank === 1 ? '1순위' : candidate.rank === 2 ? '2순위' : candidate.rank === 3 ? '3순위' : `대안 ${index}`,
+            category_name:
+              candidate.rank === 1
+                ? '1순위'
+                : candidate.rank === 2
+                  ? '2순위'
+                  : candidate.rank === 3
+                    ? '3순위'
+                    : `대안 ${index}`,
             reason: candidate.reason || (index === 0 ? '최우선 추천' : '대체 가능'),
-            rank: candidate.rank || (index + 1),
+            rank: candidate.rank || index + 1,
           }));
       } else {
-        formattedRecommendations = [{
-          hs_code: data.hsCode,
-          name_ko: data.description || '',
-          name_en: '',
-          category_name: '1순위',
-          reason: data.reason || '최적 매칭',
-          rank: 1,
-        }];
+        formattedRecommendations = [
+          {
+            hs_code: data.hsCode,
+            name_ko: data.description || '',
+            name_en: '',
+            category_name: '1순위',
+            reason: data.reason || '최적 매칭',
+            rank: 1,
+          },
+        ];
       }
-      
+
       // 모든 10자리 코드와 평가 저장 (있는 경우)
       if (data.allItems) {
         setAllItems(data.allItems);
       }
-      
+
       if (data.evaluations) {
         setEvaluations(data.evaluations);
       }
@@ -283,11 +292,7 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
       if (data.hierarchy) {
         const hierarchy = data.hierarchy;
         // 3단계 분류로 업데이트
-        const pathParts = [
-          `${hierarchy.chapter}류`,
-          `${hierarchy.heading}호`,
-          `${data.hsCode}`
-        ];
+        const pathParts = [`${hierarchy.chapter}류`, `${hierarchy.heading}호`, `${data.hsCode}`];
         setExplanation({
           exact_match: false,
           difference: `분류 경로: ${pathParts.join(' → ')}`,
@@ -393,7 +398,7 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
                 {/* 단계별 진행 표시 */}
                 <Stepper activeStep={activeStep} orientation="vertical">
                   {steps.map((label, index) => {
-                    const stepData = stepProgress.find(p => p && p.step === index + 1);
+                    const stepData = stepProgress.find((p) => p && p.step === index + 1);
                     return (
                       <Step key={label}>
                         <StepLabel
@@ -411,11 +416,13 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
                           <Typography variant="body2" color="text.secondary">
                             {index === activeStep - 1 && currentStepInfo}
                           </Typography>
-                          {stepData?.candidates && Array.isArray(stepData.candidates) && stepData.candidates.length > 1 && (
-                            <Typography variant="caption" color="info.main">
-                              후보: {stepData.candidates.join(', ')}
-                            </Typography>
-                          )}
+                          {stepData?.candidates &&
+                            Array.isArray(stepData.candidates) &&
+                            stepData.candidates.length > 1 && (
+                              <Typography variant="caption" color="info.main">
+                                후보: {stepData.candidates.join(', ')}
+                              </Typography>
+                            )}
                         </StepContent>
                       </Step>
                     );
@@ -435,14 +442,14 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
               🎯 AI 분류 경로
             </Typography>
             <Stack spacing={1}>
-              {stepProgress.map((step, index) => (
+              {stepProgress.map((step, index) =>
                 step && step.step ? (
                   <Stack key={index} direction="column" spacing={0.5}>
                     <Stack direction="row" spacing={1} alignItems="center">
-                      <Chip 
-                        label={`${step.step}단계`} 
-                        size="small" 
-                        color="primary" 
+                      <Chip
+                        label={`${step.step}단계`}
+                        size="small"
+                        color="primary"
                         variant="outlined"
                       />
                       <Typography variant="body2">
@@ -456,12 +463,11 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
                     )}
                   </Stack>
                 ) : null
-              ))}
+              )}
             </Stack>
           </CardContent>
         </Card>
       )}
-
 
       {/* 검색 결과 */}
       {recommendations.length > 0 && (
@@ -471,7 +477,6 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
               "{query}"에 대한 상위 추천 HS코드 {recommendations.length}개
             </Typography>
           </Alert>
-
 
           <Card variant="outlined" sx={{ boxShadow: 2 }}>
             <List sx={{ p: 0 }}>
@@ -498,9 +503,25 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
                       primary={
                         <Stack direction="row" spacing={2} alignItems="center">
                           <Chip
-                            label={rec.rank === 1 ? '🏆 최종추천' : rec.rank === 2 ? '🥈 대안1' : rec.rank === 3 ? '🥉 대안2' : `대안${rec.rank-1}`}
+                            label={
+                              rec.rank === 1
+                                ? '🏆 최종추천'
+                                : rec.rank === 2
+                                  ? '🥈 대안1'
+                                  : rec.rank === 3
+                                    ? '🥉 대안2'
+                                    : `대안${rec.rank - 1}`
+                            }
                             size="small"
-                            color={rec.rank === 1 ? 'success' : rec.rank === 2 ? 'primary' : rec.rank === 3 ? 'secondary' : 'default'}
+                            color={
+                              rec.rank === 1
+                                ? 'success'
+                                : rec.rank === 2
+                                  ? 'primary'
+                                  : rec.rank === 3
+                                    ? 'secondary'
+                                    : 'default'
+                            }
                             variant={rec.rank === 1 ? 'filled' : 'outlined'}
                             sx={{
                               minWidth: rec.rank <= 3 ? 90 : 60,
@@ -518,11 +539,7 @@ export function HSCodeSimpleSearch({ onSelectHsCode, onReset, onNotify }: Props)
                               {rec.hs_code}
                             </Typography>
                             {rec.name_ko && (
-                              <Typography
-                                variant="body1"
-                                component="span"
-                                sx={{ ml: 2 }}
-                              >
+                              <Typography variant="body1" component="span" sx={{ ml: 2 }}>
                                 {rec.name_ko}
                               </Typography>
                             )}

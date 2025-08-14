@@ -191,7 +191,7 @@ export default function MarketResearchPage() {
       translateInBackground({
         table: 'market_research_requests',
         recordId: application.id,
-        delay: 1000 // 1초 후 실행
+        delay: 1000, // 1초 후 실행
       });
 
       // 회사 정보 저장 (saveAsDefault 체크된 경우)

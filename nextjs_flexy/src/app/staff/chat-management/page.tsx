@@ -75,7 +75,7 @@ export default function ChatManagementPage() {
 
   // 사이드바 토글 버튼 추가
   const toggleDrawer = () => setDrawerOpen(!drawerOpen);
-  
+
   // 중국 직원인지 확인
   const isChineseStaff = userProfile?.role === 'chinese_staff';
 
@@ -83,7 +83,7 @@ export default function ChatManagementPage() {
   const fetchOrders = async () => {
     try {
       setLoading(true);
-      
+
       // 모든 서비스 타입의 주문 가져오기 (현재 3가지만 구현됨)
       const tables = [
         { table: 'market_research_requests', type: 'market-research' },
@@ -149,13 +149,14 @@ export default function ChatManagementPage() {
       }
 
       // 날짜순 정렬
-      allOrders.sort((a, b) => 
-        new Date(b.last_message_time || b.created_at).getTime() - 
-        new Date(a.last_message_time || a.created_at).getTime()
+      allOrders.sort(
+        (a, b) =>
+          new Date(b.last_message_time || b.created_at).getTime() -
+          new Date(a.last_message_time || a.created_at).getTime()
       );
 
       setOrders(allOrders);
-      
+
       // 첫 번째 주문 선택
       if (allOrders.length > 0 && !selectedOrder) {
         handleOrderSelect(allOrders[0]);
@@ -170,16 +171,16 @@ export default function ChatManagementPage() {
   // 주문 선택
   const handleOrderSelect = async (order: Order) => {
     setSelectedOrder(order);
-    
+
     // 메시지를 읽음으로 표시 (더 간단한 방법)
     if (user?.id && order.unread_count && order.unread_count > 0) {
       try {
         // 해당 예약번호의 모든 메시지를 읽음으로 표시
         const { error } = await supabase
           .from('chat_messages')
-          .update({ 
-            is_read: true, 
-            read_at: new Date().toISOString() 
+          .update({
+            is_read: true,
+            read_at: new Date().toISOString(),
           })
           .eq('reservation_number', order.reservation_number)
           .neq('sender_id', user.id);
@@ -188,15 +189,13 @@ export default function ChatManagementPage() {
           console.error('Error marking messages as read:', error);
         } else {
           // 로컬 상태 업데이트
-          setOrders(prev => prev.map(o => 
-            o.id === order.id ? { ...o, unread_count: 0 } : o
-          ));
+          setOrders((prev) => prev.map((o) => (o.id === order.id ? { ...o, unread_count: 0 } : o)));
         }
       } catch (error) {
         console.error('Error marking messages as read:', error);
       }
     }
-    
+
     // 고객 프로필 가져오기
     try {
       const { data: orderData } = await supabase
@@ -224,7 +223,7 @@ export default function ChatManagementPage() {
     const mapping: { [key: string]: string } = {
       'market-research': 'market_research_requests',
       'factory-contact': 'factory_contact_requests',
-      'inspection': 'inspection_applications',
+      inspection: 'inspection_applications',
       // 'sampling': 'sampling_requests', // 아직 구현되지 않음
     };
     return mapping[serviceType] || 'market_research_requests';
@@ -235,7 +234,7 @@ export default function ChatManagementPage() {
     const names: { [key: string]: string } = {
       'market-research': isChineseStaff ? '市场调查' : '시장조사',
       'factory-contact': isChineseStaff ? '工厂联系' : '공장컨택',
-      'inspection': isChineseStaff ? '检品代理' : '검품대행',
+      inspection: isChineseStaff ? '检品代理' : '검품대행',
       // 'sampling': isChineseStaff ? '样品进口' : '샘플수입', // 아직 구현되지 않음
     };
     return names[type] || type;
@@ -244,27 +243,28 @@ export default function ChatManagementPage() {
   // 상태별 색상
   const getStatusColor = (status: string) => {
     const colors: { [key: string]: any } = {
-      'submitted': 'info',
-      'quoted': 'warning',
-      'paid': 'success',
-      'in_progress': 'primary',
-      'completed': 'default',
-      'cancelled': 'error',
+      submitted: 'info',
+      quoted: 'warning',
+      paid: 'success',
+      in_progress: 'primary',
+      completed: 'default',
+      cancelled: 'error',
     };
     return colors[status] || 'default';
   };
 
   useEffect(() => {
     fetchOrders();
-    
+
     // Realtime 구독 (새 메시지 알림)
     const channel = supabase
       .channel('orders_update')
-      .on('postgres_changes', 
+      .on(
+        'postgres_changes',
         { event: 'INSERT', schema: 'public', table: 'chat_messages' },
         (payload) => {
           const newMessage = payload.new as any;
-          
+
           // 자기가 보낸 메시지가 아닌 경우에만 알림
           if (newMessage.sender_id !== user?.id) {
             // 브라우저 알림 (권한이 있는 경우)
@@ -275,11 +275,11 @@ export default function ChatManagementPage() {
                 tag: newMessage.reservation_number,
               });
             }
-            
+
             // 알림 소리 재생 (옵션)
             const audio = new Audio('/notification.mp3');
             audio.play().catch(() => {});
-            
+
             // 주문 목록 새로고침
             fetchOrders();
           }
@@ -298,9 +298,10 @@ export default function ChatManagementPage() {
   }, [user?.id]);
 
   // 검색 필터링
-  const filteredOrders = orders.filter(order => 
-    order.company_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    order.reservation_number.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredOrders = orders.filter(
+    (order) =>
+      order.company_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      order.reservation_number.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -326,202 +327,205 @@ export default function ChatManagementPage() {
             mr: drawerOpen ? 2 : 0,
           }}
         >
-        <Box sx={{ p: 2 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Typography variant="h6" gutterBottom>
-              {isChineseStaff ? '订单管理' : '주문 관리'}
-            </Typography>
-            <IconButton onClick={toggleDrawer} size="small">
-              <CloseIcon />
-            </IconButton>
+          <Box sx={{ p: 2 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Typography variant="h6" gutterBottom>
+                {isChineseStaff ? '订单管理' : '주문 관리'}
+              </Typography>
+              <IconButton onClick={toggleDrawer} size="small">
+                <CloseIcon />
+              </IconButton>
+            </Box>
+
+            {/* 검색 */}
+            <TextField
+              fullWidth
+              size="small"
+              placeholder={isChineseStaff ? '搜索公司名或预约号' : '회사명 또는 예약번호 검색'}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              sx={{ mb: 2 }}
+            />
           </Box>
-          
-          {/* 검색 */}
-          <TextField
-            fullWidth
-            size="small"
-            placeholder={isChineseStaff ? "搜索公司名或预约号" : "회사명 또는 예약번호 검색"}
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            sx={{ mb: 2 }}
-          />
-        </Box>
 
-        <Divider />
+          <Divider />
 
-        {/* 주문 목록 */}
-        <List sx={{ overflow: 'auto', flex: 1 }}>
-          {loading ? (
-            <ListItem>
-              <ListItemText primary={isChineseStaff ? "加载中..." : "로딩 중..."} />
-            </ListItem>
-          ) : filteredOrders.length === 0 ? (
-            <ListItem>
-              <ListItemText primary={isChineseStaff ? "没有订单" : "주문이 없습니다."} />
-            </ListItem>
-          ) : (
-            filteredOrders.map((order) => (
-              <ListItemButton
-                key={order.id}
-                selected={selectedOrder?.id === order.id}
-                onClick={() => handleOrderSelect(order)}
-                sx={{
-                  borderLeft: order.unread_count ? '4px solid' : 'none',
-                  borderColor: 'error.main',
-                }}
-              >
-                <ListItemIcon>
-                  <Badge badgeContent={order.unread_count} color="error">
-                    <Avatar sx={{ width: 32, height: 32 }}>
-                      {order.company_name[0]}
-                    </Avatar>
-                  </Badge>
-                </ListItemIcon>
-                <ListItemText
-                  primary={
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <Typography variant="subtitle2">
-                        {order.company_name}
-                      </Typography>
-                      <Chip
-                        label={getServiceTypeName(order.service_type)}
-                        size="small"
-                        color="primary"
-                        variant="outlined"
-                      />
-                    </Box>
-                  }
-                  secondary={
-                    <>
-                      <Typography variant="caption" display="block">
-                        {order.reservation_number}
-                      </Typography>
-                      {order.last_message && (
-                        <Typography
-                          variant="caption"
-                          sx={{
-                            display: 'block',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            whiteSpace: 'nowrap',
-                            color: order.unread_count ? 'text.primary' : 'text.secondary',
-                            fontWeight: order.unread_count ? 'bold' : 'normal',
-                          }}
-                        >
-                          {order.last_message}
+          {/* 주문 목록 */}
+          <List sx={{ overflow: 'auto', flex: 1 }}>
+            {loading ? (
+              <ListItem>
+                <ListItemText primary={isChineseStaff ? '加载中...' : '로딩 중...'} />
+              </ListItem>
+            ) : filteredOrders.length === 0 ? (
+              <ListItem>
+                <ListItemText primary={isChineseStaff ? '没有订单' : '주문이 없습니다.'} />
+              </ListItem>
+            ) : (
+              filteredOrders.map((order) => (
+                <ListItemButton
+                  key={order.id}
+                  selected={selectedOrder?.id === order.id}
+                  onClick={() => handleOrderSelect(order)}
+                  sx={{
+                    borderLeft: order.unread_count ? '4px solid' : 'none',
+                    borderColor: 'error.main',
+                  }}
+                >
+                  <ListItemIcon>
+                    <Badge badgeContent={order.unread_count} color="error">
+                      <Avatar sx={{ width: 32, height: 32 }}>{order.company_name[0]}</Avatar>
+                    </Badge>
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <Typography variant="subtitle2">{order.company_name}</Typography>
+                        <Chip
+                          label={getServiceTypeName(order.service_type)}
+                          size="small"
+                          color="primary"
+                          variant="outlined"
+                        />
+                      </Box>
+                    }
+                    secondary={
+                      <>
+                        <Typography variant="caption" display="block">
+                          {order.reservation_number}
                         </Typography>
-                      )}
-                      <Typography variant="caption" color="text.secondary">
-                        {order.last_message_time
-                          ? new Date(order.last_message_time).toLocaleString('ko-KR')
-                          : new Date(order.created_at).toLocaleString('ko-KR')}
-                      </Typography>
-                    </>
-                  }
-                />
-                <Chip
-                  label={order.status}
-                  size="small"
-                  color={getStatusColor(order.status)}
-                />
-              </ListItemButton>
-            ))
-          )}
-        </List>
-      </Paper>
+                        {order.last_message && (
+                          <Typography
+                            variant="caption"
+                            sx={{
+                              display: 'block',
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                              whiteSpace: 'nowrap',
+                              color: order.unread_count ? 'text.primary' : 'text.secondary',
+                              fontWeight: order.unread_count ? 'bold' : 'normal',
+                            }}
+                          >
+                            {order.last_message}
+                          </Typography>
+                        )}
+                        <Typography variant="caption" color="text.secondary">
+                          {order.last_message_time
+                            ? new Date(order.last_message_time).toLocaleString('ko-KR')
+                            : new Date(order.created_at).toLocaleString('ko-KR')}
+                        </Typography>
+                      </>
+                    }
+                  />
+                  <Chip label={order.status} size="small" color={getStatusColor(order.status)} />
+                </ListItemButton>
+              ))
+            )}
+          </List>
+        </Paper>
 
-      {/* 메인 컨텐츠 영역 */}
-      <Box
-        sx={{
-          flexGrow: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          overflow: 'hidden',
-        }}
-      >
-        {selectedOrder ? (
-          <>
-            {/* 상단 헤더 */}
-            <Paper sx={{ mb: 2 }}>
-              <Toolbar sx={{ px: 2 }}>
-                <Box sx={{ flexGrow: 1 }}>
-                  <Typography variant="h6">
-                    {selectedOrder.company_name}
-                  </Typography>
-                  <Typography variant="caption" color="text.secondary">
-                    {selectedOrder.reservation_number} | {getServiceTypeName(selectedOrder.service_type)}
-                  </Typography>
-                </Box>
-                
-                {/* 고객 프로필 및 주문 상세 버튼 */}
-                <Stack direction="row" spacing={1}>
-                  {customerProfile && (
+        {/* 메인 컨텐츠 영역 */}
+        <Box
+          sx={{
+            flexGrow: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden',
+          }}
+        >
+          {selectedOrder ? (
+            <>
+              {/* 상단 헤더 */}
+              <Paper sx={{ mb: 2 }}>
+                <Toolbar sx={{ px: 2 }}>
+                  <Box sx={{ flexGrow: 1 }}>
+                    <Typography variant="h6">{selectedOrder.company_name}</Typography>
+                    <Typography variant="caption" color="text.secondary">
+                      {selectedOrder.reservation_number} |{' '}
+                      {getServiceTypeName(selectedOrder.service_type)}
+                    </Typography>
+                  </Box>
+
+                  {/* 고객 프로필 및 주문 상세 버튼 */}
+                  <Stack direction="row" spacing={1}>
+                    {customerProfile && (
+                      <Button
+                        startIcon={<PersonIcon />}
+                        variant="outlined"
+                        size="small"
+                        onClick={() => {
+                          // 고객 프로필 모달 또는 페이지 이동
+                          const labels = isChineseStaff
+                            ? { company: '公司', person: '负责人', phone: '电话', email: '邮箱' }
+                            : {
+                                company: '회사',
+                                person: '담당자',
+                                phone: '연락처',
+                                email: '이메일',
+                              };
+                          alert(
+                            `${isChineseStaff ? '客户信息' : '고객 정보'}:\n${labels.company}: ${customerProfile.company_name}\n${labels.person}: ${customerProfile.contact_person}\n${labels.phone}: ${customerProfile.phone}\n${labels.email}: ${customerProfile.email || 'N/A'}`
+                          );
+                        }}
+                      >
+                        {isChineseStaff ? '客户信息' : '고객 정보'}
+                      </Button>
+                    )}
                     <Button
-                      startIcon={<PersonIcon />}
+                      startIcon={<OrderIcon />}
                       variant="outlined"
                       size="small"
                       onClick={() => {
-                        // 고객 프로필 모달 또는 페이지 이동
-                        const labels = isChineseStaff 
-                          ? { company: '公司', person: '负责人', phone: '电话', email: '邮箱' }
-                          : { company: '회사', person: '담당자', phone: '연락처', email: '이메일' };
-                        alert(`${isChineseStaff ? '客户信息' : '고객 정보'}:\n${labels.company}: ${customerProfile.company_name}\n${labels.person}: ${customerProfile.contact_person}\n${labels.phone}: ${customerProfile.phone}\n${labels.email}: ${customerProfile.email || 'N/A'}`);
+                        // 주문 상세 페이지로 이동
+                        const detailPath = `/dashboard/orders/${selectedOrder.service_type}/${selectedOrder.reservation_number}`;
+                        router.push(detailPath);
                       }}
                     >
-                      {isChineseStaff ? '客户信息' : '고객 정보'}
+                      {isChineseStaff ? '订单详情' : '주문 상세'}
                     </Button>
-                  )}
-                  <Button
-                    startIcon={<OrderIcon />}
-                    variant="outlined"
-                    size="small"
-                    onClick={() => {
-                      // 주문 상세 페이지로 이동
-                      const detailPath = `/dashboard/orders/${selectedOrder.service_type}/${selectedOrder.reservation_number}`;
-                      router.push(detailPath);
-                    }}
-                  >
-                    {isChineseStaff ? '订单详情' : '주문 상세'}
-                  </Button>
-                  <Button
-                    startIcon={<ViewIcon />}
-                    variant="outlined"
-                    size="small"
-                    onClick={() => window.open(`/dashboard/orders/${selectedOrder.service_type}/${selectedOrder.reservation_number}`, '_blank')}
-                  >
-                    {isChineseStaff ? '在新窗口打开' : '새 창에서 보기'}
-                  </Button>
-                </Stack>
-              </Toolbar>
-            </Paper>
+                    <Button
+                      startIcon={<ViewIcon />}
+                      variant="outlined"
+                      size="small"
+                      onClick={() =>
+                        window.open(
+                          `/dashboard/orders/${selectedOrder.service_type}/${selectedOrder.reservation_number}`,
+                          '_blank'
+                        )
+                      }
+                    >
+                      {isChineseStaff ? '在新窗口打开' : '새 창에서 보기'}
+                    </Button>
+                  </Stack>
+                </Toolbar>
+              </Paper>
 
-            {/* 채팅 패널 */}
-            <Box sx={{ flex: 1, overflow: 'hidden' }}>
-              <ChatPanel
-                key={selectedOrder.reservation_number}
-                reservationNumber={selectedOrder.reservation_number}
-                serviceType={selectedOrder.service_type}
-              />
+              {/* 채팅 패널 */}
+              <Box sx={{ flex: 1, overflow: 'hidden' }}>
+                <ChatPanel
+                  key={selectedOrder.reservation_number}
+                  reservationNumber={selectedOrder.reservation_number}
+                  serviceType={selectedOrder.service_type}
+                />
+              </Box>
+            </>
+          ) : (
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: '100%',
+                flexDirection: 'column',
+                gap: 2,
+              }}
+            >
+              <ChatIcon sx={{ fontSize: 60, color: 'text.secondary' }} />
+              <Typography variant="h6" color="text.secondary">
+                {isChineseStaff ? '选择订单开始聊天' : '주문을 선택하여 채팅을 시작하세요'}
+              </Typography>
             </Box>
-          </>
-        ) : (
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              height: '100%',
-              flexDirection: 'column',
-              gap: 2,
-            }}
-          >
-            <ChatIcon sx={{ fontSize: 60, color: 'text.secondary' }} />
-            <Typography variant="h6" color="text.secondary">
-              {isChineseStaff ? '选择订单开始聊天' : '주문을 선택하여 채팅을 시작하세요'}
-            </Typography>
-          </Box>
-        )}
-      </Box>
+          )}
+        </Box>
       </Box>
     </Box>
   );

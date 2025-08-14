@@ -232,10 +232,10 @@ export default function FactoryContactDetailPage() {
 
     // types가 없거나 null인 경우 빈 배열 반환
     if (!types) return [];
-    
+
     // 문자열인 경우 배열로 변환
     const typeArray = Array.isArray(types) ? types : [types];
-    
+
     return typeArray.map((type) => typeMap[type] || type);
   };
 

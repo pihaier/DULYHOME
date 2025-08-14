@@ -281,7 +281,7 @@ export default function FactoryContactPage() {
         translateInBackground({
           table: 'factory_contact_requests',
           recordId: application.id,
-          delay: 1000 // 1초 후 실행
+          delay: 1000, // 1초 후 실행
         });
       }
 

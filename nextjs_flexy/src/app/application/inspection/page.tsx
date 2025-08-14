@@ -213,7 +213,7 @@ export default function InspectionApplicationPage() {
         translateInBackground({
           table: 'inspection_applications',
           recordId: application.id,
-          delay: 1000 // 1초 후 실행
+          delay: 1000, // 1초 후 실행
         });
       }
 

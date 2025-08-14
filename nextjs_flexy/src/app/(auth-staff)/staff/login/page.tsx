@@ -1,13 +1,13 @@
 'use client';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { 
-  Grid, 
-  Box, 
-  Stack, 
-  Typography, 
-  Button, 
-  ToggleButton, 
+import {
+  Grid,
+  Box,
+  Stack,
+  Typography,
+  Button,
+  ToggleButton,
   ToggleButtonGroup,
   Dialog,
   DialogTitle,
@@ -52,64 +52,69 @@ export default function StaffLogin() {
   // 이미 로그인한 직원은 대시보드로 리다이렉트
   useEffect(() => {
     if (user && userProfile) {
-      if (userProfile.role === 'korean_team' || userProfile.role === 'chinese_staff' || userProfile.role === 'admin') {
+      if (
+        userProfile.role === 'korean_team' ||
+        userProfile.role === 'chinese_staff' ||
+        userProfile.role === 'admin'
+      ) {
         router.push('/staff');
       }
     }
   }, [user, userProfile, router]);
 
-  const handleLanguageChange = (event: React.MouseEvent<HTMLElement>, newLanguage: 'ko' | 'zh' | null) => {
+  const handleLanguageChange = (
+    event: React.MouseEvent<HTMLElement>,
+    newLanguage: 'ko' | 'zh' | null
+  ) => {
     if (newLanguage !== null) {
       setLanguage(newLanguage);
     }
   };
 
-  const getText = (ko: string, zh: string) => language === 'ko' ? ko : zh;
+  const getText = (ko: string, zh: string) => (language === 'ko' ? ko : zh);
 
   const handleRegisterSubmit = async () => {
     setRegisterError('');
-    
+
     // 유효성 검사
     if (registerForm.password !== registerForm.confirmPassword) {
       setRegisterError(getText('비밀번호가 일치하지 않습니다.', '密码不匹配'));
       return;
     }
-    
+
     if (registerForm.password.length < 6) {
       setRegisterError(getText('비밀번호는 최소 6자 이상이어야 합니다.', '密码至少需要6个字符'));
       return;
     }
-    
+
     setRegisterLoading(true);
-    
+
     try {
       // 1. 회원가입
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: registerForm.email,
         password: registerForm.password,
       });
-      
+
       if (authError) throw authError;
-      
+
       // 2. 프로필 생성
       if (authData.user) {
-        const { error: profileError } = await supabase
-          .from('user_profiles')
-          .insert({
-            user_id: authData.user.id,
-            email: registerForm.email,
-            company_name: '두리무역',  // 자동으로 두리무역 설정
-            contact_person: registerForm.contact_person,
-            phone: registerForm.phone,
-            role: registerForm.role,
-            department: registerForm.department,
-            approval_status: 'pending', // 직원은 승인 대기
-            language_preference: language,
-          });
-        
+        const { error: profileError } = await supabase.from('user_profiles').insert({
+          user_id: authData.user.id,
+          email: registerForm.email,
+          company_name: '두리무역', // 자동으로 두리무역 설정
+          contact_person: registerForm.contact_person,
+          phone: registerForm.phone,
+          role: registerForm.role,
+          department: registerForm.department,
+          approval_status: 'pending', // 직원은 승인 대기
+          language_preference: language,
+        });
+
         if (profileError) throw profileError;
       }
-      
+
       setRegisterSuccess(true);
       setTimeout(() => {
         setRegisterModalOpen(false);
@@ -126,16 +131,17 @@ export default function StaffLogin() {
       }, 3000);
     } catch (error: any) {
       console.error('Registration error:', error);
-      setRegisterError(
-        error.message || getText('등록 중 오류가 발생했습니다.', '注册时发生错误')
-      );
+      setRegisterError(error.message || getText('등록 중 오류가 발생했습니다.', '注册时发生错误'));
     } finally {
       setRegisterLoading(false);
     }
   };
 
   return (
-    <PageContainer title={getText("직원 로그인", "员工登录")} description={getText("두리무역 직원 로그인 페이지", "杜立贸易员工登录页面")}>
+    <PageContainer
+      title={getText('직원 로그인', '员工登录')}
+      description={getText('두리무역 직원 로그인 페이지', '杜立贸易员工登录页面')}
+    >
       <Grid container spacing={0} justifyContent="center" sx={{ height: '100vh' }}>
         <Grid
           sx={{
@@ -280,18 +286,18 @@ export default function StaffLogin() {
         >
           <Box p={4}>
             <AuthLogin
-              title={getText("직원 로그인", "员工登录")}
+              title={getText('직원 로그인', '员工登录')}
               staffLogin={true}
               subtext={
                 <Typography variant="subtitle1" color="textSecondary" mb={1}>
-                  {getText("두리무역 직원 전용 로그인", "杜立贸易员工专用登录")}
+                  {getText('두리무역 직원 전용 로그인', '杜立贸易员工专用登录')}
                 </Typography>
               }
               subtitle={
                 <Stack spacing={2} mt={3}>
                   <Stack direction="row" spacing={1}>
                     <Typography color="textSecondary" variant="body2">
-                      {getText("계정이 없으신가요?", "没有账号？")}
+                      {getText('계정이 없으신가요?', '没有账号？')}
                     </Typography>
                     <Typography
                       component="span"
@@ -303,12 +309,12 @@ export default function StaffLogin() {
                       }}
                       onClick={() => setRegisterModalOpen(true)}
                     >
-                      {getText("직원 등록 요청", "申请员工注册")}
+                      {getText('직원 등록 요청', '申请员工注册')}
                     </Typography>
                   </Stack>
                   <Stack direction="row" spacing={1}>
                     <Typography color="textSecondary" variant="body2">
-                      {getText("고객이신가요?", "您是客户吗？")}
+                      {getText('고객이신가요?', '您是客户吗？')}
                     </Typography>
                     <Typography
                       component={Link}
@@ -319,24 +325,24 @@ export default function StaffLogin() {
                         color: 'secondary.main',
                       }}
                     >
-                      {getText("고객 로그인으로 이동", "前往客户登录")}
+                      {getText('고객 로그인으로 이동', '前往客户登录')}
                     </Typography>
                   </Stack>
                 </Stack>
               }
-              loginButtonText={getText("로그인", "登录")}
-              emailLabel={getText("이메일", "电子邮箱")}
-              passwordLabel={getText("비밀번호", "密码")}
-              rememberMeLabel={getText("로그인 유지", "保持登录")}
+              loginButtonText={getText('로그인', '登录')}
+              emailLabel={getText('이메일', '电子邮箱')}
+              passwordLabel={getText('비밀번호', '密码')}
+              rememberMeLabel={getText('로그인 유지', '保持登录')}
               hideForgotPassword={true}
             />
           </Box>
         </Grid>
       </Grid>
-      
+
       {/* 직원 등록 요청 모달 */}
-      <Dialog 
-        open={registerModalOpen} 
+      <Dialog
+        open={registerModalOpen}
         onClose={() => !registerLoading && setRegisterModalOpen(false)}
         maxWidth="sm"
         fullWidth
@@ -344,107 +350,105 @@ export default function StaffLogin() {
         <DialogTitle>
           <Stack direction="row" alignItems="center" spacing={1}>
             <PersonAddIcon color="primary" />
-            <Typography variant="h6">
-              {getText("직원 등록 요청", "申请员工注册")}
-            </Typography>
+            <Typography variant="h6">{getText('직원 등록 요청', '申请员工注册')}</Typography>
           </Stack>
         </DialogTitle>
-        
+
         <DialogContent>
           {registerSuccess ? (
             <Alert severity="success" sx={{ mt: 2 }}>
               {getText(
-                "등록 요청이 완료되었습니다. 관리자 승인 후 로그인하실 수 있습니다.",
-                "注册申请已完成。管理员批准后即可登录。"
+                '등록 요청이 완료되었습니다. 관리자 승인 후 로그인하실 수 있습니다.',
+                '注册申请已完成。管理员批准后即可登录。'
               )}
             </Alert>
           ) : (
             <Stack spacing={2} sx={{ mt: 2 }}>
-              {registerError && (
-                <Alert severity="error">{registerError}</Alert>
-              )}
-              
+              {registerError && <Alert severity="error">{registerError}</Alert>}
+
               <TextField
-                label={getText("이메일", "电子邮箱")}
+                label={getText('이메일', '电子邮箱')}
                 type="email"
                 fullWidth
                 value={registerForm.email}
-                onChange={(e) => setRegisterForm({...registerForm, email: e.target.value})}
+                onChange={(e) => setRegisterForm({ ...registerForm, email: e.target.value })}
                 disabled={registerLoading}
                 required
               />
-              
+
               <TextField
-                label={getText("비밀번호", "密码")}
+                label={getText('비밀번호', '密码')}
                 type="password"
                 fullWidth
                 value={registerForm.password}
-                onChange={(e) => setRegisterForm({...registerForm, password: e.target.value})}
+                onChange={(e) => setRegisterForm({ ...registerForm, password: e.target.value })}
                 disabled={registerLoading}
                 required
-                helperText={getText("최소 6자 이상", "至少6个字符")}
+                helperText={getText('최소 6자 이상', '至少6个字符')}
               />
-              
+
               <TextField
-                label={getText("비밀번호 확인", "确认密码")}
+                label={getText('비밀번호 확인', '确认密码')}
                 type="password"
                 fullWidth
                 value={registerForm.confirmPassword}
-                onChange={(e) => setRegisterForm({...registerForm, confirmPassword: e.target.value})}
+                onChange={(e) =>
+                  setRegisterForm({ ...registerForm, confirmPassword: e.target.value })
+                }
                 disabled={registerLoading}
                 required
               />
-              
+
               <TextField
-                label={getText("담당자명", "负责人姓名")}
+                label={getText('담당자명', '负责人姓名')}
                 fullWidth
                 value={registerForm.contact_person}
-                onChange={(e) => setRegisterForm({...registerForm, contact_person: e.target.value})}
+                onChange={(e) =>
+                  setRegisterForm({ ...registerForm, contact_person: e.target.value })
+                }
                 disabled={registerLoading}
                 required
               />
-              
+
               <TextField
-                label={getText("연락처", "联系电话")}
+                label={getText('연락처', '联系电话')}
                 fullWidth
                 value={registerForm.phone}
-                onChange={(e) => setRegisterForm({...registerForm, phone: e.target.value})}
+                onChange={(e) => setRegisterForm({ ...registerForm, phone: e.target.value })}
                 disabled={registerLoading}
                 required
                 placeholder="010-1234-5678"
               />
-              
+
               <FormControl fullWidth required>
-                <InputLabel>{getText("직원 구분", "员工类型")}</InputLabel>
+                <InputLabel>{getText('직원 구분', '员工类型')}</InputLabel>
                 <Select
                   value={registerForm.role}
-                  onChange={(e) => setRegisterForm({...registerForm, role: e.target.value as any})}
+                  onChange={(e) =>
+                    setRegisterForm({ ...registerForm, role: e.target.value as any })
+                  }
                   disabled={registerLoading}
-                  label={getText("직원 구분", "员工类型")}
+                  label={getText('직원 구분', '员工类型')}
                 >
-                  <MenuItem value="korean_team">
-                    {getText("한국팀", "韩国团队")}
-                  </MenuItem>
-                  <MenuItem value="chinese_staff">
-                    {getText("중국 직원", "中国员工")}
-                  </MenuItem>
+                  <MenuItem value="korean_team">{getText('한국팀', '韩国团队')}</MenuItem>
+                  <MenuItem value="chinese_staff">{getText('중국 직원', '中国员工')}</MenuItem>
                 </Select>
               </FormControl>
-              
+
               <TextField
-                label={getText("부서", "部门")}
+                label={getText('부서', '部门')}
                 fullWidth
                 value={registerForm.department}
-                onChange={(e) => setRegisterForm({...registerForm, department: e.target.value})}
+                onChange={(e) => setRegisterForm({ ...registerForm, department: e.target.value })}
                 disabled={registerLoading}
-                placeholder={getText("예: 무역팀, 영업팀", "例：贸易部、销售部")}
+                placeholder={getText('예: 무역팀, 영업팀', '例：贸易部、销售部')}
               />
             </Stack>
           )}
         </DialogContent>
-        
+
         <DialogActions>
-          <Button 
+          <Button
             onClick={() => {
               setRegisterModalOpen(false);
               setRegisterError('');
@@ -452,10 +456,10 @@ export default function StaffLogin() {
             }}
             disabled={registerLoading}
           >
-            {getText("취소", "取消")}
+            {getText('취소', '取消')}
           </Button>
           {!registerSuccess && (
-            <Button 
+            <Button
               onClick={handleRegisterSubmit}
               variant="contained"
               disabled={
@@ -470,7 +474,7 @@ export default function StaffLogin() {
               {registerLoading ? (
                 <CircularProgress size={24} color="inherit" />
               ) : (
-                getText("등록 요청", "提交申请")
+                getText('등록 요청', '提交申请')
               )}
             </Button>
           )}

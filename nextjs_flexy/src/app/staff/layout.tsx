@@ -49,7 +49,7 @@ export default function StaffLayout({ children }: { children: React.ReactNode })
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { user, userProfile } = useUser();
   const supabase = createClient();
-  
+
   // 중국 직원인지 확인
   const isChineseStaff = userProfile?.role === 'chinese_staff';
 
@@ -116,7 +116,7 @@ export default function StaffLayout({ children }: { children: React.ReactNode })
   ];
 
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [openMenus, setOpenMenus] = useState<{[key: string]: boolean}>({});
+  const [openMenus, setOpenMenus] = useState<{ [key: string]: boolean }>({});
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -135,9 +135,9 @@ export default function StaffLayout({ children }: { children: React.ReactNode })
   };
 
   const handleMenuToggle = (path: string) => {
-    setOpenMenus(prev => ({
+    setOpenMenus((prev) => ({
       ...prev,
-      [path]: !prev[path]
+      [path]: !prev[path],
     }));
   };
 
@@ -171,8 +171,12 @@ export default function StaffLayout({ children }: { children: React.ReactNode })
           <React.Fragment key={item.path}>
             <ListItem disablePadding sx={{ mb: 0.5 }}>
               <ListItemButton
-                onClick={() => item.children ? handleMenuToggle(item.path) : handleNavigation(item.path)}
-                selected={!item.children && (pathname === item.path || pathname.startsWith(item.path + '/'))}
+                onClick={() =>
+                  item.children ? handleMenuToggle(item.path) : handleNavigation(item.path)
+                }
+                selected={
+                  !item.children && (pathname === item.path || pathname.startsWith(item.path + '/'))
+                }
                 sx={{
                   borderRadius: 2,
                   '&.Mui-selected': {
@@ -190,15 +194,17 @@ export default function StaffLayout({ children }: { children: React.ReactNode })
                 <ListItemIcon
                   sx={{
                     minWidth: 40,
-                    color: !item.children && (pathname === item.path || pathname.startsWith(item.path + '/')) ? 'white' : 'text.secondary',
+                    color:
+                      !item.children &&
+                      (pathname === item.path || pathname.startsWith(item.path + '/'))
+                        ? 'white'
+                        : 'text.secondary',
                   }}
                 >
                   {item.icon}
                 </ListItemIcon>
                 <ListItemText primary={item.title} />
-                {item.children && (
-                  openMenus[item.path] ? <ExpandLess /> : <ExpandMore />
-                )}
+                {item.children && (openMenus[item.path] ? <ExpandLess /> : <ExpandMore />)}
               </ListItemButton>
             </ListItem>
             {item.children && (
@@ -219,9 +225,7 @@ export default function StaffLayout({ children }: { children: React.ReactNode })
                           },
                         }}
                       >
-                        <ListItemIcon sx={{ minWidth: 35 }}>
-                          {child.icon}
-                        </ListItemIcon>
+                        <ListItemIcon sx={{ minWidth: 35 }}>{child.icon}</ListItemIcon>
                         <ListItemText primary={child.title} />
                       </ListItemButton>
                     </ListItem>

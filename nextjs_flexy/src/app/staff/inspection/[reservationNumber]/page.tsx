@@ -151,12 +151,12 @@ export default function StaffInspectionDetailPage() {
         .single();
 
       if (error) throw error;
-      
+
       // 백그라운드에서 자동 번역 실행 (실패해도 무시)
       // inspection_summary, pass_fail_status, improvement_items 필드는
       // 중국 직원이 입력하면 한국어로 번역되어야 함 (현재 번역 필드 없음)
       // 향후 번역 필드 추가 시 여기에 translateStaffInput 호출 추가 필요
-      
+
       setEditMode(false);
       alert(isChineseStaff ? '保存成功' : '저장되었습니다');
     } catch (error) {
@@ -219,22 +219,54 @@ export default function StaffInspectionDetailPage() {
               >
                 <Tab
                   icon={<BusinessIcon sx={{ fontSize: isMobile ? 20 : 24 }} />}
-                  label={isMobile ? (isChineseStaff ? '申请' : '신청') : (isChineseStaff ? '申请信息' : '신청정보')}
+                  label={
+                    isMobile
+                      ? isChineseStaff
+                        ? '申请'
+                        : '신청'
+                      : isChineseStaff
+                        ? '申请信息'
+                        : '신청정보'
+                  }
                   iconPosition="start"
                 />
                 <Tab
                   icon={<InventoryIcon sx={{ fontSize: isMobile ? 20 : 24 }} />}
-                  label={isMobile ? (isChineseStaff ? '检验' : '검품') : (isChineseStaff ? '检验信息' : '검품정보')}
+                  label={
+                    isMobile
+                      ? isChineseStaff
+                        ? '检验'
+                        : '검품'
+                      : isChineseStaff
+                        ? '检验信息'
+                        : '검품정보'
+                  }
                   iconPosition="start"
                 />
                 <Tab
                   icon={<AttachMoneyIcon sx={{ fontSize: isMobile ? 20 : 24 }} />}
-                  label={isMobile ? (isChineseStaff ? '费用' : '비용') : (isChineseStaff ? '费用信息' : '비용정보')}
+                  label={
+                    isMobile
+                      ? isChineseStaff
+                        ? '费用'
+                        : '비용'
+                      : isChineseStaff
+                        ? '费用信息'
+                        : '비용정보'
+                  }
                   iconPosition="start"
                 />
                 <Tab
                   icon={<AttachFileIcon sx={{ fontSize: isMobile ? 20 : 24 }} />}
-                  label={isMobile ? (isChineseStaff ? '资料' : '자료') : (isChineseStaff ? '相关资料' : '관련자료')}
+                  label={
+                    isMobile
+                      ? isChineseStaff
+                        ? '资料'
+                        : '자료'
+                      : isChineseStaff
+                        ? '相关资料'
+                        : '관련자료'
+                  }
                   iconPosition="start"
                 />
               </Tabs>
@@ -256,7 +288,9 @@ export default function StaffInspectionDetailPage() {
                               {isChineseStaff ? '产品名' : '제품명'}
                             </Typography>
                             <Typography variant="body1" fontWeight="medium">
-                              {isChineseStaff ? (data?.product_name_translated || data?.product_name || '-') : (data?.product_name || '-')}
+                              {isChineseStaff
+                                ? data?.product_name_translated || data?.product_name || '-'
+                                : data?.product_name || '-'}
                             </Typography>
                           </Box>
                           <Box>
@@ -264,7 +298,8 @@ export default function StaffInspectionDetailPage() {
                               {isChineseStaff ? '生产数量' : '생산수량'}
                             </Typography>
                             <Typography variant="body1" fontWeight="medium">
-                              {data?.production_quantity?.toLocaleString() || '-'}{isChineseStaff ? '个' : '개'}
+                              {data?.production_quantity?.toLocaleString() || '-'}
+                              {isChineseStaff ? '个' : '개'}
                             </Typography>
                           </Box>
                         </Stack>
@@ -277,7 +312,15 @@ export default function StaffInspectionDetailPage() {
                             </Typography>
                             <Box sx={{ mt: 0.5 }}>
                               <Chip
-                                label={data?.inspection_method === 'full' ? (isChineseStaff ? '全数检验' : '전수검품') : (isChineseStaff ? '标准检验' : '표준검품')}
+                                label={
+                                  data?.inspection_method === 'full'
+                                    ? isChineseStaff
+                                      ? '全数检验'
+                                      : '전수검품'
+                                    : isChineseStaff
+                                      ? '标准检验'
+                                      : '표준검품'
+                                }
                                 color={data?.inspection_method === 'full' ? 'primary' : 'default'}
                                 size="small"
                               />
@@ -289,7 +332,9 @@ export default function StaffInspectionDetailPage() {
                             </Typography>
                             <Typography variant="body1" fontWeight="medium">
                               {data?.created_at
-                                ? new Date(data.created_at).toLocaleDateString(isChineseStaff ? 'zh-CN' : 'ko-KR')
+                                ? new Date(data.created_at).toLocaleDateString(
+                                    isChineseStaff ? 'zh-CN' : 'ko-KR'
+                                  )
                                 : '-'}
                             </Typography>
                           </Box>
@@ -354,9 +399,11 @@ export default function StaffInspectionDetailPage() {
                         </Typography>
                         <Paper sx={{ p: 2, bgcolor: 'grey.100' }} elevation={0}>
                           <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }}>
-                            {isChineseStaff 
-                              ? (data.special_requirements_translated || data.special_requirements || '-')
-                              : (data.special_requirements || '-')}
+                            {isChineseStaff
+                              ? data.special_requirements_translated ||
+                                data.special_requirements ||
+                                '-'
+                              : data.special_requirements || '-'}
                           </Typography>
                         </Paper>
                       </>
@@ -371,7 +418,14 @@ export default function StaffInspectionDetailPage() {
               <Stack spacing={3} sx={{ p: 2 }}>
                 <BlankCard sx={{ bgcolor: 'primary.lighter' }}>
                   <CardContent>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        mb: 3,
+                      }}
+                    >
                       <Typography variant="h6" fontWeight="bold">
                         {isChineseStaff ? '检验信息' : '검품 일정 정보'}
                       </Typography>
@@ -424,7 +478,8 @@ export default function StaffInspectionDetailPage() {
                             {isChineseStaff ? '检验天数' : '검품 기간'}
                           </Typography>
                           <Typography variant="h5" fontWeight="600" color="primary">
-                            {data?.inspection_days || '-'}{isChineseStaff ? '天' : '일'}
+                            {data?.inspection_days || '-'}
+                            {isChineseStaff ? '天' : '일'}
                           </Typography>
                         </Box>
                       </Grid>
@@ -435,8 +490,12 @@ export default function StaffInspectionDetailPage() {
                           </Typography>
                           <Typography variant="body1" fontWeight="500">
                             {data?.confirmed_date
-                              ? new Date(data.confirmed_date).toLocaleDateString(isChineseStaff ? 'zh-CN' : 'ko-KR')
-                              : isChineseStaff ? '未定' : '미정'}
+                              ? new Date(data.confirmed_date).toLocaleDateString(
+                                  isChineseStaff ? 'zh-CN' : 'ko-KR'
+                                )
+                              : isChineseStaff
+                                ? '未定'
+                                : '미정'}
                           </Typography>
                         </Box>
                       </Grid>
@@ -452,23 +511,47 @@ export default function StaffInspectionDetailPage() {
                                 size="small"
                                 fullWidth
                                 value={staffData.pass_fail_status}
-                                onChange={(e) => setStaffData({ ...staffData, pass_fail_status: e.target.value })}
+                                onChange={(e) =>
+                                  setStaffData({ ...staffData, pass_fail_status: e.target.value })
+                                }
                               >
-                                <MenuItem value="pending">{isChineseStaff ? '待定' : '대기중'}</MenuItem>
+                                <MenuItem value="pending">
+                                  {isChineseStaff ? '待定' : '대기중'}
+                                </MenuItem>
                                 <MenuItem value="pass">{isChineseStaff ? '合格' : '합격'}</MenuItem>
-                                <MenuItem value="fail">{isChineseStaff ? '不合格' : '불합격'}</MenuItem>
-                                <MenuItem value="conditional">{isChineseStaff ? '有条件合格' : '조건부합격'}</MenuItem>
+                                <MenuItem value="fail">
+                                  {isChineseStaff ? '不合格' : '불합격'}
+                                </MenuItem>
+                                <MenuItem value="conditional">
+                                  {isChineseStaff ? '有条件合格' : '조건부합격'}
+                                </MenuItem>
                               </TextField>
                             ) : (
                               <>
                                 {staffData.pass_fail_status === 'pass' ? (
-                                  <Chip label={isChineseStaff ? '合格' : '합격'} color="success" size="small" />
+                                  <Chip
+                                    label={isChineseStaff ? '合格' : '합격'}
+                                    color="success"
+                                    size="small"
+                                  />
                                 ) : staffData.pass_fail_status === 'fail' ? (
-                                  <Chip label={isChineseStaff ? '不合格' : '불합격'} color="error" size="small" />
+                                  <Chip
+                                    label={isChineseStaff ? '不合格' : '불합격'}
+                                    color="error"
+                                    size="small"
+                                  />
                                 ) : staffData.pass_fail_status === 'conditional' ? (
-                                  <Chip label={isChineseStaff ? '有条件合格' : '조건부합격'} color="warning" size="small" />
+                                  <Chip
+                                    label={isChineseStaff ? '有条件合格' : '조건부합격'}
+                                    color="warning"
+                                    size="small"
+                                  />
                                 ) : (
-                                  <Chip label={isChineseStaff ? '待定' : '대기중'} color="default" size="small" />
+                                  <Chip
+                                    label={isChineseStaff ? '待定' : '대기중'}
+                                    color="default"
+                                    size="small"
+                                  />
                                 )}
                               </>
                             )}
@@ -484,7 +567,7 @@ export default function StaffInspectionDetailPage() {
                         <Typography variant="h6" fontWeight="bold" sx={{ mb: 2 }}>
                           {isChineseStaff ? '检验详情（员工专用）' : '검품 상세 (직원 전용)'}
                         </Typography>
-                        
+
                         <Stack spacing={3}>
                           <Box>
                             <Typography variant="subtitle2" gutterBottom>
@@ -496,13 +579,20 @@ export default function StaffInspectionDetailPage() {
                                 multiline
                                 rows={4}
                                 value={staffData.inspection_summary}
-                                onChange={(e) => setStaffData({ ...staffData, inspection_summary: e.target.value })}
-                                placeholder={isChineseStaff ? '请输入检验结果摘要...' : '검품 결과 요약을 입력하세요...'}
+                                onChange={(e) =>
+                                  setStaffData({ ...staffData, inspection_summary: e.target.value })
+                                }
+                                placeholder={
+                                  isChineseStaff
+                                    ? '请输入检验结果摘要...'
+                                    : '검품 결과 요약을 입력하세요...'
+                                }
                               />
                             ) : (
                               <Paper sx={{ p: 2, bgcolor: 'grey.100' }} elevation={0}>
                                 <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }}>
-                                  {staffData.inspection_summary || (isChineseStaff ? '未输入' : '미입력')}
+                                  {staffData.inspection_summary ||
+                                    (isChineseStaff ? '未输入' : '미입력')}
                                 </Typography>
                               </Paper>
                             )}
@@ -518,8 +608,14 @@ export default function StaffInspectionDetailPage() {
                                 multiline
                                 rows={3}
                                 value={staffData.improvement_items}
-                                onChange={(e) => setStaffData({ ...staffData, improvement_items: e.target.value })}
-                                placeholder={isChineseStaff ? '请输入需要改善的事项...' : '개선이 필요한 사항을 입력하세요...'}
+                                onChange={(e) =>
+                                  setStaffData({ ...staffData, improvement_items: e.target.value })
+                                }
+                                placeholder={
+                                  isChineseStaff
+                                    ? '请输入需要改善的事项...'
+                                    : '개선이 필요한 사항을 입력하세요...'
+                                }
                               />
                             ) : (
                               <Paper sx={{ p: 2, bgcolor: 'grey.100' }} elevation={0}>
@@ -611,7 +707,9 @@ export default function StaffInspectionDetailPage() {
                 {files.length > 0 ? (
                   <Stack spacing={2}>
                     <Typography variant="h6" fontWeight="bold" gutterBottom>
-                      {isChineseStaff ? `上传的文件 (${files.length}个)` : `업로드된 파일 (${files.length}개)`}
+                      {isChineseStaff
+                        ? `上传的文件 (${files.length}个)`
+                        : `업로드된 파일 (${files.length}개)`}
                     </Typography>
                     {files.map((file) => (
                       <Paper key={file.id} sx={{ p: 2 }} elevation={1}>
@@ -643,7 +741,9 @@ export default function StaffInspectionDetailPage() {
                               <Typography variant="body1">{file.original_filename}</Typography>
                               <Typography variant="caption" color="text.secondary">
                                 {file.file_type} • {(file.file_size / 1024 / 1024).toFixed(2)}MB •
-                                {new Date(file.created_at).toLocaleDateString(isChineseStaff ? 'zh-CN' : 'ko-KR')}
+                                {new Date(file.created_at).toLocaleDateString(
+                                  isChineseStaff ? 'zh-CN' : 'ko-KR'
+                                )}
                               </Typography>
                             </Box>
                             <Button
@@ -661,7 +761,9 @@ export default function StaffInspectionDetailPage() {
                     ))}
                   </Stack>
                 ) : (
-                  <Typography color="text.secondary">{isChineseStaff ? '没有相关资料' : '관련자료가 없습니다.'}</Typography>
+                  <Typography color="text.secondary">
+                    {isChineseStaff ? '没有相关资料' : '관련자료가 없습니다.'}
+                  </Typography>
                 )}
               </Box>
             </TabPanel>

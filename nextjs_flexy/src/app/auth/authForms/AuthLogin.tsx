@@ -30,17 +30,17 @@ interface ExtendedLoginType extends loginType {
   hideForgotPassword?: boolean;
 }
 
-const AuthLogin = ({ 
-  title, 
-  subtitle, 
+const AuthLogin = ({
+  title,
+  subtitle,
   subtext,
   staffLogin = false,
-  loginButtonText = "로그인",
-  emailLabel = "이메일",
-  passwordLabel = "비밀번호",
-  rememberMeLabel = "로그인 유지",
-  forgotPasswordText = "비밀번호를 잊으셨나요?",
-  hideForgotPassword = false
+  loginButtonText = '로그인',
+  emailLabel = '이메일',
+  passwordLabel = '비밀번호',
+  rememberMeLabel = '로그인 유지',
+  forgotPasswordText = '비밀번호를 잊으셨나요?',
+  hideForgotPassword = false,
 }: ExtendedLoginType) => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -214,7 +214,7 @@ const AuthLogin = ({
             position="relative"
             px={2}
           >
-            {staffLogin ? emailLabel : "또는 이메일로 로그인"}
+            {staffLogin ? emailLabel : '또는 이메일로 로그인'}
           </Typography>
         </Divider>
       </Box>

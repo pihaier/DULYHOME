@@ -1,13 +1,7 @@
 'use client';
 
 import React from 'react';
-import {
-  Box,
-  Typography,
-  Stack,
-  Chip,
-  IconButton,
-} from '@mui/material';
+import { Box, Typography, Stack, Chip, IconButton } from '@mui/material';
 import {
   Business as BusinessIcon,
   Science as ScienceIcon,
@@ -62,14 +56,14 @@ export default function StaffOrderHeader({
   // 상태 라벨
   const getStatusLabel = (status?: string) => {
     const labels: Record<string, { ko: string; zh: string }> = {
-      'submitted': { ko: '접수완료', zh: '已接收' },
-      'quoted': { ko: '견적완료', zh: '报价完成' },
-      'paid': { ko: '결제완료', zh: '已付款' },
-      'in_progress': { ko: '진행중', zh: '进行中' },
-      'completed': { ko: '완료', zh: '已完成' },
-      'cancelled': { ko: '취소됨', zh: '已取消' },
+      submitted: { ko: '접수완료', zh: '已接收' },
+      quoted: { ko: '견적완료', zh: '报价完成' },
+      paid: { ko: '결제완료', zh: '已付款' },
+      in_progress: { ko: '진행중', zh: '进行中' },
+      completed: { ko: '완료', zh: '已完成' },
+      cancelled: { ko: '취소됨', zh: '已取消' },
     };
-    
+
     if (!status) return isChineseStaff ? '待处理' : '대기중';
     return isChineseStaff ? labels[status]?.zh || status : labels[status]?.ko || status;
   };
@@ -79,101 +73,101 @@ export default function StaffOrderHeader({
     switch (serviceType) {
       case 'market_research':
         return [
-          { 
-            label: isChineseStaff ? '申请接收' : '신청접수', 
-            icon: <BusinessIcon sx={{ fontSize: 24 }} /> 
+          {
+            label: isChineseStaff ? '申请接收' : '신청접수',
+            icon: <BusinessIcon sx={{ fontSize: 24 }} />,
           },
-          { 
-            label: isChineseStaff ? '工厂调查' : '공장조사', 
-            icon: <ScienceIcon sx={{ fontSize: 24 }} /> 
+          {
+            label: isChineseStaff ? '工厂调查' : '공장조사',
+            icon: <ScienceIcon sx={{ fontSize: 24 }} />,
           },
-          { 
-            label: isChineseStaff ? '调查完成' : '조사완료', 
-            icon: <CheckCircleIcon sx={{ fontSize: 24 }} /> 
+          {
+            label: isChineseStaff ? '调查完成' : '조사완료',
+            icon: <CheckCircleIcon sx={{ fontSize: 24 }} />,
           },
         ];
       case 'inspection':
         return [
-          { 
-            label: isChineseStaff ? '申请接收' : '신청접수', 
-            icon: <BusinessIcon sx={{ fontSize: 24 }} /> 
+          {
+            label: isChineseStaff ? '申请接收' : '신청접수',
+            icon: <BusinessIcon sx={{ fontSize: 24 }} />,
           },
-          { 
-            label: isChineseStaff ? '日程协调' : '일정조율', 
-            icon: <InventoryIcon sx={{ fontSize: 24 }} /> 
+          {
+            label: isChineseStaff ? '日程协调' : '일정조율',
+            icon: <InventoryIcon sx={{ fontSize: 24 }} />,
           },
-          { 
-            label: isChineseStaff ? '报价及付款' : '견적및결제', 
-            icon: <PaymentIcon sx={{ fontSize: 24 }} /> 
+          {
+            label: isChineseStaff ? '报价及付款' : '견적및결제',
+            icon: <PaymentIcon sx={{ fontSize: 24 }} />,
           },
-          { 
-            label: isChineseStaff ? '检验进行' : '검품진행', 
-            icon: <ScienceIcon sx={{ fontSize: 24 }} /> 
+          {
+            label: isChineseStaff ? '检验进行' : '검품진행',
+            icon: <ScienceIcon sx={{ fontSize: 24 }} />,
           },
-          { 
-            label: isChineseStaff ? '检验完成' : '검품완료', 
-            icon: <CheckCircleIcon sx={{ fontSize: 24 }} /> 
+          {
+            label: isChineseStaff ? '检验完成' : '검품완료',
+            icon: <CheckCircleIcon sx={{ fontSize: 24 }} />,
           },
         ];
       case 'factory_contact':
         return [
-          { 
-            label: isChineseStaff ? '申请接收' : '신청접수', 
-            icon: <BusinessIcon sx={{ fontSize: 24 }} /> 
+          {
+            label: isChineseStaff ? '申请接收' : '신청접수',
+            icon: <BusinessIcon sx={{ fontSize: 24 }} />,
           },
-          { 
-            label: isChineseStaff ? '工厂确认' : '공장확인', 
-            icon: <ScienceIcon sx={{ fontSize: 24 }} /> 
+          {
+            label: isChineseStaff ? '工厂确认' : '공장확인',
+            icon: <ScienceIcon sx={{ fontSize: 24 }} />,
           },
-          { 
-            label: isChineseStaff ? '报价提供' : '견적제공', 
-            icon: <PaymentIcon sx={{ fontSize: 24 }} /> 
+          {
+            label: isChineseStaff ? '报价提供' : '견적제공',
+            icon: <PaymentIcon sx={{ fontSize: 24 }} />,
           },
-          { 
-            label: isChineseStaff ? '合同完成' : '계약완료', 
-            icon: <CheckCircleIcon sx={{ fontSize: 24 }} /> 
+          {
+            label: isChineseStaff ? '合同完成' : '계약완료',
+            icon: <CheckCircleIcon sx={{ fontSize: 24 }} />,
           },
         ];
       case 'sampling':
         return [
-          { 
-            label: isChineseStaff ? '申请接收' : '신청접수', 
-            icon: <BusinessIcon sx={{ fontSize: 24 }} /> 
+          {
+            label: isChineseStaff ? '申请接收' : '신청접수',
+            icon: <BusinessIcon sx={{ fontSize: 24 }} />,
           },
-          { 
-            label: isChineseStaff ? '样品制作' : '샘플제작', 
-            icon: <ScienceIcon sx={{ fontSize: 24 }} /> 
+          {
+            label: isChineseStaff ? '样品制作' : '샘플제작',
+            icon: <ScienceIcon sx={{ fontSize: 24 }} />,
           },
-          { 
-            label: isChineseStaff ? '配送中' : '배송중', 
-            icon: <LocalShippingIcon sx={{ fontSize: 24 }} /> 
+          {
+            label: isChineseStaff ? '配送中' : '배송중',
+            icon: <LocalShippingIcon sx={{ fontSize: 24 }} />,
           },
-          { 
-            label: isChineseStaff ? '收货完成' : '수령완료', 
-            icon: <CheckCircleIcon sx={{ fontSize: 24 }} /> 
+          {
+            label: isChineseStaff ? '收货完成' : '수령완료',
+            icon: <CheckCircleIcon sx={{ fontSize: 24 }} />,
           },
         ];
       case 'bulk_order':
         return [
-          { 
-            label: isChineseStaff ? '订单接收' : '주문접수', 
-            icon: <BusinessIcon sx={{ fontSize: 24 }} /> 
+          {
+            label: isChineseStaff ? '订单接收' : '주문접수',
+            icon: <BusinessIcon sx={{ fontSize: 24 }} />,
           },
-          { 
-            label: isChineseStaff ? '合同/付款' : '계약/결제', 
-            icon: <PaymentIcon sx={{ fontSize: 24 }} /> 
+          {
+            label: isChineseStaff ? '合同/付款' : '계약/결제',
+            icon: <PaymentIcon sx={{ fontSize: 24 }} />,
           },
-          { 
-            label: isChineseStaff ? '生产进行' : '생산진행', 
-            icon: <InventoryIcon sx={{ fontSize: 24 }} /> 
+          {
+            label: isChineseStaff ? '生产进行' : '생산진행',
+            icon: <InventoryIcon sx={{ fontSize: 24 }} />,
           },
-          { 
-            label: isChineseStaff ? '配送中' : '배송중', 
-            icon: <LocalShippingIcon sx={{ fontSize: 24 }} /> 
+          {
+            label: isChineseStaff ? '配送中' : '배송중',
+            icon: <LocalShippingIcon sx={{ fontSize: 24 }} />,
           },
-          { 
-            label: isChineseStaff ? '交货完成' : '납품완료', 
-            icon: <CheckCircleIcon sx={{ fontSize: 24 }} /> 
+          {
+            label: isChineseStaff ? '交货完成' : '납품완료',
+            icon: <CheckCircleIcon sx={{ fontSize: 24 }} />,
           },
         ];
       default:

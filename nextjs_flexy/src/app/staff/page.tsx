@@ -64,12 +64,12 @@ export default function StaffDashboard() {
   const router = useRouter();
   const { user, userProfile } = useUser();
   const supabase = createClient();
-  
+
   const [loading, setLoading] = useState(true);
   const [myOrders, setMyOrders] = useState<MyOrder[]>([]);
   const [statusCounts, setStatusCounts] = useState({
     submitted: 0,
-    in_progress: 0, 
+    in_progress: 0,
     pending_confirm: 0,
     completed: 0,
   });
@@ -118,9 +118,9 @@ export default function StaffDashboard() {
 
         // 모든 주문 합치기
         const allOrders: MyOrder[] = [];
-        
+
         if (inspectionData) {
-          inspectionData.forEach(order => {
+          inspectionData.forEach((order) => {
             allOrders.push({
               id: order.id,
               reservation_number: order.reservation_number,
@@ -129,14 +129,15 @@ export default function StaffDashboard() {
               product_name: order.product_name,
               status: order.status,
               created_at: order.created_at,
-              urgent: order.status === 'submitted' && 
-                new Date(order.created_at).getTime() < Date.now() - 24 * 60 * 60 * 1000
+              urgent:
+                order.status === 'submitted' &&
+                new Date(order.created_at).getTime() < Date.now() - 24 * 60 * 60 * 1000,
             });
           });
         }
 
         if (marketData) {
-          marketData.forEach(order => {
+          marketData.forEach((order) => {
             allOrders.push({
               id: order.id,
               reservation_number: order.reservation_number,
@@ -145,14 +146,15 @@ export default function StaffDashboard() {
               product_name: order.product_name,
               status: order.status,
               created_at: order.created_at,
-              urgent: order.status === 'submitted' &&
-                new Date(order.created_at).getTime() < Date.now() - 24 * 60 * 60 * 1000
+              urgent:
+                order.status === 'submitted' &&
+                new Date(order.created_at).getTime() < Date.now() - 24 * 60 * 60 * 1000,
             });
           });
         }
 
         if (factoryData) {
-          factoryData.forEach(order => {
+          factoryData.forEach((order) => {
             allOrders.push({
               id: order.id,
               reservation_number: order.reservation_number,
@@ -161,8 +163,9 @@ export default function StaffDashboard() {
               product_name: order.product_name,
               status: order.status,
               created_at: order.created_at,
-              urgent: order.status === 'submitted' &&
-                new Date(order.created_at).getTime() < Date.now() - 24 * 60 * 60 * 1000
+              urgent:
+                order.status === 'submitted' &&
+                new Date(order.created_at).getTime() < Date.now() - 24 * 60 * 60 * 1000,
             });
           });
         }
@@ -185,8 +188,8 @@ export default function StaffDashboard() {
           pending_confirm: 0,
           completed: 0,
         };
-        
-        allOrders.forEach(order => {
+
+        allOrders.forEach((order) => {
           if (order.status === 'submitted' || order.status === 'quoted') {
             counts.submitted++;
           } else if (order.status === 'in_progress') {
@@ -245,35 +248,35 @@ export default function StaffDashboard() {
   ];
 
   const quickActions = [
-    { 
+    {
       label: isChineseStaff ? '质检审核管理' : '검품감사 관리',
       path: '/staff/orders?service=inspection',
       color: 'success',
-      icon: <CheckCircleIcon />
+      icon: <CheckCircleIcon />,
     },
-    { 
+    {
       label: isChineseStaff ? '市场调查管理' : '시장조사 관리',
       path: '/staff/orders?service=market-research',
       color: 'primary',
-      icon: <SearchIcon />
+      icon: <SearchIcon />,
     },
-    { 
+    {
       label: isChineseStaff ? '工厂联系管理' : '공장컨택 관리',
       path: '/staff/orders?service=factory-contact',
       color: 'secondary',
-      icon: <FactoryIcon />
+      icon: <FactoryIcon />,
     },
-    { 
-      label: isChineseStaff ? '聊天管理' : '채팅 관리', 
-      path: '/staff/chat-management', 
+    {
+      label: isChineseStaff ? '聊天管理' : '채팅 관리',
+      path: '/staff/chat-management',
       color: 'error',
-      icon: <ChatIcon /> 
+      icon: <ChatIcon />,
     },
   ];
 
   const getServiceLabel = (service: string) => {
     const labels: Record<string, { ko: string; zh: string }> = {
-      'inspection': { ko: '검품감사', zh: '质检' },
+      inspection: { ko: '검품감사', zh: '质检' },
       'market-research': { ko: '시장조사', zh: '市调' },
       'factory-contact': { ko: '공장컨택', zh: '工厂' },
     };
@@ -282,23 +285,24 @@ export default function StaffDashboard() {
 
   const getStatusLabel = (status: string) => {
     const labels: Record<string, { ko: string; zh: string }> = {
-      'submitted': { ko: '접수', zh: '已提交' },
-      'quoted': { ko: '견적발송', zh: '已报价' },
-      'in_progress': { ko: '진행중', zh: '进行中' },
-      'pending_confirm': { ko: '컨펌대기', zh: '待确认' },
-      'completed': { ko: '완료', zh: '已完成' },
+      submitted: { ko: '접수', zh: '已提交' },
+      quoted: { ko: '견적발송', zh: '已报价' },
+      in_progress: { ko: '진행중', zh: '进行中' },
+      pending_confirm: { ko: '컨펌대기', zh: '待确认' },
+      completed: { ko: '완료', zh: '已完成' },
     };
     return isChineseStaff ? labels[status]?.zh || status : labels[status]?.ko || status;
   };
 
-  const filteredOrders = tabValue === 0 
-    ? myOrders 
-    : myOrders.filter(order => {
-        if (tabValue === 1) return order.status === 'submitted' || order.status === 'quoted';
-        if (tabValue === 2) return order.status === 'in_progress';
-        if (tabValue === 3) return order.status === 'pending_confirm';
-        return false;
-      });
+  const filteredOrders =
+    tabValue === 0
+      ? myOrders
+      : myOrders.filter((order) => {
+          if (tabValue === 1) return order.status === 'submitted' || order.status === 'quoted';
+          if (tabValue === 2) return order.status === 'in_progress';
+          if (tabValue === 3) return order.status === 'pending_confirm';
+          return false;
+        });
 
   return (
     <Box sx={{ p: 3 }}>
@@ -385,7 +389,9 @@ export default function StaffDashboard() {
         {/* My Orders */}
         <Grid size={{ xs: 12, md: 8 }}>
           <Paper sx={{ p: 3, height: '100%' }}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+            <Box
+              sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}
+            >
               <Typography variant="h6" fontWeight="bold">
                 {isChineseStaff ? '我的订单' : '내 담당 주문'}
               </Typography>
@@ -393,7 +399,7 @@ export default function StaffDashboard() {
                 {isChineseStaff ? '查看全部' : '전체 보기'}
               </Button>
             </Box>
-            
+
             <Tabs value={tabValue} onChange={(e, val) => setTabValue(val)} sx={{ mb: 2 }}>
               <Tab label={isChineseStaff ? '全部' : '전체'} />
               <Tab label={isChineseStaff ? '新订单' : '신규'} />
@@ -406,9 +412,7 @@ export default function StaffDashboard() {
                 <CircularProgress />
               </Box>
             ) : filteredOrders.length === 0 ? (
-              <Alert severity="info">
-                {isChineseStaff ? '没有订单' : '주문이 없습니다'}
-              </Alert>
+              <Alert severity="info">{isChineseStaff ? '没有订单' : '주문이 없습니다'}</Alert>
             ) : (
               <TableContainer>
                 <Table size="small">
@@ -422,11 +426,15 @@ export default function StaffDashboard() {
                   </TableHead>
                   <TableBody>
                     {filteredOrders.slice(0, 5).map((order) => (
-                      <TableRow 
+                      <TableRow
                         key={order.id}
                         hover
                         sx={{ cursor: 'pointer' }}
-                        onClick={() => router.push(`/staff/orders/${order.service_type}/${order.reservation_number}`)}
+                        onClick={() =>
+                          router.push(
+                            `/staff/orders/${order.service_type}/${order.reservation_number}`
+                          )
+                        }
                       >
                         <TableCell>
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -439,8 +447,8 @@ export default function StaffDashboard() {
                         </TableCell>
                         <TableCell>{order.company_name}</TableCell>
                         <TableCell>
-                          <Chip 
-                            label={getStatusLabel(order.status)} 
+                          <Chip
+                            label={getStatusLabel(order.status)}
                             size="small"
                             color={order.status === 'submitted' ? 'warning' : 'default'}
                           />

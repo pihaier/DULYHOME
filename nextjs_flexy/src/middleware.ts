@@ -11,20 +11,20 @@ export async function middleware(request: NextRequest) {
 
   // 환경별 보호 설정
   const environment = process.env.VERCEL_ENV || 'development';
-  
+
   // 프리뷰 환경 보호
   if (environment === 'preview') {
     // 검색 엔진 크롤링 차단
     response.headers.set('X-Robots-Tag', 'noindex, nofollow, noarchive, nosnippet');
     response.headers.set('X-Environment', 'preview');
-    
+
     // API 경로는 인증 제외
     if (!request.nextUrl.pathname.startsWith('/api/')) {
       const basicAuth = request.headers.get('authorization');
       const username = process.env.PREVIEW_AUTH_USERNAME || 'duly';
       const password = process.env.PREVIEW_AUTH_PASSWORD || 'preview2025';
       const expectedAuth = 'Basic ' + Buffer.from(`${username}:${password}`).toString('base64');
-      
+
       if (!basicAuth || basicAuth !== expectedAuth) {
         return new Response('🔒 Preview Environment - Team Access Only', {
           status: 401,
@@ -36,7 +36,7 @@ export async function middleware(request: NextRequest) {
       }
     }
   }
-  
+
   // 프로덕션 환경 보안 헤더
   if (environment === 'production') {
     response.headers.set('X-Environment', 'production');
@@ -73,14 +73,15 @@ export async function middleware(request: NextRequest) {
   const protectedPaths = ['/dashboard', '/chat', '/profile', '/internal'];
 
   const path = request.nextUrl.pathname;
-  
+
   // staff 경로 중 로그인 페이지는 제외하고 보호
   const isProtectedStaffPath = path.startsWith('/staff') && !path.startsWith('/staff/login');
-  const isProtectedPath = protectedPaths.some((protectedPath) => path.startsWith(protectedPath)) || isProtectedStaffPath;
+  const isProtectedPath =
+    protectedPaths.some((protectedPath) => path.startsWith(protectedPath)) || isProtectedStaffPath;
 
   // 인증 페이지는 리다이렉트에서 제외
   const isAuthPage = path.startsWith('/auth/') || path === '/staff/login';
-  
+
   // 보호된 경로에 로그인하지 않은 사용자가 접근하려는 경우
   // 단, 이미 인증 페이지인 경우는 제외
   if (isProtectedPath && !user && !isAuthPage) {
@@ -101,7 +102,7 @@ export async function middleware(request: NextRequest) {
           .select('role')
           .eq('user_id', user.id)
           .single();
-        
+
         if (profile && ['admin', 'korean_team', 'chinese_staff'].includes(profile.role)) {
           return NextResponse.redirect(new URL('/staff', request.url));
         }

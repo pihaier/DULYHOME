@@ -146,7 +146,7 @@ export default function StaffFactoryContactDetailPage() {
 
         setFiles(filesData || []);
 
-        // 컨펌 요청 가져오기  
+        // 컨펌 요청 가져오기
         const { data: confirmData } = await supabase
           .from('confirmation_requests')
           .select('*')
@@ -172,8 +172,10 @@ export default function StaffFactoryContactDetailPage() {
       const updates = {
         ...editData,
         product_name_chinese: editData.product_name_chinese || editData.product_name,
-        product_description_chinese: editData.product_description_chinese || editData.product_description,
-        special_requirements_chinese: editData.special_requirements_chinese || editData.special_requirements,
+        product_description_chinese:
+          editData.product_description_chinese || editData.product_description,
+        special_requirements_chinese:
+          editData.special_requirements_chinese || editData.special_requirements,
       };
 
       const { data: updatedData, error } = await supabase
@@ -190,7 +192,7 @@ export default function StaffFactoryContactDetailPage() {
         translateStaffInput({
           table: 'factory_contact_requests',
           recordId: updatedData.id,
-          delay: 500 // 0.5초 후 실행
+          delay: 500, // 0.5초 후 실행
         });
       }
 
@@ -235,7 +237,9 @@ export default function StaffFactoryContactDetailPage() {
 
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
+      <Box
+        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}
+      >
         <CircularProgress />
       </Box>
     );
@@ -300,317 +304,378 @@ export default function StaffFactoryContactDetailPage() {
             </Stack>
           </Box>
 
-      {/* Tabs - Dashboard와 동일 */}
-      <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}>
-        <Tabs value={tabValue} onChange={(e, val) => setTabValue(val)}>
-          <Tab
-            icon={<BusinessIcon sx={{ fontSize: 20 }} />}
-            label={isChineseStaff ? '申请信息' : '신청정보'}
-            iconPosition="start"
-          />
-          <Tab
-            icon={<FactoryIcon sx={{ fontSize: 20 }} />}
-            label={isChineseStaff ? '工厂信息' : '공장정보'}
-            iconPosition="start"
-          />
-          <Tab
-            icon={<InventoryIcon sx={{ fontSize: 20 }} />}
-            label={isChineseStaff ? '产品信息' : '제품정보'}
-            iconPosition="start"
-          />
-          <Tab
-            icon={<AssignmentIcon sx={{ fontSize: 20 }} />}
-            label={isChineseStaff ? '确认请求' : '컨펌대기'}
-            iconPosition="start"
-          />
-          <Tab
-            icon={<AttachFileIcon sx={{ fontSize: 20 }} />}
-            label={isChineseStaff ? '相关资料' : '관련자료'}
-            iconPosition="start"
-          />
-        </Tabs>
-      </Box>
+          {/* Tabs - Dashboard와 동일 */}
+          <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}>
+            <Tabs value={tabValue} onChange={(e, val) => setTabValue(val)}>
+              <Tab
+                icon={<BusinessIcon sx={{ fontSize: 20 }} />}
+                label={isChineseStaff ? '申请信息' : '신청정보'}
+                iconPosition="start"
+              />
+              <Tab
+                icon={<FactoryIcon sx={{ fontSize: 20 }} />}
+                label={isChineseStaff ? '工厂信息' : '공장정보'}
+                iconPosition="start"
+              />
+              <Tab
+                icon={<InventoryIcon sx={{ fontSize: 20 }} />}
+                label={isChineseStaff ? '产品信息' : '제품정보'}
+                iconPosition="start"
+              />
+              <Tab
+                icon={<AssignmentIcon sx={{ fontSize: 20 }} />}
+                label={isChineseStaff ? '确认请求' : '컨펌대기'}
+                iconPosition="start"
+              />
+              <Tab
+                icon={<AttachFileIcon sx={{ fontSize: 20 }} />}
+                label={isChineseStaff ? '相关资料' : '관련자료'}
+                iconPosition="start"
+              />
+            </Tabs>
+          </Box>
 
-      <Paper elevation={3} sx={{ mb: isMobile ? 8 : 0 }}>
-        {/* 신청정보 탭 */}
-      <TabPanel value={tabValue} index={0}>
-        <Stack spacing={3}>
-          <BlankCard sx={{ bgcolor: 'info.lighter' }}>
-            <CardContent>
-              <Typography variant="h6" gutterBottom fontWeight="bold">
-                {isChineseStaff ? '申请人信息' : '신청자 정보'}
-              </Typography>
-              <Grid container spacing={2}>
-                <Grid size={{ xs: 12, md: 6 }}>
-                  <Box sx={{ mb: 2 }}>
-                    <Typography variant="caption" color="text.secondary">
-                      {isChineseStaff ? '公司名' : '회사명'}
+          <Paper elevation={3} sx={{ mb: isMobile ? 8 : 0 }}>
+            {/* 신청정보 탭 */}
+            <TabPanel value={tabValue} index={0}>
+              <Stack spacing={3}>
+                <BlankCard sx={{ bgcolor: 'info.lighter' }}>
+                  <CardContent>
+                    <Typography variant="h6" gutterBottom fontWeight="bold">
+                      {isChineseStaff ? '申请人信息' : '신청자 정보'}
                     </Typography>
-                    <Typography variant="body1" fontWeight="medium">
-                      {data?.company_name || '-'}
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid size={{ xs: 12, md: 6 }}>
-                  <Box sx={{ mb: 2 }}>
-                    <Typography variant="caption" color="text.secondary">
-                      {isChineseStaff ? '联系人' : '담당자'}
-                    </Typography>
-                    <Typography variant="body1" fontWeight="medium">
-                      {data?.contact_person || '-'}
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid size={{ xs: 12, md: 6 }}>
-                  <Box sx={{ mb: 2 }}>
-                    <Typography variant="caption" color="text.secondary">
-                      {isChineseStaff ? '电话' : '연락처'}
-                    </Typography>
-                    <Typography variant="body1" fontWeight="medium">
-                      {data?.contact_phone || '-'}
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid size={{ xs: 12, md: 6 }}>
-                  <Box sx={{ mb: 2 }}>
-                    <Typography variant="caption" color="text.secondary">
-                      {isChineseStaff ? '邮箱' : '이메일'}
-                    </Typography>
-                    <Typography variant="body1" fontWeight="medium">
-                      {data?.contact_email || '-'}
-                    </Typography>
-                  </Box>
-                </Grid>
-              </Grid>
-            </CardContent>
-          </BlankCard>
-        </Stack>
-      </TabPanel>
-
-      {/* 공장정보 탭 */}
-      <TabPanel value={tabValue} index={1}>
-        <BlankCard>
-          <CardContent>
-            <Typography variant="h6" gutterBottom fontWeight="bold">
-              {isChineseStaff ? '工厂信息' : '공장 정보'}
-            </Typography>
-            <Grid container spacing={2}>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <TextField
-                  fullWidth
-                  label={isChineseStaff ? '工厂名' : '공장명'}
-                  value={editMode ? editData.factory_name || '' : data.factory_name || ''}
-                  onChange={(e) => editMode && setEditData({...editData, factory_name: e.target.value})}
-                  disabled={!editMode}
-                  size="small"
-                />
-              </Grid>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <TextField
-                  fullWidth
-                  label={isChineseStaff ? '工厂联系人' : '공장 담당자'}
-                  value={editMode ? editData.factory_contact_person || '' : data.factory_contact_person || ''}
-                  onChange={(e) => editMode && setEditData({...editData, factory_contact_person: e.target.value})}
-                  disabled={!editMode}
-                  size="small"
-                />
-              </Grid>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <TextField
-                  fullWidth
-                  label={isChineseStaff ? '工厂电话' : '공장 전화'}
-                  value={editMode ? editData.factory_contact_phone || '' : data.factory_contact_phone || ''}
-                  onChange={(e) => editMode && setEditData({...editData, factory_contact_phone: e.target.value})}
-                  disabled={!editMode}
-                  size="small"
-                />
-              </Grid>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <TextField
-                  fullWidth
-                  label={isChineseStaff ? '工厂地址' : '공장 주소'}
-                  value={editMode ? editData.factory_address || '' : data.factory_address || ''}
-                  onChange={(e) => editMode && setEditData({...editData, factory_address: e.target.value})}
-                  disabled={!editMode}
-                  size="small"
-                />
-              </Grid>
-            </Grid>
-          </CardContent>
-        </BlankCard>
-      </TabPanel>
-
-      {/* 제품정보 탭 - Staff 전용 필드 추가 */}
-      <TabPanel value={tabValue} index={2}>
-        <BlankCard>
-          <CardContent>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-              <Typography variant="h6" fontWeight="bold">
-                {isChineseStaff ? '产品信息' : '제품 정보'}
-              </Typography>
-              {editMode && (
-                <Chip 
-                  icon={<TranslateIcon />}
-                  label={isChineseStaff ? '自动翻译' : '자동번역'} 
-                  color="primary" 
-                  size="small" 
-                />
-              )}
-            </Box>
-            <Grid container spacing={2}>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <TextField
-                  fullWidth
-                  label={isChineseStaff ? '产品名(韩文)' : '제품명(한국어)'}
-                  value={data.product_name || ''}
-                  disabled
-                  size="small"
-                />
-              </Grid>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <TextField
-                  fullWidth
-                  label={isChineseStaff ? '产品名(中文)' : '제품명(중국어)'}
-                  value={editMode ? editData.product_name_chinese || '' : data.product_name_chinese || ''}
-                  onChange={(e) => editMode && setEditData({...editData, product_name_chinese: e.target.value})}
-                  disabled={!editMode}
-                  size="small"
-                  sx={{ '& .MuiInputBase-input': { color: 'primary.main' } }}
-                />
-              </Grid>
-              <Grid size={{ xs: 12 }}>
-                <TextField
-                  fullWidth
-                  multiline
-                  rows={3}
-                  label={isChineseStaff ? '产品说明(韩文)' : '제품설명(한국어)'}
-                  value={data.product_description || ''}
-                  disabled
-                  size="small"
-                />
-              </Grid>
-              <Grid size={{ xs: 12 }}>
-                <TextField
-                  fullWidth
-                  multiline
-                  rows={3}
-                  label={isChineseStaff ? '产品说明(中文)' : '제품설명(중국어)'}
-                  value={editMode ? editData.product_description_chinese || '' : data.product_description_chinese || ''}
-                  onChange={(e) => editMode && setEditData({...editData, product_description_chinese: e.target.value})}
-                  disabled={!editMode}
-                  size="small"
-                  sx={{ '& .MuiInputBase-input': { color: 'primary.main' } }}
-                />
-              </Grid>
-              <Grid size={{ xs: 12 }}>
-                <TextField
-                  fullWidth
-                  multiline
-                  rows={2}
-                  label={isChineseStaff ? '特殊要求(韩文)' : '특별요구사항(한국어)'}
-                  value={data.special_requirements || ''}
-                  disabled
-                  size="small"
-                />
-              </Grid>
-              <Grid size={{ xs: 12 }}>
-                <TextField
-                  fullWidth
-                  multiline
-                  rows={2}
-                  label={isChineseStaff ? '特殊要求(中文)' : '특별요구사항(중국어)'}
-                  value={editMode ? editData.special_requirements_chinese || '' : data.special_requirements_chinese || ''}
-                  onChange={(e) => editMode && setEditData({...editData, special_requirements_chinese: e.target.value})}
-                  disabled={!editMode}
-                  size="small"
-                  sx={{ '& .MuiInputBase-input': { color: 'primary.main' } }}
-                />
-              </Grid>
-            </Grid>
-          </CardContent>
-        </BlankCard>
-      </TabPanel>
-
-      {/* 컨펌대기 탭 */}
-      <TabPanel value={tabValue} index={3}>
-        <BlankCard>
-          <CardContent>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-              <Typography variant="h6" fontWeight="bold">
-                {isChineseStaff ? '确认请求' : '컨펌 요청'}
-              </Typography>
-              {data.status === 'in_progress' && (
-                <Button
-                  variant="contained"
-                  size="small"
-                  startIcon={<AddIcon />}
-                  onClick={handleAddConfirmationRequest}
-                >
-                  {isChineseStaff ? '添加请求' : '요청 추가'}
-                </Button>
-              )}
-            </Box>
-            
-            {confirmations.length === 0 ? (
-              <Typography color="text.secondary" align="center" sx={{ py: 3 }}>
-                {isChineseStaff ? '没有确认请求' : '컨펌 요청이 없습니다'}
-              </Typography>
-            ) : (
-              <Stack spacing={2}>
-                {confirmations.map((confirm) => (
-                  <Card key={confirm.id} variant="outlined">
-                    <CardContent>
-                      <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
-                        <Box>
-                          <Typography variant="subtitle1" fontWeight="bold">
-                            {isChineseStaff ? confirm.title_chinese : confirm.title_korean}
+                    <Grid container spacing={2}>
+                      <Grid size={{ xs: 12, md: 6 }}>
+                        <Box sx={{ mb: 2 }}>
+                          <Typography variant="caption" color="text.secondary">
+                            {isChineseStaff ? '公司名' : '회사명'}
                           </Typography>
-                          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                            {isChineseStaff ? confirm.description_chinese : confirm.description_korean}
+                          <Typography variant="body1" fontWeight="medium">
+                            {data?.company_name || '-'}
                           </Typography>
                         </Box>
-                        <Chip 
-                          label={confirm.status}
-                          size="small"
-                          color={confirm.status === 'responded' ? 'success' : 'default'}
-                        />
-                      </Stack>
-                    </CardContent>
-                  </Card>
-                ))}
+                      </Grid>
+                      <Grid size={{ xs: 12, md: 6 }}>
+                        <Box sx={{ mb: 2 }}>
+                          <Typography variant="caption" color="text.secondary">
+                            {isChineseStaff ? '联系人' : '담당자'}
+                          </Typography>
+                          <Typography variant="body1" fontWeight="medium">
+                            {data?.contact_person || '-'}
+                          </Typography>
+                        </Box>
+                      </Grid>
+                      <Grid size={{ xs: 12, md: 6 }}>
+                        <Box sx={{ mb: 2 }}>
+                          <Typography variant="caption" color="text.secondary">
+                            {isChineseStaff ? '电话' : '연락처'}
+                          </Typography>
+                          <Typography variant="body1" fontWeight="medium">
+                            {data?.contact_phone || '-'}
+                          </Typography>
+                        </Box>
+                      </Grid>
+                      <Grid size={{ xs: 12, md: 6 }}>
+                        <Box sx={{ mb: 2 }}>
+                          <Typography variant="caption" color="text.secondary">
+                            {isChineseStaff ? '邮箱' : '이메일'}
+                          </Typography>
+                          <Typography variant="body1" fontWeight="medium">
+                            {data?.contact_email || '-'}
+                          </Typography>
+                        </Box>
+                      </Grid>
+                    </Grid>
+                  </CardContent>
+                </BlankCard>
               </Stack>
-            )}
-          </CardContent>
-        </BlankCard>
-      </TabPanel>
+            </TabPanel>
 
-      {/* 관련자료 탭 */}
-      <TabPanel value={tabValue} index={4}>
-        <BlankCard>
-          <CardContent>
-            <Typography variant="h6" gutterBottom fontWeight="bold">
-              {isChineseStaff ? '上传的文件' : '업로드된 파일'}
-            </Typography>
-            {files.length === 0 ? (
-              <Typography color="text.secondary" align="center" sx={{ py: 3 }}>
-                {isChineseStaff ? '没有文件' : '파일이 없습니다'}
-              </Typography>
-            ) : (
-              <Stack spacing={1}>
-                {files.map((file) => (
-                  <Paper key={file.id} sx={{ p: 2 }}>
-                    <Typography variant="body2">{file.original_filename}</Typography>
-                    <Typography variant="caption" color="text.secondary">
-                      {new Date(file.created_at).toLocaleDateString()}
+            {/* 공장정보 탭 */}
+            <TabPanel value={tabValue} index={1}>
+              <BlankCard>
+                <CardContent>
+                  <Typography variant="h6" gutterBottom fontWeight="bold">
+                    {isChineseStaff ? '工厂信息' : '공장 정보'}
+                  </Typography>
+                  <Grid container spacing={2}>
+                    <Grid size={{ xs: 12, md: 6 }}>
+                      <TextField
+                        fullWidth
+                        label={isChineseStaff ? '工厂名' : '공장명'}
+                        value={editMode ? editData.factory_name || '' : data.factory_name || ''}
+                        onChange={(e) =>
+                          editMode && setEditData({ ...editData, factory_name: e.target.value })
+                        }
+                        disabled={!editMode}
+                        size="small"
+                      />
+                    </Grid>
+                    <Grid size={{ xs: 12, md: 6 }}>
+                      <TextField
+                        fullWidth
+                        label={isChineseStaff ? '工厂联系人' : '공장 담당자'}
+                        value={
+                          editMode
+                            ? editData.factory_contact_person || ''
+                            : data.factory_contact_person || ''
+                        }
+                        onChange={(e) =>
+                          editMode &&
+                          setEditData({ ...editData, factory_contact_person: e.target.value })
+                        }
+                        disabled={!editMode}
+                        size="small"
+                      />
+                    </Grid>
+                    <Grid size={{ xs: 12, md: 6 }}>
+                      <TextField
+                        fullWidth
+                        label={isChineseStaff ? '工厂电话' : '공장 전화'}
+                        value={
+                          editMode
+                            ? editData.factory_contact_phone || ''
+                            : data.factory_contact_phone || ''
+                        }
+                        onChange={(e) =>
+                          editMode &&
+                          setEditData({ ...editData, factory_contact_phone: e.target.value })
+                        }
+                        disabled={!editMode}
+                        size="small"
+                      />
+                    </Grid>
+                    <Grid size={{ xs: 12, md: 6 }}>
+                      <TextField
+                        fullWidth
+                        label={isChineseStaff ? '工厂地址' : '공장 주소'}
+                        value={
+                          editMode ? editData.factory_address || '' : data.factory_address || ''
+                        }
+                        onChange={(e) =>
+                          editMode && setEditData({ ...editData, factory_address: e.target.value })
+                        }
+                        disabled={!editMode}
+                        size="small"
+                      />
+                    </Grid>
+                  </Grid>
+                </CardContent>
+              </BlankCard>
+            </TabPanel>
+
+            {/* 제품정보 탭 - Staff 전용 필드 추가 */}
+            <TabPanel value={tabValue} index={2}>
+              <BlankCard>
+                <CardContent>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      mb: 2,
+                    }}
+                  >
+                    <Typography variant="h6" fontWeight="bold">
+                      {isChineseStaff ? '产品信息' : '제품 정보'}
                     </Typography>
-                  </Paper>
-                ))}
-              </Stack>
-            )}
-          </CardContent>
-        </BlankCard>
-      </TabPanel>
-      </Paper>
+                    {editMode && (
+                      <Chip
+                        icon={<TranslateIcon />}
+                        label={isChineseStaff ? '自动翻译' : '자동번역'}
+                        color="primary"
+                        size="small"
+                      />
+                    )}
+                  </Box>
+                  <Grid container spacing={2}>
+                    <Grid size={{ xs: 12, md: 6 }}>
+                      <TextField
+                        fullWidth
+                        label={isChineseStaff ? '产品名(韩文)' : '제품명(한국어)'}
+                        value={data.product_name || ''}
+                        disabled
+                        size="small"
+                      />
+                    </Grid>
+                    <Grid size={{ xs: 12, md: 6 }}>
+                      <TextField
+                        fullWidth
+                        label={isChineseStaff ? '产品名(中文)' : '제품명(중국어)'}
+                        value={
+                          editMode
+                            ? editData.product_name_chinese || ''
+                            : data.product_name_chinese || ''
+                        }
+                        onChange={(e) =>
+                          editMode &&
+                          setEditData({ ...editData, product_name_chinese: e.target.value })
+                        }
+                        disabled={!editMode}
+                        size="small"
+                        sx={{ '& .MuiInputBase-input': { color: 'primary.main' } }}
+                      />
+                    </Grid>
+                    <Grid size={{ xs: 12 }}>
+                      <TextField
+                        fullWidth
+                        multiline
+                        rows={3}
+                        label={isChineseStaff ? '产品说明(韩文)' : '제품설명(한국어)'}
+                        value={data.product_description || ''}
+                        disabled
+                        size="small"
+                      />
+                    </Grid>
+                    <Grid size={{ xs: 12 }}>
+                      <TextField
+                        fullWidth
+                        multiline
+                        rows={3}
+                        label={isChineseStaff ? '产品说明(中文)' : '제품설명(중국어)'}
+                        value={
+                          editMode
+                            ? editData.product_description_chinese || ''
+                            : data.product_description_chinese || ''
+                        }
+                        onChange={(e) =>
+                          editMode &&
+                          setEditData({ ...editData, product_description_chinese: e.target.value })
+                        }
+                        disabled={!editMode}
+                        size="small"
+                        sx={{ '& .MuiInputBase-input': { color: 'primary.main' } }}
+                      />
+                    </Grid>
+                    <Grid size={{ xs: 12 }}>
+                      <TextField
+                        fullWidth
+                        multiline
+                        rows={2}
+                        label={isChineseStaff ? '特殊要求(韩文)' : '특별요구사항(한국어)'}
+                        value={data.special_requirements || ''}
+                        disabled
+                        size="small"
+                      />
+                    </Grid>
+                    <Grid size={{ xs: 12 }}>
+                      <TextField
+                        fullWidth
+                        multiline
+                        rows={2}
+                        label={isChineseStaff ? '特殊要求(中文)' : '특별요구사항(중국어)'}
+                        value={
+                          editMode
+                            ? editData.special_requirements_chinese || ''
+                            : data.special_requirements_chinese || ''
+                        }
+                        onChange={(e) =>
+                          editMode &&
+                          setEditData({ ...editData, special_requirements_chinese: e.target.value })
+                        }
+                        disabled={!editMode}
+                        size="small"
+                        sx={{ '& .MuiInputBase-input': { color: 'primary.main' } }}
+                      />
+                    </Grid>
+                  </Grid>
+                </CardContent>
+              </BlankCard>
+            </TabPanel>
+
+            {/* 컨펌대기 탭 */}
+            <TabPanel value={tabValue} index={3}>
+              <BlankCard>
+                <CardContent>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      mb: 2,
+                    }}
+                  >
+                    <Typography variant="h6" fontWeight="bold">
+                      {isChineseStaff ? '确认请求' : '컨펌 요청'}
+                    </Typography>
+                    {data.status === 'in_progress' && (
+                      <Button
+                        variant="contained"
+                        size="small"
+                        startIcon={<AddIcon />}
+                        onClick={handleAddConfirmationRequest}
+                      >
+                        {isChineseStaff ? '添加请求' : '요청 추가'}
+                      </Button>
+                    )}
+                  </Box>
+
+                  {confirmations.length === 0 ? (
+                    <Typography color="text.secondary" align="center" sx={{ py: 3 }}>
+                      {isChineseStaff ? '没有确认请求' : '컨펌 요청이 없습니다'}
+                    </Typography>
+                  ) : (
+                    <Stack spacing={2}>
+                      {confirmations.map((confirm) => (
+                        <Card key={confirm.id} variant="outlined">
+                          <CardContent>
+                            <Stack
+                              direction="row"
+                              justifyContent="space-between"
+                              alignItems="flex-start"
+                            >
+                              <Box>
+                                <Typography variant="subtitle1" fontWeight="bold">
+                                  {isChineseStaff ? confirm.title_chinese : confirm.title_korean}
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                                  {isChineseStaff
+                                    ? confirm.description_chinese
+                                    : confirm.description_korean}
+                                </Typography>
+                              </Box>
+                              <Chip
+                                label={confirm.status}
+                                size="small"
+                                color={confirm.status === 'responded' ? 'success' : 'default'}
+                              />
+                            </Stack>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </Stack>
+                  )}
+                </CardContent>
+              </BlankCard>
+            </TabPanel>
+
+            {/* 관련자료 탭 */}
+            <TabPanel value={tabValue} index={4}>
+              <BlankCard>
+                <CardContent>
+                  <Typography variant="h6" gutterBottom fontWeight="bold">
+                    {isChineseStaff ? '上传的文件' : '업로드된 파일'}
+                  </Typography>
+                  {files.length === 0 ? (
+                    <Typography color="text.secondary" align="center" sx={{ py: 3 }}>
+                      {isChineseStaff ? '没有文件' : '파일이 없습니다'}
+                    </Typography>
+                  ) : (
+                    <Stack spacing={1}>
+                      {files.map((file) => (
+                        <Paper key={file.id} sx={{ p: 2 }}>
+                          <Typography variant="body2">{file.original_filename}</Typography>
+                          <Typography variant="caption" color="text.secondary">
+                            {new Date(file.created_at).toLocaleDateString()}
+                          </Typography>
+                        </Paper>
+                      ))}
+                    </Stack>
+                  )}
+                </CardContent>
+              </BlankCard>
+            </TabPanel>
+          </Paper>
         </Grid>
 
         {/* Desktop - Chat on right side */}

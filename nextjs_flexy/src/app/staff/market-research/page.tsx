@@ -42,7 +42,7 @@ export default function MarketResearchListPage() {
   const router = useRouter();
   const { user, userProfile } = useUser();
   const supabase = createClient();
-  
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [orders, setOrders] = useState<any[]>([]);
@@ -59,32 +59,31 @@ export default function MarketResearchListPage() {
   const fetchOrders = async () => {
     try {
       setLoading(true);
-      
+
       const { data, error } = await supabase
         .from('market_research_requests')
         .select('*')
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      
+
       let filteredData = data || [];
-      
+
       // 필터링 적용
       if (filter.assigned === 'mine' && user) {
-        filteredData = filteredData.filter(order => 
-          order.assigned_staff === user.id
-        );
+        filteredData = filteredData.filter((order) => order.assigned_staff === user.id);
       }
 
       if (filter.status !== 'all') {
-        filteredData = filteredData.filter(order => order.status === filter.status);
+        filteredData = filteredData.filter((order) => order.status === filter.status);
       }
 
       if (search) {
-        filteredData = filteredData.filter(order => 
-          order.reservation_number?.toLowerCase().includes(search.toLowerCase()) ||
-          order.company_name?.toLowerCase().includes(search.toLowerCase()) ||
-          order.product_name?.toLowerCase().includes(search.toLowerCase())
+        filteredData = filteredData.filter(
+          (order) =>
+            order.reservation_number?.toLowerCase().includes(search.toLowerCase()) ||
+            order.company_name?.toLowerCase().includes(search.toLowerCase()) ||
+            order.product_name?.toLowerCase().includes(search.toLowerCase())
         );
       }
 
@@ -104,13 +103,20 @@ export default function MarketResearchListPage() {
   // 상태 칩 색상
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'submitted': return 'info';
-      case 'quoted': return 'warning';
-      case 'paid': return 'secondary';
-      case 'in_progress': return 'primary';
-      case 'completed': return 'success';
-      case 'cancelled': return 'error';
-      default: return 'default';
+      case 'submitted':
+        return 'info';
+      case 'quoted':
+        return 'warning';
+      case 'paid':
+        return 'secondary';
+      case 'in_progress':
+        return 'primary';
+      case 'completed':
+        return 'success';
+      case 'cancelled':
+        return 'error';
+      default:
+        return 'default';
     }
   };
 
@@ -133,8 +139,8 @@ export default function MarketResearchListPage() {
   };
 
   return (
-    <PageContainer 
-      title={isChineseStaff ? '市场调查管理' : '시장조사 관리'} 
+    <PageContainer
+      title={isChineseStaff ? '市场调查管理' : '시장조사 관리'}
       description="시장조사 주문 관리 페이지"
     >
       <BlankCard>
@@ -255,9 +261,7 @@ export default function MarketResearchListPage() {
                             size="small"
                           />
                         </TableCell>
-                        <TableCell>
-                          {new Date(order.created_at).toLocaleDateString()}
-                        </TableCell>
+                        <TableCell>{new Date(order.created_at).toLocaleDateString()}</TableCell>
                         <TableCell align="center">
                           <IconButton
                             color="primary"

@@ -19,26 +19,20 @@ export async function GET() {
     };
 
     // 2. 환경변수 체크 (값은 숨김)
-    const requiredEnvs = [
-      'NEXT_PUBLIC_SUPABASE_URL',
-      'NEXT_PUBLIC_SUPABASE_ANON_KEY',
-    ];
-    
-    const envCheck = requiredEnvs.every(env => process.env[env]);
+    const requiredEnvs = ['NEXT_PUBLIC_SUPABASE_URL', 'NEXT_PUBLIC_SUPABASE_ANON_KEY'];
+
+    const envCheck = requiredEnvs.every((env) => process.env[env]);
     checks.checks.environment = {
       status: envCheck ? 'ok' : 'error',
       required: requiredEnvs.length,
-      configured: requiredEnvs.filter(env => process.env[env]).length,
+      configured: requiredEnvs.filter((env) => process.env[env]).length,
     };
 
     // 3. Supabase 연결 체크
     try {
       const supabase = createClient();
-      const { data, error } = await supabase
-        .from('user_profiles')
-        .select('user_id')
-        .limit(1);
-      
+      const { data, error } = await supabase.from('user_profiles').select('user_id').limit(1);
+
       checks.checks.database = {
         status: error ? 'error' : 'ok',
         connected: !error,
@@ -56,24 +50,24 @@ export async function GET() {
     checks.responseTime = Date.now() - startTime;
 
     // 전체 상태 결정
-    const hasErrors = Object.values(checks.checks).some(
-      (check: any) => check.status === 'error'
-    );
-    
+    const hasErrors = Object.values(checks.checks).some((check: any) => check.status === 'error');
+
     if (hasErrors) {
       checks.status = 'degraded';
     }
 
-    return NextResponse.json(checks, { 
-      status: hasErrors ? 503 : 200 
+    return NextResponse.json(checks, {
+      status: hasErrors ? 503 : 200,
     });
-
   } catch (error: any) {
-    return NextResponse.json({
-      status: 'error',
-      timestamp: new Date().toISOString(),
-      error: error.message,
-      checks,
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        status: 'error',
+        timestamp: new Date().toISOString(),
+        error: error.message,
+        checks,
+      },
+      { status: 500 }
+    );
   }
 }

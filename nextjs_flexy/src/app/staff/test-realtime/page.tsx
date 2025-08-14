@@ -20,7 +20,7 @@ export default function TestRealtimePage() {
       .channel('test-channel')
       .on('presence', { event: 'sync' }, () => {
         console.log('Presence sync');
-        setMessages(prev => [...prev, 'Presence sync event']);
+        setMessages((prev) => [...prev, 'Presence sync event']);
       })
       .subscribe((status, err) => {
         console.log('Test channel status:', status);
@@ -43,7 +43,7 @@ export default function TestRealtimePage() {
         },
         (payload) => {
           console.log('Database change:', payload);
-          setMessages(prev => [...prev, `DB Change: ${payload.eventType}`]);
+          setMessages((prev) => [...prev, `DB Change: ${payload.eventType}`]);
         }
       )
       .subscribe((status, err) => {
@@ -65,24 +65,23 @@ export default function TestRealtimePage() {
   const checkRealtimeConfig = async () => {
     try {
       // Check if user is authenticated
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       console.log('Session:', session);
-      
+
       if (!session) {
         setError('Not authenticated - Realtime requires authentication');
         return;
       }
 
       // Test database connection
-      const { data, error } = await supabase
-        .from('chat_messages')
-        .select('id')
-        .limit(1);
-      
+      const { data, error } = await supabase.from('chat_messages').select('id').limit(1);
+
       if (error) {
         setError(`Database error: ${error.message}`);
       } else {
-        setMessages(prev => [...prev, 'Database connection OK']);
+        setMessages((prev) => [...prev, 'Database connection OK']);
       }
     } catch (err) {
       console.error('Config check error:', err);
@@ -103,27 +102,17 @@ export default function TestRealtimePage() {
       <Stack spacing={3}>
         <Paper sx={{ p: 2 }}>
           <Typography variant="h6">Connection Status</Typography>
-          <Typography 
-            color={status === 'SUBSCRIBED' ? 'success.main' : 'text.secondary'}
-          >
+          <Typography color={status === 'SUBSCRIBED' ? 'success.main' : 'text.secondary'}>
             {status}
           </Typography>
         </Paper>
 
-        {error && (
-          <Alert severity="error">
-            {error}
-          </Alert>
-        )}
+        {error && <Alert severity="error">{error}</Alert>}
 
         <Paper sx={{ p: 2 }}>
           <Typography variant="h6">User Info</Typography>
-          <Typography variant="body2">
-            User ID: {user?.id || 'Not logged in'}
-          </Typography>
-          <Typography variant="body2">
-            Email: {user?.email || 'N/A'}
-          </Typography>
+          <Typography variant="body2">User ID: {user?.id || 'Not logged in'}</Typography>
+          <Typography variant="body2">Email: {user?.email || 'N/A'}</Typography>
         </Paper>
 
         <Paper sx={{ p: 2 }}>
@@ -141,18 +130,12 @@ export default function TestRealtimePage() {
           )}
         </Paper>
 
-        <Button 
-          variant="contained" 
-          onClick={testRealtime}
-          disabled={status === 'SUBSCRIBED'}
-        >
+        <Button variant="contained" onClick={testRealtime} disabled={status === 'SUBSCRIBED'}>
           Test Realtime Connection
         </Button>
 
         <Alert severity="info">
-          <Typography variant="body2">
-            Supabase Dashboard Realtime 설정 확인:
-          </Typography>
+          <Typography variant="body2">Supabase Dashboard Realtime 설정 확인:</Typography>
           <ol>
             <li>Dashboard → Database → Replication</li>
             <li>supabase_realtime publication 확인</li>

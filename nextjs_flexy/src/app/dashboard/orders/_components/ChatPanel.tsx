@@ -250,7 +250,7 @@ export default function ChatPanel({
       const {
         data: { user },
       } = await supabase.auth.getUser();
-      
+
       let userProfile = null;
       if (user?.id) {
         const { data: profile } = await supabase
@@ -328,12 +328,11 @@ export default function ChatPanel({
 
       // 채팅 메시지 새로고침
       await fetchChatMessages();
-      
+
       // 관련자료 탭 새로고침 콜백
       if (onFileUpload) {
         onFileUpload();
       }
-
     } catch (error) {
       console.error('파일 업로드 오류:', error);
       alert('파일 업로드에 실패했습니다.');
@@ -356,21 +355,21 @@ export default function ChatPanel({
           .eq('reservation_number', reservationNumber)
           .is('translated_message', null)
           .not('original_message', 'is', null);
-        
+
         if (untranslated && untranslated.length > 0) {
           for (const msg of untranslated) {
             await supabase.functions.invoke('translate-message', {
-              body: { record: msg }
+              body: { record: msg },
             });
           }
         }
       };
-      
+
       translatePendingMessages();
     });
 
     // Realtime 구독 - 더 간단한 방식으로
-    
+
     const channel = supabase
       .channel(`chat_messages_${reservationNumber}`)
       .on(
@@ -382,23 +381,22 @@ export default function ChatPanel({
           filter: `reservation_number=eq.${reservationNumber}`,
         },
         (payload) => {
-          
           if (payload.eventType === 'INSERT') {
             const newMessage = payload.new as ChatMessage;
-            
+
             // 중복 체크 후 추가
             setChatMessages((prev) => {
-              const exists = prev.some(msg => msg.id === newMessage.id);
+              const exists = prev.some((msg) => msg.id === newMessage.id);
               if (exists) {
                 return prev;
               }
               return [...prev, newMessage];
             });
-            
+
             // 번역 요청
             if (!newMessage.translated_message && newMessage.original_message) {
               supabase.functions.invoke('translate-message', {
-                body: { record: newMessage }
+                body: { record: newMessage },
               });
             }
           } else if (payload.eventType === 'UPDATE') {
@@ -408,9 +406,7 @@ export default function ChatPanel({
             );
           } else if (payload.eventType === 'DELETE') {
             const deletedMessage = payload.old as ChatMessage;
-            setChatMessages((prev) =>
-              prev.filter((msg) => msg.id !== deletedMessage.id)
-            );
+            setChatMessages((prev) => prev.filter((msg) => msg.id !== deletedMessage.id));
           }
         }
       )
@@ -439,7 +435,9 @@ export default function ChatPanel({
         flexDirection: 'column',
       }}
     >
-      <Box sx={{ p: 2, height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+      <Box
+        sx={{ p: 2, height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}
+      >
         <Typography
           variant="h6"
           fontWeight="bold"
@@ -517,18 +515,17 @@ export default function ChatPanel({
                       <Typography variant="caption" fontWeight="bold" color="primary.dark">
                         {msg.sender_name}
                       </Typography>
-                      
+
                       {/* 파일 메시지인 경우 */}
                       {msg.message_type === 'file' ? (
                         <Box sx={{ mt: 1 }}>
                           <Stack direction="row" alignItems="center" spacing={1}>
                             {getFileIcon(msg.file_name)}
                             <Box>
-                              <Typography variant="body2">
-                                {msg.original_message}
-                              </Typography>
+                              <Typography variant="body2">{msg.original_message}</Typography>
                               <Typography variant="caption" color="text.secondary">
-                                {msg.file_name} • {msg.file_size && `${(msg.file_size / 1024 / 1024).toFixed(2)}MB`}
+                                {msg.file_name} •{' '}
+                                {msg.file_size && `${(msg.file_size / 1024 / 1024).toFixed(2)}MB`}
                               </Typography>
                             </Box>
                           </Stack>
@@ -568,7 +565,7 @@ export default function ChatPanel({
                           <Typography variant="body2" sx={{ mt: 0.5 }}>
                             {msg.original_message}
                           </Typography>
-                          
+
                           {/* 번역 메시지 (있을 경우만) */}
                           {msg.translated_message && (
                             <Box
@@ -578,33 +575,39 @@ export default function ChatPanel({
                                 bgcolor: 'background.paper',
                                 borderRadius: 1,
                                 borderLeft: '3px solid',
-                                borderColor: msg.original_language === 'ko' ? 'error.light' : 'info.main',
+                                borderColor:
+                                  msg.original_language === 'ko' ? 'error.light' : 'info.main',
                               }}
                             >
-                          <Typography variant="body2" sx={{ fontSize: '0.9em', color: 'text.secondary' }}>
-                            {msg.original_language === 'ko' ? '🇨🇳 ' : '🇰🇷 '}
-                            {msg.translated_message}
-                          </Typography>
-                        </Box>
+                              <Typography
+                                variant="body2"
+                                sx={{ fontSize: '0.9em', color: 'text.secondary' }}
+                              >
+                                {msg.original_language === 'ko' ? '🇨🇳 ' : '🇰🇷 '}
+                                {msg.translated_message}
+                              </Typography>
+                            </Box>
+                          )}
+                        </>
                       )}
-                    </>
-                  )}
-                      
+
                       {/* 번역 중 표시 */}
-                      {!msg.translated_message && msg.original_message && msg.original_language !== 'ko' && (
-                        <Typography
-                          variant="caption"
-                          sx={{
-                            mt: 0.5,
-                            display: 'block',
-                            color: 'warning.main',
-                            fontStyle: 'italic',
-                          }}
-                        >
-                          🔄 한국어 번역 중...
-                        </Typography>
-                      )}
-                      
+                      {!msg.translated_message &&
+                        msg.original_message &&
+                        msg.original_language !== 'ko' && (
+                          <Typography
+                            variant="caption"
+                            sx={{
+                              mt: 0.5,
+                              display: 'block',
+                              color: 'warning.main',
+                              fontStyle: 'italic',
+                            }}
+                          >
+                            🔄 한국어 번역 중...
+                          </Typography>
+                        )}
+
                       {/* 시간 표시 */}
                       <Typography
                         variant="caption"
@@ -629,7 +632,7 @@ export default function ChatPanel({
             onChange={handleFileUpload}
             accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.txt,.ai,.psd,.sketch,.fig,.xd,.ppt,.pptx,.zip,.rar"
           />
-          
+
           <TextField
             fullWidth
             size="small"
@@ -641,9 +644,9 @@ export default function ChatPanel({
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton 
-                    edge="end" 
-                    onClick={() => fileInputRef.current?.click()} 
+                  <IconButton
+                    edge="end"
+                    onClick={() => fileInputRef.current?.click()}
                     size="small"
                     disabled={uploadingFile}
                   >
