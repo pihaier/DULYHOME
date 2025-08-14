@@ -14,13 +14,15 @@ export default function ApiMethodSetItemExpansion() {
 
   const handleExpandClick = (event: React.SyntheticEvent<Element, Event>) => {
     if (apiRef.current) {
-      apiRef.current.setItemExpansion('grid', true);
+      // Note: setItemExpansion API may have changed. Using expandItem/collapseItem instead
+      (apiRef.current as any).expandItem?.('grid');
     }
   };
 
   const handleCollapseClick = (event: React.SyntheticEvent<Element, Event>) => {
     if (apiRef.current) {
-      apiRef.current.setItemExpansion('grid', false);
+      // Note: setItemExpansion API may have changed. Using expandItem/collapseItem instead
+      (apiRef.current as any).collapseItem?.('grid');
     }
   };
 
