@@ -1,6 +1,7 @@
 'use client';
 import { styled, Container, Box, useTheme } from '@mui/material';
 import React, { useContext, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import Header from './layout/vertical/header/Header';
 import Sidebar from './layout/vertical/sidebar/Sidebar';
 
@@ -34,8 +35,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const { activeLayout, isLayout, activeMode, isCollapse } = useContext(CustomizerContext);
   const MiniSidebarWidth = config.miniSidebarWidth;
+  const pathname = usePathname();
 
   const theme = useTheme();
+
+  // market-research와 orders 페이지에서는 full width 사용
+  const isFullWidthPage = pathname?.includes('/market-research/') || pathname?.includes('/orders/');
 
   return (
     <MainWrapper>
@@ -65,7 +70,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {activeLayout === 'horizontal' ? <Navigation /> : ''}
         <Container
           sx={{
-            maxWidth: isLayout === 'boxed' ? '1300px !important' : '100%!important',
+            maxWidth: isFullWidthPage 
+              ? '1600px !important' 
+              : (isLayout === 'boxed' ? '1300px !important' : '100%!important'),
+            px: isFullWidthPage ? 3 : undefined,
           }}
         >
           {/* ------------------------------------------- */}

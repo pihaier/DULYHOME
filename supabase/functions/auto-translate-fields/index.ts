@@ -167,8 +167,7 @@ Deno.serve(async (req) => {
         { role: 'system', content: systemPrompt },
         { role: 'user', content: translationPrompt }
       ],
-      max_completion_tokens: 2000,
-      reasoning_effort: 'minimal'
+      max_completion_tokens: 2000
     });
     
     const translatedText = completion.choices[0].message.content;

@@ -1,6 +1,6 @@
 # 📋 제품조사(market_research_requests) 필드 사용 현황
 
-## 🔍 실제 Supabase 테이블 컬럼 (81개)
+## 🔍 실제 Supabase 테이블 컬럼 (83개)
 
 | 컬럼명 | 타입 | Nullable | 기본값 | 고객 입력 (/application/market-research) | 고객 조회 (/dashboard/orders/market-research) | 중국 직원 (/staff) | 한국 직원 (/staff) | 비고 |
 |--------|------|----------|--------|---------|---------|---------|---------|------|
@@ -63,7 +63,12 @@
 | **total_cbm** | numeric | YES | - | - | "총 CBM" 표시 | 자동계산 표시 | 자동계산 표시 | 자동계산 |
 | **other_matters_kr** | text | YES | - | - | "기타사항" 표시 | - | "기타사항" 입력/표시 | 한국어 번역 |
 | **other_matters_cn** | text | YES | - | - | - | "其他事项" 입력 | - | 중국 직원 입력 |
-| **product_actual_photos** | jsonb | YES | - | - | 사진 표시 | "产品实物照片" 업로드 | "제품실물사진" 표시 | uploaded_files 연동 |
+| **product_actual_photos** | jsonb | YES | '[]' | - | 사진 표시 | "产品实物照片" 업로드 | "제품실물사진" 표시 | 중국직원 업로드 실제 사진 |
+| **application_photos** | jsonb | YES | '[]' | 제품사진 업로드 | 사진 표시 | "客户申请照片" 표시 | "고객신청사진" 표시 | 고객 신청시 업로드 |
+| **logo_files** | jsonb | YES | '[]' | 로고파일 업로드 | 파일 표시 | "Logo文件" 표시 | "로고파일" 표시 | 로고 관련 파일들 |
+| **box_files** | jsonb | YES | '[]' | 박스파일 업로드 | 파일 표시 | "包装文件" 표시 | "박스파일" 표시 | 박스/포장 관련 파일 |
+| **reference_links** | jsonb | YES | '[]' | - | 링크 표시 | "参考链接" 입력 | "참고자료" 표시 | 참고 링크 및 자료 |
+| **chat_files** | jsonb | YES | '[]' | - | 채팅 파일 표시 | "聊天文件" 표시 | "채팅파일" 표시 | 채팅에서 공유된 파일들 |
 | **product_link** | text | YES | - | - | - | "产品链接" 입력 | - | 고객 미표시 |
 
 ### 🎁 샘플 정보 필드 (Staff 입력)
@@ -102,6 +107,8 @@
 | **fcl_shipping_fee** | numeric | YES | - | - | "FCL 운비" 표시 | "FCL运费" 입력 | "FCL 운비" 입력/표시 | FCL시 입력 |
 | **first_payment_amount** | numeric | YES | - | - | "1차 결제비용" 표시 | 자동계산 표시 | 자동계산 표시 | 자동계산 |
 | **import_vat** | numeric | YES | - | - | "부가세" 표시 | 자동계산 표시 | 자동계산 표시 | 10% 자동 |
+| **customs_broker_fee** | numeric | YES | 30000 | - | "관세사 비용" 표시 | 자동계산 표시 | 자동계산 표시 | 30,000원 고정 |
+| **co_certificate_fee** | numeric | YES | 0 | - | "원산지증명서" 표시 | 자동계산 표시 | 자동계산 표시 | FCN1 적용시 50,000원 |
 | **expected_second_payment** | numeric | YES | - | - | "예상 2차결제비용" 표시 | 자동계산 표시 | 자동계산 표시 | 자동계산 |
 | **expected_total_supply_price** | numeric | YES | - | - | "예상 총 합계" 표시 | 자동계산 표시 | 자동계산 표시 | 자동계산 |
 | **expected_unit_price** | numeric | YES | - | - | "예상 단가(VAT포함)" 표시 | 자동계산 표시 | 자동계산 표시 | 자동계산 |
@@ -228,16 +235,24 @@ if (shipping_method === 'LCL') {
 // 9. 관세 (관세율은 함수호출로 가져옴)
 customs_duty = customs_rate * (exw_total + shipping_fee)
 
-// 10. 부가세
-import_vat = (exw_total + shipping_fee + customs_duty) * 0.1
+// 10. 관세사 비용 (고정)
+customs_broker_fee = 30000
 
-// 11. 2차 결제비용
-expected_second_payment = customs_duty + import_vat + shipping_fee
+// 11. 원산지 증명서 비용 (FCN1 적용시)
+co_certificate_fee = (tariff_rate_type === 'FCN1') ? 50000 : 0
 
-// 12. 예상 총 합계
+// 12. 수입VAT (관세사, 원산지증명서 포함)
+vat_base = exw_total + shipping_fee + customs_duty + customs_broker_fee + co_certificate_fee
+import_vat = vat_base * 0.1
+
+// 13. 2차 결제비용
+expected_second_payment = shipping_fee + customs_duty + customs_broker_fee + 
+                          co_certificate_fee + import_vat
+
+// 14. 예상 총 합계
 expected_total_supply_price = first_payment_amount + expected_second_payment
 
-// 13. 예상 단가 (VAT 포함)
+// 15. 예상 단가 (VAT 포함)
 expected_unit_price = expected_total_supply_price / quoted_quantity
 ```
 

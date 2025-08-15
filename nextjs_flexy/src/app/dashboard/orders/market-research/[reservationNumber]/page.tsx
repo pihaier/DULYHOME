@@ -91,6 +91,10 @@ export default function MarketResearchDetailPage() {
       try {
         const supabase = createClient();
 
+        // 현재 사용자 정보 확인
+        const { data: { user } } = await supabase.auth.getUser();
+        console.log('Current user:', user?.id);
+
         // SDK 사용하여 직접 조회
         const { data, error } = await supabase
           .from('market_research_requests')
@@ -98,24 +102,36 @@ export default function MarketResearchDetailPage() {
           .eq('reservation_number', reservationNumber)
           .maybeSingle();
 
-        // 업로드된 파일들 가져오기
-        const { data: files } = await supabase
-          .from('uploaded_files')
-          .select('*')
-          .eq('reservation_number', reservationNumber)
-          .eq('upload_purpose', 'application')
-          .order('created_at', { ascending: true });
+        console.log('Query result:', { data, error });
+
+        // 파일들은 이제 data에 포함되어 있음 (application_photos, logo_files, box_files)
 
         if (error) {
+          console.error('Database error:', error);
           throw new Error(error.message || '데이터를 불러오는데 실패했습니다.');
         }
 
         if (!data) {
-          throw new Error('데이터를 찾을 수 없습니다.');
+          // 사용자 역할 확인
+          const { data: profile } = await supabase
+            .from('user_profiles')
+            .select('role')
+            .eq('user_id', user?.id)
+            .single();
+          
+          console.error('No data found. User role:', profile?.role);
+          throw new Error('데이터를 찾을 수 없습니다. 권한이 없거나 데이터가 존재하지 않습니다.');
         }
 
         setData(data);
-        setFiles(files || []);
+        // files는 이제 data에 포함되어 있음
+        // application_photos, logo_files, box_files를 통합하여 files 배열 생성
+        const allFiles = [
+          ...(data.application_photos || []).map((f: any) => ({ ...f, file_type: 'product', file_url: f.url })),
+          ...(data.logo_files || []).map((f: any) => ({ ...f, file_type: 'logo', file_url: f.url })),
+          ...(data.box_files || []).map((f: any) => ({ ...f, file_type: 'box_design', file_url: f.url }))
+        ];
+        setFiles(allFiles);
       } catch (err) {
         setError(err instanceof Error ? err.message : '알 수 없는 오류가 발생했습니다.');
       } finally {
@@ -155,9 +171,16 @@ export default function MarketResearchDetailPage() {
   return (
     <Box
       sx={{
-        p: { xs: 2, md: 3, lg: 4 },
-        maxWidth: '100%',
-        width: '100%',
+        // Container의 padding을 상쇄하기 위해 음수 마진 적용
+        mx: { xs: -2, sm: -3, md: -4 },
+        px: { xs: 2, sm: 3, md: 4 },
+        width: 'calc(100% + 32px)',
+        '@media (min-width: 600px)': {
+          width: 'calc(100% + 48px)',
+        },
+        '@media (min-width: 900px)': {
+          width: 'calc(100% + 64px)',
+        },
       }}
     >
       {/* Header */}
@@ -171,26 +194,27 @@ export default function MarketResearchDetailPage() {
       />
 
       {/* Main Content with Chat */}
-      <Paper
-        elevation={3}
+      <Box
         sx={{
           mt: 2,
-          height: 'calc(100vh - 250px)',
           display: 'flex',
-          maxWidth: '100%',
+          gap: 2,
           width: '100%',
-          overflow: 'hidden',
+          maxWidth: '100%',
+          flexDirection: { xs: 'column', lg: 'row' },
         }}
       >
         {/* Main Content */}
-        <Box
+        <Paper
+          elevation={2}
           sx={{
             flex: 1,
-            overflowY: 'auto',
-            overflowX: 'hidden',
-            height: '100%',
+            minHeight: { xs: 'auto', lg: 'calc(100vh - 200px)' },
+            maxHeight: { xs: 'none', lg: 'calc(100vh - 200px)' },
+            overflow: 'hidden',
             display: 'flex',
             flexDirection: 'column',
+            width: '100%',
           }}
         >
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -235,9 +259,11 @@ export default function MarketResearchDetailPage() {
             </Tabs>
           </Box>
 
-          {/* 신청정보 탭 */}
-          <TabPanel value={tabValue} index={0}>
-            <Stack spacing={3} sx={{ p: { xs: 2, md: 3 } }}>
+          {/* Tab Content Container */}
+          <Box sx={{ flex: 1, overflow: 'auto' }}>
+            {/* 신청정보 탭 */}
+            <TabPanel value={tabValue} index={0}>
+              <Stack spacing={3} sx={{ p: { xs: 2, md: 3, lg: 4 } }}>
               {/* 신청 정보 */}
               <BlankCard sx={{ bgcolor: 'info.lighter' }}>
                 <CardContent>
@@ -741,26 +767,6 @@ export default function MarketResearchDetailPage() {
                           박스당 제품개수
                         </TableCell>
                         <TableCell>{data?.units_per_box || '조사중'}개</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
-                          박스 길이
-                        </TableCell>
-                        <TableCell>
-                          {data?.box_length ? `${data.box_length}cm` : '조사중'}
-                        </TableCell>
-                        <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
-                          박스 너비
-                        </TableCell>
-                        <TableCell>{data?.box_width ? `${data.box_width}cm` : '조사중'}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
-                          박스 높이
-                        </TableCell>
-                        <TableCell>
-                          {data?.box_height ? `${data.box_height}cm` : '조사중'}
-                        </TableCell>
                         <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
                           총 박스수
                         </TableCell>
@@ -768,11 +774,43 @@ export default function MarketResearchDetailPage() {
                       </TableRow>
                       <TableRow>
                         <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
-                          총 CBM
+                          박스 사이즈
                         </TableCell>
                         <TableCell colSpan={3}>
-                          {data?.total_cbm ? `${data.total_cbm.toFixed(2)}㎥` : '자동계산'}
+                          {data?.box_length && data?.box_width && data?.box_height 
+                            ? `${data.box_length} × ${data.box_width} × ${data.box_height} cm (가로×세로×높이)`
+                            : '조사중'}
                         </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                          HS코드
+                        </TableCell>
+                        <TableCell>{data?.hs_code || '조사중'}</TableCell>
+                        <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                          인증필요여부
+                        </TableCell>
+                        <TableCell>
+                          {data?.certification_required !== undefined ? (
+                            <Chip
+                              label={data.certification_required ? '인증 필요' : '인증 불필요'}
+                              color={data.certification_required ? 'error' : 'success'}
+                              size="small"
+                            />
+                          ) : (
+                            'API 조회중'
+                          )}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                          소요시간
+                        </TableCell>
+                        <TableCell>{data?.work_duration || '조사중'}</TableCell>
+                        <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                          수출항
+                        </TableCell>
+                        <TableCell>{data?.export_port || '조사중'}</TableCell>
                       </TableRow>
                       <TableRow>
                         <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
@@ -813,165 +851,147 @@ export default function MarketResearchDetailPage() {
                           )}
                         </TableCell>
                         <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
-                          샘플단가
-                        </TableCell>
-                        <TableCell>
-                          {data?.sample_unit_price
-                            ? `${data.sample_unit_price.toLocaleString()}원`
-                            : '조사중'}
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
                           샘플 주문 가능 수량
                         </TableCell>
                         <TableCell>
                           {data?.sample_order_qty ? `${data.sample_order_qty}개` : '조사중'}
                         </TableCell>
+                      </TableRow>
+                      <TableRow>
                         <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
-                          샘플 무게(kg)
+                          샘플 무게
                         </TableCell>
                         <TableCell>
                           {data?.sample_weight ? `${data.sample_weight}kg` : '조사중'}
                         </TableCell>
-                      </TableRow>
-                      <TableRow>
                         <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
-                          샘플 제작 기간(day)
+                          샘플 제작 기간
                         </TableCell>
                         <TableCell>
-                          {data?.sample_make_time ? `${data.sample_make_time} day` : '조사중'}
-                        </TableCell>
-                        <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
-                          샘플 가격
-                        </TableCell>
-                        <TableCell>
-                          {data?.sample_price
-                            ? `${data.sample_price.toLocaleString()}원`
-                            : '조사중'}
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
-                          HS코드
-                        </TableCell>
-                        <TableCell>{data?.hs_code || '조사중'}</TableCell>
-                        <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
-                          수입 시 인증 필요 여부
-                        </TableCell>
-                        <TableCell>
-                          {data?.certification_required !== undefined ? (
-                            <Chip
-                              label={data.certification_required ? '인증 필요' : '인증 불필요'}
-                              color={data.certification_required ? 'error' : 'success'}
-                              size="small"
-                            />
-                          ) : (
-                            'API 조회중'
-                          )}
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
-                          인증 예상 비용
-                        </TableCell>
-                        <TableCell colSpan={3}>
-                          {data?.cert_cost ? `${data.cert_cost.toLocaleString()}원` : 'AI 예측중'}
+                          {data?.sample_make_time ? `${data.sample_make_time}일` : '조사중'}
                         </TableCell>
                       </TableRow>
                     </TableBody>
                   </Table>
                 </CardContent>
               </BlankCard>
+
+              {/* 제품 실사 사진 */}
+              {data?.product_actual_photos && data.product_actual_photos.length > 0 && (
+                <BlankCard>
+                  <CardContent>
+                    <Typography variant="h6" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
+                      제품 실사 사진
+                    </Typography>
+                    <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                      {data.product_actual_photos.map((photo: string, index: number) => (
+                        <Box
+                          key={index}
+                          sx={{
+                            position: 'relative',
+                            width: 150,
+                            height: 150,
+                            border: '1px solid #ddd',
+                            borderRadius: 1,
+                            overflow: 'hidden',
+                            cursor: 'pointer',
+                            '&:hover': {
+                              boxShadow: 2,
+                            },
+                          }}
+                          onClick={() => {
+                            setSelectedImage(photo);
+                            setModalOpen(true);
+                          }}
+                        >
+                          <img
+                            src={photo}
+                            alt={`제품 실사 ${index + 1}`}
+                            style={{
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'cover',
+                            }}
+                          />
+                          <Box
+                            sx={{
+                              position: 'absolute',
+                              bottom: 0,
+                              left: 0,
+                              right: 0,
+                              bgcolor: 'rgba(0,0,0,0.7)',
+                              color: 'white',
+                              p: 0.5,
+                              textAlign: 'center',
+                            }}
+                          >
+                            <Typography variant="caption">실사 {index + 1}</Typography>
+                          </Box>
+                        </Box>
+                      ))}
+                    </Box>
+                  </CardContent>
+                </BlankCard>
+              )}
             </Stack>
           </TabPanel>
 
-          {/* 가격정보 탭 */}
-          <TabPanel value={tabValue} index={3}>
-            <Stack spacing={3} sx={{ p: 2 }}>
+            {/* 가격정보 탭 */}
+            <TabPanel value={tabValue} index={3}>
+              <Stack spacing={3} sx={{ p: { xs: 2, md: 3, lg: 4 } }}>
               {/* 기본 정보 */}
               <BlankCard sx={{ bgcolor: 'grey.50' }}>
-                <CardContent>
+                <CardContent sx={{ p: { xs: 2, md: 3 } }}>
                   <Typography variant="h6" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
                     기본 정보
                   </Typography>
-                  <Table>
+                  <Table sx={{ minWidth: { xs: 'auto', md: 700, lg: 900 } }}>
                     <TableBody>
                       <TableRow>
                         <TableCell
                           component="th"
-                          sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}
+                          sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50', whiteSpace: 'nowrap' }}
                         >
-                          소요시간
+                          견적수량
                         </TableCell>
-                        <TableCell sx={{ width: '35%' }}>
-                          {data?.work_duration || '조사중'}
+                        <TableCell sx={{ width: '30%' }}>
+                          {data?.quoted_quantity?.toLocaleString() || '조사중'}개
                         </TableCell>
                         <TableCell
                           component="th"
-                          sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}
+                          sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50', whiteSpace: 'nowrap' }}
                         >
-                          수출항
+                          중국단가
                         </TableCell>
-                        <TableCell sx={{ width: '35%' }}>{data?.export_port || '조사중'}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
-                          출고가 RMB
-                        </TableCell>
-                        <TableCell>
-                          {data?.factory_price_rmb
-                            ? `¥${data.factory_price_rmb.toLocaleString()}`
+                        <TableCell sx={{ width: '30%' }}>
+                          {data?.china_unit_price 
+                            ? `¥${data.china_unit_price.toLocaleString()}`
                             : '조사중'}
                         </TableCell>
-                        <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
-                          조사제품 연결
-                        </TableCell>
-                        <TableCell>
-                          {data?.product_link ? (
-                            <a
-                              href={data.product_link}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              style={{ color: '#1976d2', textDecoration: 'underline' }}
-                            >
-                              제품 링크
-                            </a>
-                          ) : (
-                            '조사중'
-                          )}
-                        </TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
-                          운송방식
-                        </TableCell>
-                        <TableCell>{data?.shipping_method || 'CBM 기준 자동선택'}</TableCell>
-                        <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
-                          환율
-                        </TableCell>
-                        <TableCell>조사중</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
-                          환율 산정일
-                        </TableCell>
-                        <TableCell>조사중</TableCell>
                         <TableCell
                           component="th"
-                          sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}
-                        ></TableCell>
-                        <TableCell></TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
-                          수수료
+                          sx={{ fontWeight: 'bold', bgcolor: 'grey.50', whiteSpace: 'nowrap' }}
+                        >
+                          환율
                         </TableCell>
-                        <TableCell>조사중</TableCell>
-                        <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
-                          수수료(금액)
+                        <TableCell>
+                          {data?.exchange_rate 
+                            ? `₩${data.exchange_rate.toFixed(2)}`
+                            : '조사중'}
                         </TableCell>
-                        <TableCell>조사중</TableCell>
+                        <TableCell
+                          component="th"
+                          sx={{ fontWeight: 'bold', bgcolor: 'grey.50', whiteSpace: 'nowrap' }}
+                        >
+                          환율 산정일
+                        </TableCell>
+                        <TableCell>
+                          {data?.exchange_rate_date 
+                            ? new Date(data.exchange_rate_date).toLocaleDateString('ko-KR')
+                            : '조사중'}
+                        </TableCell>
                       </TableRow>
                     </TableBody>
                   </Table>
@@ -980,49 +1000,53 @@ export default function MarketResearchDetailPage() {
 
               {/* 1차 결제 정보 */}
               <BlankCard sx={{ bgcolor: 'info.lighter' }}>
-                <CardContent>
+                <CardContent sx={{ p: { xs: 2, md: 3 } }}>
                   <Typography variant="h6" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
                     1차 결제 정보
                   </Typography>
-                  <Table>
+                  <Table sx={{ minWidth: { xs: 'auto', md: 700, lg: 900 } }}>
                     <TableBody>
                       <TableRow>
                         <TableCell
                           component="th"
-                          sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}
-                        >
-                          중국단가
-                        </TableCell>
-                        <TableCell sx={{ width: '35%' }}>조사중</TableCell>
-                        <TableCell
-                          component="th"
-                          sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}
+                          sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50', whiteSpace: 'nowrap' }}
                         >
                           EXW 합계
                         </TableCell>
-                        <TableCell sx={{ width: '35%' }}>조사중</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                        <TableCell sx={{ width: '30%' }}>
+                          {data?.exw_total 
+                            ? `₩${data.exw_total.toLocaleString()}`
+                            : '조사중'}
+                        </TableCell>
+                        <TableCell
+                          component="th"
+                          sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50', whiteSpace: 'nowrap' }}
+                        >
                           중국 운송료
                         </TableCell>
-                        <TableCell>조사중</TableCell>
-                        <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
-                          FCL 운비
+                        <TableCell sx={{ width: '30%' }}>
+                          {data?.china_shipping_fee 
+                            ? `¥${data.china_shipping_fee.toLocaleString()}`
+                            : '조사중'}
                         </TableCell>
-                        <TableCell>조사중</TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
-                          1차 상세비용
+                        <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50', whiteSpace: 'nowrap' }}>
+                          수수료
                         </TableCell>
-                        <TableCell>조사중</TableCell>
-                        <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                        <TableCell>
+                          {data?.commission_amount 
+                            ? `₩${data.commission_amount.toLocaleString()} (${data?.commission_rate || 5}%)`
+                            : '조사중'}
+                        </TableCell>
+                        <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50', whiteSpace: 'nowrap' }}>
                           1차 결제비용
                         </TableCell>
                         <TableCell>
                           <Typography variant="h6" color="primary">
-                            조사중
+                            {data?.first_payment_amount 
+                              ? `₩${data.first_payment_amount.toLocaleString()}`
+                              : '조사중'}
                           </Typography>
                         </TableCell>
                       </TableRow>
@@ -1031,47 +1055,158 @@ export default function MarketResearchDetailPage() {
                 </CardContent>
               </BlankCard>
 
-              {/* 예상 비용 정보 */}
+              {/* 2차 결제 정보 */}
               <BlankCard sx={{ bgcolor: 'warning.lighter' }}>
-                <CardContent>
+                <CardContent sx={{ p: { xs: 2, md: 3 } }}>
                   <Typography variant="h6" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
-                    예상 비용 정보
+                    2차 결제 정보 (예측값)
                   </Typography>
-                  <Table>
+                  <Table sx={{ minWidth: { xs: 'auto', md: 700, lg: 900 } }}>
                     <TableBody>
                       <TableRow>
                         <TableCell
                           component="th"
-                          sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}
+                          sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50', whiteSpace: 'nowrap' }}
+                        >
+                          총 CBM
+                        </TableCell>
+                        <TableCell sx={{ width: '30%' }}>
+                          {data?.total_cbm ? `${data.total_cbm}㎥` : '조사중'}
+                        </TableCell>
+                        <TableCell
+                          component="th"
+                          sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50', whiteSpace: 'nowrap' }}
+                        >
+                          운송방식
+                        </TableCell>
+                        <TableCell sx={{ width: '30%' }}>
+                          {data?.shipping_method || '조사중'}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell
+                          component="th"
+                          sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50', whiteSpace: 'nowrap' }}
+                        >
+                          LCL 운송비
+                        </TableCell>
+                        <TableCell sx={{ width: '30%' }}>
+                          {data?.lcl_shipping_fee
+                            ? `₩${data.lcl_shipping_fee.toLocaleString()}`
+                            : '-'}
+                        </TableCell>
+                        <TableCell
+                          component="th"
+                          sx={{ fontWeight: 'bold', width: '20%', bgcolor: 'grey.50', whiteSpace: 'nowrap' }}
+                        >
+                          FCL 운송비
+                        </TableCell>
+                        <TableCell sx={{ width: '30%' }}>
+                          {data?.fcl_shipping_fee
+                            ? `₩${data.fcl_shipping_fee.toLocaleString()}`
+                            : '-'}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell
+                          component="th"
+                          sx={{ fontWeight: 'bold', bgcolor: 'grey.50', whiteSpace: 'nowrap' }}
                         >
                           관세
                         </TableCell>
-                        <TableCell sx={{ width: '35%' }}>조사중</TableCell>
+                        <TableCell>
+                          {data?.customs_duty !== undefined
+                            ? `₩${data.customs_duty.toLocaleString()} (${data?.customs_rate || 0}%)`
+                            : '조사중'}
+                        </TableCell>
                         <TableCell
                           component="th"
-                          sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}
+                          sx={{ fontWeight: 'bold', bgcolor: 'grey.50', whiteSpace: 'nowrap' }}
                         >
-                          부가세
+                          수입 부가세
                         </TableCell>
-                        <TableCell sx={{ width: '35%' }}>조사중</TableCell>
+                        <TableCell>
+                          {data?.import_vat 
+                            ? `₩${data.import_vat.toLocaleString()}`
+                            : '조사중'}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell
+                          component="th"
+                          sx={{ fontWeight: 'bold', bgcolor: 'grey.50', whiteSpace: 'nowrap' }}
+                        >
+                          관세사 비용
+                        </TableCell>
+                        <TableCell>
+                          {data?.customs_broker_fee
+                            ? `₩${data.customs_broker_fee.toLocaleString()}`
+                            : '₩30,000 (고정)'}
+                        </TableCell>
+                        <TableCell
+                          component="th"
+                          sx={{ fontWeight: 'bold', bgcolor: 'grey.50', whiteSpace: 'nowrap' }}
+                        >
+                          원산지 증명서
+                        </TableCell>
+                        <TableCell>
+                          {data?.co_certificate_fee
+                            ? `₩${data.co_certificate_fee.toLocaleString()}`
+                            : '-'}
+                        </TableCell>
                       </TableRow>
                       <TableRow>
                         <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
                           예상 2차결제비용
                         </TableCell>
-                        <TableCell>조사중</TableCell>
-                        <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                        <TableCell colSpan={3}>
+                          <Typography variant="h6" color="warning.main">
+                            {data?.expected_second_payment 
+                              ? `₩${data.expected_second_payment.toLocaleString()}`
+                              : '조사중'}
+                          </Typography>
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </BlankCard>
+
+              {/* 최종 예상 가격 */}
+              <BlankCard sx={{ bgcolor: 'success.lighter' }}>
+                <CardContent sx={{ p: { xs: 2, md: 3 } }}>
+                  <Typography variant="h6" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
+                    최종 예상 가격
+                  </Typography>
+                  <Table sx={{ minWidth: { xs: 'auto', md: 700, lg: 900 } }}>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell
+                          component="th"
+                          sx={{ fontWeight: 'bold', width: '30%', bgcolor: 'grey.50' }}
+                        >
                           예상 총 공급가
                         </TableCell>
-                        <TableCell>조사중</TableCell>
+                        <TableCell>
+                          <Typography variant="h6" color="text.primary">
+                            {data?.expected_total_supply_price 
+                              ? `₩${data.expected_total_supply_price.toLocaleString()}`
+                              : '조사중'}
+                          </Typography>
+                        </TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
-                          예상 단가 (VAT 별도)
+                        <TableCell
+                          component="th"
+                          sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}
+                        >
+                          예상 단가 (VAT 포함)
                         </TableCell>
-                        <TableCell colSpan={3}>
-                          <Typography variant="h6" color="primary">
-                            조사중
+                        <TableCell>
+                          <Typography variant="h5" color="primary" fontWeight="bold">
+                            {data?.expected_unit_price 
+                              ? `₩${data.expected_unit_price.toLocaleString()}`
+                              : '조사중'}
                           </Typography>
                         </TableCell>
                       </TableRow>
@@ -1082,9 +1217,9 @@ export default function MarketResearchDetailPage() {
             </Stack>
           </TabPanel>
 
-          {/* 관련자료 탭 */}
-          <TabPanel value={tabValue} index={4}>
-            <Box sx={{ p: 3 }}>
+            {/* 관련자료 탭 */}
+            <TabPanel value={tabValue} index={4}>
+              <Box sx={{ p: { xs: 2, md: 3, lg: 4 } }}>
               {files.length > 0 ? (
                 <Stack spacing={2}>
                   <Typography variant="h6" gutterBottom fontWeight="bold">
@@ -1133,27 +1268,28 @@ export default function MarketResearchDetailPage() {
                 <Typography color="text.secondary">관련자료가 없습니다.</Typography>
               )}
             </Box>
-          </TabPanel>
-        </Box>
+            </TabPanel>
+          </Box>
+
+        </Paper>
 
         {/* Desktop - Chat on right side */}
         {!isMobile && (
-          <Box
+          <Paper
+            elevation={2}
             sx={{
-              width: 450,
-              borderLeft: '1px solid',
-              borderColor: 'divider',
-              height: '100%',
-              display: 'flex',
-              flexDirection: 'column',
+              flex: '0 0 400px',
+              minHeight: 'calc(100vh - 200px)',
+              maxHeight: 'calc(100vh - 200px)',
               overflow: 'hidden',
-              ml: 1,
+              display: { xs: 'none', lg: 'flex' },
+              flexDirection: 'column',
             }}
           >
             <ChatPanel reservationNumber={reservationNumber} serviceType="market-research" />
-          </Box>
+          </Paper>
         )}
-      </Paper>
+      </Box>
 
       {/* Mobile - Floating Chat Button */}
       {isMobile && (

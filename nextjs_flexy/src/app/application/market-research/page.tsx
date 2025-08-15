@@ -148,7 +148,6 @@ export default function MarketResearchPage() {
       const applicationData = {
         reservation_number: newReservationNumber,
         user_id: user.id,
-        service_type: 'market_research',
         company_name: formData.company_name,
         contact_person: formData.contact_person,
         contact_phone: formData.contact_phone,
@@ -163,7 +162,8 @@ export default function MarketResearchPage() {
         custom_box_required: formData.customBoxRequired,
         box_details: formData.boxDetails || null,
         status: 'submitted',
-        payment_status: 'pending',
+        service_type: 'market_research',
+        payment_status: 'not_required',
       };
 
       // Supabase에 직접 저장
@@ -267,9 +267,11 @@ export default function MarketResearchPage() {
         },
       });
 
-      // 파일 업로드 처리 (Storage SDK 사용)
+      // 파일 업로드 처리 (Storage SDK 사용 + 컬럼에 직접 저장)
       const uploadFiles = async () => {
-        const uploadedFiles = [];
+        const applicationPhotos = [];
+        const logoFiles = [];
+        const boxFiles = [];
 
         // 모든 파일을 배열로 모으기 (이미 압축된 파일들)
         const filesToUpload = [
@@ -307,28 +309,21 @@ export default function MarketResearchPage() {
               data: { publicUrl },
             } = supabase.storage.from('application-files').getPublicUrl(uploadData.path);
 
-            // uploaded_files 테이블에 기록
-            const { data: fileRecord, error: dbError } = await supabase
-              .from('uploaded_files')
-              .insert({
-                reservation_number: newReservationNumber,
-                uploaded_by: user.id,
-                original_filename: file.name,
-                file_path: uploadData.path,
-                file_size: file.size,
-                file_type: category,
-                mime_type: file.type,
-                upload_purpose: 'application',
-                upload_category: category,
-                upload_status: 'completed',
-                file_url: publicUrl,
-              })
-              .select()
-              .single();
+            // 파일 정보를 적절한 배열에 추가
+            const fileInfo = {
+              url: publicUrl,
+              filename: file.name,
+              size: file.size,
+              uploaded_at: new Date().toISOString()
+            };
 
-            if (dbError) {
-            } else {
-              uploadedFiles.push(fileRecord);
+            // 카테고리별로 적절한 배열에 추가
+            if (category === 'product') {
+              applicationPhotos.push(fileInfo);
+            } else if (category === 'logo') {
+              logoFiles.push(fileInfo);
+            } else if (category === 'box_design') {
+              boxFiles.push(fileInfo);
             }
           } catch (error) {
             // 로컬 환경에서 Storage 오류 발생 시 API 폴백
@@ -360,7 +355,32 @@ export default function MarketResearchPage() {
           }
         }
 
-        return uploadedFiles;
+        // 파일 정보를 market_research_requests 테이블의 컬럼에 저장
+        if (applicationPhotos.length > 0 || logoFiles.length > 0 || boxFiles.length > 0) {
+          const updateData = {};
+          
+          if (applicationPhotos.length > 0) {
+            updateData.application_photos = applicationPhotos;
+          }
+          if (logoFiles.length > 0) {
+            updateData.logo_files = logoFiles;
+          }
+          if (boxFiles.length > 0) {
+            updateData.box_files = boxFiles;
+          }
+
+          const { error: updateError } = await supabase
+            .from('market_research_requests')
+            .update(updateData)
+            .eq('reservation_number', newReservationNumber);
+
+          if (updateError) {
+            console.error('Failed to update file columns:', updateError);
+            // 파일 업로드는 성공했으므로 계속 진행
+          }
+        }
+
+        return { applicationPhotos, logoFiles, boxFiles };
       };
 
       // 파일이 있으면 업로드

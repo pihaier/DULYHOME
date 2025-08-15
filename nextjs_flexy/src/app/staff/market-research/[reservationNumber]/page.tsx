@@ -29,6 +29,8 @@ import {
   IconButton,
   Divider,
   MenuItem,
+  Dialog,
+  DialogContent,
 } from '@mui/material';
 import { useRouter, useParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
@@ -49,6 +51,9 @@ import {
   ArrowBack as ArrowBackIcon,
   Chat as ChatIcon,
   Close as CloseIcon,
+  AttachFile as AttachFileIcon,
+  Search as SearchIcon,
+  CloudUpload as CloudUploadIcon,
 } from '@mui/icons-material';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -74,6 +79,19 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
+// 숫자 포맷 함수 (콤마 추가, 소수점 제거)
+const formatNumber = (num: number | string | null | undefined): string => {
+  if (!num) return '0';
+  const number = typeof num === 'string' ? parseFloat(num) : num;
+  // 소수점 제거하고 정수로 변환
+  return Math.round(number).toLocaleString('ko-KR');
+};
+
+// 숫자 입력 시 콤마 제거
+const parseNumberInput = (value: string): number => {
+  return parseFloat(value.replace(/,/g, '')) || 0;
+};
+
 export default function MarketResearchDetailPage() {
   const router = useRouter();
   const params = useParams();
@@ -91,6 +109,10 @@ export default function MarketResearchDetailPage() {
   const [saving, setSaving] = useState(false);
   const [chatDrawerOpen, setChatDrawerOpen] = useState(false);
   const [tariffDetails, setTariffDetails] = useState<any>(null);
+  const [lookingUpHsCode, setLookingUpHsCode] = useState(false);
+  const [hsCodeProgress, setHsCodeProgress] = useState<string>('');
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const supabase = createClient();
   const isChineseStaff = userProfile?.role === 'chinese_staff';
@@ -115,7 +137,8 @@ export default function MarketResearchDetailPage() {
     if (updated.total_cbm) {
       updated.shipping_method = updated.total_cbm >= 15 ? 'FCL' : 'LCL';
       if (updated.shipping_method === 'LCL') {
-        updated.lcl_shipping_fee = updated.total_cbm * 90000;
+        // 1 CBM 이하는 90,000원 고정
+        updated.lcl_shipping_fee = updated.total_cbm <= 1 ? 90000 : updated.total_cbm * 90000;
       }
     }
 
@@ -153,21 +176,38 @@ export default function MarketResearchDetailPage() {
       shipping_fee = updated.fcl_shipping_fee;
     }
 
-    // 관세 계산
-    if (updated.customs_rate && updated.exw_total && shipping_fee) {
-      updated.customs_duty = (updated.customs_rate / 100) * (updated.exw_total + shipping_fee);
+    // 관세 계산 (운송비가 0이어도 계산)
+    if (updated.customs_rate && updated.exw_total) {
+      const dutiable_value = updated.exw_total + shipping_fee; // 과세가격 = EXW + 운송비
+      updated.customs_duty = (updated.customs_rate / 100) * dutiable_value;
     }
 
-    // 수입VAT
-    if (updated.exw_total && shipping_fee) {
-      updated.import_vat = (updated.exw_total + shipping_fee + (updated.customs_duty || 0)) * 0.1;
+    // 관세사 비용 (고정 3만원)
+    updated.customs_broker_fee = 30000;
+
+    // 원산지 증명서 비용은 이미 fetchTariffAndCertification에서 설정됨
+    // co_certificate_fee가 없으면 0으로 설정
+    if (!updated.co_certificate_fee) {
+      updated.co_certificate_fee = 0;
     }
 
-    // 2차 결제비용
-    if (shipping_fee > 0) {
-      updated.expected_second_payment =
-        shipping_fee + (updated.customs_duty || 0) + (updated.import_vat || 0);
+    // 수입VAT (관세 + 관세사 + 원산지증명서 포함하여 계산)
+    if (updated.exw_total) {
+      const cif_value = updated.exw_total + shipping_fee; // CIF 가격
+      const vat_base = cif_value + 
+                      (updated.customs_duty || 0) + 
+                      updated.customs_broker_fee + 
+                      updated.co_certificate_fee; // 부가세 과세표준
+      updated.import_vat = vat_base * 0.1;
     }
+
+    // 2차 결제비용 (운송비 + 관세 + 관세사 + C/O + 수입VAT)
+    updated.expected_second_payment =
+      shipping_fee + 
+      (updated.customs_duty || 0) + 
+      updated.customs_broker_fee +
+      updated.co_certificate_fee +
+      (updated.import_vat || 0);
 
     // 예상 총 합계
     if (updated.first_payment_amount && updated.expected_second_payment) {
@@ -178,6 +218,11 @@ export default function MarketResearchDetailPage() {
     // 예상 단가
     if (updated.expected_total_supply_price && updated.quoted_quantity) {
       updated.expected_unit_price = updated.expected_total_supply_price / updated.quoted_quantity;
+    }
+
+    // 샘플 단가 자동 계산 (중국단가 * 환율)
+    if (updated.china_unit_price && updated.exchange_rate) {
+      updated.sample_unit_price = updated.china_unit_price * updated.exchange_rate;
     }
 
     return updated;
@@ -195,7 +240,107 @@ export default function MarketResearchDetailPage() {
     }
   };
 
-  // 관세율 및 인증 정보 자동 조회
+  // HS코드 조회 버튼 핸들러 - hs-code-classifier SSE 스트리밍 처리
+  const handleHsCodeLookup = async () => {
+    if (!editData.product_name) {
+      alert(isChineseStaff ? '请先输入产品名' : '제품명을 먼저 입력해주세요');
+      return;
+    }
+
+    setLookingUpHsCode(true);
+    setHsCodeProgress(isChineseStaff ? '正在查询HS编码...' : 'HS코드 조회 중...');
+    
+    try {
+      // Edge Function URL 직접 호출 (SSE 스트리밍)
+      const response = await fetch('https://fzpyfzpmwyvqumvftfbr.supabase.co/functions/v1/hs-code-classifier', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${(await supabase.auth.getSession()).data.session?.access_token || ''}`,
+        },
+        body: JSON.stringify({ 
+          productName: editData.product_name,
+          stream: true  // SSE 스트리밍 활성화
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+      let finalHsCode = '';
+
+      if (reader) {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          const chunk = decoder.decode(value);
+          const lines = chunk.split('\n');
+          
+          for (const line of lines) {
+            if (line.startsWith('data: ')) {
+              try {
+                const data = JSON.parse(line.slice(6));
+                
+                // 진행 상황 업데이트
+                switch (data.type) {
+                  case 'start':
+                    setHsCodeProgress(isChineseStaff ? '分析开始...' : '분석 시작...');
+                    break;
+                  case 'step':
+                    setHsCodeProgress(data.data.description || (isChineseStaff ? '处理中...' : '처리 중...'));
+                    break;
+                  case 'progress':
+                    setHsCodeProgress(data.data.message || (isChineseStaff ? '进行中...' : '진행 중...'));
+                    break;
+                  case 'complete':
+                    // 최종 HS코드 받음
+                    if (data.data && data.data.hsCode) {
+                      finalHsCode = data.data.hsCode;
+                      console.log('최종 HS코드:', finalHsCode);
+                      setHsCodeProgress(`${isChineseStaff ? 'HS编码' : 'HS코드'}: ${finalHsCode}`);
+                    }
+                    break;
+                  case 'error':
+                    throw new Error(data.data.message || '처리 중 오류');
+                }
+              } catch (e) {
+                console.error('SSE 파싱 오류:', e);
+              }
+            }
+          }
+        }
+      }
+
+      // HS코드 설정
+      if (finalHsCode && /^\d{10}$/.test(finalHsCode)) {
+        handleFieldChange('hs_code', finalHsCode);
+        
+        // 관세율 자동 조회
+        await fetchTariffAndCertification(finalHsCode);
+        
+        // 완료 메시지는 이미 setHsCodeProgress로 표시됨
+      } else {
+        setHsCodeProgress(isChineseStaff ? '未找到有效的HS编码' : '유효한 HS코드를 찾을 수 없습니다');
+      }
+    } catch (error) {
+      console.error('HS code lookup error:', error);
+      setHsCodeProgress(
+        `${isChineseStaff ? '查询失败' : '조회 실패'}: ${error instanceof Error ? error.message : '알 수 없는 오류'}`
+      );
+    } finally {
+      setLookingUpHsCode(false);
+      // 3초 후 진행 메시지 지우기
+      setTimeout(() => {
+        setHsCodeProgress('');
+      }, 3000);
+    }
+  };
+
+  // 관세율 및 인증 정보 자동 조회 - typeCode A, C, FCN1 파싱
   const fetchTariffAndCertification = async (hsCode: string) => {
     try {
       // 병렬로 관세율과 인증 정보 조회
@@ -208,64 +353,84 @@ export default function MarketResearchDetailPage() {
         }),
       ]);
 
-      // 관세율 처리 - tariff-rate Edge Function의 응답 구조에 맞게 파싱
+      // 관세율 처리 - typeCode A(기본), C(WTO), FCN1(한중FTA) 중 최저값
       if (!tariffResponse.error && tariffResponse.data?.success) {
         const tariffData = tariffResponse.data.tariffRates;
+        
+        console.log('관세율 조회 결과:', tariffData);
 
-        // 상세 정보 저장
+        // A, C, FCN1 값 추출 - 0도 유효한 값이므로 ?? 사용
+        const rateA = tariffData.basic?.rate ?? 8;  // typeCode: A
+        const rateC = tariffData.wto?.rate ?? rateA;  // typeCode: C
+        const rateFCN1 = tariffData.fta_china?.rate ?? rateA;  // typeCode: FCN1
+
+        // 상세 정보 저장 - 3개 값 모두 표시
         setTariffDetails({
-          basic_rate: tariffData.basic?.rate || 8,
-          wto_rate: tariffData.wto?.rate || null,
-          fta_rate: tariffData.fta_us?.rate || tariffData.fta_vietnam?.rate || null,
-          korea_china_fta_rate: tariffData.fta_china?.rate || null,
+          basic_rate: rateA,
+          wto_rate: rateC,
+          korea_china_fta_rate: rateFCN1,
         });
 
-        // 가장 낮은 세율 찾기 (한중 FTA > FTA > WTO > 기본)
-        let lowestRate = tariffData.basic?.rate || 8;
-        let rateType = '기본세율';
+        // 최저값 찾기
+        let lowestRate = rateA;
+        let rateType = 'A(기본)';
+        let usesFTA = false;
 
-        if (tariffData.fta_china?.rate !== undefined && tariffData.fta_china.rate < lowestRate) {
-          lowestRate = tariffData.fta_china.rate;
-          rateType = '한중FTA';
-        } else if (tariffData.fta_us?.rate !== undefined && tariffData.fta_us.rate < lowestRate) {
-          lowestRate = tariffData.fta_us.rate;
-          rateType = '한미FTA';
-        } else if (
-          tariffData.fta_vietnam?.rate !== undefined &&
-          tariffData.fta_vietnam.rate < lowestRate
-        ) {
-          lowestRate = tariffData.fta_vietnam.rate;
-          rateType = '한베트남FTA';
-        } else if (tariffData.wto?.rate !== undefined && tariffData.wto.rate < lowestRate) {
-          lowestRate = tariffData.wto.rate;
-          rateType = 'WTO협정';
+        if (rateC < lowestRate) {
+          lowestRate = rateC;
+          rateType = 'C(WTO)';
+          usesFTA = false;
         }
+        if (rateFCN1 < lowestRate) {
+          lowestRate = rateFCN1;
+          rateType = 'FCN1(한중FTA)';
+          usesFTA = true;  // FCN1이 최저값일 때 원산지 증명서 필요
+        }
+        
+        console.log(`관세율 선택: ${rateType} = ${lowestRate}%`);
 
-        // 관세율 설정 및 재계산
+        // 관세율 설정 및 재계산 (원산지 증명서 비용 포함)
         setEditData((prev) => {
-          const updated = { ...prev, customs_rate: lowestRate };
+          const updated = { 
+            ...prev, 
+            customs_rate: lowestRate,
+            co_certificate_fee: usesFTA ? 50000 : 0  // FCN1 적용시 5만원
+          };
+          return calculateValues(updated);
+        });
+      } else {
+        // 오류 시 기본값 설정
+        setTariffDetails({
+          basic_rate: 8,
+          wto_rate: 8,
+          korea_china_fta_rate: 8,
+        });
+        
+        setEditData((prev) => {
+          const updated = { ...prev, customs_rate: 8 };
           return calculateValues(updated);
         });
       }
 
-      // 인증 필요 여부 처리 - customs-verification Edge Function의 응답 구조에 맞게 파싱
+      // 인증 필요 여부 처리
       if (!customsResponse.error && customsResponse.data?.success) {
         const hasRequirements = customsResponse.data.totalCount > 0;
-        const certifications = customsResponse.data.requirements
-          ?.map((req: any) => req.documentName || req.lawName)
-          .filter(Boolean)
-          .join(', ');
-
+        
         setEditData((prev) => ({
           ...prev,
           certification_required: hasRequirements,
-          required_certifications: certifications || null,
+          // required_certifications 필드는 테이블에 없으므로 제거
         }));
-
-        if (certifications) {
-        }
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error('Tariff/Certification lookup error:', error);
+      // 에러 시 기본값 설정
+      setTariffDetails({
+        basic_rate: 8,
+        wto_rate: 8,
+        korea_china_fta_rate: 8,
+      });
+    }
   };
 
   useEffect(() => {
@@ -288,8 +453,16 @@ export default function MarketResearchDetailPage() {
         if (error) throw error;
         if (!data) throw new Error('주문을 찾을 수 없습니다');
 
-        setData(data);
-        setEditData(data);
+        // product_actual_photos가 없으면 빈 배열로 초기화
+        const dataWithPhotos = {
+          ...data,
+          product_actual_photos: data.product_actual_photos || []
+        };
+        setData(dataWithPhotos);
+        setEditData(dataWithPhotos);
+
+        // files 상태는 더 이상 필요없음 - 컬럼에서 직접 읽음
+        // application_photos, logo_files, box_files 등은 data에 포함되어 있음
       } catch (error: any) {
         setError(error.message);
       } finally {
@@ -303,13 +476,15 @@ export default function MarketResearchDetailPage() {
   const handleSave = async () => {
     setSaving(true);
     try {
-      // 최종 계산 실행
-      const updated = calculateValues(editData);
-      updated.exchange_rate_date = new Date().toISOString().split('T')[0];
+      // 이미 계산된 editData를 그대로 사용 (화면에서 이미 계산됨)
+      const dataToSave = { ...editData };
+      
+      // 환율 산정 날짜를 저장 시점의 날짜로 기록
+      dataToSave.exchange_rate_date = new Date().toISOString().split('T')[0];
 
       const { data: updatedData, error } = await supabase
         .from('market_research_requests')
-        .update(updated)
+        .update(dataToSave)
         .eq('reservation_number', reservationNumber)
         .select()
         .single();
@@ -325,12 +500,13 @@ export default function MarketResearchDetailPage() {
         });
       }
 
-      setData(updated);
-      setEditData(updated);
+      setData(dataToSave);
+      setEditData(dataToSave);
       setEditMode(false);
       alert(isChineseStaff ? '保存成功' : '저장되었습니다');
     } catch (error: any) {
-      alert(error.message);
+      console.error('Save error:', error);
+      alert(`저장 실패: ${error.message}`);
     } finally {
       setSaving(false);
     }
@@ -339,6 +515,68 @@ export default function MarketResearchDetailPage() {
   const handleCancel = () => {
     setEditData(data);
     setEditMode(false);
+  };
+
+  // 파일 업로드 함수
+  const uploadProductPhotos = async (files: FileList) => {
+    const supabase = createClient();
+    const uploadedUrls: string[] = [];
+    
+    try {
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const fileExt = file.name.split('.').pop();
+        const safeFileName = `${Date.now()}_${Math.random().toString(36).substring(2, 8)}.${fileExt}`;
+        const filePath = `${reservationNumber}/product-photos/${safeFileName}`;
+        
+        // Supabase Storage에 업로드 (고객과 동일한 버킷 사용)
+        const { data, error } = await supabase.storage
+          .from('application-files')
+          .upload(filePath, file, {
+            cacheControl: '3600',
+            upsert: false
+          });
+        
+        if (error) {
+          console.error('Upload error:', error);
+          alert(isChineseStaff ? `文件上传失败: ${error.message}` : `파일 업로드 실패: ${error.message}`);
+          continue;
+        }
+        
+        // 업로드된 파일의 공개 URL 가져오기
+        const { data: { publicUrl } } = supabase.storage
+          .from('application-files')
+          .getPublicUrl(filePath);
+        
+        uploadedUrls.push(publicUrl);
+        
+        // uploaded_files 테이블에 기록
+        if (userProfile?.user_id) {
+          const { error: uploadError } = await supabase.from('uploaded_files').insert({
+            reservation_number: reservationNumber,
+            uploaded_by: userProfile.user_id,
+            original_filename: file.name,
+            file_path: filePath,
+            file_size: file.size,
+            file_type: 'product-photo',
+            mime_type: file.type,
+            upload_purpose: 'product-actual',  // 이제 허용됨
+            file_url: publicUrl,
+          });
+          
+          if (uploadError) {
+            console.error('uploaded_files insert error:', uploadError);
+            // 에러가 발생해도 업로드는 성공했으므로 계속 진행
+          }
+        }
+      }
+      
+      return uploadedUrls;
+    } catch (error) {
+      console.error('Upload failed:', error);
+      alert(isChineseStaff ? '文件上传失败' : '파일 업로드 실패');
+      return [];
+    }
   };
 
   const getStatusColor = (status: string) => {
@@ -439,7 +677,7 @@ export default function MarketResearchDetailPage() {
             </Stack>
           </Box>
 
-          {/* Tabs - STAFF_PAGE_DETAILED_PLAN.md 구조 반영 */}
+          {/* Tabs - 4개 탭으로 간소화 */}
           <Tabs value={tabValue} onChange={(e, val) => setTabValue(val)} sx={{ mb: 3 }}>
             <Tab
               label={isChineseStaff ? '基本信息' : '기본정보'}
@@ -457,13 +695,8 @@ export default function MarketResearchDetailPage() {
               iconPosition="start"
             />
             <Tab
-              label={isChineseStaff ? '价格信息' : '가격정보'}
+              label={isChineseStaff ? '价格/关税信息' : '가격/관세정보'}
               icon={<AttachMoneyIcon />}
-              iconPosition="start"
-            />
-            <Tab
-              label={isChineseStaff ? '运输信息' : '운송정보'}
-              icon={<ShippingIcon />}
               iconPosition="start"
             />
           </Tabs>
@@ -502,7 +735,11 @@ export default function MarketResearchDetailPage() {
                       )}
                       <TableRow>
                         <TableCell width="30%">{isChineseStaff ? '产品名' : '제품명'}</TableCell>
-                        <TableCell>{data.product_name}</TableCell>
+                        <TableCell>
+                          {isChineseStaff && data.product_name_chinese
+                            ? data.product_name_chinese
+                            : data.product_name}
+                        </TableCell>
                       </TableRow>
                       <TableRow>
                         <TableCell>{isChineseStaff ? '调查数量' : '조사수량'}</TableCell>
@@ -514,15 +751,12 @@ export default function MarketResearchDetailPage() {
                       </TableRow>
                       <TableRow>
                         <TableCell>{isChineseStaff ? '要求事项' : '요구사항'}</TableCell>
-                        <TableCell>{data.requirements || '-'}</TableCell>
+                        <TableCell>
+                          {isChineseStaff && data.requirements_chinese
+                            ? data.requirements_chinese
+                            : data.requirements || '-'}
+                        </TableCell>
                       </TableRow>
-                      {/* 중국 직원에게만 번역된 요구사항 표시 */}
-                      {isChineseStaff && data.requirements_translated && (
-                        <TableRow>
-                          <TableCell>要求事项（中文）</TableCell>
-                          <TableCell>{data.requirements_translated}</TableCell>
-                        </TableRow>
-                      )}
                       <TableRow>
                         <TableCell>{isChineseStaff ? '详细页面' : '상세페이지 URL'}</TableCell>
                         <TableCell>
@@ -564,7 +798,11 @@ export default function MarketResearchDetailPage() {
                       {data.logo_details && (
                         <TableRow>
                           <TableCell>{isChineseStaff ? 'Logo详情' : '로고 상세'}</TableCell>
-                          <TableCell>{data.logo_details}</TableCell>
+                          <TableCell>
+                            {isChineseStaff && data.logo_details_chinese
+                              ? data.logo_details_chinese
+                              : data.logo_details}
+                          </TableCell>
                         </TableRow>
                       )}
                       <TableRow>
@@ -583,7 +821,11 @@ export default function MarketResearchDetailPage() {
                       {data.box_details && (
                         <TableRow>
                           <TableCell>{isChineseStaff ? '包装详情' : '박스 상세'}</TableCell>
-                          <TableCell>{data.box_details}</TableCell>
+                          <TableCell>
+                            {isChineseStaff && data.box_details_chinese
+                              ? data.box_details_chinese
+                              : data.box_details}
+                          </TableCell>
                         </TableRow>
                       )}
                       <TableRow>
@@ -606,6 +848,78 @@ export default function MarketResearchDetailPage() {
                   </Table>
                 </CardContent>
               </BlankCard>
+
+              {/* 客户申请照片 - Customer Application Photos */}
+              {data?.application_photos && data.application_photos.length > 0 && (
+                <BlankCard sx={{ mt: 2, bgcolor: 'grey.50' }}>
+                  <CardContent>
+                    <Typography variant="h6" fontWeight="bold" gutterBottom sx={{ mb: 2 }}>
+                      {isChineseStaff ? '客户申请照片' : '고객 신청 사진'} (
+                      {data.application_photos.length}
+                      {isChineseStaff ? '张' : '개'})
+                    </Typography>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        gap: 1,
+                        overflowX: 'auto',
+                        pb: 1,
+                        '&::-webkit-scrollbar': {
+                          height: 4,
+                        },
+                        '&::-webkit-scrollbar-track': {
+                          background: '#f1f1f1',
+                          borderRadius: 10,
+                        },
+                        '&::-webkit-scrollbar-thumb': {
+                          background: '#888',
+                          borderRadius: 10,
+                        },
+                        '&::-webkit-scrollbar-thumb:hover': {
+                          background: '#555',
+                        },
+                      }}
+                    >
+                      {data.application_photos.map((file: any, index: number) => (
+                        <Box
+                          key={index}
+                          sx={{
+                            minWidth: 120,
+                            width: 120,
+                            height: 120,
+                            position: 'relative',
+                            cursor: 'pointer',
+                            borderRadius: 1,
+                            overflow: 'hidden',
+                            border: '2px solid',
+                            borderColor: 'success.light',
+                            '&:hover': {
+                              borderColor: 'success.main',
+                              transform: 'scale(1.05)',
+                              transition: 'all 0.3s ease',
+                            },
+                          }}
+                          onClick={() => {
+                            setSelectedImage(file.url);
+                            setModalOpen(true);
+                          }}
+                        >
+                          <Box
+                            component="img"
+                            src={file.url}
+                            alt={`${isChineseStaff ? '申请照片' : '신청 사진'} ${index + 1}`}
+                            sx={{
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'cover',
+                            }}
+                          />
+                        </Box>
+                      ))}
+                    </Box>
+                  </CardContent>
+                </BlankCard>
+              )}
             </TabPanel>
 
             {/* Tab Content - 공장정보 (중국직원 입력, 한중 병기) */}
@@ -928,120 +1242,6 @@ export default function MarketResearchDetailPage() {
                       />
                     </Grid>
 
-                    {/* 제품 기본정보 */}
-                    <Grid size={{ xs: 12, md: 6 }}>
-                      <TextField
-                        fullWidth
-                        label={isChineseStaff ? '报价数量' : '견적수량'}
-                        value={
-                          editMode ? editData.quoted_quantity || '' : data.quoted_quantity || ''
-                        }
-                        onChange={(e) =>
-                          editMode &&
-                          handleFieldChange('quoted_quantity', parseInt(e.target.value) || 0)
-                        }
-                        disabled={!editMode}
-                        size="small"
-                        type="number"
-                      />
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 6 }}>
-                      <TextField
-                        fullWidth
-                        label={isChineseStaff ? '每箱数量' : '박스당 수량'}
-                        value={editMode ? editData.units_per_box || '' : data.units_per_box || ''}
-                        onChange={(e) =>
-                          editMode &&
-                          handleFieldChange('units_per_box', parseInt(e.target.value) || 0)
-                        }
-                        disabled={!editMode}
-                        size="small"
-                        type="number"
-                      />
-                    </Grid>
-
-                    {/* 박스 치수 */}
-                    <Grid size={{ xs: 12, md: 3 }}>
-                      <TextField
-                        fullWidth
-                        type="number"
-                        label={isChineseStaff ? '长度(cm)' : '길이(cm)'}
-                        value={editMode ? editData.box_length || '' : data.box_length || ''}
-                        onChange={(e) =>
-                          editMode &&
-                          handleFieldChange('box_length', parseFloat(e.target.value) || 0)
-                        }
-                        disabled={!editMode}
-                        size="small"
-                      />
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 3 }}>
-                      <TextField
-                        fullWidth
-                        type="number"
-                        label={isChineseStaff ? '宽度(cm)' : '너비(cm)'}
-                        value={editMode ? editData.box_width || '' : data.box_width || ''}
-                        onChange={(e) =>
-                          editMode &&
-                          handleFieldChange('box_width', parseFloat(e.target.value) || 0)
-                        }
-                        disabled={!editMode}
-                        size="small"
-                      />
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 3 }}>
-                      <TextField
-                        fullWidth
-                        type="number"
-                        label={isChineseStaff ? '高度(cm)' : '높이(cm)'}
-                        value={editMode ? editData.box_height || '' : data.box_height || ''}
-                        onChange={(e) =>
-                          editMode &&
-                          handleFieldChange('box_height', parseFloat(e.target.value) || 0)
-                        }
-                        disabled={!editMode}
-                        size="small"
-                      />
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 3 }}>
-                      <TextField
-                        fullWidth
-                        label={isChineseStaff ? '总箱数' : '총 박스수'}
-                        value={editMode ? editData.total_boxes || '-' : data.total_boxes || '-'}
-                        disabled
-                        size="small"
-                        helperText="자동계산"
-                      />
-                    </Grid>
-
-                    {/* CBM 및 운송 */}
-                    <Grid size={{ xs: 12, md: 6 }}>
-                      <TextField
-                        fullWidth
-                        label={isChineseStaff ? '总CBM' : '총CBM'}
-                        value={
-                          editMode
-                            ? `${editData.total_cbm?.toFixed(2) || '0.00'} m³`
-                            : `${data.total_cbm?.toFixed(2) || '0.00'} m³`
-                        }
-                        disabled
-                        size="small"
-                        helperText="자동계산"
-                      />
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 6 }}>
-                      <TextField
-                        fullWidth
-                        label={isChineseStaff ? '运输方式' : '운송방식'}
-                        value={
-                          editMode ? editData.shipping_method || '-' : data.shipping_method || '-'
-                        }
-                        disabled
-                        size="small"
-                        helperText="15CBM 기준 자동결정"
-                      />
-                    </Grid>
-
                     {/* 기타사항 - 중국직원은 중국어만, 한국직원은 둘 다 */}
                     <Grid size={12}>
                       <TextField
@@ -1079,6 +1279,137 @@ export default function MarketResearchDetailPage() {
                       </Grid>
                     )}
 
+                    {/* 제품 실사 사진 */}
+                    <Grid size={12}>
+                      <Divider sx={{ my: 2 }}>
+                        <Chip label={isChineseStaff ? '产品实物照片' : '제품 실물 사진'} size="small" />
+                      </Divider>
+                    </Grid>
+                    <Grid size={12}>
+                      <Box sx={{ 
+                        border: '2px dashed #ccc', 
+                        borderRadius: 2, 
+                        p: 3,
+                        textAlign: 'center',
+                        bgcolor: 'background.paper'
+                      }}>
+                        {editData.product_actual_photos && editData.product_actual_photos.length > 0 ? (
+                          <Box>
+                            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'center', mb: 2 }}>
+                              {editData.product_actual_photos.map((photo: string, index: number) => (
+                                <Box
+                                  key={index}
+                                  sx={{
+                                    position: 'relative',
+                                    width: 120,
+                                    height: 120,
+                                    border: '1px solid #ddd',
+                                    borderRadius: 1,
+                                    overflow: 'hidden',
+                                  }}
+                                >
+                                  <img
+                                    src={photo}
+                                    alt={`제품 실사 ${index + 1}`}
+                                    style={{
+                                      width: '100%',
+                                      height: '100%',
+                                      objectFit: 'cover',
+                                    }}
+                                  />
+                                  {editMode && (
+                                    <IconButton
+                                      size="small"
+                                      sx={{
+                                        position: 'absolute',
+                                        top: 4,
+                                        right: 4,
+                                        bgcolor: 'rgba(255,255,255,0.9)',
+                                        '&:hover': { bgcolor: 'rgba(255,255,255,1)' },
+                                      }}
+                                      onClick={() => {
+                                        const newPhotos = [...editData.product_actual_photos];
+                                        newPhotos.splice(index, 1);
+                                        setEditData({ ...editData, product_actual_photos: newPhotos });
+                                      }}
+                                    >
+                                      <CloseIcon fontSize="small" />
+                                    </IconButton>
+                                  )}
+                                </Box>
+                              ))}
+                            </Box>
+                            {editMode && (
+                              <Button
+                                variant="outlined"
+                                component="label"
+                                startIcon={<CloudUploadIcon />}
+                              >
+                                {isChineseStaff ? '添加更多照片' : '사진 추가'}
+                                <input
+                                  type="file"
+                                  hidden
+                                  multiple
+                                  accept="image/*"
+                                  onChange={async (e) => {
+                                    const files = e.target.files;
+                                    if (files && files.length > 0) {
+                                      const uploadedUrls = await uploadProductPhotos(files);
+                                      if (uploadedUrls.length > 0) {
+                                        setEditData({
+                                          ...editData,
+                                          product_actual_photos: [...(editData.product_actual_photos || []), ...uploadedUrls]
+                                        });
+                                      }
+                                    }
+                                  }}
+                                />
+                              </Button>
+                            )}
+                          </Box>
+                        ) : (
+                          <Box>
+                            <CloudUploadIcon sx={{ fontSize: 48, color: 'text.secondary', mb: 2 }} />
+                            <Typography variant="body1" color="text.secondary" gutterBottom>
+                              {isChineseStaff ? '产品实物照片' : '제품 실물 사진'}
+                            </Typography>
+                            {editMode ? (
+                              <Button
+                                variant="contained"
+                                component="label"
+                                startIcon={<CloudUploadIcon />}
+                                sx={{ mt: 2 }}
+                              >
+                                {isChineseStaff ? '选择照片' : '사진 선택'}
+                                <input
+                                  type="file"
+                                  hidden
+                                  multiple
+                                  accept="image/*"
+                                  onChange={async (e) => {
+                                    const files = e.target.files;
+                                    if (files && files.length > 0) {
+                                      const uploadedUrls = await uploadProductPhotos(files);
+                                      if (uploadedUrls.length > 0) {
+                                        setEditData({
+                                          ...editData,
+                                          product_actual_photos: uploadedUrls
+                                        });
+                                      }
+                                    }
+                                  }}
+                                />
+                              </Button>
+                            ) : (
+                              <Typography variant="body2" color="text.secondary">
+                                {isChineseStaff ? '尚未上传照片' : '업로드된 사진이 없습니다'}
+                              </Typography>
+                            )}
+                          </Box>
+                        )}
+                      </Box>
+                    </Grid>
+
                     {/* 샘플 정보 */}
                     <Grid size={12}>
                       <Divider sx={{ my: 2 }}>
@@ -1100,34 +1431,59 @@ export default function MarketResearchDetailPage() {
                         label={isChineseStaff ? '样品库存' : '샘플재고 유무'}
                       />
                     </Grid>
-                    <Grid size={{ xs: 12, md: 4 }}>
+                    <Grid size={{ xs: 12, md: 3 }}>
                       <TextField
                         fullWidth
                         type="number"
-                        label={isChineseStaff ? '样品单价' : '샘플단가'}
+                        label={isChineseStaff ? '样品单价(¥)' : '샘플단가(¥)'}
                         value={
-                          editMode ? editData.sample_unit_price || '' : data.sample_unit_price || ''
+                          editMode 
+                            ? (editData.sample_china_price || '')
+                            : (data.sample_china_price || '')
                         }
-                        onChange={(e) =>
-                          editMode &&
-                          setEditData({
-                            ...editData,
-                            sample_unit_price: parseFloat(e.target.value) || null,
-                          })
-                        }
+                        onChange={(e) => {
+                          if (editMode) {
+                            const chinaPrice = parseFloat(e.target.value) || 0;
+                            // 중국 단가 저장 및 원화 자동 계산
+                            setEditData({
+                              ...editData,
+                              sample_china_price: chinaPrice,
+                              sample_unit_price: chinaPrice * (editData.exchange_rate || 203)
+                            });
+                          }
+                        }}
                         disabled={!editMode}
                         size="small"
-                        helperText={
-                          editMode && editData.china_unit_price && editData.exchange_rate
-                            ? `${isChineseStaff ? '参考' : '참고'}: ₩${(editData.china_unit_price * editData.exchange_rate).toFixed(0)}`
-                            : ''
+                        InputProps={{
+                          startAdornment: <InputAdornment position="start">¥</InputAdornment>,
+                        }}
+                      />
+                    </Grid>
+                    <Grid size={{ xs: 12, md: 3 }}>
+                      <TextField
+                        fullWidth
+                        label={isChineseStaff ? '样品单价(韩元)' : '샘플단가(원)'}
+                        value={
+                          editMode 
+                            ? (editData.sample_unit_price ? editData.sample_unit_price.toLocaleString() : '')
+                            : (data.sample_unit_price ? data.sample_unit_price.toLocaleString() : '')
                         }
+                        disabled
+                        size="small"
+                        helperText="자동계산"
+                        sx={{
+                          '& .MuiInputBase-input.Mui-disabled': {
+                            color: 'text.primary',
+                            WebkitTextFillColor: 'rgba(0, 0, 0, 0.87)',
+                            fontWeight: 500,
+                          },
+                        }}
                         InputProps={{
                           startAdornment: <InputAdornment position="start">₩</InputAdornment>,
                         }}
                       />
                     </Grid>
-                    <Grid size={{ xs: 12, md: 4 }}>
+                    <Grid size={{ xs: 12, md: 3 }}>
                       <TextField
                         fullWidth
                         type="number"
@@ -1176,765 +1532,785 @@ export default function MarketResearchDetailPage() {
               </BlankCard>
             </TabPanel>
 
-            {/* Tab Content - 가격정보 (MARKET_RESEARCH_FIELDS_USAGE.md 기준) */}
+            {/* Tab Content - 가격/관세정보 (통합) */}
             <TabPanel value={tabValue} index={3}>
               <BlankCard>
                 <CardContent>
                   <Typography variant="h6" gutterBottom>
-                    {isChineseStaff ? '价格信息' : '가격정보'}
+                    {isChineseStaff ? '价格/关税信息' : '가격/관세정보'}
                   </Typography>
-                  <Grid container spacing={2}>
-                    {/* 소요시간 */}
+
+                  <Grid container spacing={3}>
+                    {/* ========== 입력 필드 섹션 (상단) ========== */}
                     <Grid size={12}>
-                      <TextField
-                        fullWidth
-                        label={isChineseStaff ? '所需时间' : '소요시간'}
-                        value={editMode ? editData.work_duration || '' : data.work_duration || ''}
-                        onChange={(e) =>
-                          editMode && setEditData({ ...editData, work_duration: e.target.value })
-                        }
-                        disabled={!editMode}
-                        size="small"
-                        placeholder="예: 30일"
-                      />
-                    </Grid>
-
-                    {/* 기본 가격 정보 */}
-                    <Grid size={{ xs: 12, md: 4 }}>
-                      <TextField
-                        fullWidth
-                        type="number"
-                        label={isChineseStaff ? '中国单价' : '중국단가'}
-                        value={
-                          editMode ? editData.china_unit_price || '' : data.china_unit_price || ''
-                        }
-                        onChange={(e) =>
-                          editMode &&
-                          handleFieldChange('china_unit_price', parseFloat(e.target.value) || 0)
-                        }
-                        disabled={!editMode}
-                        size="small"
-                        InputProps={{
-                          endAdornment: <InputAdornment position="end">¥</InputAdornment>,
-                        }}
-                      />
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 4 }}>
-                      <TextField
-                        fullWidth
-                        type="number"
-                        label={isChineseStaff ? '汇率' : '환율'}
-                        value={
-                          editMode ? editData.exchange_rate || 203.0 : data.exchange_rate || 203.0
-                        }
-                        onChange={(e) =>
-                          editMode &&
-                          handleFieldChange('exchange_rate', parseFloat(e.target.value) || 203.0)
-                        }
-                        disabled={!editMode}
-                        size="small"
-                        helperText="두리무역 적용환율 (203.00)"
-                      />
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 4 }}>
-                      <TextField
-                        fullWidth
-                        label={isChineseStaff ? '汇率算定日' : '환율 산정일'}
-                        value={
-                          data.exchange_rate_date
-                            ? new Date(data.exchange_rate_date).toLocaleDateString()
-                            : new Date().toLocaleDateString()
-                        }
-                        disabled
-                        size="small"
-                      />
-                    </Grid>
-
-                    {/* 수수료 및 EXW */}
-                    <Grid size={{ xs: 12, md: 3 }}>
-                      <TextField
-                        fullWidth
-                        label={isChineseStaff ? '佣金率' : '수수료율'}
-                        value="5%"
-                        disabled
-                        size="small"
-                      />
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 3 }}>
-                      <TextField
-                        fullWidth
-                        label={isChineseStaff ? '佣金金额' : '수수료 금액'}
-                        value={
-                          editMode
-                            ? `₩${editData.commission_amount?.toFixed(0) || '0'}`
-                            : `₩${data.commission_amount?.toFixed(0) || '0'}`
-                        }
-                        disabled
-                        size="small"
-                        helperText="자동계산"
-                      />
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 6 }}>
-                      <TextField
-                        fullWidth
-                        label={isChineseStaff ? 'EXW合计' : 'EXW 합계'}
-                        value={
-                          editMode
-                            ? `₩${editData.exw_total?.toFixed(0) || '0'}`
-                            : `₩${data.exw_total?.toFixed(0) || '0'}`
-                        }
-                        disabled
-                        size="small"
-                        helperText="KRW 환산"
-                      />
-                    </Grid>
-
-                    {/* 운송비 */}
-                    <Grid size={{ xs: 12, md: 4 }}>
-                      <TextField
-                        fullWidth
-                        type="number"
-                        label={isChineseStaff ? '中国运费' : '중국 운송료'}
-                        value={
-                          editMode
-                            ? editData.china_shipping_fee || ''
-                            : data.china_shipping_fee || ''
-                        }
-                        onChange={(e) =>
-                          editMode &&
-                          handleFieldChange('china_shipping_fee', parseFloat(e.target.value) || 0)
-                        }
-                        disabled={!editMode}
-                        size="small"
-                        InputProps={{
-                          endAdornment: <InputAdornment position="end">¥</InputAdornment>,
-                        }}
-                      />
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 4 }}>
-                      <TextField
-                        fullWidth
-                        label={isChineseStaff ? 'LCL运费' : 'LCL 운비'}
-                        value={
-                          editMode
-                            ? `₩${editData.lcl_shipping_fee?.toFixed(0) || '0'}`
-                            : `₩${data.lcl_shipping_fee?.toFixed(0) || '0'}`
-                        }
-                        disabled
-                        size="small"
-                        helperText="CBM * 90,000"
-                      />
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 4 }}>
-                      <TextField
-                        fullWidth
-                        type="number"
-                        label={isChineseStaff ? 'FCL运费' : 'FCL 운비'}
-                        value={
-                          editMode ? editData.fcl_shipping_fee || '' : data.fcl_shipping_fee || ''
-                        }
-                        onChange={(e) =>
-                          editMode &&
-                          handleFieldChange('fcl_shipping_fee', parseFloat(e.target.value) || 0)
-                        }
-                        disabled={!editMode || (editMode && editData.shipping_method !== 'FCL')}
-                        size="small"
-                        InputProps={{
-                          endAdornment: <InputAdornment position="end">₩</InputAdornment>,
-                        }}
-                      />
-                    </Grid>
-
-                    {/* 결제 및 총액 */}
-                    <Grid size={{ xs: 12, md: 6 }}>
-                      <TextField
-                        fullWidth
-                        label={isChineseStaff ? '1次结算费用' : '1차 결제비용'}
-                        value={
-                          editMode
-                            ? `₩${editData.first_payment_amount?.toFixed(0) || '0'}`
-                            : `₩${data.first_payment_amount?.toFixed(0) || '0'}`
-                        }
-                        disabled
-                        size="small"
-                        helperText="자동계산"
-                      />
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 6 }}>
-                      <TextField
-                        fullWidth
-                        label={isChineseStaff ? '进口VAT' : '부가세'}
-                        value={
-                          editMode
-                            ? `₩${editData.import_vat?.toFixed(0) || '0'}`
-                            : `₩${data.import_vat?.toFixed(0) || '0'}`
-                        }
-                        disabled
-                        size="small"
-                        helperText="10% 자동"
-                      />
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 4 }}>
-                      <TextField
-                        fullWidth
-                        label={isChineseStaff ? '预计2次结算费用' : '예상 2차결제비용'}
-                        value={
-                          editMode
-                            ? `₩${editData.expected_second_payment?.toFixed(0) || '0'}`
-                            : `₩${data.expected_second_payment?.toFixed(0) || '0'}`
-                        }
-                        disabled
-                        size="small"
-                      />
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 4 }}>
-                      <TextField
-                        fullWidth
-                        label={isChineseStaff ? '预计总合计' : '예상 총 합계'}
-                        value={
-                          editMode
-                            ? `₩${editData.expected_total_supply_price?.toFixed(0) || '0'}`
-                            : `₩${data.expected_total_supply_price?.toFixed(0) || '0'}`
-                        }
-                        disabled
-                        size="small"
-                        sx={{
-                          '& .MuiInputBase-input': {
-                            fontWeight: 'bold',
-                            color: 'primary.main',
-                          },
-                        }}
-                      />
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 4 }}>
-                      <TextField
-                        fullWidth
-                        label={isChineseStaff ? '预计单价(VAT含)' : '예상 단가(VAT포함)'}
-                        value={
-                          editMode
-                            ? `₩${editData.expected_unit_price?.toFixed(0) || '0'}`
-                            : `₩${data.expected_unit_price?.toFixed(0) || '0'}`
-                        }
-                        disabled
-                        size="small"
-                        sx={{
-                          '& .MuiInputBase-input': {
-                            fontWeight: 'bold',
-                          },
-                        }}
-                      />
-                    </Grid>
-                  </Grid>
-                </CardContent>
-              </BlankCard>
-            </TabPanel>
-
-            {/* Tab Content - 운송정보 (수출입/인증 포함) */}
-            <TabPanel value={tabValue} index={4}>
-              <BlankCard>
-                <CardContent>
-                  <Typography variant="h6" gutterBottom>
-                    {isChineseStaff ? '运输信息' : '운송정보'}
-                  </Typography>
-                  <Grid container spacing={2}>
-                    {/* 수출항 정보 - 중국직원은 중국어만, 한국직원은 둘 다 */}
-                    <Grid size={{ xs: 12, md: isChineseStaff ? 6 : 6 }}>
-                      <TextField
-                        fullWidth
-                        label={isChineseStaff ? '出口港' : '수출항(중국어)'}
-                        value={editMode ? editData.export_port_cn || '' : data.export_port_cn || ''}
-                        onChange={(e) =>
-                          editMode && setEditData({ ...editData, export_port_cn: e.target.value })
-                        }
-                        disabled={!editMode || !isChineseStaff}
-                        size="small"
-                      />
-                    </Grid>
-                    {!isChineseStaff && (
-                      <Grid size={{ xs: 12, md: 6 }}>
-                        <TextField
-                          fullWidth
-                          label="수출항(한국어)"
-                          value={data.export_port || ''}
-                          disabled
-                          size="small"
-                        />
-                      </Grid>
-                    )}
-
-                    {/* 운송방식 */}
-                    <Grid size={{ xs: 12, md: 6 }}>
-                      <TextField
-                        fullWidth
-                        label={isChineseStaff ? '运输方式' : '운송방식'}
-                        value={data.shipping_method || '-'}
-                        disabled
-                        size="small"
-                        helperText="15CBM 기준 자동결정"
-                      />
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 6 }}>
-                      <TextField
-                        fullWidth
-                        label={isChineseStaff ? '总CBM' : '총CBM'}
-                        value={`${data.total_cbm?.toFixed(2) || '0.00'} m³`}
-                        disabled
-                        size="small"
-                      />
-                    </Grid>
-
-                    {/* 수출입/인증 정보 */}
-                    <Grid size={12}>
-                      <Divider sx={{ my: 2 }}>
-                        <Chip
-                          label={isChineseStaff ? '进出口/认证信息' : '수출입/인증 정보'}
-                          size="small"
-                        />
-                      </Divider>
-                    </Grid>
-
-                    {/* HS코드 조회 */}
-                    <Grid size={{ xs: 12, md: 6 }}>
-                      <TextField
-                        fullWidth
-                        label={isChineseStaff ? 'HS编码' : 'HS코드'}
-                        value={editMode ? editData.hs_code || '' : data.hs_code || ''}
-                        onChange={(e) => {
-                          if (editMode) {
-                            const value = e.target.value;
-                            setEditData({ ...editData, hs_code: value });
-                            // 10자리 입력 완료 시 자동 조회
-                            if (value.length === 10) {
-                              fetchTariffAndCertification(value);
-                            }
-                          }
-                        }}
-                        disabled={!editMode}
-                        size="small"
-                        placeholder="10자리 숫자"
-                        InputProps={{
-                          endAdornment: editMode && (
-                            <Button
-                              size="small"
-                              variant="outlined"
-                              onClick={async () => {
-                                // 한글 제품명 사용 (원본 product_name이 한글)
-                                const koreanProductName = data.product_name;
-
-                                if (koreanProductName) {
-                                  try {
-                                    // HS코드 조회 Edge Function 호출 - hs-code-classifier 사용
-                                    const { data: hsData, error } = await supabase.functions.invoke(
-                                      'hs-code-classifier',
-                                      {
-                                        body: {
-                                          productName: koreanProductName,
-                                        },
-                                      }
-                                    );
-
-                                    if (error) throw error;
-
-                                    if (hsData?.results && hsData.results.length > 0) {
-                                      // 첫 번째 결과 사용 (가장 신뢰도 높은 것)
-                                      const bestMatch = hsData.results[0];
-                                      setEditData({ ...editData, hs_code: bestMatch.hs_code });
-                                      alert(
-                                        `HS코드 조회 완료: ${bestMatch.hs_code}\n${bestMatch.name_ko}\n신뢰도: ${Math.round(bestMatch.confidence * 100)}%`
-                                      );
-
-                                      // HS코드 설정 후 자동으로 관세율과 인증 정보 조회
-                                      if (bestMatch.hs_code && bestMatch.hs_code.length === 10) {
-                                        fetchTariffAndCertification(bestMatch.hs_code);
-                                      }
-                                    } else {
-                                      alert(
-                                        isChineseStaff
-                                          ? '未找到对应的HS编码'
-                                          : 'HS코드를 찾을 수 없습니다'
-                                      );
-                                    }
-                                  } catch (error) {
-                                    alert(
-                                      isChineseStaff
-                                        ? 'HS编码查询失败'
-                                        : 'HS코드 조회에 실패했습니다'
-                                    );
-                                  }
-                                } else {
-                                  alert(
-                                    isChineseStaff
-                                      ? '请先输入产品名(韩文)'
-                                      : '제품명을 먼저 입력하세요'
-                                  );
-                                }
-                              }}
-                              sx={{ ml: 1, minWidth: 'auto' }}
-                            >
-                              {isChineseStaff ? '查询' : '조회'}
-                            </Button>
-                          ),
-                        }}
-                      />
-                    </Grid>
-
-                    {/* 인증 필요 여부 */}
-                    <Grid size={{ xs: 12, md: 6 }}>
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            checked={editData.certification_required || false}
-                            onChange={(e) =>
-                              editMode &&
-                              setEditData({ ...editData, certification_required: e.target.checked })
-                            }
-                            disabled={!editMode}
-                          />
-                        }
-                        label={isChineseStaff ? '需要进口认证' : '수입 시 인증 필요'}
-                      />
-                      {editMode && editData.hs_code && (
-                        <Button
-                          size="small"
-                          variant="text"
-                          onClick={async () => {
-                            try {
-                              // 인증 필요 여부 확인 Edge Function 호출
-                              const { data: certData, error } = await supabase.functions.invoke(
-                                'check-certification',
-                                {
-                                  body: { hs_code: editData.hs_code },
-                                }
-                              );
-
-                              if (error) throw error;
-
-                              if (certData?.required !== undefined) {
-                                setEditData({
-                                  ...editData,
-                                  certification_required: certData.required,
-                                });
-                                alert(
-                                  certData.required
-                                    ? isChineseStaff
-                                      ? '需要进口认证'
-                                      : '수입 인증이 필요합니다'
-                                    : isChineseStaff
-                                      ? '不需要认证'
-                                      : '인증이 필요하지 않습니다'
-                                );
-                              }
-                            } catch (error) {
-                              alert(isChineseStaff ? '认证确认失败' : '인증 확인에 실패했습니다');
-                            }
-                          }}
-                          sx={{ ml: 2 }}
+                      <Paper
+                        elevation={3}
+                        sx={{ p: 3, bgcolor: 'background.paper', borderRadius: 2 }}
+                      >
+                        <Typography
+                          variant="h6"
+                          sx={{ mb: 3, fontWeight: 600, color: 'primary.main', fontSize: '1.3rem' }}
                         >
-                          {isChineseStaff ? '自动确认' : '자동확인'}
-                        </Button>
-                      )}
-                    </Grid>
-
-                    {/* 인증 예상 비용 */}
-                    <Grid size={{ xs: 12, md: 6 }}>
-                      <TextField
-                        fullWidth
-                        label={isChineseStaff ? '认证预计费用' : '인증 예상 비용'}
-                        type="number"
-                        value={editMode ? editData.cert_cost || '' : data.cert_cost || ''}
-                        onChange={(e) =>
-                          editMode &&
-                          setEditData({
-                            ...editData,
-                            cert_cost: parseFloat(e.target.value) || null,
-                          })
-                        }
-                        disabled={!editMode}
-                        size="small"
-                        InputProps={{
-                          startAdornment: <InputAdornment position="start">₩</InputAdornment>,
-                          endAdornment: editMode && editData.certification_required && (
-                            <Button
-                              size="small"
-                              variant="text"
-                              onClick={async () => {
-                                // TODO: WebSearch로 인증 비용 예상
-                                alert('WebSearch로 인증 비용 예상 기능 구현 예정');
-                                // const cost = await estimateCertCost(editData.hs_code, data.product_name);
-                                // setEditData({...editData, cert_cost: cost});
+                          📝 {isChineseStaff ? '手动输入项目' : '수동 입력 항목'}
+                        </Typography>
+                        <Grid container spacing={3}>
+                          {/* 1번째 줄: 기본 가격 정보 */}
+                          <Grid size={{ xs: 12, md: 3 }}>
+                            <TextField
+                              fullWidth
+                              type="text"
+                              label={isChineseStaff ? '中国单价' : '중국단가'}
+                              value={
+                                editMode
+                                  ? formatNumber(editData.china_unit_price)
+                                  : formatNumber(data.china_unit_price)
+                              }
+                              onChange={(e) => {
+                                if (editMode) {
+                                  const value = parseNumberInput(e.target.value);
+                                  handleFieldChange('china_unit_price', value);
+                                }
                               }}
-                            >
-                              {isChineseStaff ? '估算' : '예상'}
-                            </Button>
-                          ),
-                        }}
-                      />
-                    </Grid>
+                              disabled={!editMode}
+                              size="medium"
+                              InputProps={{
+                                endAdornment: <InputAdornment position="end">¥</InputAdornment>,
+                              }}
+                              sx={{
+                                '& .MuiInputLabel-root': {
+                                  fontSize: '1.1rem',
+                                  color: '#333',
+                                  fontWeight: 500,
+                                },
+                                '& .MuiInputBase-input': {
+                                  fontSize: '1.2rem',
+                                  fontWeight: 600,
+                                  color: '#d32f2f',
+                                },
+                              }}
+                            />
+                          </Grid>
+                          
+                          <Grid size={{ xs: 12, md: 3 }}>
+                            <TextField
+                              fullWidth
+                              type="text"
+                              label={isChineseStaff ? '汇率' : '환율'}
+                              value={
+                                editMode
+                                  ? formatNumber(editData.exchange_rate || 203.0)
+                                  : formatNumber(data.exchange_rate || 203.0)
+                              }
+                              onChange={(e) => {
+                                if (editMode) {
+                                  const value = parseNumberInput(e.target.value);
+                                  handleFieldChange('exchange_rate', value || 203.0);
+                                }
+                              }}
+                              disabled={!editMode}
+                              size="medium"
+                              helperText="두리무역 적용환율 (203.00)"
+                              sx={{
+                                '& .MuiInputLabel-root': {
+                                  fontSize: '1.1rem',
+                                  color: '#333',
+                                  fontWeight: 500,
+                                },
+                                '& .MuiInputBase-input': {
+                                  fontSize: '1.2rem',
+                                  fontWeight: 500,
+                                  color: '#000',
+                                },
+                              }}
+                            />
+                          </Grid>
+                          
+                          <Grid size={{ xs: 12, md: 3 }}>
+                            <TextField
+                              fullWidth
+                              type="text"
+                              label={isChineseStaff ? '中国运费' : '중국 운송료'}
+                              value={
+                                editMode
+                                  ? formatNumber(editData.china_shipping_fee)
+                                  : formatNumber(data.china_shipping_fee)
+                              }
+                              onChange={(e) => {
+                                if (editMode) {
+                                  const value = parseNumberInput(e.target.value);
+                                  handleFieldChange('china_shipping_fee', value);
+                                }
+                              }}
+                              disabled={!editMode}
+                              size="medium"
+                              InputProps={{
+                                endAdornment: <InputAdornment position="end">¥</InputAdornment>,
+                              }}
+                              sx={{
+                                '& .MuiInputLabel-root': {
+                                  fontSize: '1.1rem',
+                                  color: '#333',
+                                  fontWeight: 500,
+                                },
+                                '& .MuiInputBase-input': {
+                                  fontSize: '1.2rem',
+                                  fontWeight: 500,
+                                  color: '#000',
+                                },
+                              }}
+                            />
+                          </Grid>
+                          
+                          <Grid size={{ xs: 12, md: 3 }}>
+                            <TextField
+                              fullWidth
+                              label={isChineseStaff ? '所需时间' : '소요시간'}
+                              value={
+                                editMode ? editData.work_duration || '' : data.work_duration || ''
+                              }
+                              onChange={(e) =>
+                                editMode &&
+                                setEditData({ ...editData, work_duration: e.target.value })
+                              }
+                              disabled={!editMode}
+                              size="medium"
+                              placeholder="예: 30일"
+                              sx={{
+                                '& .MuiInputLabel-root': {
+                                  fontSize: '1.1rem',
+                                  color: '#333',
+                                  fontWeight: 500,
+                                },
+                                '& .MuiInputBase-input': {
+                                  fontSize: '1.2rem',
+                                  fontWeight: 500,
+                                  color: '#000',
+                                },
+                              }}
+                            />
+                          </Grid>
 
-                    {/* 관세율 */}
-                    <Grid size={{ xs: 12, md: 6 }}>
-                      <TextField
-                        fullWidth
-                        label={isChineseStaff ? '关税率' : '관세율'}
-                        type="number"
-                        value={editMode ? editData.customs_rate || '' : data.customs_rate || ''}
-                        onChange={(e) =>
-                          editMode &&
-                          handleFieldChange('customs_rate', parseFloat(e.target.value) || 0)
-                        }
-                        disabled={!editMode}
-                        size="small"
-                        InputProps={{
-                          endAdornment: <InputAdornment position="end">%</InputAdornment>,
-                        }}
-                      />
-                    </Grid>
-
-                    {/* 관세율 상세 정보 표시 */}
-                    {tariffDetails && (
-                      <Grid size={12}>
-                        <Paper elevation={2} sx={{ p: 2, mt: 2, bgcolor: 'grey.50' }}>
-                          <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
-                            {isChineseStaff ? '关税率详细信息' : '관세율 상세 정보'}
-                          </Typography>
-
-                          {/* 적용 관세율 알림 */}
-                          <Alert severity="success" sx={{ mb: 2 }}>
-                            {isChineseStaff ? '适用税率' : '적용 관세율'}:{' '}
-                            {editData.customs_rate || data.customs_rate || 8}%
-                            {(() => {
-                              const rate = editData.customs_rate || data.customs_rate;
-                              if (rate === tariffDetails.korea_china_fta_rate)
-                                return ` (${isChineseStaff ? '韩中FTA' : '한중 FTA'})`;
-                              if (rate === tariffDetails.fta_rate)
-                                return ` (${isChineseStaff ? 'FTA优惠' : 'FTA 특혜'})`;
-                              if (rate === tariffDetails.wto_rate)
-                                return ` (${isChineseStaff ? 'WTO协定' : 'WTO 협정'})`;
-                              return ` (${isChineseStaff ? '基本税率' : '기본세율'})`;
-                            })()}
-                          </Alert>
-
-                          {/* 관세율 테이블 */}
-                          <TableContainer>
-                            <Table size="small">
-                              <TableHead>
-                                <TableRow>
-                                  <TableCell>{isChineseStaff ? '税率类型' : '세율 종류'}</TableCell>
-                                  <TableCell align="center">
-                                    {isChineseStaff ? '税率' : '세율'}
-                                  </TableCell>
-                                  <TableCell align="center">
-                                    {isChineseStaff ? '状态' : '상태'}
-                                  </TableCell>
-                                </TableRow>
-                              </TableHead>
-                              <TableBody>
-                                <TableRow>
-                                  <TableCell>{isChineseStaff ? '基本税率' : '기본세율'}</TableCell>
-                                  <TableCell align="center">
-                                    {tariffDetails.basic_rate !== undefined
-                                      ? `${tariffDetails.basic_rate}%`
-                                      : '8%'}
-                                  </TableCell>
-                                  <TableCell align="center">
-                                    {(editData.customs_rate || data.customs_rate) ===
-                                      tariffDetails.basic_rate && (
-                                      <Chip
-                                        label={isChineseStaff ? '适用' : '적용'}
-                                        color="success"
-                                        size="small"
-                                      />
-                                    )}
-                                  </TableCell>
-                                </TableRow>
-
-                                {tariffDetails.wto_rate !== undefined &&
-                                  tariffDetails.wto_rate !== null && (
-                                    <TableRow>
-                                      <TableCell>
-                                        {isChineseStaff ? 'WTO协定税率' : 'WTO 협정세율'}
-                                      </TableCell>
-                                      <TableCell align="center">
-                                        {tariffDetails.wto_rate}%
-                                      </TableCell>
-                                      <TableCell align="center">
-                                        {(editData.customs_rate || data.customs_rate) ===
-                                        tariffDetails.wto_rate ? (
-                                          <Chip
-                                            label={isChineseStaff ? '适用' : '적용'}
-                                            color="success"
-                                            size="small"
-                                          />
-                                        ) : (
-                                          <Chip
-                                            label={isChineseStaff ? '未适用' : '미적용'}
-                                            size="small"
-                                          />
-                                        )}
-                                      </TableCell>
-                                    </TableRow>
-                                  )}
-
-                                {tariffDetails.fta_rate !== undefined &&
-                                  tariffDetails.fta_rate !== null && (
-                                    <TableRow>
-                                      <TableCell>
-                                        {isChineseStaff ? 'FTA优惠税率' : 'FTA 특혜세율'}
-                                      </TableCell>
-                                      <TableCell align="center">
-                                        {tariffDetails.fta_rate}%
-                                      </TableCell>
-                                      <TableCell align="center">
-                                        {(editData.customs_rate || data.customs_rate) ===
-                                        tariffDetails.fta_rate ? (
-                                          <Chip
-                                            label={isChineseStaff ? '适用(需C/O)' : '적용(C/O필요)'}
-                                            color="success"
-                                            size="small"
-                                          />
-                                        ) : (
-                                          <Chip
-                                            label={isChineseStaff ? 'C/O必要' : 'C/O필요'}
-                                            color="warning"
-                                            size="small"
-                                          />
-                                        )}
-                                      </TableCell>
-                                    </TableRow>
-                                  )}
-
-                                {tariffDetails.korea_china_fta_rate !== undefined &&
-                                  tariffDetails.korea_china_fta_rate !== null && (
-                                    <TableRow>
-                                      <TableCell>
-                                        {isChineseStaff ? '韩中FTA税率' : '한중 FTA세율'}
-                                      </TableCell>
-                                      <TableCell align="center">
-                                        {tariffDetails.korea_china_fta_rate}%
-                                      </TableCell>
-                                      <TableCell align="center">
-                                        {(editData.customs_rate || data.customs_rate) ===
-                                        tariffDetails.korea_china_fta_rate ? (
-                                          <Chip
-                                            label={isChineseStaff ? '适用(需C/O)' : '적용(C/O필요)'}
-                                            color="success"
-                                            size="small"
-                                          />
-                                        ) : (
-                                          <Chip
-                                            label={isChineseStaff ? 'C/O必要' : 'C/O필요'}
-                                            color="warning"
-                                            size="small"
-                                          />
-                                        )}
-                                      </TableCell>
-                                    </TableRow>
-                                  )}
-                              </TableBody>
-                            </Table>
-                          </TableContainer>
-
-                          {/* FTA 안내 */}
-                          {(tariffDetails.fta?.rate !== undefined ||
-                            tariffDetails.fcn?.rate !== undefined) && (
-                            <Alert severity="info" sx={{ mt: 2 }}>
-                              {isChineseStaff
-                                ? 'FTA优惠税率适用时需要原产地证明(C/O)。发行费用约为33,000~73,000韩元。'
-                                : 'FTA 특혜세율 적용 시 원산지증명서(C/O)가 필요합니다. 발급비용: 약 33,000~73,000원'}
-                            </Alert>
+                          {/* FCL 운송비 (FCL인 경우만 별도 줄에 표시) */}
+                          {editData.shipping_method === 'FCL' && (
+                            <Grid size={{ xs: 12, md: 6 }}>
+                              <TextField
+                                fullWidth
+                                type="text"
+                                label={isChineseStaff ? 'FCL运费' : 'FCL 운송비'}
+                                value={
+                                  editMode
+                                    ? formatNumber(editData.fcl_shipping_fee)
+                                    : formatNumber(data.fcl_shipping_fee)
+                                }
+                                onChange={(e) => {
+                                  if (editMode) {
+                                    const value = parseNumberInput(e.target.value);
+                                    handleFieldChange('fcl_shipping_fee', value);
+                                  }
+                                }}
+                                disabled={!editMode}
+                                size="medium"
+                                InputProps={{
+                                  endAdornment: <InputAdornment position="end">₩</InputAdornment>,
+                                }}
+                                sx={{
+                                  '& .MuiInputLabel-root': {
+                                    fontSize: '1.1rem',
+                                    color: '#333',
+                                    fontWeight: 500,
+                                  },
+                                  '& .MuiInputBase-input': {
+                                    fontSize: '1.2rem',
+                                    fontWeight: 500,
+                                    color: '#000',
+                                  },
+                                }}
+                              />
+                            </Grid>
                           )}
-                        </Paper>
-                      </Grid>
-                    )}
 
-                    {/* 샘플 가격 */}
+                          {/* 제품 수량 및 박스 정보 구분선 */}
+                          <Grid size={12}>
+                            <Divider sx={{ my: 2 }}>
+                              <Chip label={isChineseStaff ? '📦 产品数量与包装' : '📦 제품 수량 및 포장'} size="small" color="secondary" />
+                            </Divider>
+                          </Grid>
+
+                          {/* 2번째 줄: 수량 정보 */}
+                          <Grid size={{ xs: 12, md: 6 }}>
+                            <TextField
+                              fullWidth
+                              type="text"
+                              label={isChineseStaff ? '报价数量' : '견적수량'}
+                              value={
+                                editMode
+                                  ? formatNumber(editData.quoted_quantity)
+                                  : formatNumber(data.quoted_quantity)
+                              }
+                              onChange={(e) => {
+                                if (editMode) {
+                                  const value = parseNumberInput(e.target.value);
+                                  handleFieldChange('quoted_quantity', value);
+                                }
+                              }}
+                              disabled={!editMode}
+                              size="medium"
+                              InputProps={{
+                                endAdornment: <InputAdornment position="end">개</InputAdornment>,
+                              }}
+                              sx={{
+                                '& .MuiInputLabel-root': {
+                                  fontSize: '1.1rem',
+                                  color: '#333',
+                                  fontWeight: 500,
+                                },
+                                '& .MuiInputBase-input': {
+                                  fontSize: '1.2rem',
+                                  fontWeight: 600,
+                                  color: '#d32f2f',
+                                },
+                              }}
+                            />
+                          </Grid>
+                          
+                          <Grid size={{ xs: 12, md: 6 }}>
+                            <TextField
+                              fullWidth
+                              type="text"
+                              label={isChineseStaff ? '每箱数量' : '박스당 수량'}
+                              value={
+                                editMode
+                                  ? formatNumber(editData.units_per_box)
+                                  : formatNumber(data.units_per_box)
+                              }
+                              onChange={(e) => {
+                                if (editMode) {
+                                  const value = parseNumberInput(e.target.value);
+                                  handleFieldChange('units_per_box', value);
+                                }
+                              }}
+                              disabled={!editMode}
+                              size="medium"
+                              InputProps={{
+                                endAdornment: <InputAdornment position="end">개/박스</InputAdornment>,
+                              }}
+                              sx={{
+                                '& .MuiInputLabel-root': {
+                                  fontSize: '1.1rem',
+                                  color: '#333',
+                                  fontWeight: 500,
+                                },
+                                '& .MuiInputBase-input': {
+                                  fontSize: '1.2rem',
+                                  fontWeight: 500,
+                                  color: '#000',
+                                },
+                              }}
+                            />
+                          </Grid>
+
+                          {/* 3번째 줄: 박스 치수 */}
+                          <Grid size={{ xs: 12, md: 4 }}>
+                            <TextField
+                              fullWidth
+                              type="text"
+                              label={isChineseStaff ? '箱长' : '박스 길이'}
+                              value={
+                                editMode
+                                  ? formatNumber(editData.box_length)
+                                  : formatNumber(data.box_length)
+                              }
+                              onChange={(e) => {
+                                if (editMode) {
+                                  const value = parseNumberInput(e.target.value);
+                                  handleFieldChange('box_length', value);
+                                }
+                              }}
+                              disabled={!editMode}
+                              size="medium"
+                              InputProps={{
+                                endAdornment: <InputAdornment position="end">cm</InputAdornment>,
+                              }}
+                              sx={{
+                                '& .MuiInputLabel-root': {
+                                  fontSize: '1.1rem',
+                                  color: '#333',
+                                  fontWeight: 500,
+                                },
+                                '& .MuiInputBase-input': {
+                                  fontSize: '1.2rem',
+                                  fontWeight: 500,
+                                  color: '#000',
+                                },
+                              }}
+                            />
+                          </Grid>
+                          
+                          <Grid size={{ xs: 12, md: 4 }}>
+                            <TextField
+                              fullWidth
+                              type="text"
+                              label={isChineseStaff ? '箱宽' : '박스 너비'}
+                              value={
+                                editMode
+                                  ? formatNumber(editData.box_width)
+                                  : formatNumber(data.box_width)
+                              }
+                              onChange={(e) => {
+                                if (editMode) {
+                                  const value = parseNumberInput(e.target.value);
+                                  handleFieldChange('box_width', value);
+                                }
+                              }}
+                              disabled={!editMode}
+                              size="medium"
+                              InputProps={{
+                                endAdornment: <InputAdornment position="end">cm</InputAdornment>,
+                              }}
+                              sx={{
+                                '& .MuiInputLabel-root': {
+                                  fontSize: '1.1rem',
+                                  color: '#333',
+                                  fontWeight: 500,
+                                },
+                                '& .MuiInputBase-input': {
+                                  fontSize: '1.2rem',
+                                  fontWeight: 500,
+                                  color: '#000',
+                                },
+                              }}
+                            />
+                          </Grid>
+                          
+                          <Grid size={{ xs: 12, md: 4 }}>
+                            <TextField
+                              fullWidth
+                              type="text"
+                              label={isChineseStaff ? '箱高' : '박스 높이'}
+                              value={
+                                editMode
+                                  ? formatNumber(editData.box_height)
+                                  : formatNumber(data.box_height)
+                              }
+                              onChange={(e) => {
+                                if (editMode) {
+                                  const value = parseNumberInput(e.target.value);
+                                  handleFieldChange('box_height', value);
+                                }
+                              }}
+                              disabled={!editMode}
+                              size="medium"
+                              InputProps={{
+                                endAdornment: <InputAdornment position="end">cm</InputAdornment>,
+                              }}
+                              sx={{
+                                '& .MuiInputLabel-root': {
+                                  fontSize: '1.1rem',
+                                  color: '#333',
+                                  fontWeight: 500,
+                                },
+                                '& .MuiInputBase-input': {
+                                  fontSize: '1.2rem',
+                                  fontWeight: 500,
+                                  color: '#000',
+                                },
+                              }}
+                            />
+                          </Grid>
+
+                          {/* 가격 섹션 구분선 */}
+                          <Grid size={12}>
+                            <Divider sx={{ my: 2 }}>
+                              <Chip label={isChineseStaff ? '💰 价格信息' : '💰 가격 정보'} size="small" color="primary" />
+                            </Divider>
+                          </Grid>
+
+                          {/* HS코드 with 조회 버튼 */}
+                          <Grid size={{ xs: 12, md: 8 }}>
+                            <Box sx={{ display: 'flex', gap: 1 }}>
+                              <TextField
+                                fullWidth
+                                label={isChineseStaff ? 'HS编码' : 'HS코드'}
+                                value={editMode ? editData.hs_code || '' : data.hs_code || ''}
+                                onChange={(e) => {
+                                  if (editMode) {
+                                    const value = e.target.value;
+                                    setEditData({ ...editData, hs_code: value });
+                                    if (value.length === 10) {
+                                      fetchTariffAndCertification(value);
+                                    }
+                                  }
+                                }}
+                                disabled={!editMode}
+                                size="medium"
+                                placeholder="10자리 숫자"
+                                sx={{
+                                  '& .MuiInputLabel-root': {
+                                    fontSize: '1.1rem',
+                                    color: '#333',
+                                    fontWeight: 500,
+                                  },
+                                  '& .MuiInputBase-input': {
+                                    fontSize: '1.2rem',
+                                    fontWeight: 500,
+                                    color: '#000',
+                                  },
+                                }}
+                              />
+                              {editMode && (
+                                <Button
+                                  variant="contained"
+                                  onClick={handleHsCodeLookup}
+                                  disabled={lookingUpHsCode || !editData.product_name}
+                                  startIcon={<SearchIcon />}
+                                  sx={{ minWidth: '120px' }}
+                                >
+                                  {lookingUpHsCode
+                                    ? isChineseStaff
+                                      ? '查询中...'
+                                      : '조회중...'
+                                    : isChineseStaff
+                                      ? '自动查询'
+                                      : '자동조회'}
+                                </Button>
+                              )}
+                            </Box>
+                            {/* HS코드 조회 진행 상황 표시 */}
+                            {hsCodeProgress && (
+                              <Typography 
+                                variant="body2" 
+                                color="primary" 
+                                sx={{ mt: 1, fontWeight: 500 }}
+                              >
+                                {hsCodeProgress}
+                              </Typography>
+                            )}
+                          </Grid>
+
+                          {/* 관세율 */}
+                          <Grid size={{ xs: 12, md: 4 }}>
+                            <TextField
+                              fullWidth
+                              label={isChineseStaff ? '关税率' : '관세율'}
+                              value={
+                                editMode
+                                  ? editData.customs_rate || 0
+                                  : data.customs_rate || 0
+                              }
+                              onChange={(e) => {
+                                if (editMode) {
+                                  const value = parseFloat(e.target.value) || 0;
+                                  handleFieldChange('customs_rate', value);
+                                }
+                              }}
+                              disabled={!editMode}
+                              size="medium"
+                              InputProps={{
+                                endAdornment: <InputAdornment position="end">%</InputAdornment>,
+                              }}
+                              helperText={
+                                tariffDetails
+                                  ? `A(기본): ${tariffDetails.basic_rate || 8}%, C(WTO): ${tariffDetails.wto_rate || 8}%, FCN1(한중FTA): ${tariffDetails.korea_china_fta_rate || 8}%`
+                                  : editMode 
+                                    ? '수동 입력 가능 (HS코드 조회 시 자동입력)'
+                                    : 'HS코드 입력 시 자동조회'
+                              }
+                              sx={{
+                                '& .MuiInputLabel-root': {
+                                  fontSize: '1.1rem',
+                                  color: '#333',
+                                  fontWeight: 500,
+                                },
+                                '& .MuiInputBase-input.Mui-disabled': {
+                                  fontSize: '1.2rem',
+                                  fontWeight: 600,
+                                  color: 'success.main',
+                                  WebkitTextFillColor: theme.palette.success.main,
+                                },
+                                '& .MuiFormHelperText-root': {
+                                  fontSize: '0.85rem',
+                                  color: 'text.secondary',
+                                  fontWeight: 500,
+                                },
+                              }}
+                            />
+                          </Grid>
+                        </Grid>
+                      </Paper>
+                    </Grid>
+
+                    {/* ========== 자동 계산 섹션 (하단) ========== */}
                     <Grid size={12}>
-                      <Divider sx={{ my: 2 }}>
-                        <Chip label={isChineseStaff ? '样品信息' : '샘플 가격'} size="small" />
-                      </Divider>
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 4 }}>
-                      <TextField
-                        fullWidth
-                        type="number"
-                        label={isChineseStaff ? '样品单价' : '샘플단가'}
-                        value={
-                          editMode ? editData.sample_unit_price || '' : data.sample_unit_price || ''
-                        }
-                        onChange={(e) =>
-                          editMode &&
-                          setEditData({
-                            ...editData,
-                            sample_unit_price: parseFloat(e.target.value),
-                          })
-                        }
-                        disabled={!editMode}
-                        size="small"
-                        InputProps={{
-                          endAdornment: <InputAdornment position="end">₩</InputAdornment>,
-                        }}
-                        helperText="Staff 직접 입력"
-                      />
-                    </Grid>
+                      <Paper
+                        elevation={3}
+                        sx={{ p: 3, bgcolor: 'grey.50', borderRadius: 2 }}
+                      >
+                        <Typography
+                          variant="h6"
+                          sx={{ mb: 3, fontWeight: 600, color: 'secondary.main', fontSize: '1.3rem' }}
+                        >
+                          💰 {isChineseStaff ? '自动计算结果' : '자동 계산 결과'}
+                        </Typography>
 
-                    {/* HS코드 및 인증 */}
-                    <Grid size={12}>
-                      <Divider sx={{ my: 2 }}>
-                        <Chip
-                          label={isChineseStaff ? 'HS编码和认证' : 'HS코드 및 인증'}
-                          size="small"
-                        />
-                      </Divider>
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 4 }}>
-                      <TextField
-                        fullWidth
-                        label={isChineseStaff ? 'HS编码' : 'HS코드'}
-                        value={data.hs_code || ''}
-                        disabled
-                        size="small"
-                        helperText="자동 조회"
-                      />
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 4 }}>
-                      <FormControlLabel
-                        control={
-                          <Checkbox checked={data.certification_required || false} disabled />
-                        }
-                        label={isChineseStaff ? '进口时需要认证' : '수입 시 인증 필요'}
-                      />
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 4 }}>
-                      <TextField
-                        fullWidth
-                        label={isChineseStaff ? '认证预计费用' : '인증 예상 비용'}
-                        value={data.cert_cost ? `₩${data.cert_cost.toFixed(0)}` : '-'}
-                        disabled
-                        size="small"
-                        helperText="WebSearch 함수"
-                      />
-                    </Grid>
+                        {/* 계산 결과 테이블 */}
+                        <TableContainer>
+                          <Table>
+                            <TableHead>
+                              <TableRow>
+                                <TableCell
+                                  sx={{
+                                    fontWeight: 'bold',
+                                    bgcolor: 'primary.main',
+                                    color: 'white',
+                                    fontSize: '1.1rem',
+                                    py: 2,
+                                  }}
+                                >
+                                  {isChineseStaff ? '项目' : '항목'}
+                                </TableCell>
+                                <TableCell
+                                  sx={{
+                                    fontWeight: 'bold',
+                                    bgcolor: 'primary.main',
+                                    color: 'white',
+                                    fontSize: '1.1rem',
+                                    py: 2,
+                                  }}
+                                  align="right"
+                                >
+                                  {isChineseStaff ? '金额' : '금액'}
+                                </TableCell>
+                                <TableCell
+                                  sx={{
+                                    fontWeight: 'bold',
+                                    bgcolor: 'primary.main',
+                                    color: 'white',
+                                    fontSize: '1.1rem',
+                                    py: 2,
+                                  }}
+                                >
+                                  {isChineseStaff ? '计算公式' : '계산식'}
+                                </TableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
 
-                    {/* 관세 */}
-                    <Grid size={{ xs: 12, md: 6 }}>
-                      <TextField
-                        fullWidth
-                        label={isChineseStaff ? '关税率' : '관세율'}
-                        value={data.customs_rate ? `${data.customs_rate}%` : '-'}
-                        disabled
-                        size="small"
-                        helperText="자동 조회"
-                      />
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 6 }}>
-                      <TextField
-                        fullWidth
-                        label={isChineseStaff ? '关税' : '관세'}
-                        value={data.customs_duty ? `₩${data.customs_duty.toFixed(0)}` : '-'}
-                        disabled
-                        size="small"
-                        helperText="자동계산"
-                      />
+                              {/* 총 박스수 */}
+                              <TableRow>
+                                <TableCell sx={{ fontSize: '1rem', py: 1.5 }}>{isChineseStaff ? '总箱数' : '총 박스수'}</TableCell>
+                                <TableCell align="right" sx={{ fontWeight: 700, fontSize: '1.1rem', py: 1.5 }}>
+                                  {formatNumber(editData.total_boxes)}
+                                </TableCell>
+                                <TableCell sx={{ color: 'text.secondary', fontSize: '0.95rem', py: 1.5 }}>
+                                  수량 ÷ 박스당개수
+                                </TableCell>
+                              </TableRow>
+
+                              {/* CBM */}
+                              <TableRow>
+                                <TableCell sx={{ fontSize: '1rem', py: 1.5 }}>{isChineseStaff ? '总CBM' : '총 CBM'}</TableCell>
+                                <TableCell align="right" sx={{ fontWeight: 700, fontSize: '1.1rem', py: 1.5, color: 'info.main' }}>
+                                  {editData.total_cbm?.toFixed(2) || 0} m³
+                                </TableCell>
+                                <TableCell sx={{ color: 'text.secondary', fontSize: '0.95rem', py: 1.5 }}>
+                                  박스수 × (가로×세로×높이)÷1,000,000
+                                </TableCell>
+                              </TableRow>
+
+                              {/* 운송방법 */}
+                              <TableRow>
+                                <TableCell sx={{ fontSize: '1rem', py: 1.5 }}>{isChineseStaff ? '运输方式' : '운송방법'}</TableCell>
+                                <TableCell align="right" sx={{ 
+                                  fontWeight: 700, 
+                                  fontSize: '1.2rem', 
+                                  py: 1.5,
+                                  color: editData.shipping_method === 'FCL' ? 'error.main' : 'success.main'
+                                }}>
+                                  {editData.shipping_method}
+                                </TableCell>
+                                <TableCell sx={{ color: 'text.secondary', fontSize: '0.95rem', py: 1.5 }}>
+                                  CBM ≥ 15 ? FCL : LCL
+                                </TableCell>
+                              </TableRow>
+
+                              {/* LCL 운송비 (LCL인 경우만) */}
+                              {editData.shipping_method === 'LCL' && (
+                                <TableRow>
+                                  <TableCell>{isChineseStaff ? 'LCL运费' : 'LCL 운송비'}</TableCell>
+                                  <TableCell align="right" sx={{ fontWeight: 600 }}>
+                                    ₩{formatNumber(editData.lcl_shipping_fee)}
+                                  </TableCell>
+                                  <TableCell sx={{ color: 'text.secondary', fontSize: '0.9rem' }}>
+                                    {editData.total_cbm <= 1
+                                      ? '1CBM 이하 ₩90,000'
+                                      : `${editData.total_cbm}CBM × ₩90,000`}
+                                  </TableCell>
+                                </TableRow>
+                              )}
+
+                              {/* 수수료 */}
+                              <TableRow>
+                                <TableCell>{isChineseStaff ? '手续费' : '수수료'}</TableCell>
+                                <TableCell align="right" sx={{ fontWeight: 600 }}>
+                                  ₩{formatNumber(editData.commission_amount)}
+                                </TableCell>
+                                <TableCell sx={{ color: 'text.secondary', fontSize: '0.9rem' }}>
+                                  중국단가 × 수량 × 환율 × 5%
+                                </TableCell>
+                              </TableRow>
+
+                              {/* EXW 합계 */}
+                              <TableRow>
+                                <TableCell>{isChineseStaff ? 'EXW合计' : 'EXW 합계'}</TableCell>
+                                <TableCell align="right" sx={{ fontWeight: 600 }}>
+                                  ₩{formatNumber(editData.exw_total)}
+                                </TableCell>
+                                <TableCell sx={{ color: 'text.secondary', fontSize: '0.9rem' }}>
+                                  (중국단가 × 수량 + 중국운송료) × 환율
+                                </TableCell>
+                              </TableRow>
+
+
+                              {/* 관세 */}
+                              <TableRow>
+                                <TableCell>{isChineseStaff ? '关税' : '관세'}</TableCell>
+                                <TableCell align="right" sx={{ fontWeight: 600 }}>
+                                  ₩{formatNumber(editData.customs_duty)}
+                                </TableCell>
+                                <TableCell sx={{ color: 'text.secondary', fontSize: '0.9rem' }}>
+                                  (EXW + 운송비) × 관세율
+                                </TableCell>
+                              </TableRow>
+
+                              {/* 수입 VAT */}
+                              <TableRow>
+                                <TableCell>{isChineseStaff ? '进口VAT' : '수입 VAT'}</TableCell>
+                                <TableCell align="right" sx={{ fontWeight: 600 }}>
+                                  ₩{formatNumber(editData.import_vat)}
+                                </TableCell>
+                                <TableCell sx={{ color: 'text.secondary', fontSize: '0.9rem' }}>
+                                  (EXW + 운송비 + 관세 + 관세사 + C/O) × 10%
+                                </TableCell>
+                              </TableRow>
+
+                              {/* 관세사 비용 */}
+                              <TableRow>
+                                <TableCell>{isChineseStaff ? '报关代理费' : '관세사 비용'}</TableCell>
+                                <TableCell align="right" sx={{ fontWeight: 600 }}>
+                                  ₩{formatNumber(editData.customs_broker_fee)}
+                                </TableCell>
+                                <TableCell sx={{ color: 'text.secondary', fontSize: '0.9rem' }}>
+                                  ₩30,000 (고정)
+                                </TableCell>
+                              </TableRow>
+
+                              {/* 원산지 증명서 비용 (FCN1 적용시만) */}
+                              {editData.co_certificate_fee > 0 && (
+                                <TableRow>
+                                  <TableCell>{isChineseStaff ? '原产地证明书费用' : '원산지 증명서 비용'}</TableCell>
+                                  <TableCell align="right" sx={{ fontWeight: 600 }}>
+                                    ₩{formatNumber(editData.co_certificate_fee)}
+                                  </TableCell>
+                                  <TableCell sx={{ color: 'text.secondary', fontSize: '0.9rem' }}>
+                                    ₩50,000 (FCN1 적용)
+                                  </TableCell>
+                                </TableRow>
+                              )}
+
+                              {/* ===== 합계 섹션 ===== */}
+                              <TableRow sx={{ bgcolor: 'grey.100' }}>
+                                <TableCell colSpan={3} sx={{ fontWeight: 'bold', color: 'error.main' }}>
+                                  💰 {isChineseStaff ? '合计' : '합계'}
+                                </TableCell>
+                              </TableRow>
+
+                              {/* 1차 결제비용 */}
+                              <TableRow sx={{ bgcolor: 'warning.light' }}>
+                                <TableCell sx={{ fontWeight: 'bold' }}>
+                                  {isChineseStaff ? '1次付款' : '1차 결제비용'}
+                                </TableCell>
+                                <TableCell
+                                  align="right"
+                                  sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}
+                                >
+                                  ₩{formatNumber(editData.first_payment_amount)}
+                                </TableCell>
+                                <TableCell sx={{ color: 'text.secondary', fontSize: '0.9rem' }}>
+                                  EXW + 수수료 + 수수료VAT
+                                </TableCell>
+                              </TableRow>
+
+                              {/* 2차 결제비용 */}
+                              <TableRow sx={{ bgcolor: 'info.light' }}>
+                                <TableCell sx={{ fontWeight: 'bold' }}>
+                                  {isChineseStaff ? '预计2次付款' : '예상 2차 결제비용'}
+                                </TableCell>
+                                <TableCell
+                                  align="right"
+                                  sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}
+                                >
+                                  ₩{formatNumber(editData.expected_second_payment)}
+                                </TableCell>
+                                <TableCell sx={{ color: 'text.secondary', fontSize: '0.9rem' }}>
+                                  운송비 + 관세 + 관세사 + C/O + 수입VAT
+                                </TableCell>
+                              </TableRow>
+
+                              {/* 예상 총 합계 */}
+                              <TableRow sx={{ bgcolor: 'error.light' }}>
+                                <TableCell sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
+                                  {isChineseStaff ? '预计总合计' : '예상 총 합계'}
+                                </TableCell>
+                                <TableCell
+                                  align="right"
+                                  sx={{
+                                    fontWeight: 'bold',
+                                    fontSize: '1.3rem',
+                                    color: 'error.dark',
+                                  }}
+                                >
+                                  ₩{formatNumber(editData.expected_total_supply_price)}
+                                </TableCell>
+                                <TableCell sx={{ color: 'text.secondary', fontSize: '0.9rem' }}>
+                                  1차 + 2차 결제비용
+                                </TableCell>
+                              </TableRow>
+
+                              {/* 예상 단가 */}
+                              <TableRow sx={{ bgcolor: 'success.light' }}>
+                                <TableCell sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
+                                  {isChineseStaff ? '预计单价(含VAT)' : '예상 단가(VAT포함)'}
+                                </TableCell>
+                                <TableCell
+                                  align="right"
+                                  sx={{
+                                    fontWeight: 'bold',
+                                    fontSize: '1.3rem',
+                                    color: 'success.dark',
+                                  }}
+                                >
+                                  ₩{formatNumber(editData.expected_unit_price)}
+                                </TableCell>
+                                <TableCell sx={{ color: 'text.secondary', fontSize: '0.9rem' }}>
+                                  총합계 ÷ 수량
+                                </TableCell>
+                              </TableRow>
+                            </TableBody>
+                          </Table>
+                        </TableContainer>
+
+                        {/* 인증 정보 */}
+                        {editData.certification_required && (
+                          <Alert severity="warning" sx={{ mt: 2 }}>
+                            <Typography variant="subtitle2" fontWeight="bold">
+                              {isChineseStaff ? '需要认证' : '인증 필요'}
+                            </Typography>
+                            <Typography variant="body2">
+                              {editData.required_certifications || '인증 정보 확인 중...'}
+                            </Typography>
+                          </Alert>
+                        )}
+                      </Paper>
                     </Grid>
                   </Grid>
                 </CardContent>
@@ -1943,17 +2319,21 @@ export default function MarketResearchDetailPage() {
           </Paper>
         </Grid>
 
-        {/* Desktop - Chat on right side */}
+        {/* Chat Panel - Desktop only */}
         {!isMobile && (
-          <Grid size={{ md: 4 }}>
-            <Box sx={{ height: 'calc(100vh - 250px)', overflow: 'hidden' }}>
-              <ChatPanel reservationNumber={reservationNumber} serviceType="market-research" />
-            </Box>
+          <Grid size={{ xs: 12, md: 4 }}>
+            <Paper elevation={3} sx={{ position: 'sticky', top: 100, height: 'calc(100vh - 200px)' }}>
+              <ChatPanel
+                reservationNumber={reservationNumber}
+                currentUserRole={userProfile?.role || ''}
+                serviceType="market-research"
+              />
+            </Paper>
           </Grid>
         )}
       </Grid>
 
-      {/* Mobile - Floating Chat Button */}
+      {/* Mobile Chat FAB and Drawer */}
       {isMobile && (
         <>
           <Fab
@@ -1963,40 +2343,97 @@ export default function MarketResearchDetailPage() {
               position: 'fixed',
               bottom: 16,
               right: 16,
-              zIndex: 1200,
+              zIndex: 1000,
             }}
             onClick={() => setChatDrawerOpen(true)}
           >
             <ChatIcon />
           </Fab>
 
-          {/* Mobile Chat Drawer */}
           <Drawer
-            anchor="bottom"
+            anchor="right"
             open={chatDrawerOpen}
             onClose={() => setChatDrawerOpen(false)}
             sx={{
               '& .MuiDrawer-paper': {
-                height: '80vh',
-                borderTopLeftRadius: 16,
-                borderTopRightRadius: 16,
+                width: '100%',
+                maxWidth: '400px',
               },
             }}
           >
-            <Box sx={{ p: 2 }}>
-              <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2}>
-                <Typography variant="h6">{isChineseStaff ? '聊天' : '채팅'}</Typography>
-                <IconButton onClick={() => setChatDrawerOpen(false)}>
-                  <CloseIcon />
-                </IconButton>
-              </Stack>
-              <Box sx={{ height: 'calc(80vh - 100px)' }}>
-                <ChatPanel reservationNumber={reservationNumber} serviceType="market-research" />
-              </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', p: 2 }}>
+              <IconButton onClick={() => setChatDrawerOpen(false)}>
+                <CloseIcon />
+              </IconButton>
+              <Typography variant="h6" sx={{ ml: 2 }}>
+                {isChineseStaff ? '聊天' : '채팅'}
+              </Typography>
+            </Box>
+            <Divider />
+            <Box sx={{ height: 'calc(100vh - 80px)', overflow: 'hidden' }}>
+              <ChatPanel
+                reservationNumber={reservationNumber}
+                currentUserRole={userProfile?.role || ''}
+                serviceType="market-research"
+              />
             </Box>
           </Drawer>
         </>
       )}
+
+      {/* Image Modal */}
+      <Dialog
+        open={modalOpen}
+        onClose={() => {
+          setModalOpen(false);
+          setSelectedImage(null);
+        }}
+        maxWidth="lg"
+        fullWidth
+      >
+        <DialogContent
+          sx={{
+            position: 'relative',
+            p: 0,
+            bgcolor: 'black',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            minHeight: '60vh',
+          }}
+        >
+          <IconButton
+            onClick={() => {
+              setModalOpen(false);
+              setSelectedImage(null);
+            }}
+            sx={{
+              position: 'absolute',
+              right: 8,
+              top: 8,
+              color: 'white',
+              bgcolor: 'rgba(0,0,0,0.5)',
+              '&:hover': {
+                bgcolor: 'rgba(0,0,0,0.7)',
+              },
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+          {selectedImage && (
+            <Box
+              component="img"
+              src={selectedImage}
+              alt="확대 이미지"
+              sx={{
+                maxWidth: '100%',
+                maxHeight: '80vh',
+                objectFit: 'contain',
+              }}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
     </Box>
   );
 }
