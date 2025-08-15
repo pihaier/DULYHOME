@@ -251,11 +251,6 @@ export default function MarketResearchPage() {
           .eq('id', application.id);
 
         if (updateError) {
-            error: updateError,
-            message: updateError.message,
-            details: updateError.details,
-            code: updateError.code,
-          });
           // 배정 실패해도 계속 진행 (중요하지 않은 오류)
         }
       }

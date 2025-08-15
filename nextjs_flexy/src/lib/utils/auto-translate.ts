@@ -55,10 +55,10 @@ export async function translateInBackground({
       const result = await response.json();
 
       if (result.translatedFields > 0) {
-          `[Translation] Successfully translated ${result.translatedFields} fields for ${table}`
-        );
+        // Translation successful
       }
     } catch (error) {
+      // Translation failed
     }
   }, delay);
 }

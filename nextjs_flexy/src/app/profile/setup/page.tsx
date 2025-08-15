@@ -197,11 +197,6 @@ export default function ProfileSetup() {
 
 
       if (result.error) {
-          message: result.error.message,
-          details: result.error.details,
-          hint: result.error.hint,
-          code: result.error.code,
-        });
         // erro.md: 상세한 에러 정보 제공
         setError(
           `프로필 ${operation === 'insert' ? '생성' : '업데이트'} 중 오류가 발생했습니다: ${result.error.message || '알 수 없는 오류'}`

@@ -188,11 +188,6 @@ export default function ChatPanel({
         .single();
 
       if (error) {
-          message: error.message,
-          details: error.details,
-          hint: error.hint,
-          code: error.code,
-        });
         alert(`메시지 전송에 실패했습니다: ${error.message}`);
       } else {
         // 메시지 즉시 추가 (실시간 구독이 작동하지 않을 경우를 대비)
@@ -210,10 +205,6 @@ export default function ChatPanel({
         }
       }
     } catch (error) {
-        error: error,
-        message: error instanceof Error ? error.message : 'Unknown error',
-        stack: error instanceof Error ? error.stack : undefined,
-      });
       alert(
         `메시지 전송 중 오류가 발생했습니다: ${error instanceof Error ? error.message : '알 수 없는 오류'}`
       );

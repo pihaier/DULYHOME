@@ -149,12 +149,6 @@ export default function OrderDetailPage() {
             .eq('reservation_number', reservationNumber)
             .single();
 
-            data: marketResult.data,
-            error: marketResult.error,
-            status: marketResult.status,
-            statusText: marketResult.statusText,
-          });
-
           data = marketResult.data;
           error = marketResult.error;
           break;
