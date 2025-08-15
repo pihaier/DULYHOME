@@ -1373,6 +1373,7 @@ export default function MarketResearchDetailPage() {
                               }}
                             />
                           </Grid>
+                          )}
 
                           {/* HS코드 */}
                           <Grid size={{ xs: 12, md: 6 }}>
@@ -1804,6 +1805,7 @@ export default function MarketResearchDetailPage() {
                         </Box>
                       </Paper>
                     </Grid>
+                  </Grid>
                 </CardContent>
               </BlankCard>
             </TabPanel>

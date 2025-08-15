@@ -343,7 +343,22 @@ export default function MarketResearchPage() {
 
                 if (uploadResponse.ok) {
                   const result = await uploadResponse.json();
-                  uploadedFiles.push(result.data);
+                  // 파일 정보를 적절한 배열에 추가
+                  const fileInfo = {
+                    url: result.data.url,
+                    filename: file.name,
+                    size: file.size,
+                    uploaded_at: new Date().toISOString()
+                  };
+
+                  // 카테고리별로 적절한 배열에 추가
+                  if (category === 'product') {
+                    applicationPhotos.push(fileInfo);
+                  } else if (category === 'logo') {
+                    logoFiles.push(fileInfo);
+                  } else if (category === 'box_design') {
+                    boxFiles.push(fileInfo);
+                  }
                 } else {
                   const error = await uploadResponse.json();
                   throw new Error(`파일 업로드 실패: ${error.message}`);
@@ -357,7 +372,7 @@ export default function MarketResearchPage() {
 
         // 파일 정보를 market_research_requests 테이블의 컬럼에 저장
         if (applicationPhotos.length > 0 || logoFiles.length > 0 || boxFiles.length > 0) {
-          const updateData = {};
+          const updateData: any = {};
           
           if (applicationPhotos.length > 0) {
             updateData.application_photos = applicationPhotos;
