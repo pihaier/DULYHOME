@@ -184,7 +184,6 @@ export default function BulkOrderApplicationPage() {
 
       setFormData((prev) => ({ ...prev, orderItems }));
     } catch (error) {
-
       // 실패 시 임시 데이터 사용 (시장조사 없이 진행)
       const fallbackOrderItems: OrderItem[] = [
         {
@@ -373,8 +372,7 @@ export default function BulkOrderApplicationPage() {
 
             if (dbError) {
             }
-          } catch (error) {
-          }
+          } catch (error) {}
         }
       }
 

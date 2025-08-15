@@ -76,7 +76,6 @@ export default function SamplingDetailPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-
       if (!reservationNumber) {
         setLoading(false);
         return;

@@ -68,24 +68,21 @@ export const NotesProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const addNote = async (newNote: { title: string; color: string }) => {
     try {
       await mutate(postFetcher('/api/notes', newNote));
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   // Update a note by its ID
   const updateNote = async (id: number, title: string, color: string) => {
     try {
       await mutate(putFetcher('/api/notes', { id, title, color }));
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   // Delete a note by its ID
   const deleteNote = async (id: number) => {
     try {
       const response = await mutate(deleteFetcher('/api/notes', { id }));
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   return (

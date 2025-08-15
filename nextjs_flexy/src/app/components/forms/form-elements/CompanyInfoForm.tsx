@@ -64,7 +64,6 @@ export default function CompanyInfoForm({
 
   // user_profiles에서 기본값 가져오기
   useEffect(() => {
-
     if (user && !value.company_name) {
       // userProfile이 있으면 그 값 사용, 없으면 빈 값
       const newValues = {
@@ -116,8 +115,7 @@ export default function CompanyInfoForm({
           refreshUser();
         }
       }
-    } catch (err) {
-    }
+    } catch (err) {}
   };
 
   // 폼 제출 시 프로필 업데이트
@@ -317,8 +315,7 @@ export function useCompanyInfoSubmit(companyInfo: CompanyInfo) {
       if (!error && refreshUser) {
         await refreshUser();
       }
-    } catch (err) {
-    }
+    } catch (err) {}
   };
 
   return { updateProfileOnSubmit };

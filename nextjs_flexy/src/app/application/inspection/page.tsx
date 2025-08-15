@@ -315,7 +315,6 @@ export default function InspectionApplicationPage() {
               });
 
             if (uploadError) {
-
               // Word 파일 등 지원하지 않는 MIME 타입의 경우 API 폴백 사용
               if (
                 uploadError.message?.includes('mime type') ||
@@ -371,8 +370,7 @@ export default function InspectionApplicationPage() {
 
             if (dbError) {
             }
-          } catch (error) {
-          }
+          } catch (error) {}
         }
       }
 

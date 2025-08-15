@@ -405,8 +405,7 @@ export default function SamplingApplicationPage() {
 
             if (dbError) {
             }
-          } catch (error) {
-          }
+          } catch (error) {}
         }
       }
 

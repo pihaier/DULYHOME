@@ -201,8 +201,7 @@ export default function ChatPanel({
 
           if (functionError) {
           }
-        } catch (err) {
-        }
+        } catch (err) {}
       }
     } catch (error) {
       alert(

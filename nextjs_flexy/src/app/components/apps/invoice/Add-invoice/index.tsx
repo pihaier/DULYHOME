@@ -195,8 +195,7 @@ const CreateInvoice = () => {
       setShowAlert(true);
       setTimeout(() => setShowAlert(false), 5000);
       router.push('/apps/invoice/list');
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   const parsedDate = isValid(new Date(formData.orderDate))

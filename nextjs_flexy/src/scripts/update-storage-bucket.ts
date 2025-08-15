@@ -73,7 +73,6 @@ async function updateBucketMimeTypes() {
       return;
     }
 
-
     // 다른 버킷들도 필요하면 업데이트
     const bucketsToUpdate = ['chat-files', 'report-files']; // 실제 버킷 이름으로 변경
 
@@ -102,8 +101,7 @@ async function updateBucketMimeTypes() {
       } else {
       }
     }
-  } catch (error) {
-  }
+  } catch (error) {}
 }
 
 // 스크립트 실행

@@ -315,7 +315,6 @@ export function HSCodeSmartSearch({ onSelectHsCode, onReset, onNotify }: Props) 
 
   // 6자리 그룹 선택 시 10자리 상세 표시 (3단계)
   const handleGroupSelect = (group: HSCodeGroup) => {
-
     setSelectedGroup(group);
     if (group.detail_codes && group.detail_codes.length > 0) {
       // detail_codes를 그대로 저장 (specs 정보 포함)

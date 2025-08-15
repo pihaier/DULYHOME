@@ -137,8 +137,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
           comment,
         })
       );
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   // Add reply to a comment
@@ -151,24 +150,21 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
           reply,
         })
       );
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   // Function to toggle like/unlike a post
   const likePost = async (postId: number | string) => {
     try {
       await mutate(postFetcher('/api/userprofile', { postId }));
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   // Function to toggle like/unlike a reply to a comment
   const likeReply = async (postId: string | number, commentId: string | number) => {
     try {
       await mutate(postFetcher('/api/userprofile/replies-like', { postId, commentId }));
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   return (

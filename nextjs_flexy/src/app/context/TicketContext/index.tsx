@@ -50,8 +50,7 @@ export const TicketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const deleteTicket = async (id: number) => {
     try {
       await mutate(deleteFetcher('/api/ticket', { id }));
-    } catch (err) {
-    }
+    } catch (err) {}
   };
 
   // Update the ticket search term state based on the provided search term value.

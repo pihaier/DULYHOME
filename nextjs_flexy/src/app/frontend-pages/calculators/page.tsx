@@ -182,7 +182,6 @@ const CalculatorsPage = () => {
         .limit(1)
         .single();
 
-
       if (!error && data) {
         const formattedData = {
           success: true,
@@ -233,8 +232,7 @@ const CalculatorsPage = () => {
         };
         setExchangeRates(formattedData);
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   const fetchExchangeRate = async (date?: string) => {

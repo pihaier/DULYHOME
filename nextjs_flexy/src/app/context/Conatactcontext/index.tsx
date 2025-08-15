@@ -93,8 +93,7 @@ export const ContactContextProvider: React.FC<{ children: ReactNode }> = ({ chil
   const addContact = async (newContact: ContactType) => {
     try {
       await mutate(postFetcher('/api/contacts', newContact));
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   // Function to delete a contact
@@ -104,16 +103,14 @@ export const ContactContextProvider: React.FC<{ children: ReactNode }> = ({ chil
       if (selectedContact && selectedContact.id === contactId) {
         setSelectedContact(null);
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   };
   // Function to update a contact
   const updateContact = async (updatedContact: React.SetStateAction<ContactType | null>) => {
     try {
       await mutate(putFetcher('/api/contacts', updatedContact));
       setSelectedContact(updatedContact);
-    } catch (error) {
-    }
+    } catch (error) {}
   };
   // Function to select a contact
   const selectContact = (contact: ContactType) => {

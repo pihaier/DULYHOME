@@ -191,10 +191,8 @@ export default function ProfileSetup() {
           notification_enabled: true,
         };
 
-
         result = await supabase.from('user_profiles').insert(profileInsertData).select();
       }
-
 
       if (result.error) {
         // erro.md: 상세한 에러 정보 제공

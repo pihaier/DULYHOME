@@ -56,7 +56,6 @@ export const useChat = (reservationNumber: string, currentUser?: any): UseChatRe
     if (!reservationNumber) return;
 
     try {
-
       const { data, error } = await supabase
         .from('chat_messages')
         .select('*')
@@ -89,8 +88,7 @@ export const useChat = (reservationNumber: string, currentUser?: any): UseChatRe
       }
 
       setParticipants(data || []);
-    } catch (err) {
-    }
+    } catch (err) {}
   }, [reservationNumber, supabase]);
 
   // Send message
@@ -99,7 +97,6 @@ export const useChat = (reservationNumber: string, currentUser?: any): UseChatRe
       if (!message.trim() || !currentUser) return;
 
       try {
-
         const messageData = {
           reservation_number: reservationNumber,
           sender_id: currentUser.id,
@@ -145,7 +142,6 @@ export const useChat = (reservationNumber: string, currentUser?: any): UseChatRe
   useEffect(() => {
     if (!reservationNumber) return;
 
-
     // Create channel
     const channel = supabase
       .channel(`chat:${reservationNumber}`)
@@ -158,7 +154,6 @@ export const useChat = (reservationNumber: string, currentUser?: any): UseChatRe
           filter: `reservation_number=eq.${reservationNumber}`,
         },
         (payload) => {
-
           if (payload.eventType === 'INSERT') {
             setMessages((prev) => [...prev, payload.new as ChatMessage]);
           } else if (payload.eventType === 'UPDATE') {
@@ -170,8 +165,7 @@ export const useChat = (reservationNumber: string, currentUser?: any): UseChatRe
           }
         }
       )
-      .subscribe((status) => {
-      });
+      .subscribe((status) => {});
 
     channelRef.current = channel;
 

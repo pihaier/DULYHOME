@@ -34,8 +34,7 @@ const Profile = () => {
         // 로그아웃 성공 시 메인 페이지로 이동
         router.push('/');
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   const theme = useTheme();

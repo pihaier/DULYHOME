@@ -72,8 +72,7 @@ const HpHeader = (props: any) => {
         // 페이지 새로고침하여 세션 완전히 정리
         window.location.href = '/';
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   return (

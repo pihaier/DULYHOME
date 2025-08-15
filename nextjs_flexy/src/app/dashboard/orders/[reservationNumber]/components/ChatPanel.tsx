@@ -49,8 +49,7 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ reservationNumber }) => {
 
     try {
       await sendMessage(message);
-    } catch (err) {
-    }
+    } catch (err) {}
   };
 
   // 엔터키 처리

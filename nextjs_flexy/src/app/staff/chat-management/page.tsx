@@ -188,8 +188,7 @@ export default function ChatManagementPage() {
           // 로컬 상태 업데이트
           setOrders((prev) => prev.map((o) => (o.id === order.id ? { ...o, unread_count: 0 } : o)));
         }
-      } catch (error) {
-      }
+      } catch (error) {}
     }
 
     // 고객 프로필 가져오기
@@ -209,8 +208,7 @@ export default function ChatManagementPage() {
 
         setCustomerProfile(profile);
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   // 테이블명 매핑

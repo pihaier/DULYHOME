@@ -78,7 +78,6 @@ export default function MarketResearchDetailPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-
       if (!reservationNumber) {
         setLoading(false);
         return;
@@ -96,7 +95,6 @@ export default function MarketResearchDetailPage() {
           .select('*')
           .eq('reservation_number', reservationNumber)
           .single();
-
 
         if (error) {
           throw new Error(error.message);

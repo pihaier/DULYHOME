@@ -71,8 +71,7 @@ const ProfileInfoTab = () => {
             // GlobalContext의 refreshUser 호출
             await refreshUser();
           }
-        } catch (error) {
-        }
+        } catch (error) {}
       };
 
       createProfile();

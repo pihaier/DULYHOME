@@ -76,7 +76,6 @@ export default function InspectionDetailPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-
       if (!reservationNumber) {
         setLoading(false);
         return;
@@ -93,7 +92,6 @@ export default function InspectionDetailPage() {
           .select('*')
           .eq('reservation_number', reservationNumber)
           .maybeSingle();
-
 
         if (error) {
           throw new Error(error.message);

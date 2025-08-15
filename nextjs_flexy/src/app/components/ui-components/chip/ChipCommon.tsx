@@ -14,8 +14,7 @@ import DisabledCode from '@/app/components/ui-components/chip/code/DisabledCode'
 import SizesCode from '@/app/components/ui-components/chip/code/SizesCode';
 
 const ChipCommon = () => {
-  const handleDelete = () => {
-  };
+  const handleDelete = () => {};
 
   return (
     <Grid container spacing={3}>

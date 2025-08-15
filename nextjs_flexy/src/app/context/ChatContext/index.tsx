@@ -87,8 +87,7 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       if (updatedChat) {
         setSelectedChat(updatedChat);
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   const value: ChatContextProps = {

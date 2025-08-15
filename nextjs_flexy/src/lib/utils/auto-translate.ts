@@ -107,7 +107,6 @@ export async function translateStaffInput({
       }
 
       const result = await response.json();
-    } catch (error) {
-    }
+    } catch (error) {}
   }, delay);
 }

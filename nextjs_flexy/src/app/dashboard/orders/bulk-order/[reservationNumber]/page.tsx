@@ -75,7 +75,6 @@ export default function BulkOrderDetailPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-
       if (!reservationNumber) {
         setLoading(false);
         return;
@@ -93,7 +92,6 @@ export default function BulkOrderDetailPage() {
           .select('*')
           .eq('reservation_number', reservationNumber)
           .maybeSingle();
-
 
         if (error) {
           throw new Error(error.message);

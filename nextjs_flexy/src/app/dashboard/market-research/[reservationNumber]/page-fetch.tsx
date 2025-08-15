@@ -44,13 +44,11 @@ export default function MarketResearchDetailPage({
       setError(null);
 
       try {
-
         // 메인 데이터 조회
         const marketData = await fetchFromSupabase(
           'market_research_requests',
           `reservation_number=eq.${reservationNumber}`
         );
-
 
         if (!marketData || marketData.length === 0) {
           throw new Error('데이터를 찾을 수 없습니다.');

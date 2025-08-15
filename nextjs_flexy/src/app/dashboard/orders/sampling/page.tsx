@@ -67,7 +67,6 @@ export default function SamplingListPage() {
 
       if (sampleError) throw sampleError;
 
-
       // sampling_applications 데이터를 사용
       const formattedOrders = (sampleOrders || []).map((sample) => ({
         ...sample,

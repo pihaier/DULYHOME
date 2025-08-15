@@ -44,23 +44,20 @@ export const InvoiceProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const deleteInvoice = async (invoiceId: number) => {
     try {
       await mutate(deleteFetcher('/api/invoice', { invoiceId }));
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   const addInvoice = async (newInvoice: InvoiceList) => {
     try {
       await mutate(postFetcher('/api/invoice', newInvoice));
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   //  Function to update an invoice
   const updateInvoice = async (updatedInvoice: InvoiceList) => {
     try {
       await mutate(putFetcher('/api/invoice', updatedInvoice));
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   return (

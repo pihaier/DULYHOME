@@ -246,7 +246,6 @@ export default function MarketResearchDetailPage() {
           const updated = { ...prev, customs_rate: lowestRate };
           return calculateValues(updated);
         });
-
       }
 
       // 인증 필요 여부 처리 - customs-verification Edge Function의 응답 구조에 맞게 파싱
@@ -266,8 +265,7 @@ export default function MarketResearchDetailPage() {
         if (certifications) {
         }
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {

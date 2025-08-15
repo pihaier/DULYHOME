@@ -74,8 +74,7 @@ const EditInvoicePage = () => {
 
       // Navigate to the list page
       router.push('/apps/invoice/list');
-    } catch (error) {
-    }
+    } catch (error) {}
 
     setTimeout(() => {
       setShowAlert(false);

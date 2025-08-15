@@ -76,7 +76,6 @@ export default function OrderDetailPage() {
   const params = useParams();
   const reservationNumber = params.reservationNumber as string;
 
-
   const [tabValue, setTabValue] = useState(0);
   const [chatMessage, setChatMessage] = useState('');
   const [chatMessages, setChatMessages] = useState<any[]>([]);
@@ -132,7 +131,6 @@ export default function OrderDetailPage() {
 
   // 주문 정보 로드
   const fetchOrderDetails = useCallback(async () => {
-
     setLoading(true);
     setError(null);
 
@@ -234,7 +232,6 @@ export default function OrderDetailPage() {
           return;
       }
 
-
       if (data && !error) {
         setData(data);
 
@@ -284,7 +281,6 @@ export default function OrderDetailPage() {
   const sendMessage = async () => {
     if (!chatMessage.trim()) return;
 
-
     try {
       const {
         data: { user },
@@ -333,8 +329,7 @@ export default function OrderDetailPage() {
           });
         }, 100);
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -364,8 +359,7 @@ export default function OrderDetailPage() {
           }
         }
       )
-      .subscribe((status) => {
-      });
+      .subscribe((status) => {});
 
     // 컴포넌트 언마운트 시 구독 해제
     return () => {
@@ -457,8 +451,7 @@ export default function OrderDetailPage() {
           if (functionError) {
           } else {
           }
-        } catch (translationError) {
-        }
+        } catch (translationError) {}
       }
     } catch (error) {
       alert('메시지 전송 중 오류가 발생했습니다.');

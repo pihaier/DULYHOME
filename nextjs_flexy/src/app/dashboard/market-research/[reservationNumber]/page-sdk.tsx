@@ -25,13 +25,11 @@ export default function MarketResearchDetailPage({
       try {
         const supabase = createClient();
 
-
         // 단순 쿼리만 실행
         const { data: result, error: queryError } = await supabase
           .from('market_research_requests')
           .select('*')
           .eq('reservation_number', reservationNumber);
-
 
         if (queryError) {
           throw queryError;
