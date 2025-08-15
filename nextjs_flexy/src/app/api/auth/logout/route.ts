@@ -38,7 +38,6 @@ export async function POST(request: NextRequest) {
       message: '로그아웃되었습니다.',
     });
   } catch (error) {
-    console.error('Logout error:', error);
     return NextResponse.json(
       {
         success: false,

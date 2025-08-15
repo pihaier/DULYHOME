@@ -104,7 +104,6 @@ export default function CompanyAddressSelector({
         setSelectedId(value.id);
       }
     } catch (err) {
-      console.error('Error fetching addresses:', err);
     } finally {
       setLoading(false);
     }
@@ -176,7 +175,6 @@ export default function CompanyAddressSelector({
         is_default: false,
       });
     } catch (err) {
-      console.error('Error saving address:', err);
       setError('주소 저장 중 오류가 발생했습니다.');
     } finally {
       setSaving(false);

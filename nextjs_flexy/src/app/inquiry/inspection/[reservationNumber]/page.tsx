@@ -76,7 +76,6 @@ const InspectionInquiry = () => {
       if (error) throw error;
       setInspectionData(data);
     } catch (error) {
-      console.error('Error fetching inspection data:', error);
     } finally {
       setLoading(false);
     }

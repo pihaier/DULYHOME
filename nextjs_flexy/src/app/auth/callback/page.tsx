@@ -18,7 +18,6 @@ function AuthCallbackContent() {
       const errorDescription = searchParams.get('error_description');
 
       if (error) {
-        console.error('OAuth error:', error, errorDescription);
         router.push('/auth/customer/login?error=' + error);
         return;
       }

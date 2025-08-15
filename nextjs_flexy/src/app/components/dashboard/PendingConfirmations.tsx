@@ -43,7 +43,6 @@ const PendingConfirmations = () => {
 
       setConfirmations(data || []);
     } catch (error) {
-      console.error('Error fetching confirmations:', error);
     } finally {
       setLoading(false);
     }

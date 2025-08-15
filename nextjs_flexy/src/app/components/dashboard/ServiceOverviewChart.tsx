@@ -73,7 +73,6 @@ const ServiceOverviewChart = () => {
         labels: data.map((d) => d.name),
       });
     } catch (error) {
-      console.error('Error fetching service data:', error);
     } finally {
       setLoading(false);
     }

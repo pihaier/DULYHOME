@@ -167,7 +167,6 @@ export default function CustomerSupportManagement() {
       if (faqsError) throw faqsError;
       setFaqs(faqsData || []);
     } catch (error) {
-      console.error('Error fetching data:', error);
       showSnackbar('데이터를 불러오는데 실패했습니다.', 'error');
     } finally {
       setLoading(false);
@@ -224,7 +223,6 @@ export default function CustomerSupportManagement() {
       });
       fetchData();
     } catch (error) {
-      console.error('Error saving notice:', error);
       showSnackbar('저장에 실패했습니다.', 'error');
     }
   };
@@ -243,7 +241,6 @@ export default function CustomerSupportManagement() {
       setDeleteDialog({ open: false, type: 'notice', id: '' });
       fetchData();
     } catch (error) {
-      console.error('Error deleting notice:', error);
       showSnackbar('삭제에 실패했습니다.', 'error');
     }
   };
@@ -259,7 +256,6 @@ export default function CustomerSupportManagement() {
       showSnackbar('공개 상태가 변경되었습니다.', 'success');
       fetchData();
     } catch (error) {
-      console.error('Error toggling visibility:', error);
       showSnackbar('상태 변경에 실패했습니다.', 'error');
     }
   };
@@ -306,7 +302,6 @@ export default function CustomerSupportManagement() {
       });
       fetchData();
     } catch (error) {
-      console.error('Error saving FAQ:', error);
       showSnackbar('저장에 실패했습니다.', 'error');
     }
   };
@@ -325,7 +320,6 @@ export default function CustomerSupportManagement() {
       setDeleteDialog({ open: false, type: 'faq', id: '' });
       fetchData();
     } catch (error) {
-      console.error('Error deleting FAQ:', error);
       showSnackbar('삭제에 실패했습니다.', 'error');
     }
   };
@@ -341,7 +335,6 @@ export default function CustomerSupportManagement() {
       showSnackbar('공개 상태가 변경되었습니다.', 'success');
       fetchData();
     } catch (error) {
-      console.error('Error toggling visibility:', error);
       showSnackbar('상태 변경에 실패했습니다.', 'error');
     }
   };

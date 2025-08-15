@@ -75,7 +75,6 @@ const BigCalendar = () => {
   const editEvent = (event: EventType) => {
     const newEditEvent = calevents.find((elem) => elem.title === event.title);
     if (!newEditEvent) {
-      console.warn('Event not found:', event.title);
       return;
     }
     setTitle(newEditEvent.title ?? '');

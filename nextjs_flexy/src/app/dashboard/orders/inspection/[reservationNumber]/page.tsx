@@ -76,11 +76,8 @@ export default function InspectionDetailPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log('=== Inspection fetchData started ===');
-      console.log('Reservation Number:', reservationNumber);
 
       if (!reservationNumber) {
-        console.log('No reservation number provided');
         setLoading(false);
         return;
       }
@@ -91,17 +88,14 @@ export default function InspectionDetailPage() {
       try {
         const supabase = createClient();
 
-        console.log('Querying inspection_applications...');
         const { data, error } = await supabase
           .from('inspection_applications')
           .select('*')
           .eq('reservation_number', reservationNumber)
           .maybeSingle();
 
-        console.log('Query result:', { data, error });
 
         if (error) {
-          console.error('Supabase error:', error);
           throw new Error(error.message);
         }
 
@@ -119,12 +113,10 @@ export default function InspectionDetailPage() {
           .order('created_at', { ascending: false });
 
         if (filesError) {
-          console.error('Files fetch error:', filesError);
         } else {
           setFiles(filesData || []);
         }
       } catch (err) {
-        console.error('Fetch error:', err);
         setError(err instanceof Error ? err.message : '알 수 없는 오류가 발생했습니다.');
       } finally {
         setLoading(false);
@@ -587,7 +579,6 @@ export default function InspectionDetailPage() {
                                   border: '1px solid rgba(0,0,0,0.1)',
                                 }}
                                 onError={(e) => {
-                                  console.error('이미지 로드 실패:', file.file_url);
                                   e.currentTarget.style.display = 'none';
                                 }}
                               />

@@ -94,7 +94,6 @@ const CustomerSupportView = () => {
         .order('created_at', { ascending: false });
 
       if (noticesError) {
-        console.error('Error fetching notices:', noticesError);
         throw noticesError;
       }
       setNotices(noticesData || []);
@@ -107,12 +106,10 @@ const CustomerSupportView = () => {
         .order('sort_order', { ascending: true });
 
       if (faqsError) {
-        console.error('Error fetching FAQs:', faqsError);
         throw faqsError;
       }
       setFaqs(faqsData || []);
     } catch (err: any) {
-      console.error('Error fetching data:', err);
       setError('데이터를 불러오는데 실패했습니다. 잠시 후 다시 시도해주세요.');
     } finally {
       setLoading(false);

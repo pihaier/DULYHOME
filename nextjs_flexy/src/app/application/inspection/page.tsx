@@ -315,7 +315,6 @@ export default function InspectionApplicationPage() {
               });
 
             if (uploadError) {
-              console.error(`Storage 업로드 오류: ${file.name}`, uploadError);
 
               // Word 파일 등 지원하지 않는 MIME 타입의 경우 API 폴백 사용
               if (
@@ -371,10 +370,8 @@ export default function InspectionApplicationPage() {
             });
 
             if (dbError) {
-              console.error('파일 정보 DB 저장 오류:', dbError);
             }
           } catch (error) {
-            console.error('파일 업로드 오류:', error);
           }
         }
       }
@@ -382,7 +379,6 @@ export default function InspectionApplicationPage() {
       // 신청 완료 모달 표시
       setShowSuccessModal(true);
     } catch (error) {
-      console.error('신청 오류:', error);
       alert(error instanceof Error ? error.message : '신청 중 오류가 발생했습니다.');
     } finally {
       setLoading(false);

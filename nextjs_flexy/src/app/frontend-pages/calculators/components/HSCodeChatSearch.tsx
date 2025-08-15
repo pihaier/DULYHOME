@@ -65,7 +65,6 @@ export default function HSCodeChatSearch() {
       });
 
       if (error || (data && data.error)) {
-        console.error('Search error:', error);
         setMessages((prev) => [
           ...prev,
           {
@@ -111,7 +110,6 @@ export default function HSCodeChatSearch() {
         ]);
       }
     } catch (error) {
-      console.error('Error:', error);
     } finally {
       setLoading(false);
     }

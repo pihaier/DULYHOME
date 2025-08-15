@@ -94,7 +94,6 @@ export const ContactContextProvider: React.FC<{ children: ReactNode }> = ({ chil
     try {
       await mutate(postFetcher('/api/contacts', newContact));
     } catch (error) {
-      console.log('Failed to add contact', error);
     }
   };
 
@@ -106,7 +105,6 @@ export const ContactContextProvider: React.FC<{ children: ReactNode }> = ({ chil
         setSelectedContact(null);
       }
     } catch (error) {
-      console.error('Failed to delete contact:', error);
     }
   };
   // Function to update a contact
@@ -115,7 +113,6 @@ export const ContactContextProvider: React.FC<{ children: ReactNode }> = ({ chil
       await mutate(putFetcher('/api/contacts', updatedContact));
       setSelectedContact(updatedContact);
     } catch (error) {
-      console.error('Failed to update contact:', error);
     }
   };
   // Function to select a contact

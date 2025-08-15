@@ -71,7 +71,6 @@ const ServiceStatsCards = () => {
         pendingFactoryContacts: pendingFactoryContacts || 0,
       });
     } catch (error) {
-      console.error('Error fetching stats:', error);
     } finally {
       setLoading(false);
     }

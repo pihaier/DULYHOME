@@ -89,7 +89,6 @@ export default function MarketResearchListPage() {
 
       setOrders(filteredData);
     } catch (error: any) {
-      console.error('Error fetching orders:', error);
       setError(error.message);
     } finally {
       setLoading(false);

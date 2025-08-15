@@ -56,7 +56,6 @@ export const useChat = (reservationNumber: string, currentUser?: any): UseChatRe
     if (!reservationNumber) return;
 
     try {
-      console.log('💬 Loading chat messages for:', reservationNumber);
 
       const { data, error } = await supabase
         .from('chat_messages')
@@ -66,14 +65,11 @@ export const useChat = (reservationNumber: string, currentUser?: any): UseChatRe
         .order('created_at', { ascending: true });
 
       if (error) {
-        console.error('❌ Error loading messages:', error);
         throw error;
       }
 
-      console.log('✅ Messages loaded:', data?.length || 0);
       setMessages(data || []);
     } catch (err) {
-      console.error('❌ Error in loadMessages:', err);
       setError(err instanceof Error ? err.message : 'Failed to load messages');
     }
   }, [reservationNumber, supabase]);
@@ -89,13 +85,11 @@ export const useChat = (reservationNumber: string, currentUser?: any): UseChatRe
         .eq('reservation_number', reservationNumber);
 
       if (error) {
-        console.error('❌ Error loading participants:', error);
         throw error;
       }
 
       setParticipants(data || []);
     } catch (err) {
-      console.error('❌ Error in loadParticipants:', err);
     }
   }, [reservationNumber, supabase]);
 
@@ -105,7 +99,6 @@ export const useChat = (reservationNumber: string, currentUser?: any): UseChatRe
       if (!message.trim() || !currentUser) return;
 
       try {
-        console.log('📤 Sending message:', message);
 
         const messageData = {
           reservation_number: reservationNumber,
@@ -125,14 +118,11 @@ export const useChat = (reservationNumber: string, currentUser?: any): UseChatRe
           .single();
 
         if (error) {
-          console.error('❌ Error sending message:', error);
           throw error;
         }
 
-        console.log('✅ Message sent:', data);
         // Message will be automatically added via Realtime subscription
       } catch (err) {
-        console.error('❌ Error in sendMessage:', err);
         setError(err instanceof Error ? err.message : 'Failed to send message');
       }
     },
@@ -143,21 +133,18 @@ export const useChat = (reservationNumber: string, currentUser?: any): UseChatRe
   const markAsRead = useCallback(async () => {
     // Implementation for marking messages as read
     // This would typically update a read_status table or field
-    console.log('📖 Marking messages as read');
   }, []);
 
   // Set typing indicator
   const setTyping = useCallback(async (isTyping: boolean) => {
     // Implementation for typing indicator
     // This would typically use Supabase Realtime presence
-    console.log('⌨️ Setting typing status:', isTyping);
   }, []);
 
   // Setup Realtime subscription
   useEffect(() => {
     if (!reservationNumber) return;
 
-    console.log('🔄 Setting up chat realtime subscription');
 
     // Create channel
     const channel = supabase
@@ -171,7 +158,6 @@ export const useChat = (reservationNumber: string, currentUser?: any): UseChatRe
           filter: `reservation_number=eq.${reservationNumber}`,
         },
         (payload) => {
-          console.log('💬 Chat event received:', payload);
 
           if (payload.eventType === 'INSERT') {
             setMessages((prev) => [...prev, payload.new as ChatMessage]);
@@ -185,13 +171,11 @@ export const useChat = (reservationNumber: string, currentUser?: any): UseChatRe
         }
       )
       .subscribe((status) => {
-        console.log('💬 Chat subscription status:', status);
       });
 
     channelRef.current = channel;
 
     return () => {
-      console.log('🔄 Cleaning up chat subscription');
       if (channelRef.current) {
         channelRef.current.unsubscribe();
       }

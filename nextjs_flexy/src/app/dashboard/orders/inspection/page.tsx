@@ -73,11 +73,8 @@ export default function InspectionListPage() {
 
       if (error) throw error;
 
-      console.log('Inspection orders fetched:', data);
-      console.log('Number of orders:', data?.length);
       setOrders(data || []);
     } catch (error) {
-      console.error('Error fetching inspection orders:', error);
       setError('검품감사 주문 목록을 불러오는데 실패했습니다.');
     } finally {
       setLoading(false);

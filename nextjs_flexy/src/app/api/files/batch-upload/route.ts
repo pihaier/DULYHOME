@@ -26,7 +26,6 @@ export async function POST(request: NextRequest) {
     } = await supabase.auth.getUser();
 
     if (authError || !user) {
-      console.error('인증 오류:', authError);
       return NextResponse.json({ success: false, error: '인증이 필요합니다.' }, { status: 401 });
     }
 
@@ -147,7 +146,6 @@ export async function POST(request: NextRequest) {
       message: `${uploadedFiles.length}개 파일 업로드 성공${errors.length > 0 ? `, ${errors.length}개 실패` : ''}`,
     });
   } catch (error) {
-    console.error('Batch file upload error:', error);
     return NextResponse.json(
       {
         success: false,

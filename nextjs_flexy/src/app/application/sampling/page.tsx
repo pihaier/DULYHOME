@@ -183,7 +183,6 @@ export default function SamplingApplicationPage() {
         }));
       }
     } catch (err) {
-      console.error('Error fetching shipping addresses:', err);
     } finally {
       setLoadingShipping(false);
     }
@@ -381,7 +380,6 @@ export default function SamplingApplicationPage() {
               });
 
             if (uploadError) {
-              console.error(`Storage 업로드 오류: ${file.name}`, uploadError);
               throw uploadError;
             }
 
@@ -406,10 +404,8 @@ export default function SamplingApplicationPage() {
             });
 
             if (dbError) {
-              console.error('파일 정보 DB 저장 오류:', dbError);
             }
           } catch (error) {
-            console.error('파일 업로드 오류:', error);
           }
         }
       }
@@ -417,7 +413,6 @@ export default function SamplingApplicationPage() {
       // 신청 완료 모달 표시
       setShowSuccessModal(true);
     } catch (error: any) {
-      console.error('신청 오류:', error);
       alert(error.message || '신청 중 오류가 발생했습니다.');
     } finally {
       setLoading(false);

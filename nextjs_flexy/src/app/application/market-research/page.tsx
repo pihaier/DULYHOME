@@ -174,14 +174,12 @@ export default function MarketResearchPage() {
         .single();
 
       if (insertError) {
-        console.error('Insert error details:', insertError);
         throw new Error(
           `신청 저장 실패: ${insertError.message || insertError.details || '알 수 없는 오류'}`
         );
       }
 
       if (!application || !application.id) {
-        console.error('Application data not returned properly:', application);
         throw new Error('신청서가 생성되었지만 데이터를 가져올 수 없습니다.');
       }
 
@@ -253,7 +251,6 @@ export default function MarketResearchPage() {
           .eq('id', application.id);
 
         if (updateError) {
-          console.warn('중국직원 배정 오류 (계속 진행):', {
             error: updateError,
             message: updateError.message,
             details: updateError.details,
@@ -307,7 +304,6 @@ export default function MarketResearchPage() {
               });
 
             if (uploadError) {
-              console.error(`Storage 업로드 오류: ${file.name}`, uploadError);
               throw uploadError;
             }
 
@@ -336,12 +332,10 @@ export default function MarketResearchPage() {
               .single();
 
             if (dbError) {
-              console.error('파일 정보 DB 저장 오류:', dbError);
             } else {
               uploadedFiles.push(fileRecord);
             }
           } catch (error) {
-            console.error(`파일 업로드 오류: ${file.name}`, error);
             // 로컬 환경에서 Storage 오류 발생 시 API 폴백
             if (error.message?.includes('upstream server')) {
               const formData = new FormData();

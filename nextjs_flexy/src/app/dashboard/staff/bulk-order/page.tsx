@@ -184,7 +184,6 @@ export default function BulkOrderApplicationPage() {
 
       setFormData((prev) => ({ ...prev, orderItems }));
     } catch (error) {
-      console.error('시장조사 데이터 로드 실패:', error);
 
       // 실패 시 임시 데이터 사용 (시장조사 없이 진행)
       const fallbackOrderItems: OrderItem[] = [
@@ -349,7 +348,6 @@ export default function BulkOrderApplicationPage() {
               });
 
             if (uploadError) {
-              console.error(`Storage 업로드 오류: ${file.name}`, uploadError);
               throw uploadError;
             }
 
@@ -374,17 +372,14 @@ export default function BulkOrderApplicationPage() {
             });
 
             if (dbError) {
-              console.error('파일 정보 DB 저장 오류:', dbError);
             }
           } catch (error) {
-            console.error('파일 업로드 오류:', error);
           }
         }
       }
 
       setShowSuccessModal(true);
     } catch (error: any) {
-      console.error('신청 오류:', error);
       alert(error.message || '신청 중 오류가 발생했습니다.');
     } finally {
       setLoading(false);

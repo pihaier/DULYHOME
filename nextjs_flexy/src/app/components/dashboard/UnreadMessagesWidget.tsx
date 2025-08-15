@@ -44,7 +44,6 @@ const UnreadMessagesWidget = () => {
         .limit(5);
 
       if (error) {
-        console.error('Error details:', error);
         throw error;
       }
 
@@ -52,7 +51,6 @@ const UnreadMessagesWidget = () => {
       setMessages(messages || []);
       setTotalUnread(messages?.length || 0);
     } catch (error) {
-      console.error('Error fetching messages:', error);
       // 에러가 발생해도 위젯은 표시되도록 함
     } finally {
       setLoading(false);

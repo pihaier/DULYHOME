@@ -87,7 +87,6 @@ export default function InspectionListPage() {
 
       setOrders(filteredData);
     } catch (error) {
-      console.error('Error fetching orders:', error);
       setError(error instanceof Error ? error.message : 'An error occurred');
     } finally {
       setLoading(false);

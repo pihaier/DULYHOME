@@ -151,7 +151,6 @@ export function MarketResearchForm({ onSuccess }: MarketResearchFormProps) {
         onSuccess(result.data);
       }
     } catch (error) {
-      console.error('Submit error:', error);
       toast.error(error instanceof Error ? error.message : '시장조사 신청 중 오류가 발생했습니다.');
     } finally {
       setIsSubmitting(false);

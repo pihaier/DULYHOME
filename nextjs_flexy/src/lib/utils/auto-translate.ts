@@ -27,7 +27,6 @@ export async function translateInBackground({
         .single();
 
       if (fetchError || !record) {
-        console.warn('[Translation] Record not found:', fetchError);
         return;
       }
 
@@ -50,19 +49,16 @@ export async function translateInBackground({
 
       if (!response.ok) {
         const errorText = await response.text();
-        console.warn('[Translation] Edge Function error:', errorText);
         return;
       }
 
       const result = await response.json();
 
       if (result.translatedFields > 0) {
-        console.log(
           `[Translation] Successfully translated ${result.translatedFields} fields for ${table}`
         );
       }
     } catch (error) {
-      console.warn('[Translation] Background translation failed:', error);
     }
   }, delay);
 }
@@ -86,7 +82,6 @@ export async function translateStaffInput({
         .single();
 
       if (fetchError || !record) {
-        console.warn('[Translation] Record not found for staff update:', fetchError);
         return;
       }
 
@@ -108,14 +103,11 @@ export async function translateStaffInput({
 
       if (!response.ok) {
         const errorText = await response.text();
-        console.warn('[Translation] Staff translation error:', errorText);
         return;
       }
 
       const result = await response.json();
-      console.log(`[Translation] Staff input translated: ${result.translatedFields} fields`);
     } catch (error) {
-      console.warn('[Translation] Staff translation failed:', error);
     }
   }, delay);
 }

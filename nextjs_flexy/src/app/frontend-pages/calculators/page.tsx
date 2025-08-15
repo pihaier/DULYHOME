@@ -182,7 +182,6 @@ const CalculatorsPage = () => {
         .limit(1)
         .single();
 
-      console.log('DB 환율 직접 조회:', data, error);
 
       if (!error && data) {
         const formattedData = {
@@ -194,9 +193,7 @@ const CalculatorsPage = () => {
           },
         };
         setExchangeRates(formattedData);
-        console.log('환율 설정 완료:', formattedData);
       } else {
-        console.log('DB 조회 실패, 기본값 사용');
         // 오류시 기본값 사용
         setExchangeRates({
           success: false,
@@ -208,7 +205,6 @@ const CalculatorsPage = () => {
         });
       }
     } catch (error) {
-      console.error('환율 조회 오류:', error);
       // 오류시 기본값 사용
       setExchangeRates({
         success: false,
@@ -238,7 +234,6 @@ const CalculatorsPage = () => {
         setExchangeRates(formattedData);
       }
     } catch (error) {
-      console.error('환율 동기화 오류:', error);
     }
   };
 
@@ -257,7 +252,6 @@ const CalculatorsPage = () => {
         // 로컬스토리지에 캐시 저장
         localStorage.setItem('exchangeRates', JSON.stringify(data));
         localStorage.setItem('exchangeRatesTime', new Date().toISOString());
-        console.log('환율 캐시 저장 완료');
       } else {
         // Fallback 기본 환율 적용 (서비스 지속성 보장)
         setExchangeRates({

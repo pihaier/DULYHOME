@@ -236,7 +236,6 @@ export default function SamplingPage() {
       // 신청 완료 후 상세 페이지로 이동
       router.push(`/orders/${reservationNumber}`);
     } catch (error) {
-      console.error('Error:', error);
       alert('신청 중 오류가 발생했습니다. 다시 시도해주세요.');
     } finally {
       setLoading(false);

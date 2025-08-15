@@ -64,7 +64,6 @@ export default function BulkOrderListPage() {
 
       setOrders(data || []);
     } catch (error) {
-      console.error('Error fetching bulk orders:', error);
       setError('대량주문 목록을 불러오는데 실패했습니다.');
     } finally {
       setLoading(false);

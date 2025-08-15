@@ -107,7 +107,6 @@ export default function MarketResearchDetailPage() {
           .order('created_at', { ascending: true });
 
         if (error) {
-          console.error('Fetch error:', error);
           throw new Error(error.message || '데이터를 불러오는데 실패했습니다.');
         }
 
@@ -118,7 +117,6 @@ export default function MarketResearchDetailPage() {
         setData(data);
         setFiles(files || []);
       } catch (err) {
-        console.error('Fetch error:', err);
         setError(err instanceof Error ? err.message : '알 수 없는 오류가 발생했습니다.');
       } finally {
         setLoading(false);

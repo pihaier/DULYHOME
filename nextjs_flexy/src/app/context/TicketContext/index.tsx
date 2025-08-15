@@ -51,7 +51,6 @@ export const TicketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     try {
       await mutate(deleteFetcher('/api/ticket', { id }));
     } catch (err) {
-      console.error('Error deleting ticket:', err);
     }
   };
 

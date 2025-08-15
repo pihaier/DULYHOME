@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView';
 import { TreeItem } from '@mui/x-tree-view/TreeItem';
-import { useTreeViewApiRef } from '@mui/x-tree-view/hooks';
+import { useTreeViewApiRef } from '@mui/x-tree-view';
 import ApiMethodSetItemExpansionCode from '../code/simpletreecode/ApiMethodSetItemExpansionCode';
 import ParentCard from '../../shared/ParentCard';
 

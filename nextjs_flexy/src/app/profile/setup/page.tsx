@@ -135,7 +135,6 @@ export default function ProfileSetup() {
       let result;
 
       if (existingProfile) {
-        console.log('Profile already exists, updating instead of inserting');
         operation = 'update';
 
         // 기존 프로필 업데이트
@@ -192,16 +191,12 @@ export default function ProfileSetup() {
           notification_enabled: true,
         };
 
-        console.log('Attempting to insert profile data:', profileInsertData);
 
         result = await supabase.from('user_profiles').insert(profileInsertData).select();
       }
 
-      console.log(`Profile ${operation} result:`, result.data);
-      console.log(`Profile ${operation} error:`, result.error);
 
       if (result.error) {
-        console.error(`Profile ${operation} error details:`, {
           message: result.error.message,
           details: result.error.details,
           hint: result.error.hint,
@@ -229,7 +224,6 @@ export default function ProfileSetup() {
         router.push('/staff/login?message=approval_pending');
       }
     } catch (err) {
-      console.error('Profile setup error:', err);
       setError('프로필 설정 중 오류가 발생했습니다.');
     } finally {
       setLoading(false);

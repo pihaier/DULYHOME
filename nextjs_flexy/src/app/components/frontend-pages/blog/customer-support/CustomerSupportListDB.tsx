@@ -125,7 +125,6 @@ const CustomerSupportListDB = () => {
         .order('created_at', { ascending: false });
 
       if (noticesError) {
-        console.error('Error fetching notices:', noticesError);
         // 테이블이 없는 경우 빈 배열로 처리
         if (noticesError.code === '42P01') {
           setNotices([]);
@@ -143,7 +142,6 @@ const CustomerSupportListDB = () => {
         .order('sort_order', { ascending: true });
 
       if (faqsError) {
-        console.error('Error fetching FAQs:', faqsError);
         // 테이블이 없는 경우 빈 배열로 처리
         if (faqsError.code === '42P01') {
           setFaqs([]);
@@ -154,7 +152,6 @@ const CustomerSupportListDB = () => {
         setFaqs(faqsData || []);
       }
     } catch (err: any) {
-      console.error('Error fetching data:', err);
       // 테이블이 없는 경우 로컬 데이터 사용
       if (err?.code === '42P01') {
         setError('데이터베이스 테이블이 아직 생성되지 않았습니다. 마이그레이션을 실행해주세요.');
@@ -218,7 +215,6 @@ const CustomerSupportListDB = () => {
         setFaqs(faqs.filter((f) => f.id !== id));
       }
     } catch (err) {
-      console.error('Error deleting:', err);
       alert('삭제에 실패했습니다.');
     }
   };
@@ -296,7 +292,6 @@ const CustomerSupportListDB = () => {
       setEditDialogOpen(false);
       setEditData(null);
     } catch (err) {
-      console.error('Error saving:', err);
       alert('저장에 실패했습니다.');
     }
   };

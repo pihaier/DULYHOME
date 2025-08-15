@@ -729,7 +729,6 @@ export default function StaffInspectionDetailPage() {
                                   border: '1px solid rgba(0,0,0,0.1)',
                                 }}
                                 onError={(e) => {
-                                  console.error('이미지 로드 실패:', file.file_url);
                                   e.currentTarget.style.display = 'none';
                                 }}
                               />

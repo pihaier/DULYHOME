@@ -162,7 +162,6 @@ export async function POST(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error('File upload error:', error);
     return NextResponse.json(
       {
         success: false,

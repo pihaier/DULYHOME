@@ -15,7 +15,6 @@ import SizesCode from '@/app/components/ui-components/chip/code/SizesCode';
 
 const ChipCommon = () => {
   const handleDelete = () => {
-    console.info('You clicked the delete icon.');
   };
 
   return (

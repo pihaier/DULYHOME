@@ -203,7 +203,6 @@ export default function StaffDashboard() {
 
         setStatusCounts(counts);
       } catch (error) {
-        console.error('Error fetching orders:', error);
       } finally {
         setLoading(false);
       }

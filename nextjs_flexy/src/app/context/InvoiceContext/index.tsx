@@ -45,7 +45,6 @@ export const InvoiceProvider: React.FC<{ children: React.ReactNode }> = ({ child
     try {
       await mutate(deleteFetcher('/api/invoice', { invoiceId }));
     } catch (error) {
-      console.error('Error deleting invoice:', error);
     }
   };
 
@@ -53,7 +52,6 @@ export const InvoiceProvider: React.FC<{ children: React.ReactNode }> = ({ child
     try {
       await mutate(postFetcher('/api/invoice', newInvoice));
     } catch (error) {
-      console.error('Error adding invoice:', error);
     }
   };
 
@@ -62,7 +60,6 @@ export const InvoiceProvider: React.FC<{ children: React.ReactNode }> = ({ child
     try {
       await mutate(putFetcher('/api/invoice', updatedInvoice));
     } catch (error) {
-      console.error('Error updating invoice:', error);
     }
   };
 

@@ -81,7 +81,6 @@ const BulkOrderInquiry = () => {
       if (error) throw error;
       setOrderData(data);
     } catch (error) {
-      console.error('Error fetching bulk order:', error);
     } finally {
       setLoading(false);
     }

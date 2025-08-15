@@ -89,7 +89,6 @@ export default function CompleteProfile() {
       // 성공 - 리다이렉트
       window.location.href = result.redirectUrl;
     } catch (err) {
-      console.error('Terms update error:', err);
       setError('약관 동의 처리 중 오류가 발생했습니다.');
     } finally {
       setLoading(false);

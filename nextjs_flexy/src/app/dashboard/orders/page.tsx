@@ -173,7 +173,6 @@ export default function OrdersListPage() {
 
       setOrders(allOrders);
     } catch (error) {
-      console.error('Error fetching orders:', error);
       setError('주문 목록을 불러오는데 실패했습니다.');
     } finally {
       setLoading(false);
@@ -195,7 +194,6 @@ export default function OrdersListPage() {
         serviceType = 'inspection';
         break;
       default:
-        console.error('Unknown service type:', order.service_type);
         return;
     }
 

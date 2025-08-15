@@ -76,7 +76,6 @@ export default function OrderDetailPage() {
   const params = useParams();
   const reservationNumber = params.reservationNumber as string;
 
-  console.log('=== OrderDetailPage rendered with:', { reservationNumber });
 
   const [tabValue, setTabValue] = useState(0);
   const [chatMessage, setChatMessage] = useState('');
@@ -87,7 +86,6 @@ export default function OrderDetailPage() {
   const chatScrollRef = useRef<HTMLDivElement>(null);
 
   // 디버깅: Supabase 클라이언트 확인
-  console.log('Supabase client created:', !!supabase);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<any>(null);
   const [files, setFiles] = useState<any[]>([]);
@@ -134,10 +132,6 @@ export default function OrderDetailPage() {
 
   // 주문 정보 로드
   const fetchOrderDetails = useCallback(async () => {
-    console.log('🔄 Fetching order details for:', reservationNumber);
-    console.log('🔄 Service Type:', serviceType);
-    console.log('🔄 Supabase URL:', process.env.NEXT_PUBLIC_SUPABASE_URL);
-    console.log('🔄 Supabase Key exists:', !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
 
     setLoading(true);
     setError(null);
@@ -149,14 +143,12 @@ export default function OrderDetailPage() {
       // 서비스 타입별로 적절한 테이블에서 조회
       switch (serviceType) {
         case 'market_research':
-          console.log('🔍 Querying market_research_requests table...');
           const marketResult = await supabase
             .from('market_research_requests')
             .select('*')
             .eq('reservation_number', reservationNumber)
             .single();
 
-          console.log('📊 Market research result:', {
             data: marketResult.data,
             error: marketResult.error,
             status: marketResult.status,
@@ -168,7 +160,6 @@ export default function OrderDetailPage() {
           break;
 
         case 'inspection':
-          console.log('🔍 Querying inspection_applications table...');
           const inspectionResult = await supabase
             .from('inspection_applications')
             .select('*')
@@ -179,7 +170,6 @@ export default function OrderDetailPage() {
           break;
 
         case 'sampling':
-          console.log('🔍 Querying sample_orders table...');
           const samplingResult = await supabase
             .from('sample_orders')
             .select(
@@ -213,7 +203,6 @@ export default function OrderDetailPage() {
           break;
 
         case 'bulk_order':
-          console.log('🔍 Querying bulk_orders table...');
           const bulkResult = await supabase
             .from('bulk_orders')
             .select(
@@ -247,15 +236,12 @@ export default function OrderDetailPage() {
           break;
 
         default:
-          console.log('❌ Unknown service type:', serviceType);
           setError('지원하지 않는 서비스 타입입니다.');
           return;
       }
 
-      console.log('✅ Query completed:', { data, error, serviceType });
 
       if (data && !error) {
-        console.log(`Found ${serviceType} data:`, data);
         setData(data);
 
         // 관련 파일들도 로드
@@ -265,28 +251,22 @@ export default function OrderDetailPage() {
           .eq('reservation_number', reservationNumber);
 
         if (filesData && !filesError) {
-          console.log('Found files:', filesData);
           setFiles(filesData);
         } else {
-          console.log('No files found or error:', filesError);
           setFiles([]);
         }
       } else {
-        console.log(`❌ Not found in ${serviceType} table, error:`, error);
         setError(`${getServiceTitle()} 정보를 찾을 수 없습니다.`);
       }
     } catch (error) {
-      console.error('Error fetching order details:', error);
       setError('주문 정보를 불러올 수 없습니다.');
     } finally {
-      console.log('Finished loading, setting loading to false');
       setLoading(false);
     }
   }, [reservationNumber, serviceType]);
 
   // 채팅 메시지 로드
   const loadChatMessages = async () => {
-    console.log('Loading chat messages for:', reservationNumber);
     setLoadingChat(true);
 
     try {
@@ -297,13 +277,10 @@ export default function OrderDetailPage() {
         .order('created_at', { ascending: true });
 
       if (error) {
-        console.error('Error loading chat messages:', error);
       } else {
-        console.log('Loaded chat messages:', data);
         setChatMessages(data || []);
       }
     } catch (error) {
-      console.error('Error in loadChatMessages:', error);
     } finally {
       setLoadingChat(false);
     }
@@ -313,7 +290,6 @@ export default function OrderDetailPage() {
   const sendMessage = async () => {
     if (!chatMessage.trim()) return;
 
-    console.log('Sending message:', chatMessage);
 
     try {
       const {
@@ -352,9 +328,7 @@ export default function OrderDetailPage() {
         .single();
 
       if (error) {
-        console.error('Error sending message:', error);
       } else {
-        console.log('Message sent:', data);
         setChatMessage('');
 
         // 스크롤을 아래로
@@ -366,7 +340,6 @@ export default function OrderDetailPage() {
         }, 100);
       }
     } catch (error) {
-      console.error('Error in sendMessage:', error);
     }
   };
 
@@ -374,8 +347,6 @@ export default function OrderDetailPage() {
     if (!reservationNumber) return;
 
     // 주문 정보와 채팅을 동시에 로드
-    fetchOrderDetails().catch(console.error);
-    loadChatMessages().catch(console.error);
 
     // Supabase Realtime 구독 설정
     const channel = supabase
@@ -389,7 +360,6 @@ export default function OrderDetailPage() {
           filter: `reservation_number=eq.${reservationNumber}`,
         },
         (payload) => {
-          console.log('Chat event:', payload);
           if (payload.eventType === 'INSERT') {
             setChatMessages((prev) => [...prev, payload.new as any]);
           } else if (payload.eventType === 'UPDATE') {
@@ -401,7 +371,6 @@ export default function OrderDetailPage() {
         }
       )
       .subscribe((status) => {
-        console.log('Realtime subscription status:', status);
       });
 
     // 컴포넌트 언마운트 시 구독 해제
@@ -429,7 +398,6 @@ export default function OrderDetailPage() {
     input.accept = 'image/*,.pdf,.doc,.docx';
     input.onchange = (e: any) => {
       const files = e.target.files;
-      console.log('Selected files:', files);
       // 파일 업로드 처리
     };
     input.click();
@@ -479,13 +447,11 @@ export default function OrderDetailPage() {
         .single();
 
       if (error) {
-        console.error('Failed to send message:', error);
         alert('메시지 전송에 실패했습니다.');
       } else {
         setChatMessage(''); // 입력창 초기화
 
         // Edge Function 직접 호출로 번역 처리
-        console.log('Message sent, calling translation function...');
         try {
           const { data: functionData, error: functionError } = await supabase.functions.invoke(
             'translate-message',
@@ -495,16 +461,12 @@ export default function OrderDetailPage() {
           );
 
           if (functionError) {
-            console.error('Translation failed:', functionError);
           } else {
-            console.log('Translation completed:', functionData);
           }
         } catch (translationError) {
-          console.error('Translation error:', translationError);
         }
       }
     } catch (error) {
-      console.error('Error sending message:', error);
       alert('메시지 전송 중 오류가 발생했습니다.');
     } finally {
       setLoadingChat(false);
@@ -521,13 +483,11 @@ export default function OrderDetailPage() {
 
   const handleOrderSample = () => {
     // 샘플 주문 로직
-    console.log('샘플 주문하기');
     // TODO: 샘플 주문 페이지로 이동 또는 모달 열기
   };
 
   const handlePayment = () => {
     // 결제 진행 로직
-    console.log('결제하기');
     // TODO: 결제 페이지로 이동
   };
 

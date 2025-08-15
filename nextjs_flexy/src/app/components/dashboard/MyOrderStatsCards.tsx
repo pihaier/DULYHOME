@@ -127,7 +127,6 @@ const MyOrderStatsCards = () => {
         pendingConfirmations: pendingConfirmations || 0,
       });
     } catch (error) {
-      console.error('Error fetching my stats:', error);
     } finally {
       setLoading(false);
     }

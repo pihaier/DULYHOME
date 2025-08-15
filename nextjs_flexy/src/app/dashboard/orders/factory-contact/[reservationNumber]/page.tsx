@@ -134,7 +134,6 @@ export default function FactoryContactDetailPage() {
           .order('created_at', { ascending: false });
 
         if (filesError) {
-          console.error('Files fetch error:', filesError);
         } else {
           setFiles(filesData || []);
         }
@@ -147,12 +146,10 @@ export default function FactoryContactDetailPage() {
           .order('created_at', { ascending: false });
 
         if (confirmError) {
-          console.error('Confirmation requests fetch error:', confirmError);
         } else {
           setConfirmations(confirmData || []);
         }
       } catch (err) {
-        console.error('Fetch error:', err);
         setError(err instanceof Error ? err.message : '알 수 없는 오류가 발생했습니다.');
       } finally {
         setLoading(false);
@@ -200,7 +197,6 @@ export default function FactoryContactDetailPage() {
 
       alert('응답이 전송되었습니다.');
     } catch (error) {
-      console.error('Error responding to confirmation:', error);
       alert('응답 전송 중 오류가 발생했습니다.');
     } finally {
       setSubmitting(false);

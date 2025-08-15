@@ -30,13 +30,11 @@ const Profile = () => {
     try {
       const { error } = await supabase.auth.signOut();
       if (error) {
-        console.error('로그아웃 에러:', error);
       } else {
         // 로그아웃 성공 시 메인 페이지로 이동
         router.push('/');
       }
     } catch (error) {
-      console.error('로그아웃 처리 중 에러:', error);
     }
   };
 

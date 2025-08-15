@@ -73,7 +73,6 @@ export default function MarketResearchListPage() {
 
       setOrders(data || []);
     } catch (error) {
-      console.error('Error fetching market research orders:', error);
       setError('시장조사 주문 목록을 불러오는데 실패했습니다.');
     } finally {
       setLoading(false);

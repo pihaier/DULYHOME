@@ -21,15 +21,12 @@ const CustomerSupportWithFallback = () => {
 
       if (error && error.code === '42P01') {
         // 테이블이 없는 경우
-        console.log('Database tables not found, using local data');
         setUseDatabase(false);
       } else {
         // 테이블이 있는 경우
-        console.log('Database tables found, using database');
         setUseDatabase(true);
       }
     } catch (err) {
-      console.error('Error checking database:', err);
       setUseDatabase(false);
     } finally {
       setChecking(false);

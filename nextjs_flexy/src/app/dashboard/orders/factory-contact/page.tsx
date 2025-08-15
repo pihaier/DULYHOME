@@ -94,7 +94,6 @@ export default function FactoryContactListPage() {
 
       setOrders(ordersWithConfirmCount);
     } catch (error) {
-      console.error('Error fetching factory contact orders:', error);
       setError('공장컨택 주문 목록을 불러오는데 실패했습니다.');
     } finally {
       setLoading(false);

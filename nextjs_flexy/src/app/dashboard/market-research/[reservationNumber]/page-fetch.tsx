@@ -40,12 +40,10 @@ export default function MarketResearchDetailPage({
 
   useEffect(() => {
     async function fetchData() {
-      console.log('=== Direct fetch started ===');
       setLoading(true);
       setError(null);
 
       try {
-        console.log('Fetching for:', reservationNumber);
 
         // 메인 데이터 조회
         const marketData = await fetchFromSupabase(
@@ -53,19 +51,15 @@ export default function MarketResearchDetailPage({
           `reservation_number=eq.${reservationNumber}`
         );
 
-        console.log('Fetch result:', marketData);
 
         if (!marketData || marketData.length === 0) {
           throw new Error('데이터를 찾을 수 없습니다.');
         }
 
         setData(marketData[0]);
-        console.log('Data set successfully');
       } catch (err) {
-        console.error('Fetch error:', err);
         setError(err instanceof Error ? err.message : 'Unknown error');
       } finally {
-        console.log('Setting loading to false');
         setLoading(false);
       }
     }

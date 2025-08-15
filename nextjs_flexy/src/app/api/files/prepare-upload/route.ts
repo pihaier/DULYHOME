@@ -40,7 +40,6 @@ export async function POST(request: NextRequest) {
     const { data, error } = await supabase.from('uploaded_files').insert(fileRecords).select();
 
     if (error) {
-      console.error('파일 정보 저장 오류:', error);
       throw error;
     }
 
@@ -50,7 +49,6 @@ export async function POST(request: NextRequest) {
       files: data,
     });
   } catch (error) {
-    console.error('파일 준비 오류:', error);
     return NextResponse.json(
       {
         success: false,

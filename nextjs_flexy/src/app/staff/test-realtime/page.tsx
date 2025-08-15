@@ -11,7 +11,6 @@ export default function TestRealtimePage() {
   const [error, setError] = useState<string | null>(null);
 
   const testRealtime = () => {
-    console.log('Starting Realtime test...');
     setError(null);
     setMessages([]);
 
@@ -19,13 +18,10 @@ export default function TestRealtimePage() {
     const testChannel = supabase
       .channel('test-channel')
       .on('presence', { event: 'sync' }, () => {
-        console.log('Presence sync');
         setMessages((prev) => [...prev, 'Presence sync event']);
       })
       .subscribe((status, err) => {
-        console.log('Test channel status:', status);
         if (err) {
-          console.error('Test channel error:', err);
           setError(`Channel error: ${err.message}`);
         }
         setStatus(status);
@@ -42,14 +38,11 @@ export default function TestRealtimePage() {
           table: 'chat_messages',
         },
         (payload) => {
-          console.log('Database change:', payload);
           setMessages((prev) => [...prev, `DB Change: ${payload.eventType}`]);
         }
       )
       .subscribe((status, err) => {
-        console.log('DB channel status:', status);
         if (err) {
-          console.error('DB channel error:', err);
           setError(`DB error: ${err.message}`);
         }
       });
@@ -68,7 +61,6 @@ export default function TestRealtimePage() {
       const {
         data: { session },
       } = await supabase.auth.getSession();
-      console.log('Session:', session);
 
       if (!session) {
         setError('Not authenticated - Realtime requires authentication');
@@ -84,7 +76,6 @@ export default function TestRealtimePage() {
         setMessages((prev) => [...prev, 'Database connection OK']);
       }
     } catch (err) {
-      console.error('Config check error:', err);
       setError(`Config error: ${err}`);
     }
   };

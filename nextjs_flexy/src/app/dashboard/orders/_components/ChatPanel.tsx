@@ -116,12 +116,10 @@ export default function ChatPanel({
         .order('created_at', { ascending: true });
 
       if (error) {
-        console.error('Error fetching chat messages:', error);
       } else {
         setChatMessages(data || []);
       }
     } catch (error) {
-      console.error('Error in fetchChatMessages:', error);
     } finally {
       setLoadingChat(false);
     }
@@ -190,8 +188,6 @@ export default function ChatPanel({
         .single();
 
       if (error) {
-        console.error('Failed to send message:', error);
-        console.error('Error details:', {
           message: error.message,
           details: error.details,
           hint: error.hint,
@@ -209,15 +205,11 @@ export default function ChatPanel({
           });
 
           if (functionError) {
-            console.error('Translation function error:', functionError);
           }
         } catch (err) {
-          console.error('Failed to invoke translation:', err);
         }
       }
     } catch (error) {
-      console.error('Error sending message:', error);
-      console.error('Catch block error details:', {
         error: error,
         message: error instanceof Error ? error.message : 'Unknown error',
         stack: error instanceof Error ? error.stack : undefined,
@@ -334,7 +326,6 @@ export default function ChatPanel({
         onFileUpload();
       }
     } catch (error) {
-      console.error('파일 업로드 오류:', error);
       alert('파일 업로드에 실패했습니다.');
     } finally {
       setUploadingFile(false);

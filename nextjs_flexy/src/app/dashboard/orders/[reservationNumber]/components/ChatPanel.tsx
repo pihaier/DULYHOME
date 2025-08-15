@@ -50,7 +50,6 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ reservationNumber }) => {
     try {
       await sendMessage(message);
     } catch (err) {
-      console.error('Failed to send message:', err);
     }
   };
 

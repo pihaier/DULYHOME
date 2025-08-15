@@ -10,7 +10,6 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 
 if (!supabaseUrl || !supabaseServiceKey) {
-  console.error('Supabase URL 또는 Service Role Key가 설정되지 않았습니다.');
   process.exit(1);
 }
 
@@ -71,12 +70,9 @@ async function updateBucketMimeTypes() {
     });
 
     if (error) {
-      console.error('버킷 업데이트 오류:', error);
       return;
     }
 
-    console.log('✅ application-files 버킷이 성공적으로 업데이트되었습니다!');
-    console.log('업데이트된 설정:', data);
 
     // 다른 버킷들도 필요하면 업데이트
     const bucketsToUpdate = ['chat-files', 'report-files']; // 실제 버킷 이름으로 변경
@@ -103,13 +99,10 @@ async function updateBucketMimeTypes() {
       );
 
       if (bucketError) {
-        console.error(`${bucketName} 버킷 업데이트 오류:`, bucketError);
       } else {
-        console.log(`✅ ${bucketName} 버킷이 성공적으로 업데이트되었습니다!`);
       }
     }
   } catch (error) {
-    console.error('오류 발생:', error);
   }
 }
 

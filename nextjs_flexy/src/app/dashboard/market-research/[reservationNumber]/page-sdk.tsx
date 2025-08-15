@@ -19,15 +19,12 @@ export default function MarketResearchDetailPage({
 
   useEffect(() => {
     async function fetchData() {
-      console.log('=== Simple fetchData started ===');
       setLoading(true);
       setError(null);
 
       try {
         const supabase = createClient();
-        console.log('Supabase client created');
 
-        console.log('Querying for:', reservationNumber);
 
         // 단순 쿼리만 실행
         const { data: result, error: queryError } = await supabase
@@ -35,10 +32,8 @@ export default function MarketResearchDetailPage({
           .select('*')
           .eq('reservation_number', reservationNumber);
 
-        console.log('Query completed:', { result, queryError });
 
         if (queryError) {
-          console.error('Query error:', queryError);
           throw queryError;
         }
 
@@ -47,12 +42,9 @@ export default function MarketResearchDetailPage({
         }
 
         setData(result[0]);
-        console.log('Data set successfully');
       } catch (err) {
-        console.error('Fetch error:', err);
         setError(err instanceof Error ? err.message : 'Unknown error');
       } finally {
-        console.log('Setting loading to false');
         setLoading(false);
       }
     }

@@ -119,7 +119,6 @@ class HSCodeSearchService {
       const result = await response.json();
       return result.results;
     } catch (error) {
-      console.error('GPT 검색 실패:', error);
       // 폴백으로 텍스트 검색
       return await this.searchByText(productName, 5);
     }

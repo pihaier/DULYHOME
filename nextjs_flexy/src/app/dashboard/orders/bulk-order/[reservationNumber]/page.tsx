@@ -75,11 +75,8 @@ export default function BulkOrderDetailPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log('=== BulkOrder fetchData started ===');
-      console.log('Reservation Number:', reservationNumber);
 
       if (!reservationNumber) {
-        console.log('No reservation number provided');
         setLoading(false);
         return;
       }
@@ -89,20 +86,16 @@ export default function BulkOrderDetailPage() {
 
       try {
         // Supabase SDK 사용
-        console.log('Creating Supabase client...');
         const supabase = createClient();
 
-        console.log('Querying bulk_orders...');
         const { data, error } = await supabase
           .from('bulk_orders')
           .select('*')
           .eq('reservation_number', reservationNumber)
           .maybeSingle();
 
-        console.log('Query result:', { data, error });
 
         if (error) {
-          console.error('Supabase error:', error);
           throw new Error(error.message);
         }
 
@@ -112,7 +105,6 @@ export default function BulkOrderDetailPage() {
 
         setData(data);
       } catch (err) {
-        console.error('Fetch error:', err);
         setError(err instanceof Error ? err.message : '알 수 없는 오류가 발생했습니다.');
       } finally {
         setLoading(false);

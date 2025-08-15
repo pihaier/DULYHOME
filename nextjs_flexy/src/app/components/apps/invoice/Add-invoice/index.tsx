@@ -196,7 +196,6 @@ const CreateInvoice = () => {
       setTimeout(() => setShowAlert(false), 5000);
       router.push('/apps/invoice/list');
     } catch (error) {
-      console.error('Error adding invoice:', error);
     }
   };
 

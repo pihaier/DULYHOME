@@ -18,11 +18,7 @@ function BasicSparkLine() {
           <SparkLineChart data={[1, 4, 2, 5, 7, 2, 4, 6]} height={100} />
         </Box>
         <Box sx={{ flexGrow: 1 }}>
-          <SparkLineChart
-            plotType="bar"
-            data={[1, 4, 2, 5, 7, 2, 4, 6]}
-            height={100}
-          />
+          <SparkLineChart plotType="bar" data={[1, 4, 2, 5, 7, 2, 4, 6]} height={100} />
         </Box>
       </Stack>
     </ParentCard>

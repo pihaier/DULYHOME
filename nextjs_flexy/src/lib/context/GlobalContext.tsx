@@ -59,10 +59,8 @@ export function GlobalProvider({ children }: { children: React.ReactNode }) {
         .single();
 
       if (error) {
-        console.error('Profile fetch error:', error);
         // 프로필이 없으면 null 반환 (빈칸으로 표시)
         if (error.code === 'PGRST116') {
-          console.log('Profile not found, will show empty form');
           return null;
         }
         return null;
@@ -70,7 +68,6 @@ export function GlobalProvider({ children }: { children: React.ReactNode }) {
 
       return data as UserProfile;
     } catch (error) {
-      console.error('Exception in fetchUserProfile:', error);
       return null;
     }
   };
@@ -92,7 +89,6 @@ export function GlobalProvider({ children }: { children: React.ReactNode }) {
       } = await supabase.auth.getSession();
 
       if (sessionError) {
-        console.error('Session error:', sessionError);
         setUser(null);
         setUserProfile(null);
         userRef.current = null;
@@ -120,7 +116,6 @@ export function GlobalProvider({ children }: { children: React.ReactNode }) {
 
       setLoading(false);
     } catch (error) {
-      console.error('Error refreshing user:', error);
       setUser(null);
       setUserProfile(null);
       userRef.current = null;

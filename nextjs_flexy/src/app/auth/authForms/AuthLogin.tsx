@@ -135,7 +135,6 @@ const AuthLogin = ({
         router.refresh();
       }
     } catch (err) {
-      console.error('Login error:', err);
       setError('로그인 중 오류가 발생했습니다.');
     } finally {
       setLoading(false);
@@ -167,7 +166,6 @@ const AuthLogin = ({
       }
       // OAuth는 리다이렉트되므로 loading을 false로 설정하지 않음
     } catch (err) {
-      console.error('OAuth login error:', err);
       setError('OAuth 로그인 중 오류가 발생했습니다.');
       setLoading(false);
     }

@@ -177,7 +177,6 @@ export function SamplingForm({ onSuccess }: SamplingFormProps) {
         onSuccess(result.data);
       }
     } catch (error) {
-      console.error('Submit error:', error);
       toast.error(error instanceof Error ? error.message : '샘플링 신청 중 오류가 발생했습니다.');
     } finally {
       setIsSubmitting(false);

@@ -80,7 +80,6 @@ const ShippingInfoTab = () => {
 
       setShippingAddresses(data || []);
     } catch (error) {
-      console.error('Error fetching shipping addresses:', error);
       setMessage({ type: 'error', text: '배송지 정보를 불러오는데 실패했습니다.' });
     } finally {
       setLoading(false);
@@ -144,7 +143,6 @@ const ShippingInfoTab = () => {
           .single();
 
         if (error) {
-          console.error('Insert error details:', error);
           throw error;
         }
       }
@@ -153,7 +151,6 @@ const ShippingInfoTab = () => {
       handleCloseDialog();
       fetchShippingAddresses();
     } catch (error: any) {
-      console.error('Error saving shipping address:', error);
       setMessage({ type: 'error', text: error.message || '저장 중 오류가 발생했습니다.' });
     } finally {
       setSaving(false);
@@ -172,7 +169,6 @@ const ShippingInfoTab = () => {
       setMessage({ type: 'success', text: '배송지가 삭제되었습니다.' });
       fetchShippingAddresses();
     } catch (error: any) {
-      console.error('Error deleting shipping address:', error);
       setMessage({ type: 'error', text: error.message || '삭제 중 오류가 발생했습니다.' });
     }
   };
@@ -198,7 +194,6 @@ const ShippingInfoTab = () => {
       setMessage({ type: 'success', text: '기본 배송지가 설정되었습니다.' });
       fetchShippingAddresses();
     } catch (error: any) {
-      console.error('Error setting default:', error);
       setMessage({ type: 'error', text: error.message || '설정 중 오류가 발생했습니다.' });
     }
   };

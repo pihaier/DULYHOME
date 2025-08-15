@@ -130,7 +130,6 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   // Add comment to a post
   const addComment = async (postId: string, comment: Comment) => {
-    console.log('comment', comment);
     try {
       await mutate(
         postFetcher('/api/userprofile/add-comments', {
@@ -139,7 +138,6 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         })
       );
     } catch (error) {
-      console.error('Error adding comment:', error);
     }
   };
 
@@ -154,7 +152,6 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         })
       );
     } catch (error) {
-      console.error('Error adding reply:', error);
     }
   };
 
@@ -163,7 +160,6 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     try {
       await mutate(postFetcher('/api/userprofile', { postId }));
     } catch (error) {
-      console.error('Error liking post:', error);
     }
   };
 
@@ -172,7 +168,6 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     try {
       await mutate(postFetcher('/api/userprofile/replies-like', { postId, commentId }));
     } catch (error) {
-      console.error('Error liking reply:', error);
     }
   };
 

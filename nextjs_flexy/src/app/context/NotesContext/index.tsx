@@ -69,7 +69,6 @@ export const NotesProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     try {
       await mutate(postFetcher('/api/notes', newNote));
     } catch (error) {
-      console.error('Error adding note:', error);
     }
   };
 
@@ -78,7 +77,6 @@ export const NotesProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     try {
       await mutate(putFetcher('/api/notes', { id, title, color }));
     } catch (error) {
-      console.error('Error updating note:', error);
     }
   };
 
@@ -87,7 +85,6 @@ export const NotesProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     try {
       const response = await mutate(deleteFetcher('/api/notes', { id }));
     } catch (error) {
-      console.error('Error deleting note:', error);
     }
   };
 

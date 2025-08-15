@@ -52,7 +52,6 @@ const NoteContent = ({ toggleNoteSidebar }: Props) => {
   const handleColorChange = (color: string) => {
     const titleToUse = isEditing ? updatedTitle : initialTitle;
     updateNote(selectedNoteId, titleToUse, color);
-    console.log(color);
   };
 
   const handleBlur = () => {

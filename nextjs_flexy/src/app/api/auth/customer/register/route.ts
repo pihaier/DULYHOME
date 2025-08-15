@@ -116,7 +116,6 @@ export async function POST(request: NextRequest) {
       message: '회원가입이 완료되었습니다. 로그인해주세요.',
     });
   } catch (error) {
-    console.error('Registration error:', error);
     return NextResponse.json(
       {
         success: false,

@@ -110,7 +110,6 @@ export default function FileManager({
       setFiles(fileList);
       onFilesChange?.(fileList);
     } catch (err) {
-      console.error('Error loading files:', err);
       setError('파일 목록을 불러오는데 실패했습니다.');
     } finally {
       setLoading(false);
@@ -197,7 +196,6 @@ export default function FileManager({
       setFiles(newFiles);
       onFilesChange?.(newFiles);
     } catch (err) {
-      console.error('Error uploading files:', err);
       setError('파일 업로드 중 오류가 발생했습니다.');
     } finally {
       setUploading(false);
@@ -224,7 +222,6 @@ export default function FileManager({
       setFiles(newFiles);
       onFilesChange?.(newFiles);
     } catch (err) {
-      console.error('Error deleting file:', err);
       setError('파일 삭제 중 오류가 발생했습니다.');
     }
   };

@@ -64,9 +64,6 @@ export default function CompanyInfoForm({
 
   // user_profiles에서 기본값 가져오기
   useEffect(() => {
-    console.log('CompanyInfoForm useEffect - user:', user);
-    console.log('CompanyInfoForm useEffect - userProfile:', userProfile);
-    console.log('CompanyInfoForm useEffect - value:', value);
 
     if (user && !value.company_name) {
       // userProfile이 있으면 그 값 사용, 없으면 빈 값
@@ -76,7 +73,6 @@ export default function CompanyInfoForm({
         contact_phone: userProfile?.phone || '',
         contact_email: user.email || '', // 항상 user.email 사용
       };
-      console.log('Setting new values:', newValues);
       onChange(newValues);
     }
   }, [userProfile, user]);
@@ -114,7 +110,6 @@ export default function CompanyInfoForm({
         .eq('user_id', user.id);
 
       if (error) {
-        console.error('프로필 업데이트 실패:', error);
       } else {
         // GlobalContext의 프로필 정보 새로고침
         if (refreshUser) {
@@ -122,7 +117,6 @@ export default function CompanyInfoForm({
         }
       }
     } catch (err) {
-      console.error('프로필 업데이트 중 오류:', err);
     }
   };
 
@@ -164,7 +158,6 @@ export default function CompanyInfoForm({
         });
       }
     } catch (err) {
-      console.error('Error fetching addresses:', err);
     } finally {
       setLoading(false);
     }
@@ -325,7 +318,6 @@ export function useCompanyInfoSubmit(companyInfo: CompanyInfo) {
         await refreshUser();
       }
     } catch (err) {
-      console.error('프로필 업데이트 실패:', err);
     }
   };
 

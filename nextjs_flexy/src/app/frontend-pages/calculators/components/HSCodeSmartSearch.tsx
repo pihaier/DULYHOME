@@ -155,7 +155,6 @@ export function HSCodeSmartSearch({ onSelectHsCode, onReset, onNotify }: Props) 
       });
 
       if (error) {
-        console.error('Hierarchical search error:', error);
         onNotify?.('검색 중 오류가 발생했습니다', 'error');
         return;
       }
@@ -176,7 +175,6 @@ export function HSCodeSmartSearch({ onSelectHsCode, onReset, onNotify }: Props) 
         onNotify?.('검색 결과가 없습니다', 'info');
       }
     } catch (error) {
-      console.error('Search error:', error);
       onNotify?.('검색 중 오류가 발생했습니다', 'error');
     } finally {
       setLoading(false);
@@ -199,7 +197,6 @@ export function HSCodeSmartSearch({ onSelectHsCode, onReset, onNotify }: Props) 
       });
 
       if (error) {
-        console.error('Finalize error:', error);
         onNotify?.('코드 확정 중 오류가 발생했습니다', 'error');
         return;
       }
@@ -213,7 +210,6 @@ export function HSCodeSmartSearch({ onSelectHsCode, onReset, onNotify }: Props) 
         setSelectionOptions([]);
       }
     } catch (error) {
-      console.error('Selection error:', error);
       onNotify?.('선택 중 오류가 발생했습니다', 'error');
     } finally {
       setLoading(false);
@@ -261,7 +257,6 @@ export function HSCodeSmartSearch({ onSelectHsCode, onReset, onNotify }: Props) 
       });
 
       if (error) {
-        console.error('Category extraction error:', error);
         onNotify?.('검색 중 오류가 발생했습니다', 'error');
         return;
       }
@@ -274,7 +269,6 @@ export function HSCodeSmartSearch({ onSelectHsCode, onReset, onNotify }: Props) 
         onNotify?.('검색 결과가 없습니다', 'info');
       }
     } catch (error) {
-      console.error('Search error:', error);
       onNotify?.('검색 중 오류가 발생했습니다', 'error');
     } finally {
       setLoading(false);
@@ -304,20 +298,16 @@ export function HSCodeSmartSearch({ onSelectHsCode, onReset, onNotify }: Props) 
       });
 
       if (error) {
-        console.error('Group search error:', error);
         onNotify?.('그룹 조회 중 오류가 발생했습니다', 'error');
         return;
       }
 
       if (data?.results && data.results.length > 0) {
-        console.log('API Response from hs-code-vector-search:', data);
-        console.log('Groups received:', data.results);
         setGroups(data.results);
         setMode('group');
         setCategories([]);
       }
     } catch (error) {
-      console.error('Category search error:', error);
     } finally {
       setLoading(false);
     }
@@ -325,9 +315,6 @@ export function HSCodeSmartSearch({ onSelectHsCode, onReset, onNotify }: Props) 
 
   // 6자리 그룹 선택 시 10자리 상세 표시 (3단계)
   const handleGroupSelect = (group: HSCodeGroup) => {
-    console.log('Selected group:', group);
-    console.log('Detail codes count:', group.detail_codes?.length);
-    console.log('Detail codes:', group.detail_codes);
 
     setSelectedGroup(group);
     if (group.detail_codes && group.detail_codes.length > 0) {

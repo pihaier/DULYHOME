@@ -130,7 +130,6 @@ export default function StaffLogin() {
         });
       }, 3000);
     } catch (error: any) {
-      console.error('Registration error:', error);
       setRegisterError(error.message || getText('등록 중 오류가 발생했습니다.', '注册时发生错误'));
     } finally {
       setRegisterLoading(false);

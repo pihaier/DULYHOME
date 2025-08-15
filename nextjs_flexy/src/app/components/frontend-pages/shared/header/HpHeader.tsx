@@ -66,7 +66,6 @@ const HpHeader = (props: any) => {
       const { error } = await supabase.auth.signOut();
 
       if (error) {
-        console.error('로그아웃 에러:', error);
       } else {
         handleMenuClose();
         // 로그아웃 성공 시 GlobalContext가 자동으로 상태 업데이트
@@ -74,7 +73,6 @@ const HpHeader = (props: any) => {
         window.location.href = '/';
       }
     } catch (error) {
-      console.error('로그아웃 처리 중 에러:', error);
     }
   };
 

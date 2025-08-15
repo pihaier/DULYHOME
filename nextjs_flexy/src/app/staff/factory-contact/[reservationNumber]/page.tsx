@@ -155,7 +155,6 @@ export default function StaffFactoryContactDetailPage() {
 
         setConfirmations(confirmData || []);
       } catch (err) {
-        console.error('Fetch error:', err);
         setError(err instanceof Error ? err.message : '알 수 없는 오류가 발생했습니다.');
       } finally {
         setLoading(false);

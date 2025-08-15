@@ -25,7 +25,6 @@ export async function fetchMarketResearchByReservation(reservationNumber: string
     const data = await response.json();
     return { data: data[0] || null, error: null };
   } catch (error) {
-    console.error('Fetch error:', error);
     return { data: null, error };
   }
 }
@@ -51,7 +50,6 @@ export async function insertChatMessage(message: any) {
     const data = await response.json();
     return { data: data[0], error: null };
   } catch (error) {
-    console.error('Insert error:', error);
     return { data: null, error };
   }
 }
@@ -76,7 +74,6 @@ export async function fetchChatMessages(reservationNumber: string) {
     const data = await response.json();
     return { data, error: null };
   } catch (error) {
-    console.error('Fetch error:', error);
     return { data: null, error };
   }
 }

@@ -40,7 +40,6 @@ export async function POST(request: NextRequest) {
 
     if (!response.ok) {
       const error = await response.text();
-      console.error('Translation failed:', error);
       return NextResponse.json({ error: 'Translation failed' }, { status: 500 });
     }
 
@@ -52,7 +51,6 @@ export async function POST(request: NextRequest) {
       translatedFields: result.translatedFields,
     });
   } catch (error) {
-    console.error('Translation API error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

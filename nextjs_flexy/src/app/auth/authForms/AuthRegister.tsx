@@ -96,7 +96,6 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
       if (data.user) {
         // 세션이 있으면 자동 확인된 것
         if (data.session) {
-          console.error('ERROR: User was auto-confirmed. This should NOT happen!');
           // 강제 로그아웃
           await supabase.auth.signOut();
           alert('회원가입이 완료되었습니다. 이메일을 확인하여 인증을 완료해주세요.');
@@ -110,7 +109,6 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
         }
       }
     } catch (err: any) {
-      console.error('Sign up error:', err);
       if (err.message.includes('already registered')) {
         setError('이미 등록된 이메일입니다.');
       } else {
@@ -139,7 +137,6 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
       });
 
       if (error) {
-        console.error('OTP verification error:', error);
         setError('인증번호가 올바르지 않습니다.');
         return;
       }
@@ -149,7 +146,6 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
         router.push('/');
       }
     } catch (err) {
-      console.error('OTP verify error:', err);
       setError('인증 중 오류가 발생했습니다.');
     } finally {
       setLoading(false);
@@ -177,7 +173,6 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
         setLoading(false);
       }
     } catch (err) {
-      console.error('OAuth sign up error:', err);
       setError('OAuth 회원가입 중 오류가 발생했습니다.');
       setLoading(false);
     }

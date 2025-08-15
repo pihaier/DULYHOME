@@ -67,13 +67,11 @@ const ProfileInfoTab = () => {
             .single();
 
           if (error) {
-            console.error('Error creating profile:', error);
           } else {
             // GlobalContext의 refreshUser 호출
             await refreshUser();
           }
         } catch (error) {
-          console.error('Exception creating profile:', error);
         }
       };
 
@@ -141,7 +139,6 @@ const ProfileInfoTab = () => {
         confirm_password: '',
       }));
     } catch (error: any) {
-      console.error('Error saving profile:', error);
       setMessage({ type: 'error', text: error.message || '업데이트 중 오류가 발생했습니다.' });
     } finally {
       setSaving(false);

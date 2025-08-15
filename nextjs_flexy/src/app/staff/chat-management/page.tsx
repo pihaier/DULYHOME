@@ -140,7 +140,6 @@ export default function ChatManagementPage() {
             .eq('is_read', false);
 
           if (unreadError) {
-            console.error('Error fetching unread count:', unreadError);
             order.unread_count = 0;
           } else {
             order.unread_count = unreadMessages?.length || 0;
@@ -162,7 +161,6 @@ export default function ChatManagementPage() {
         handleOrderSelect(allOrders[0]);
       }
     } catch (error) {
-      console.error('Error fetching orders:', error);
     } finally {
       setLoading(false);
     }
@@ -186,13 +184,11 @@ export default function ChatManagementPage() {
           .neq('sender_id', user.id);
 
         if (error) {
-          console.error('Error marking messages as read:', error);
         } else {
           // 로컬 상태 업데이트
           setOrders((prev) => prev.map((o) => (o.id === order.id ? { ...o, unread_count: 0 } : o)));
         }
       } catch (error) {
-        console.error('Error marking messages as read:', error);
       }
     }
 
@@ -214,7 +210,6 @@ export default function ChatManagementPage() {
         setCustomerProfile(profile);
       }
     } catch (error) {
-      console.error('Error fetching customer profile:', error);
     }
   };
 

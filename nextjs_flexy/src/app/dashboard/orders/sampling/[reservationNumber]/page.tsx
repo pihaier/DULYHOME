@@ -76,11 +76,8 @@ export default function SamplingDetailPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log('=== Sampling fetchData started ===');
-      console.log('Reservation Number:', reservationNumber);
 
       if (!reservationNumber) {
-        console.log('No reservation number provided');
         setLoading(false);
         return;
       }
@@ -99,7 +96,6 @@ export default function SamplingDetailPage() {
           .maybeSingle();
 
         if (sampleError) {
-          console.error('Sample order query error:', sampleError);
           throw new Error(sampleError.message);
         }
 
@@ -107,10 +103,8 @@ export default function SamplingDetailPage() {
           throw new Error('샘플링 데이터를 찾을 수 없습니다.');
         }
 
-        console.log('Sample data:', sampleData);
         setData(sampleData);
       } catch (err) {
-        console.error('Fetch error:', err);
         setError(err instanceof Error ? err.message : '알 수 없는 오류가 발생했습니다.');
       } finally {
         setLoading(false);

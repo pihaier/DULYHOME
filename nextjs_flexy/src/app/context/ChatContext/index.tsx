@@ -71,7 +71,6 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     } else if (Chatserror) {
       setError(Chatserror);
       setLoading(isChatsLoading);
-      console.log('Failed to fetch the data');
     } else {
       setLoading(isChatsLoading);
     }
@@ -89,7 +88,6 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         setSelectedChat(updatedChat);
       }
     } catch (error) {
-      console.error('Error sending message:', error);
     }
   };
 

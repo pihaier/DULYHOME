@@ -78,11 +78,8 @@ export default function MarketResearchDetailPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log('=== MarketResearch fetchData started ===');
-      console.log('Reservation Number:', reservationNumber);
 
       if (!reservationNumber) {
-        console.log('No reservation number provided');
         setLoading(false);
         return;
       }
@@ -92,20 +89,16 @@ export default function MarketResearchDetailPage() {
 
       try {
         // Supabase SDK 사용
-        console.log('Creating Supabase client...');
         const supabase = createClient();
 
-        console.log('Querying market_research_requests...');
         const { data, error } = await supabase
           .from('market_research_requests')
           .select('*')
           .eq('reservation_number', reservationNumber)
           .single();
 
-        console.log('Query result:', { data, error });
 
         if (error) {
-          console.error('Supabase error:', error);
           throw new Error(error.message);
         }
 
@@ -115,7 +108,6 @@ export default function MarketResearchDetailPage() {
 
         setData(data);
       } catch (err) {
-        console.error('Fetch error:', err);
         setError(err instanceof Error ? err.message : '알 수 없는 오류가 발생했습니다.');
       } finally {
         setLoading(false);

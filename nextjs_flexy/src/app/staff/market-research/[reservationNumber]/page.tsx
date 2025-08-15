@@ -247,7 +247,6 @@ export default function MarketResearchDetailPage() {
           return calculateValues(updated);
         });
 
-        console.log(`관세율 자동 설정: ${lowestRate}% (${rateType})`);
       }
 
       // 인증 필요 여부 처리 - customs-verification Edge Function의 응답 구조에 맞게 파싱
@@ -264,13 +263,10 @@ export default function MarketResearchDetailPage() {
           required_certifications: certifications || null,
         }));
 
-        console.log(`인증 필요: ${hasRequirements ? '예' : '아니오'}`);
         if (certifications) {
-          console.log(`필요 인증: ${certifications}`);
         }
       }
     } catch (error) {
-      console.error('관세/인증 정보 자동 조회 실패:', error);
     }
   };
 
@@ -297,7 +293,6 @@ export default function MarketResearchDetailPage() {
         setData(data);
         setEditData(data);
       } catch (error: any) {
-        console.error('Error:', error);
         setError(error.message);
       } finally {
         setLoading(false);
@@ -1562,7 +1557,6 @@ export default function MarketResearchDetailPage() {
                                       );
                                     }
                                   } catch (error) {
-                                    console.error('HS코드 조회 실패:', error);
                                     alert(
                                       isChineseStaff
                                         ? 'HS编码查询失败'
@@ -1633,7 +1627,6 @@ export default function MarketResearchDetailPage() {
                                 );
                               }
                             } catch (error) {
-                              console.error('인증 확인 실패:', error);
                               alert(isChineseStaff ? '认证确认失败' : '인증 확인에 실패했습니다');
                             }
                           }}

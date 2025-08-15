@@ -29,7 +29,6 @@ export async function setupChatTranslation() {
         );
 
         if (!response.ok) {
-          console.error('Translation failed:', await response.text());
         }
       }
     )

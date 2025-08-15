@@ -61,7 +61,6 @@ const TaxInvoiceTab = () => {
 
       setMessage({ type: 'success', text: '세금계산서 정보가 업데이트되었습니다.' });
     } catch (error: any) {
-      console.error('Error saving tax info:', error);
       setMessage({ type: 'error', text: error.message || '업데이트 중 오류가 발생했습니다.' });
     } finally {
       setSaving(false);

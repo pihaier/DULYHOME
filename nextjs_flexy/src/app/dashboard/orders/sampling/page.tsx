@@ -67,7 +67,6 @@ export default function SamplingListPage() {
 
       if (sampleError) throw sampleError;
 
-      console.log('Sample orders:', sampleOrders);
 
       // sampling_applications 데이터를 사용
       const formattedOrders = (sampleOrders || []).map((sample) => ({
@@ -76,10 +75,8 @@ export default function SamplingListPage() {
         sample_quantity: sample.sample_items?.[0]?.quantity || 0,
       }));
 
-      console.log('Fetched sampling orders:', formattedOrders.length);
       setOrders(formattedOrders);
     } catch (error) {
-      console.error('Error fetching sampling orders:', error);
       setError('샘플링 주문 목록을 불러오는데 실패했습니다.');
     } finally {
       setLoading(false);

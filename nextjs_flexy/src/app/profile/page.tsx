@@ -68,7 +68,6 @@ export default function ProfilePage() {
           .single();
 
         if (profileError) {
-          console.error('Profile fetch error:', profileError);
           setError('프로필 정보를 가져오는 중 오류가 발생했습니다.');
           return;
         }
@@ -81,7 +80,6 @@ export default function ProfilePage() {
 
         setProfile(profileData);
       } catch (err) {
-        console.error('Profile page error:', err);
         setError('프로필 페이지 로딩 중 오류가 발생했습니다.');
       } finally {
         setLoading(false);

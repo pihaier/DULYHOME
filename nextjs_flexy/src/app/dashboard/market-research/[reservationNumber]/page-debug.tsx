@@ -19,7 +19,6 @@ export default function MarketResearchDetailPage({
   const [debugInfo, setDebugInfo] = useState<string[]>([]);
 
   const addDebug = (message: string) => {
-    console.log(`[DEBUG] ${message}`);
     setDebugInfo((prev) => [...prev, `${new Date().toISOString()}: ${message}`]);
   };
 
