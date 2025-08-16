@@ -550,25 +550,7 @@ export default function MarketResearchDetailPage() {
         
         uploadedUrls.push(publicUrl);
         
-        // uploaded_files 테이블에 기록
-        if (userProfile?.user_id) {
-          const { error: uploadError } = await supabase.from('uploaded_files').insert({
-            reservation_number: reservationNumber,
-            uploaded_by: userProfile.user_id,
-            original_filename: file.name,
-            file_path: filePath,
-            file_size: file.size,
-            file_type: 'product-photo',
-            mime_type: file.type,
-            upload_purpose: 'product-actual',  // 이제 허용됨
-            file_url: publicUrl,
-          });
-          
-          if (uploadError) {
-            console.error('uploaded_files insert error:', uploadError);
-            // 에러가 발생해도 업로드는 성공했으므로 계속 진행
-          }
-        }
+        // uploaded_files 테이블 사용 제거 - JSONB 컬럼(product_actual_photos)만 사용
       }
       
       return uploadedUrls;
