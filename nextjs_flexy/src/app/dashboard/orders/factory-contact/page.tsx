@@ -119,7 +119,7 @@ export default function FactoryContactListPage() {
     }
   };
 
-  const getRequestTypeLabels = (types: string[]) => {
+  const getRequestTypeLabels = (types: string | string[]) => {
     const typeMap: { [key: string]: string } = {
       sample: '샘플',
       bulk_order: '대량주문',
@@ -128,7 +128,9 @@ export default function FactoryContactListPage() {
       other: '기타',
     };
 
-    return types.map((type) => typeMap[type] || type).join(', ');
+    // types가 배열이 아닌 경우 처리
+    const typeArray = Array.isArray(types) ? types : [types];
+    return typeArray.map((type) => typeMap[type] || type).join(', ');
   };
 
   const filteredOrders = orders.filter((order) => {
