@@ -965,7 +965,7 @@ export default function MarketResearchDetailPage() {
                         </TableCell>
                         <TableCell sx={{ width: '30%' }}>
                           {data?.china_unit_price 
-                            ? `¥${data.china_unit_price.toLocaleString()}`
+                            ? `¥${data.china_unit_price?.toLocaleString() || '0'}`
                             : '조사중'}
                         </TableCell>
                       </TableRow>
@@ -1015,7 +1015,7 @@ export default function MarketResearchDetailPage() {
                         </TableCell>
                         <TableCell sx={{ width: '30%' }}>
                           {data?.exw_total 
-                            ? `₩${data.exw_total.toLocaleString()}`
+                            ? `₩${data.exw_total?.toLocaleString() || '0'}`
                             : '조사중'}
                         </TableCell>
                         <TableCell
@@ -1026,7 +1026,7 @@ export default function MarketResearchDetailPage() {
                         </TableCell>
                         <TableCell sx={{ width: '30%' }}>
                           {data?.china_shipping_fee 
-                            ? `¥${data.china_shipping_fee.toLocaleString()}`
+                            ? `¥${data.china_shipping_fee?.toLocaleString() || '0'}`
                             : '조사중'}
                         </TableCell>
                       </TableRow>
@@ -1036,7 +1036,7 @@ export default function MarketResearchDetailPage() {
                         </TableCell>
                         <TableCell>
                           {data?.commission_amount 
-                            ? `₩${data.commission_amount.toLocaleString()} (${data?.commission_rate || 5}%)`
+                            ? `₩${data.commission_amount?.toLocaleString() || '0'} (${data?.commission_rate || 5}%)`
                             : '조사중'}
                         </TableCell>
                         <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50', whiteSpace: 'nowrap' }}>
@@ -1045,7 +1045,7 @@ export default function MarketResearchDetailPage() {
                         <TableCell>
                           <Typography variant="h6" color="primary">
                             {data?.first_payment_amount 
-                              ? `₩${data.first_payment_amount.toLocaleString()}`
+                              ? `₩${data.first_payment_amount?.toLocaleString() || '0'}`
                               : '조사중'}
                           </Typography>
                         </TableCell>
@@ -1092,7 +1092,7 @@ export default function MarketResearchDetailPage() {
                         </TableCell>
                         <TableCell sx={{ width: '30%' }}>
                           {data?.lcl_shipping_fee
-                            ? `₩${data.lcl_shipping_fee.toLocaleString()}`
+                            ? `₩${data.lcl_shipping_fee?.toLocaleString() || '0'}`
                             : '-'}
                         </TableCell>
                         <TableCell
@@ -1103,7 +1103,7 @@ export default function MarketResearchDetailPage() {
                         </TableCell>
                         <TableCell sx={{ width: '30%' }}>
                           {data?.fcl_shipping_fee
-                            ? `₩${data.fcl_shipping_fee.toLocaleString()}`
+                            ? `₩${data.fcl_shipping_fee?.toLocaleString() || '0'}`
                             : '-'}
                         </TableCell>
                       </TableRow>
@@ -1116,7 +1116,7 @@ export default function MarketResearchDetailPage() {
                         </TableCell>
                         <TableCell>
                           {data?.customs_duty !== undefined
-                            ? `₩${data.customs_duty.toLocaleString()} (${data?.customs_rate || 0}%)`
+                            ? `₩${data.customs_duty?.toLocaleString() || '0'} (${data?.customs_rate || 0}%)`
                             : '조사중'}
                         </TableCell>
                         <TableCell
@@ -1127,7 +1127,7 @@ export default function MarketResearchDetailPage() {
                         </TableCell>
                         <TableCell>
                           {data?.import_vat 
-                            ? `₩${data.import_vat.toLocaleString()}`
+                            ? `₩${data.import_vat?.toLocaleString() || '0'}`
                             : '조사중'}
                         </TableCell>
                       </TableRow>
@@ -1140,7 +1140,7 @@ export default function MarketResearchDetailPage() {
                         </TableCell>
                         <TableCell>
                           {data?.customs_broker_fee
-                            ? `₩${data.customs_broker_fee.toLocaleString()}`
+                            ? `₩${data.customs_broker_fee?.toLocaleString() || '0'}`
                             : '₩30,000 (고정)'}
                         </TableCell>
                         <TableCell
@@ -1151,7 +1151,7 @@ export default function MarketResearchDetailPage() {
                         </TableCell>
                         <TableCell>
                           {data?.co_certificate_fee
-                            ? `₩${data.co_certificate_fee.toLocaleString()}`
+                            ? `₩${data.co_certificate_fee?.toLocaleString() || '0'}`
                             : '-'}
                         </TableCell>
                       </TableRow>
@@ -1162,7 +1162,7 @@ export default function MarketResearchDetailPage() {
                         <TableCell colSpan={3}>
                           <Typography variant="h6" color="warning.main">
                             {data?.expected_second_payment 
-                              ? `₩${data.expected_second_payment.toLocaleString()}`
+                              ? `₩${data.expected_second_payment?.toLocaleString() || '0'}`
                               : '조사중'}
                           </Typography>
                         </TableCell>
@@ -1190,7 +1190,7 @@ export default function MarketResearchDetailPage() {
                         <TableCell>
                           <Typography variant="h6" color="text.primary">
                             {data?.expected_total_supply_price 
-                              ? `₩${data.expected_total_supply_price.toLocaleString()}`
+                              ? `₩${data.expected_total_supply_price?.toLocaleString() || '0'}`
                               : '조사중'}
                           </Typography>
                         </TableCell>
@@ -1205,7 +1205,7 @@ export default function MarketResearchDetailPage() {
                         <TableCell>
                           <Typography variant="h5" color="primary" fontWeight="bold">
                             {data?.expected_unit_price 
-                              ? `₩${data.expected_unit_price.toLocaleString()}`
+                              ? `₩${data.expected_unit_price?.toLocaleString() || '0'}`
                               : '조사중'}
                           </Typography>
                         </TableCell>
