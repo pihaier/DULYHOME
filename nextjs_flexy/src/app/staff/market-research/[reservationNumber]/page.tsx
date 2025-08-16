@@ -660,26 +660,42 @@ export default function MarketResearchDetailPage() {
           </Box>
 
           {/* Tabs - 4개 탭으로 간소화 */}
-          <Tabs value={tabValue} onChange={(e, val) => setTabValue(val)} sx={{ mb: 3 }}>
+          <Tabs 
+            value={tabValue} 
+            onChange={(e, val) => setTabValue(val)} 
+            sx={{ 
+              mb: 3,
+              '& .MuiTabs-scrollButtons': {
+                '&.Mui-disabled': { opacity: 0.3 }
+              }
+            }}
+            variant={isMobile ? "scrollable" : "standard"}
+            scrollButtons={isMobile ? "auto" : false}
+            allowScrollButtonsMobile
+          >
             <Tab
               label={isChineseStaff ? '基本信息' : '기본정보'}
               icon={<BusinessIcon />}
               iconPosition="start"
+              sx={{ minWidth: isMobile ? 'auto' : 120 }}
             />
             <Tab
               label={isChineseStaff ? '工厂信息' : '공장정보'}
               icon={<FactoryIcon />}
               iconPosition="start"
+              sx={{ minWidth: isMobile ? 'auto' : 120 }}
             />
             <Tab
               label={isChineseStaff ? '产品信息' : '제품정보'}
               icon={<InventoryIcon />}
               iconPosition="start"
+              sx={{ minWidth: isMobile ? 'auto' : 120 }}
             />
             <Tab
               label={isChineseStaff ? '价格/关税信息' : '가격/관세정보'}
               icon={<AttachMoneyIcon />}
               iconPosition="start"
+              sx={{ minWidth: isMobile ? 'auto' : 120 }}
             />
           </Tabs>
 
