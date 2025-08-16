@@ -902,6 +902,150 @@ export default function MarketResearchDetailPage() {
                   </CardContent>
                 </BlankCard>
               )}
+
+              {/* 로고 파일 - Logo Files */}
+              {data?.logo_files && data.logo_files.length > 0 && (
+                <BlankCard sx={{ mt: 2, bgcolor: 'grey.50' }}>
+                  <CardContent>
+                    <Typography variant="h6" fontWeight="bold" gutterBottom sx={{ mb: 2 }}>
+                      {isChineseStaff ? 'LOGO文件' : '로고 파일'} (
+                      {data.logo_files.length}
+                      {isChineseStaff ? '个' : '개'})
+                    </Typography>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        gap: 1,
+                        overflowX: 'auto',
+                        pb: 1,
+                        '&::-webkit-scrollbar': {
+                          height: 4,
+                        },
+                        '&::-webkit-scrollbar-track': {
+                          background: '#f1f1f1',
+                          borderRadius: 10,
+                        },
+                        '&::-webkit-scrollbar-thumb': {
+                          background: '#888',
+                          borderRadius: 10,
+                        },
+                        '&::-webkit-scrollbar-thumb:hover': {
+                          background: '#555',
+                        },
+                      }}
+                    >
+                      {data.logo_files.map((file: any, index: number) => (
+                        <Box
+                          key={index}
+                          sx={{
+                            minWidth: 120,
+                            width: 120,
+                            height: 120,
+                            position: 'relative',
+                            cursor: 'pointer',
+                            borderRadius: 1,
+                            overflow: 'hidden',
+                            border: '2px solid',
+                            borderColor: 'info.light',
+                            '&:hover': {
+                              borderColor: 'info.main',
+                              transform: 'scale(1.05)',
+                              transition: 'all 0.3s ease',
+                            },
+                          }}
+                          onClick={() => {
+                            setSelectedImage(file.url);
+                            setModalOpen(true);
+                          }}
+                        >
+                          <Box
+                            component="img"
+                            src={file.url}
+                            alt={`${isChineseStaff ? 'LOGO' : '로고'} ${index + 1}`}
+                            sx={{
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'cover',
+                            }}
+                          />
+                        </Box>
+                      ))}
+                    </Box>
+                  </CardContent>
+                </BlankCard>
+              )}
+
+              {/* 박스 디자인 파일 - Box Design Files */}
+              {data?.box_files && data.box_files.length > 0 && (
+                <BlankCard sx={{ mt: 2, bgcolor: 'grey.50' }}>
+                  <CardContent>
+                    <Typography variant="h6" fontWeight="bold" gutterBottom sx={{ mb: 2 }}>
+                      {isChineseStaff ? '包装设计文件' : '박스 디자인 파일'} (
+                      {data.box_files.length}
+                      {isChineseStaff ? '个' : '개'})
+                    </Typography>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        gap: 1,
+                        overflowX: 'auto',
+                        pb: 1,
+                        '&::-webkit-scrollbar': {
+                          height: 4,
+                        },
+                        '&::-webkit-scrollbar-track': {
+                          background: '#f1f1f1',
+                          borderRadius: 10,
+                        },
+                        '&::-webkit-scrollbar-thumb': {
+                          background: '#888',
+                          borderRadius: 10,
+                        },
+                        '&::-webkit-scrollbar-thumb:hover': {
+                          background: '#555',
+                        },
+                      }}
+                    >
+                      {data.box_files.map((file: any, index: number) => (
+                        <Box
+                          key={index}
+                          sx={{
+                            minWidth: 120,
+                            width: 120,
+                            height: 120,
+                            position: 'relative',
+                            cursor: 'pointer',
+                            borderRadius: 1,
+                            overflow: 'hidden',
+                            border: '2px solid',
+                            borderColor: 'warning.light',
+                            '&:hover': {
+                              borderColor: 'warning.main',
+                              transform: 'scale(1.05)',
+                              transition: 'all 0.3s ease',
+                            },
+                          }}
+                          onClick={() => {
+                            setSelectedImage(file.url);
+                            setModalOpen(true);
+                          }}
+                        >
+                          <Box
+                            component="img"
+                            src={file.url}
+                            alt={`${isChineseStaff ? '包装设计' : '박스 디자인'} ${index + 1}`}
+                            sx={{
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'cover',
+                            }}
+                          />
+                        </Box>
+                      ))}
+                    </Box>
+                  </CardContent>
+                </BlankCard>
+              )}
             </TabPanel>
 
             {/* Tab Content - 공장정보 (중국직원 입력, 한중 병기) */}
