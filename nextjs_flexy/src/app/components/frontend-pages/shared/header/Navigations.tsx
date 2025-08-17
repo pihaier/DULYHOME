@@ -15,6 +15,11 @@ export const NavLinks = [
     href: '/frontend-pages/about',
   },
   {
+    title: '1688 상품',
+    href: '/1688',
+    badge: '준비중',
+  },
+  {
     title: '서비스',
     href: '/frontend-pages/services',
   },
@@ -67,7 +72,17 @@ const Navigations = () => {
           variant="text"
           key={i}
         >
-          <NextLink href={navlink.href}>{navlink.title}</NextLink>
+          <NextLink href={navlink.href}>
+            {navlink.title}
+            {navlink.badge && (
+              <Chip 
+                label={navlink.badge} 
+                size="small" 
+                color={navlink.badge === '준비중' ? 'warning' : 'error'}
+                sx={{ ml: 1, height: 20, fontSize: '0.7rem' }}
+              />
+            )}
+          </NextLink>
         </StyledButton>
       ))}
     </>

@@ -9,18 +9,16 @@ import Stack from '@mui/material/Stack';
 import Toolbar from '@mui/material/Toolbar';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { styled } from '@mui/material/styles';
-import { Typography, Avatar, Menu, MenuItem } from '@mui/material';
+import { Typography } from '@mui/material';
 import Logo from '@/app/dashboard/layout/shared/logo/Logo';
 import Navigations from './Navigations';
 import MobileSidebar from './MobileSidebar';
-import { IconMenu2, IconUser, IconLogout } from '@tabler/icons-react';
-import { createClient } from '@/lib/supabase/client';
+import Profile from '@/app/dashboard/layout/vertical/header/Profile';
+import { IconMenu2 } from '@tabler/icons-react';
 import { useUser } from '@/lib/context/GlobalContext';
 
 const HpHeader = (props: any) => {
-  const supabase = createClient();
   const { user, userProfile } = useUser();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const AppBarStyled = styled(AppBar)(({ theme }) => ({
     justifyContent: 'center',
@@ -53,28 +51,6 @@ const HpHeader = (props: any) => {
     setOpen(newOpen);
   };
 
-  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleLogout = async () => {
-    try {
-      const { error } = await supabase.auth.signOut();
-
-      if (error) {
-      } else {
-        handleMenuClose();
-        // 로그아웃 성공 시 GlobalContext가 자동으로 상태 업데이트
-        // 페이지 새로고침하여 세션 완전히 정리
-        window.location.href = '/';
-      }
-    } catch (error) {}
-  };
-
   return (
     <AppBarStyled position="sticky" elevation={0}>
       <Container
@@ -94,33 +70,14 @@ const HpHeader = (props: any) => {
               <Stack spacing={1} direction="row" alignItems="center">
                 <Navigations />
               </Stack>
-              <Stack direction="row" spacing={2}>
+              <Stack direction="row" spacing={2} alignItems="center">
                 {user ? (
-                  // 로그인된 사용자 UI
+                  // 로그인된 사용자 UI - 대시보드 Profile 컴포넌트 사용
                   <>
                     <Button color="primary" variant="outlined" href="/dashboard">
-                      대시보드
+                      마이페이지
                     </Button>
-                    <IconButton onClick={handleMenuOpen}>
-                      <Avatar sx={{ width: 32, height: 32 }}>
-                        {userProfile?.contact_person?.charAt(0) || user.email?.charAt(0)}
-                      </Avatar>
-                    </IconButton>
-                    <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
-                      <MenuItem
-                        onClick={() => {
-                          handleMenuClose();
-                          window.location.href = '/dashboard/profile';
-                        }}
-                      >
-                        <IconUser size={18} style={{ marginRight: 8 }} />
-                        프로필
-                      </MenuItem>
-                      <MenuItem onClick={handleLogout}>
-                        <IconLogout size={18} style={{ marginRight: 8 }} />
-                        로그아웃
-                      </MenuItem>
-                    </Menu>
+                    <Profile />
                   </>
                 ) : (
                   // 비로그인 사용자 UI

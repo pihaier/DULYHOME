@@ -4,6 +4,8 @@ import React, { useContext, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Header from './layout/vertical/header/Header';
 import Sidebar from './layout/vertical/sidebar/Sidebar';
+import HpHeader from '@/app/components/frontend-pages/shared/header/HpHeader';
+import Footer from '@/app/components/frontend-pages/shared/footer';
 
 import Navigation from './layout/horizontal/navbar/Navigation';
 import HorizontalHeader from './layout/horizontal/header/Header';
@@ -43,31 +45,35 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const isFullWidthPage = pathname?.includes('/market-research/') || pathname?.includes('/orders/');
 
   return (
-    <MainWrapper>
-      <title>두리무역 ERP 시스템</title>
-      {/* ------------------------------------------- */}
-      {/* Sidebar */}
-      {/* ------------------------------------------- */}
-      {activeLayout === 'horizontal' ? '' : <Sidebar />}
-      {/* ------------------------------------------- */}
-      {/* Main Wrapper */}
-      {/* ------------------------------------------- */}
-      <PageWrapper
-        className="page-wrapper"
-        sx={{
-          ...(isCollapse === 'mini-sidebar' && {
-            [theme.breakpoints.up('lg')]: {
-              ml: `${MiniSidebarWidth}px`,
-            },
-          }),
-        }}
-      >
+    <>
+      {/* 홈페이지 헤더 추가 */}
+      <HpHeader />
+      
+      <MainWrapper>
+        <title>두리무역 ERP 시스템</title>
         {/* ------------------------------------------- */}
-        {/* Header */}
+        {/* Sidebar */}
         {/* ------------------------------------------- */}
-        {activeLayout === 'horizontal' ? <HorizontalHeader /> : <Header />}
-        {/* PageContent */}
-        {activeLayout === 'horizontal' ? <Navigation /> : ''}
+        {activeLayout === 'horizontal' ? '' : <Sidebar />}
+        {/* ------------------------------------------- */}
+        {/* Main Wrapper */}
+        {/* ------------------------------------------- */}
+        <PageWrapper
+          className="page-wrapper"
+          sx={{
+            ...(isCollapse === 'mini-sidebar' && {
+              [theme.breakpoints.up('lg')]: {
+                ml: `${MiniSidebarWidth}px`,
+              },
+            }),
+          }}
+        >
+          {/* ------------------------------------------- */}
+          {/* 대시보드 헤더 숨김 - HpHeader 사용 */}
+          {/* ------------------------------------------- */}
+          {/* {activeLayout === 'horizontal' ? <HorizontalHeader /> : <Header />} */}
+          {/* PageContent */}
+          {activeLayout === 'horizontal' ? <Navigation /> : ''}
         <Container
           sx={{
             maxWidth: isFullWidthPage 
@@ -92,5 +98,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </Container>
       </PageWrapper>
     </MainWrapper>
+    
+    {/* Footer 추가 */}
+    <Footer />
+    </>
   );
 }
