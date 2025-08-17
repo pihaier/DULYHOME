@@ -107,8 +107,8 @@ const Profile = () => {
               ml: 1,
             }}
           >
-            {(userProfile?.contact_person && userProfile.contact_person !== '미입력') 
-              ? userProfile.contact_person 
+            {userProfile?.contact_person && userProfile.contact_person !== '미입력'
+              ? userProfile.contact_person
               : user?.user_metadata?.name || '고객님'}
           </Typography>
           <IconChevronDown width="20" height="20" />
@@ -138,13 +138,13 @@ const Profile = () => {
           <Avatar src={'/images/users/1.jpg'} alt={'ProfileImg'} sx={{ width: 95, height: 95 }} />
           <Box>
             <Typography variant="h4" color="textPrimary">
-              {(userProfile?.contact_person && userProfile.contact_person !== '미입력') 
-                ? userProfile.contact_person 
+              {userProfile?.contact_person && userProfile.contact_person !== '미입력'
+                ? userProfile.contact_person
                 : user?.user_metadata?.name || '고객님'}
             </Typography>
             <Typography variant="h6" color="textSecondary">
-              {(userProfile?.company_name && userProfile.company_name !== '미입력') 
-                ? userProfile.company_name 
+              {userProfile?.company_name && userProfile.company_name !== '미입력'
+                ? userProfile.company_name
                 : '회사명'}
             </Typography>
             <Typography

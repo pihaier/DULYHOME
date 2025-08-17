@@ -38,10 +38,10 @@ interface Product1688 {
   titleCn?: string;
   image: string;
   images?: string[];
-  price: number;          // 중국 위안화
-  priceRange?: string;    // "10.5-25.8"
-  moq: number;           // 최소주문수량
-  sold30Days?: number;   // 30일 판매량
+  price: number; // 중국 위안화
+  priceRange?: string; // "10.5-25.8"
+  moq: number; // 최소주문수량
+  sold30Days?: number; // 30일 판매량
   supplier: {
     name: string;
     location: string;
@@ -74,13 +74,13 @@ const DUMMY_PRODUCTS: Product1688[] = [
       verified: true,
       yearsInBusiness: 8,
       rating: 4.8,
-      responseRate: '98%'
+      responseRate: '98%',
     },
     shipping: {
       fee: 8.5,
-      days: '7-15일'
+      days: '7-15일',
     },
-    tags: ['인기상품', '품질보증']
+    tags: ['인기상품', '품질보증'],
   },
   {
     id: '2',
@@ -97,13 +97,13 @@ const DUMMY_PRODUCTS: Product1688[] = [
       verified: true,
       yearsInBusiness: 5,
       rating: 4.9,
-      responseRate: '99%'
+      responseRate: '99%',
     },
     shipping: {
       fee: 5.0,
-      days: '5-10일'
+      days: '5-10일',
     },
-    tags: ['베스트셀러', '빠른배송']
+    tags: ['베스트셀러', '빠른배송'],
   },
   {
     id: '3',
@@ -120,13 +120,13 @@ const DUMMY_PRODUCTS: Product1688[] = [
       verified: true,
       yearsInBusiness: 10,
       rating: 4.7,
-      responseRate: '95%'
+      responseRate: '95%',
     },
     shipping: {
       fee: 6.0,
-      days: '7-12일'
+      days: '7-12일',
     },
-    tags: ['신상품', 'OEM가능']
+    tags: ['신상품', 'OEM가능'],
   },
   {
     id: '4',
@@ -143,13 +143,13 @@ const DUMMY_PRODUCTS: Product1688[] = [
       verified: true,
       yearsInBusiness: 6,
       rating: 4.6,
-      responseRate: '92%'
+      responseRate: '92%',
     },
     shipping: {
       fee: 7.5,
-      days: '10-15일'
+      days: '10-15일',
     },
-    tags: ['프리미엄', '인증완료']
+    tags: ['프리미엄', '인증완료'],
   },
   {
     id: '5',
@@ -166,13 +166,13 @@ const DUMMY_PRODUCTS: Product1688[] = [
       verified: true,
       yearsInBusiness: 12,
       rating: 4.8,
-      responseRate: '97%'
+      responseRate: '97%',
     },
     shipping: {
       fee: 4.5,
-      days: '7-10일'
+      days: '7-10일',
     },
-    tags: ['대량할인', '맞춤제작']
+    tags: ['대량할인', '맞춤제작'],
   },
   {
     id: '6',
@@ -189,13 +189,13 @@ const DUMMY_PRODUCTS: Product1688[] = [
       verified: false,
       yearsInBusiness: 3,
       rating: 4.5,
-      responseRate: '90%'
+      responseRate: '90%',
     },
     shipping: {
       fee: 3.5,
-      days: '5-8일'
+      days: '5-8일',
     },
-    tags: ['인기상품', '소량주문가능']
+    tags: ['인기상품', '소량주문가능'],
   },
 ];
 
@@ -214,24 +214,38 @@ export default function Search1688Page() {
   // 환율 적용 가격 계산 (나중에 실제 환율 API 사용)
   const calculateKRW = (cnyPrice: number) => {
     const exchangeRate = 200; // 임시 환율
-    const margin = 1.5;        // 50% 마진
+    const margin = 1.5; // 50% 마진
     return Math.round(cnyPrice * exchangeRate * margin);
   };
 
   const popularKeywords = [
-    '노트북', '가방', '신발', '의류', '화장품',
-    '전자제품', '악세서리', '가구', '주방용품', '완구'
+    '노트북',
+    '가방',
+    '신발',
+    '의류',
+    '화장품',
+    '전자제품',
+    '악세서리',
+    '가구',
+    '주방용품',
+    '완구',
   ];
 
   const categories = [
-    '전자제품', '의류/패션', '가정용품', '뷰티/화장품',
-    '스포츠/레저', '완구/취미', '사무용품', '자동차용품'
+    '전자제품',
+    '의류/패션',
+    '가정용품',
+    '뷰티/화장품',
+    '스포츠/레저',
+    '완구/취미',
+    '사무용품',
+    '자동차용품',
   ];
 
   return (
     <PageContainer title="1688 상품 검색 - 두리무역" description="중국 도매 상품 실시간 검색">
       <HpHeader />
-      
+
       {/* 준비중 알림 */}
       <Container maxWidth="lg" sx={{ mt: 4 }}>
         <Alert severity="warning" icon={<ConstructionIcon />} sx={{ mb: 3 }}>
@@ -239,17 +253,20 @@ export default function Search1688Page() {
             1688 서비스 준비중
           </Typography>
           <Typography variant="body2">
-            현재 1688.com API 연동 및 서비스 준비 중입니다. 빠른 시일 내에 정식 서비스를 제공할 예정입니다.
+            현재 1688.com API 연동 및 서비스 준비 중입니다. 빠른 시일 내에 정식 서비스를 제공할
+            예정입니다.
           </Typography>
         </Alert>
       </Container>
 
       {/* 검색 섹션 (비활성화) */}
-      <Box sx={{ 
-        background: 'linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%)',
-        py: 8,
-        position: 'relative'
-      }}>
+      <Box
+        sx={{
+          background: 'linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%)',
+          py: 8,
+          position: 'relative',
+        }}
+      >
         <Container maxWidth="lg">
           <Stack alignItems="center" spacing={2}>
             <ConstructionIcon sx={{ fontSize: 60, color: 'white' }} />
@@ -260,7 +277,7 @@ export default function Search1688Page() {
               중국 최대 B2B 도매 플랫폼 • 실시간 가격 조회 • L6 등급 5% 할인
             </Typography>
           </Stack>
-          
+
           {/* 검색바 */}
           <Paper sx={{ p: 3, maxWidth: 900, mx: 'auto', mt: 4 }}>
             <Stack direction="row" spacing={2}>
@@ -276,39 +293,39 @@ export default function Search1688Page() {
                       <SearchIcon />
                     </InputAdornment>
                   ),
-                  sx: { fontSize: '1.1rem' }
+                  sx: { fontSize: '1.1rem' },
                 }}
                 size="medium"
               />
-              
-              <IconButton 
-                color="primary" 
+
+              <IconButton
+                color="primary"
                 title="이미지로 검색"
                 disabled
-                sx={{ 
+                sx={{
                   border: '2px solid',
                   borderColor: 'action.disabled',
                   borderRadius: 1,
-                  px: 2
+                  px: 2,
                 }}
               >
                 <PhotoCameraIcon />
               </IconButton>
-              
-              <Button 
-                variant="contained" 
+
+              <Button
+                variant="contained"
                 size="large"
                 disabled
-                sx={{ 
+                sx={{
                   minWidth: 140,
                   fontSize: '1.1rem',
-                  fontWeight: 'bold'
+                  fontWeight: 'bold',
                 }}
               >
                 준비중
               </Button>
             </Stack>
-            
+
             {/* 카테고리 */}
             <Box sx={{ mt: 3 }}>
               <Typography variant="body2" color="text.secondary" gutterBottom>
@@ -316,9 +333,9 @@ export default function Search1688Page() {
               </Typography>
               <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ gap: 1 }}>
                 {categories.map((cat) => (
-                  <Chip 
+                  <Chip
                     key={cat}
-                    label={cat} 
+                    label={cat}
                     onClick={() => {
                       setKeyword(cat);
                       handleSearch();
@@ -329,7 +346,7 @@ export default function Search1688Page() {
                 ))}
               </Stack>
             </Box>
-            
+
             {/* 인기 검색어 */}
             <Box sx={{ mt: 2 }}>
               <Typography variant="body2" color="text.secondary" gutterBottom>
@@ -337,9 +354,9 @@ export default function Search1688Page() {
               </Typography>
               <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ gap: 1 }}>
                 {popularKeywords.map((kw) => (
-                  <Chip 
+                  <Chip
                     key={kw}
-                    label={kw} 
+                    label={kw}
                     onClick={() => {
                       setKeyword(kw);
                       handleSearch();
@@ -377,27 +394,27 @@ export default function Search1688Page() {
           <>
             <Alert severity="info" sx={{ mb: 3 }}>
               <Typography variant="body2">
-                <strong>테스트 모드:</strong> 현재 표시되는 데이터는 더미 데이터입니다. 
-                실제 1688 API 연동은 준비 중입니다.
+                <strong>테스트 모드:</strong> 현재 표시되는 데이터는 더미 데이터입니다. 실제 1688
+                API 연동은 준비 중입니다.
               </Typography>
             </Alert>
-            
+
             <Typography variant="h5" gutterBottom sx={{ mb: 3 }}>
               검색 결과: <strong>{products.length}</strong>개 상품
             </Typography>
-            
+
             <Grid container spacing={3}>
               {products.map((product) => (
                 <Grid size={{ xs: 12, sm: 6, md: 4 }} key={product.id}>
-                  <Card 
-                    sx={{ 
-                      height: '100%', 
+                  <Card
+                    sx={{
+                      height: '100%',
                       cursor: 'pointer',
                       transition: 'all 0.3s',
                       '&:hover': {
                         transform: 'translateY(-4px)',
-                        boxShadow: 3
-                      }
+                        boxShadow: 3,
+                      },
                     }}
                   >
                     <Box sx={{ position: 'relative' }}>
@@ -409,80 +426,73 @@ export default function Search1688Page() {
                         sx={{ objectFit: 'cover' }}
                       />
                       {product.tags && product.tags.length > 0 && (
-                        <Box sx={{ 
-                          position: 'absolute', 
-                          top: 8, 
-                          left: 8,
-                          display: 'flex',
-                          gap: 0.5
-                        }}>
+                        <Box
+                          sx={{
+                            position: 'absolute',
+                            top: 8,
+                            left: 8,
+                            display: 'flex',
+                            gap: 0.5,
+                          }}
+                        >
                           {product.tags.slice(0, 2).map((tag) => (
-                            <Chip 
+                            <Chip
                               key={tag}
-                              label={tag} 
-                              size="small" 
+                              label={tag}
+                              size="small"
                               color="error"
-                              sx={{ 
+                              sx={{
                                 fontSize: '0.7rem',
-                                height: 24
+                                height: 24,
                               }}
                             />
                           ))}
                         </Box>
                       )}
                     </Box>
-                    
+
                     <CardContent>
-                      <Typography 
-                        variant="body1" 
-                        gutterBottom 
-                        sx={{ 
+                      <Typography
+                        variant="body1"
+                        gutterBottom
+                        sx={{
                           fontWeight: 500,
                           overflow: 'hidden',
                           textOverflow: 'ellipsis',
                           display: '-webkit-box',
                           WebkitLineClamp: 2,
                           WebkitBoxOrient: 'vertical',
-                          minHeight: 48
+                          minHeight: 48,
                         }}
                       >
                         {product.title}
                       </Typography>
-                      
-                      <Typography 
-                        variant="h5" 
-                        color="primary" 
-                        gutterBottom
-                        fontWeight="bold"
-                      >
+
+                      <Typography variant="h5" color="primary" gutterBottom fontWeight="bold">
                         ₩{calculateKRW(product.price).toLocaleString()}
                       </Typography>
-                      
+
                       <Stack spacing={0.5}>
                         <Typography variant="body2" color="text.secondary">
-                          <strong>도매가:</strong> ¥{product.price} 
+                          <strong>도매가:</strong> ¥{product.price}
                           {product.priceRange && ` (¥${product.priceRange})`}
                         </Typography>
-                        
+
                         <Stack direction="row" spacing={1}>
-                          <Chip 
-                            label={`MOQ: ${product.moq}개`} 
-                            size="small" 
-                            variant="outlined"
-                          />
+                          <Chip label={`MOQ: ${product.moq}개`} size="small" variant="outlined" />
                           {product.sold30Days && (
-                            <Chip 
-                              label={`월 ${product.sold30Days.toLocaleString()}개 판매`} 
-                              size="small" 
+                            <Chip
+                              label={`월 ${product.sold30Days.toLocaleString()}개 판매`}
+                              size="small"
                               color="success"
                               variant="outlined"
                             />
                           )}
                         </Stack>
                       </Stack>
-                      
+
                       <Divider sx={{ my: 1.5 }} />
-                      
+
                       <Stack spacing={0.5}>
                         <Stack direction="row" alignItems="center" spacing={0.5}>
                           <StorefrontIcon sx={{ fontSize: 16, color: 'text.secondary' }} />
@@ -490,7 +500,7 @@ export default function Search1688Page() {
                             {product.supplier.name}
                           </Typography>
                         </Stack>
-                        
+
                         <Stack direction="row" alignItems="center" spacing={1}>
                           {product.supplier.verified && (
                             <Stack direction="row" alignItems="center" spacing={0.5}>
@@ -500,13 +510,13 @@ export default function Search1688Page() {
                               </Typography>
                             </Stack>
                           )}
-                          
+
                           {product.supplier.rating && (
                             <Stack direction="row" alignItems="center" spacing={0.5}>
-                              <Rating 
-                                value={product.supplier.rating} 
-                                readOnly 
-                                size="small" 
+                              <Rating
+                                value={product.supplier.rating}
+                                readOnly
+                                size="small"
                                 precision={0.1}
                               />
                               <Typography variant="caption" color="text.secondary">
@@ -515,7 +525,7 @@ export default function Search1688Page() {
                             </Stack>
                           )}
                         </Stack>
-                        
+
                         {product.shipping && (
                           <Stack direction="row" alignItems="center" spacing={0.5}>
                             <LocalShippingIcon sx={{ fontSize: 16, color: 'text.secondary' }} />
@@ -530,7 +540,7 @@ export default function Search1688Page() {
                 </Grid>
               ))}
             </Grid>
-            
+
             <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
               <Button variant="outlined" size="large">
                 더 보기
@@ -558,7 +568,7 @@ export default function Search1688Page() {
           </Box>
         )}
       </Container>
-      
+
       <Footer />
     </PageContainer>
   );

@@ -48,7 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <>
       {/* 홈페이지 헤더 추가 */}
       <HpHeader />
-      
+
       <MainWrapper>
         <title>두리무역 ERP 시스템</title>
         {/* ------------------------------------------- */}
@@ -74,33 +74,35 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {/* {activeLayout === 'horizontal' ? <HorizontalHeader /> : <Header />} */}
           {/* PageContent */}
           {activeLayout === 'horizontal' ? <Navigation /> : ''}
-        <Container
-          sx={{
-            maxWidth: isFullWidthPage 
-              ? '1600px !important' 
-              : (isLayout === 'boxed' ? '1300px !important' : '100%!important'),
-            px: isFullWidthPage ? 3 : undefined,
-          }}
-        >
-          {/* ------------------------------------------- */}
-          {/* PageContent */}
-          {/* ------------------------------------------- */}
+          <Container
+            sx={{
+              maxWidth: isFullWidthPage
+                ? '1600px !important'
+                : isLayout === 'boxed'
+                  ? '1300px !important'
+                  : '100%!important',
+              px: isFullWidthPage ? 3 : undefined,
+            }}
+          >
+            {/* ------------------------------------------- */}
+            {/* PageContent */}
+            {/* ------------------------------------------- */}
 
-          <Box sx={{ minHeight: 'calc(100vh - 170px)' }}>
-            {/* <Outlet /> */}
-            {children}
-            {/* <Index /> */}
-          </Box>
+            <Box sx={{ minHeight: 'calc(100vh - 170px)' }}>
+              {/* <Outlet /> */}
+              {children}
+              {/* <Index /> */}
+            </Box>
 
-          {/* ------------------------------------------- */}
-          {/* End Page */}
-          {/* ------------------------------------------- */}
-        </Container>
-      </PageWrapper>
-    </MainWrapper>
-    
-    {/* Footer 추가 */}
-    <Footer />
+            {/* ------------------------------------------- */}
+            {/* End Page */}
+            {/* ------------------------------------------- */}
+          </Container>
+        </PageWrapper>
+      </MainWrapper>
+
+      {/* Footer 추가 */}
+      <Footer />
     </>
   );
 }

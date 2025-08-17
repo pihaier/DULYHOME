@@ -1191,12 +1191,18 @@ export default function MarketResearchDetailPage() {
                   <Typography variant="h6" gutterBottom>
                     {isChineseStaff ? '价格/关税信息' : '가격/관세정보'}
                   </Typography>
-                    
+
                   <Grid container spacing={3}>
                     {/* ========== 입력 필드 섹션 (상단) ========== */}
                     <Grid size={12}>
-                      <Paper elevation={3} sx={{ p: 3, bgcolor: 'background.paper', borderRadius: 2 }}>
-                        <Typography variant="h6" sx={{ mb: 3, fontWeight: 600, color: 'primary.main', fontSize: '1.3rem' }}>
+                      <Paper
+                        elevation={3}
+                        sx={{ p: 3, bgcolor: 'background.paper', borderRadius: 2 }}
+                      >
+                        <Typography
+                          variant="h6"
+                          sx={{ mb: 3, fontWeight: 600, color: 'primary.main', fontSize: '1.3rem' }}
+                        >
                           📝 {isChineseStaff ? '输入项目' : '입력 항목'}
                         </Typography>
                         <Grid container spacing={3}>
@@ -1205,9 +1211,12 @@ export default function MarketResearchDetailPage() {
                             <TextField
                               fullWidth
                               label={isChineseStaff ? '所需时间' : '소요시간'}
-                              value={editMode ? editData.work_duration || '' : data.work_duration || ''}
+                              value={
+                                editMode ? editData.work_duration || '' : data.work_duration || ''
+                              }
                               onChange={(e) =>
-                                editMode && setEditData({ ...editData, work_duration: e.target.value })
+                                editMode &&
+                                setEditData({ ...editData, work_duration: e.target.value })
                               }
                               disabled={!editMode}
                               size="medium"
@@ -1234,8 +1243,8 @@ export default function MarketResearchDetailPage() {
                               type="text"
                               label={isChineseStaff ? '中国单价' : '중국단가'}
                               value={
-                                editMode 
-                                  ? formatNumber(editData.china_unit_price) 
+                                editMode
+                                  ? formatNumber(editData.china_unit_price)
                                   : formatNumber(data.china_unit_price)
                               }
                               onChange={(e) => {
@@ -1271,8 +1280,8 @@ export default function MarketResearchDetailPage() {
                               type="text"
                               label={isChineseStaff ? '汇率' : '환율'}
                               value={
-                                editMode 
-                                  ? formatNumber(editData.exchange_rate || 203.0) 
+                                editMode
+                                  ? formatNumber(editData.exchange_rate || 203.0)
                                   : formatNumber(data.exchange_rate || 203.0)
                               }
                               onChange={(e) => {
@@ -1306,8 +1315,8 @@ export default function MarketResearchDetailPage() {
                               type="text"
                               label={isChineseStaff ? '中国运费' : '중국 운송료'}
                               value={
-                                editMode 
-                                  ? formatNumber(editData.china_shipping_fee) 
+                                editMode
+                                  ? formatNumber(editData.china_shipping_fee)
                                   : formatNumber(data.china_shipping_fee)
                               }
                               onChange={(e) => {
@@ -1340,39 +1349,41 @@ export default function MarketResearchDetailPage() {
                           {editData.shipping_method === 'FCL' && (
                             <Grid size={{ xs: 12, md: 6 }}>
                               <TextField
-                              fullWidth
-                              type="text"
-                              label={isChineseStaff ? 'FCL运费' : 'FCL 운송비'}
-                              value={
-                                editMode 
-                                  ? formatNumber(editData.fcl_shipping_fee) 
-                                  : formatNumber(data.fcl_shipping_fee)
-                              }
-                              onChange={(e) => {
-                                if (editMode) {
-                                  const value = parseNumberInput(e.target.value);
-                                  handleFieldChange('fcl_shipping_fee', value);
+                                fullWidth
+                                type="text"
+                                label={isChineseStaff ? 'FCL运费' : 'FCL 운송비'}
+                                value={
+                                  editMode
+                                    ? formatNumber(editData.fcl_shipping_fee)
+                                    : formatNumber(data.fcl_shipping_fee)
                                 }
-                              }}
-                              disabled={!editMode || (editMode && editData.shipping_method !== 'FCL')}
-                              size="medium"
-                              InputProps={{
-                                endAdornment: <InputAdornment position="end">₩</InputAdornment>,
-                              }}
-                              sx={{
-                                '& .MuiInputLabel-root': {
-                                  fontSize: '1.1rem',
-                                  color: '#333',
-                                  fontWeight: 500,
-                                },
-                                '& .MuiInputBase-input': {
-                                  fontSize: '1.2rem',
-                                  fontWeight: 500,
-                                  color: '#000',
-                                },
-                              }}
-                            />
-                          </Grid>
+                                onChange={(e) => {
+                                  if (editMode) {
+                                    const value = parseNumberInput(e.target.value);
+                                    handleFieldChange('fcl_shipping_fee', value);
+                                  }
+                                }}
+                                disabled={
+                                  !editMode || (editMode && editData.shipping_method !== 'FCL')
+                                }
+                                size="medium"
+                                InputProps={{
+                                  endAdornment: <InputAdornment position="end">₩</InputAdornment>,
+                                }}
+                                sx={{
+                                  '& .MuiInputLabel-root': {
+                                    fontSize: '1.1rem',
+                                    color: '#333',
+                                    fontWeight: 500,
+                                  },
+                                  '& .MuiInputBase-input': {
+                                    fontSize: '1.2rem',
+                                    fontWeight: 500,
+                                    color: '#000',
+                                  },
+                                }}
+                              />
+                            </Grid>
                           )}
 
                           {/* HS코드 */}
@@ -1414,7 +1425,9 @@ export default function MarketResearchDetailPage() {
                               fullWidth
                               label={isChineseStaff ? '关税率' : '관세율'}
                               type="number"
-                              value={editMode ? editData.customs_rate || '' : data.customs_rate || ''}
+                              value={
+                                editMode ? editData.customs_rate || '' : data.customs_rate || ''
+                              }
                               onChange={(e) =>
                                 editMode &&
                                 handleFieldChange('customs_rate', parseFloat(e.target.value) || 0)
@@ -1444,9 +1457,12 @@ export default function MarketResearchDetailPage() {
                             <TextField
                               fullWidth
                               label={isChineseStaff ? '出口港' : '수출항'}
-                              value={editMode ? editData.export_port_cn || '' : data.export_port_cn || ''}
+                              value={
+                                editMode ? editData.export_port_cn || '' : data.export_port_cn || ''
+                              }
                               onChange={(e) =>
-                                editMode && setEditData({ ...editData, export_port_cn: e.target.value })
+                                editMode &&
+                                setEditData({ ...editData, export_port_cn: e.target.value })
                               }
                               disabled={!editMode || !isChineseStaff}
                               size="medium"
@@ -1468,7 +1484,11 @@ export default function MarketResearchDetailPage() {
                           {/* ========== 제품 수량 및 박스 정보 ========== */}
                           <Grid size={12}>
                             <Divider sx={{ my: 2 }}>
-                              <Chip label={isChineseStaff ? '产品/包装信息' : '제품/포장 정보'} size="small" color="info" />
+                              <Chip
+                                label={isChineseStaff ? '产品/包装信息' : '제품/포장 정보'}
+                                size="small"
+                                color="info"
+                              />
                             </Divider>
                           </Grid>
 
@@ -1477,7 +1497,11 @@ export default function MarketResearchDetailPage() {
                             <TextField
                               fullWidth
                               label={isChineseStaff ? '报价数量' : '견적수량'}
-                              value={editMode ? editData.quoted_quantity || '' : data.quoted_quantity || ''}
+                              value={
+                                editMode
+                                  ? editData.quoted_quantity || ''
+                                  : data.quoted_quantity || ''
+                              }
                               onChange={(e) =>
                                 editMode &&
                                 handleFieldChange('quoted_quantity', parseInt(e.target.value) || 0)
@@ -1505,7 +1529,9 @@ export default function MarketResearchDetailPage() {
                             <TextField
                               fullWidth
                               label={isChineseStaff ? '每箱数量' : '박스당 수량'}
-                              value={editMode ? editData.units_per_box || '' : data.units_per_box || ''}
+                              value={
+                                editMode ? editData.units_per_box || '' : data.units_per_box || ''
+                              }
                               onChange={(e) =>
                                 editMode &&
                                 handleFieldChange('units_per_box', parseInt(e.target.value) || 0)
@@ -1613,13 +1639,33 @@ export default function MarketResearchDetailPage() {
 
                     {/* ========== 자동계산 필드 섹션 (하단) ========== */}
                     <Grid size={12}>
-                      <Paper elevation={1} sx={{ p: 3, bgcolor: '#f8f9fa', borderRadius: 2, border: '2px dashed #e0e0e0', mt: 3 }}>
-                        <Typography variant="h6" sx={{ mb: 3, fontWeight: 600, color: 'secondary.main', fontSize: '1.3rem' }}>
+                      <Paper
+                        elevation={1}
+                        sx={{
+                          p: 3,
+                          bgcolor: '#f8f9fa',
+                          borderRadius: 2,
+                          border: '2px dashed #e0e0e0',
+                          mt: 3,
+                        }}
+                      >
+                        <Typography
+                          variant="h6"
+                          sx={{
+                            mb: 3,
+                            fontWeight: 600,
+                            color: 'secondary.main',
+                            fontSize: '1.3rem',
+                          }}
+                        >
                           🔢 {isChineseStaff ? '自动计算项目' : '자동계산 항목'}
                         </Typography>
-                        
+
                         {/* 가격 정보 */}
-                        <Typography variant="subtitle1" sx={{ fontWeight: 600, color: '#555', mb: 2, fontSize: '1.1rem' }}>
+                        <Typography
+                          variant="subtitle1"
+                          sx={{ fontWeight: 600, color: '#555', mb: 2, fontSize: '1.1rem' }}
+                        >
                           💰 {isChineseStaff ? '价格信息' : '가격 정보'}
                         </Typography>
                         <Grid container spacing={2} sx={{ mb: 3 }}>
@@ -1637,7 +1683,10 @@ export default function MarketResearchDetailPage() {
                               {isChineseStaff ? '佣金金额' : '수수료 금액'}
                             </Typography>
                             <Typography sx={{ fontSize: '1.3rem', fontWeight: 600, color: '#000' }}>
-                              ₩ {formatNumber(editMode ? editData.commission_amount : data.commission_amount || 0)}
+                              ₩{' '}
+                              {formatNumber(
+                                editMode ? editData.commission_amount : data.commission_amount || 0
+                              )}
                             </Typography>
                           </Grid>
                           <Grid size={{ xs: 12, md: 4 }}>
@@ -1652,7 +1701,10 @@ export default function MarketResearchDetailPage() {
 
                         {/* 제품/포장 계산 정보 */}
                         <Divider sx={{ my: 2 }} />
-                        <Typography variant="subtitle1" sx={{ fontWeight: 600, color: '#555', mb: 2, fontSize: '1.1rem' }}>
+                        <Typography
+                          variant="subtitle1"
+                          sx={{ fontWeight: 600, color: '#555', mb: 2, fontSize: '1.1rem' }}
+                        >
                           📦 {isChineseStaff ? '包装计算' : '포장 계산'}
                         </Typography>
                         <Grid container spacing={2} sx={{ mb: 3 }}>
@@ -1662,7 +1714,10 @@ export default function MarketResearchDetailPage() {
                               {isChineseStaff ? '总箱数' : '총 박스수'}
                             </Typography>
                             <Typography sx={{ fontSize: '1.3rem', fontWeight: 600, color: '#000' }}>
-                              {formatNumber(editMode ? editData.total_boxes : data.total_boxes || 0)} {isChineseStaff ? '箱' : '박스'}
+                              {formatNumber(
+                                editMode ? editData.total_boxes : data.total_boxes || 0
+                              )}{' '}
+                              {isChineseStaff ? '箱' : '박스'}
                             </Typography>
                           </Grid>
                           {/* 박스당 CBM */}
@@ -1671,9 +1726,13 @@ export default function MarketResearchDetailPage() {
                               {isChineseStaff ? '每箱CBM' : '박스당 CBM'}
                             </Typography>
                             <Typography sx={{ fontSize: '1.3rem', fontWeight: 600, color: '#000' }}>
-                              {((editMode ? editData.box_length : data.box_length || 0) * 
-                                (editMode ? editData.box_width : data.box_width || 0) * 
-                                (editMode ? editData.box_height : data.box_height || 0) / 1000000).toFixed(4)} m³
+                              {(
+                                ((editMode ? editData.box_length : data.box_length || 0) *
+                                  (editMode ? editData.box_width : data.box_width || 0) *
+                                  (editMode ? editData.box_height : data.box_height || 0)) /
+                                1000000
+                              ).toFixed(4)}{' '}
+                              m³
                             </Typography>
                           </Grid>
                           {/* 총CBM */}
@@ -1681,15 +1740,23 @@ export default function MarketResearchDetailPage() {
                             <Typography sx={{ color: '#666', fontSize: '1rem', mb: 1 }}>
                               {isChineseStaff ? '总CBM' : '총CBM'}
                             </Typography>
-                            <Typography sx={{ fontSize: '1.3rem', fontWeight: 600, color: '#2196f3' }}>
-                              {(editMode ? editData.total_cbm?.toFixed(2) : data.total_cbm?.toFixed(2)) || '0.00'} m³
+                            <Typography
+                              sx={{ fontSize: '1.3rem', fontWeight: 600, color: '#2196f3' }}
+                            >
+                              {(editMode
+                                ? editData.total_cbm?.toFixed(2)
+                                : data.total_cbm?.toFixed(2)) || '0.00'}{' '}
+                              m³
                             </Typography>
                           </Grid>
                         </Grid>
 
                         {/* 운송 정보 */}
                         <Divider sx={{ my: 2 }} />
-                        <Typography variant="subtitle1" sx={{ fontWeight: 600, color: '#555', mb: 2, fontSize: '1.1rem' }}>
+                        <Typography
+                          variant="subtitle1"
+                          sx={{ fontWeight: 600, color: '#555', mb: 2, fontSize: '1.1rem' }}
+                        >
                           🚢 {isChineseStaff ? '物流信息' : '물류 정보'}
                         </Typography>
                         <Grid container spacing={2} sx={{ mb: 3 }}>
@@ -1699,7 +1766,9 @@ export default function MarketResearchDetailPage() {
                               {isChineseStaff ? '运输方式' : '운송방식'}
                             </Typography>
                             <Typography sx={{ fontSize: '1.3rem', fontWeight: 600, color: '#000' }}>
-                              {editMode ? editData.shipping_method || '-' : data.shipping_method || '-'}
+                              {editMode
+                                ? editData.shipping_method || '-'
+                                : data.shipping_method || '-'}
                             </Typography>
                           </Grid>
                           {/* LCL 운비 */}
@@ -1708,14 +1777,20 @@ export default function MarketResearchDetailPage() {
                               {isChineseStaff ? 'LCL运费' : 'LCL 운비'}
                             </Typography>
                             <Typography sx={{ fontSize: '1.3rem', fontWeight: 600, color: '#000' }}>
-                              ₩ {formatNumber(editMode ? editData.lcl_shipping_fee : data.lcl_shipping_fee || 0)}
+                              ₩{' '}
+                              {formatNumber(
+                                editMode ? editData.lcl_shipping_fee : data.lcl_shipping_fee || 0
+                              )}
                             </Typography>
                           </Grid>
                         </Grid>
 
                         {/* 관부가세 정보 */}
                         <Divider sx={{ my: 2 }} />
-                        <Typography variant="subtitle1" sx={{ fontWeight: 600, color: '#555', mb: 2, fontSize: '1.1rem' }}>
+                        <Typography
+                          variant="subtitle1"
+                          sx={{ fontWeight: 600, color: '#555', mb: 2, fontSize: '1.1rem' }}
+                        >
                           📋 {isChineseStaff ? '关税/认证' : '관부가세'}
                         </Typography>
                         <Grid container spacing={2} sx={{ mb: 3 }}>
@@ -1724,8 +1799,13 @@ export default function MarketResearchDetailPage() {
                             <Typography sx={{ color: '#666', fontSize: '1rem', mb: 1 }}>
                               {isChineseStaff ? '关税' : '관세'}
                             </Typography>
-                            <Typography sx={{ fontSize: '1.3rem', fontWeight: 600, color: '#d32f2f' }}>
-                              ₩ {formatNumber(editMode ? editData.customs_duty : data.customs_duty || 0)}
+                            <Typography
+                              sx={{ fontSize: '1.3rem', fontWeight: 600, color: '#d32f2f' }}
+                            >
+                              ₩{' '}
+                              {formatNumber(
+                                editMode ? editData.customs_duty : data.customs_duty || 0
+                              )}
                             </Typography>
                           </Grid>
                           {/* 수입 VAT */}
@@ -1733,8 +1813,11 @@ export default function MarketResearchDetailPage() {
                             <Typography sx={{ color: '#666', fontSize: '1rem', mb: 1 }}>
                               {isChineseStaff ? '进口VAT' : '수입 VAT'}
                             </Typography>
-                            <Typography sx={{ fontSize: '1.3rem', fontWeight: 600, color: '#d32f2f' }}>
-                              ₩ {formatNumber(editMode ? editData.import_vat : data.import_vat || 0)}
+                            <Typography
+                              sx={{ fontSize: '1.3rem', fontWeight: 600, color: '#d32f2f' }}
+                            >
+                              ₩{' '}
+                              {formatNumber(editMode ? editData.import_vat : data.import_vat || 0)}
                             </Typography>
                           </Grid>
                           {/* 통관 수수료 */}
@@ -1742,15 +1825,25 @@ export default function MarketResearchDetailPage() {
                             <Typography sx={{ color: '#666', fontSize: '1rem', mb: 1 }}>
                               {isChineseStaff ? '通关手续费' : '통관 수수료'}
                             </Typography>
-                            <Typography sx={{ fontSize: '1.3rem', fontWeight: 600, color: '#d32f2f' }}>
-                              ₩ {formatNumber(editMode ? editData.customs_clearance_fee : data.customs_clearance_fee || 0)}
+                            <Typography
+                              sx={{ fontSize: '1.3rem', fontWeight: 600, color: '#d32f2f' }}
+                            >
+                              ₩{' '}
+                              {formatNumber(
+                                editMode
+                                  ? editData.customs_clearance_fee
+                                  : data.customs_clearance_fee || 0
+                              )}
                             </Typography>
                           </Grid>
                         </Grid>
 
                         {/* 최종 가격 정보 */}
                         <Divider sx={{ my: 2 }} />
-                        <Typography variant="subtitle1" sx={{ fontWeight: 600, color: '#555', mb: 2, fontSize: '1.1rem' }}>
+                        <Typography
+                          variant="subtitle1"
+                          sx={{ fontWeight: 600, color: '#555', mb: 2, fontSize: '1.1rem' }}
+                        >
                           💵 {isChineseStaff ? '最终价格' : '최종 가격'}
                         </Typography>
                         <Grid container spacing={2} sx={{ mb: 3 }}>
@@ -1758,32 +1851,60 @@ export default function MarketResearchDetailPage() {
                             <Typography sx={{ color: '#666', fontSize: '1rem', mb: 1 }}>
                               {isChineseStaff ? '1次结算费用' : '1차 결제비용'}
                             </Typography>
-                            <Typography sx={{ fontSize: '1.3rem', fontWeight: 600, color: '#1976d2' }}>
-                              ₩ {formatNumber(editMode ? editData.first_payment_amount : data.first_payment_amount || 0)}
+                            <Typography
+                              sx={{ fontSize: '1.3rem', fontWeight: 600, color: '#1976d2' }}
+                            >
+                              ₩{' '}
+                              {formatNumber(
+                                editMode
+                                  ? editData.first_payment_amount
+                                  : data.first_payment_amount || 0
+                              )}
                             </Typography>
                           </Grid>
                           <Grid size={{ xs: 12, md: 6 }}>
                             <Typography sx={{ color: '#666', fontSize: '1rem', mb: 1 }}>
                               {isChineseStaff ? '预计2次结算费用' : '예상 2차결제비용'}
                             </Typography>
-                            <Typography sx={{ fontSize: '1.3rem', fontWeight: 600, color: '#1976d2' }}>
-                              ₩ {formatNumber(editMode ? editData.expected_second_payment : data.expected_second_payment || 0)}
+                            <Typography
+                              sx={{ fontSize: '1.3rem', fontWeight: 600, color: '#1976d2' }}
+                            >
+                              ₩{' '}
+                              {formatNumber(
+                                editMode
+                                  ? editData.expected_second_payment
+                                  : data.expected_second_payment || 0
+                              )}
                             </Typography>
                           </Grid>
                           <Grid size={{ xs: 12, md: 6 }}>
                             <Typography sx={{ color: '#666', fontSize: '1rem', mb: 1 }}>
                               {isChineseStaff ? '预计总合计' : '예상 총 합계'}
                             </Typography>
-                            <Typography sx={{ fontSize: '1.3rem', fontWeight: 600, color: '#388e3c' }}>
-                              ₩ {formatNumber(editMode ? editData.expected_total_supply_price : data.expected_total_supply_price || 0)}
+                            <Typography
+                              sx={{ fontSize: '1.3rem', fontWeight: 600, color: '#388e3c' }}
+                            >
+                              ₩{' '}
+                              {formatNumber(
+                                editMode
+                                  ? editData.expected_total_supply_price
+                                  : data.expected_total_supply_price || 0
+                              )}
                             </Typography>
                           </Grid>
                           <Grid size={{ xs: 12, md: 6 }}>
                             <Typography sx={{ color: '#666', fontSize: '1rem', mb: 1 }}>
                               {isChineseStaff ? '预计单价(VAT含)' : '예상 단가(VAT포함)'}
                             </Typography>
-                            <Typography sx={{ fontSize: '1.3rem', fontWeight: 600, color: '#388e3c' }}>
-                              ₩ {formatNumber(editMode ? editData.expected_unit_price : data.expected_unit_price || 0)}
+                            <Typography
+                              sx={{ fontSize: '1.3rem', fontWeight: 600, color: '#388e3c' }}
+                            >
+                              ₩{' '}
+                              {formatNumber(
+                                editMode
+                                  ? editData.expected_unit_price
+                                  : data.expected_unit_price || 0
+                              )}
                             </Typography>
                           </Grid>
                         </Grid>
@@ -1791,15 +1912,22 @@ export default function MarketResearchDetailPage() {
                         {/* 총 합계 */}
                         <Box sx={{ p: 2, bgcolor: 'primary.main', borderRadius: 1 }}>
                           <Typography sx={{ color: '#fff', fontSize: '1.1rem', mb: 1 }}>
-                            {isChineseStaff ? '总预计费用 (产品 + 运输 + 关税)' : '총 예상 비용 (제품 + 운송 + 관부가세)'}
+                            {isChineseStaff
+                              ? '总预计费用 (产品 + 运输 + 关税)'
+                              : '총 예상 비용 (제품 + 운송 + 관부가세)'}
                           </Typography>
                           <Typography sx={{ fontSize: '1.8rem', fontWeight: 700, color: '#fff' }}>
-                            ₩ {formatNumber(
-                              (editMode ? editData.exw_total : data.exw_total || 0) + 
-                              (editMode ? editData.lcl_shipping_fee || editData.fcl_shipping_fee : data.lcl_shipping_fee || data.fcl_shipping_fee || 0) + 
-                              (editMode ? editData.customs_duty : data.customs_duty || 0) + 
-                              (editMode ? editData.import_vat : data.import_vat || 0) + 
-                              (editMode ? editData.customs_clearance_fee : data.customs_clearance_fee || 0)
+                            ₩{' '}
+                            {formatNumber(
+                              (editMode ? editData.exw_total : data.exw_total || 0) +
+                                (editMode
+                                  ? editData.lcl_shipping_fee || editData.fcl_shipping_fee
+                                  : data.lcl_shipping_fee || data.fcl_shipping_fee || 0) +
+                                (editMode ? editData.customs_duty : data.customs_duty || 0) +
+                                (editMode ? editData.import_vat : data.import_vat || 0) +
+                                (editMode
+                                  ? editData.customs_clearance_fee
+                                  : data.customs_clearance_fee || 0)
                             )}
                           </Typography>
                         </Box>
@@ -1809,14 +1937,6 @@ export default function MarketResearchDetailPage() {
                 </CardContent>
               </BlankCard>
             </TabPanel>
-
-
-
-
-
-
-
-
           </Paper>
         </Grid>
 

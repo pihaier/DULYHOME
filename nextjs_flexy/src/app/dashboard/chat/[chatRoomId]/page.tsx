@@ -2,16 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import {
-  Box,
-  Container,
-  Paper,
-  Typography,
-  Alert,
-  Button,
-  Stack,
-  Chip,
-} from '@mui/material';
+import { Box, Container, Paper, Typography, Alert, Button, Stack, Chip } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import PageContainer from '@/app/components/container/PageContainer';
 import ChatPanel from '@/app/dashboard/orders/_components/ChatPanel';
@@ -22,11 +13,11 @@ export default function ChatPage() {
   const router = useRouter();
   const chatRoomId = params.chatRoomId as string;
   const { user, userProfile } = useUser();
-  
+
   // 제품 문의인지 주문 채팅인지 구분
   const isProductInquiry = chatRoomId?.startsWith('PROD-');
   const productId = isProductInquiry ? chatRoomId.replace('PROD-', '') : null;
-  
+
   // 채팅 타입 표시
   const getChatTypeInfo = () => {
     if (isProductInquiry) {
@@ -36,7 +27,7 @@ export default function ChatPage() {
         description: `제품 ID: ${productId}`,
       };
     }
-    
+
     // 주문 채팅 타입 구분 (MR-, QI-, DL- 등)
     if (chatRoomId?.startsWith('MR-')) {
       return {
@@ -59,16 +50,16 @@ export default function ChatPage() {
         description: chatRoomId,
       };
     }
-    
+
     return {
       type: '일반 문의',
       color: 'default' as const,
       description: chatRoomId,
     };
   };
-  
+
   const chatInfo = getChatTypeInfo();
-  
+
   return (
     <PageContainer title="채팅" description="실시간 채팅">
       <Container maxWidth="lg">
@@ -87,25 +78,19 @@ export default function ChatPage() {
             >
               돌아가기
             </Button>
-            
-            <Chip 
-              label={chatInfo.type} 
-              color={chatInfo.color}
-              size="small"
-            />
-            
-            <Typography variant="h6">
-              {chatInfo.description}
-            </Typography>
+
+            <Chip label={chatInfo.type} color={chatInfo.color} size="small" />
+
+            <Typography variant="h6">{chatInfo.description}</Typography>
           </Stack>
-          
+
           {/* 안내 메시지 */}
           {isProductInquiry && (
             <Alert severity="info" sx={{ mb: 2 }}>
               제품에 대한 문의사항을 남겨주세요. 담당자가 확인 후 답변드리겠습니다.
             </Alert>
           )}
-          
+
           {/* 채팅 패널 */}
           <Paper sx={{ height: '70vh', display: 'flex', flexDirection: 'column' }}>
             <ChatPanel

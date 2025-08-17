@@ -194,17 +194,18 @@ export default function MarketResearchDetailPage() {
     // 수입VAT (관세 + 관세사 + 원산지증명서 포함하여 계산)
     if (updated.exw_total) {
       const cif_value = updated.exw_total + shipping_fee; // CIF 가격
-      const vat_base = cif_value + 
-                      (updated.customs_duty || 0) + 
-                      updated.customs_broker_fee + 
-                      updated.co_certificate_fee; // 부가세 과세표준
+      const vat_base =
+        cif_value +
+        (updated.customs_duty || 0) +
+        updated.customs_broker_fee +
+        updated.co_certificate_fee; // 부가세 과세표준
       updated.import_vat = vat_base * 0.1;
     }
 
     // 2차 결제비용 (운송비 + 관세 + 관세사 + C/O + 수입VAT)
     updated.expected_second_payment =
-      shipping_fee + 
-      (updated.customs_duty || 0) + 
+      shipping_fee +
+      (updated.customs_duty || 0) +
       updated.customs_broker_fee +
       updated.co_certificate_fee +
       (updated.import_vat || 0);
@@ -249,20 +250,23 @@ export default function MarketResearchDetailPage() {
 
     setLookingUpHsCode(true);
     setHsCodeProgress(isChineseStaff ? '正在查询HS编码...' : 'HS코드 조회 중...');
-    
+
     try {
       // Edge Function URL 직접 호출 (SSE 스트리밍)
-      const response = await fetch('https://fzpyfzpmwyvqumvftfbr.supabase.co/functions/v1/hs-code-classifier', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${(await supabase.auth.getSession()).data.session?.access_token || ''}`,
-        },
-        body: JSON.stringify({ 
-          productName: editData.product_name,
-          stream: true  // SSE 스트리밍 활성화
-        }),
-      });
+      const response = await fetch(
+        'https://fzpyfzpmwyvqumvftfbr.supabase.co/functions/v1/hs-code-classifier',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${(await supabase.auth.getSession()).data.session?.access_token || ''}`,
+          },
+          body: JSON.stringify({
+            productName: editData.product_name,
+            stream: true, // SSE 스트리밍 활성화
+          }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -279,22 +283,26 @@ export default function MarketResearchDetailPage() {
 
           const chunk = decoder.decode(value);
           const lines = chunk.split('\n');
-          
+
           for (const line of lines) {
             if (line.startsWith('data: ')) {
               try {
                 const data = JSON.parse(line.slice(6));
-                
+
                 // 진행 상황 업데이트
                 switch (data.type) {
                   case 'start':
                     setHsCodeProgress(isChineseStaff ? '分析开始...' : '분석 시작...');
                     break;
                   case 'step':
-                    setHsCodeProgress(data.data.description || (isChineseStaff ? '处理中...' : '처리 중...'));
+                    setHsCodeProgress(
+                      data.data.description || (isChineseStaff ? '处理中...' : '처리 중...')
+                    );
                     break;
                   case 'progress':
-                    setHsCodeProgress(data.data.message || (isChineseStaff ? '进行中...' : '진행 중...'));
+                    setHsCodeProgress(
+                      data.data.message || (isChineseStaff ? '进行中...' : '진행 중...')
+                    );
                     break;
                   case 'complete':
                     // 최종 HS코드 받음
@@ -318,13 +326,15 @@ export default function MarketResearchDetailPage() {
       // HS코드 설정
       if (finalHsCode && /^\d{10}$/.test(finalHsCode)) {
         handleFieldChange('hs_code', finalHsCode);
-        
+
         // 관세율 자동 조회
         await fetchTariffAndCertification(finalHsCode);
-        
+
         // 완료 메시지는 이미 setHsCodeProgress로 표시됨
       } else {
-        setHsCodeProgress(isChineseStaff ? '未找到有效的HS编码' : '유효한 HS코드를 찾을 수 없습니다');
+        setHsCodeProgress(
+          isChineseStaff ? '未找到有效的HS编码' : '유효한 HS코드를 찾을 수 없습니다'
+        );
       }
     } catch (error) {
       console.error('HS code lookup error:', error);
@@ -356,13 +366,13 @@ export default function MarketResearchDetailPage() {
       // 관세율 처리 - typeCode A(기본), C(WTO), FCN1(한중FTA) 중 최저값
       if (!tariffResponse.error && tariffResponse.data?.success) {
         const tariffData = tariffResponse.data.tariffRates;
-        
+
         console.log('관세율 조회 결과:', tariffData);
 
         // A, C, FCN1 값 추출 - 0도 유효한 값이므로 ?? 사용
-        const rateA = tariffData.basic?.rate ?? 8;  // typeCode: A
-        const rateC = tariffData.wto?.rate ?? rateA;  // typeCode: C
-        const rateFCN1 = tariffData.fta_china?.rate ?? rateA;  // typeCode: FCN1
+        const rateA = tariffData.basic?.rate ?? 8; // typeCode: A
+        const rateC = tariffData.wto?.rate ?? rateA; // typeCode: C
+        const rateFCN1 = tariffData.fta_china?.rate ?? rateA; // typeCode: FCN1
 
         // 상세 정보 저장 - 3개 값 모두 표시
         setTariffDetails({
@@ -384,17 +394,17 @@ export default function MarketResearchDetailPage() {
         if (rateFCN1 < lowestRate) {
           lowestRate = rateFCN1;
           rateType = 'FCN1(한중FTA)';
-          usesFTA = true;  // FCN1이 최저값일 때 원산지 증명서 필요
+          usesFTA = true; // FCN1이 최저값일 때 원산지 증명서 필요
         }
-        
+
         console.log(`관세율 선택: ${rateType} = ${lowestRate}%`);
 
         // 관세율 설정 및 재계산 (원산지 증명서 비용 포함)
         setEditData((prev) => {
-          const updated = { 
-            ...prev, 
+          const updated = {
+            ...prev,
             customs_rate: lowestRate,
-            co_certificate_fee: usesFTA ? 50000 : 0  // FCN1 적용시 5만원
+            co_certificate_fee: usesFTA ? 50000 : 0, // FCN1 적용시 5만원
           };
           return calculateValues(updated);
         });
@@ -405,7 +415,7 @@ export default function MarketResearchDetailPage() {
           wto_rate: 8,
           korea_china_fta_rate: 8,
         });
-        
+
         setEditData((prev) => {
           const updated = { ...prev, customs_rate: 8 };
           return calculateValues(updated);
@@ -415,7 +425,7 @@ export default function MarketResearchDetailPage() {
       // 인증 필요 여부 처리
       if (!customsResponse.error && customsResponse.data?.success) {
         const hasRequirements = customsResponse.data.totalCount > 0;
-        
+
         setEditData((prev) => ({
           ...prev,
           certification_required: hasRequirements,
@@ -456,7 +466,7 @@ export default function MarketResearchDetailPage() {
         // product_actual_photos가 없으면 빈 배열로 초기화
         const dataWithPhotos = {
           ...data,
-          product_actual_photos: data.product_actual_photos || []
+          product_actual_photos: data.product_actual_photos || [],
         };
         setData(dataWithPhotos);
         setEditData(dataWithPhotos);
@@ -478,7 +488,7 @@ export default function MarketResearchDetailPage() {
     try {
       // 이미 계산된 editData를 그대로 사용 (화면에서 이미 계산됨)
       const dataToSave = { ...editData };
-      
+
       // 환율 산정 날짜를 저장 시점의 날짜로 기록
       dataToSave.exchange_rate_date = new Date().toISOString().split('T')[0];
 
@@ -521,38 +531,40 @@ export default function MarketResearchDetailPage() {
   const uploadProductPhotos = async (files: FileList) => {
     const supabase = createClient();
     const uploadedUrls: string[] = [];
-    
+
     try {
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
         const fileExt = file.name.split('.').pop();
         const safeFileName = `${Date.now()}_${Math.random().toString(36).substring(2, 8)}.${fileExt}`;
         const filePath = `${reservationNumber}/product-photos/${safeFileName}`;
-        
+
         // Supabase Storage에 업로드 (고객과 동일한 버킷 사용)
         const { data, error } = await supabase.storage
           .from('application-files')
           .upload(filePath, file, {
             cacheControl: '3600',
-            upsert: false
+            upsert: false,
           });
-        
+
         if (error) {
           console.error('Upload error:', error);
-          alert(isChineseStaff ? `文件上传失败: ${error.message}` : `파일 업로드 실패: ${error.message}`);
+          alert(
+            isChineseStaff ? `文件上传失败: ${error.message}` : `파일 업로드 실패: ${error.message}`
+          );
           continue;
         }
-        
+
         // 업로드된 파일의 공개 URL 가져오기
-        const { data: { publicUrl } } = supabase.storage
-          .from('application-files')
-          .getPublicUrl(filePath);
-        
+        const {
+          data: { publicUrl },
+        } = supabase.storage.from('application-files').getPublicUrl(filePath);
+
         uploadedUrls.push(publicUrl);
-        
+
         // uploaded_files 테이블 사용 제거 - JSONB 컬럼(product_actual_photos)만 사용
       }
-      
+
       return uploadedUrls;
     } catch (error) {
       console.error('Upload failed:', error);
@@ -660,17 +672,17 @@ export default function MarketResearchDetailPage() {
           </Box>
 
           {/* Tabs - 4개 탭으로 간소화 */}
-          <Tabs 
-            value={tabValue} 
-            onChange={(e, val) => setTabValue(val)} 
-            sx={{ 
+          <Tabs
+            value={tabValue}
+            onChange={(e, val) => setTabValue(val)}
+            sx={{
               mb: 3,
               '& .MuiTabs-scrollButtons': {
-                '&.Mui-disabled': { opacity: 0.3 }
-              }
+                '&.Mui-disabled': { opacity: 0.3 },
+              },
             }}
-            variant={isMobile ? "scrollable" : "standard"}
-            scrollButtons={isMobile ? "auto" : false}
+            variant={isMobile ? 'scrollable' : 'standard'}
+            scrollButtons={isMobile ? 'auto' : false}
             allowScrollButtonsMobile
           >
             <Tab
@@ -924,8 +936,7 @@ export default function MarketResearchDetailPage() {
                 <BlankCard sx={{ mt: 2, bgcolor: 'grey.50' }}>
                   <CardContent>
                     <Typography variant="h6" fontWeight="bold" gutterBottom sx={{ mb: 2 }}>
-                      {isChineseStaff ? 'LOGO文件' : '로고 파일'} (
-                      {data.logo_files.length}
+                      {isChineseStaff ? 'LOGO文件' : '로고 파일'} ({data.logo_files.length}
                       {isChineseStaff ? '个' : '개'})
                     </Typography>
                     <Box
@@ -1424,62 +1435,81 @@ export default function MarketResearchDetailPage() {
                     {/* 제품 실사 사진 */}
                     <Grid size={12}>
                       <Divider sx={{ my: 2 }}>
-                        <Chip label={isChineseStaff ? '产品实物照片' : '제품 실물 사진'} size="small" />
+                        <Chip
+                          label={isChineseStaff ? '产品实物照片' : '제품 실물 사진'}
+                          size="small"
+                        />
                       </Divider>
                     </Grid>
                     <Grid size={12}>
-                      <Box sx={{ 
-                        border: '2px dashed #ccc', 
-                        borderRadius: 2, 
-                        p: 3,
-                        textAlign: 'center',
-                        bgcolor: 'background.paper'
-                      }}>
-                        {editData.product_actual_photos && editData.product_actual_photos.length > 0 ? (
+                      <Box
+                        sx={{
+                          border: '2px dashed #ccc',
+                          borderRadius: 2,
+                          p: 3,
+                          textAlign: 'center',
+                          bgcolor: 'background.paper',
+                        }}
+                      >
+                        {editData.product_actual_photos &&
+                        editData.product_actual_photos.length > 0 ? (
                           <Box>
-                            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'center', mb: 2 }}>
-                              {editData.product_actual_photos.map((photo: string, index: number) => (
-                                <Box
-                                  key={index}
-                                  sx={{
-                                    position: 'relative',
-                                    width: 120,
-                                    height: 120,
-                                    border: '1px solid #ddd',
-                                    borderRadius: 1,
-                                    overflow: 'hidden',
-                                  }}
-                                >
-                                  <img
-                                    src={photo}
-                                    alt={`제품 실사 ${index + 1}`}
-                                    style={{
-                                      width: '100%',
-                                      height: '100%',
-                                      objectFit: 'cover',
+                            <Box
+                              sx={{
+                                display: 'flex',
+                                gap: 2,
+                                flexWrap: 'wrap',
+                                justifyContent: 'center',
+                                mb: 2,
+                              }}
+                            >
+                              {editData.product_actual_photos.map(
+                                (photo: string, index: number) => (
+                                  <Box
+                                    key={index}
+                                    sx={{
+                                      position: 'relative',
+                                      width: 120,
+                                      height: 120,
+                                      border: '1px solid #ddd',
+                                      borderRadius: 1,
+                                      overflow: 'hidden',
                                     }}
-                                  />
-                                  {editMode && (
-                                    <IconButton
-                                      size="small"
-                                      sx={{
-                                        position: 'absolute',
-                                        top: 4,
-                                        right: 4,
-                                        bgcolor: 'rgba(255,255,255,0.9)',
-                                        '&:hover': { bgcolor: 'rgba(255,255,255,1)' },
+                                  >
+                                    <img
+                                      src={photo}
+                                      alt={`제품 실사 ${index + 1}`}
+                                      style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        objectFit: 'cover',
                                       }}
-                                      onClick={() => {
-                                        const newPhotos = [...editData.product_actual_photos];
-                                        newPhotos.splice(index, 1);
-                                        setEditData({ ...editData, product_actual_photos: newPhotos });
-                                      }}
-                                    >
-                                      <CloseIcon fontSize="small" />
-                                    </IconButton>
-                                  )}
-                                </Box>
-                              ))}
+                                    />
+                                    {editMode && (
+                                      <IconButton
+                                        size="small"
+                                        sx={{
+                                          position: 'absolute',
+                                          top: 4,
+                                          right: 4,
+                                          bgcolor: 'rgba(255,255,255,0.9)',
+                                          '&:hover': { bgcolor: 'rgba(255,255,255,1)' },
+                                        }}
+                                        onClick={() => {
+                                          const newPhotos = [...editData.product_actual_photos];
+                                          newPhotos.splice(index, 1);
+                                          setEditData({
+                                            ...editData,
+                                            product_actual_photos: newPhotos,
+                                          });
+                                        }}
+                                      >
+                                        <CloseIcon fontSize="small" />
+                                      </IconButton>
+                                    )}
+                                  </Box>
+                                )
+                              )}
                             </Box>
                             {editMode && (
                               <Button
@@ -1500,7 +1530,10 @@ export default function MarketResearchDetailPage() {
                                       if (uploadedUrls.length > 0) {
                                         setEditData({
                                           ...editData,
-                                          product_actual_photos: [...(editData.product_actual_photos || []), ...uploadedUrls]
+                                          product_actual_photos: [
+                                            ...(editData.product_actual_photos || []),
+                                            ...uploadedUrls,
+                                          ],
                                         });
                                       }
                                     }
@@ -1511,7 +1544,9 @@ export default function MarketResearchDetailPage() {
                           </Box>
                         ) : (
                           <Box>
-                            <CloudUploadIcon sx={{ fontSize: 48, color: 'text.secondary', mb: 2 }} />
+                            <CloudUploadIcon
+                              sx={{ fontSize: 48, color: 'text.secondary', mb: 2 }}
+                            />
                             <Typography variant="body1" color="text.secondary" gutterBottom>
                               {isChineseStaff ? '产品实物照片' : '제품 실물 사진'}
                             </Typography>
@@ -1535,7 +1570,7 @@ export default function MarketResearchDetailPage() {
                                       if (uploadedUrls.length > 0) {
                                         setEditData({
                                           ...editData,
-                                          product_actual_photos: uploadedUrls
+                                          product_actual_photos: uploadedUrls,
                                         });
                                       }
                                     }
@@ -1579,9 +1614,9 @@ export default function MarketResearchDetailPage() {
                         type="number"
                         label={isChineseStaff ? '样品单价(¥)' : '샘플단가(¥)'}
                         value={
-                          editMode 
-                            ? (editData.sample_china_price || '')
-                            : (data.sample_china_price || '')
+                          editMode
+                            ? editData.sample_china_price || ''
+                            : data.sample_china_price || ''
                         }
                         onChange={(e) => {
                           if (editMode) {
@@ -1590,7 +1625,7 @@ export default function MarketResearchDetailPage() {
                             setEditData({
                               ...editData,
                               sample_china_price: chinaPrice,
-                              sample_unit_price: chinaPrice * (editData.exchange_rate || 203)
+                              sample_unit_price: chinaPrice * (editData.exchange_rate || 203),
                             });
                           }
                         }}
@@ -1606,9 +1641,13 @@ export default function MarketResearchDetailPage() {
                         fullWidth
                         label={isChineseStaff ? '样品单价(韩元)' : '샘플단가(원)'}
                         value={
-                          editMode 
-                            ? (editData.sample_unit_price ? editData.sample_unit_price.toLocaleString() : '')
-                            : (data.sample_unit_price ? data.sample_unit_price.toLocaleString() : '')
+                          editMode
+                            ? editData.sample_unit_price
+                              ? editData.sample_unit_price.toLocaleString()
+                              : ''
+                            : data.sample_unit_price
+                              ? data.sample_unit_price.toLocaleString()
+                              : ''
                         }
                         disabled
                         size="small"
@@ -1732,7 +1771,7 @@ export default function MarketResearchDetailPage() {
                               }}
                             />
                           </Grid>
-                          
+
                           <Grid size={{ xs: 12, md: 3 }}>
                             <TextField
                               fullWidth
@@ -1766,7 +1805,7 @@ export default function MarketResearchDetailPage() {
                               }}
                             />
                           </Grid>
-                          
+
                           <Grid size={{ xs: 12, md: 3 }}>
                             <TextField
                               fullWidth
@@ -1802,7 +1841,7 @@ export default function MarketResearchDetailPage() {
                               }}
                             />
                           </Grid>
-                          
+
                           <Grid size={{ xs: 12, md: 3 }}>
                             <TextField
                               fullWidth
@@ -1874,7 +1913,13 @@ export default function MarketResearchDetailPage() {
                           {/* 제품 수량 및 박스 정보 구분선 */}
                           <Grid size={12}>
                             <Divider sx={{ my: 2 }}>
-                              <Chip label={isChineseStaff ? '📦 产品数量与包装' : '📦 제품 수량 및 포장'} size="small" color="secondary" />
+                              <Chip
+                                label={
+                                  isChineseStaff ? '📦 产品数量与包装' : '📦 제품 수량 및 포장'
+                                }
+                                size="small"
+                                color="secondary"
+                              />
                             </Divider>
                           </Grid>
 
@@ -1914,7 +1959,7 @@ export default function MarketResearchDetailPage() {
                               }}
                             />
                           </Grid>
-                          
+
                           <Grid size={{ xs: 12, md: 6 }}>
                             <TextField
                               fullWidth
@@ -1934,7 +1979,9 @@ export default function MarketResearchDetailPage() {
                               disabled={!editMode}
                               size="medium"
                               InputProps={{
-                                endAdornment: <InputAdornment position="end">개/박스</InputAdornment>,
+                                endAdornment: (
+                                  <InputAdornment position="end">개/박스</InputAdornment>
+                                ),
                               }}
                               sx={{
                                 '& .MuiInputLabel-root': {
@@ -1987,7 +2034,7 @@ export default function MarketResearchDetailPage() {
                               }}
                             />
                           </Grid>
-                          
+
                           <Grid size={{ xs: 12, md: 4 }}>
                             <TextField
                               fullWidth
@@ -2023,7 +2070,7 @@ export default function MarketResearchDetailPage() {
                               }}
                             />
                           </Grid>
-                          
+
                           <Grid size={{ xs: 12, md: 4 }}>
                             <TextField
                               fullWidth
@@ -2063,7 +2110,11 @@ export default function MarketResearchDetailPage() {
                           {/* 가격 섹션 구분선 */}
                           <Grid size={12}>
                             <Divider sx={{ my: 2 }}>
-                              <Chip label={isChineseStaff ? '💰 价格信息' : '💰 가격 정보'} size="small" color="primary" />
+                              <Chip
+                                label={isChineseStaff ? '💰 价格信息' : '💰 가격 정보'}
+                                size="small"
+                                color="primary"
+                              />
                             </Divider>
                           </Grid>
 
@@ -2119,9 +2170,9 @@ export default function MarketResearchDetailPage() {
                             </Box>
                             {/* HS코드 조회 진행 상황 표시 */}
                             {hsCodeProgress && (
-                              <Typography 
-                                variant="body2" 
-                                color="primary" 
+                              <Typography
+                                variant="body2"
+                                color="primary"
                                 sx={{ mt: 1, fontWeight: 500 }}
                               >
                                 {hsCodeProgress}
@@ -2134,11 +2185,7 @@ export default function MarketResearchDetailPage() {
                             <TextField
                               fullWidth
                               label={isChineseStaff ? '关税率' : '관세율'}
-                              value={
-                                editMode
-                                  ? editData.customs_rate || 0
-                                  : data.customs_rate || 0
-                              }
+                              value={editMode ? editData.customs_rate || 0 : data.customs_rate || 0}
                               onChange={(e) => {
                                 if (editMode) {
                                   const value = parseFloat(e.target.value) || 0;
@@ -2153,7 +2200,7 @@ export default function MarketResearchDetailPage() {
                               helperText={
                                 tariffDetails
                                   ? `A(기본): ${tariffDetails.basic_rate || 8}%, C(WTO): ${tariffDetails.wto_rate || 8}%, FCN1(한중FTA): ${tariffDetails.korea_china_fta_rate || 8}%`
-                                  : editMode 
+                                  : editMode
                                     ? '수동 입력 가능 (HS코드 조회 시 자동입력)'
                                     : 'HS코드 입력 시 자동조회'
                               }
@@ -2183,13 +2230,15 @@ export default function MarketResearchDetailPage() {
 
                     {/* ========== 자동 계산 섹션 (하단) ========== */}
                     <Grid size={12}>
-                      <Paper
-                        elevation={3}
-                        sx={{ p: 3, bgcolor: 'grey.50', borderRadius: 2 }}
-                      >
+                      <Paper elevation={3} sx={{ p: 3, bgcolor: 'grey.50', borderRadius: 2 }}>
                         <Typography
                           variant="h6"
-                          sx={{ mb: 3, fontWeight: 600, color: 'secondary.main', fontSize: '1.3rem' }}
+                          sx={{
+                            mb: 3,
+                            fontWeight: 600,
+                            color: 'secondary.main',
+                            fontSize: '1.3rem',
+                          }}
                         >
                           💰 {isChineseStaff ? '自动计算结果' : '자동 계산 결과'}
                         </Typography>
@@ -2236,41 +2285,69 @@ export default function MarketResearchDetailPage() {
                               </TableRow>
                             </TableHead>
                             <TableBody>
-
                               {/* 총 박스수 */}
                               <TableRow>
-                                <TableCell sx={{ fontSize: '1rem', py: 1.5 }}>{isChineseStaff ? '总箱数' : '총 박스수'}</TableCell>
-                                <TableCell align="right" sx={{ fontWeight: 700, fontSize: '1.1rem', py: 1.5 }}>
+                                <TableCell sx={{ fontSize: '1rem', py: 1.5 }}>
+                                  {isChineseStaff ? '总箱数' : '총 박스수'}
+                                </TableCell>
+                                <TableCell
+                                  align="right"
+                                  sx={{ fontWeight: 700, fontSize: '1.1rem', py: 1.5 }}
+                                >
                                   {formatNumber(editData.total_boxes)}
                                 </TableCell>
-                                <TableCell sx={{ color: 'text.secondary', fontSize: '0.95rem', py: 1.5 }}>
+                                <TableCell
+                                  sx={{ color: 'text.secondary', fontSize: '0.95rem', py: 1.5 }}
+                                >
                                   수량 ÷ 박스당개수
                                 </TableCell>
                               </TableRow>
 
                               {/* CBM */}
                               <TableRow>
-                                <TableCell sx={{ fontSize: '1rem', py: 1.5 }}>{isChineseStaff ? '总CBM' : '총 CBM'}</TableCell>
-                                <TableCell align="right" sx={{ fontWeight: 700, fontSize: '1.1rem', py: 1.5, color: 'info.main' }}>
+                                <TableCell sx={{ fontSize: '1rem', py: 1.5 }}>
+                                  {isChineseStaff ? '总CBM' : '총 CBM'}
+                                </TableCell>
+                                <TableCell
+                                  align="right"
+                                  sx={{
+                                    fontWeight: 700,
+                                    fontSize: '1.1rem',
+                                    py: 1.5,
+                                    color: 'info.main',
+                                  }}
+                                >
                                   {editData.total_cbm?.toFixed(2) || 0} m³
                                 </TableCell>
-                                <TableCell sx={{ color: 'text.secondary', fontSize: '0.95rem', py: 1.5 }}>
+                                <TableCell
+                                  sx={{ color: 'text.secondary', fontSize: '0.95rem', py: 1.5 }}
+                                >
                                   박스수 × (가로×세로×높이)÷1,000,000
                                 </TableCell>
                               </TableRow>
 
                               {/* 운송방법 */}
                               <TableRow>
-                                <TableCell sx={{ fontSize: '1rem', py: 1.5 }}>{isChineseStaff ? '运输方式' : '운송방법'}</TableCell>
-                                <TableCell align="right" sx={{ 
-                                  fontWeight: 700, 
-                                  fontSize: '1.2rem', 
-                                  py: 1.5,
-                                  color: editData.shipping_method === 'FCL' ? 'error.main' : 'success.main'
-                                }}>
+                                <TableCell sx={{ fontSize: '1rem', py: 1.5 }}>
+                                  {isChineseStaff ? '运输方式' : '운송방법'}
+                                </TableCell>
+                                <TableCell
+                                  align="right"
+                                  sx={{
+                                    fontWeight: 700,
+                                    fontSize: '1.2rem',
+                                    py: 1.5,
+                                    color:
+                                      editData.shipping_method === 'FCL'
+                                        ? 'error.main'
+                                        : 'success.main',
+                                  }}
+                                >
                                   {editData.shipping_method}
                                 </TableCell>
-                                <TableCell sx={{ color: 'text.secondary', fontSize: '0.95rem', py: 1.5 }}>
+                                <TableCell
+                                  sx={{ color: 'text.secondary', fontSize: '0.95rem', py: 1.5 }}
+                                >
                                   CBM ≥ 15 ? FCL : LCL
                                 </TableCell>
                               </TableRow>
@@ -2312,7 +2389,6 @@ export default function MarketResearchDetailPage() {
                                 </TableCell>
                               </TableRow>
 
-
                               {/* 관세 */}
                               <TableRow>
                                 <TableCell>{isChineseStaff ? '关税' : '관세'}</TableCell>
@@ -2337,7 +2413,9 @@ export default function MarketResearchDetailPage() {
 
                               {/* 관세사 비용 */}
                               <TableRow>
-                                <TableCell>{isChineseStaff ? '报关代理费' : '관세사 비용'}</TableCell>
+                                <TableCell>
+                                  {isChineseStaff ? '报关代理费' : '관세사 비용'}
+                                </TableCell>
                                 <TableCell align="right" sx={{ fontWeight: 600 }}>
                                   ₩{formatNumber(editData.customs_broker_fee)}
                                 </TableCell>
@@ -2349,7 +2427,9 @@ export default function MarketResearchDetailPage() {
                               {/* 원산지 증명서 비용 (FCN1 적용시만) */}
                               {editData.co_certificate_fee > 0 && (
                                 <TableRow>
-                                  <TableCell>{isChineseStaff ? '原产地证明书费用' : '원산지 증명서 비용'}</TableCell>
+                                  <TableCell>
+                                    {isChineseStaff ? '原产地证明书费用' : '원산지 증명서 비용'}
+                                  </TableCell>
                                   <TableCell align="right" sx={{ fontWeight: 600 }}>
                                     ₩{formatNumber(editData.co_certificate_fee)}
                                   </TableCell>
@@ -2361,7 +2441,10 @@ export default function MarketResearchDetailPage() {
 
                               {/* ===== 합계 섹션 ===== */}
                               <TableRow sx={{ bgcolor: 'grey.100' }}>
-                                <TableCell colSpan={3} sx={{ fontWeight: 'bold', color: 'error.main' }}>
+                                <TableCell
+                                  colSpan={3}
+                                  sx={{ fontWeight: 'bold', color: 'error.main' }}
+                                >
                                   💰 {isChineseStaff ? '合计' : '합계'}
                                 </TableCell>
                               </TableRow>
@@ -2464,7 +2547,10 @@ export default function MarketResearchDetailPage() {
         {/* Chat Panel - Desktop only */}
         {!isMobile && (
           <Grid size={{ xs: 12, md: 4 }}>
-            <Paper elevation={3} sx={{ position: 'sticky', top: 100, height: 'calc(100vh - 200px)' }}>
+            <Paper
+              elevation={3}
+              sx={{ position: 'sticky', top: 100, height: 'calc(100vh - 200px)' }}
+            >
               <ChatPanel
                 reservationNumber={reservationNumber}
                 currentUserRole={userProfile?.role || ''}

@@ -314,7 +314,7 @@ export default function MarketResearchPage() {
               url: publicUrl,
               filename: file.name,
               size: file.size,
-              uploaded_at: new Date().toISOString()
+              uploaded_at: new Date().toISOString(),
             };
 
             // 카테고리별로 적절한 배열에 추가
@@ -348,7 +348,7 @@ export default function MarketResearchPage() {
                     url: result.data.url,
                     filename: file.name,
                     size: file.size,
-                    uploaded_at: new Date().toISOString()
+                    uploaded_at: new Date().toISOString(),
                   };
 
                   // 카테고리별로 적절한 배열에 추가
@@ -373,7 +373,7 @@ export default function MarketResearchPage() {
         // 파일 정보를 market_research_requests 테이블의 컬럼에 저장
         if (applicationPhotos.length > 0 || logoFiles.length > 0 || boxFiles.length > 0) {
           const updateData: any = {};
-          
+
           if (applicationPhotos.length > 0) {
             updateData.application_photos = applicationPhotos;
           }

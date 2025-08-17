@@ -89,21 +89,23 @@ export default function CartPage() {
   // 장바구니 데이터 가져오기
   const fetchCartItems = async () => {
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
       if (!session?.user?.id) {
         console.log('No user session');
         setLoading(false);
         return;
       }
-      
+
       const { data, error } = await supabase
         .from('cart_items_1688')
         .select('*')
         .eq('user_id', session.user.id)
         .eq('status', 'pending')
         .order('created_at', { ascending: false });
-      
+
       if (error) {
         console.error('Error fetching cart items:', error);
       } else {
@@ -123,17 +125,14 @@ export default function CartPage() {
   // 아이템 삭제
   const handleDelete = async (itemId: string) => {
     if (!confirm('정말 삭제하시겠습니까?')) return;
-    
+
     try {
-      const { error } = await supabase
-        .from('cart_items_1688')
-        .delete()
-        .eq('id', itemId);
-      
+      const { error } = await supabase.from('cart_items_1688').delete().eq('id', itemId);
+
       if (error) {
         throw error;
       }
-      
+
       await fetchCartItems();
       alert('삭제되었습니다.');
     } catch (error) {
@@ -153,14 +152,14 @@ export default function CartPage() {
   // 수정 저장
   const handleSaveEdit = async () => {
     if (!editingItem) return;
-    
+
     try {
       // 최소 주문 수량 체크
       if (editQuantity < editingItem.min_order_quantity) {
         alert(`최소 주문 수량은 ${editingItem.min_order_quantity}개 입니다.`);
         return;
       }
-      
+
       // 1차 비용 재계산
       const chinaPriceKRW = Math.floor(editingItem.china_price * editingItem.exchange_rate);
       const totalChinaPrice = chinaPriceKRW * editQuantity;
@@ -168,7 +167,7 @@ export default function CartPage() {
       const commission = Math.floor(exwTotal * 0.05); // 5% 수수료
       const commissionVAT = Math.floor(commission * 0.1);
       const firstPayment = exwTotal + commission + commissionVAT;
-      
+
       const { error } = await supabase
         .from('cart_items_1688')
         .update({
@@ -181,14 +180,14 @@ export default function CartPage() {
           commission: commission,
           commission_vat: commissionVAT,
           first_payment: firstPayment,
-          updated_at: new Date().toISOString()
+          updated_at: new Date().toISOString(),
         })
         .eq('id', editingItem.id);
-      
+
       if (error) {
         throw error;
       }
-      
+
       await fetchCartItems();
       setEditDialog(false);
       alert('수정되었습니다.');
@@ -201,23 +200,21 @@ export default function CartPage() {
   // 선택 항목 관리
   const handleSelectAll = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      setSelectedItems(cartItems.map(item => item.id));
+      setSelectedItems(cartItems.map((item) => item.id));
     } else {
       setSelectedItems([]);
     }
   };
 
   const handleSelectItem = (itemId: string) => {
-    setSelectedItems(prev => 
-      prev.includes(itemId) 
-        ? prev.filter(id => id !== itemId)
-        : [...prev, itemId]
+    setSelectedItems((prev) =>
+      prev.includes(itemId) ? prev.filter((id) => id !== itemId) : [...prev, itemId]
     );
   };
 
   // 총 금액 계산
   const calculateTotal = () => {
-    const selectedCartItems = cartItems.filter(item => selectedItems.includes(item.id));
+    const selectedCartItems = cartItems.filter((item) => selectedItems.includes(item.id));
     return selectedCartItems.reduce((sum, item) => sum + (item.first_payment || 0), 0);
   };
 
@@ -241,28 +238,24 @@ export default function CartPage() {
             <ShoppingCartIcon sx={{ mr: 1, verticalAlign: 'bottom' }} />
             1688 장바구니
           </Typography>
-          
+
           {/* 준비중 알림 */}
           <Alert severity="warning" icon={<ConstructionIcon />} sx={{ mb: 3 }}>
             <Typography variant="h6" gutterBottom>
               1688 서비스 준비중
             </Typography>
             <Typography variant="body2">
-              현재 1688.com API 연동 및 주문 시스템 준비 중입니다. 
-              빠른 시일 내에 정식 서비스를 제공할 예정입니다.
+              현재 1688.com API 연동 및 주문 시스템 준비 중입니다. 빠른 시일 내에 정식 서비스를
+              제공할 예정입니다.
             </Typography>
           </Alert>
-          
+
           {cartItems.length === 0 ? (
             <Paper sx={{ p: 4, textAlign: 'center' }}>
               <Typography variant="h6" color="text.secondary">
                 장바구니가 비어있습니다.
               </Typography>
-              <Button 
-                variant="contained" 
-                sx={{ mt: 2 }}
-                href="/1688"
-              >
+              <Button variant="contained" sx={{ mt: 2 }} href="/1688">
                 상품 둘러보기
               </Button>
             </Paper>
@@ -299,15 +292,13 @@ export default function CartPage() {
                         </TableCell>
                         <TableCell>
                           <Stack direction="row" spacing={2}>
-                            <img 
-                              src={item.product_image} 
+                            <img
+                              src={item.product_image}
                               alt={item.product_name}
                               style={{ width: 80, height: 80, objectFit: 'cover' }}
                             />
                             <Box>
-                              <Typography variant="subtitle2">
-                                {item.product_name}
-                              </Typography>
+                              <Typography variant="subtitle2">{item.product_name}</Typography>
                               <Button
                                 size="small"
                                 startIcon={<OpenInNewIcon />}
@@ -320,30 +311,50 @@ export default function CartPage() {
                         </TableCell>
                         <TableCell align="center">
                           <Box>
-                            {item.selected_attributes && Object.entries(item.selected_attributes).map(([key, value]) => (
-                              <Chip 
-                                key={key} 
-                                label={`${key}: ${value}`} 
-                                size="small" 
-                                sx={{ m: 0.5 }}
-                              />
-                            ))}
+                            {item.selected_attributes &&
+                              Object.entries(item.selected_attributes).map(([key, value]) => (
+                                <Chip
+                                  key={key}
+                                  label={`${key}: ${value}`}
+                                  size="small"
+                                  sx={{ m: 0.5 }}
+                                />
+                              ))}
                             {/* 메모 표시 */}
                             {item.memo && (
-                              <Typography variant="caption" display="block" sx={{ mt: 1, fontStyle: 'italic' }}>
+                              <Typography
+                                variant="caption"
+                                display="block"
+                                sx={{ mt: 1, fontStyle: 'italic' }}
+                              >
                                 메모: {item.memo}
                               </Typography>
                             )}
                             {/* 추가 요청사항 표시 */}
-                            <Stack direction="row" spacing={0.5} sx={{ mt: 1 }} justifyContent="center">
+                            <Stack
+                              direction="row"
+                              spacing={0.5}
+                              sx={{ mt: 1 }}
+                              justifyContent="center"
+                            >
                               {item.is_sample_needed && (
                                 <Chip label="샘플" size="small" color="info" variant="outlined" />
                               )}
                               {item.is_logo_needed && (
-                                <Chip label="로고" size="small" color="success" variant="outlined" />
+                                <Chip
+                                  label="로고"
+                                  size="small"
+                                  color="success"
+                                  variant="outlined"
+                                />
                               )}
                               {item.is_custom_packaging && (
-                                <Chip label="커스텀포장" size="small" color="warning" variant="outlined" />
+                                <Chip
+                                  label="커스텀포장"
+                                  size="small"
+                                  color="warning"
+                                  variant="outlined"
+                                />
                               )}
                             </Stack>
                           </Box>
@@ -383,15 +394,15 @@ export default function CartPage() {
                         </TableCell>
                         <TableCell align="center">
                           <Stack direction="row" spacing={1}>
-                            <IconButton 
-                              size="small" 
+                            <IconButton
+                              size="small"
                               onClick={() => handleEdit(item)}
                               color="primary"
                             >
                               <EditIcon />
                             </IconButton>
-                            <IconButton 
-                              size="small" 
+                            <IconButton
+                              size="small"
                               onClick={() => handleDelete(item.id)}
                               color="error"
                             >
@@ -411,8 +422,8 @@ export default function CartPage() {
                   <Grid container spacing={3}>
                     <Grid size={{ xs: 12, md: 8 }}>
                       <Alert severity="info">
-                        선택한 {selectedItems.length}개 상품의 1차 결제 비용입니다. 
-                        2차 결제 비용(운송비, 관세 등)은 별도로 계산됩니다.
+                        선택한 {selectedItems.length}개 상품의 1차 결제 비용입니다. 2차 결제
+                        비용(운송비, 관세 등)은 별도로 계산됩니다.
                       </Alert>
                     </Grid>
                     <Grid size={{ xs: 12, md: 4 }}>
@@ -449,7 +460,13 @@ export default function CartPage() {
                   수량 (최소: {editingItem?.min_order_quantity}개)
                 </Typography>
                 <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 3 }}>
-                  <IconButton onClick={() => setEditQuantity(Math.max(editingItem?.min_order_quantity || 1, editQuantity - 1))}>
+                  <IconButton
+                    onClick={() =>
+                      setEditQuantity(
+                        Math.max(editingItem?.min_order_quantity || 1, editQuantity - 1)
+                      )
+                    }
+                  >
                     <RemoveIcon />
                   </IconButton>
                   <TextField
@@ -464,7 +481,7 @@ export default function CartPage() {
                     <AddIcon />
                   </IconButton>
                 </Stack>
-                
+
                 <Typography variant="subtitle2" gutterBottom>
                   메모
                 </Typography>
@@ -476,34 +493,46 @@ export default function CartPage() {
                   fullWidth
                   placeholder="특별 요청사항을 입력하세요"
                 />
-                
+
                 <Typography variant="subtitle2" gutterBottom sx={{ mt: 2 }}>
                   추가 요청사항
                 </Typography>
                 <FormGroup>
                   <FormControlLabel
                     control={
-                      <Checkbox 
+                      <Checkbox
                         checked={editingItem?.is_sample_needed || false}
-                        onChange={(e) => setEditingItem(prev => prev ? {...prev, is_sample_needed: e.target.checked} : null)}
+                        onChange={(e) =>
+                          setEditingItem((prev) =>
+                            prev ? { ...prev, is_sample_needed: e.target.checked } : null
+                          )
+                        }
                       />
                     }
                     label="샘플 필요"
                   />
                   <FormControlLabel
                     control={
-                      <Checkbox 
+                      <Checkbox
                         checked={editingItem?.is_logo_needed || false}
-                        onChange={(e) => setEditingItem(prev => prev ? {...prev, is_logo_needed: e.target.checked} : null)}
+                        onChange={(e) =>
+                          setEditingItem((prev) =>
+                            prev ? { ...prev, is_logo_needed: e.target.checked } : null
+                          )
+                        }
                       />
                     }
                     label="로고 삽입 필요"
                   />
                   <FormControlLabel
                     control={
-                      <Checkbox 
+                      <Checkbox
                         checked={editingItem?.is_custom_packaging || false}
-                        onChange={(e) => setEditingItem(prev => prev ? {...prev, is_custom_packaging: e.target.checked} : null)}
+                        onChange={(e) =>
+                          setEditingItem((prev) =>
+                            prev ? { ...prev, is_custom_packaging: e.target.checked } : null
+                          )
+                        }
                       />
                     }
                     label="커스텀 포장 필요"
@@ -513,7 +542,9 @@ export default function CartPage() {
             </DialogContent>
             <DialogActions>
               <Button onClick={() => setEditDialog(false)}>취소</Button>
-              <Button onClick={handleSaveEdit} variant="contained">저장</Button>
+              <Button onClick={handleSaveEdit} variant="contained">
+                저장
+              </Button>
             </DialogActions>
           </Dialog>
         </Box>

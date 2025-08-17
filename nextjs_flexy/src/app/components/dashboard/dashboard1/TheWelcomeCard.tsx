@@ -11,9 +11,10 @@ const WelcomeCard = () => {
   const { user, userProfile } = useUser();
   const router = useRouter();
 
-  const userName = (userProfile?.contact_person && userProfile.contact_person !== '미입력') 
-    ? userProfile.contact_person 
-    : user?.user_metadata?.name || '고객';
+  const userName =
+    userProfile?.contact_person && userProfile.contact_person !== '미입력'
+      ? userProfile.contact_person
+      : user?.user_metadata?.name || '고객';
 
   return (
     <Card

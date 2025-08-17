@@ -75,9 +75,9 @@ const Navigations = () => {
           <NextLink href={navlink.href}>
             {navlink.title}
             {navlink.badge && (
-              <Chip 
-                label={navlink.badge} 
-                size="small" 
+              <Chip
+                label={navlink.badge}
+                size="small"
                 color={navlink.badge === '준비중' ? 'warning' : 'error'}
                 sx={{ ml: 1, height: 20, fontSize: '0.7rem' }}
               />

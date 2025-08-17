@@ -130,7 +130,7 @@ export default function OrdersListPage() {
             ...order,
             quantity: order.research_quantity,
             service_type: 'market_research' as const,
-            payment_status: 'pending',  // market_research는 payment_status 필드가 없으므로 기본값 사용
+            payment_status: 'pending', // market_research는 payment_status 필드가 없으므로 기본값 사용
           }))
         );
       }

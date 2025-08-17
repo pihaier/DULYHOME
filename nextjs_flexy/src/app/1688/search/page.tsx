@@ -107,78 +107,78 @@ interface Category {
 const dummyCategories: Category[] = [
   {
     categoryID: 15,
-    name: "居家日用品",
+    name: '居家日用品',
     level: 1,
     isLeaf: false,
     parentIDs: [0],
     childCategorys: [
-      { id: 1556, name: "居家日用", categoryType: "1", isLeaf: false },
-      { id: 1045268, name: "酒店用品", categoryType: "1", isLeaf: false },
-      { id: 124284003, name: "秤", categoryType: "1", isLeaf: false },
-      { id: 124272009, name: "打火机及烟具", categoryType: "1", isLeaf: false },
-      { id: 124016003, name: "挡风、遮阳、防雨工具", categoryType: "1", isLeaf: false },
-      { id: 201664803, name: "保暖贴/怀炉/保暖用品", categoryType: "1", isLeaf: false },
-      { id: 1045059, name: "USB新奇特", categoryType: "1", isLeaf: false }
-    ]
+      { id: 1556, name: '居家日用', categoryType: '1', isLeaf: false },
+      { id: 1045268, name: '酒店用品', categoryType: '1', isLeaf: false },
+      { id: 124284003, name: '秤', categoryType: '1', isLeaf: false },
+      { id: 124272009, name: '打火机及烟具', categoryType: '1', isLeaf: false },
+      { id: 124016003, name: '挡风、遮阳、防雨工具', categoryType: '1', isLeaf: false },
+      { id: 201664803, name: '保暖贴/怀炉/保暖用品', categoryType: '1', isLeaf: false },
+      { id: 1045059, name: 'USB新奇特', categoryType: '1', isLeaf: false },
+    ],
   },
   {
     categoryID: 7,
-    name: "纺织、皮革、羽绒原料",
+    name: '纺织、皮革、羽绒原料',
     level: 1,
     isLeaf: false,
     parentIDs: [0],
     childCategorys: [
-      { id: 2829, name: "纺织原料", categoryType: "1", isLeaf: false },
-      { id: 411, name: "皮革", categoryType: "1", isLeaf: false },
-      { id: 2805, name: "羽绒原料", categoryType: "1", isLeaf: false },
-      { id: 10166, name: "化纤坯布", categoryType: "1", isLeaf: false }
-    ]
+      { id: 2829, name: '纺织原料', categoryType: '1', isLeaf: false },
+      { id: 411, name: '皮革', categoryType: '1', isLeaf: false },
+      { id: 2805, name: '羽绒原料', categoryType: '1', isLeaf: false },
+      { id: 10166, name: '化纤坯布', categoryType: '1', isLeaf: false },
+    ],
   },
   {
     categoryID: 311,
-    name: "服装",
+    name: '服装',
     level: 1,
     isLeaf: false,
     parentIDs: [0],
     childCategorys: [
-      { id: 100000773, name: "女装", categoryType: "1", isLeaf: false },
-      { id: 100000777, name: "男装", categoryType: "1", isLeaf: false },
-      { id: 100003197, name: "童装", categoryType: "1", isLeaf: false },
-      { id: 127450003, name: "中老年服装", categoryType: "1", isLeaf: false }
-    ]
+      { id: 100000773, name: '女装', categoryType: '1', isLeaf: false },
+      { id: 100000777, name: '男装', categoryType: '1', isLeaf: false },
+      { id: 100003197, name: '童装', categoryType: '1', isLeaf: false },
+      { id: 127450003, name: '中老年服装', categoryType: '1', isLeaf: false },
+    ],
   },
   {
     categoryID: 1813,
-    name: "内衣",
+    name: '内衣',
     level: 1,
     isLeaf: false,
     parentIDs: [0],
     childCategorys: [
-      { id: 100003222, name: "文胸", categoryType: "1", isLeaf: false },
-      { id: 100003224, name: "内裤", categoryType: "1", isLeaf: false },
-      { id: 100003226, name: "塑身内衣", categoryType: "1", isLeaf: false },
-      { id: 100003233, name: "睡衣/家居服", categoryType: "1", isLeaf: false }
-    ]
+      { id: 100003222, name: '文胸', categoryType: '1', isLeaf: false },
+      { id: 100003224, name: '内裤', categoryType: '1', isLeaf: false },
+      { id: 100003226, name: '塑身内衣', categoryType: '1', isLeaf: false },
+      { id: 100003233, name: '睡衣/家居服', categoryType: '1', isLeaf: false },
+    ],
   },
   {
     categoryID: 509,
-    name: "电子元器件",
+    name: '电子元器件',
     level: 1,
     isLeaf: false,
     parentIDs: [0],
     childCategorys: [
-      { id: 503, name: "连接器", categoryType: "1", isLeaf: false },
-      { id: 501, name: "集成电路", categoryType: "1", isLeaf: false },
-      { id: 502, name: "二三极管", categoryType: "1", isLeaf: false },
-      { id: 504, name: "电容器", categoryType: "1", isLeaf: false }
-    ]
-  }
+      { id: 503, name: '连接器', categoryType: '1', isLeaf: false },
+      { id: 501, name: '集成电路', categoryType: '1', isLeaf: false },
+      { id: 502, name: '二三极管', categoryType: '1', isLeaf: false },
+      { id: 504, name: '电容器', categoryType: '1', isLeaf: false },
+    ],
+  },
 ];
 
 // 더미 데이터
 const dummyApiResponse: ApiResponse = {
   code: 200,
-  message: "success",
+  message: 'success',
   data: {
     totalRecords: 256,
     totalPage: 26,
@@ -186,166 +186,166 @@ const dummyApiResponse: ApiResponse = {
     currentPage: 1,
     data: [
       {
-        imageUrl: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400",
-        subject: "高品质商务双肩包",
-        subjectTrans: "고품질 비즈니스 백팩",
+        imageUrl: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400',
+        subject: '高品质商务双肩包',
+        subjectTrans: '고품질 비즈니스 백팩',
         offerId: 678901234567,
         isJxhy: true,
         priceInfo: {
-          price: "45.00-85.00",
-          jxhyPrice: "42.00",
+          price: '45.00-85.00',
+          jxhyPrice: '42.00',
           pfJxhyPrice: null,
-          consignPrice: "48.00"
+          consignPrice: '48.00',
         },
-        repurchaseRate: "45.2%",
+        repurchaseRate: '45.2%',
         monthSold: 15842,
-        traceInfo: "GZ-BAG-2024",
+        traceInfo: 'GZ-BAG-2024',
         isOnePsale: true,
-        sellerIdentities: ["manufacturer", "verified_supplier"]
+        sellerIdentities: ['manufacturer', 'verified_supplier'],
       },
       {
-        imageUrl: "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?w=400",
-        subject: "TWS无线蓝牙耳机",
-        subjectTrans: "TWS 무선 블루투스 이어폰",
+        imageUrl: 'https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?w=400',
+        subject: 'TWS无线蓝牙耳机',
+        subjectTrans: 'TWS 무선 블루투스 이어폰',
         offerId: 678901234568,
         isJxhy: false,
         priceInfo: {
-          price: "28.50",
+          price: '28.50',
           jxhyPrice: null,
           pfJxhyPrice: null,
-          consignPrice: "30.00"
+          consignPrice: '30.00',
         },
-        repurchaseRate: "38.5%",
+        repurchaseRate: '38.5%',
         monthSold: 8623,
-        traceInfo: "SZ-AUDIO-2024",
+        traceInfo: 'SZ-AUDIO-2024',
         isOnePsale: true,
-        sellerIdentities: ["gold_supplier"]
+        sellerIdentities: ['gold_supplier'],
       },
       {
-        imageUrl: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400",
-        subject: "运动鞋休闲鞋",
-        subjectTrans: "스포츠 캐주얼 운동화",
+        imageUrl: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400',
+        subject: '运动鞋休闲鞋',
+        subjectTrans: '스포츠 캐주얼 운동화',
         offerId: 678901234569,
         isJxhy: true,
         priceInfo: {
-          price: "65.00-120.00",
-          jxhyPrice: "58.00",
+          price: '65.00-120.00',
+          jxhyPrice: '58.00',
           pfJxhyPrice: null,
-          consignPrice: "70.00"
+          consignPrice: '70.00',
         },
-        repurchaseRate: "52.8%",
+        repurchaseRate: '52.8%',
         monthSold: 23456,
-        traceInfo: "FJ-SHOES-2024",
+        traceInfo: 'FJ-SHOES-2024',
         isOnePsale: false,
-        sellerIdentities: ["manufacturer", "trade_assurance"]
+        sellerIdentities: ['manufacturer', 'trade_assurance'],
       },
       {
-        imageUrl: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400",
-        subject: "智能手表",
-        subjectTrans: "스마트워치",
+        imageUrl: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400',
+        subject: '智能手表',
+        subjectTrans: '스마트워치',
         offerId: 678901234570,
         isJxhy: false,
         priceInfo: {
-          price: "95.00",
+          price: '95.00',
           jxhyPrice: null,
           pfJxhyPrice: null,
-          consignPrice: "98.00"
+          consignPrice: '98.00',
         },
-        repurchaseRate: "41.2%",
+        repurchaseRate: '41.2%',
         monthSold: 5432,
-        traceInfo: "SZ-WATCH-2024",
+        traceInfo: 'SZ-WATCH-2024',
         isOnePsale: true,
-        sellerIdentities: ["verified_supplier"]
+        sellerIdentities: ['verified_supplier'],
       },
       {
-        imageUrl: "https://images.unsplash.com/photo-1585565804112-f201f68212d1?w=400",
-        subject: "化妆品套装",
-        subjectTrans: "화장품 세트",
+        imageUrl: 'https://images.unsplash.com/photo-1585565804112-f201f68212d1?w=400',
+        subject: '化妆品套装',
+        subjectTrans: '화장품 세트',
         offerId: 678901234571,
         isJxhy: true,
         priceInfo: {
-          price: "35.00-68.00",
-          jxhyPrice: "32.00",
+          price: '35.00-68.00',
+          jxhyPrice: '32.00',
           pfJxhyPrice: null,
-          consignPrice: "38.00"
+          consignPrice: '38.00',
         },
-        repurchaseRate: "62.3%",
+        repurchaseRate: '62.3%',
         monthSold: 18976,
-        traceInfo: "GZ-BEAUTY-2024",
+        traceInfo: 'GZ-BEAUTY-2024',
         isOnePsale: false,
-        sellerIdentities: ["manufacturer", "gold_supplier"]
+        sellerIdentities: ['manufacturer', 'gold_supplier'],
       },
       {
-        imageUrl: "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400",
-        subject: "儿童玩具积木",
-        subjectTrans: "어린이 장난감 블록",
+        imageUrl: 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400',
+        subject: '儿童玩具积木',
+        subjectTrans: '어린이 장난감 블록',
         offerId: 678901234572,
         isJxhy: false,
         priceInfo: {
-          price: "15.50-45.00",
+          price: '15.50-45.00',
           jxhyPrice: null,
           pfJxhyPrice: null,
-          consignPrice: "20.00"
+          consignPrice: '20.00',
         },
-        repurchaseRate: "35.6%",
+        repurchaseRate: '35.6%',
         monthSold: 12543,
-        traceInfo: "DG-TOY-2024",
+        traceInfo: 'DG-TOY-2024',
         isOnePsale: true,
-        sellerIdentities: ["trade_assurance"]
+        sellerIdentities: ['trade_assurance'],
       },
       {
-        imageUrl: "https://images.unsplash.com/photo-1564466809058-bf4114d55352?w=400",
-        subject: "办公文具套装",
-        subjectTrans: "사무용품 세트",
+        imageUrl: 'https://images.unsplash.com/photo-1564466809058-bf4114d55352?w=400',
+        subject: '办公文具套装',
+        subjectTrans: '사무용품 세트',
         offerId: 678901234573,
         isJxhy: true,
         priceInfo: {
-          price: "12.00-25.00",
-          jxhyPrice: "10.50",
+          price: '12.00-25.00',
+          jxhyPrice: '10.50',
           pfJxhyPrice: null,
-          consignPrice: "14.00"
+          consignPrice: '14.00',
         },
-        repurchaseRate: "48.9%",
+        repurchaseRate: '48.9%',
         monthSold: 34567,
-        traceInfo: "SH-OFFICE-2024",
+        traceInfo: 'SH-OFFICE-2024',
         isOnePsale: true,
-        sellerIdentities: ["manufacturer", "verified_supplier"]
+        sellerIdentities: ['manufacturer', 'verified_supplier'],
       },
       {
-        imageUrl: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400",
-        subject: "运动服装",
-        subjectTrans: "스포츠웨어",
+        imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400',
+        subject: '运动服装',
+        subjectTrans: '스포츠웨어',
         offerId: 678901234574,
         isJxhy: false,
         priceInfo: {
-          price: "28.00-55.00",
+          price: '28.00-55.00',
           jxhyPrice: null,
           pfJxhyPrice: null,
-          consignPrice: "32.00"
+          consignPrice: '32.00',
         },
-        repurchaseRate: "42.1%",
+        repurchaseRate: '42.1%',
         monthSold: 9876,
-        traceInfo: "FJ-SPORT-2024",
+        traceInfo: 'FJ-SPORT-2024',
         isOnePsale: false,
-        sellerIdentities: ["gold_supplier"]
-      }
-    ]
+        sellerIdentities: ['gold_supplier'],
+      },
+    ],
   },
   timestamp: Date.now(),
-  traceId: "trace-" + Date.now()
+  traceId: 'trace-' + Date.now(),
 };
 
 export default function SearchResultsPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const query = searchParams.get('q') || '';
-  
+
   const [loading, setLoading] = useState(true);
   const [apiResponse, setApiResponse] = useState<ApiResponse | null>(null);
   const [sortBy, setSortBy] = useState(''); // 빈 문자열이 기본(추천순)
   const [currentPage, setCurrentPage] = useState(1);
   const [searchKeyword, setSearchKeyword] = useState(query);
-  
+
   // 필터 상태
   const [selectedFilters, setSelectedFilters] = useState({
     isJxhy: false,
@@ -356,13 +356,13 @@ export default function SearchResultsPage() {
     tradeAssurance: false,
     highRepurchase: false,
   });
-  
+
   // 카테고리 필터
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedSubCategory, setSelectedSubCategory] = useState('');
   const [categoryMenuAnchor, setCategoryMenuAnchor] = useState<null | HTMLElement>(null);
   const [hoveredCategory, setHoveredCategory] = useState<number | null>(null);
-  
+
   // 이미지 검색 모달 상태
   const [imageSearchOpen, setImageSearchOpen] = useState(false);
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
@@ -379,7 +379,7 @@ export default function SearchResultsPage() {
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true);
-      
+
       // 실제 API 호출 시 사용할 코드
       // const response = await fetch('/api/1688/search', {
       //   method: 'POST',
@@ -393,17 +393,16 @@ export default function SearchResultsPage() {
       // });
       // const data = await response.json();
       // setApiResponse(data);
-      
+
       // 더미 데이터로 검색 시뮬레이션
       setTimeout(() => {
         // 검색어에 따라 다른 결과 표시 (시뮬레이션)
         let filteredData = { ...dummyApiResponse };
-        
+
         if (query) {
           // 검색어가 있으면 필터링 (실제로는 API가 처리)
-          filteredData.data.data = dummyApiResponse.data.data.filter(product => 
-            product.subjectTrans.includes(query) || 
-            product.subject.includes(query)
+          filteredData.data.data = dummyApiResponse.data.data.filter(
+            (product) => product.subjectTrans.includes(query) || product.subject.includes(query)
           );
           filteredData.data.totalRecords = filteredData.data.data.length;
           filteredData.data.totalPage = Math.ceil(filteredData.data.data.length / 20);
@@ -411,12 +410,12 @@ export default function SearchResultsPage() {
           // 검색어가 없으면 전체 더미 데이터 표시
           filteredData = { ...dummyApiResponse };
         }
-        
+
         setApiResponse(filteredData);
         setLoading(false);
       }, 800);
     };
-    
+
     fetchProducts();
   }, [query, currentPage, sortBy]);
 
@@ -424,8 +423,6 @@ export default function SearchResultsPage() {
     setCurrentPage(value);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-
-
 
   const handleSearch = () => {
     if (searchKeyword.trim()) {
@@ -440,13 +437,11 @@ export default function SearchResultsPage() {
   };
 
   const handleFilterChange = (filterName: string) => {
-    setSelectedFilters(prev => ({
+    setSelectedFilters((prev) => ({
       ...prev,
-      [filterName]: !prev[filterName as keyof typeof prev]
+      [filterName]: !prev[filterName as keyof typeof prev],
     }));
   };
-
-
 
   // 이미지 업로드 핸들러
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -464,9 +459,9 @@ export default function SearchResultsPage() {
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (e.type === "dragenter" || e.type === "dragover") {
+    if (e.type === 'dragenter' || e.type === 'dragover') {
       setDragActive(true);
-    } else if (e.type === "dragleave") {
+    } else if (e.type === 'dragleave') {
       setDragActive(false);
     }
   };
@@ -475,7 +470,7 @@ export default function SearchResultsPage() {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
-    
+
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       const file = e.dataTransfer.files[0];
       const reader = new FileReader();
@@ -489,7 +484,7 @@ export default function SearchResultsPage() {
   // 이미지로 검색 실행
   const handleImageSearch = async () => {
     if (!uploadedImage) return;
-    
+
     setImageSearchLoading(true);
     // TODO: 실제 API 호출
     setTimeout(() => {
@@ -504,10 +499,10 @@ export default function SearchResultsPage() {
 
   const ProductCard = ({ product }: { product: Product1688 }) => {
     const displayPrice = product.priceInfo.jxhyPrice || product.priceInfo.price.split('-')[0];
-    
+
     return (
-      <Card 
-        sx={{ 
+      <Card
+        sx={{
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
@@ -523,18 +518,20 @@ export default function SearchResultsPage() {
             boxShadow: '0 0 8px rgba(0,0,0,0.15)',
             '& .product-image': {
               transform: 'scale(1.05)',
-            }
-          }
+            },
+          },
         }}
       >
         {/* 상품 이미지 - 실제 1688처럼 정사각형 */}
-        <Box sx={{ 
-          position: 'relative', 
-          paddingTop: '100%', 
-          overflow: 'hidden', 
-          bgcolor: '#fff',
-          border: '1px solid #e7e7e7'
-        }}>
+        <Box
+          sx={{
+            position: 'relative',
+            paddingTop: '100%',
+            overflow: 'hidden',
+            bgcolor: '#fff',
+            border: '1px solid #e7e7e7',
+          }}
+        >
           <Box
             component="img"
             className="product-image"
@@ -554,32 +551,36 @@ export default function SearchResultsPage() {
           {/* 1688 스타일 배지 - 왼쪽 상단 */}
           <Box sx={{ position: 'absolute', top: 0, left: 0 }}>
             {product.isJxhy && (
-              <Box sx={{
-                bgcolor: '#ff4400',
-                color: 'white',
-                px: 0.8,
-                py: 0.3,
-                fontSize: '11px',
-                fontWeight: 600,
-              }}>
+              <Box
+                sx={{
+                  bgcolor: '#ff4400',
+                  color: 'white',
+                  px: 0.8,
+                  py: 0.3,
+                  fontSize: '11px',
+                  fontWeight: 600,
+                }}
+              >
                 精选
               </Box>
             )}
           </Box>
-          
+
           {/* 일대일 대발 배지 - 오른쪽 하단 */}
           {product.isOnePsale && (
-            <Box sx={{
-              position: 'absolute',
-              bottom: 0,
-              right: 0,
-              bgcolor: 'rgba(255,102,0,0.9)',
-              color: 'white',
-              px: 0.8,
-              py: 0.3,
-              fontSize: '11px',
-              fontWeight: 500,
-            }}>
+            <Box
+              sx={{
+                position: 'absolute',
+                bottom: 0,
+                right: 0,
+                bgcolor: 'rgba(255,102,0,0.9)',
+                color: 'white',
+                px: 0.8,
+                py: 0.3,
+                fontSize: '11px',
+                fontWeight: 500,
+              }}
+            >
               一件代发
             </Box>
           )}
@@ -589,30 +590,34 @@ export default function SearchResultsPage() {
         <Box sx={{ p: 1.5 }}>
           {/* 가격 정보 - 가장 먼저 크게 */}
           <Box sx={{ mb: 1 }}>
-            <Typography sx={{ 
-              color: '#ff4400', 
-              fontWeight: 700,
-              fontSize: '22px',
-              lineHeight: 1,
-              fontFamily: 'Arial, sans-serif'
-            }}>
+            <Typography
+              sx={{
+                color: '#ff4400',
+                fontWeight: 700,
+                fontSize: '22px',
+                lineHeight: 1,
+                fontFamily: 'Arial, sans-serif',
+              }}
+            >
               <span style={{ fontSize: '14px' }}>¥</span>
               {displayPrice}
             </Typography>
             {product.priceInfo.price.includes('-') && (
-              <Typography sx={{ 
-                color: '#999',
-                fontSize: '12px',
-                mt: 0.3
-              }}>
+              <Typography
+                sx={{
+                  color: '#999',
+                  fontSize: '12px',
+                  mt: 0.3,
+                }}
+              >
                 ¥{product.priceInfo.price}
               </Typography>
             )}
           </Box>
 
           {/* 제목 - 간단하게 */}
-          <Typography 
-            sx={{ 
+          <Typography
+            sx={{
               fontSize: '13px',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
@@ -622,7 +627,7 @@ export default function SearchResultsPage() {
               lineHeight: 1.4,
               color: '#333',
               minHeight: '36px',
-              mb: 1
+              mb: 1,
             }}
           >
             {product.subjectTrans}
@@ -644,30 +649,28 @@ export default function SearchResultsPage() {
               代发价: ¥{product.priceInfo.consignPrice}
             </Typography>
           )}
-          
+
           {/* 재구매율 - API 값 그대로 */}
           <Typography sx={{ fontSize: '11px', color: '#ff6600', mt: 0.5 }}>
             复购率: {product.repurchaseRate}
           </Typography>
-          
+
           {/* 월판매량 - API 값 그대로 */}
           <Typography sx={{ fontSize: '11px', color: '#666' }}>
             30天销量: {product.monthSold}件
           </Typography>
 
-
-
           {/* 판매자 배지 - 모든 sellerIdentities 표시 */}
           <Stack direction="row" spacing={0.5} flexWrap="wrap" gap={0.5} sx={{ mt: 'auto' }}>
             {product.sellerIdentities.includes('manufacturer') && (
-              <Chip 
-                size="small" 
-                label="제조사" 
-                sx={{ 
+              <Chip
+                size="small"
+                label="제조사"
+                sx={{
                   height: 18,
                   fontSize: '0.65rem',
                   bgcolor: 'primary.light',
-                  color: 'primary.contrastText'
+                  color: 'primary.contrastText',
                 }}
               />
             )}
@@ -675,50 +678,50 @@ export default function SearchResultsPage() {
               <VerifiedIcon sx={{ fontSize: 16, color: 'success.main' }} />
             )}
             {product.sellerIdentities.includes('gold_supplier') && (
-              <Chip 
-                size="small" 
-                label="Gold" 
-                sx={{ 
+              <Chip
+                size="small"
+                label="Gold"
+                sx={{
                   height: 18,
                   fontSize: '0.65rem',
                   bgcolor: 'warning.light',
-                  color: 'warning.contrastText'
+                  color: 'warning.contrastText',
                 }}
               />
             )}
             {product.sellerIdentities.includes('trade_assurance') && (
-              <Chip 
-                size="small" 
-                label="무역보증" 
-                sx={{ 
+              <Chip
+                size="small"
+                label="무역보증"
+                sx={{
                   height: 18,
                   fontSize: '0.65rem',
                   bgcolor: 'info.light',
-                  color: 'info.contrastText'
+                  color: 'info.contrastText',
                 }}
               />
             )}
             {product.sellerIdentities.includes('tp_member') && (
-              <Chip 
-                size="small" 
-                label="TP" 
-                sx={{ 
+              <Chip
+                size="small"
+                label="TP"
+                sx={{
                   height: 18,
                   fontSize: '0.65rem',
                   bgcolor: 'secondary.light',
-                  color: 'secondary.contrastText'
+                  color: 'secondary.contrastText',
                 }}
               />
             )}
             {product.sellerIdentities.includes('powerful_merchants') && (
-              <Chip 
-                size="small" 
-                label="파워셀러" 
-                sx={{ 
+              <Chip
+                size="small"
+                label="파워셀러"
+                sx={{
                   height: 18,
                   fontSize: '0.65rem',
                   bgcolor: 'error.light',
-                  color: 'error.contrastText'
+                  color: 'error.contrastText',
                 }}
               />
             )}
@@ -728,11 +731,11 @@ export default function SearchResultsPage() {
         {/* 액션 버튼 */}
         <Box sx={{ p: 2, pt: 0, borderTop: '1px solid #f0f0f0' }}>
           <Stack direction="row" spacing={1}>
-            <Button 
-              fullWidth 
-              variant="outlined" 
+            <Button
+              fullWidth
+              variant="outlined"
               size="medium"
-              sx={{ 
+              sx={{
                 fontSize: '13px',
                 py: 1,
                 borderColor: '#e8e8e8',
@@ -740,24 +743,24 @@ export default function SearchResultsPage() {
                 '&:hover': {
                   borderColor: '#ff6900',
                   bgcolor: '#fff5f0',
-                  color: '#ff6900'
-                }
+                  color: '#ff6900',
+                },
               }}
             >
               문의하기
             </Button>
-            <Button 
-              fullWidth 
-              variant="contained" 
+            <Button
+              fullWidth
+              variant="contained"
               size="medium"
               onClick={() => router.push(`/1688/product/${product.offerId}`)}
-              sx={{ 
+              sx={{
                 fontSize: '13px',
                 py: 1,
                 bgcolor: '#ff6900',
                 '&:hover': {
-                  bgcolor: '#ff5500'
-                }
+                  bgcolor: '#ff5500',
+                },
               }}
             >
               상세보기
@@ -771,7 +774,7 @@ export default function SearchResultsPage() {
   return (
     <PageContainer title="1688 상품 검색" description="1688.com 상품 검색 결과">
       <HpHeader />
-      
+
       <Box sx={{ minHeight: '100vh', bgcolor: '#f5f5f5' }}>
         {/* 검색바 섹션 */}
         <Box sx={{ bgcolor: '#ff6900', py: 3 }}>
@@ -797,7 +800,7 @@ export default function SearchResultsPage() {
                         '& .MuiOutlinedInput-root': {
                           '& fieldset': { border: 'none' },
                           height: 44,
-                        }
+                        },
                       }}
                       InputProps={{
                         startAdornment: (
@@ -810,7 +813,7 @@ export default function SearchResultsPage() {
                     <Button
                       variant="contained"
                       onClick={handleSearch}
-                      sx={{ 
+                      sx={{
                         px: 4,
                         bgcolor: '#ff3300',
                         minWidth: 100,
@@ -818,21 +821,21 @@ export default function SearchResultsPage() {
                         fontSize: '16px',
                         fontWeight: 600,
                         '&:hover': {
-                          bgcolor: '#e62e00'
-                        }
+                          bgcolor: '#e62e00',
+                        },
                       }}
                     >
                       검색
                     </Button>
                     <IconButton
                       onClick={() => setImageSearchOpen(true)}
-                      sx={{ 
+                      sx={{
                         bgcolor: 'white',
                         width: 44,
                         height: 44,
                         '&:hover': {
-                          bgcolor: 'grey.100'
-                        }
+                          bgcolor: 'grey.100',
+                        },
                       }}
                     >
                       <PhotoCameraIcon />
@@ -842,7 +845,9 @@ export default function SearchResultsPage() {
               </Box>
               {/* 인기 검색어 */}
               <Stack direction="row" spacing={1} alignItems="center">
-                <Typography color="white" variant="body2">인기:</Typography>
+                <Typography color="white" variant="body2">
+                  인기:
+                </Typography>
                 {['가방', '신발', '의류', '전자제품', '화장품'].map((keyword) => (
                   <Chip
                     key={keyword}
@@ -857,7 +862,7 @@ export default function SearchResultsPage() {
                       color: 'white',
                       '&:hover': {
                         bgcolor: 'rgba(255,255,255,0.3)',
-                      }
+                      },
                     }}
                   />
                 ))}
@@ -879,7 +884,7 @@ export default function SearchResultsPage() {
                   endIcon={<ChevronRightIcon />}
                   variant="outlined"
                   size="small"
-                  sx={{ 
+                  sx={{
                     minWidth: 180,
                     justifyContent: 'space-between',
                     textAlign: 'left',
@@ -887,24 +892,28 @@ export default function SearchResultsPage() {
                     color: selectedCategory ? '#333' : '#666',
                     '&:hover': {
                       borderColor: '#ff6900',
-                      bgcolor: 'rgba(255, 105, 0, 0.04)'
-                    }
+                      bgcolor: 'rgba(255, 105, 0, 0.04)',
+                    },
                   }}
                 >
                   {(() => {
                     if (!selectedCategory) return '전체 카테고리';
-                    
+
                     // 선택된 카테고리 찾기
-                    const mainCategory = dummyCategories.find(c => c.categoryID.toString() === selectedCategory);
+                    const mainCategory = dummyCategories.find(
+                      (c) => c.categoryID.toString() === selectedCategory
+                    );
                     if (mainCategory) {
                       // 서브 카테고리도 선택되었다면
                       if (selectedSubCategory) {
-                        const subCat = mainCategory.childCategorys?.find(sc => sc.id.toString() === selectedSubCategory);
+                        const subCat = mainCategory.childCategorys?.find(
+                          (sc) => sc.id.toString() === selectedSubCategory
+                        );
                         return subCat ? `${mainCategory.name} > ${subCat.name}` : mainCategory.name;
                       }
                       return mainCategory.name;
                     }
-                    
+
                     return '전체 카테고리';
                   })()}
                 </Button>
@@ -913,21 +922,15 @@ export default function SearchResultsPage() {
 
                 {/* 가격 범위 */}
                 <Stack direction="row" spacing={1} alignItems="center">
-                  <Typography variant="body2" color="text.secondary">가격:</Typography>
-                  <TextField
-                    size="small"
-                    placeholder="최소"
-                    type="number"
-                    sx={{ width: 80 }}
-                  />
+                  <Typography variant="body2" color="text.secondary">
+                    가격:
+                  </Typography>
+                  <TextField size="small" placeholder="최소" type="number" sx={{ width: 80 }} />
                   <Typography>-</Typography>
-                  <TextField
-                    size="small"
-                    placeholder="최대"
-                    type="number"
-                    sx={{ width: 80 }}
-                  />
-                  <Typography variant="body2" color="text.secondary">¥</Typography>
+                  <TextField size="small" placeholder="최대" type="number" sx={{ width: 80 }} />
+                  <Typography variant="body2" color="text.secondary">
+                    ¥
+                  </Typography>
                 </Stack>
 
                 <Divider orientation="vertical" flexItem />
@@ -945,14 +948,8 @@ export default function SearchResultsPage() {
                   checked={selectedFilters.isOnePsale}
                   onChange={() => handleFilterChange('isOnePsale')}
                 />
-                <FormControlLabel
-                  control={<Checkbox size="small" />}
-                  label="48小时发货"
-                />
-                <FormControlLabel
-                  control={<Checkbox size="small" />}
-                  label="7天包换"
-                />
+                <FormControlLabel control={<Checkbox size="small" />} label="48小时发货" />
+                <FormControlLabel control={<Checkbox size="small" />} label="7天包换" />
 
                 <Box sx={{ flexGrow: 1 }} />
 
@@ -978,16 +975,26 @@ export default function SearchResultsPage() {
               </Stack>
 
               {/* 선택된 필터 표시 */}
-              {(selectedCategory || selectedSubCategory || Object.values(selectedFilters).some(v => v)) && (
+              {(selectedCategory ||
+                selectedSubCategory ||
+                Object.values(selectedFilters).some((v) => v)) && (
                 <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1 }}>
-                  <Typography variant="body2" color="text.secondary">선택된 필터:</Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    선택된 필터:
+                  </Typography>
                   {selectedCategory && (
                     <Chip
                       label={(() => {
-                        const mainCategory = dummyCategories.find(c => c.categoryID.toString() === selectedCategory);
+                        const mainCategory = dummyCategories.find(
+                          (c) => c.categoryID.toString() === selectedCategory
+                        );
                         if (mainCategory && selectedSubCategory) {
-                          const subCat = mainCategory.childCategorys?.find(sc => sc.id.toString() === selectedSubCategory);
-                          return subCat ? `${mainCategory.name} > ${subCat.name}` : mainCategory.name;
+                          const subCat = mainCategory.childCategorys?.find(
+                            (sc) => sc.id.toString() === selectedSubCategory
+                          );
+                          return subCat
+                            ? `${mainCategory.name} > ${subCat.name}`
+                            : mainCategory.name;
                         }
                         return mainCategory?.name || '';
                       })()}
@@ -996,24 +1003,20 @@ export default function SearchResultsPage() {
                         setSelectedCategory('');
                         setSelectedSubCategory('');
                       }}
-                      sx={{ 
+                      sx={{
                         bgcolor: '#fff5f0',
                         color: '#ff6900',
                         '& .MuiChip-deleteIcon': {
                           color: '#ff6900',
                           '&:hover': {
-                            color: '#ff5500'
-                          }
-                        }
+                            color: '#ff5500',
+                          },
+                        },
                       }}
                     />
                   )}
                   {selectedFilters.isJxhy && (
-                    <Chip
-                      label="精选"
-                      size="small"
-                      onDelete={() => handleFilterChange('isJxhy')}
-                    />
+                    <Chip label="精选" size="small" onDelete={() => handleFilterChange('isJxhy')} />
                   )}
                   {selectedFilters.isOnePsale && (
                     <Chip
@@ -1027,7 +1030,9 @@ export default function SearchResultsPage() {
 
               {/* 판매자 인증 필터 */}
               <Stack direction="row" spacing={2} alignItems="center">
-                <Typography variant="body2" color="text.secondary">판매자:</Typography>
+                <Typography variant="body2" color="text.secondary">
+                  판매자:
+                </Typography>
                 <FormControlLabel
                   control={<Checkbox size="small" />}
                   label="실력상가"
@@ -1110,7 +1115,7 @@ export default function SearchResultsPage() {
                     { id: '3005', name: '品牌直销' }
                   );
                 }
-                
+
                 return relatedCategories.map((cat) => (
                   <Chip
                     key={cat.id}
@@ -1125,8 +1130,8 @@ export default function SearchResultsPage() {
                       borderColor: '#e8e8e8',
                       '&:hover': {
                         borderColor: '#ff6900',
-                        bgcolor: 'rgba(255, 105, 0, 0.04)'
-                      }
+                        bgcolor: 'rgba(255, 105, 0, 0.04)',
+                      },
                     }}
                   />
                 ));
@@ -1148,17 +1153,17 @@ export default function SearchResultsPage() {
                       {apiResponse?.data.totalRecords.toLocaleString()}개 상품
                     </Typography>
                   </Box>
-                  
+
                   <FormControl size="small" sx={{ minWidth: 140 }}>
-                    <Select 
-                      value={sortBy} 
+                    <Select
+                      value={sortBy}
                       onChange={(e) => setSortBy(e.target.value)}
-                      sx={{ 
+                      sx={{
                         bgcolor: 'white',
                         '& .MuiSelect-select': {
                           py: 1,
-                          fontSize: '0.875rem'
-                        }
+                          fontSize: '0.875rem',
+                        },
                       }}
                     >
                       <MenuItem value="relevance">추천순</MenuItem>
@@ -1190,36 +1195,38 @@ export default function SearchResultsPage() {
                     ))}
                   </Grid>
 
-              {/* 페이지네이션 */}
-              {apiResponse && apiResponse.data.totalPage > 1 && (
-                <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
-                  <Pagination 
-                    count={apiResponse.data.totalPage} 
-                    page={currentPage}
-                    onChange={handlePageChange}
-                    color="primary"
-                    size="large"
-                    siblingCount={1}
-                    boundaryCount={1}
-                    sx={{
-                      '& .MuiPaginationItem-root': {
-                        fontSize: '0.875rem',
-                      }
-                    }}
-                  />
-                </Box>
-              )}
-              
+                  {/* 페이지네이션 */}
+                  {apiResponse && apiResponse.data.totalPage > 1 && (
+                    <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
+                      <Pagination
+                        count={apiResponse.data.totalPage}
+                        page={currentPage}
+                        onChange={handlePageChange}
+                        color="primary"
+                        size="large"
+                        siblingCount={1}
+                        boundaryCount={1}
+                        sx={{
+                          '& .MuiPaginationItem-root': {
+                            fontSize: '0.875rem',
+                          },
+                        }}
+                      />
+                    </Box>
+                  )}
+
                   {/* API 메타데이터 정보 (개발용) */}
                   {apiResponse && (
                     <Box sx={{ mt: 3, p: 2, bgcolor: 'grey.100', borderRadius: 1 }}>
-                      <Typography variant="caption" sx={{ fontSize: '0.65rem', color: 'text.secondary' }}>
-                        API 응답: 코드 {apiResponse.code} | {apiResponse.message} | 
-                        페이지 {apiResponse.data.currentPage}/{apiResponse.data.totalPage} | 
-                        페이지당 {apiResponse.data.pageSize}개 | 
-                        전체 {apiResponse.data.totalRecords}개 | 
-                        Timestamp: {new Date(apiResponse.timestamp).toLocaleString()} | 
-                        TraceID: {apiResponse.traceId}
+                      <Typography
+                        variant="caption"
+                        sx={{ fontSize: '0.65rem', color: 'text.secondary' }}
+                      >
+                        API 응답: 코드 {apiResponse.code} | {apiResponse.message} | 페이지{' '}
+                        {apiResponse.data.currentPage}/{apiResponse.data.totalPage} | 페이지당{' '}
+                        {apiResponse.data.pageSize}개 | 전체 {apiResponse.data.totalRecords}개 |
+                        Timestamp: {new Date(apiResponse.timestamp).toLocaleString()} | TraceID:{' '}
+                        {apiResponse.traceId}
                       </Typography>
                     </Box>
                   )}
@@ -1229,7 +1236,7 @@ export default function SearchResultsPage() {
           </Grid>
         </Container>
       </Box>
-      
+
       {/* 카테고리 선택 메뉴 */}
       <Menu
         anchorEl={categoryMenuAnchor}
@@ -1251,7 +1258,7 @@ export default function SearchResultsPage() {
             maxHeight: 400,
             width: 500,
             mt: 0.5,
-          }
+          },
         }}
       >
         <Box sx={{ display: 'flex' }}>
@@ -1265,7 +1272,7 @@ export default function SearchResultsPage() {
               }}
               sx={{
                 py: 1,
-                '&:hover': { bgcolor: '#fff5f0' }
+                '&:hover': { bgcolor: '#fff5f0' },
               }}
             >
               <ListItemText primary="전체 카테고리" />
@@ -1285,7 +1292,7 @@ export default function SearchResultsPage() {
                 sx={{
                   py: 1,
                   bgcolor: hoveredCategory === category.categoryID ? '#fff5f0' : 'transparent',
-                  '&:hover': { bgcolor: '#fff5f0' }
+                  '&:hover': { bgcolor: '#fff5f0' },
                 }}
               >
                 <ListItemText primary={category.name} />
@@ -1300,7 +1307,7 @@ export default function SearchResultsPage() {
           {hoveredCategory && (
             <List sx={{ width: 300, py: 0 }}>
               {dummyCategories
-                .find(c => c.categoryID === hoveredCategory)
+                .find((c) => c.categoryID === hoveredCategory)
                 ?.childCategorys?.map((subCategory) => (
                   <ListItemButton
                     key={subCategory.id}
@@ -1312,10 +1319,10 @@ export default function SearchResultsPage() {
                     }}
                     sx={{
                       py: 1,
-                      '&:hover': { bgcolor: '#fff5f0' }
+                      '&:hover': { bgcolor: '#fff5f0' },
                     }}
                   >
-                    <ListItemText 
+                    <ListItemText
                       primary={subCategory.name}
                       primaryTypographyProps={{ fontSize: '0.875rem' }}
                     />
