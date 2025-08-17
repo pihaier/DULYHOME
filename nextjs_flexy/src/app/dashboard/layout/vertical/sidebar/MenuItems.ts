@@ -88,6 +88,18 @@ const Menuitems: MenuitemsType[] = [
   // },
   {
     navlabel: true,
+    subheader: '🛒 구매대행',
+  },
+  {
+    id: uniqueId(),
+    title: '1688 장바구니',
+    icon: IconShoppingCart,
+    href: '/dashboard/1688/cart',
+    chip: 'NEW',
+    chipColor: 'error',
+  },
+  {
+    navlabel: true,
     subheader: '📊 주문 조회',
   },
   {

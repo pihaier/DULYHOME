@@ -361,7 +361,7 @@ export default function Search1688Page() {
           // 로딩 스켈레톤
           <Grid container spacing={3}>
             {[1, 2, 3, 4, 5, 6].map((n) => (
-              <Grid item xs={12} sm={6} md={4} key={n}>
+              <Grid size={{ xs: 12, sm: 6, md: 4 }} key={n}>
                 <Card>
                   <Skeleton variant="rectangular" height={250} />
                   <CardContent>
@@ -388,7 +388,7 @@ export default function Search1688Page() {
             
             <Grid container spacing={3}>
               {products.map((product) => (
-                <Grid item xs={12} sm={6} md={4} key={product.id}>
+                <Grid size={{ xs: 12, sm: 6, md: 4 }} key={product.id}>
                   <Card 
                     sx={{ 
                       height: '100%', 

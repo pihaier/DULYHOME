@@ -1573,11 +1573,12 @@ export default function ProductDetailPage() {
                 </Box>
               )}
 
+              {/* freightTemplateId는 현재 인터페이스에 없음 
               {productDetail.productShippingInfo.freightTemplateId && (
                 <Typography variant="body2" color="text.secondary">
                   운송 템플릿 ID: {productDetail.productShippingInfo.freightTemplateId}
                 </Typography>
-              )}
+              )} */}
             </Box>
           </Paper>
 

@@ -26,8 +26,8 @@ import {
   Card,
   CardContent,
   Divider,
-  Grid,
 } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import PageContainer from '@/app/components/container/PageContainer';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -409,13 +409,13 @@ export default function CartPage() {
               <Card sx={{ mt: 3 }}>
                 <CardContent>
                   <Grid container spacing={3}>
-                    <Grid item xs={12} md={8}>
+                    <Grid size={{ xs: 12, md: 8 }}>
                       <Alert severity="info">
                         선택한 {selectedItems.length}개 상품의 1차 결제 비용입니다. 
                         2차 결제 비용(운송비, 관세 등)은 별도로 계산됩니다.
                       </Alert>
                     </Grid>
-                    <Grid item xs={12} md={4}>
+                    <Grid size={{ xs: 12, md: 4 }}>
                       <Box sx={{ textAlign: 'right' }}>
                         <Typography variant="h6" gutterBottom>
                           선택 상품 1차 결제 총액
