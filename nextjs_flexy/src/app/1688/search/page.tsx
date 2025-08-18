@@ -103,237 +103,7 @@ interface Category {
 //   products?: Product1688[];
 // }
 
-// 더미 카테고리 데이터 (API 문서 기반)
-const dummyCategories: Category[] = [
-  {
-    categoryID: 15,
-    name: '居家日用品',
-    level: 1,
-    isLeaf: false,
-    parentIDs: [0],
-    childCategorys: [
-      { id: 1556, name: '居家日用', categoryType: '1', isLeaf: false },
-      { id: 1045268, name: '酒店用品', categoryType: '1', isLeaf: false },
-      { id: 124284003, name: '秤', categoryType: '1', isLeaf: false },
-      { id: 124272009, name: '打火机及烟具', categoryType: '1', isLeaf: false },
-      { id: 124016003, name: '挡风、遮阳、防雨工具', categoryType: '1', isLeaf: false },
-      { id: 201664803, name: '保暖贴/怀炉/保暖用品', categoryType: '1', isLeaf: false },
-      { id: 1045059, name: 'USB新奇特', categoryType: '1', isLeaf: false },
-    ],
-  },
-  {
-    categoryID: 7,
-    name: '纺织、皮革、羽绒原料',
-    level: 1,
-    isLeaf: false,
-    parentIDs: [0],
-    childCategorys: [
-      { id: 2829, name: '纺织原料', categoryType: '1', isLeaf: false },
-      { id: 411, name: '皮革', categoryType: '1', isLeaf: false },
-      { id: 2805, name: '羽绒原料', categoryType: '1', isLeaf: false },
-      { id: 10166, name: '化纤坯布', categoryType: '1', isLeaf: false },
-    ],
-  },
-  {
-    categoryID: 311,
-    name: '服装',
-    level: 1,
-    isLeaf: false,
-    parentIDs: [0],
-    childCategorys: [
-      { id: 100000773, name: '女装', categoryType: '1', isLeaf: false },
-      { id: 100000777, name: '男装', categoryType: '1', isLeaf: false },
-      { id: 100003197, name: '童装', categoryType: '1', isLeaf: false },
-      { id: 127450003, name: '中老年服装', categoryType: '1', isLeaf: false },
-    ],
-  },
-  {
-    categoryID: 1813,
-    name: '内衣',
-    level: 1,
-    isLeaf: false,
-    parentIDs: [0],
-    childCategorys: [
-      { id: 100003222, name: '文胸', categoryType: '1', isLeaf: false },
-      { id: 100003224, name: '内裤', categoryType: '1', isLeaf: false },
-      { id: 100003226, name: '塑身内衣', categoryType: '1', isLeaf: false },
-      { id: 100003233, name: '睡衣/家居服', categoryType: '1', isLeaf: false },
-    ],
-  },
-  {
-    categoryID: 509,
-    name: '电子元器件',
-    level: 1,
-    isLeaf: false,
-    parentIDs: [0],
-    childCategorys: [
-      { id: 503, name: '连接器', categoryType: '1', isLeaf: false },
-      { id: 501, name: '集成电路', categoryType: '1', isLeaf: false },
-      { id: 502, name: '二三极管', categoryType: '1', isLeaf: false },
-      { id: 504, name: '电容器', categoryType: '1', isLeaf: false },
-    ],
-  },
-];
-
-// 더미 데이터
-const dummyApiResponse: ApiResponse = {
-  code: 200,
-  message: 'success',
-  data: {
-    totalRecords: 256,
-    totalPage: 26,
-    pageSize: 20,
-    currentPage: 1,
-    data: [
-      {
-        imageUrl: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400',
-        subject: '高品质商务双肩包',
-        subjectTrans: '고품질 비즈니스 백팩',
-        offerId: 678901234567,
-        isJxhy: true,
-        priceInfo: {
-          price: '45.00-85.00',
-          jxhyPrice: '42.00',
-          pfJxhyPrice: null,
-          consignPrice: '48.00',
-        },
-        repurchaseRate: '45.2%',
-        monthSold: 15842,
-        traceInfo: 'GZ-BAG-2024',
-        isOnePsale: true,
-        sellerIdentities: ['manufacturer', 'verified_supplier'],
-      },
-      {
-        imageUrl: 'https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?w=400',
-        subject: 'TWS无线蓝牙耳机',
-        subjectTrans: 'TWS 무선 블루투스 이어폰',
-        offerId: 678901234568,
-        isJxhy: false,
-        priceInfo: {
-          price: '28.50',
-          jxhyPrice: null,
-          pfJxhyPrice: null,
-          consignPrice: '30.00',
-        },
-        repurchaseRate: '38.5%',
-        monthSold: 8623,
-        traceInfo: 'SZ-AUDIO-2024',
-        isOnePsale: true,
-        sellerIdentities: ['gold_supplier'],
-      },
-      {
-        imageUrl: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400',
-        subject: '运动鞋休闲鞋',
-        subjectTrans: '스포츠 캐주얼 운동화',
-        offerId: 678901234569,
-        isJxhy: true,
-        priceInfo: {
-          price: '65.00-120.00',
-          jxhyPrice: '58.00',
-          pfJxhyPrice: null,
-          consignPrice: '70.00',
-        },
-        repurchaseRate: '52.8%',
-        monthSold: 23456,
-        traceInfo: 'FJ-SHOES-2024',
-        isOnePsale: false,
-        sellerIdentities: ['manufacturer', 'trade_assurance'],
-      },
-      {
-        imageUrl: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400',
-        subject: '智能手表',
-        subjectTrans: '스마트워치',
-        offerId: 678901234570,
-        isJxhy: false,
-        priceInfo: {
-          price: '95.00',
-          jxhyPrice: null,
-          pfJxhyPrice: null,
-          consignPrice: '98.00',
-        },
-        repurchaseRate: '41.2%',
-        monthSold: 5432,
-        traceInfo: 'SZ-WATCH-2024',
-        isOnePsale: true,
-        sellerIdentities: ['verified_supplier'],
-      },
-      {
-        imageUrl: 'https://images.unsplash.com/photo-1585565804112-f201f68212d1?w=400',
-        subject: '化妆品套装',
-        subjectTrans: '화장품 세트',
-        offerId: 678901234571,
-        isJxhy: true,
-        priceInfo: {
-          price: '35.00-68.00',
-          jxhyPrice: '32.00',
-          pfJxhyPrice: null,
-          consignPrice: '38.00',
-        },
-        repurchaseRate: '62.3%',
-        monthSold: 18976,
-        traceInfo: 'GZ-BEAUTY-2024',
-        isOnePsale: false,
-        sellerIdentities: ['manufacturer', 'gold_supplier'],
-      },
-      {
-        imageUrl: 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400',
-        subject: '儿童玩具积木',
-        subjectTrans: '어린이 장난감 블록',
-        offerId: 678901234572,
-        isJxhy: false,
-        priceInfo: {
-          price: '15.50-45.00',
-          jxhyPrice: null,
-          pfJxhyPrice: null,
-          consignPrice: '20.00',
-        },
-        repurchaseRate: '35.6%',
-        monthSold: 12543,
-        traceInfo: 'DG-TOY-2024',
-        isOnePsale: true,
-        sellerIdentities: ['trade_assurance'],
-      },
-      {
-        imageUrl: 'https://images.unsplash.com/photo-1564466809058-bf4114d55352?w=400',
-        subject: '办公文具套装',
-        subjectTrans: '사무용품 세트',
-        offerId: 678901234573,
-        isJxhy: true,
-        priceInfo: {
-          price: '12.00-25.00',
-          jxhyPrice: '10.50',
-          pfJxhyPrice: null,
-          consignPrice: '14.00',
-        },
-        repurchaseRate: '48.9%',
-        monthSold: 34567,
-        traceInfo: 'SH-OFFICE-2024',
-        isOnePsale: true,
-        sellerIdentities: ['manufacturer', 'verified_supplier'],
-      },
-      {
-        imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400',
-        subject: '运动服装',
-        subjectTrans: '스포츠웨어',
-        offerId: 678901234574,
-        isJxhy: false,
-        priceInfo: {
-          price: '28.00-55.00',
-          jxhyPrice: null,
-          pfJxhyPrice: null,
-          consignPrice: '32.00',
-        },
-        repurchaseRate: '42.1%',
-        monthSold: 9876,
-        traceInfo: 'FJ-SPORT-2024',
-        isOnePsale: false,
-        sellerIdentities: ['gold_supplier'],
-      },
-    ],
-  },
-  timestamp: Date.now(),
-  traceId: 'trace-' + Date.now(),
-};
+// 더미 데이터 모두 제거 - API에서 실시간으로 가져옴
 
 export default function SearchResultsPage() {
   const searchParams = useSearchParams();
@@ -345,6 +115,7 @@ export default function SearchResultsPage() {
   const [sortBy, setSortBy] = useState(''); // 빈 문자열이 기본(추천순)
   const [currentPage, setCurrentPage] = useState(1);
   const [searchKeyword, setSearchKeyword] = useState(query);
+  const [categories, setCategories] = useState<Category[]>([]); // API에서 카테고리 가져옴
 
   // 필터 상태
   const [selectedFilters, setSelectedFilters] = useState({
@@ -376,48 +147,85 @@ export default function SearchResultsPage() {
     setSearchKeyword(query);
   }, [query]);
 
+  // 카테고리 로드
+  useEffect(() => {
+    const loadCategories = async () => {
+      try {
+        const { getCategories } = await import('@/lib/1688/api');
+        // 루트 카테고리 조회 (categoryID: 0)
+        const result = await getCategories('0');
+        console.log('카테고리 API 응답:', result);
+        
+        if (result?.success && result.data) {
+          console.log('카테고리 데이터 설정:', result.data);
+          setCategories(result.data);
+        } else {
+          console.error('카테고리 응답 형식 오류:', result);
+        }
+      } catch (error) {
+        console.error('카테고리 로드 실패:', error);
+        // 실패 시 더미 데이터 유지
+      }
+    };
+    
+    loadCategories();
+  }, []);
+
   useEffect(() => {
     const fetchProducts = async () => {
+      if (!query) {
+        setApiResponse(null);
+        setLoading(false);
+        return;
+      }
+
       setLoading(true);
 
-      // 실제 API 호출 시 사용할 코드
-      // const response = await fetch('/api/1688/search', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({
-      //     keyword: query,
-      //     beginPage: currentPage,
-      //     pageSize: 20,
-      //     sort: sortBy
-      //   })
-      // });
-      // const data = await response.json();
-      // setApiResponse(data);
+      try {
+        // 1688 API 유틸리티 함수 사용
+        const { searchProducts } = await import('@/lib/1688/api');
+        
+        // 필터 생성
+        const filters = [];
+        if (selectedFilters.isJxhy) filters.push('isJxhy');
+        if (selectedFilters.isOnePsale) filters.push('isOnePsale');
+        if (selectedFilters.manufacturer) filters.push('manufacturer');
+        if (selectedFilters.verifiedSupplier) filters.push('verifiedSupplier');
+        if (selectedFilters.goldSupplier) filters.push('goldSupplier');
+        
+        const result = await searchProducts({
+          keyword: query,
+          page: currentPage,
+          pageSize: 20,
+          country: 'ko',
+          sort: sortBy || undefined,
+          filter: filters.length > 0 ? filters.join(',') : undefined,
+          categoryId: selectedCategory ? parseInt(selectedCategory) : undefined,
+        });
 
-      // 더미 데이터로 검색 시뮬레이션
-      setTimeout(() => {
-        // 검색어에 따라 다른 결과 표시 (시뮬레이션)
-        let filteredData = { ...dummyApiResponse };
-
-        if (query) {
-          // 검색어가 있으면 필터링 (실제로는 API가 처리)
-          filteredData.data.data = dummyApiResponse.data.data.filter(
-            (product) => product.subjectTrans.includes(query) || product.subject.includes(query)
-          );
-          filteredData.data.totalRecords = filteredData.data.data.length;
-          filteredData.data.totalPage = Math.ceil(filteredData.data.data.length / 20);
+        if (result?.success) {
+          // API 응답을 기존 형식에 맞게 변환
+          setApiResponse({
+            code: 200,
+            message: 'success',
+            data: result.data,
+            timestamp: Date.now(),
+            traceId: 'search-' + Date.now()
+          });
         } else {
-          // 검색어가 없으면 전체 더미 데이터 표시
-          filteredData = { ...dummyApiResponse };
+          console.error('Search failed:', result);
+          setApiResponse(null);
         }
-
-        setApiResponse(filteredData);
+      } catch (err) {
+        console.error('Search error:', err);
+        setApiResponse(null);
+      } finally {
         setLoading(false);
-      }, 800);
+      }
     };
 
     fetchProducts();
-  }, [query, currentPage, sortBy]);
+  }, [query, currentPage, sortBy, selectedFilters, selectedCategory, selectedSubCategory]);
 
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setCurrentPage(value);
@@ -486,13 +294,49 @@ export default function SearchResultsPage() {
     if (!uploadedImage) return;
 
     setImageSearchLoading(true);
-    // TODO: 실제 API 호출
-    setTimeout(() => {
+    try {
+      // 1. 이미지 업로드하여 imageId 획득
+      const { uploadImage, searchByImage } = await import('@/lib/1688/api');
+      
+      // base64 이미지 데이터 추출 (data:image/jpeg;base64, 부분 제거)
+      const base64Data = uploadedImage.split(',')[1];
+      
+      const uploadResult = await uploadImage(base64Data);
+      
+      if (uploadResult?.success && uploadResult.data?.imageId) {
+        // 2. imageId로 상품 검색
+        const searchResult = await searchByImage({
+          imageId: uploadResult.data.imageId,
+          beginPage: 1,
+          pageSize: 20,
+          country: 'ko'
+        });
+        
+        if (searchResult?.success) {
+          // 검색 결과를 상태에 저장
+          setApiResponse({
+            code: 200,
+            message: '성공',
+            data: {
+              totalRecords: searchResult.data.totalRecords,
+              totalPage: searchResult.data.totalPage,
+              pageSize: searchResult.data.pageSize,
+              currentPage: searchResult.data.currentPage,
+              data: searchResult.data.data
+            },
+            timestamp: Date.now(),
+            traceId: 'image-search'
+          });
+          // setTotalPages 는 이미지 검색에서는 사용하지 않음 (별도 페이징 필요시 추가)
+        }
+      }
+    } catch (error) {
+      console.error('이미지 검색 실패:', error);
+      alert('이미지 검색에 실패했습니다. 다시 시도해주세요.');
+    } finally {
       setImageSearchLoading(false);
       setImageSearchOpen(false);
-      // 검색 결과 표시
-      router.push('/1688/search?q=이미지검색결과');
-    }, 2000);
+    }
   };
 
   // 카테고리 토글 함수 제거 (사용하지 않음)
@@ -900,7 +744,7 @@ export default function SearchResultsPage() {
                     if (!selectedCategory) return '전체 카테고리';
 
                     // 선택된 카테고리 찾기
-                    const mainCategory = dummyCategories.find(
+                    const mainCategory = categories.find(
                       (c) => c.categoryID.toString() === selectedCategory
                     );
                     if (mainCategory) {
@@ -985,7 +829,7 @@ export default function SearchResultsPage() {
                   {selectedCategory && (
                     <Chip
                       label={(() => {
-                        const mainCategory = dummyCategories.find(
+                        const mainCategory = categories.find(
                           (c) => c.categoryID.toString() === selectedCategory
                         );
                         if (mainCategory && selectedSubCategory) {
@@ -1069,61 +913,16 @@ export default function SearchResultsPage() {
               {query ? '相关分类 (관련 카테고리)' : '热门分类 (인기 카테고리)'}
             </Typography>
             <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-              {/* 검색어에 따른 동적 카테고리 - 실제로는 API에서 받아옴 */}
-              {(() => {
-                // 검색어에 따라 관련 카테고리 표시 (더미 로직)
-                const relatedCategories = [];
-                if (!query) {
-                  // 검색어가 없을 때 인기 카테고리 표시
-                  relatedCategories.push(
-                    { id: '0001', name: '女装' },
-                    { id: '0002', name: '男装' },
-                    { id: '0003', name: '鞋包配饰' },
-                    { id: '0004', name: '手机数码' },
-                    { id: '0005', name: '家居生活' },
-                    { id: '0006', name: '美妆个护' },
-                    { id: '0007', name: '食品饮料' },
-                    { id: '0008', name: '母婴玩具' },
-                    { id: '0009', name: '运动户外' },
-                    { id: '0010', name: '汽车用品' }
-                  );
-                } else if (query.includes('가방') || query.includes('bag')) {
-                  relatedCategories.push(
-                    { id: '1001', name: '女包' },
-                    { id: '1002', name: '男包' },
-                    { id: '1003', name: '旅行包' },
-                    { id: '1004', name: '背包' },
-                    { id: '1005', name: '手提包' },
-                    { id: '1006', name: '钱包' }
-                  );
-                } else if (query.includes('신발') || query.includes('shoe')) {
-                  relatedCategories.push(
-                    { id: '2001', name: '运动鞋' },
-                    { id: '2002', name: '休闲鞋' },
-                    { id: '2003', name: '皮鞋' },
-                    { id: '2004', name: '女鞋' },
-                    { id: '2005', name: '男鞋' },
-                    { id: '2006', name: '童鞋' }
-                  );
-                } else {
-                  // 기본 관련 카테고리
-                  relatedCategories.push(
-                    { id: '3001', name: '热销商品' },
-                    { id: '3002', name: '新品上市' },
-                    { id: '3003', name: '优质供应商' },
-                    { id: '3004', name: '实力商家' },
-                    { id: '3005', name: '品牌直销' }
-                  );
-                }
-
-                return relatedCategories.map((cat) => (
+              {/* API에서 받아온 실제 카테고리 표시 */}
+              {categories.length > 0 ? (
+                categories.slice(0, 15).map((cat) => (
                   <Chip
-                    key={cat.id}
+                    key={cat.categoryID}
                     label={cat.name}
                     onClick={() => {
-                      setSelectedCategory('');
-                      setSelectedSubCategory(cat.id);
-                      // 실제로는 카테고리 필터링 로직 추가
+                      setSelectedCategory(cat.categoryID.toString());
+                      setSelectedSubCategory('');
+                      // 카테고리 선택 시 검색 실행
                     }}
                     variant="outlined"
                     sx={{
@@ -1134,8 +933,13 @@ export default function SearchResultsPage() {
                       },
                     }}
                   />
-                ));
-              })()}
+                ))
+              ) : (
+                // 카테고리 로딩 중이거나 없을 때 기본 표시
+                <Typography variant="body2" color="text.secondary">
+                  카테고리를 불러오는 중...
+                </Typography>
+              )}
             </Stack>
           </Paper>
 
@@ -1278,7 +1082,7 @@ export default function SearchResultsPage() {
               <ListItemText primary="전체 카테고리" />
             </ListItemButton>
             <Divider />
-            {dummyCategories.map((category) => (
+            {categories.map((category) => (
               <ListItemButton
                 key={category.categoryID}
                 onMouseEnter={() => setHoveredCategory(category.categoryID)}
@@ -1306,7 +1110,7 @@ export default function SearchResultsPage() {
           {/* 2급 카테고리 목록 */}
           {hoveredCategory && (
             <List sx={{ width: 300, py: 0 }}>
-              {dummyCategories
+              {categories
                 .find((c) => c.categoryID === hoveredCategory)
                 ?.childCategorys?.map((subCategory) => (
                   <ListItemButton

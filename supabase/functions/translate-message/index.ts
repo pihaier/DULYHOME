@@ -1,6 +1,11 @@
-import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
+import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
-import OpenAI from 'https://deno.land/x/openai@v4.20.1/mod.ts'
+import OpenAI from 'https://esm.sh/openai@4'
+
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type'
+};
 
 const openai = new OpenAI({
   apiKey: Deno.env.get('OPENAI_API_KEY'),
@@ -9,70 +14,61 @@ const openai = new OpenAI({
 const supabaseUrl = Deno.env.get('SUPABASE_URL')!
 const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
 
-serve(async (req) => {
+Deno.serve(async (req) => {
+  // CORS preflight
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders });
+  }
+
   try {
     const { record } = await req.json()
     
     // 이미 번역된 메시지는 스킵
     if (record.translated_message) {
       return new Response(JSON.stringify({ success: true }), {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          ...corsHeaders,
+          'Content-Type': 'application/json' 
+        },
       })
     }
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
-    // 주문 정보 가져오기 (컨텍스트용) - 여러 테이블에서 시도
+    // service_type에 따라 해당 테이블에서만 주문 정보 가져오기
     let orderData = null;
     
-    // Try market_research_requests first
-    const { data: marketResearch } = await supabase
-      .from('market_research_requests')
-      .select('*')
-      .eq('reservation_number', record.reservation_number)
-      .single();
-    
-    if (marketResearch) {
-      orderData = marketResearch;
-    } else {
-      // Try inspection_applications
-      const { data: inspection } = await supabase
-        .from('inspection_applications')
-        .select('*')
-        .eq('reservation_number', record.reservation_number)
-        .single();
+    if (record.service_type) {
+      // service_type과 테이블 매핑
+      const tableMap = {
+        'market-research': 'market_research_requests',
+        'factory-contact': 'factory_contact_requests', 
+        'inspection': 'inspection_applications',
+        'sampling': 'sampling_orders',
+        'bulk-purchase': 'bulk_orders',
+        'purchase-agency': 'purchase_agency_orders',
+        'shipping-agency': 'shipping_agency_orders'
+      };
       
-      if (inspection) {
-        orderData = inspection;
-      } else {
-        // Try sampling_orders
-        const { data: sampling } = await supabase
-          .from('sampling_orders')
+      const tableName = tableMap[record.service_type];
+      
+      if (tableName) {
+        const { data } = await supabase
+          .from(tableName)
           .select('*')
           .eq('reservation_number', record.reservation_number)
           .single();
         
-        if (sampling) {
-          orderData = sampling;
-        } else {
-          // Try bulk_orders
-          const { data: bulk } = await supabase
-            .from('bulk_orders')
-            .select('*')
-            .eq('reservation_number', record.reservation_number)
-            .single();
-          
-          orderData = bulk;
-        }
+        orderData = data;
       }
     }
     
     // 주문 정보 압축 (시스템 메시지용)
     let compressedOrderInfo = ''
     if (orderData) {
-      // GPT-4로 주문 정보 압축
+      // GPT-5-mini로 주문 정보 압축
       const compressionResponse = await openai.chat.completions.create({
-        model: 'gpt-4-turbo-preview',
+        model: 'gpt-5-mini',
         messages: [
           {
             role: 'system',
@@ -83,8 +79,7 @@ serve(async (req) => {
             content: `서비스: ${orderData.service_type}\n회사: ${orderData.company_name}\n제품: ${orderData.product_name || ''}\n상태: ${orderData.status}`
           }
         ],
-        temperature: 0.3,
-        max_tokens: 200,
+        max_completion_tokens: 200,
       })
       
       compressedOrderInfo = compressionResponse.choices[0]?.message?.content?.trim() || ''
@@ -124,15 +119,14 @@ ${recentMessages?.reverse().map(msg =>
 
 Provide only the translated text without any explanation.`
 
-    // GPT-4 번역 요청
+    // GPT-5-mini 번역 요청
     const completion = await openai.chat.completions.create({
-      model: 'gpt-4-turbo-preview',
+      model: 'gpt-5-mini',
       messages: [
         { role: 'system', content: systemMessage },
         { role: 'user', content: userMessage }
       ],
-      temperature: 0.3,
-      max_tokens: 1000,
+      max_completion_tokens: 1000,
     })
 
     const translatedText = completion.choices[0]?.message?.content?.trim() || record.original_message
@@ -152,13 +146,24 @@ Provide only the translated text without any explanation.`
 
     return new Response(
       JSON.stringify({ success: true, translated: translatedText }),
-      { headers: { 'Content-Type': 'application/json' } }
+      { 
+        headers: { 
+          ...corsHeaders,
+          'Content-Type': 'application/json' 
+        } 
+      }
     )
   } catch (error) {
     console.error('Translation error:', error)
     return new Response(
       JSON.stringify({ error: error.message }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
+      { 
+        status: 500, 
+        headers: { 
+          ...corsHeaders,
+          'Content-Type': 'application/json' 
+        } 
+      }
     )
   }
 })

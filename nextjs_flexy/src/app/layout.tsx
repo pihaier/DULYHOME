@@ -1,6 +1,7 @@
 import React from 'react';
 import { CustomizerContextProvider } from './context/customizerContext';
 import { GlobalProvider } from '@/lib/context/GlobalContext';
+import { ChatTranslationProvider } from './providers';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
@@ -25,9 +26,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <NextTopLoader color="#1e4db7" />
         <GlobalProvider>
-          <CustomizerContextProvider>
-            <MyApp>{children}</MyApp>
-          </CustomizerContextProvider>
+          <ChatTranslationProvider>
+            <CustomizerContextProvider>
+              <MyApp>{children}</MyApp>
+            </CustomizerContextProvider>
+          </ChatTranslationProvider>
         </GlobalProvider>
         <Analytics />
         <SpeedInsights />

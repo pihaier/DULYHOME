@@ -200,8 +200,11 @@ export default function ChatPanel({
           });
 
           if (functionError) {
+            console.error('Translation error:', functionError);
           }
-        } catch (err) {}
+        } catch (err) {
+          console.error('Translation failed:', err);
+        }
       }
     } catch (error) {
       alert(
@@ -337,13 +340,8 @@ export default function ChatPanel({
           .is('translated_message', null)
           .not('original_message', 'is', null);
 
-        if (untranslated && untranslated.length > 0) {
-          for (const msg of untranslated) {
-            await supabase.functions.invoke('translate-message', {
-              body: { record: msg },
-            });
-          }
-        }
+        // Realtime 리스너가 자동으로 번역 처리
+        // 중복 호출 제거
       };
 
       translatePendingMessages();
@@ -374,12 +372,8 @@ export default function ChatPanel({
               return [...prev, newMessage];
             });
 
-            // 번역 요청
-            if (!newMessage.translated_message && newMessage.original_message) {
-              supabase.functions.invoke('translate-message', {
-                body: { record: newMessage },
-              });
-            }
+            // Realtime 리스너가 자동으로 번역 처리
+            // 중복 호출 제거
           } else if (payload.eventType === 'UPDATE') {
             const updatedMessage = payload.new as ChatMessage;
             setChatMessages((prev) =>

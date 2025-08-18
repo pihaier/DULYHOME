@@ -25,6 +25,9 @@ import {
   Link,
   TextField,
   ButtonGroup,
+  Modal,
+  Backdrop,
+  Fade,
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import PageContainer from '@/app/components/container/PageContainer';
@@ -48,6 +51,7 @@ import AccessTime from '@mui/icons-material/AccessTime';
 import LocalShipping from '@mui/icons-material/LocalShipping';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import ConstructionIcon from '@mui/icons-material/Construction';
+import BrushIcon from '@mui/icons-material/Brush';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -63,6 +67,10 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
 import Drawer from '@mui/material/Drawer';
+import TranslateIcon from '@mui/icons-material/Translate';
+import CircularProgress from '@mui/material/CircularProgress';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import Snackbar from '@mui/material/Snackbar';
 // 동적 import를 위한 타입
 const ChatPanel = React.lazy(() => import('@/app/dashboard/orders/_components/ChatPanel'));
 
@@ -189,899 +197,9 @@ interface ProductDetail {
   sellingPoint: string | null;
   offerIdentities: string[];
   createDate: string;
-} // 더미 데이터
-const dummyProductDetail: ProductDetail = {
-  offerId: 670291644950,
-  categoryId: 1031919,
-  categoryName: null,
-  subject: '郁金香印花白色短袖T恤女夏新款日式设计感小众宽松甜美半袖上衣',
-  subjectTrans: '튤립 프린트 화이트 반팔 티셔츠 여성 여름 신상 일본 디자인 루즈핏 스위트',
-  description: `<div id="offer-template-0"></div><p><img src="https://cbu01.alicdn.com/img/ibank/O1CN01jHuYYY1lmqPtOEpdr_!!2212511504862-0-cib.jpg" alt="undefined" width="790" height="473.99999999999994"/><br/><br/></p>
-<p><br/><img src="https://cbu01.alicdn.com/img/ibank/O1CN01Yed3zg1lmqQaQVVre_!!2212511504862-0-cib.jpg" alt="undefined" width="790" height="1007.25"/><br/><br/><img src="https://cbu01.alicdn.com/img/ibank/O1CN01FKdK0y1lmqQ0fhGYE_!!2212511504862-0-cib.jpg" alt="undefined" width="790" height="790.9875000000001"/><br/><img src="https://cbu01.alicdn.com/img/ibank/O1CN01K3xZsV1lmqPiJdlrG_!!2212511504862-0-cib.jpg" alt="undefined" width="790" height="778.1500000000001"/><br/><img src="https://cbu01.alicdn.com/img/ibank/O1CN01zEUIHO1lmqPrkbepC_!!2212511504862-0-cib.jpg" alt="undefined" width="790" height="815.6750000000001"/><br/><img src="https://cbu01.alicdn.com/img/ibank/O1CN015vP5Uv1lmqPw4ahCV_!!2212511504862-0-cib.jpg" alt="undefined" width="790" height="565.8375"/><br/><img src="https://cbu01.alicdn.com/img/ibank/O1CN01xe0OFb1lmqPv8W4hn_!!2212511504862-0-cib.jpg" alt="undefined" width="790" height="926.2750000000001"/><br/><br/></p><div id="offer-template-1452144038967"></div><p><img src="https://cbu01.alicdn.com/img/ibank/O1CN01uF62741lmqPrbJIuo_!!2212511504862-0-cib.jpg" alt="undefined" width="790" height="473.99999999999994"/><br/><br/></p><div id="offer-template-1452144040852"></div><p><img src="https://cbu01.alicdn.com/img/ibank/O1CN014zXIHc1lmqPiJoNUw_!!2212511504862-0-cib.jpg" alt="undefined"/><br/><br/></p>`,
-  mainVideo: 'https://cloud.video.taobao.com/play/u/2212511504862/p/1/e/6/t/1/343616685880.mp4',
-  detailVideo: null,
-  productImage: {
-    images: [
-      'https://cbu01.alicdn.com/img/ibank/O1CN01Snplzg1lmqPztdR06_!!2212511504862-0-cib.jpg',
-      'https://cbu01.alicdn.com/img/ibank/O1CN01ILiRZg1lmqPrkM1Aw_!!2212511504862-0-cib.jpg',
-      'https://cbu01.alicdn.com/img/ibank/O1CN01RfOVS91lmqPsPP9Q4_!!2212511504862-0-cib.jpg',
-      'https://cbu01.alicdn.com/img/ibank/O1CN01ADWq5i1lmqPyjuvAV_!!2212511504862-0-cib.jpg',
-      'https://cbu01.alicdn.com/img/ibank/O1CN01z1mdFf1Bs2kADtm7e_!!0-0-cib.jpg',
-    ],
-  },
-  productAttribute: [
-    {
-      attributeId: '100031521',
-      attributeName: '面料名称',
-      value: '精梳棉',
-      attributeNameTrans: 'Fabric Name',
-      valueTrans: 'Combed cotton',
-    },
-    {
-      attributeId: '117130178',
-      attributeName: '主面料成分',
-      value: '棉',
-      attributeNameTrans: 'Main fabric composition',
-      valueTrans: 'Cotton',
-    },
-    {
-      attributeId: '151844178',
-      attributeName: '主面料成分2',
-      value: '棉',
-      attributeNameTrans: 'Main fabric composition 2',
-      valueTrans: 'Cotton',
-    },
-    {
-      attributeId: '2900',
-      attributeName: '图案',
-      value: '印花',
-      attributeNameTrans: 'Pattern',
-      valueTrans: 'Printing',
-    },
-    {
-      attributeId: '1811',
-      attributeName: '款式',
-      value: '套头',
-      attributeNameTrans: 'Style',
-      valueTrans: 'Pullover',
-    },
-    {
-      attributeId: '7001',
-      attributeName: '袖长',
-      value: '短袖',
-      attributeNameTrans: 'Sleeve length',
-      valueTrans: 'Short Sleeve',
-    },
-    {
-      attributeId: '1085',
-      attributeName: '工艺',
-      value: '印花/印染',
-      attributeNameTrans: 'Process',
-      valueTrans: 'Printing/Dyeing',
-    },
-    {
-      attributeId: '1398',
-      attributeName: '货号',
-      value: '1985',
-      attributeNameTrans: 'Item No.',
-      valueTrans: '1985',
-    },
-    {
-      attributeId: '2176',
-      attributeName: '品牌',
-      value: '伊念',
-      attributeNameTrans: 'Brand',
-      valueTrans: 'Yi Nian',
-    },
-    {
-      attributeId: '42842855',
-      attributeName: '版型',
-      value: '宽松型',
-      attributeNameTrans: 'Version',
-      valueTrans: 'Loose type',
-    },
-    {
-      attributeId: '20602',
-      attributeName: '领型',
-      value: '圆领',
-      attributeNameTrans: 'Collar',
-      valueTrans: 'Crewneck',
-    },
-    {
-      attributeId: '2917380',
-      attributeName: '袖型',
-      value: '常规袖',
-      attributeNameTrans: 'Sleeve type',
-      valueTrans: 'Conventional Sleeve',
-    },
-    {
-      attributeId: '8614',
-      attributeName: '流行元素',
-      value: '印花',
-      attributeNameTrans: 'Popular elements',
-      valueTrans: 'Printing',
-    },
-    {
-      attributeId: '20666',
-      attributeName: '上市年份/季节',
-      value: '2022年夏季',
-      attributeNameTrans: 'Listing year/season',
-      valueTrans: 'Summer 2022',
-    },
-    {
-      attributeId: '2489638',
-      attributeName: '风格类型',
-      value: '清新甜美',
-      attributeNameTrans: 'Style Type',
-      valueTrans: 'Fresh and sweet',
-    },
-    {
-      attributeId: '149092418',
-      attributeName: '主面料成分含量',
-      value: '95%以上',
-      attributeNameTrans: 'Main fabric composition content',
-      valueTrans: 'More than 95%',
-    },
-    {
-      attributeId: '401',
-      attributeName: '风格',
-      value: '可爱风',
-      attributeNameTrans: 'Style',
-      valueTrans: 'Lovable wind',
-    },
-    {
-      attributeId: '401',
-      attributeName: '风格',
-      value: '甜美风',
-      attributeNameTrans: 'Style',
-      valueTrans: 'Sweet wind',
-    },
-    {
-      attributeId: '401',
-      attributeName: '风格',
-      value: '田园风',
-      attributeNameTrans: 'Style',
-      valueTrans: 'Pastoral style',
-    },
-    {
-      attributeId: '401',
-      attributeName: '风格',
-      value: '少女风',
-      attributeNameTrans: 'Style',
-      valueTrans: 'Maiden wind',
-    },
-    {
-      attributeId: '401',
-      attributeName: '风格',
-      value: '清新风',
-      attributeNameTrans: 'Style',
-      valueTrans: 'Fresh wind',
-    },
-    {
-      attributeId: '401',
-      attributeName: '风格',
-      value: '森系风',
-      attributeNameTrans: 'Style',
-      valueTrans: 'Mori wind',
-    },
-    {
-      attributeId: '221796513',
-      attributeName: '是否跨境货源',
-      value: '否',
-      attributeNameTrans: 'Whether cross-border source',
-      valueTrans: 'No',
-    },
-    {
-      attributeId: '364',
-      attributeName: '产品类别',
-      value: 'T恤',
-      attributeNameTrans: 'Product Category',
-      valueTrans: 'T-Shirt',
-    },
-    {
-      attributeId: '153610427',
-      attributeName: '主面料成分2含量',
-      value: '95%以上',
-      attributeNameTrans: 'Main fabric component 2 content',
-      valueTrans: 'More than 95%',
-    },
-    // 색상 SKU 속성 (API에는 있지만 UI 표시용으로는 productSkuInfos에서 추출)
-    {
-      attributeId: '3216',
-      attributeName: '颜色',
-      value: '郁金香',
-      attributeNameTrans: 'Color',
-      valueTrans: 'Tulip',
-    },
-    {
-      attributeId: '3216',
-      attributeName: '颜色',
-      value: 'BLUTO',
-      attributeNameTrans: 'Color',
-      valueTrans: 'BLUTO',
-    },
-    {
-      attributeId: '3216',
-      attributeName: '颜色',
-      value: '汽车字母',
-      attributeNameTrans: 'Color',
-      valueTrans: 'Car Alphabet',
-    },
-    // 사이즈 SKU 속성
-    {
-      attributeId: '450',
-      attributeName: '尺码',
-      value: 'S',
-      attributeNameTrans: 'Size',
-      valueTrans: 'S',
-    },
-    {
-      attributeId: '450',
-      attributeName: '尺码',
-      value: 'M',
-      attributeNameTrans: 'Size',
-      valueTrans: 'M',
-    },
-    {
-      attributeId: '450',
-      attributeName: '尺码',
-      value: 'L',
-      attributeNameTrans: 'Size',
-      valueTrans: 'L',
-    },
-    {
-      attributeId: '450',
-      attributeName: '尺码',
-      value: 'XL',
-      attributeNameTrans: 'Size',
-      valueTrans: 'XL',
-    },
-    {
-      attributeId: '450',
-      attributeName: '尺码',
-      value: 'XXL',
-      attributeNameTrans: 'Size',
-      valueTrans: 'XXL',
-    },
-    {
-      attributeId: '450',
-      attributeName: '尺码',
-      value: 'XXXL',
-      attributeNameTrans: 'Size',
-      valueTrans: 'XXXL',
-    },
-  ],
-  productSkuInfos: [
-    // 郁金香 색상 - 6개 사이즈
-    {
-      amountOnSale: 9498,
-      price: null,
-      jxhyPrice: null,
-      skuId: 4829152353068,
-      specId: '594b40c111b019af610a0078e4316373',
-      skuAttributes: [
-        {
-          attributeId: 3216,
-          attributeName: '颜色',
-          attributeNameTrans: 'Color',
-          value: '郁金香',
-          valueTrans: 'Tulip',
-          skuImageUrl:
-            'https://cbu01.alicdn.com/img/ibank/O1CN01RUych41lmqPv8KjLV_!!2212511504862-0-cib.jpg',
-        },
-        {
-          attributeId: 450,
-          attributeName: '尺码',
-          attributeNameTrans: 'Size',
-          value: 'S',
-          valueTrans: 'S',
-          skuImageUrl: null,
-        },
-      ],
-      pfJxhyPrice: null,
-      consignPrice: '15.9',
-      cargoNumber: '无缝短袖',
-      promotionPrice: null,
-    },
-    {
-      amountOnSale: 14775,
-      price: null,
-      jxhyPrice: null,
-      skuId: 4829152353069,
-      specId: '25cbe467528870fb827eeddc52d4c52e',
-      skuAttributes: [
-        {
-          attributeId: 3216,
-          attributeName: '颜色',
-          attributeNameTrans: 'Color',
-          value: '郁金香',
-          valueTrans: 'Tulip',
-          skuImageUrl:
-            'https://cbu01.alicdn.com/img/ibank/O1CN01RUych41lmqPv8KjLV_!!2212511504862-0-cib.jpg',
-        },
-        {
-          attributeId: 450,
-          attributeName: '尺码',
-          attributeNameTrans: 'Size',
-          value: 'M',
-          valueTrans: 'M',
-          skuImageUrl: null,
-        },
-      ],
-      pfJxhyPrice: null,
-      consignPrice: '15.9',
-      cargoNumber: '无缝短袖',
-      promotionPrice: null,
-    },
-    {
-      amountOnSale: 4980,
-      price: null,
-      jxhyPrice: null,
-      skuId: 4829152353070,
-      specId: '3c3636cc0f14af1b523d1554198ccb23',
-      skuAttributes: [
-        {
-          attributeId: 3216,
-          attributeName: '颜色',
-          attributeNameTrans: 'Color',
-          value: '郁金香',
-          valueTrans: 'Tulip',
-          skuImageUrl:
-            'https://cbu01.alicdn.com/img/ibank/O1CN01RUych41lmqPv8KjLV_!!2212511504862-0-cib.jpg',
-        },
-        {
-          attributeId: 450,
-          attributeName: '尺码',
-          attributeNameTrans: 'Size',
-          value: 'L',
-          valueTrans: 'L',
-          skuImageUrl: null,
-        },
-      ],
-      pfJxhyPrice: null,
-      consignPrice: '15.9',
-      cargoNumber: '无缝短袖',
-      promotionPrice: null,
-    },
-    {
-      amountOnSale: 6301,
-      price: null,
-      jxhyPrice: null,
-      skuId: 4829152353071,
-      specId: '4d1790eb7cbc0421f044f59f57f227eb',
-      skuAttributes: [
-        {
-          attributeId: 3216,
-          attributeName: '颜色',
-          attributeNameTrans: 'Color',
-          value: '郁金香',
-          valueTrans: 'Tulip',
-          skuImageUrl:
-            'https://cbu01.alicdn.com/img/ibank/O1CN01RUych41lmqPv8KjLV_!!2212511504862-0-cib.jpg',
-        },
-        {
-          attributeId: 450,
-          attributeName: '尺码',
-          attributeNameTrans: 'Size',
-          value: 'XL',
-          valueTrans: 'XL',
-          skuImageUrl: null,
-        },
-      ],
-      pfJxhyPrice: null,
-      consignPrice: '15.9',
-      cargoNumber: '无缝短袖',
-      promotionPrice: null,
-    },
-    {
-      amountOnSale: 8886,
-      price: null,
-      jxhyPrice: null,
-      skuId: 4829152353072,
-      specId: '63114b38aa43cf4dc90dfbbb3dbe5c38',
-      skuAttributes: [
-        {
-          attributeId: 3216,
-          attributeName: '颜色',
-          attributeNameTrans: 'Color',
-          value: '郁金香',
-          valueTrans: 'Tulip',
-          skuImageUrl:
-            'https://cbu01.alicdn.com/img/ibank/O1CN01RUych41lmqPv8KjLV_!!2212511504862-0-cib.jpg',
-        },
-        {
-          attributeId: 450,
-          attributeName: '尺码',
-          attributeNameTrans: 'Size',
-          value: 'XXL',
-          valueTrans: 'XXL',
-          skuImageUrl: null,
-        },
-      ],
-      pfJxhyPrice: null,
-      consignPrice: '15.9',
-      cargoNumber: '无缝短袖',
-      promotionPrice: null,
-    },
-    {
-      amountOnSale: 9638,
-      price: null,
-      jxhyPrice: null,
-      skuId: 4829152353073,
-      specId: '7f5ae8695c57c10c3434b7bcc00d64ce',
-      skuAttributes: [
-        {
-          attributeId: 3216,
-          attributeName: '颜色',
-          attributeNameTrans: 'Color',
-          value: '郁金香',
-          valueTrans: 'Tulip',
-          skuImageUrl:
-            'https://cbu01.alicdn.com/img/ibank/O1CN01RUych41lmqPv8KjLV_!!2212511504862-0-cib.jpg',
-        },
-        {
-          attributeId: 450,
-          attributeName: '尺码',
-          attributeNameTrans: 'Size',
-          value: 'XXXL',
-          valueTrans: 'XXXL',
-          skuImageUrl: null,
-        },
-      ],
-      pfJxhyPrice: null,
-      consignPrice: '15.9',
-      cargoNumber: '无缝短袖',
-      promotionPrice: null,
-    },
-    // BLUTO 색상 - 6개 사이즈
-    {
-      amountOnSale: 9158,
-      price: null,
-      jxhyPrice: null,
-      skuId: 4834487028612,
-      specId: '98cf040514ba7854e23dd8d33f0deab6',
-      skuAttributes: [
-        {
-          attributeId: 3216,
-          attributeName: '颜色',
-          attributeNameTrans: 'Color',
-          value: 'BLUTO',
-          valueTrans: 'BLUTO',
-          skuImageUrl:
-            'https://cbu01.alicdn.com/img/ibank/O1CN01VkuFF51lmqQ3qU9zP_!!2212511504862-0-cib.jpg',
-        },
-        {
-          attributeId: 450,
-          attributeName: '尺码',
-          attributeNameTrans: 'Size',
-          value: 'S',
-          valueTrans: 'S',
-          skuImageUrl: null,
-        },
-      ],
-      pfJxhyPrice: null,
-      consignPrice: '15.9',
-      cargoNumber: '无缝短袖',
-      promotionPrice: null,
-    },
-    {
-      amountOnSale: 9178,
-      price: null,
-      jxhyPrice: null,
-      skuId: 4834487028613,
-      specId: 'ef03a1de6eabee587d12b1cd4b2a300c',
-      skuAttributes: [
-        {
-          attributeId: 3216,
-          attributeName: '颜色',
-          attributeNameTrans: 'Color',
-          value: 'BLUTO',
-          valueTrans: 'BLUTO',
-          skuImageUrl:
-            'https://cbu01.alicdn.com/img/ibank/O1CN01VkuFF51lmqQ3qU9zP_!!2212511504862-0-cib.jpg',
-        },
-        {
-          attributeId: 450,
-          attributeName: '尺码',
-          attributeNameTrans: 'Size',
-          value: 'M',
-          valueTrans: 'M',
-          skuImageUrl: null,
-        },
-      ],
-      pfJxhyPrice: null,
-      consignPrice: '15.9',
-      cargoNumber: '无缝短袖',
-      promotionPrice: null,
-    },
-    {
-      amountOnSale: 9305,
-      price: null,
-      jxhyPrice: null,
-      skuId: 4834487028614,
-      specId: 'f4dd047e9199f0edcb15064e09afe5b4',
-      skuAttributes: [
-        {
-          attributeId: 3216,
-          attributeName: '颜色',
-          attributeNameTrans: 'Color',
-          value: 'BLUTO',
-          valueTrans: 'BLUTO',
-          skuImageUrl:
-            'https://cbu01.alicdn.com/img/ibank/O1CN01VkuFF51lmqQ3qU9zP_!!2212511504862-0-cib.jpg',
-        },
-        {
-          attributeId: 450,
-          attributeName: '尺码',
-          attributeNameTrans: 'Size',
-          value: 'L',
-          valueTrans: 'L',
-          skuImageUrl: null,
-        },
-      ],
-      pfJxhyPrice: null,
-      consignPrice: '15.9',
-      cargoNumber: '无缝短袖',
-      promotionPrice: null,
-    },
-    {
-      amountOnSale: 9438,
-      price: null,
-      jxhyPrice: null,
-      skuId: 4834487028615,
-      specId: '12395eba76b474802c93a80d647a4878',
-      skuAttributes: [
-        {
-          attributeId: 3216,
-          attributeName: '颜色',
-          attributeNameTrans: 'Color',
-          value: 'BLUTO',
-          valueTrans: 'BLUTO',
-          skuImageUrl:
-            'https://cbu01.alicdn.com/img/ibank/O1CN01VkuFF51lmqQ3qU9zP_!!2212511504862-0-cib.jpg',
-        },
-        {
-          attributeId: 450,
-          attributeName: '尺码',
-          attributeNameTrans: 'Size',
-          value: 'XL',
-          valueTrans: 'XL',
-          skuImageUrl: null,
-        },
-      ],
-      pfJxhyPrice: null,
-      consignPrice: '15.9',
-      cargoNumber: '无缝短袖',
-      promotionPrice: null,
-    },
-    {
-      amountOnSale: 9832,
-      price: null,
-      jxhyPrice: null,
-      skuId: 4834487028616,
-      specId: '2aece9cab73bc61f813bca6b65225eed',
-      skuAttributes: [
-        {
-          attributeId: 3216,
-          attributeName: '颜色',
-          attributeNameTrans: 'Color',
-          value: 'BLUTO',
-          valueTrans: 'BLUTO',
-          skuImageUrl:
-            'https://cbu01.alicdn.com/img/ibank/O1CN01VkuFF51lmqQ3qU9zP_!!2212511504862-0-cib.jpg',
-        },
-        {
-          attributeId: 450,
-          attributeName: '尺码',
-          attributeNameTrans: 'Size',
-          value: 'XXL',
-          valueTrans: 'XXL',
-          skuImageUrl: null,
-        },
-      ],
-      pfJxhyPrice: null,
-      consignPrice: '15.9',
-      cargoNumber: '无缝短袖',
-      promotionPrice: null,
-    },
-    {
-      amountOnSale: 9981,
-      price: null,
-      jxhyPrice: null,
-      skuId: 4834487028617,
-      specId: 'fab196fcf27778c2baf58e80e69ce3f6',
-      skuAttributes: [
-        {
-          attributeId: 3216,
-          attributeName: '颜色',
-          attributeNameTrans: 'Color',
-          value: 'BLUTO',
-          valueTrans: 'BLUTO',
-          skuImageUrl:
-            'https://cbu01.alicdn.com/img/ibank/O1CN01VkuFF51lmqQ3qU9zP_!!2212511504862-0-cib.jpg',
-        },
-        {
-          attributeId: 450,
-          attributeName: '尺码',
-          attributeNameTrans: 'Size',
-          value: 'XXXL',
-          valueTrans: 'XXXL',
-          skuImageUrl: null,
-        },
-      ],
-      pfJxhyPrice: null,
-      consignPrice: '15.9',
-      cargoNumber: '无缝短袖',
-      promotionPrice: null,
-    },
-    // 汽车字母 색상 - 6개 사이즈
-    {
-      amountOnSale: 9388,
-      price: null,
-      jxhyPrice: null,
-      skuId: 5016469159118,
-      specId: 'ff43ce57a4297749c38604763bf35f21',
-      skuAttributes: [
-        {
-          attributeId: 3216,
-          attributeName: '颜色',
-          attributeNameTrans: 'Color',
-          value: '汽车字母',
-          valueTrans: 'Car Alphabet',
-          skuImageUrl:
-            'https://cbu01.alicdn.com/img/ibank/O1CN01upN7y71lmqQ90F4yz_!!2212511504862-0-cib.jpg',
-        },
-        {
-          attributeId: 450,
-          attributeName: '尺码',
-          attributeNameTrans: 'Size',
-          value: 'S',
-          valueTrans: 'S',
-          skuImageUrl: null,
-        },
-      ],
-      pfJxhyPrice: null,
-      consignPrice: '15.9',
-      cargoNumber: '无缝短袖',
-      promotionPrice: null,
-    },
-    {
-      amountOnSale: 9011,
-      price: null,
-      jxhyPrice: null,
-      skuId: 5016469159119,
-      specId: '8fb77875f4a354413fe01aa3c3e5bd1f',
-      skuAttributes: [
-        {
-          attributeId: 3216,
-          attributeName: '颜色',
-          attributeNameTrans: 'Color',
-          value: '汽车字母',
-          valueTrans: 'Car Alphabet',
-          skuImageUrl:
-            'https://cbu01.alicdn.com/img/ibank/O1CN01upN7y71lmqQ90F4yz_!!2212511504862-0-cib.jpg',
-        },
-        {
-          attributeId: 450,
-          attributeName: '尺码',
-          attributeNameTrans: 'Size',
-          value: 'M',
-          valueTrans: 'M',
-          skuImageUrl: null,
-        },
-      ],
-      pfJxhyPrice: null,
-      consignPrice: '15.9',
-      cargoNumber: '无缝短袖',
-      promotionPrice: null,
-    },
-    {
-      amountOnSale: 8900,
-      price: null,
-      jxhyPrice: null,
-      skuId: 5016469159120,
-      specId: '182a7e869c48ce1005ba60554c8bed4a',
-      skuAttributes: [
-        {
-          attributeId: 3216,
-          attributeName: '颜色',
-          attributeNameTrans: 'Color',
-          value: '汽车字母',
-          valueTrans: 'Car Alphabet',
-          skuImageUrl:
-            'https://cbu01.alicdn.com/img/ibank/O1CN01upN7y71lmqQ90F4yz_!!2212511504862-0-cib.jpg',
-        },
-        {
-          attributeId: 450,
-          attributeName: '尺码',
-          attributeNameTrans: 'Size',
-          value: 'L',
-          valueTrans: 'L',
-          skuImageUrl: null,
-        },
-      ],
-      pfJxhyPrice: null,
-      consignPrice: '15.9',
-      cargoNumber: '无缝短袖',
-      promotionPrice: null,
-    },
-    {
-      amountOnSale: 9176,
-      price: null,
-      jxhyPrice: null,
-      skuId: 5016469159121,
-      specId: 'f53c84b3f98443eecb50d98ec7271292',
-      skuAttributes: [
-        {
-          attributeId: 3216,
-          attributeName: '颜色',
-          attributeNameTrans: 'Color',
-          value: '汽车字母',
-          valueTrans: 'Car Alphabet',
-          skuImageUrl:
-            'https://cbu01.alicdn.com/img/ibank/O1CN01upN7y71lmqQ90F4yz_!!2212511504862-0-cib.jpg',
-        },
-        {
-          attributeId: 450,
-          attributeName: '尺码',
-          attributeNameTrans: 'Size',
-          value: 'XL',
-          valueTrans: 'XL',
-          skuImageUrl: null,
-        },
-      ],
-      pfJxhyPrice: null,
-      consignPrice: '15.9',
-      cargoNumber: '无缝短袖',
-      promotionPrice: null,
-    },
-    {
-      amountOnSale: 9481,
-      price: null,
-      jxhyPrice: null,
-      skuId: 5016469159122,
-      specId: '90dbd2c2649d1df12c847c542bc57255',
-      skuAttributes: [
-        {
-          attributeId: 3216,
-          attributeName: '颜色',
-          attributeNameTrans: 'Color',
-          value: '汽车字母',
-          valueTrans: 'Car Alphabet',
-          skuImageUrl:
-            'https://cbu01.alicdn.com/img/ibank/O1CN01upN7y71lmqQ90F4yz_!!2212511504862-0-cib.jpg',
-        },
-        {
-          attributeId: 450,
-          attributeName: '尺码',
-          attributeNameTrans: 'Size',
-          value: 'XXL',
-          valueTrans: 'XXL',
-          skuImageUrl: null,
-        },
-      ],
-      pfJxhyPrice: null,
-      consignPrice: '15.9',
-      cargoNumber: '无缝短袖',
-      promotionPrice: null,
-    },
-    {
-      amountOnSale: 9835,
-      price: null,
-      jxhyPrice: null,
-      skuId: 5016469159123,
-      specId: 'e25ad039bdd3e6aacc245238e0e2a43f',
-      skuAttributes: [
-        {
-          attributeId: 3216,
-          attributeName: '颜色',
-          attributeNameTrans: 'Color',
-          value: '汽车字母',
-          valueTrans: 'Car Alphabet',
-          skuImageUrl:
-            'https://cbu01.alicdn.com/img/ibank/O1CN01upN7y71lmqQ90F4yz_!!2212511504862-0-cib.jpg',
-        },
-        {
-          attributeId: 450,
-          attributeName: '尺码',
-          attributeNameTrans: 'Size',
-          value: 'XXXL',
-          valueTrans: 'XXXL',
-          skuImageUrl: null,
-        },
-      ],
-      pfJxhyPrice: null,
-      consignPrice: '15.9',
-      cargoNumber: '无缝短袖',
-      promotionPrice: null,
-    },
-  ],
-  productSaleInfo: {
-    priceRanges: null,
-    amountOnSale: 166761,
-    priceRangeList: [
-      { startQuantity: 2, price: '13.9', promotionPrice: '13.21' },
-      { startQuantity: 20, price: '13.5', promotionPrice: '12.83' },
-    ],
-    quoteType: 2,
-    consignPrice: null,
-    jxhyPrice: null,
-    unitInfo: { unit: '件', transUnit: 'Piece' },
-  },
-  productShippingInfo: {
-    sendGoodsAddressText: '广东省广州市',
-    weight: null,
-    width: null,
-    height: null,
-    length: null,
-    shippingTimeGuarantee: 'shipIn48Hours',
-    skuShippingInfoList: [], // deprecated
-    skuShippingDetails: [
-      {
-        skuId: '4829152353068',
-        width: 22,
-        length: 33,
-        height: 1,
-        weight: 0.2,
-        pkgSizeSource: '商家自填',
-      },
-      {
-        skuId: '4829152353069',
-        width: 22,
-        length: 33,
-        height: 1,
-        weight: 0.2,
-        pkgSizeSource: '商家自填',
-      },
-    ],
-    pkgSizeSource: null,
-  },
-  isJxhy: false,
-  sellerOpenId: 'BBBEjczPHMQ_zHE-67YyNGXyw',
-  minOrderQuantity: 2,
-  batchNumber: null,
-  status: 'published',
-  tagInfoList: [
-    { key: 'isOnePsale', value: true },
-    { key: 'isSupportMix', value: true },
-    { key: 'isOnePsaleFreePostage', value: true },
-    { key: 'noReason7DReturn', value: false },
-    { key: '1688_yx', value: false },
-  ],
-  traceInfo: 'object_id@670291644950^object_type@offer',
-  sellerMixSetting: {
-    isGeneralHunpi: null,
-    mixAmount: 2,
-    mixNumber: 2,
-    generalHunpi: true,
-  },
-  productCargoNumber: '1985',
-  sellerDataInfo: {
-    tradeMedalLevel: '3',
-    compositeServiceScore: '4.5',
-    logisticsExperienceScore: '4.0',
-    disputeComplaintScore: '4.0',
-    offerExperienceScore: '3.0',
-    consultingExperienceScore: '4.0',
-    repeatPurchasePercent: '52.48%',
-    afterSalesExperienceScore: '3.0',
-    collect30DayWithin48HPercent: null,
-    qualityRefundWithin30Day: '0.12%',
-  },
-  soldOut: '128',
-  channelPrice: null,
-  promotionModel: {
-    hasPromotion: true,
-    promotionType: 'plus',
-  },
-  tradeScore: '4.9',
-  topCategoryId: 10166,
-  secondCategoryId: 1031919,
-  thirdCategoryId: null,
-  sellingPoint: null,
-  offerIdentities: ['tp_member'],
-  createDate: '2022-03-21',
-};
+}
+
+// 더미 데이터 제거 - API에서만 데이터 가져옴
 
 export default function ProductDetailPage() {
   const params = useParams();
@@ -1089,6 +207,7 @@ export default function ProductDetailPage() {
 
   const [productDetail, setProductDetail] = useState<ProductDetail | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState(0);
   const [activeTab, setActiveTab] = useState(0);
   const [quantity, setQuantity] = useState(2);
@@ -1096,6 +215,11 @@ export default function ProductDetailPage() {
   const [selectedSku, setSelectedSku] = useState<any>(null);
   const [selectedAttributes, setSelectedAttributes] = useState<{ [key: string]: string }>({});
   const [calculatorOpen, setCalculatorOpen] = useState(false);
+  const [translatingImage, setTranslatingImage] = useState<string | null>(null);
+  const [translatedImages, setTranslatedImages] = useState<Record<string, string>>({});
+  const [snackbarMsg, setSnackbarMsg] = useState({ open: false, message: '', severity: 'info' as 'success' | 'error' | 'info' });
+  const [imageModalOpen, setImageModalOpen] = useState(false);
+  const [modalImageUrl, setModalImageUrl] = useState('');
 
   // 계산기 상태
   const [calculatorData, setCalculatorData] = useState({
@@ -1141,22 +265,52 @@ export default function ProductDetailPage() {
   const [cartOptionsDialog, setCartOptionsDialog] = useState(false);
   const [cartOptions, setCartOptions] = useState({
     memo: '',
-    isSampleNeeded: false,
-    isLogoNeeded: false,
-    isCustomPackaging: false,
   });
   const [chatDialog, setChatDialog] = useState(false); // 채팅 모달 상태
   const router = useRouter();
 
   useEffect(() => {
-    // 실제로는 API 호출
-    setTimeout(() => {
-      setProductDetail(dummyProductDetail);
-      if (dummyProductDetail.productSkuInfos.length > 0) {
-        setSelectedSku(dummyProductDetail.productSkuInfos[0]);
+    const fetchProductDetail = async () => {
+      if (!offerId) return;
+      
+      setLoading(true);
+      setError(null);
+      
+      try {
+        // API 유틸리티 함수 사용
+        const { getProductDetail } = await import('@/lib/1688/api');
+        const result = await getProductDetail({
+          offerId: offerId,
+          country: 'ko'
+        });
+        
+        console.log('API Response:', result);
+        
+        // API 응답 구조 확인
+        if (result?.data) {
+          setProductDetail(result.data);
+          // 첫 번째 SKU를 기본 선택
+          if (result.data.productSkuInfos?.length > 0) {
+            setSelectedSku(result.data.productSkuInfos[0]);
+          }
+        } else if (result?.success === false) {
+          // API 에러 메시지 처리
+          console.error('API Error:', result.error);
+          setError(result.error || '상품 정보를 불러올 수 없습니다.');
+        } else {
+          // 예상치 못한 응답 구조
+          console.error('Unexpected API response:', result);
+          setError('상품 정보를 불러올 수 없습니다.');
+        }
+      } catch (error: any) {
+        console.error('상품 상세 정보 조회 실패:', error);
+        setError(error?.message || '상품 정보를 불러오는 중 오류가 발생했습니다.');
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
-    }, 1000);
+    };
+    
+    fetchProductDetail();
   }, [offerId]);
 
   const handleQuantityChange = (delta: number) => {
@@ -1355,13 +509,14 @@ export default function ProductDetailPage() {
 
     setChinaShippingLoading(true);
     try {
-      // API 호출하여 중국 배송비 조회
-      const response = await fetch('/api/1688/shipping', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+      // Supabase SDK로 Edge Function 호출
+      const { createClient } = await import('@/lib/supabase/client');
+      const supabase = createClient();
+      
+      const { data, error } = await supabase.functions.invoke('calculate-shipping', {
+        body: {
           offerId: productDetail.offerId,
-          toProvinceCode: '330000', // 저장 창고 지역 (예: 저장성)
+          toProvinceCode: '330000', // 저장성
           toCityCode: '330100', // 항저우시
           toCountryCode: '330108', // 빈장구
           totalNum: quantity,
@@ -1373,11 +528,10 @@ export default function ProductDetailPage() {
                 },
               ]
             : [],
-        }),
+        },
       });
 
-      if (response.ok) {
-        const data = await response.json();
+      if (!error && data) {
         if (data.data) {
           const shippingData = data.data;
 
@@ -1689,10 +843,9 @@ export default function ProductDetailPage() {
       let chinaShippingFeeKRW = 0;
 
       try {
-        const shippingResponse = await fetch('/api/1688/shipping', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
+        // Supabase SDK로 Edge Function 호출
+        const { data: shippingData, error: shippingError } = await supabase.functions.invoke('calculate-shipping', {
+          body: {
             offerId: productDetail.offerId,
             toProvinceCode: '330000', // 저장성
             toCityCode: '330100', // 항저우시
@@ -1704,15 +857,12 @@ export default function ProductDetailPage() {
                 number: quantity,
               },
             ],
-          }),
+          },
         });
 
-        if (shippingResponse.ok) {
-          const shippingData = await shippingResponse.json();
-          if (shippingData.data) {
-            chinaShippingFeeYuan = shippingData.data.finalFreight || 0;
-            chinaShippingFeeKRW = Math.floor(chinaShippingFeeYuan * calculatorData.exchangeRate);
-          }
+        if (!shippingError && shippingData?.data) {
+          chinaShippingFeeYuan = shippingData.data.freight || 0;
+          chinaShippingFeeKRW = Math.floor(chinaShippingFeeYuan * calculatorData.exchangeRate);
         }
       } catch (error) {
         console.error('중국 배송비 조회 실패:', error);
@@ -1786,14 +936,6 @@ export default function ProductDetailPage() {
         commission_vat: commissionVAT,
         first_payment: firstPayment,
         memo: cartOptions.memo,
-        requirements: {
-          sample: cartOptions.isSampleNeeded,
-          logo: cartOptions.isLogoNeeded,
-          customPackaging: cartOptions.isCustomPackaging,
-        },
-        is_sample_needed: cartOptions.isSampleNeeded,
-        is_logo_needed: cartOptions.isLogoNeeded,
-        is_custom_packaging: cartOptions.isCustomPackaging,
         status: 'pending',
       };
 
@@ -1814,9 +956,6 @@ export default function ProductDetailPage() {
       // 옵션 초기화
       setCartOptions({
         memo: '',
-        isSampleNeeded: false,
-        isLogoNeeded: false,
-        isCustomPackaging: false,
       });
       // 선택적으로 장바구니 페이지로 이동
       // router.push('/dashboard/1688/cart');
@@ -1828,6 +967,56 @@ export default function ProductDetailPage() {
     }
   };
 
+  // 맞춤 제작 문의로 이동하는 함수
+  // 이미지 번역 함수
+  const handleTranslateImage = async (imageUrl: string) => {
+    // 이미 번역된 이미지가 있으면 모달로 보여주기
+    if (translatedImages[imageUrl]) {
+      setModalImageUrl(translatedImages[imageUrl]);
+      setImageModalOpen(true);
+      return;
+    }
+
+    setTranslatingImage(imageUrl);
+    try {
+      const { translateImage } = await import('@/lib/1688/api');
+      const result = await translateImage(imageUrl);
+      
+      if (result.success && result.data?.translatedImageUrl) {
+        setTranslatedImages(prev => ({
+          ...prev,
+          [imageUrl]: result.data.translatedImageUrl
+        }));
+        // 번역 성공하면 바로 모달 열기
+        setModalImageUrl(result.data.translatedImageUrl);
+        setImageModalOpen(true);
+      } else {
+        setSnackbarMsg({ open: true, message: '이미지 번역 서비스가 준비 중입니다.', severity: 'info' });
+      }
+    } catch (error) {
+      console.error('이미지 번역 오류:', error);
+      setSnackbarMsg({ open: true, message: '이미지 번역에 실패했습니다.', severity: 'error' });
+    } finally {
+      setTranslatingImage(null);
+    }
+  };
+
+  const goToMarketResearch = () => {
+    if (!productDetail) return;
+    
+    const params = new URLSearchParams({
+      offerId: productDetail.offerId.toString(),
+      productName: productDetail.subjectTrans || productDetail.subject,
+      productUrl: `https://detail.1688.com/offer/${productDetail.offerId}.html`,
+      productImage: productDetail.productImage.images[0] || '',
+      price: selectedSku?.price || productDetail.productSaleInfo?.priceRangeList?.[0]?.price || '',
+      moq: productDetail.minOrderQuantity?.toString() || '1',
+      quantity: quantity.toString(),
+    });
+    
+    router.push(`/application/market-research?${params.toString()}`);
+  };
+
   const handleAttributeSelect = (attributeName: string, value: string) => {
     setSelectedAttributes((prev) => ({
       ...prev,
@@ -1835,9 +1024,12 @@ export default function ProductDetailPage() {
     }));
 
     // 색상 선택 시 해당 색상의 이미지로 변경
-    if (attributeName === '颜色') {
+    if (attributeName === '색상' || attributeName === '颜色') {
       const skuWithImage = productDetail?.productSkuInfos.find((sku) =>
-        sku.skuAttributes.find((attr) => attr.attributeName === '颜色' && attr.value === value)
+        sku.skuAttributes.find((attr) => 
+          (attr.attributeName === '颜色' || attr.attributeName === '색상') && 
+          (attr.value === value || attr.valueTrans === value)
+        )
       );
       const colorImage = skuWithImage?.skuAttributes.find((attr) => attr.skuImageUrl)?.skuImageUrl;
       if (colorImage && productDetail) {
@@ -1879,7 +1071,7 @@ export default function ProductDetailPage() {
       <HpHeader />
 
       <Box sx={{ bgcolor: '#f5f5f5', minHeight: '100vh' }}>
-        <Container maxWidth="xl" sx={{ py: 3 }}>
+        <Container maxWidth="xl" sx={{ py: { xs: 1, sm: 2, md: 3 }, px: { xs: 1, sm: 2, md: 3 } }}>
           {/* 준비중 알림 */}
           <Alert severity="warning" icon={<ConstructionIcon />} sx={{ mb: 3 }}>
             <Typography variant="h6" gutterBottom>
@@ -1889,7 +1081,6 @@ export default function ProductDetailPage() {
               현재 1688.com API 연동 및 서비스 준비 중입니다. 빠른 시일 내에 정식 서비스를 제공할
               예정입니다.
               <br />
-              아래 표시되는 데이터는 테스트용 더미 데이터입니다.
             </Typography>
           </Alert>
 
@@ -1905,66 +1096,141 @@ export default function ProductDetailPage() {
           </Breadcrumbs>
 
           {/* 메인 상품 정보 */}
-          <Paper sx={{ p: 3, mb: 3 }}>
-            <Grid container spacing={3}>
+          <Paper sx={{ p: { xs: 2, sm: 3 }, mb: 3, overflow: 'hidden' }}>
+            <Grid container spacing={{ xs: 2, sm: 3 }}>
               {/* 이미지 갤러리 - MUI v7 size prop 사용 */}
-              <Grid size={{ xs: 12, md: 5 }}>
-                <Box>
-                  {/* 메인 이미지 */}
+              <Grid size={{ xs: 12, md: 5, lg: 5 }}>
+                <Box sx={{ width: '100%', overflow: 'hidden' }}>
+                  {/* 메인 이미지 또는 동영상 */}
                   <Box
                     sx={{
                       position: 'relative',
                       mb: 2,
                       bgcolor: 'white',
                       border: '1px solid #e8e8e8',
+                      width: '100%',
+                      overflow: 'hidden',
                     }}
                   >
-                    <Box
-                      component="img"
-                      src={productDetail.productImage.images[selectedImage]}
-                      alt={productDetail.subjectTrans}
-                      sx={{
-                        width: '100%',
-                        height: 500,
-                        objectFit: 'contain',
-                      }}
-                    />
-                    {productDetail.mainVideo && (
-                      <IconButton
+                    {/* 동영상이 있고 선택된 경우 동영상 표시 */}
+                    {productDetail.mainVideo && selectedImage === -1 ? (
+                      <Box
                         sx={{
-                          position: 'absolute',
-                          top: 10,
-                          right: 10,
-                          bgcolor: 'rgba(0,0,0,0.5)',
-                          color: 'white',
-                          '&:hover': { bgcolor: 'rgba(0,0,0,0.7)' },
+                          width: '100%',
+                          height: { xs: 250, sm: 350, md: 450, lg: 500 },
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          bgcolor: '#000',
                         }}
                       >
-                        <PlayCircleIcon />
-                      </IconButton>
-                    )}{' '}
-                    <IconButton
-                      sx={{
-                        position: 'absolute',
-                        bottom: 10,
-                        right: 10,
-                        bgcolor: 'rgba(255,255,255,0.9)',
-                        '&:hover': { bgcolor: 'white' },
-                      }}
-                    >
-                      <ZoomInIcon />
-                    </IconButton>
+                        <video
+                          controls
+                          autoPlay
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'contain',
+                          }}
+                        >
+                          <source src={productDetail.mainVideo} type="video/mp4" />
+                          동영상을 재생할 수 없습니다.
+                        </video>
+                      </Box>
+                    ) : (
+                      <>
+                        <Box
+                          component="img"
+                          src={translatedImages[productDetail.productImage.images[selectedImage]] || productDetail.productImage.images[selectedImage]}
+                          alt={productDetail.subjectTrans}
+                          sx={{
+                            width: '100%',
+                            maxWidth: '100%',
+                            height: { xs: 250, sm: 350, md: 450, lg: 500 },
+                            objectFit: 'contain',
+                            cursor: 'pointer',
+                          }}
+                          onClick={() => handleTranslateImage(productDetail.productImage.images[selectedImage])}
+                        />
+                        {/* 번역 중 표시 */}
+                        {translatingImage === productDetail.productImage.images[selectedImage] && (
+                          <Box
+                            sx={{
+                              position: 'absolute',
+                              top: 0,
+                              left: 0,
+                              right: 0,
+                              bottom: 0,
+                              bgcolor: 'rgba(0,0,0,0.5)',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                            }}
+                          >
+                            <CircularProgress color="primary" />
+                          </Box>
+                        )}
+                        {/* 번역 버튼 */}
+                        <IconButton
+                          onClick={() => handleTranslateImage(productDetail.productImage.images[selectedImage])}
+                          sx={{
+                            position: 'absolute',
+                            top: 10,
+                            left: 10,
+                            bgcolor: translatedImages[productDetail.productImage.images[selectedImage]] ? 'success.main' : 'primary.main',
+                            color: 'white',
+                            '&:hover': { 
+                              bgcolor: translatedImages[productDetail.productImage.images[selectedImage]] ? 'success.dark' : 'primary.dark'
+                            },
+                          }}
+                        >
+                          <TranslateIcon />
+                        </IconButton>
+                        <IconButton
+                          sx={{
+                            position: 'absolute',
+                            bottom: 10,
+                            right: 10,
+                            bgcolor: 'rgba(255,255,255,0.9)',
+                            '&:hover': { bgcolor: 'white' },
+                          }}
+                        >
+                          <ZoomInIcon />
+                        </IconButton>
+                      </>
+                    )}
                   </Box>
 
                   {/* 썸네일 이미지 */}
-                  <Stack direction="row" spacing={1} sx={{ overflowX: 'auto' }}>
+                  <Stack direction="row" spacing={1} sx={{ overflowX: 'auto', pb: 1 }}>
+                    {/* 동영상 썸네일 (있는 경우) */}
+                    {productDetail.mainVideo && (
+                      <Box
+                        onClick={() => setSelectedImage(-1)}
+                        sx={{
+                          width: { xs: 60, sm: 70, md: 80 },
+                          height: { xs: 60, sm: 70, md: 80 },
+                          border:
+                            selectedImage === -1 ? '2px solid #ff6900' : '1px solid #e8e8e8',
+                          cursor: 'pointer',
+                          flexShrink: 0,
+                          position: 'relative',
+                          bgcolor: '#000',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        <PlayCircleIcon sx={{ color: 'white', fontSize: 30 }} />
+                      </Box>
+                    )}
                     {productDetail.productImage.images.map((image, index) => (
                       <Box
                         key={index}
                         onClick={() => setSelectedImage(index)}
                         sx={{
-                          width: 80,
-                          height: 80,
+                          width: { xs: 60, sm: 70, md: 80 },
+                          height: { xs: 60, sm: 70, md: 80 },
                           border:
                             selectedImage === index ? '2px solid #ff6900' : '1px solid #e8e8e8',
                           cursor: 'pointer',
@@ -1988,7 +1254,7 @@ export default function ProductDetailPage() {
               </Grid>
 
               {/* 상품 정보 - MUI v7 size prop 사용 */}
-              <Grid size={{ xs: 12, md: 7 }}>
+              <Grid size={{ xs: 12, md: 7, lg: 7 }}>
                 <Box>
                   {/* 제목 */}
                   <Box sx={{ mb: 2 }}>
@@ -1999,19 +1265,19 @@ export default function ProductDetailPage() {
                       spacing={2}
                     >
                       <Box sx={{ flex: 1 }}>
-                        <Typography variant="h5" gutterBottom fontWeight={600}>
+                        <Typography variant="h5" gutterBottom fontWeight={600} sx={{ fontSize: { xs: '1.25rem', sm: '1.5rem' } }}>
                           {productDetail.subjectTrans}
                         </Typography>
                         <Typography variant="body2" color="text.secondary" gutterBottom>
                           {productDetail.subject}
                         </Typography>
                       </Box>
-                      <Stack direction="row" spacing={1}>
+                      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1} sx={{ width: { xs: '100%', sm: 'auto' } }}>
                         <Button
                           variant="outlined"
                           startIcon={<CalculateIcon />}
                           onClick={handleOpenCalculator}
-                          sx={{ minWidth: { xs: '100%', sm: 'auto' } }}
+                          fullWidth
                           color="success"
                         >
                           가격 계산기
@@ -2025,7 +1291,7 @@ export default function ProductDetailPage() {
                               '_blank'
                             )
                           }
-                          sx={{ minWidth: { xs: '100%', sm: 'auto' } }}
+                          fullWidth
                           color="primary"
                         >
                           1688에서 보기
@@ -2035,7 +1301,7 @@ export default function ProductDetailPage() {
                   </Box>
 
                   {/* 태그 */}
-                  <Stack direction="row" spacing={1} sx={{ mb: 2, flexWrap: 'wrap' }}>
+                  <Stack direction="row" spacing={1} sx={{ mb: 2, flexWrap: 'wrap', gap: 1 }}>
                     {productDetail.isJxhy && (
                       <Chip label="프리미엄 상품" size="small" color="error" />
                     )}
@@ -2050,10 +1316,10 @@ export default function ProductDetailPage() {
                     {productDetail.tagInfoList.find((t) => t.key === 'noReason7DReturn')?.value && (
                       <Chip label="7일 무조건 반품" size="small" color="secondary" />
                     )}
-                    {productDetail.promotionModel.hasPromotion && (
+                    {productDetail.promotionModel?.hasPromotion && (
                       <Chip
                         label={
-                          productDetail.promotionModel.promotionType === 'plus'
+                          productDetail.promotionModel?.promotionType === 'plus'
                             ? 'PLUS 회원 할인'
                             : '프로모션 중'
                         }
@@ -2074,8 +1340,83 @@ export default function ProductDetailPage() {
 
                   <Divider sx={{ my: 2 }} />
 
+                  {/* 구매 정보 및 태그 */}
+                  <Box sx={{ mb: 2 }}>
+                    <Stack spacing={1.5}>
+                      {/* 최소 주문 수량 */}
+                      <Stack direction="row" alignItems="center" spacing={1}>
+                        <Typography variant="body2" color="text.secondary">
+                          최소 주문:
+                        </Typography>
+                        <Typography variant="body1" fontWeight={600}>
+                          {productDetail.minOrderQuantity || 1}{productDetail.productSaleInfo.unitInfo.transUnit}
+                        </Typography>
+                      </Stack>
+
+                      {/* 혼합 구매 정보 */}
+                      {productDetail.sellerMixSetting?.generalHunpi && (
+                        <Stack direction="row" alignItems="center" spacing={1}>
+                          <Typography variant="body2" color="text.secondary">
+                            혼합 구매:
+                          </Typography>
+                          <Typography variant="body1" fontWeight={600}>
+                            최소 {productDetail.sellerMixSetting.mixNumber}개 / ¥{productDetail.sellerMixSetting.mixAmount}
+                          </Typography>
+                        </Stack>
+                      )}
+
+                      {/* 배송 보장 */}
+                      {productDetail.productShippingInfo?.shippingTimeGuarantee && (
+                        <Chip 
+                          icon={<LocalShippingIcon />} 
+                          label={
+                            productDetail.productShippingInfo.shippingTimeGuarantee === 'shipIn48Hours' 
+                              ? '48시간 내 배송' 
+                              : '빠른 배송'
+                          }
+                          color="success"
+                          size="small"
+                        />
+                      )}
+
+                      {/* 태그 정보 */}
+                      <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap', gap: 1 }}>
+                        {productDetail.tagInfoList?.map((tag, index) => {
+                          if (tag.value) {
+                            let label = '';
+                            let color: any = 'default';
+                            switch(tag.key) {
+                              case 'isOnePsale':
+                                label = '일대일 판매';
+                                color = 'primary';
+                                break;
+                              case 'isSupportMix':
+                                label = '혼합 구매 가능';
+                                color = 'info';
+                                break;
+                              case 'isOnePsaleFreePostage':
+                                label = '무료 배송';
+                                color = 'success';
+                                break;
+                              case 'noReason7DReturn':
+                                label = '7일 무조건 반품';
+                                color = 'warning';
+                                break;
+                              default:
+                                return null;
+                            }
+                            return label ? (
+                              <Chip key={index} label={label} size="small" color={color} />
+                            ) : null;
+                          }
+                          return null;
+                        })}
+                      </Stack>
+                    </Stack>
+                  </Box>
+
                   {/* 가격 정보 */}
-                  <Box sx={{ bgcolor: '#fff5f0', p: 2, borderRadius: 1, mb: 2 }}>
+                  <Box sx={{ bgcolor: '#fff5f0', p: { xs: 1.5, sm: 2 }, borderRadius: 1, mb: 2 }}>
                     <Stack spacing={1}>
                       <Box>
                         <Typography variant="body2" color="text.secondary">
@@ -2084,7 +1425,7 @@ export default function ProductDetailPage() {
                         <Stack direction="row" spacing={1} alignItems="baseline">
                           {getCurrentPrice().promotionPrice ? (
                             <>
-                              <Typography variant="h4" color="error" fontWeight={700}>
+                              <Typography variant="h4" color="error" fontWeight={700} sx={{ fontSize: { xs: '1.5rem', sm: '2rem', md: '2.125rem' } }}>
                                 ¥{getCurrentPrice().promotionPrice}
                               </Typography>
                               <Typography
@@ -2095,7 +1436,7 @@ export default function ProductDetailPage() {
                               </Typography>
                             </>
                           ) : (
-                            <Typography variant="h4" color="error" fontWeight={700}>
+                            <Typography variant="h4" color="error" fontWeight={700} sx={{ fontSize: { xs: '1.5rem', sm: '2rem', md: '2.125rem' } }}>
                               ¥{getCurrentPrice().price}
                             </Typography>
                           )}
@@ -2103,7 +1444,7 @@ export default function ProductDetailPage() {
                       </Box>
 
                       {/* 가격 구간 표시 */}
-                      <Stack direction="row" spacing={2}>
+                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: { xs: 1, sm: 2 } }}>
                         {productDetail.productSaleInfo.priceRangeList.map((range, index) => (
                           <Box key={index}>
                             <Typography variant="caption" color="text.secondary">
@@ -2129,7 +1470,7 @@ export default function ProductDetailPage() {
                             )}
                           </Box>
                         ))}
-                      </Stack>
+                      </Box>
                     </Stack>
                   </Box>
 
@@ -2140,13 +1481,16 @@ export default function ProductDetailPage() {
                       <Typography variant="body2" gutterBottom>
                         색상
                       </Typography>
-                      <Stack direction="row" spacing={1} flexWrap="wrap">
+                      <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap', gap: 1 }}>
                         {Array.from(
                           new Set(
                             productDetail.productSkuInfos.map(
-                              (sku) =>
-                                sku.skuAttributes.find((attr) => attr.attributeName === '颜色')
-                                  ?.value
+                              (sku) => {
+                                const colorAttr = sku.skuAttributes.find((attr) => 
+                                  attr.attributeName === '颜色'
+                                );
+                                return colorAttr?.valueTrans || colorAttr?.value;
+                              }
                             )
                           )
                         )
@@ -2155,12 +1499,12 @@ export default function ProductDetailPage() {
                             <Chip
                               key={color}
                               label={color}
-                              onClick={() => handleAttributeSelect('颜色', color!)}
-                              variant={selectedAttributes['颜色'] === color ? 'filled' : 'outlined'}
-                              color={selectedAttributes['颜色'] === color ? 'primary' : 'default'}
+                              onClick={() => handleAttributeSelect('색상', color!)}
+                              variant={selectedAttributes['색상'] === color ? 'filled' : 'outlined'}
+                              color={selectedAttributes['색상'] === color ? 'primary' : 'default'}
                             />
                           ))}
-                      </Stack>{' '}
+                      </Stack>
                     </Box>
 
                     {/* 사이즈 선택 */}
@@ -2168,13 +1512,16 @@ export default function ProductDetailPage() {
                       <Typography variant="body2" gutterBottom>
                         사이즈
                       </Typography>
-                      <Stack direction="row" spacing={1} flexWrap="wrap">
+                      <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap', gap: 1 }}>
                         {Array.from(
                           new Set(
                             productDetail.productSkuInfos.map(
-                              (sku) =>
-                                sku.skuAttributes.find((attr) => attr.attributeName === '尺码')
-                                  ?.value
+                              (sku) => {
+                                const sizeAttr = sku.skuAttributes.find((attr) => 
+                                  attr.attributeName === '尺码'
+                                );
+                                return sizeAttr?.valueTrans || sizeAttr?.value;
+                              }
                             )
                           )
                         )
@@ -2183,9 +1530,9 @@ export default function ProductDetailPage() {
                             <Chip
                               key={size}
                               label={size}
-                              onClick={() => handleAttributeSelect('尺码', size!)}
-                              variant={selectedAttributes['尺码'] === size ? 'filled' : 'outlined'}
-                              color={selectedAttributes['尺码'] === size ? 'primary' : 'default'}
+                              onClick={() => handleAttributeSelect('사이즈', size!)}
+                              variant={selectedAttributes['사이즈'] === size ? 'filled' : 'outlined'}
+                              color={selectedAttributes['사이즈'] === size ? 'primary' : 'default'}
                             />
                           ))}
                       </Stack>
@@ -2197,9 +1544,8 @@ export default function ProductDetailPage() {
                     <Typography variant="body2" gutterBottom>
                       구매 수량
                     </Typography>
-                    <Stack direction="row" spacing={2} alignItems="center">
+                    <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 2, alignItems: { xs: 'flex-start', sm: 'center' } }}>
                       <ButtonGroup size="small">
-                        {' '}
                         <Button onClick={() => handleQuantityChange(-1)}>
                           <RemoveIcon />
                         </Button>
@@ -2214,14 +1560,15 @@ export default function ProductDetailPage() {
                           <AddIcon />
                         </Button>
                       </ButtonGroup>
-                      <Typography variant="body2" color="text.secondary">
-                        {productDetail.productSaleInfo.unitInfo.unit} (最小起订:{' '}
-                        {productDetail.minOrderQuantity})
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        库存: {productDetail.productSaleInfo.amountOnSale}
-                      </Typography>
-                    </Stack>
+                      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+                        <Typography variant="body2" color="text.secondary">
+                          {productDetail.productSaleInfo.unitInfo.transUnit || productDetail.productSaleInfo.unitInfo.unit} (최소주문수량: {productDetail.minOrderQuantity})
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          재고: {productDetail.productSaleInfo.amountOnSale}
+                        </Typography>
+                      </Box>
+                    </Box>
                   </Box>
 
                   {/* 배송 정보 */}
@@ -2230,7 +1577,7 @@ export default function ProductDetailPage() {
                       <Stack direction="row" spacing={1} alignItems="center">
                         <LocalShippingIcon fontSize="small" color="action" />
                         <Typography variant="body2">
-                          배송지: {productDetail.productShippingInfo.sendGoodsAddressText}{' '}
+                          배송지: {productDetail.productShippingInfo.sendGoodsAddressText}
                         </Typography>
                       </Stack>
                       <Typography variant="body2" color="text.secondary">
@@ -2240,8 +1587,8 @@ export default function ProductDetailPage() {
                   </Box>
 
                   {/* 액션 버튼 */}
-                  <Stack spacing={2}>
-                    <Stack direction="row" spacing={2}>
+                  <Box sx={{ mb: 3 }}>
+                    <Stack direction="column" spacing={2}>
                       <Button
                         variant="contained"
                         size="large"
@@ -2268,7 +1615,7 @@ export default function ProductDetailPage() {
                         size="large"
                         color="secondary"
                         onClick={() => router.push('/dashboard/1688/cart')}
-                        sx={{ minWidth: 140 }}
+                        sx={{ width: { xs: '100%', sm: 140 } }}
                         startIcon={<ListAltIcon />}
                       >
                         장바구니 보기
@@ -2277,46 +1624,61 @@ export default function ProductDetailPage() {
                         variant="outlined"
                         size="large"
                         onClick={() => setIsFavorite(!isFavorite)}
-                        sx={{ minWidth: 120 }}
+                        sx={{ width: { xs: '100%', sm: 120 } }}
                       >
                         {isFavorite ? <FavoriteIcon color="error" /> : <FavoriteBorderIcon />}
                       </Button>
                     </Stack>
-
-                    {/* 제품 문의 채팅 버튼 */}
+                    
+                    {/* 맞춤 제작 문의 버튼 */}
                     <Button
-                      variant="contained"
+                      variant="outlined"
                       size="large"
                       fullWidth
-                      color="info"
-                      startIcon={<ChatIcon />}
-                      onClick={() => setChatDialog(true)}
+                      color="primary"
+                      startIcon={<BrushIcon />}
+                      onClick={goToMarketResearch}
+                      sx={{ mt: 2 }}
                     >
-                      제품 문의하기
+                      맞춤 제작 문의 (로고/포장/샘플)
                     </Button>
-                  </Stack>
+
+                    <Stack direction="column" spacing={2} sx={{ mt: 1 }}>
+                      {/* 제품 문의 채팅 버튼 */}
+                      <Button
+                        variant="contained"
+                        size="large"
+                        fullWidth
+                        color="info"
+                        startIcon={<ChatIcon />}
+                        onClick={() => setChatDialog(true)}
+                      >
+                        제품 문의하기
+                      </Button>
+                    </Stack>
+                  </Box>
                 </Box>
               </Grid>
             </Grid>
           </Paper>
 
           {/* 배송 정보 */}
-          <Paper sx={{ p: 3, mb: 3 }}>
+          <Paper sx={{ p: { xs: 2, sm: 3 }, mb: 3 }}>
             <Typography variant="h6" gutterBottom>
               배송 정보
             </Typography>
             <Divider sx={{ mb: 2 }} />
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
                 <LocalShipping color="action" />
-                <Typography>
+                <Typography sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}>
                   발송지: {productDetail.productShippingInfo.sendGoodsAddressText}
                 </Typography>
               </Box>
               {productDetail.productShippingInfo.shippingTimeGuarantee && (
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
                   <AccessTime color="action" />
-                  <Typography>
+                  <Typography sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}>
                     배송 보증:{' '}
                     {productDetail.productShippingInfo.shippingTimeGuarantee === 'shipIn48Hours'
                       ? '48시간 내 발송'
@@ -2334,7 +1696,7 @@ export default function ProductDetailPage() {
                   <Typography variant="subtitle2" color="primary" gutterBottom>
                     제품 규격
                   </Typography>
-                  <Grid container spacing={2}>
+                  <Grid container spacing={{ xs: 1, sm: 2 }}>
                     {productDetail.productShippingInfo.width !== null && (
                       <Grid size={{ xs: 6, sm: 3 }}>
                         <Typography variant="body2" color="text.secondary">
@@ -2449,11 +1811,11 @@ export default function ProductDetailPage() {
           </Paper>
 
           {/* 판매자 정보 */}
-          <Paper sx={{ p: 3, mb: 3 }}>
+          <Paper sx={{ p: { xs: 2, sm: 3 }, mb: 3 }}>
             <Typography variant="h6" sx={{ mb: 2 }}>
               판매자 정보
             </Typography>
-            <Grid container spacing={3}>
+            <Grid container spacing={{ xs: 2, sm: 3 }}>
               <Grid size={{ xs: 12, md: 6 }}>
                 <Stack spacing={2}>
                   <Stack direction="row" justifyContent="space-between">
@@ -2495,7 +1857,7 @@ export default function ProductDetailPage() {
                       재구매율
                     </Typography>
                     <Typography variant="body2">
-                      {productDetail.sellerDataInfo.repeatPurchasePercent}
+                      {(Number(productDetail.sellerDataInfo.repeatPurchasePercent) * 100).toFixed(1)}%
                     </Typography>
                   </Stack>
                   <Stack direction="row" justifyContent="space-between">
@@ -2503,7 +1865,9 @@ export default function ProductDetailPage() {
                       48시간 내 수거율
                     </Typography>
                     <Typography variant="body2">
-                      {productDetail.sellerDataInfo.collect30DayWithin48HPercent}
+                      {productDetail.sellerDataInfo.collect30DayWithin48HPercent 
+                        ? `${(Number(productDetail.sellerDataInfo.collect30DayWithin48HPercent) * 100).toFixed(1)}%`
+                        : 'N/A'}
                     </Typography>
                   </Stack>
                   <Stack direction="row" justifyContent="space-between">
@@ -2511,7 +1875,7 @@ export default function ProductDetailPage() {
                       품질 환불율
                     </Typography>
                     <Typography variant="body2">
-                      {productDetail.sellerDataInfo.qualityRefundWithin30Day}
+                      {(Number(productDetail.sellerDataInfo.qualityRefundWithin30Day) * 100).toFixed(2)}%
                     </Typography>
                   </Stack>
                 </Stack>
@@ -2520,30 +1884,78 @@ export default function ProductDetailPage() {
           </Paper>
 
           {/* 상세 정보 탭 */}
-          <Paper>
-            <Tabs value={activeTab} onChange={(e, v) => setActiveTab(v)}>
+          <Paper sx={{ overflow: 'hidden' }}>
+            <Tabs 
+              value={activeTab} 
+              onChange={(e, v) => setActiveTab(v)}
+              variant="scrollable"
+              scrollButtons="auto"
+              allowScrollButtonsMobile
+              sx={{ borderBottom: 1, borderColor: 'divider' }}
+            >
               <Tab label="상품 상세" />
               <Tab label="상품 속성" />
+              <Tab label="배송 정보" />
               <Tab label="거래 기록" />
               <Tab label="평가" />
             </Tabs>
 
-            <Box sx={{ p: 3 }}>
+            <Box sx={{ p: { xs: 2, sm: 3 }, overflow: 'hidden' }}>
               {activeTab === 0 && (
-                <Box
-                  dangerouslySetInnerHTML={{ __html: productDetail.description }}
-                  sx={{
-                    '& img': {
-                      maxWidth: '100%',
-                      height: 'auto',
-                      display: 'block',
-                      margin: '10px auto',
-                    },
-                    '& p': {
-                      margin: '10px 0',
-                    },
-                  }}
-                />
+                <>
+                  {/* 이미지 번역 안내 */}
+                  <Alert severity="info" sx={{ mb: 2 }} icon={<TranslateIcon />}>
+                    상품 설명의 이미지를 클릭하면 한글로 번역된 이미지를 볼 수 있습니다
+                  </Alert>
+                  
+                  {/* 번역 중 메시지 */}
+                  {translatingImage && (
+                    <Alert severity="info" sx={{ mb: 2 }}>
+                      <CircularProgress size={16} sx={{ mr: 1 }} />
+                      이미지 번역 중...
+                    </Alert>
+                  )}
+                  
+                  <Box
+                    className="product-description"
+                    onClick={(e) => {
+                      const target = e.target as HTMLElement;
+                      if (target.tagName === 'IMG') {
+                        const img = target as HTMLImageElement;
+                        handleTranslateImage(img.src);
+                      }
+                    }}
+                    dangerouslySetInnerHTML={{ __html: productDetail.description }}
+                    sx={{
+                      width: '100%',
+                      // 이미지 스타일
+                      '& img': {
+                        width: '100% !important',
+                        maxWidth: '100% !important',
+                        height: 'auto !important',
+                        display: 'block !important',
+                        margin: '0 auto !important',
+                        objectFit: 'contain',
+                        cursor: 'pointer',
+                        '&:hover': {
+                          opacity: 0.9,
+                        },
+                      },
+                      // 텍스트 스타일
+                      '& p': {
+                        margin: '10px 0',
+                        padding: '0 10px',
+                        wordBreak: 'break-word',
+                        fontSize: { xs: '14px', sm: '16px' },
+                        lineHeight: 1.6,
+                      },
+                      // 모바일 반응형
+                      '& *': {
+                        maxWidth: '100%',
+                      },
+                    }}
+                  />
+                </>
               )}
 
               {activeTab === 1 && (
@@ -2561,9 +1973,403 @@ export default function ProductDetailPage() {
                 </TableContainer>
               )}
 
-              {activeTab === 2 && <Typography>거래 기록</Typography>}
+              {activeTab === 2 && (
+                <Box>
+                  <Typography variant="h6" gutterBottom>
+                    배송 정보
+                  </Typography>
+                  
+                  <Stack spacing={3}>
+                    {/* 배송 보장 정보 */}
+                    {productDetail.productShippingInfo?.shippingTimeGuarantee && (
+                      <Paper sx={{ p: 2, bgcolor: '#e8f5e9' }}>
+                        <Stack direction="row" alignItems="center" spacing={2}>
+                          <LocalShippingIcon color="success" sx={{ fontSize: 32 }} />
+                          <Box>
+                            <Typography variant="subtitle1" fontWeight={600}>
+                              {productDetail.productShippingInfo.shippingTimeGuarantee === 'shipIn48Hours' 
+                                ? '48시간 내 발송 보장' 
+                                : '빠른 배송 보장'}
+                            </Typography>
+                            <Typography variant="caption" color="text.secondary">
+                              판매자가 약속한 시간 내에 발송을 보장합니다
+                            </Typography>
+                          </Box>
+                        </Stack>
+                      </Paper>
+                    )}
 
-              {activeTab === 3 && <Typography>평가 내용</Typography>}
+                    {/* 포장 정보 */}
+                    <Paper sx={{ p: 2 }}>
+                      <Typography variant="subtitle2" gutterBottom>
+                        기본 포장 정보
+                      </Typography>
+                      <Grid container spacing={2} sx={{ mt: 1 }}>
+                        <Grid size={{ xs: 6, sm: 3 }}>
+                          <Stack spacing={0.5}>
+                            <Typography variant="caption" color="text.secondary">
+                              가로
+                            </Typography>
+                            <Typography variant="body1">
+                              {productDetail.productShippingInfo.width || '미제공'} cm
+                            </Typography>
+                          </Stack>
+                        </Grid>
+                        <Grid size={{ xs: 6, sm: 3 }}>
+                          <Stack spacing={0.5}>
+                            <Typography variant="caption" color="text.secondary">
+                              세로
+                            </Typography>
+                            <Typography variant="body1">
+                              {productDetail.productShippingInfo.length || '미제공'} cm
+                            </Typography>
+                          </Stack>
+                        </Grid>
+                        <Grid size={{ xs: 6, sm: 3 }}>
+                          <Stack spacing={0.5}>
+                            <Typography variant="caption" color="text.secondary">
+                              높이
+                            </Typography>
+                            <Typography variant="body1">
+                              {productDetail.productShippingInfo.height || '미제공'} cm
+                            </Typography>
+                          </Stack>
+                        </Grid>
+                        <Grid size={{ xs: 6, sm: 3 }}>
+                          <Stack spacing={0.5}>
+                            <Typography variant="caption" color="text.secondary">
+                              무게
+                            </Typography>
+                            <Typography variant="body1">
+                              {productDetail.productShippingInfo.weight || '미제공'} kg
+                            </Typography>
+                          </Stack>
+                        </Grid>
+                      </Grid>
+                      
+                      {productDetail.productShippingInfo.productNum && (
+                        <Box sx={{ mt: 2 }}>
+                          <Typography variant="caption" color="text.secondary">
+                            포장 단위
+                          </Typography>
+                          <Typography variant="body1">
+                            {productDetail.productShippingInfo.productNum}개/박스
+                          </Typography>
+                        </Box>
+                      )}
+                    </Paper>
+
+                    {/* SKU별 포장 정보 (있는 경우) */}
+                    {productDetail.productShippingInfo?.skuShippingDetails && 
+                     productDetail.productShippingInfo.skuShippingDetails.length > 0 && (
+                      <Paper sx={{ p: 2 }}>
+                        <Typography variant="subtitle2" gutterBottom>
+                          옵션별 포장 정보
+                        </Typography>
+                        <TableContainer sx={{ mt: 2 }}>
+                          <Table size="small">
+                            <TableHead>
+                              <TableRow>
+                                <TableCell>옵션</TableCell>
+                                <TableCell align="center">가로</TableCell>
+                                <TableCell align="center">세로</TableCell>
+                                <TableCell align="center">높이</TableCell>
+                                <TableCell align="center">무게</TableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                              {productDetail.productShippingInfo.skuShippingDetails.map((detail, index) => {
+                                const sku = productDetail.productSkuInfos.find(s => s.skuId === detail.skuId);
+                                return (
+                                  <TableRow key={index}>
+                                    <TableCell>
+                                      {sku?.skuAttributes.map(attr => attr.valueTrans || attr.value).join(', ') || detail.skuId}
+                                    </TableCell>
+                                    <TableCell align="center">{detail.width || '-'} cm</TableCell>
+                                    <TableCell align="center">{detail.length || '-'} cm</TableCell>
+                                    <TableCell align="center">{detail.height || '-'} cm</TableCell>
+                                    <TableCell align="center">{detail.weight || '-'} kg</TableCell>
+                                  </TableRow>
+                                );
+                              })}
+                            </TableBody>
+                          </Table>
+                        </TableContainer>
+                      </Paper>
+                    )}
+
+                    {/* 배송 방식 정보 */}
+                    <Paper sx={{ p: 2 }}>
+                      <Typography variant="subtitle2" gutterBottom>
+                        배송 방식
+                      </Typography>
+                      <Stack spacing={1} sx={{ mt: 2 }}>
+                        <Stack direction="row" alignItems="center" spacing={1}>
+                          <CheckCircleIcon color="success" fontSize="small" />
+                          <Typography variant="body2">
+                            중국 내 배송: 판매자 → 항저우 창고
+                          </Typography>
+                        </Stack>
+                        <Stack direction="row" alignItems="center" spacing={1}>
+                          <CheckCircleIcon color="success" fontSize="small" />
+                          <Typography variant="body2">
+                            국제 배송: 항저우 → 한국 (해운/항공)
+                          </Typography>
+                        </Stack>
+                        <Stack direction="row" alignItems="center" spacing={1}>
+                          <CheckCircleIcon color="success" fontSize="small" />
+                          <Typography variant="body2">
+                            통관 및 국내 배송 대행 가능
+                          </Typography>
+                        </Stack>
+                      </Stack>
+                    </Paper>
+
+                    <Alert severity="info">
+                      실제 배송비는 구매 수량, 배송 방법, 최종 목적지에 따라 달라질 수 있습니다.
+                      정확한 배송비는 가격 계산기를 통해 확인하세요.
+                    </Alert>
+                  </Stack>
+                </Box>
+              )}
+
+              {activeTab === 3 && (
+                <Box>
+                  <Typography variant="h6" gutterBottom>
+                    거래 정보
+                  </Typography>
+                  
+                  <Stack spacing={3}>
+                    {/* 판매량 정보 */}
+                    <Paper sx={{ p: 2, bgcolor: '#f8f8f8' }}>
+                      <Stack direction="row" justifyContent="space-between" alignItems="center">
+                        <Typography variant="body2" color="text.secondary">
+                          총 판매량
+                        </Typography>
+                        <Typography variant="h5" color="primary">
+                          {productDetail.soldOut || '0'}개
+                        </Typography>
+                      </Stack>
+                    </Paper>
+
+                    {/* 거래 점수 */}
+                    <Paper sx={{ p: 2, bgcolor: '#f8f8f8' }}>
+                      <Stack direction="row" justifyContent="space-between" alignItems="center">
+                        <Typography variant="body2" color="text.secondary">
+                          거래 점수
+                        </Typography>
+                        <Stack direction="row" alignItems="center" spacing={1}>
+                          <Rating value={Number(productDetail.tradeScore)} readOnly precision={0.1} />
+                          <Typography variant="h6" color="primary">
+                            {productDetail.tradeScore}/5.0
+                          </Typography>
+                        </Stack>
+                      </Stack>
+                    </Paper>
+
+                    {/* 판매자 거래 정보 */}
+                    <Paper sx={{ p: 2 }}>
+                      <Typography variant="subtitle2" gutterBottom>
+                        판매자 거래 통계
+                      </Typography>
+                      <Grid container spacing={2} sx={{ mt: 1 }}>
+                        <Grid size={{ xs: 6 }}>
+                          <Stack spacing={1}>
+                            <Typography variant="caption" color="text.secondary">
+                              재구매율
+                            </Typography>
+                            <Typography variant="body1" fontWeight={600}>
+                              {(Number(productDetail.sellerDataInfo.repeatPurchasePercent) * 100).toFixed(1)}%
+                            </Typography>
+                          </Stack>
+                        </Grid>
+                        <Grid size={{ xs: 6 }}>
+                          <Stack spacing={1}>
+                            <Typography variant="caption" color="text.secondary">
+                              품질 환불율
+                            </Typography>
+                            <Typography variant="body1" fontWeight={600}>
+                              {(Number(productDetail.sellerDataInfo.qualityRefundWithin30Day) * 100).toFixed(2)}%
+                            </Typography>
+                          </Stack>
+                        </Grid>
+                        <Grid size={{ xs: 6 }}>
+                          <Stack spacing={1}>
+                            <Typography variant="caption" color="text.secondary">
+                              거래 메달 레벨
+                            </Typography>
+                            <Typography variant="body1" fontWeight={600}>
+                              Level {productDetail.sellerDataInfo.tradeMedalLevel}
+                            </Typography>
+                          </Stack>
+                        </Grid>
+                        <Grid size={{ xs: 6 }}>
+                          <Stack spacing={1}>
+                            <Typography variant="caption" color="text.secondary">
+                              48시간 내 수거율
+                            </Typography>
+                            <Typography variant="body1" fontWeight={600}>
+                              {productDetail.sellerDataInfo.collect30DayWithin48HPercent 
+                                ? `${(Number(productDetail.sellerDataInfo.collect30DayWithin48HPercent) * 100).toFixed(1)}%`
+                                : 'N/A'}
+                            </Typography>
+                          </Stack>
+                        </Grid>
+                      </Grid>
+                    </Paper>
+
+                    <Alert severity="info">
+                      거래 기록은 1688 판매자가 제공하는 데이터를 기반으로 표시됩니다.
+                      상세한 거래 내역은 1688.com에서 직접 확인하실 수 있습니다.
+                    </Alert>
+                  </Stack>
+                </Box>
+              )}
+
+              {activeTab === 4 && (
+                <Box>
+                  <Typography variant="h6" gutterBottom>
+                    서비스 평가
+                  </Typography>
+                  
+                  <Stack spacing={3}>
+                    {/* 종합 평가 점수 */}
+                    <Paper sx={{ p: 3, bgcolor: 'primary.light', color: 'white' }}>
+                      <Typography variant="h6" gutterBottom>
+                        종합 서비스 점수
+                      </Typography>
+                      <Stack direction="row" alignItems="center" spacing={2}>
+                        <Typography variant="h3">
+                          {productDetail.sellerDataInfo.compositeServiceScore}
+                        </Typography>
+                        <Rating 
+                          value={Number(productDetail.sellerDataInfo.compositeServiceScore)} 
+                          readOnly 
+                          sx={{ 
+                            '& .MuiRating-iconFilled': { color: 'white' },
+                            '& .MuiRating-iconEmpty': { color: 'rgba(255,255,255,0.3)' }
+                          }}
+                        />
+                      </Stack>
+                    </Paper>
+
+                    {/* 세부 평가 점수 */}
+                    <Grid container spacing={2}>
+                      <Grid size={{ xs: 12, sm: 6 }}>
+                        <Paper sx={{ p: 2 }}>
+                          <Stack spacing={2}>
+                            <Stack direction="row" justifyContent="space-between" alignItems="center">
+                              <Typography variant="body2">물류 체험</Typography>
+                              <Stack direction="row" alignItems="center" spacing={1}>
+                                <Rating 
+                                  value={Number(productDetail.sellerDataInfo.logisticsExperienceScore)} 
+                                  readOnly 
+                                  size="small" 
+                                />
+                                <Typography variant="body2" fontWeight={600}>
+                                  {productDetail.sellerDataInfo.logisticsExperienceScore}
+                                </Typography>
+                              </Stack>
+                            </Stack>
+                            
+                            <Stack direction="row" justifyContent="space-between" alignItems="center">
+                              <Typography variant="body2">상품 체험</Typography>
+                              <Stack direction="row" alignItems="center" spacing={1}>
+                                <Rating 
+                                  value={Number(productDetail.sellerDataInfo.offerExperienceScore)} 
+                                  readOnly 
+                                  size="small" 
+                                />
+                                <Typography variant="body2" fontWeight={600}>
+                                  {productDetail.sellerDataInfo.offerExperienceScore}
+                                </Typography>
+                              </Stack>
+                            </Stack>
+                            
+                            <Stack direction="row" justifyContent="space-between" alignItems="center">
+                              <Typography variant="body2">상담 체험</Typography>
+                              <Stack direction="row" alignItems="center" spacing={1}>
+                                <Rating 
+                                  value={Number(productDetail.sellerDataInfo.consultingExperienceScore)} 
+                                  readOnly 
+                                  size="small" 
+                                />
+                                <Typography variant="body2" fontWeight={600}>
+                                  {productDetail.sellerDataInfo.consultingExperienceScore}
+                                </Typography>
+                              </Stack>
+                            </Stack>
+                          </Stack>
+                        </Paper>
+                      </Grid>
+
+                      <Grid size={{ xs: 12, sm: 6 }}>
+                        <Paper sx={{ p: 2 }}>
+                          <Stack spacing={2}>
+                            <Stack direction="row" justifyContent="space-between" alignItems="center">
+                              <Typography variant="body2">분쟁 해결</Typography>
+                              <Stack direction="row" alignItems="center" spacing={1}>
+                                <Rating 
+                                  value={Number(productDetail.sellerDataInfo.disputeComplaintScore)} 
+                                  readOnly 
+                                  size="small" 
+                                />
+                                <Typography variant="body2" fontWeight={600}>
+                                  {productDetail.sellerDataInfo.disputeComplaintScore}
+                                </Typography>
+                              </Stack>
+                            </Stack>
+                            
+                            <Stack direction="row" justifyContent="space-between" alignItems="center">
+                              <Typography variant="body2">교환/환불</Typography>
+                              <Stack direction="row" alignItems="center" spacing={1}>
+                                <Rating 
+                                  value={Number(productDetail.sellerDataInfo.afterSalesExperienceScore)} 
+                                  readOnly 
+                                  size="small" 
+                                />
+                                <Typography variant="body2" fontWeight={600}>
+                                  {productDetail.sellerDataInfo.afterSalesExperienceScore}
+                                </Typography>
+                              </Stack>
+                            </Stack>
+                            
+                            <Stack direction="row" justifyContent="space-between" alignItems="center">
+                              <Typography variant="body2">거래 평가</Typography>
+                              <Stack direction="row" alignItems="center" spacing={1}>
+                                <Rating 
+                                  value={Number(productDetail.tradeScore)} 
+                                  readOnly 
+                                  size="small" 
+                                />
+                                <Typography variant="body2" fontWeight={600}>
+                                  {productDetail.tradeScore}
+                                </Typography>
+                              </Stack>
+                            </Stack>
+                          </Stack>
+                        </Paper>
+                      </Grid>
+                    </Grid>
+
+                    {/* 평가 요약 */}
+                    <Alert severity="success">
+                      <Typography variant="subtitle2" gutterBottom>
+                        판매자 평가 요약
+                      </Typography>
+                      <Typography variant="body2">
+                        • 재구매율: {(Number(productDetail.sellerDataInfo.repeatPurchasePercent) * 100).toFixed(1)}%<br/>
+                        • 품질 환불율: {(Number(productDetail.sellerDataInfo.qualityRefundWithin30Day) * 100).toFixed(2)}%<br/>
+                        • 거래 메달: Level {productDetail.sellerDataInfo.tradeMedalLevel}
+                      </Typography>
+                    </Alert>
+
+                    <Typography variant="caption" color="text.secondary" sx={{ textAlign: 'center', display: 'block' }}>
+                      * 평가 점수는 1688 플랫폼에서 제공하는 판매자 데이터를 기반으로 표시됩니다.
+                    </Typography>
+                  </Stack>
+                </Box>
+              )}
             </Box>
           </Paper>
         </Container>
@@ -2706,8 +2512,7 @@ export default function ProductDetailPage() {
                                 calculatorData.packageLength *
                                 calculatorData.packageHeight) /
                               1000000
-                            ).toFixed(6)}{' '}
-                            m³
+                            ).toFixed(6)} m³
                           </Typography>
                         </Grid>
                         <Grid size={6}>
@@ -2721,8 +2526,7 @@ export default function ProductDetailPage() {
                                 calculatorData.packageHeight *
                                 calculatorData.quantity) /
                               1000000
-                            ).toFixed(2)}{' '}
-                            m³
+                            ).toFixed(2)} m³
                           </Typography>
                         </Grid>
                       </Grid>
@@ -3101,45 +2905,13 @@ export default function ProductDetailPage() {
               sx={{ mb: 3 }}
             />
 
-            {/* 추가 요청사항 체크박스 */}
+            {/* 커스터마이징 안내 */}
             <Typography variant="subtitle2" gutterBottom>
-              추가 요청사항
+              커스터마이징이 필요하신가요?
             </Typography>
-            <FormGroup>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={cartOptions.isSampleNeeded}
-                    onChange={(e) =>
-                      setCartOptions({ ...cartOptions, isSampleNeeded: e.target.checked })
-                    }
-                  />
-                }
-                label="샘플 필요"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={cartOptions.isLogoNeeded}
-                    onChange={(e) =>
-                      setCartOptions({ ...cartOptions, isLogoNeeded: e.target.checked })
-                    }
-                  />
-                }
-                label="로고 삽입 필요"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={cartOptions.isCustomPackaging}
-                    onChange={(e) =>
-                      setCartOptions({ ...cartOptions, isCustomPackaging: e.target.checked })
-                    }
-                  />
-                }
-                label="커스텀 포장 필요"
-              />
-            </FormGroup>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+              로고 인쇄, 포장 변경, 샘플 제작 등이 필요하시면 '맞춤 제작 문의' 버튼을 이용해주세요.
+            </Typography>
           </Box>
         </DialogContent>
         <DialogActions>
@@ -3222,6 +2994,75 @@ export default function ProductDetailPage() {
           </Box>
         </Box>
       </Drawer>
+
+      {/* 이미지 번역 모달 */}
+      <Modal
+        open={imageModalOpen}
+        onClose={() => setImageModalOpen(false)}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+          sx: { bgcolor: 'rgba(0, 0, 0, 0.8)' }
+        }}
+      >
+        <Fade in={imageModalOpen}>
+          <Box
+            sx={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: { xs: '95%', sm: '90%', md: '80%', lg: '70%' },
+              maxWidth: '1200px',
+              maxHeight: '90vh',
+              bgcolor: 'background.paper',
+              borderRadius: 2,
+              boxShadow: 24,
+              p: 2,
+              outline: 'none',
+            }}
+          >
+            {/* 닫기 버튼 */}
+            <IconButton
+              onClick={() => setImageModalOpen(false)}
+              sx={{
+                position: 'absolute',
+                top: 8,
+                right: 8,
+                zIndex: 1,
+                bgcolor: 'rgba(0, 0, 0, 0.5)',
+                color: 'white',
+                '&:hover': { bgcolor: 'rgba(0, 0, 0, 0.7)' }
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
+            
+            {/* 번역된 이미지 */}
+            <Box
+              sx={{
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                overflow: 'auto',
+              }}
+            >
+              <img
+                src={modalImageUrl}
+                alt="번역된 이미지"
+                style={{
+                  maxWidth: '100%',
+                  maxHeight: '85vh',
+                  objectFit: 'contain',
+                }}
+              />
+            </Box>
+          </Box>
+        </Fade>
+      </Modal>
 
       <Footer />
     </PageContainer>
