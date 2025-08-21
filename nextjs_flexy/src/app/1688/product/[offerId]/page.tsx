@@ -148,7 +148,7 @@ export default function ProductDetailPage() {
       setSnackbarMsg({
         open: true,
         message: '상품 이미지를 찾을 수 없습니다.',
-        severity: 'warning'
+        severity: 'info'
       });
     }
   };

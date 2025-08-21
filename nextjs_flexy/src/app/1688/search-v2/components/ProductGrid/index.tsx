@@ -94,7 +94,7 @@ export default function ProductGrid({
       <Grid container spacing={2}>
         {products.map((product, index) => (
           <Grid 
-            key={product.offerId || product.id || `product-${index}`} 
+            key={product.offerId || `product-${index}`} 
             size={{ xs: 12, sm: 6, md: 4, lg: 3 }}
           >
             <ProductCard

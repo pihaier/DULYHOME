@@ -255,7 +255,7 @@ export default function Search1688Page() {
         setCurrentImageId(imageId);
         setCurrentImageUrl(null);
         setIsImageUrlSearch(false);
-        await searchByImage(imageId, 1);
+        await searchByImage(imageId, 1, 'default', undefined, false);
         setImageSearchOpen(false);
         // 키워드 초기화하여 키워드 검색 결과와 구분
         setCurrentKeyword('');
