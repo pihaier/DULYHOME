@@ -292,7 +292,7 @@ export default function SkuSelector({
                           }
                         }}
                         startIcon={hasImage ? (
-                          <Box component="img" src={hasImage} sx={{ width: 24, height: 24, borderRadius: '50%' }} />
+                          <Box component="img" src={`/api/1688/image-proxy?url=${encodeURIComponent(hasImage)}`} sx={{ width: 24, height: 24, borderRadius: '50%' }} />
                         ) : null}
                         endIcon={isSelected ? <CheckCircleIcon /> : null}
                       >
@@ -640,7 +640,7 @@ export default function SkuSelector({
                       {hasImage && (
                         <Box
                           component="img"
-                          src={hasImage}
+                          src={`/api/1688/image-proxy?url=${encodeURIComponent(hasImage)}`}
                           sx={{
                             width: 24,
                             height: 24,
