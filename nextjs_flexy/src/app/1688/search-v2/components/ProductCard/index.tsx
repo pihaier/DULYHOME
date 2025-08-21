@@ -76,7 +76,7 @@ function ProductCard({ product, onDetailClick, onInquiryClick, onFindSimilar }: 
       <Box sx={{ position: 'relative', height: 200, bgcolor: 'grey.100' }}>
         {!imageError && product.imageUrl ? (
           <Image
-            src={product.imageUrl}
+            src={`/api/1688/image-proxy?url=${encodeURIComponent(product.imageUrl)}`}
             alt={product.subjectTrans || product.subject}
             fill
             style={{ objectFit: 'cover' }}

@@ -136,7 +136,7 @@ export default function ProductImageGallery({
       >
         <Box
           component="img"
-          src={displayImage}
+          src={displayImage.startsWith('/images/') ? displayImage : `/api/1688/image-proxy?url=${encodeURIComponent(displayImage)}`}
           alt="Product"
           sx={{
             width: '100%',
@@ -293,7 +293,7 @@ export default function ProductImageGallery({
             >
               <Box
                 component="img"
-                src={image}
+                src={`/api/1688/image-proxy?url=${encodeURIComponent(image)}`}
                 alt={`Thumbnail ${index + 1}`}
                 sx={{
                   width: '100%',
@@ -349,7 +349,7 @@ export default function ProductImageGallery({
           >
             <Box
               component="img"
-              src={displayImage}
+              src={displayImage.startsWith('/images/') ? displayImage : `/api/1688/image-proxy?url=${encodeURIComponent(displayImage)}`}
               alt="Product Large"
               sx={{
                 maxWidth: '100%',
@@ -393,7 +393,7 @@ export default function ProductImageGallery({
                   >
                     <Box
                       component="img"
-                      src={image}
+                      src={`/api/1688/image-proxy?url=${encodeURIComponent(image)}`}
                       alt={`Gallery ${index + 1}`}
                       sx={{
                         width: '100%',
