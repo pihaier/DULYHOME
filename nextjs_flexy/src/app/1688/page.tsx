@@ -156,8 +156,8 @@ export default function Search1688Page() {
   const handleSearch = async () => {
     if (!keyword.trim()) return;
     
-    // 검색 페이지로 이동
-    router.push(`/1688/search?q=${encodeURIComponent(keyword)}`);
+    // 검색 페이지로 이동 (search-v2 사용)
+    router.push(`/1688/search-v2?q=${encodeURIComponent(keyword)}`);
   };
 
   // 환율 적용 가격 계산
@@ -286,7 +286,7 @@ export default function Search1688Page() {
                         boxShadow: 3,
                       },
                     }}
-                    onClick={() => router.push(`/1688/search?category=${category.categoryID}`)}
+                    onClick={() => router.push(`/1688/search-v2?category=${category.categoryID}`)}
                   >
                     <Typography variant="body2" noWrap>
                       {category.name}
