@@ -74,6 +74,53 @@ export default function SkuSelector({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   
+  // 일반 옵션용 수량 입력 상태
+  const [generalOptionQuantities, setGeneralOptionQuantities] = useState<{ [key: string]: number }>({});
+  
+  // 색상과 사이즈가 있는지 확인
+  const hasColorAndSize = productSkuInfos?.some(sku => 
+    sku.skuAttributes?.some((attr: any) => 
+      attr.attributeName === '颜色' || attr.attributeName === '색상' ||
+      attr.attributeNameTrans === '색상'
+    ) &&
+    sku.skuAttributes?.some((attr: any) => 
+      attr.attributeName === '尺码' || attr.attributeName === '크기' ||
+      attr.attributeNameTrans === '크기' || attr.attributeNameTrans === 'Size'
+    )
+  );
+
+  // 색상 선택 처리 함수
+  const handleColorSelection = (attrName: string, value: string) => {
+    const isColorAttribute = attrName === '색상' || attrName === '颜色' || 
+                           attrName === 'Color' || attrName === '색깔';
+    
+    if (isColorAttribute && hasColorAndSize) {
+      setSelectedColor(value);
+      
+      const colorSkus = productSkuInfos?.filter((sku: any) => 
+        sku.skuAttributes.some((attr: any) => 
+          (attr.attributeName === '颜色' || attr.attributeName === '색상' || 
+           attr.attributeNameTrans === '색상') &&
+          (attr.value === value || attr.valueTrans === value)
+        )
+      );
+      
+      const newSizeQuantities: { [key: string]: number } = {};
+      colorSkus?.forEach((sku: any) => {
+        const sizeAttr = sku.skuAttributes.find((attr: any) => 
+          attr.attributeName === '尺码' || attr.attributeName === '크기' ||
+          attr.attributeNameTrans === '크기' || attr.attributeNameTrans === 'Size'
+        );
+        if (sizeAttr) {
+          const sizeValue = sizeAttr.valueTrans || sizeAttr.value;
+          newSizeQuantities[sizeValue] = allQuantities[`${value}-${sizeValue}`]?.qty || 0;
+        }
+      });
+      
+      setCurrentColorQuantities(newSizeQuantities);
+    }
+  };
+  
   // 전체 수량과 금액 계산 (모든 옵션 누적)
   useEffect(() => {
     let totalQty = 0;
@@ -505,58 +552,6 @@ export default function SkuSelector({
       </Box>
     </Drawer>
   );
-
-  // 일반 옵션용 수량 입력 상태
-  const [generalOptionQuantities, setGeneralOptionQuantities] = useState<{ [key: string]: number }>({});
-  
-  // 색상과 사이즈가 있는지 확인
-  const hasColorAndSize = productSkuInfos?.some(sku => 
-    sku.skuAttributes?.some((attr: any) => 
-      attr.attributeName === '颜色' || attr.attributeName === '색상' ||
-      attr.attributeNameTrans === '색상'
-    ) &&
-    sku.skuAttributes?.some((attr: any) => 
-      attr.attributeName === '尺码' || attr.attributeName === '크기' ||
-      attr.attributeNameTrans === '크기' || attr.attributeNameTrans === 'Size'
-    )
-  );
-
-  // 색상 선택 처리 함수
-  const handleColorSelection = (attrName: string, value: string) => {
-    const isColorAttribute = attrName === '색상' || attrName === '颜色' || 
-                           attrName === 'Color' || attrName === '색깔';
-    
-    if (isColorAttribute && hasColorAndSize) {
-      setSelectedColor(value);
-      
-      const colorSkus = productSkuInfos?.filter((sku: any) => 
-        sku.skuAttributes.some((attr: any) => 
-          (attr.attributeName === '颜色' || attr.attributeName === '색상' || 
-           attr.attributeNameTrans === '색상') &&
-          (attr.value === value || attr.valueTrans === value)
-        )
-      );
-      
-      const newSizeQuantities: { [key: string]: number } = {};
-      const sizeSet = new Set<string>();
-      
-      colorSkus?.forEach((sku: any) => {
-        const sizeAttr = sku.skuAttributes.find((attr: any) => 
-          attr.attributeName === '尺码' || attr.attributeName === '크기' ||
-          attr.attributeNameTrans === '크기' || attr.attributeNameTrans === 'Size'
-        );
-        if (sizeAttr) {
-          const sizeValue = sizeAttr.valueTrans || sizeAttr.value;
-          if (!sizeSet.has(sizeValue)) {
-            sizeSet.add(sizeValue);
-            const key = `${value}-${sizeValue}`;
-            newSizeQuantities[sizeValue] = allQuantities[key]?.qty || 0;
-          }
-        }
-      });
-      setCurrentColorQuantities(newSizeQuantities);
-    }
-  };
 
   // 모바일 UI
   if (isMobile) {

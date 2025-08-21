@@ -95,8 +95,8 @@ export default function ProductInfo({
     };
   };
 
-  const currentPrice = getCurrentPrice();
   const [isFavorite, setIsFavorite] = React.useState(false);
+  const currentPrice = getCurrentPrice();
 
   return (
     <Box>
