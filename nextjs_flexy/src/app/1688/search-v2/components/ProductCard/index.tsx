@@ -16,6 +16,7 @@ interface ProductCardProps {
 
 function ProductCard({ product, onDetailClick, onInquiryClick, onFindSimilar }: ProductCardProps) {
   const router = useRouter();
+  const [imageError, setImageError] = React.useState(false);
 
   const handleDetailClick = () => {
     if (onDetailClick) {
@@ -72,14 +73,36 @@ function ProductCard({ product, onDetailClick, onInquiryClick, onFindSimilar }: 
       }}
       onClick={handleDetailClick}
     >
-      <Box sx={{ position: 'relative', height: 200 }}>
-        <Image
-          src={product.imageUrl}
-          alt={product.subjectTrans || product.subject}
-          fill
-          style={{ objectFit: 'cover' }}
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        />
+      <Box sx={{ position: 'relative', height: 200, bgcolor: 'grey.100' }}>
+        {!imageError && product.imageUrl ? (
+          <Image
+            src={product.imageUrl}
+            alt={product.subjectTrans || product.subject}
+            fill
+            style={{ objectFit: 'cover' }}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            onError={() => {
+              console.error('Image load failed:', product.imageUrl);
+              setImageError(true);
+            }}
+            priority={false}
+            loading="lazy"
+          />
+        ) : (
+          <Box 
+            sx={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              height: '100%',
+              bgcolor: 'grey.200'
+            }}
+          >
+            <Typography variant="body2" color="text.secondary">
+              이미지 없음
+            </Typography>
+          </Box>
+        )}
         <Tooltip title="유사 상품 찾기">
           <IconButton
             onClick={handleFindSimilar}
