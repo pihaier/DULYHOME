@@ -3,6 +3,9 @@
 import { Card, CardMedia, CardContent, Typography, Box, Chip } from '@mui/material';
 import { useRouter } from 'next/navigation';
 
+// 환율 상수 (실제로는 환경변수나 API에서 가져와야 함)
+const EXCHANGE_RATE = 203;
+
 interface ShopProduct {
   imageUrl: string;
   subject: string;
@@ -79,9 +82,13 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
           <Typography variant="h6" color="primary" sx={{ fontWeight: 'bold' }}>
             ¥{product.priceInfo.price}
           </Typography>
+          <Typography variant="body2" color="text.secondary">
+            ₩{(parseFloat(product.priceInfo.price) * EXCHANGE_RATE).toLocaleString('ko-KR')}
+          </Typography>
           {product.priceInfo.consignPrice && product.priceInfo.consignPrice !== product.priceInfo.price && (
             <Typography variant="caption" color="text.secondary">
-              대발가: ¥{product.priceInfo.consignPrice}
+              드롭쉬핑: ¥{product.priceInfo.consignPrice} 
+              (₩{(parseFloat(product.priceInfo.consignPrice) * EXCHANGE_RATE).toLocaleString('ko-KR')})
             </Typography>
           )}
         </Box>

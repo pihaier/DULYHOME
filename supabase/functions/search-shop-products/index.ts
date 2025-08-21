@@ -250,7 +250,7 @@ Deno.serve(async (req) => {
 
     // 데이터 변환 (한국어 친화적으로)
     const transformedData = {
-      sellerOpenId: sellerOpenId,  // 상점 ID 포함
+      sellerOpenId: result.data?.sellerOpenId || sellerOpenId,  // API 응답에서 먼저 가져오고, 없으면 요청 파라미터 사용
       totalRecords: result.data?.totalRecords || 0,
       totalPage: result.data?.totalPage || 0,
       pageSize: result.data?.pageSize || 20,

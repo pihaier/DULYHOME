@@ -19,7 +19,6 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 interface ShopProductsSectionProps {
   sellerOpenId: string;
   currentProductId: string;  // 현재 보고 있는 상품 제외
-  sellerName?: string;
 }
 
 interface ShopProduct {
@@ -43,7 +42,6 @@ interface ShopProduct {
 export default function ShopProductsSection({
   sellerOpenId,
   currentProductId,
-  sellerName,
 }: ShopProductsSectionProps) {
   const [products, setProducts] = useState<ShopProduct[]>([]);
   const [loading, setLoading] = useState(false);
@@ -158,7 +156,7 @@ export default function ShopProductsSection({
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
         <StorefrontIcon sx={{ mr: 1, color: 'primary.main' }} />
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          {sellerName ? `${sellerName}의 다른 상품` : '판매자의 다른 상품'}
+          판매자의 다른 상품
           {totalRecords > 0 && (
             <Typography component="span" variant="body2" color="text.secondary" sx={{ ml: 1 }}>
               (총 {totalRecords}개)

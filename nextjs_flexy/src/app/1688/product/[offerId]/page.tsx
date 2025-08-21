@@ -407,7 +407,6 @@ export default function ProductDetailPage() {
               <ShopProductsSection
                 sellerOpenId={productDetail.sellerOpenId}
                 currentProductId={offerId}
-                sellerName={productDetail.sellerName || productDetail.sellerLoginId}
               />
             </Box>
           )}

@@ -41,6 +41,8 @@ export interface ProductDetail {
   
   // 판매자 정보
   sellerOpenId?: string;
+  sellerName?: string;
+  sellerLoginId?: string;
   sellerDataInfo?: any;
   sellerMixSetting?: any;
   
