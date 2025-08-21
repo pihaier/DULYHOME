@@ -73,13 +73,26 @@ function ProductCard({ product, onDetailClick, onInquiryClick, onFindSimilar }: 
       }}
       onClick={handleDetailClick}
     >
-      <Box sx={{ position: 'relative', height: 200, bgcolor: 'grey.100' }}>
+      <Box sx={{ 
+        position: 'relative', 
+        height: 240, 
+        bgcolor: 'white',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        overflow: 'hidden',
+        border: '1px solid',
+        borderColor: 'grey.200',
+      }}>
         {!imageError && product.imageUrl ? (
           <Image
             src={`/api/1688/image-proxy?url=${encodeURIComponent(product.imageUrl)}`}
             alt={product.subjectTrans || product.subject}
             fill
-            style={{ objectFit: 'cover' }}
+            style={{ 
+              objectFit: 'contain',
+              padding: '8px',
+            }}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             onError={() => {
               console.error('Image load failed:', product.imageUrl);
