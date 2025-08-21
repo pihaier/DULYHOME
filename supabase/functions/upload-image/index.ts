@@ -51,11 +51,11 @@ Deno.serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { imageBase64 } = body;
+    const { image_base64 } = body;
 
-    if (!imageBase64) {
+    if (!image_base64) {
       return new Response(
-        JSON.stringify({ error: '이미지 데이터(imageBase64)는 필수입니다.' }),
+        JSON.stringify({ error: '이미지 데이터(image_base64)는 필수입니다.' }),
         {
           status: 400,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -64,7 +64,7 @@ Deno.serve(async (req) => {
     }
 
     // Base64 크기 체크 (3MB 제한)
-    const sizeInBytes = (imageBase64.length * 3) / 4;
+    const sizeInBytes = (image_base64.length * 3) / 4;
     if (sizeInBytes > 3 * 1024 * 1024) {
       return new Response(
         JSON.stringify({ error: '이미지 크기는 3MB를 초과할 수 없습니다.' }),
@@ -78,12 +78,12 @@ Deno.serve(async (req) => {
     // FormData 생성
     const formData = new FormData();
     formData.append('appKey', DAJI_APP_KEY);
-    formData.append('image_base64', imageBase64);
+    formData.append('image_base64', image_base64);
     
     // Sign 생성
     const params = {
       appKey: DAJI_APP_KEY,
-      image_base64: imageBase64,
+      image_base64: image_base64,
     };
     const sign = await generateSign(params, DAJI_APP_SECRET);
     formData.append('sign', sign);

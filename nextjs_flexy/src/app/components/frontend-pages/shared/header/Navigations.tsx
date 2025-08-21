@@ -37,6 +37,21 @@ export const NavLinks = [
   },
 ];
 
+const StyledButton = styled(Button)(({ theme }) => ({
+  a: {
+    color: theme.palette.text.secondary,
+    fontWeight: 500,
+    fontSize: '15px',
+  },
+
+  '&.active': {
+    backgroundColor: 'rgba(93, 135, 255, 0.15)',
+    a: {
+      color: theme.palette.primary.main,
+    },
+  },
+}));
+
 const Navigations = () => {
   const router = usePathname();
 
@@ -47,21 +62,6 @@ const Navigations = () => {
   }, []);
 
   if (!isMounted) return null;
-
-  const StyledButton = styled(Button)(({ theme }) => ({
-    a: {
-      color: theme.palette.text.secondary,
-      fontWeight: 500,
-      fontSize: '15px',
-    },
-
-    '&.active': {
-      backgroundColor: 'rgba(93, 135, 255, 0.15)',
-      a: {
-        color: theme.palette.primary.main,
-      },
-    },
-  }));
 
   return (
     <>

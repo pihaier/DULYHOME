@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/client';
+import { getEdgeFunctionsClient } from '@/lib/supabase/edge-functions-client';
 
 // Supabase Edge Functions URL
 const EDGE_FUNCTIONS_URL = process.env.NEXT_PUBLIC_SUPABASE_URL + '/functions/v1';
@@ -12,17 +13,15 @@ const getHeaders = () => ({
 // 1. 카테고리 조회
 export async function getCategories(categoryID: string = '0') {
   try {
-    const response = await fetch(`${EDGE_FUNCTIONS_URL}/get-categories`, {
-      method: 'POST',
-      headers: getHeaders(),
-      body: JSON.stringify({ categoryID }),
+    const functionsClient = getEdgeFunctionsClient();
+    const { data, error } = await functionsClient.invoke('get-categories', {
+      body: { categoryID }
     });
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch categories: ${response.status}`);
+    if (error) {
+      throw new Error(error.message || 'Failed to fetch categories');
     }
 
-    const data = await response.json();
     return data;
   } catch (error) {
     console.error('Error fetching categories:', error);
@@ -53,12 +52,11 @@ export async function searchProducts({
   categoryId?: number;
 }) {
   try {
-    const response = await fetch(`${EDGE_FUNCTIONS_URL}/search-1688-products`, {
-      method: 'POST',
-      headers: getHeaders(),
-      body: JSON.stringify({
+    const functionsClient = getEdgeFunctionsClient();
+    const { data, error } = await functionsClient.invoke('search-1688-products', {
+      body: {
         keyword,
-        page,
+        beginPage: page, // page를 beginPage로 변경
         pageSize,
         country,
         sort,
@@ -66,14 +64,13 @@ export async function searchProducts({
         priceStart,
         priceEnd,
         categoryId,
-      }),
+      }
     });
 
-    if (!response.ok) {
-      throw new Error(`Failed to search products: ${response.status}`);
+    if (error) {
+      throw new Error(error.message || 'Failed to search products');
     }
 
-    const data = await response.json();
     return data;
   } catch (error) {
     console.error('Error searching products:', error);
@@ -84,17 +81,15 @@ export async function searchProducts({
 // 3. 이미지 업로드
 export async function uploadImage(imageBase64: string) {
   try {
-    const response = await fetch(`${EDGE_FUNCTIONS_URL}/upload-image`, {
-      method: 'POST',
-      headers: getHeaders(),
-      body: JSON.stringify({ imageBase64 }),
+    const functionsClient = getEdgeFunctionsClient();
+    const { data, error } = await functionsClient.invoke('upload-image', {
+      body: { imageBase64 }
     });
 
-    if (!response.ok) {
-      throw new Error(`Failed to upload image: ${response.status}`);
+    if (error) {
+      throw new Error(error.message || 'Failed to upload image');
     }
 
-    const data = await response.json();
     return data;
   } catch (error) {
     console.error('Error uploading image:', error);
@@ -135,10 +130,9 @@ export async function searchByImage({
   }
 
   try {
-    const response = await fetch(`${EDGE_FUNCTIONS_URL}/search-by-image`, {
-      method: 'POST',
-      headers: getHeaders(),
-      body: JSON.stringify({
+    const functionsClient = getEdgeFunctionsClient();
+    const { data, error } = await functionsClient.invoke('search-by-image', {
+      body: {
         imageId,
         imageAddress,
         beginPage,
@@ -151,14 +145,13 @@ export async function searchByImage({
         priceEnd,
         categoryId,
         keyword,
-      }),
+      }
     });
 
-    if (!response.ok) {
-      throw new Error(`Failed to search by image: ${response.status}`);
+    if (error) {
+      throw new Error(error.message || 'Failed to search by image');
     }
 
-    const data = await response.json();
     return data;
   } catch (error) {
     console.error('Error searching by image:', error);
@@ -177,24 +170,26 @@ export async function getProductDetail({
   outMemberId?: string;
 }) {
   try {
-    const response = await fetch(`${EDGE_FUNCTIONS_URL}/get-product-detail`, {
-      method: 'POST',
-      headers: getHeaders(),
-      body: JSON.stringify({
+    const functionsClient = getEdgeFunctionsClient();
+    const { data, error } = await functionsClient.invoke('get-product-detail', {
+      body: {
         offerId,
         country,
         outMemberId,
-      }),
+      }
     });
 
-    const data = await response.json();
-    
-    if (!response.ok) {
-      console.error('Product detail API error:', data);
-      throw new Error(data.error || `Failed to fetch product detail: ${response.status}`);
+    if (error) {
+      console.error('Product detail API error:', error);
+      throw new Error(error.message || 'Failed to fetch product detail');
     }
 
-    return data;
+    // success 플래그가 없어도 data가 있으면 정상 응답으로 처리
+    if (data && (data.success || data.offerId)) {
+      return data;
+    }
+    
+    throw new Error('Invalid response format');
   } catch (error) {
     console.error('Error fetching product detail:', error);
     throw error;
@@ -221,24 +216,22 @@ export async function calculateShipping({
   }>;
 }) {
   try {
-    const response = await fetch(`${EDGE_FUNCTIONS_URL}/calculate-shipping`, {
-      method: 'POST',
-      headers: getHeaders(),
-      body: JSON.stringify({
+    const functionsClient = getEdgeFunctionsClient();
+    const { data, error } = await functionsClient.invoke('calculate-shipping', {
+      body: {
         offerId,
         toProvinceCode,
         toCityCode,
         toCountryCode,
         totalNum,
         logisticsSkuNumModels,
-      }),
+      }
     });
 
-    if (!response.ok) {
-      throw new Error(`Failed to calculate shipping: ${response.status}`);
+    if (error) {
+      throw new Error(error.message || 'Failed to calculate shipping');
     }
 
-    const data = await response.json();
     return data;
   } catch (error) {
     console.error('Error calculating shipping:', error);
@@ -283,25 +276,51 @@ export function convertToKRW(cnyPrice: string | number, exchangeRate: number = 1
 // 7. 이미지 번역
 export async function translateImage(imageUrl: string) {
   try {
-    const response = await fetch(`${EDGE_FUNCTIONS_URL}/translate-image`, {
-      method: 'POST',
-      headers: getHeaders(),
-      body: JSON.stringify({
+    const functionsClient = getEdgeFunctionsClient();
+    const { data, error } = await functionsClient.invoke('translate-image', {
+      body: {
         imageUrl,
         sourceLanguage: 'zh',
         targetLanguage: 'ko',
         field: 'e-commerce'
-      }),
+      }
     });
 
-    if (!response.ok) {
-      throw new Error(`Failed to translate image: ${response.status}`);
+    if (error) {
+      throw new Error(error.message || 'Failed to translate image');
     }
 
-    const data = await response.json();
     return data;
   } catch (error) {
     console.error('Error translating image:', error);
+    throw error;
+  }
+}
+
+// 8. 상품 설명 번역
+export async function translateProductDescription({
+  description,
+  productName,
+}: {
+  description: string;
+  productName?: string;
+}) {
+  try {
+    const functionsClient = getEdgeFunctionsClient();
+    const { data, error } = await functionsClient.invoke('translate-product-description', {
+      body: {
+        description,
+        productName,
+      }
+    });
+
+    if (error) {
+      throw new Error(error.message || 'Failed to translate description');
+    }
+
+    return data;
+  } catch (error) {
+    console.error('Error translating description:', error);
     throw error;
   }
 }

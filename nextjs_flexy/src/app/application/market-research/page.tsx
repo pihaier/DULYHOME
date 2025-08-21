@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Container,
@@ -23,7 +23,7 @@ import {
   DialogActions,
   CircularProgress,
 } from '@mui/material';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import PageContainer from '@/app/components/container/PageContainer';
 import HpHeader from '@/app/components/frontend-pages/shared/header/HpHeader';
 import Footer from '@/app/components/frontend-pages/shared/footer';
@@ -67,11 +67,13 @@ function generateReservationNumber(): string {
 
 export default function MarketResearchPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { user, userProfile, loading: authLoading } = useUser();
   const supabase = createClient();
   const [loading, setLoading] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [reservationNumber, setReservationNumber] = useState('');
+  const [productImageUrl, setProductImageUrl] = useState<string>('');
 
   const [formData, setFormData] = useState<FormData>({
     company_name: '',
@@ -91,6 +93,52 @@ export default function MarketResearchPage() {
     boxDesignFiles: [],
     files: [],
   });
+
+  // URL 파라미터에서 제품 정보 읽기
+  useEffect(() => {
+    const offerId = searchParams.get('offerId');
+    const productName = searchParams.get('productName');
+    const productUrl = searchParams.get('productUrl');
+    const productImage = searchParams.get('productImage');
+    const selectedSku = searchParams.get('selectedSku');
+    const selectedOptions = searchParams.get('selectedOptions');
+    const skuPrice = searchParams.get('skuPrice');
+    const quantityParam = searchParams.get('quantity');
+
+    if (productName || productUrl) {
+      let requirementsText = '위 제품과 유사한 제품의 견적을 받고 싶습니다.\n\n';
+      
+      // 선택된 옵션 정보 추가
+      if (selectedSku) {
+        requirementsText += `선택 옵션: ${selectedSku}\n`;
+        if (skuPrice) {
+          requirementsText += `현재 가격: ¥${skuPrice}\n`;
+        }
+      } else if (selectedOptions) {
+        requirementsText += `선택 옵션: ${selectedOptions}\n`;
+      }
+      
+      requirementsText += '\n요청 사항:\n';
+      requirementsText += '- 최소 주문량(MOQ)\n';
+      requirementsText += '- 단가 (수량별)\n';
+      requirementsText += '- 배송 기간\n';
+      requirementsText += '- 원산지 증명서 발급 가능 여부\n';
+      requirementsText += '- 샘플 제공 가능 여부 및 비용';
+      
+      setFormData(prev => ({
+        ...prev,
+        productName: productName || '',
+        detailPage: productUrl || '',
+        quantity: quantityParam || prev.quantity,
+        requirements: productUrl ? requirementsText : prev.requirements
+      }));
+    }
+
+    // 제품 이미지 URL 저장 (나중에 표시용)
+    if (productImage) {
+      setProductImageUrl(productImage);
+    }
+  }, [searchParams]);
 
   // 로그인 체크 - 로그인하지 않은 경우 로그인 페이지로 리다이렉트
   React.useEffect(() => {
@@ -125,7 +173,8 @@ export default function MarketResearchPage() {
       return;
     }
 
-    if (formData.files.length === 0) {
+    // 1688에서 넘어온 경우가 아닐 때만 파일 필수 체크
+    if (formData.files.length === 0 && !productImageUrl) {
       alert('제품 사진 및 관련 서류는 필수 입력 항목입니다.');
       return;
     }
@@ -145,7 +194,7 @@ export default function MarketResearchPage() {
       const newReservationNumber = generateReservationNumber();
 
       // 시장조사 데이터 준비
-      const applicationData = {
+      const applicationData: any = {
         reservation_number: newReservationNumber,
         user_id: user.id,
         company_name: formData.company_name,
@@ -154,6 +203,7 @@ export default function MarketResearchPage() {
         contact_email: formData.contact_email || user.email,
         product_name: formData.productName,
         detail_page: formData.detailPage || null,
+        product_site_url: formData.detailPage || null, // 1688 URL 저장
         research_quantity: formData.quantity ? parseInt(formData.quantity) : null,
         moq_check: formData.moqCheck,
         requirements: formData.requirements,
@@ -165,6 +215,18 @@ export default function MarketResearchPage() {
         service_type: 'market_research',
         payment_status: 'not_required',
       };
+
+      // 1688 제품 이미지 URL이 있으면 reference_links에 저장
+      if (productImageUrl) {
+        applicationData.reference_links = [
+          {
+            type: '1688_product_image',
+            url: productImageUrl,
+            source: '1688',
+            added_at: new Date().toISOString()
+          }
+        ];
+      }
 
       // Supabase에 직접 저장
       const { data: application, error: insertError } = await supabase
@@ -465,6 +527,34 @@ export default function MarketResearchPage() {
                 />
 
                 <Divider />
+
+                {/* 1688 제품에서 넘어온 경우 제품 정보 표시 */}
+                {productImageUrl && (
+                  <Alert severity="info" sx={{ mb: 2 }}>
+                    <Stack direction="row" spacing={2} alignItems="center">
+                      <Box
+                        component="img"
+                        src={productImageUrl}
+                        alt="제품 이미지"
+                        sx={{
+                          width: 80,
+                          height: 80,
+                          objectFit: 'cover',
+                          borderRadius: 1,
+                          border: '1px solid #e0e0e0'
+                        }}
+                      />
+                      <Box>
+                        <Typography variant="body2" fontWeight="bold">
+                          1688 제품 정보가 자동으로 입력되었습니다
+                        </Typography>
+                        <Typography variant="caption" color="text.secondary">
+                          제품명과 URL이 자동으로 입력되었습니다. 필요시 수정하실 수 있습니다.
+                        </Typography>
+                      </Box>
+                    </Stack>
+                  </Alert>
+                )}
 
                 {/* 제품명 */}
                 <TextField

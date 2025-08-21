@@ -18,7 +18,7 @@ const Footer = () => {
             lg: 4,
           }}
         >
-          <Image src={logoIcon} alt="icon" />
+          <Image src={logoIcon} alt="icon" width={40} height={40} />
           <Typography fontSize="16" color="textSecondary" mt={1} mb={4}>
             All rights reserved by Flexy. Designed & Developed by
             <Link target="_blank" href="https://wrappixel.com/">

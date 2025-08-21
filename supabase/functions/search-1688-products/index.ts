@@ -97,7 +97,7 @@ Deno.serve(async (req) => {
     const body = await req.json();
     const {
       keyword,
-      page = 1,  // API에서는 beginPage
+      beginPage = 1,  // API 파라미터명과 일치
       pageSize = 20,
       filter,
       sort,
@@ -111,10 +111,10 @@ Deno.serve(async (req) => {
       snId,           // 검색 네비게이션 ID
     } = body;
 
-    // 필수 파라미터 체크
-    if (!keyword) {
+    // 필수 파라미터 체크 - keyword 또는 categoryId 중 하나는 있어야 함
+    if (!keyword && !categoryId) {
       return new Response(
-        JSON.stringify({ error: '검색어(keyword)는 필수입니다.' }),
+        JSON.stringify({ error: '검색어(keyword) 또는 카테고리(categoryId) 중 하나는 필수입니다.' }),
         {
           status: 400,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -138,7 +138,7 @@ Deno.serve(async (req) => {
 
     // 캐시 확인 (선택사항 - 테이블이 없어도 동작)
     try {
-      const cached = await getCachedResults(keyword, page, supabase);
+      const cached = await getCachedResults(keyword, beginPage, supabase);
       if (cached) {
         return new Response(
           JSON.stringify({
@@ -160,11 +160,16 @@ Deno.serve(async (req) => {
     const params: Record<string, any> = {
       appKey: DAJI_APP_KEY,
       // appSecret는 파라미터로 보내지 않음 (sign 생성에만 사용)
-      keyword: keyword,
-      beginPage: page,  // page를 beginPage로 매핑
+      beginPage: beginPage,  // beginPage 그대로 사용
       pageSize: pageSize,
       country: country,  // 필수 파라미터 (ko, en, ru, vi, ja, fr, pt, es, th, id, ar 등)
     };
+    
+    // keyword는 categoryId가 없을 때만 필수
+    // categoryId로만 검색할 때는 keyword를 포함하지 않음
+    if (keyword) {
+      params.keyword = keyword;
+    }
 
     // 선택 파라미터 추가
     if (filter) params.filter = filter;
@@ -204,7 +209,7 @@ Deno.serve(async (req) => {
     const queryString = queryParts.join('&');
     const apiUrl = `${API_BASE_URL}/alibaba/product/keywordQuery?${queryString}`;
 
-    console.log('🔍 Searching 1688 products:', { keyword, page, pageSize });
+    console.log('🔍 Searching 1688 products:', { keyword, beginPage, pageSize });
     console.log('API URL:', apiUrl);
 
     const response = await fetch(apiUrl, {
@@ -229,11 +234,11 @@ Deno.serve(async (req) => {
 
     // 데이터 변환 (한국어 친화적으로)
     const transformedData = {
-      totalRecords: result.data.totalRecords,
-      totalPage: result.data.totalPage,
-      pageSize: result.data.pageSize,
-      currentPage: result.data.currentPage,
-      data: result.data.data.map((product: any) => ({
+      totalRecords: result.data?.totalRecords || 0,
+      totalPage: result.data?.totalPage || 0,
+      pageSize: result.data?.pageSize || 20,
+      currentPage: result.data?.currentPage || beginPage,  // API가 currentPage를 안 주면 요청한 beginPage 사용
+      data: result.data?.data ? result.data.data.map((product: any) => ({
         // 프론트엔드 Product1688 인터페이스와 일치하도록
         imageUrl: product.imageUrl,
         subject: product.subject,
@@ -251,12 +256,12 @@ Deno.serve(async (req) => {
         traceInfo: product.traceInfo,
         isOnePsale: product.isOnePsale,
         sellerIdentities: product.sellerIdentities,
-      })),
+      })) : [],  // data가 null이면 빈 배열 반환
     };
 
     // 캐시 저장 (선택사항 - 실패해도 무시)
     try {
-      await saveCachedResults(keyword, page, transformedData, supabase);
+      await saveCachedResults(keyword, beginPage, transformedData, supabase);
     } catch (error) {
       console.log('Failed to save cache:', error.message);
     }
@@ -267,7 +272,7 @@ Deno.serve(async (req) => {
         .from('product_search_history')
         .insert({
           keyword,
-          page,
+          page: beginPage,
           results_count: transformedData.data.length,
           user_ip: req.headers.get('x-forwarded-for') || 'unknown',
           created_at: new Date().toISOString(),

@@ -285,36 +285,38 @@ export default function MarketResearchDetailPage() {
                       신청 정보
                     </Typography>
                     {isMobile ? (
-                      <Stack spacing={2}>
-                        <Box>
-                          <Typography variant="subtitle2" fontWeight="bold" color="text.secondary">
+                      <Stack spacing={1.5}>
+                        <Box sx={{ p: 1.5, bgcolor: 'grey.50', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
                             품명
                           </Typography>
-                          <Typography variant="body1">{data?.product_name || '-'}</Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                            {data?.product_name || '-'}
+                          </Typography>
                         </Box>
-                        <Box>
-                          <Typography variant="subtitle2" fontWeight="bold" color="text.secondary">
+                        <Box sx={{ p: 1.5, bgcolor: 'grey.50', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
                             조사수량
                           </Typography>
-                          <Typography variant="body1">
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
                             {data?.research_quantity?.toLocaleString() || '-'}개
                           </Typography>
                         </Box>
-                        <Box>
-                          <Typography variant="subtitle2" fontWeight="bold" color="text.secondary">
+                        <Box sx={{ p: 1.5, bgcolor: 'grey.50', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
                             신청일시
                           </Typography>
-                          <Typography variant="body1">
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
                             {data?.created_at
                               ? new Date(data.created_at).toLocaleString('ko-KR')
                               : '-'}
                           </Typography>
                         </Box>
-                        <Box>
-                          <Typography variant="subtitle2" fontWeight="bold" color="text.secondary">
+                        <Box sx={{ p: 1.5, bgcolor: 'grey.50', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
                             상세 페이지 URL
                           </Typography>
-                          <Typography variant="body1">
+                          <Typography variant="body2" sx={{ fontWeight: 500, wordBreak: 'break-all' }}>
                             {data?.detail_page ? (
                               <a
                                 href={data.detail_page}
@@ -329,34 +331,40 @@ export default function MarketResearchDetailPage() {
                             )}
                           </Typography>
                         </Box>
-                        <Box>
-                          <Typography variant="subtitle2" fontWeight="bold" color="text.secondary">
+                        <Box sx={{ p: 1.5, bgcolor: 'info.lighter', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
                             추가 요청사항
                           </Typography>
-                          <Stack spacing={1} sx={{ mt: 1 }}>
-                            <Box>
+                          <Stack spacing={1}>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                               <Typography variant="caption" color="text.secondary">
                                 MOQ 확인
                               </Typography>
-                              <Typography variant="body2">
-                                {data?.moq_check ? '확인 필요' : '미확인'}
-                              </Typography>
+                              <Chip 
+                                label={data?.moq_check ? '확인 필요' : '미확인'} 
+                                size="small" 
+                                color={data?.moq_check ? 'warning' : 'default'}
+                              />
                             </Box>
-                            <Box>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                               <Typography variant="caption" color="text.secondary">
                                 로고 인쇄
                               </Typography>
-                              <Typography variant="body2">
-                                {data?.logo_required ? '요청' : '요청 없음'}
-                              </Typography>
+                              <Chip 
+                                label={data?.logo_required ? '요청' : '요청 없음'} 
+                                size="small" 
+                                color={data?.logo_required ? 'primary' : 'default'}
+                              />
                             </Box>
-                            <Box>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                               <Typography variant="caption" color="text.secondary">
                                 커스텀 박스
                               </Typography>
-                              <Typography variant="body2">
-                                {data?.custom_box_required ? '요청' : '요청 없음'}
-                              </Typography>
+                              <Chip 
+                                label={data?.custom_box_required ? '요청' : '요청 없음'} 
+                                size="small" 
+                                color={data?.custom_box_required ? 'secondary' : 'default'}
+                              />
                             </Box>
                           </Stack>
                         </Box>
@@ -560,7 +568,13 @@ export default function MarketResearchDetailPage() {
                           .map((file: any, index: number) => (
                             <Paper
                               key={index}
-                              sx={{ p: 2, textAlign: 'center', cursor: 'pointer', width: 150 }}
+                              sx={{ 
+                                p: 2, 
+                                textAlign: 'center', 
+                                cursor: 'pointer', 
+                                width: { xs: '100%', sm: 150 },
+                                minWidth: { xs: 120, sm: 150 }
+                              }}
                               onClick={() =>
                                 window.open(file.file_url || file.public_url, '_blank')
                               }
@@ -568,7 +582,18 @@ export default function MarketResearchDetailPage() {
                               <Box sx={{ py: 3 }}>
                                 <ImageIcon sx={{ fontSize: 40, color: 'text.secondary' }} />
                               </Box>
-                              <Typography variant="caption" sx={{ mt: 1, display: 'block' }}>
+                              <Typography 
+                                variant="caption" 
+                                sx={{ 
+                                  mt: 1, 
+                                  display: 'block',
+                                  wordWrap: 'break-word',
+                                  overflowWrap: 'break-word',
+                                  hyphens: 'auto',
+                                  fontSize: { xs: '0.7rem', sm: '0.75rem' }
+                                }}
+                                title={file.original_filename}
+                              >
                                 {file.original_filename}
                               </Typography>
                             </Paper>
@@ -613,7 +638,13 @@ export default function MarketResearchDetailPage() {
                           .map((file: any, index: number) => (
                             <Paper
                               key={index}
-                              sx={{ p: 2, textAlign: 'center', cursor: 'pointer', width: 150 }}
+                              sx={{ 
+                                p: 2, 
+                                textAlign: 'center', 
+                                cursor: 'pointer', 
+                                width: { xs: '100%', sm: 150 },
+                                minWidth: { xs: 120, sm: 150 }
+                              }}
                               onClick={() =>
                                 window.open(file.file_url || file.public_url, '_blank')
                               }
@@ -621,7 +652,17 @@ export default function MarketResearchDetailPage() {
                               <Box sx={{ py: 3 }}>
                                 <PictureAsPdfIcon sx={{ fontSize: 48, color: 'error.main' }} />
                               </Box>
-                              <Typography variant="caption" sx={{ wordBreak: 'break-all' }}>
+                              <Typography 
+                                variant="caption" 
+                                sx={{ 
+                                  wordWrap: 'break-word',
+                                  overflowWrap: 'break-word',
+                                  hyphens: 'auto',
+                                  fontSize: { xs: '0.7rem', sm: '0.75rem' },
+                                  display: 'block'
+                                }}
+                                title={file.original_filename}
+                              >
                                 {file.original_filename}
                               </Typography>
                               <Typography variant="caption" display="block" color="text.secondary">
@@ -654,8 +695,95 @@ export default function MarketResearchDetailPage() {
                     <Typography variant="h6" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
                       공장 정보
                     </Typography>
-                    <Table>
-                      <TableBody>
+                    {isMobile ? (
+                      // 모바일 레이아웃
+                      <Stack spacing={2}>
+                        <Typography variant="subtitle2" fontWeight="bold" color="primary" sx={{ mt: 2, mb: 1 }}>
+                          기업 신용정보
+                        </Typography>
+                        <Box sx={{ p: 1.5, bgcolor: 'white', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            업종
+                          </Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                            {data?.industry_kr || '조사중'}
+                          </Typography>
+                        </Box>
+                        <Box sx={{ p: 1.5, bgcolor: 'white', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            법인/개인
+                          </Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                            {data?.legal_type_kr || '조사중'}
+                          </Typography>
+                        </Box>
+                        <Box sx={{ p: 1.5, bgcolor: 'white', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            인원규모
+                          </Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                            {data?.company_size_kr || '조사중'}
+                          </Typography>
+                        </Box>
+                        <Box sx={{ p: 1.5, bgcolor: 'white', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            개업시간
+                          </Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                            {data?.established_date
+                              ? new Date(data.established_date).toLocaleDateString('ko-KR')
+                              : '조사중'}
+                          </Typography>
+                        </Box>
+                        <Box sx={{ p: 1.5, bgcolor: 'white', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            등록자본
+                          </Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                            {data?.registered_capital || '조사중'}
+                          </Typography>
+                        </Box>
+                        <Box sx={{ p: 1.5, bgcolor: 'white', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            실수등록자금
+                          </Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                            {data?.real_paid_capital || '조사중'}
+                          </Typography>
+                        </Box>
+                        <Box sx={{ p: 1.5, bgcolor: 'white', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            기업상태
+                          </Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                            {data?.company_status || '조사중'}
+                          </Typography>
+                        </Box>
+                        <Box sx={{ p: 1.5, bgcolor: 'white', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            소규모기업 여부
+                          </Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                            {data?.is_small_business !== undefined
+                              ? data.is_small_business
+                                ? '소규모기업'
+                                : '일반기업'
+                              : '조사중'}
+                          </Typography>
+                        </Box>
+                        <Box sx={{ p: 1.5, bgcolor: 'white', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            영업범위
+                          </Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                            {data?.business_scope_kr || '조사중'}
+                          </Typography>
+                        </Box>
+                      </Stack>
+                    ) : (
+                      // 데스크톱 테이블
+                      <Table>
+                        <TableBody>
                         {/* 기업 신용정보 */}
                         <TableRow>
                           <TableCell
@@ -742,6 +870,7 @@ export default function MarketResearchDetailPage() {
                         </TableRow>
                       </TableBody>
                     </Table>
+                    )}
                   </CardContent>
                 </BlankCard>
               </Stack>
@@ -756,7 +885,106 @@ export default function MarketResearchDetailPage() {
                     <Typography variant="h6" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
                       제품 정보
                     </Typography>
-                    <Table>
+                    {isMobile ? (
+                      // 모바일 레이아웃
+                      <Stack spacing={2}>
+                        <Typography variant="subtitle2" fontWeight="bold" color="primary" sx={{ mt: 2, mb: 1 }}>
+                          제품 기본정보
+                        </Typography>
+                        <Box sx={{ p: 1.5, bgcolor: 'grey.50', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            제품번호
+                          </Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                            {data?.product_code || '자동발급'}
+                          </Typography>
+                        </Box>
+                        <Box sx={{ p: 1.5, bgcolor: 'grey.50', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            견적수량
+                          </Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                            {data?.quoted_quantity?.toLocaleString() || '조사중'}개
+                          </Typography>
+                        </Box>
+                        <Box sx={{ p: 1.5, bgcolor: 'grey.50', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            박스당 제품개수
+                          </Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                            {data?.units_per_box || '조사중'}개
+                          </Typography>
+                        </Box>
+                        <Box sx={{ p: 1.5, bgcolor: 'grey.50', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            총 박스수
+                          </Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                            {data?.total_boxes || '자동계산'}박스
+                          </Typography>
+                        </Box>
+                        <Box sx={{ p: 1.5, bgcolor: 'grey.50', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            박스 사이즈
+                          </Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                            {data?.box_length && data?.box_width && data?.box_height
+                              ? `${data.box_length} × ${data.box_width} × ${data.box_height} cm`
+                              : '조사중'}
+                          </Typography>
+                        </Box>
+                        <Box sx={{ p: 1.5, bgcolor: 'grey.50', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            HS코드
+                          </Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                            {data?.hs_code || '조사중'}
+                          </Typography>
+                        </Box>
+                        <Box sx={{ p: 1.5, bgcolor: 'grey.50', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            인증필요여부
+                          </Typography>
+                          {data?.certification_required !== undefined ? (
+                            <Chip
+                              label={data.certification_required ? '인증 필요' : '인증 불필요'}
+                              color={data.certification_required ? 'error' : 'success'}
+                              size="small"
+                            />
+                          ) : (
+                            <Typography variant="body2" sx={{ fontWeight: 500 }}>API 조회중</Typography>
+                          )}
+                        </Box>
+                        
+                        <Typography variant="subtitle2" fontWeight="bold" color="secondary" sx={{ mt: 2, mb: 1 }}>
+                          샘플 정보
+                        </Typography>
+                        <Box sx={{ p: 1.5, bgcolor: 'grey.50', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            샘플재고 유무
+                          </Typography>
+                          {data?.sample_available !== undefined ? (
+                            <Chip
+                              label={data.sample_available ? '재고 있음' : '재고 없음'}
+                              color={data.sample_available ? 'success' : 'default'}
+                              size="small"
+                            />
+                          ) : (
+                            <Typography variant="body2" sx={{ fontWeight: 500 }}>조사중</Typography>
+                          )}
+                        </Box>
+                        <Box sx={{ p: 1.5, bgcolor: 'grey.50', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            샘플 주문 가능 수량
+                          </Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                            {data?.sample_order_quantity || '조사중'}개
+                          </Typography>
+                        </Box>
+                      </Stack>
+                    ) : (
+                      // 데스크톱 테이블
+                      <Table>
                       <TableBody>
                         {/* 제품 기본정보 섹션 */}
                         <TableRow>
@@ -774,7 +1002,12 @@ export default function MarketResearchDetailPage() {
                         <TableRow>
                           <TableCell
                             component="th"
-                            sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}
+                            sx={{ 
+                              fontWeight: 'bold', 
+                              width: { xs: '30%', md: '15%' }, 
+                              bgcolor: 'grey.50',
+                              fontSize: { xs: '0.75rem', sm: '0.875rem' }
+                            }}
                           >
                             제품번호
                           </TableCell>
@@ -783,7 +1016,12 @@ export default function MarketResearchDetailPage() {
                           </TableCell>
                           <TableCell
                             component="th"
-                            sx={{ fontWeight: 'bold', width: '15%', bgcolor: 'grey.50' }}
+                            sx={{ 
+                              fontWeight: 'bold', 
+                              width: { xs: '30%', md: '15%' }, 
+                              bgcolor: 'grey.50',
+                              fontSize: { xs: '0.75rem', sm: '0.875rem' }
+                            }}
                           >
                             견적수량
                           </TableCell>
@@ -792,17 +1030,17 @@ export default function MarketResearchDetailPage() {
                           </TableCell>
                         </TableRow>
                         <TableRow>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                          <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50', fontSize: { xs: '0.75rem', sm: '0.875rem' } }}>
                             박스당 제품개수
                           </TableCell>
                           <TableCell>{data?.units_per_box || '조사중'}개</TableCell>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                          <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50', fontSize: { xs: '0.75rem', sm: '0.875rem' } }}>
                             총 박스수
                           </TableCell>
                           <TableCell>{data?.total_boxes || '자동계산'}박스</TableCell>
                         </TableRow>
                         <TableRow>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                          <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50', fontSize: { xs: '0.75rem', sm: '0.875rem' } }}>
                             박스 사이즈
                           </TableCell>
                           <TableCell colSpan={3}>
@@ -812,11 +1050,11 @@ export default function MarketResearchDetailPage() {
                           </TableCell>
                         </TableRow>
                         <TableRow>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                          <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50', fontSize: { xs: '0.75rem', sm: '0.875rem' } }}>
                             HS코드
                           </TableCell>
                           <TableCell>{data?.hs_code || '조사중'}</TableCell>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                          <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50', fontSize: { xs: '0.75rem', sm: '0.875rem' } }}>
                             인증필요여부
                           </TableCell>
                           <TableCell>
@@ -832,17 +1070,17 @@ export default function MarketResearchDetailPage() {
                           </TableCell>
                         </TableRow>
                         <TableRow>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                          <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50', fontSize: { xs: '0.75rem', sm: '0.875rem' } }}>
                             소요시간
                           </TableCell>
                           <TableCell>{data?.work_duration || '조사중'}</TableCell>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                          <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50', fontSize: { xs: '0.75rem', sm: '0.875rem' } }}>
                             수출항
                           </TableCell>
                           <TableCell>{data?.export_port || '조사중'}</TableCell>
                         </TableRow>
                         <TableRow>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                          <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50', fontSize: { xs: '0.75rem', sm: '0.875rem' } }}>
                             기타사항
                           </TableCell>
                           <TableCell colSpan={3}>
@@ -865,7 +1103,7 @@ export default function MarketResearchDetailPage() {
                           </TableCell>
                         </TableRow>
                         <TableRow>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                          <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50', fontSize: { xs: '0.75rem', sm: '0.875rem' } }}>
                             샘플재고 유무
                           </TableCell>
                           <TableCell>
@@ -879,7 +1117,7 @@ export default function MarketResearchDetailPage() {
                               '조사중'
                             )}
                           </TableCell>
-                          <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50' }}>
+                          <TableCell component="th" sx={{ fontWeight: 'bold', bgcolor: 'grey.50', fontSize: { xs: '0.75rem', sm: '0.875rem' } }}>
                             샘플 주문 가능 수량
                           </TableCell>
                           <TableCell>
@@ -902,6 +1140,7 @@ export default function MarketResearchDetailPage() {
                         </TableRow>
                       </TableBody>
                     </Table>
+                    )}
                   </CardContent>
                 </BlankCard>
 
@@ -912,14 +1151,22 @@ export default function MarketResearchDetailPage() {
                       <Typography variant="h6" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
                         제품 실사 사진
                       </Typography>
-                      <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                      <Box sx={{ 
+                        display: 'grid',
+                        gridTemplateColumns: {
+                          xs: 'repeat(2, 1fr)',  // 모바일: 2열
+                          sm: 'repeat(3, 1fr)',  // 태블릿: 3열
+                          md: 'repeat(4, 1fr)',  // 데스크톱: 4열
+                        },
+                        gap: { xs: 1, sm: 2 }
+                      }}>
                         {data.product_actual_photos.map((photo: string, index: number) => (
                           <Box
                             key={index}
                             sx={{
                               position: 'relative',
-                              width: 150,
-                              height: 150,
+                              width: '100%',
+                              aspectRatio: '1/1',  // 정사각형 유지
                               border: '1px solid #ddd',
                               borderRadius: 1,
                               overflow: 'hidden',
@@ -974,16 +1221,58 @@ export default function MarketResearchDetailPage() {
                     <Typography variant="h6" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
                       기본 정보
                     </Typography>
-                    <Table sx={{ minWidth: { xs: 'auto', md: 700, lg: 900 } }}>
+                    {isMobile ? (
+                      // 모바일 레이아웃
+                      <Stack spacing={1.5}>
+                        <Box sx={{ p: 1.5, bgcolor: 'white', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            견적수량
+                          </Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                            {data?.quoted_quantity?.toLocaleString() || '조사중'}개
+                          </Typography>
+                        </Box>
+                        <Box sx={{ p: 1.5, bgcolor: 'white', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            중국단가
+                          </Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                            {data?.china_unit_price
+                              ? `¥${data.china_unit_price?.toLocaleString() || '0'}`
+                              : '조사중'}
+                          </Typography>
+                        </Box>
+                        <Box sx={{ p: 1.5, bgcolor: 'white', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            환율
+                          </Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                            {data?.exchange_rate ? `₩${data.exchange_rate.toFixed(2)}` : '조사중'}
+                          </Typography>
+                        </Box>
+                        <Box sx={{ p: 1.5, bgcolor: 'white', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            환율 산정일
+                          </Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                            {data?.exchange_rate_date
+                              ? new Date(data.exchange_rate_date).toLocaleDateString('ko-KR')
+                              : '조사중'}
+                          </Typography>
+                        </Box>
+                      </Stack>
+                    ) : (
+                      // 데스크톱 테이블
+                      <Table sx={{ minWidth: { xs: 'auto', md: 700, lg: 900 } }}>
                       <TableBody>
                         <TableRow>
                           <TableCell
                             component="th"
                             sx={{
                               fontWeight: 'bold',
-                              width: '20%',
+                              width: { xs: '35%', sm: '20%' },
                               bgcolor: 'grey.50',
-                              whiteSpace: 'nowrap',
+                              fontSize: { xs: '0.75rem', sm: '0.875rem' },
                             }}
                           >
                             견적수량
@@ -995,9 +1284,9 @@ export default function MarketResearchDetailPage() {
                             component="th"
                             sx={{
                               fontWeight: 'bold',
-                              width: '20%',
+                              width: { xs: '35%', sm: '20%' },
                               bgcolor: 'grey.50',
-                              whiteSpace: 'nowrap',
+                              fontSize: { xs: '0.75rem', sm: '0.875rem' },
                             }}
                           >
                             중국단가
@@ -1011,7 +1300,7 @@ export default function MarketResearchDetailPage() {
                         <TableRow>
                           <TableCell
                             component="th"
-                            sx={{ fontWeight: 'bold', bgcolor: 'grey.50', whiteSpace: 'nowrap' }}
+                            sx={{ fontWeight: 'bold', bgcolor: 'grey.50', fontSize: { xs: '0.75rem', sm: '0.875rem' } }}
                           >
                             환율
                           </TableCell>
@@ -1020,7 +1309,7 @@ export default function MarketResearchDetailPage() {
                           </TableCell>
                           <TableCell
                             component="th"
-                            sx={{ fontWeight: 'bold', bgcolor: 'grey.50', whiteSpace: 'nowrap' }}
+                            sx={{ fontWeight: 'bold', bgcolor: 'grey.50', fontSize: { xs: '0.75rem', sm: '0.875rem' } }}
                           >
                             환율 산정일
                           </TableCell>
@@ -1032,6 +1321,7 @@ export default function MarketResearchDetailPage() {
                         </TableRow>
                       </TableBody>
                     </Table>
+                    )}
                   </CardContent>
                 </BlankCard>
 
@@ -1041,16 +1331,62 @@ export default function MarketResearchDetailPage() {
                     <Typography variant="h6" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
                       1차 결제 정보
                     </Typography>
-                    <Table sx={{ minWidth: { xs: 'auto', md: 700, lg: 900 } }}>
+                    {isMobile ? (
+                      // 모바일 레이아웃
+                      <Stack spacing={1.5}>
+                        <Box sx={{ p: 1.5, bgcolor: 'white', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            EXW 합계
+                          </Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                            {data?.exw_total
+                              ? `₩${data.exw_total?.toLocaleString() || '0'}`
+                              : '조사중'}
+                          </Typography>
+                        </Box>
+                        <Box sx={{ p: 1.5, bgcolor: 'white', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            중국 운송료
+                          </Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                            {data?.china_shipping_fee
+                              ? `¥${data.china_shipping_fee?.toLocaleString() || '0'}`
+                              : '조사중'}
+                          </Typography>
+                        </Box>
+                        <Box sx={{ p: 1.5, bgcolor: 'white', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            수수료
+                          </Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                            {data?.commission_amount
+                              ? `₩${data.commission_amount?.toLocaleString() || '0'} (${data?.commission_rate || 5}%)`
+                              : '조사중'}
+                          </Typography>
+                        </Box>
+                        <Box sx={{ p: 1.5, bgcolor: 'primary.lighter', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            1차 결제비용
+                          </Typography>
+                          <Typography variant="h6" color="primary">
+                            {data?.first_payment_amount
+                              ? `₩${data.first_payment_amount?.toLocaleString() || '0'}`
+                              : '조사중'}
+                          </Typography>
+                        </Box>
+                      </Stack>
+                    ) : (
+                      // 데스크톱 테이블
+                      <Table sx={{ minWidth: { xs: 'auto', md: 700, lg: 900 } }}>
                       <TableBody>
                         <TableRow>
                           <TableCell
                             component="th"
                             sx={{
                               fontWeight: 'bold',
-                              width: '20%',
+                              width: { xs: '35%', sm: '20%' },
                               bgcolor: 'grey.50',
-                              whiteSpace: 'nowrap',
+                              fontSize: { xs: '0.75rem', sm: '0.875rem' },
                             }}
                           >
                             EXW 합계
@@ -1064,9 +1400,9 @@ export default function MarketResearchDetailPage() {
                             component="th"
                             sx={{
                               fontWeight: 'bold',
-                              width: '20%',
+                              width: { xs: '35%', sm: '20%' },
                               bgcolor: 'grey.50',
-                              whiteSpace: 'nowrap',
+                              fontSize: { xs: '0.75rem', sm: '0.875rem' },
                             }}
                           >
                             중국 운송료
@@ -1080,7 +1416,7 @@ export default function MarketResearchDetailPage() {
                         <TableRow>
                           <TableCell
                             component="th"
-                            sx={{ fontWeight: 'bold', bgcolor: 'grey.50', whiteSpace: 'nowrap' }}
+                            sx={{ fontWeight: 'bold', bgcolor: 'grey.50', fontSize: { xs: '0.75rem', sm: '0.875rem' } }}
                           >
                             수수료
                           </TableCell>
@@ -1091,7 +1427,7 @@ export default function MarketResearchDetailPage() {
                           </TableCell>
                           <TableCell
                             component="th"
-                            sx={{ fontWeight: 'bold', bgcolor: 'grey.50', whiteSpace: 'nowrap' }}
+                            sx={{ fontWeight: 'bold', bgcolor: 'grey.50', fontSize: { xs: '0.75rem', sm: '0.875rem' } }}
                           >
                             1차 결제비용
                           </TableCell>
@@ -1105,6 +1441,7 @@ export default function MarketResearchDetailPage() {
                         </TableRow>
                       </TableBody>
                     </Table>
+                    )}
                   </CardContent>
                 </BlankCard>
 
@@ -1114,16 +1451,72 @@ export default function MarketResearchDetailPage() {
                     <Typography variant="h6" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
                       2차 결제 정보 (예측값)
                     </Typography>
-                    <Table sx={{ minWidth: { xs: 'auto', md: 700, lg: 900 } }}>
+                    {isMobile ? (
+                      // 모바일 레이아웃
+                      <Stack spacing={1.5}>
+                        <Box sx={{ p: 1.5, bgcolor: 'white', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            관세
+                          </Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                            {data?.tariff_amount
+                              ? `₩${data.tariff_amount?.toLocaleString() || '0'}`
+                              : '조사중'}
+                          </Typography>
+                        </Box>
+                        <Box sx={{ p: 1.5, bgcolor: 'white', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            부가세
+                          </Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                            {data?.vat_amount
+                              ? `₩${data.vat_amount?.toLocaleString() || '0'}`
+                              : '조사중'}
+                          </Typography>
+                        </Box>
+                        <Box sx={{ p: 1.5, bgcolor: 'white', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            한국 통관료
+                          </Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                            {data?.korea_clearance_fee
+                              ? `₩${data.korea_clearance_fee?.toLocaleString() || '0'}`
+                              : '조사중'}
+                          </Typography>
+                        </Box>
+                        <Box sx={{ p: 1.5, bgcolor: 'white', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            한국 배송료
+                          </Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                            {data?.korea_shipping_fee
+                              ? `₩${data.korea_shipping_fee?.toLocaleString() || '0'}`
+                              : '조사중'}
+                          </Typography>
+                        </Box>
+                        <Box sx={{ p: 1.5, bgcolor: 'warning.light', borderRadius: 1 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            2차 결제비용
+                          </Typography>
+                          <Typography variant="h6" color="warning.dark">
+                            {data?.second_payment_amount
+                              ? `₩${data.second_payment_amount?.toLocaleString() || '0'}`
+                              : '조사중'}
+                          </Typography>
+                        </Box>
+                      </Stack>
+                    ) : (
+                      // 데스크톱 테이블
+                      <Table sx={{ minWidth: { xs: 'auto', md: 700, lg: 900 } }}>
                       <TableBody>
                         <TableRow>
                           <TableCell
                             component="th"
                             sx={{
                               fontWeight: 'bold',
-                              width: '20%',
+                              width: { xs: '35%', sm: '20%' },
                               bgcolor: 'grey.50',
-                              whiteSpace: 'nowrap',
+                              fontSize: { xs: '0.75rem', sm: '0.875rem' },
                             }}
                           >
                             총 CBM
@@ -1135,9 +1528,9 @@ export default function MarketResearchDetailPage() {
                             component="th"
                             sx={{
                               fontWeight: 'bold',
-                              width: '20%',
+                              width: { xs: '35%', sm: '20%' },
                               bgcolor: 'grey.50',
-                              whiteSpace: 'nowrap',
+                              fontSize: { xs: '0.75rem', sm: '0.875rem' },
                             }}
                           >
                             운송방식
@@ -1151,9 +1544,9 @@ export default function MarketResearchDetailPage() {
                             component="th"
                             sx={{
                               fontWeight: 'bold',
-                              width: '20%',
+                              width: { xs: '35%', sm: '20%' },
                               bgcolor: 'grey.50',
-                              whiteSpace: 'nowrap',
+                              fontSize: { xs: '0.75rem', sm: '0.875rem' },
                             }}
                           >
                             LCL 운송비
@@ -1167,9 +1560,9 @@ export default function MarketResearchDetailPage() {
                             component="th"
                             sx={{
                               fontWeight: 'bold',
-                              width: '20%',
+                              width: { xs: '35%', sm: '20%' },
                               bgcolor: 'grey.50',
-                              whiteSpace: 'nowrap',
+                              fontSize: { xs: '0.75rem', sm: '0.875rem' },
                             }}
                           >
                             FCL 운송비
@@ -1183,7 +1576,7 @@ export default function MarketResearchDetailPage() {
                         <TableRow>
                           <TableCell
                             component="th"
-                            sx={{ fontWeight: 'bold', bgcolor: 'grey.50', whiteSpace: 'nowrap' }}
+                            sx={{ fontWeight: 'bold', bgcolor: 'grey.50', fontSize: { xs: '0.75rem', sm: '0.875rem' } }}
                           >
                             관세
                           </TableCell>
@@ -1194,7 +1587,7 @@ export default function MarketResearchDetailPage() {
                           </TableCell>
                           <TableCell
                             component="th"
-                            sx={{ fontWeight: 'bold', bgcolor: 'grey.50', whiteSpace: 'nowrap' }}
+                            sx={{ fontWeight: 'bold', bgcolor: 'grey.50', fontSize: { xs: '0.75rem', sm: '0.875rem' } }}
                           >
                             수입 부가세
                           </TableCell>
@@ -1207,7 +1600,7 @@ export default function MarketResearchDetailPage() {
                         <TableRow>
                           <TableCell
                             component="th"
-                            sx={{ fontWeight: 'bold', bgcolor: 'grey.50', whiteSpace: 'nowrap' }}
+                            sx={{ fontWeight: 'bold', bgcolor: 'grey.50', fontSize: { xs: '0.75rem', sm: '0.875rem' } }}
                           >
                             관세사 비용
                           </TableCell>
@@ -1218,7 +1611,7 @@ export default function MarketResearchDetailPage() {
                           </TableCell>
                           <TableCell
                             component="th"
-                            sx={{ fontWeight: 'bold', bgcolor: 'grey.50', whiteSpace: 'nowrap' }}
+                            sx={{ fontWeight: 'bold', bgcolor: 'grey.50', fontSize: { xs: '0.75rem', sm: '0.875rem' } }}
                           >
                             원산지 증명서
                           </TableCell>
@@ -1242,6 +1635,7 @@ export default function MarketResearchDetailPage() {
                         </TableRow>
                       </TableBody>
                     </Table>
+                  )}
                   </CardContent>
                 </BlankCard>
 

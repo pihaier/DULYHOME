@@ -1,5 +1,5 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+// import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'; // 불필요 - 제거
 import { crypto } from 'https://deno.land/std@0.224.0/crypto/mod.ts';
 
 const corsHeaders = {
@@ -13,8 +13,8 @@ const DAJI_APP_KEY = Deno.env.get('DAJI_APP_KEY')!;
 const DAJI_APP_SECRET = Deno.env.get('DAJI_APP_SECRET')!;
 const API_BASE_URL = 'https://openapi.dajisaas.com';
 
-const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+// const supabaseUrl = Deno.env.get('SUPABASE_URL')!; // 불필요 - 제거
+// const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!; // 불필요 - 제거
 
 // MD5 Sign 생성 (API 문서의 규칙에 따라)
 async function generateSign(params: Record<string, any>, appSecret: string): Promise<string> {
@@ -56,7 +56,7 @@ Deno.serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { offerId, country = 'ko', outMemberId } = body;
+    const { offerId, country = 'ko', outMemberId } = body;  // 기본값을 'ko'로 복원
 
     if (!offerId) {
       return new Response(
@@ -82,12 +82,18 @@ Deno.serve(async (req) => {
 
     // Sign 생성
     params.sign = await generateSign(params, DAJI_APP_SECRET);
+    
+    // 디버깅: country 파라미터 확인
+    console.log('🔍 Country parameter:', country);
+    console.log('🔍 Params before API call:', JSON.stringify(params));
 
     // API 호출
     const queryString = new URLSearchParams(params).toString();
     const apiUrl = `${API_BASE_URL}/alibaba/product/queryProductDetail?${queryString}`;
 
     console.log('🔍 Getting product detail:', { offerId, country });
+    console.log('📤 Full API URL:', apiUrl);
+    console.log('📋 Request params:', params);
 
     const response = await fetch(apiUrl, {
       method: 'GET',
@@ -106,7 +112,11 @@ Deno.serve(async (req) => {
       throw new Error(result.message || 'API 오류가 발생했습니다.');
     }
 
-    // 데이터 변환 (API 응답 구조 그대로 유지)
+    // API 응답 로그 (디버깅용)
+    console.log('📥 API Response (first attribute):', result.data?.productAttribute?.[0]);
+    console.log('📥 API Response country param:', country);
+
+    // 데이터 변환 (API 응답 구조 그대로 유지 + 누락된 필드 추가)
     const product = result.data;
     const transformedData = {
       // 기본 정보
@@ -129,8 +139,11 @@ Deno.serve(async (req) => {
       detailVideo: product.detailVideo,
       productImage: product.productImage, // images 배열 포함
       
-      // 상품 속성
-      productAttribute: product.productAttribute,
+      // 상품 속성 (productAttributes와 productAttribute 둘 다 체크)
+      productAttribute: product.productAttribute || product.productAttributes,
+      productAttributes: product.productAttributes || product.productAttribute,
+      productFeatureList: product.productFeatureList || [],
+      productExtends: product.productExtends || [],
       
       // SKU 정보
       productSkuInfos: product.productSkuInfos,
@@ -138,13 +151,33 @@ Deno.serve(async (req) => {
       // 판매 정보
       productSaleInfo: product.productSaleInfo,
       
-      // 배송 정보
+      // 배송 정보  
       productShippingInfo: product.productShippingInfo,
       
-      // 판매자 정보
+      // 판매자/공급업체 정보 (여러 필드명 체크)
       sellerOpenId: product.sellerOpenId,
       sellerDataInfo: product.sellerDataInfo,
       sellerMixSetting: product.sellerMixSetting,
+      supplierInfo: product.supplierInfo || product.companyInfo || {
+        companyName: product.companyName,
+        name: product.supplierName,
+        tpYear: product.tpYear,
+        isTP: product.isTP,
+        isTradeSafeSupplier: product.isTradeSafeSupplier,
+        address: product.companyAddress
+      },
+      companyInfo: product.companyInfo || product.supplierInfo,
+      
+      // 평가 정보 (누락된 중요 필드)
+      evaluationInfo: product.evaluationInfo || {
+        totalSoldQuantity: product.totalSoldQuantity || product.soldOut,
+        monthSoldQuantity: product.monthSoldQuantity || product.saleCount30Days,
+        repeatRate: product.repeatRate || product.sellerDataInfo?.repeatPurchasePercent,
+        totalBuyers: product.totalBuyers,
+        starLevel: product.starLevel || product.sellerDataInfo?.compositeServiceScore,
+        transactionLevel: product.transactionLevel,
+        responseTime: product.responseTime
+      },
       
       // 상품 상태
       status: product.status,
@@ -167,17 +200,12 @@ Deno.serve(async (req) => {
       offerIdentities: product.offerIdentities,
       createDate: product.createDate,
       traceInfo: product.traceInfo,
+      
+      // 맞춤제작 정보
+      customizationInfo: product.customizationInfo || product.isCustomizable
     };
 
-    // Supabase에 조회 기록 저장 (선택사항)
-    const supabase = createClient(supabaseUrl, supabaseServiceKey);
-    await supabase
-      .from('product_view_history')
-      .insert({
-        offer_id: offerId,
-        product_data: transformedData,
-        created_at: new Date().toISOString(),
-      });
+    // 조회 기록 저장 제거 - 불필요한 기능
 
     return new Response(
       JSON.stringify({

@@ -42,6 +42,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { createClient } from '@/lib/supabase/client';
 import { useUser } from '@/lib/context/GlobalContext';
 import ConstructionIcon from '@mui/icons-material/Construction';
+import TextareaAutosize from '@mui/material/TextareaAutosize';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
 
 interface CartItem {
   id: string;
@@ -83,6 +86,9 @@ export default function CartPage() {
   const [editingItem, setEditingItem] = useState<CartItem | null>(null);
   const [editQuantity, setEditQuantity] = useState(1);
   const [editMemo, setEditMemo] = useState('');
+  const [quoteDialog, setQuoteDialog] = useState(false);
+  const [quoteRequirements, setQuoteRequirements] = useState('');
+  const [shippingMethod, setShippingMethod] = useState('sea');
   const { user } = useUser();
   const supabase = createClient();
 
@@ -216,6 +222,93 @@ export default function CartPage() {
   const calculateTotal = () => {
     const selectedCartItems = cartItems.filter((item) => selectedItems.includes(item.id));
     return selectedCartItems.reduce((sum, item) => sum + (item.first_payment || 0), 0);
+  };
+
+  // 견적 요청 다이얼로그 열기
+  const handleQuoteRequest = () => {
+    if (selectedItems.length === 0) {
+      alert('견적을 요청할 상품을 선택해주세요.');
+      return;
+    }
+    setQuoteDialog(true);
+  };
+
+  // 견적 요청 제출
+  const submitQuoteRequest = async () => {
+    try {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (!session?.user?.id) {
+        alert('로그인이 필요합니다.');
+        return;
+      }
+
+      // 선택된 상품들 가져오기
+      const selectedCartItems = cartItems.filter((item) => selectedItems.includes(item.id));
+      
+      // 예약 번호 생성 (QR-YYYYMMDD-XXXXXX)
+      const date = new Date();
+      const dateStr = date.toISOString().slice(0, 10).replace(/-/g, '');
+      const random = Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
+      const reservationNumber = `QR-${dateStr}-${random}`;
+
+      // 견적 요청 데이터 생성
+      const quoteData = {
+        reservation_number: reservationNumber,
+        user_id: session.user.id,
+        items: selectedCartItems.map(item => ({
+          cart_item_id: item.id,
+          offer_id: item.offer_id,
+          sku_id: item.sku_id,
+          product_name: item.product_name,
+          product_image: item.product_image,
+          quantity: item.quantity,
+          china_price: item.china_price,
+          selected_attributes: item.selected_attributes,
+          memo: item.memo,
+        })),
+        requirements: quoteRequirements,
+        shipping_method: shippingMethod,
+        total_amount: calculateTotal(),
+        status: 'requested',
+        created_at: new Date().toISOString(),
+      };
+
+      // quote_requests_1688 테이블에 저장
+      const { error } = await supabase
+        .from('quote_requests_1688')
+        .insert(quoteData);
+
+      if (error) {
+        console.error('Quote request error:', error);
+        alert('견적 요청에 실패했습니다. 다시 시도해주세요.');
+        return;
+      }
+
+      // 선택된 상품들의 상태를 'quoted'로 업데이트
+      const { error: updateError } = await supabase
+        .from('cart_items_1688')
+        .update({ status: 'quoted' })
+        .in('id', selectedItems);
+
+      if (updateError) {
+        console.error('Cart update error:', updateError);
+      }
+
+      alert(`견적 요청이 완료되었습니다.\n예약번호: ${reservationNumber}`);
+      setQuoteDialog(false);
+      setSelectedItems([]);
+      setQuoteRequirements('');
+      
+      // 장바구니 새로고침
+      await fetchCartItems();
+      
+    } catch (error) {
+      console.error('Failed to submit quote request:', error);
+      alert('견적 요청 중 오류가 발생했습니다.');
+    }
   };
 
   if (loading) {
@@ -440,8 +533,9 @@ export default function CartPage() {
                           fullWidth
                           startIcon={<LocalShippingIcon />}
                           disabled={selectedItems.length === 0}
+                          onClick={() => handleQuoteRequest()}
                         >
-                          선택 상품 주문하기
+                          견적 요청하기
                         </Button>
                       </Box>
                     </Grid>
@@ -544,6 +638,59 @@ export default function CartPage() {
               <Button onClick={() => setEditDialog(false)}>취소</Button>
               <Button onClick={handleSaveEdit} variant="contained">
                 저장
+              </Button>
+            </DialogActions>
+          </Dialog>
+
+          {/* 견적 요청 다이얼로그 */}
+          <Dialog open={quoteDialog} onClose={() => setQuoteDialog(false)} maxWidth="md" fullWidth>
+            <DialogTitle>견적 요청</DialogTitle>
+            <DialogContent>
+              <Box sx={{ pt: 2 }}>
+                {/* 선택된 상품 요약 */}
+                <Alert severity="info" sx={{ mb: 3 }}>
+                  선택한 {selectedItems.length}개 상품에 대한 견적을 요청합니다.
+                  <br />
+                  예상 금액: ₩{calculateTotal().toLocaleString()}
+                </Alert>
+
+                {/* 배송 방법 선택 */}
+                <Typography variant="subtitle1" gutterBottom>
+                  배송 방법
+                </Typography>
+                <RadioGroup
+                  value={shippingMethod}
+                  onChange={(e) => setShippingMethod(e.target.value)}
+                  row
+                  sx={{ mb: 3 }}
+                >
+                  <FormControlLabel value="sea" control={<Radio />} label="해운 (20-30일)" />
+                  <FormControlLabel value="air" control={<Radio />} label="항공 (7-10일)" />
+                  <FormControlLabel value="express" control={<Radio />} label="특송 (3-5일)" />
+                </RadioGroup>
+
+                {/* 추가 요청사항 */}
+                <Typography variant="subtitle1" gutterBottom>
+                  추가 요청사항
+                </Typography>
+                <TextField
+                  value={quoteRequirements}
+                  onChange={(e) => setQuoteRequirements(e.target.value)}
+                  multiline
+                  rows={4}
+                  fullWidth
+                  placeholder="예: 샘플 먼저 받아보고 싶습니다 / 불량품 검사 필요 / 한국어 라벨 부착 / 고급 포장 요청 / 제품 사진 촬영 / 긴급 배송 필요 등"
+                />
+
+                <Alert severity="warning" sx={{ mt: 3 }}>
+                  견적 요청 후 담당자가 24시간 이내에 연락드립니다.
+                </Alert>
+              </Box>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => setQuoteDialog(false)}>취소</Button>
+              <Button onClick={submitQuoteRequest} variant="contained">
+                견적 요청 제출
               </Button>
             </DialogActions>
           </Dialog>

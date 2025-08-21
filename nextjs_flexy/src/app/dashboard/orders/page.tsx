@@ -130,7 +130,7 @@ export default function OrdersListPage() {
             ...order,
             quantity: order.research_quantity,
             service_type: 'market_research' as const,
-            payment_status: 'pending', // market_research는 payment_status 필드가 없으므로 기본값 사용
+            payment_status: 'not_required', // 시장조사는 결제가 필요 없음
           }))
         );
       }
@@ -240,13 +240,16 @@ export default function OrdersListPage() {
     if (statusFilter !== 'all') {
       switch (statusFilter) {
         case 'pending_payment':
-          filtered = filtered.filter((order) => order.payment_status === 'pending');
+          // 시장조사는 결제가 필요 없으므로 제외
+          filtered = filtered.filter(
+            (order) => order.payment_status === 'pending' && order.service_type !== 'market_research'
+          );
           break;
         case 'in_progress':
           filtered = filtered.filter(
             (order) =>
               order.status === 'in_progress' ||
-              (order.status === 'submitted' && order.payment_status === 'paid')
+              (order.status === 'submitted' && (order.payment_status === 'paid' || order.payment_status === 'not_required'))
           );
           break;
         case 'completed':

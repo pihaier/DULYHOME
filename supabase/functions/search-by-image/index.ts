@@ -1,4 +1,4 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+/// <reference types="https://esm.sh/@supabase/functions-js/edge-runtime.d.ts" />
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { crypto } from 'https://deno.land/std@0.224.0/crypto/mod.ts';
 
@@ -55,6 +55,10 @@ Deno.serve(async (req) => {
 
   try {
     const body = await req.json();
+    
+    // 디버깅: 요청 본문 로그
+    console.log('📥 Request body:', JSON.stringify(body));
+    
     const {
       imageId,
       imageAddress,  // 1688 이미지 링크로 검색
@@ -103,8 +107,9 @@ Deno.serve(async (req) => {
     };
 
     // imageId 또는 imageAddress 추가
+    // 1688 API는 imageUrl 파라미터를 기대함 (에러 메시지: imageUrl或imageId参数不能同时为空)
     if (imageId) params.imageId = imageId;
-    if (imageAddress) params.imageAddress = imageAddress;
+    if (imageAddress) params.imageUrl = imageAddress;  // imageAddress를 imageUrl로 매핑
 
     // 선택 파라미터 추가
     if (region) params.region = region;
@@ -124,7 +129,13 @@ Deno.serve(async (req) => {
     const queryString = new URLSearchParams(params).toString();
     const apiUrl = `${API_BASE_URL}/alibaba/product/imageQuery?${queryString}`;
 
-    console.log('🔍 Searching by image:', { imageId, page, pageSize });
+    console.log('🔍 Searching by image:', { 
+      imageId, 
+      page, 
+      pageSize,
+      apiUrl: apiUrl.substring(0, 100) + '...', // URL 일부만 로그
+      paramsCount: Object.keys(params).length 
+    });
 
     const response = await fetch(apiUrl, {
       method: 'GET',
@@ -134,12 +145,18 @@ Deno.serve(async (req) => {
     });
 
     if (!response.ok) {
-      throw new Error(`API request failed: ${response.status}`);
+      const errorText = await response.text();
+      console.error('❌ API Error Response:', errorText);
+      throw new Error(`API request failed: ${response.status} - ${errorText}`);
     }
 
     const result = await response.json();
+    
+    // API 응답 로그
+    console.log('📤 API Response code:', result.code);
 
     if (result.code !== 200) {
+      console.error('❌ API Error:', result.message);
       throw new Error(result.message || '이미지 검색 실패');
     }
 
@@ -150,16 +167,17 @@ Deno.serve(async (req) => {
       pageSize: result.data.pageSize,
       currentPage: result.data.currentPage,
       products: result.data.data.map((product: any) => ({
-        // 기본 정보
+        // 기본 정보 - api리턴값.md와 동일한 구조
         id: product.offerId,
-        title: product.subject,
-        titleTranslated: product.subjectTrans,
+        offerId: product.offerId,
+        subject: product.subject,  // subject 필드 사용
+        subjectTrans: product.subjectTrans,  // subjectTrans 필드 사용
         imageUrl: product.imageUrl,
         
         // 가격 정보
-        price: {
-          wholesale: product.priceInfo.price,
-          consignment: product.priceInfo.consignPrice,
+        priceInfo: {
+          price: product.priceInfo.price,
+          consignPrice: product.priceInfo.consignPrice,
           jxhyPrice: product.priceInfo.jxhyPrice,
           pfJxhyPrice: product.priceInfo.pfJxhyPrice,
         },
@@ -206,10 +224,16 @@ Deno.serve(async (req) => {
 
   } catch (error) {
     console.error('Image search error:', error);
+    console.error('Error stack:', error.stack);
     return new Response(
       JSON.stringify({
         success: false,
         error: error.message || '이미지 검색 중 오류가 발생했습니다.',
+        details: {
+          message: error.message,
+          stack: error.stack,
+          type: error.constructor.name
+        }
       }),
       {
         status: 500,
