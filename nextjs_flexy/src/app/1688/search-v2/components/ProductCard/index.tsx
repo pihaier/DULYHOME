@@ -1,9 +1,10 @@
 'use client';
 
 import React, { memo } from 'react';
-import { Card, CardContent, CardMedia, Typography, Box, Chip, Button, IconButton, Tooltip } from '@mui/material';
+import { Card, CardContent, Typography, Box, Chip, Button, IconButton, Tooltip } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { ImageSearch as ImageSearchIcon } from '@mui/icons-material';
+import Image from 'next/image';
 import type { Product1688 } from '../../types';
 
 interface ProductCardProps {
@@ -71,13 +72,13 @@ function ProductCard({ product, onDetailClick, onInquiryClick, onFindSimilar }: 
       }}
       onClick={handleDetailClick}
     >
-      <Box sx={{ position: 'relative' }}>
-        <CardMedia
-          component="img"
-          height="200"
-          image={product.imageUrl}
+      <Box sx={{ position: 'relative', height: 200 }}>
+        <Image
+          src={product.imageUrl}
           alt={product.subjectTrans || product.subject}
-          sx={{ objectFit: 'cover' }}
+          fill
+          style={{ objectFit: 'cover' }}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
         <Tooltip title="유사 상품 찾기">
           <IconButton

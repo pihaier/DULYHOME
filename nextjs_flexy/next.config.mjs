@@ -2,7 +2,20 @@
 const nextConfig = {
     reactStrictMode: true,
     images: { 
-        domains: ['localhost', 'nextjsflexy-khjoascxz-doohos-projects.vercel.app'],
+        domains: [
+            'localhost', 
+            'nextjsflexy-khjoascxz-doohos-projects.vercel.app',
+            'cbu01.alicdn.com',
+            'cbu02.alicdn.com',
+            'cbu03.alicdn.com',
+            'cbu04.alicdn.com',
+            'img.alicdn.com',
+            'gw.alicdn.com',
+            'i01.c.aliimg.com',
+            'i02.c.aliimg.com',
+            'i03.c.aliimg.com',
+            'i04.c.aliimg.com'
+        ],
         formats: ['image/avif', 'image/webp'],
     },
     // Vercel-Supabase Integration 환경변수 매핑
