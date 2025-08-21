@@ -324,3 +324,55 @@ export async function translateProductDescription({
     throw error;
   }
 }
+
+// 9. 상점 상품 검색 (sellerOpenId로 특정 판매자의 상품 목록 조회)
+export async function searchShopProducts({
+  sellerOpenId,
+  keyword,
+  page = 1,
+  pageSize = 20,
+  sort,
+  filter,
+  priceStart,
+  priceEnd,
+  categoryId,
+}: {
+  sellerOpenId: string;  // 필수: 판매자 ID
+  keyword?: string;       // 선택: 상점 내 검색어
+  page?: number;
+  pageSize?: number;
+  sort?: string;
+  filter?: string;
+  priceStart?: string;
+  priceEnd?: string;
+  categoryId?: number;
+}) {
+  try {
+    const functionsClient = getEdgeFunctionsClient();
+    
+    const { data, error } = await functionsClient.invoke('search-shop-products', {
+      body: {
+        sellerOpenId,
+        keyword,
+        beginPage: page,
+        pageSize,
+        sort,
+        filter,
+        priceStart,
+        priceEnd,
+        categoryId,
+        country: 'ko',  // 한국어로 번역된 결과 받기
+      },
+    });
+    
+    if (error) {
+      console.error('Shop search error:', error);
+      throw new Error(error.message || '상점 검색 중 오류가 발생했습니다.');
+    }
+    
+    return data;
+  } catch (error) {
+    console.error('Error searching shop products:', error);
+    throw error;
+  }
+}

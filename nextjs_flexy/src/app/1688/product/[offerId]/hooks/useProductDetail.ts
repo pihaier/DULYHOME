@@ -116,11 +116,23 @@ export function useProductDetail(offerId: string) {
 
       console.log('Translation result:', result);
 
-      if (result.success && result.translatedText) {
-        setTranslatedDescription(result.translatedText);
+      // Edge Function에서 직접 번역된 텍스트를 반환하는 경우
+      if (result) {
+        if (typeof result === 'string') {
+          // 직접 문자열로 반환하는 경우
+          setTranslatedDescription(result);
+        } else if (result.translatedText) {
+          // translatedText 필드가 있는 경우
+          setTranslatedDescription(result.translatedText);
+        } else if (result.success && result.translatedText) {
+          // success 플래그와 함께 반환하는 경우
+          setTranslatedDescription(result.translatedText);
+        } else {
+          console.error('Unexpected translation result format:', result);
+          throw new Error('Translation result format error');
+        }
       } else {
-        console.error('Translation failed:', result.error);
-        throw new Error(result.error || 'Translation failed');
+        throw new Error('No translation result received');
       }
     } catch (error) {
       console.error('Failed to translate description:', error);

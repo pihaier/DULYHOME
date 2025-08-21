@@ -12,9 +12,10 @@ import ShieldIcon from '@mui/icons-material/Shield';
 
 interface SupplierInfoProps {
   productDetail: any;
+  onViewOtherProducts?: () => void;
 }
 
-export default function SupplierInfo({ productDetail }: SupplierInfoProps) {
+export default function SupplierInfo({ productDetail, onViewOtherProducts }: SupplierInfoProps) {
   // API 실제 필드명에 맞게 수정
   const sellerData = productDetail?.sellerDataInfo || {};
   const sellerMixSetting = productDetail?.sellerMixSetting || {};
@@ -219,14 +220,24 @@ export default function SupplierInfo({ productDetail }: SupplierInfoProps) {
         </Grid>
       </Grid>
 
-      <Box sx={{ mt: 3, display: 'flex', gap: 2 }}>
-        <Button variant="outlined" size="small">
-          업체 문의
-        </Button>
-        <Button variant="outlined" size="small">
-          다른 상품 보기
-        </Button>
-      </Box>
+      {onViewOtherProducts && (
+        <Box sx={{ mt: 3 }}>
+          <Button 
+            variant="contained" 
+            size="large"
+            onClick={onViewOtherProducts}
+            fullWidth
+            sx={{ 
+              background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+              boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+              color: 'white',
+              fontWeight: 'bold'
+            }}
+          >
+            판매자의 다른 상품 보기
+          </Button>
+        </Box>
+      )}
     </Paper>
   );
 }

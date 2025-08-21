@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { useParams } from 'next/navigation';
 import { Box, Container, Alert, CircularProgress, Typography, Snackbar, Modal, Fade, Backdrop, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
@@ -17,6 +17,7 @@ import SkuSelector from './components/SkuSelector';
 import ProductTabs from './components/ProductTabs';
 import AddToCartDialog from './components/AddToCartDialog';
 import SupplierInfo from './components/SupplierInfo';
+import ShopProductsSection from './components/shop/ShopProductsSection';
 
 // hooks
 import { useProductDetail } from './hooks/useProductDetail';
@@ -25,6 +26,9 @@ import { useCart } from './hooks/useCart';
 export default function ProductDetailPage() {
   const params = useParams();
   const offerId = params.offerId as string;
+  
+  // Ref for scrolling to shop products section
+  const shopProductsRef = useRef<HTMLDivElement>(null);
 
   // Custom hooks 사용
   const { 
@@ -48,6 +52,14 @@ export default function ProductDetailPage() {
   // 상태 관리
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
+  
+  // 다른 상품 보기 스크롤 함수
+  const handleViewOtherProducts = () => {
+    shopProductsRef.current?.scrollIntoView({ 
+      behavior: 'smooth', 
+      block: 'start' 
+    });
+  };
   const [selectedSku, setSelectedSku] = useState<any>(null);
   const [selectedAttributes, setSelectedAttributes] = useState<{ [key: string]: string }>({});
   const [calculatorOpen, setCalculatorOpen] = useState(false);
@@ -370,7 +382,10 @@ export default function ProductDetailPage() {
 
           {/* 공급업체 정보 */}
           <Box sx={{ mt: 3 }}>
-            <SupplierInfo productDetail={productDetail} />
+            <SupplierInfo 
+              productDetail={productDetail} 
+              onViewOtherProducts={productDetail?.sellerOpenId ? handleViewOtherProducts : undefined}
+            />
           </Box>
 
           {/* 상품 상세 탭 */}
@@ -385,6 +400,17 @@ export default function ProductDetailPage() {
               onTranslateImage={handleTranslateImage}
             />
           </Box>
+
+          {/* 판매자의 다른 상품들 */}
+          {productDetail?.sellerOpenId && (
+            <Box ref={shopProductsRef} sx={{ mt: 3 }}>
+              <ShopProductsSection
+                sellerOpenId={productDetail.sellerOpenId}
+                currentProductId={offerId}
+                sellerName={productDetail.sellerName || productDetail.sellerLoginId}
+              />
+            </Box>
+          )}
       </Container>
 
       {/* 가격 계산기 모달 */}
