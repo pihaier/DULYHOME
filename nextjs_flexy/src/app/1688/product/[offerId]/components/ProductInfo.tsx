@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, Suspense } from 'react';
+import React, { useState, Suspense, useEffect } from 'react';
 import {
   Box,
   Typography,
@@ -16,7 +16,9 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
+  DialogActions,
   CircularProgress,
+  Drawer,
 } from '@mui/material';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
@@ -33,6 +35,7 @@ import ChatIcon from '@mui/icons-material/Chat';
 import BrushIcon from '@mui/icons-material/Brush';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import ImageSearchIcon from '@mui/icons-material/ImageSearch';
+import CloseIcon from '@mui/icons-material/Close';
 
 interface ProductInfoProps {
   productDetail: any;
@@ -61,6 +64,45 @@ export default function ProductInfo({
   onFindSimilar 
 }: ProductInfoProps) {
   const [chatDialog, setChatDialog] = useState(false);
+  const [skuModalOpen, setSkuModalOpen] = useState(false);
+  const [tempSelectedSku, setTempSelectedSku] = useState(selectedSku);
+  const [tempQuantity, setTempQuantity] = useState(quantity);
+  const [tempSelectedAttributes, setTempSelectedAttributes] = useState<{ [key: string]: string }>({});
+  const [imageModalOpen, setImageModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState('');
+  
+  // 모달이 열릴 때 현재 선택된 SKU와 수량을 임시 상태에 동기화
+  useEffect(() => {
+    if (skuModalOpen) {
+      setTempSelectedSku(selectedSku);
+      setTempQuantity(quantity);
+      // 선택된 SKU의 속성을 tempSelectedAttributes에 설정
+      if (selectedSku) {
+        const attrs = {};
+        selectedSku.skuAttributes?.forEach((attr: any) => {
+          attrs[attr.attributeNameTrans || attr.attributeName] = attr.value;
+        });
+        setTempSelectedAttributes(attrs);
+      }
+    }
+  }, [skuModalOpen, selectedSku, quantity]);
+  
+  // 선택된 속성들로 SKU 찾기
+  useEffect(() => {
+    if (Object.keys(tempSelectedAttributes).length > 0) {
+      const matchingSku = productDetail?.productSkuInfos?.find((sku: any) => {
+        // SKU의 모든 속성이 선택된 속성과 일치하는지 확인
+        return sku.skuAttributes?.every((attr: any) => {
+          const attrName = attr.attributeNameTrans || attr.attributeName;
+          return tempSelectedAttributes[attrName] === attr.value;
+        });
+      });
+      
+      if (matchingSku) {
+        setTempSelectedSku(matchingSku);
+      }
+    }
+  }, [tempSelectedAttributes, productDetail]);
   
   if (!productDetail) return null;
 
@@ -135,31 +177,6 @@ export default function ProductInfo({
         </Stack>
       </Box>
 
-      {/* 카테고리 */}
-      {(productDetail.categoryId || productDetail.categoryName || productDetail.topCategoryId) && (
-        <Stack spacing={1} sx={{ mb: 2 }}>
-          <Stack direction="row" spacing={1} alignItems="center">
-            <Typography variant="caption" color="text.secondary">
-              카테고리:
-            </Typography>
-            {productDetail.topCategoryId && productDetail.secondCategoryId && productDetail.thirdCategoryId ? (
-              <Stack direction="row" spacing={0.5} alignItems="center">
-                <Chip label={`1차: ${productDetail.topCategoryId}`} size="small" variant="outlined" />
-                <Typography variant="caption">›</Typography>
-                <Chip label={`2차: ${productDetail.secondCategoryId}`} size="small" variant="outlined" />
-                <Typography variant="caption">›</Typography>
-                <Chip label={`3차: ${productDetail.thirdCategoryId}`} size="small" variant="outlined" />
-              </Stack>
-            ) : (
-              <Chip 
-                label={productDetail.categoryName || `카테고리 ID: ${productDetail.categoryId}`} 
-                size="small" 
-                variant="outlined"
-              />
-            )}
-          </Stack>
-        </Stack>
-      )}
 
       {/* 태그 */}
       <Stack direction="row" spacing={1} sx={{ mb: 2, flexWrap: 'wrap', gap: 1 }}>
@@ -192,18 +209,10 @@ export default function ProductInfo({
         {productDetail.offerIdentities?.includes('tp_member') && (
           <Chip label="TP 회원" size="small" color="success" icon={<VerifiedIcon />} />
         )}
-        {/* 추가 태그 표시 */}
-        {productDetail.tagInfoList?.filter((t: any) => 
-          !['isOnePsale', 'isSupportMix', 'isOnePsaleFreePostage', '1688_yx', 'isQqyx', 'select'].includes(t.key)
-        ).map((tag: any, index: number) => (
-          <Chip 
-            key={index} 
-            label={tag.name || tag.key} 
-            size="small" 
-            variant="outlined"
-            title={tag.value?.toString()}
-          />
-        ))}
+        {/* 7일 무조건 반품 */}
+        {productDetail.tagInfoList?.find((t: any) => t.key === 'noReason7DReturn')?.value && (
+          <Chip label="7일 이내 이유 없이 반품 가능" size="small" color="secondary" />
+        )}
       </Stack>
 
       <Divider sx={{ my: 2 }} />
@@ -353,8 +362,8 @@ export default function ProductInfo({
         </Box>
       )}
 
-      {/* 액션 버튼 */}
-      <Stack spacing={2}>
+      {/* 액션 버튼 - 데스크톱에서만 표시 */}
+      <Stack spacing={2} sx={{ display: { xs: 'none', md: 'flex' } }}>
         <Stack direction="row" spacing={2}>
           <Button
             variant="outlined"
@@ -472,6 +481,84 @@ export default function ProductInfo({
         </Button>
       </Stack>
 
+      {/* 모바일 하단 고정 버튼 - 타오바오 스타일 - 모달이 열려있으면 숨김 */}
+      {!skuModalOpen && (
+        <Box
+          sx={{
+            display: { xs: 'flex', md: 'none' },
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            backgroundColor: 'white',
+            borderTop: '1px solid #e0e0e0',
+            padding: '8px 12px',
+            zIndex: 1300,
+            gap: 1,
+            alignItems: 'center',
+            boxShadow: '0 -2px 10px rgba(0,0,0,0.1)',
+          }}
+        >
+        {/* 왼쪽 아이콘 버튼들 */}
+        <Stack direction="row" spacing={0.5} sx={{ flex: '0 0 auto' }}>
+          <IconButton 
+            onClick={onOpenCalculator}
+            sx={{
+              border: '1px solid #e0e0e0',
+              borderRadius: 1,
+              padding: '6px',
+              bgcolor: 'white',
+            }}
+          >
+            <CalculateIcon sx={{ fontSize: 20 }} />
+          </IconButton>
+          <IconButton 
+            onClick={() => setChatDialog(true)}
+            sx={{
+              border: '1px solid #e0e0e0',
+              borderRadius: 1,
+              padding: '6px',
+              bgcolor: 'white',
+            }}
+          >
+            <ChatIcon sx={{ fontSize: 20 }} />
+          </IconButton>
+        </Stack>
+
+        {/* 오른쪽 액션 버튼들 */}
+        <Stack direction="row" spacing={1} sx={{ flex: 1 }}>
+          <Button
+            variant="outlined"
+            onClick={() => window.location.href = '/dashboard/1688/cart'}
+            sx={{
+              flex: 1,
+              height: '36px',
+              fontSize: '13px',
+              borderColor: 'primary.main',
+              color: 'primary.main',
+            }}
+          >
+            장바구니
+          </Button>
+          <Button
+            variant="contained"
+            onClick={() => setSkuModalOpen(true)} // 모달 열기로 변경
+            sx={{
+              flex: 1.5,
+              bgcolor: 'primary.main',
+              '&:hover': {
+                bgcolor: 'primary.dark'
+              },
+              height: '36px',
+              fontSize: '13px',
+            }}
+          >
+            담기
+          </Button>
+        </Stack>
+        </Box>
+      )}
+
       {/* 채팅 다이얼로그 */}
       <Dialog
         open={chatDialog}
@@ -551,6 +638,289 @@ export default function ProductInfo({
           </Box>
         </>
       )}
+
+      {/* SKU 선택 모달 - 타오바오 스타일 */}
+      <Drawer
+        anchor="bottom"
+        open={skuModalOpen}
+        onClose={() => setSkuModalOpen(false)}
+        sx={{
+          display: { xs: 'block', md: 'none' },
+          '& .MuiDrawer-paper': {
+            borderTopLeftRadius: 16,
+            borderTopRightRadius: 16,
+            maxHeight: '80vh',
+          }
+        }}
+      >
+        <Box sx={{ p: 2 }}>
+          {/* 헤더 */}
+          <Stack direction="row" alignItems="flex-start" spacing={2} sx={{ mb: 2 }}>
+            <Box
+              component="img"
+              src={(() => {
+                // 현재 선택된 속성에서 이미지가 있는 속성 찾기
+                for (const [key, value] of Object.entries(tempSelectedAttributes)) {
+                  // 모든 SKU를 순회하면서 해당 값을 가진 속성의 이미지 찾기
+                  for (const sku of productDetail.productSkuInfos || []) {
+                    const attr = sku.skuAttributes?.find((a: any) => 
+                      a.value === value && a.skuImageUrl
+                    );
+                    if (attr?.skuImageUrl) {
+                      return `/api/1688/image-proxy?url=${encodeURIComponent(attr.skuImageUrl)}`;
+                    }
+                  }
+                }
+                // 기본 이미지
+                return productDetail.productImage?.images?.[0] ? 
+                  `/api/1688/image-proxy?url=${encodeURIComponent(productDetail.productImage.images[0])}` : 
+                  '/images/products/s1.jpg';
+              })()}
+              onClick={(e) => {
+                const currentSrc = (e.target as HTMLImageElement).src;
+                setSelectedImage(currentSrc);
+                setImageModalOpen(true);
+              }}
+              sx={{
+                width: 150,
+                height: 150,
+                objectFit: 'cover',
+                borderRadius: 1,
+                border: '1px solid #e0e0e0',
+                cursor: 'pointer',
+                '&:hover': {
+                  opacity: 0.9,
+                }
+              }}
+            />
+            <Box sx={{ flex: 1 }}>
+              <Typography variant="h6" color="error">
+                ¥{tempSelectedSku?.price || tempSelectedSku?.consignPrice || productDetail.productSaleInfo?.priceRangeList?.[0]?.price || '0'}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                재고: {tempSelectedSku?.amountOnSale || productDetail.productSaleInfo?.amountOnSale || '충분'}
+              </Typography>
+              {Object.keys(tempSelectedAttributes).length > 0 && (
+                <Typography variant="caption" color="primary">
+                  선택: {Object.entries(tempSelectedAttributes).map(([key, value]) => {
+                    // 값에 대한 번역 찾기
+                    const allAttrs = new Set();
+                    productDetail.productSkuInfos?.forEach((sku: any) => {
+                      sku.skuAttributes?.forEach((attr: any) => {
+                        if (attr.value === value) {
+                          allAttrs.add(attr.valueTrans || attr.value);
+                        }
+                      });
+                    });
+                    return Array.from(allAttrs)[0] || value;
+                  }).join(' / ')}
+                </Typography>
+              )}
+            </Box>
+            <IconButton onClick={() => setSkuModalOpen(false)}>
+              <CloseIcon />
+            </IconButton>
+          </Stack>
+
+          <Divider sx={{ mb: 2 }} />
+
+          {/* SKU 옵션들 */}
+          {productDetail.productSkuInfos && productDetail.productSkuInfos.length > 0 && (
+            <Box sx={{ mb: 3 }}>
+              {/* SKU 속성별로 그룹화하여 표시 */}
+              {(() => {
+                const attributeGroups: { [key: string]: Set<any> } = {};
+                
+                productDetail.productSkuInfos.forEach((sku: any) => {
+                  sku.skuAttributes?.forEach((attr: any) => {
+                    const key = attr.attributeNameTrans || attr.attributeName;
+                    if (!attributeGroups[key]) {
+                      attributeGroups[key] = new Set();
+                    }
+                    attributeGroups[key].add(JSON.stringify({
+                      value: attr.value,
+                      valueTrans: attr.valueTrans,
+                      skuImageUrl: attr.skuImageUrl
+                    }));
+                  });
+                });
+
+                return Object.entries(attributeGroups).map(([attrName, values]) => (
+                  <Box key={attrName} sx={{ mb: 2 }}>
+                    <Typography variant="subtitle2" gutterBottom>
+                      {attrName}
+                    </Typography>
+                    <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ gap: 1 }}>
+                      {Array.from(values).map((valueStr) => {
+                        const attr = JSON.parse(valueStr);
+                        const isSelected = tempSelectedAttributes[attrName] === attr.value;
+                        
+                        return (
+                          <Chip
+                            key={attr.value}
+                            label={attr.valueTrans || attr.value}
+                            onClick={() => {
+                              // 해당 속성 업데이트
+                              setTempSelectedAttributes(prev => ({
+                                ...prev,
+                                [attrName]: attr.value
+                              }));
+                            }}
+                            variant={isSelected ? 'filled' : 'outlined'}
+                            color={isSelected ? 'primary' : 'default'}
+                            sx={{
+                              borderRadius: 1,
+                              height: attr.skuImageUrl ? 60 : 32,
+                              ...(attr.skuImageUrl && {
+                                '& .MuiChip-label': {
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  gap: 1,
+                                },
+                              }),
+                            }}
+                            icon={attr.skuImageUrl ? (
+                              <Box
+                                component="img"
+                                src={`/api/1688/image-proxy?url=${encodeURIComponent(attr.skuImageUrl)}`}
+                                sx={{
+                                  width: 40,
+                                  height: 40,
+                                  objectFit: 'cover',
+                                  borderRadius: 0.5,
+                                }}
+                              />
+                            ) : undefined}
+                          />
+                        );
+                      })}
+                    </Stack>
+                  </Box>
+                ));
+              })()}
+            </Box>
+          )}
+
+          {/* 수량 선택 */}
+          <Box sx={{ mb: 3 }}>
+            <Typography variant="subtitle2" gutterBottom>
+              수량
+            </Typography>
+            <Stack direction="row" spacing={2} alignItems="center">
+              <ButtonGroup size="small">
+                <Button onClick={() => setTempQuantity(Math.max(1, tempQuantity - 1))}>
+                  <RemoveIcon />
+                </Button>
+                <TextField
+                  value={tempQuantity}
+                  onChange={(e) => setTempQuantity(parseInt(e.target.value) || 1)}
+                  size="small"
+                  sx={{ width: 80 }}
+                  inputProps={{ style: { textAlign: 'center' } }}
+                />
+                <Button onClick={() => setTempQuantity(tempQuantity + 1)}>
+                  <AddIcon />
+                </Button>
+              </ButtonGroup>
+            </Stack>
+          </Box>
+
+          {/* 하단 확인 버튼 */}
+          <Button
+            variant="contained"
+            fullWidth
+            size="large"
+            onClick={() => {
+              // 선택된 속성들로 최종 SKU 찾기
+              let finalSku = tempSelectedSku;
+              
+              if (Object.keys(tempSelectedAttributes).length > 0) {
+                const matchingSku = productDetail.productSkuInfos?.find((sku: any) => {
+                  return sku.skuAttributes?.every((attr: any) => {
+                    const attrName = attr.attributeNameTrans || attr.attributeName;
+                    return tempSelectedAttributes[attrName] === attr.value;
+                  });
+                });
+                if (matchingSku) {
+                  finalSku = matchingSku;
+                }
+              }
+              
+              // 선택한 SKU와 수량을 적용
+              if (finalSku) {
+                onAttributeSelect?.('selectedSku', finalSku);
+              }
+              onQuantityChange(tempQuantity - quantity);
+              onAddToCart?.();
+              setSkuModalOpen(false);
+            }}
+            disabled={productDetail.productSkuInfos?.length > 0 && Object.keys(tempSelectedAttributes).length === 0}
+            sx={{
+              bgcolor: 'primary.main',
+              '&:hover': {
+                bgcolor: 'primary.dark'
+              },
+              height: '48px',
+            }}
+          >
+            확인
+          </Button>
+        </Box>
+      </Drawer>
+
+      {/* 이미지 확대 모달 */}
+      <Dialog
+        open={imageModalOpen}
+        onClose={() => setImageModalOpen(false)}
+        maxWidth="lg"
+        fullWidth
+        PaperProps={{
+          sx: {
+            backgroundColor: 'black',
+            m: 1,
+          },
+        }}
+      >
+        <DialogContent sx={{ position: 'relative', p: 0 }}>
+          <IconButton
+            onClick={() => setImageModalOpen(false)}
+            sx={{
+              position: 'absolute',
+              top: 8,
+              right: 8,
+              color: 'white',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+              zIndex: 1,
+              '&:hover': {
+                backgroundColor: 'rgba(0, 0, 0, 0.7)',
+              },
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+          
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              minHeight: '60vh',
+              backgroundColor: 'black',
+            }}
+          >
+            <Box
+              component="img"
+              src={selectedImage}
+              alt="Product Large"
+              sx={{
+                maxWidth: '100%',
+                maxHeight: '80vh',
+                objectFit: 'contain',
+              }}
+            />
+          </Box>
+        </DialogContent>
+      </Dialog>
     </Box>
   );
 }

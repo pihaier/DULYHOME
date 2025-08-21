@@ -355,7 +355,7 @@ export default function ProductDetailPage() {
               
               {/* SKU 선택기 */}
               {productDetail.productSkuInfos && productDetail.productSkuInfos.length > 0 && (
-                <Box sx={{ mt: 3 }}>
+                <Box sx={{ mt: 3, display: { xs: 'none', md: 'block' } }}>
                   <SkuSelector
                     productSkuInfos={productDetail.productSkuInfos}
                     selectedAttributes={selectedAttributes}

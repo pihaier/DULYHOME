@@ -99,7 +99,10 @@ export default function ProductTabs({
   };
 
   return (
-    <Box sx={{ mt: 4 }}>
+    <Box sx={{ 
+      mt: 4,
+      pb: { xs: '80px', md: 0 } // 모바일에서 하단 고정 버튼 공간 확보
+    }}>
       <Paper elevation={1}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={activeTab} onChange={handleTabChange} aria-label="product tabs" variant="scrollable" scrollButtons="auto">
@@ -161,7 +164,29 @@ export default function ProductTabs({
               const target = e.target as HTMLElement;
               if (target.tagName === 'IMG') {
                 const img = target as HTMLImageElement;
-                handleTranslateImage(img.src);
+                
+                // Extract original URL if it's a proxy URL
+                let originalUrl = img.src;
+                if (img.src.includes('/api/1688/image-proxy?url=')) {
+                  try {
+                    const url = new URL(img.src);
+                    const encodedUrl = url.searchParams.get('url');
+                    if (encodedUrl) {
+                      originalUrl = decodeURIComponent(encodedUrl);
+                    }
+                  } catch (error) {
+                    console.error('Failed to extract original URL:', error);
+                    // Fallback: try simple split
+                    try {
+                      const urlParam = img.src.split('url=')[1];
+                      originalUrl = decodeURIComponent(urlParam);
+                    } catch (e) {
+                      console.error('Fallback extraction failed:', e);
+                    }
+                  }
+                }
+                
+                handleTranslateImage(originalUrl);
               }
             }}
             dangerouslySetInnerHTML={{ __html: productDetail.description || '' }}

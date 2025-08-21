@@ -215,9 +215,34 @@ export default function ProductImageGallery({
               }}
               onClick={(e) => {
                 e.stopPropagation();
-                handleTranslateImage(displayImage);
+                // Extract original URL if it's a proxy URL
+                let originalUrl = displayImage;
+                if (displayImage.includes('/api/1688/image-proxy?url=')) {
+                  try {
+                    const urlParam = displayImage.split('url=')[1];
+                    originalUrl = decodeURIComponent(urlParam);
+                  } catch (error) {
+                    console.error('Failed to extract original URL:', error);
+                  }
+                } else if (!displayImage.startsWith('/images/')) {
+                  // If it's not a proxy URL and not a local image, it's already an original URL
+                  originalUrl = displayImage;
+                }
+                handleTranslateImage(originalUrl);
               }}
-              disabled={translatingImage === displayImage}
+              disabled={(() => {
+                // Check if this image is currently being translated
+                if (displayImage.includes('/api/1688/image-proxy?url=')) {
+                  try {
+                    const urlParam = displayImage.split('url=')[1];
+                    const originalUrl = decodeURIComponent(urlParam);
+                    return translatingImage === originalUrl;
+                  } catch {
+                    return false;
+                  }
+                }
+                return translatingImage === displayImage;
+              })()}
             >
               {translatingImage === displayImage ? (
                 <CircularProgress size={20} color="inherit" />

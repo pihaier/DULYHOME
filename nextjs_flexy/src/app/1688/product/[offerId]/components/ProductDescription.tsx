@@ -110,7 +110,34 @@ export default function ProductDescription({
                 const target = e.target as HTMLElement;
                 if (target.tagName === 'IMG') {
                   const img = target as HTMLImageElement;
-                  onTranslateImage(img.src);
+                  // Extract original URL from proxy URL if it exists
+                  let originalUrl = img.src;
+                  console.log('Clicked image src:', img.src);
+                  
+                  // Check for proxy URL pattern (including localhost)
+                  if (img.src.includes('/api/1688/image-proxy?url=') || img.src.includes('image-proxy?url=')) {
+                    try {
+                      // Extract URL parameter
+                      const url = new URL(img.src);
+                      const encodedUrl = url.searchParams.get('url');
+                      if (encodedUrl) {
+                        originalUrl = decodeURIComponent(encodedUrl);
+                        console.log('Extracted original URL:', originalUrl);
+                      }
+                    } catch (error) {
+                      console.error('Failed to extract original URL:', error);
+                      // Fallback: try simple split
+                      try {
+                        const urlParam = img.src.split('url=')[1];
+                        originalUrl = decodeURIComponent(urlParam);
+                      } catch (e) {
+                        console.error('Fallback extraction failed:', e);
+                      }
+                    }
+                  }
+                  
+                  console.log('Sending to translate:', originalUrl);
+                  onTranslateImage(originalUrl);
                 }
               }}
               dangerouslySetInnerHTML={{ __html: productDetail.description }}
