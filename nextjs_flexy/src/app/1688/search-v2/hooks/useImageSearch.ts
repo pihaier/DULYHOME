@@ -14,7 +14,13 @@ import type {
 
 interface UseImageSearchReturn {
   uploadImage: (base64Image: string) => Promise<string | null>;
-  searchByImage: (imageId: string, page?: number) => Promise<Product1688[]>;
+  searchByImage: (
+    imageIdOrAddress: string,
+    page?: number,
+    sortBy?: SortOption,
+    filters?: SelectedFilters,
+    isImageAddress?: boolean
+  ) => Promise<Product1688[]>;
   products: Product1688[];
   loading: boolean;
   uploadProgress: boolean;
