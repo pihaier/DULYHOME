@@ -52,21 +52,35 @@ export default function ProductImageGallery({
       sku.skuAttributes?.filter((attr: any) => attr.skuImageUrl).map((attr: any) => attr.skuImageUrl)
     ) || [];
     
-    return [...new Set([...productImages, ...skuImages])];
+    // 비디오가 있으면 첫 번째 이미지를 비디오 썸네일로 사용
+    const allImages = [...new Set([...productImages, ...skuImages])];
+    
+    return allImages;
+  };
+  
+  // 비디오 썸네일 가져오기 (첫 번째 이미지 사용)
+  const getVideoThumbnail = () => {
+    const images = getAllProductImages();
+    return images[0] || '/images/products/s1.jpg';
   };
 
   const images = getAllProductImages();
   
+  // 비디오 썸네일 선택 상태 추가
+  const [isVideoSelected, setIsVideoSelected] = useState(false);
+  
   // currentImage를 기준으로 selectedImage 계산 (상태 대신 계산값 사용)
   // indexOf가 -1을 반환하면 0으로 설정
   const currentImageIndex = currentImage ? images.indexOf(currentImage) : -1;
-  const selectedImage = currentImageIndex >= 0 ? currentImageIndex : 0;
-  const displayImage = currentImage || images[0] || '/images/products/s1.jpg';
+  const selectedImage = isVideoSelected ? -1 : (currentImageIndex >= 0 ? currentImageIndex : 0);
+  const displayImage = isVideoSelected ? getVideoThumbnail() : (currentImage || images[0] || '/images/products/s1.jpg');
   
   const hasVideo = productDetail?.mainVideo || productDetail?.detailVideo;
   const hasDetailVideo = productDetail?.detailVideo;
 
   const handleImageSelect = (index: number) => {
+    // 비디오 선택 상태 해제
+    setIsVideoSelected(false);
     // 부모 컴포넌트의 onImageChange를 통해서만 이미지 변경
     if (onImageChange && images[index]) {
       onImageChange(images[index]);
@@ -144,9 +158,35 @@ export default function ProductImageGallery({
             height: { xs: 250, sm: 350, md: 450, lg: 500 },
             objectFit: 'contain',
             cursor: 'pointer',
+            filter: isVideoSelected ? 'brightness(0.7)' : 'none',
           }}
-          onClick={handleZoomToggle}
+          onClick={() => {
+            if (isVideoSelected) {
+              const videoUrl = productDetail?.mainVideo || productDetail?.detailVideo;
+              if (videoUrl) {
+                window.open(videoUrl, '_blank');
+              }
+            } else {
+              handleZoomToggle();
+            }
+          }}
         />
+        
+        {/* 비디오 재생 버튼 (비디오 썸네일 선택 시) */}
+        {isVideoSelected && (
+          <PlayCircleIcon
+            sx={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              color: 'white',
+              fontSize: { xs: 60, sm: 80, md: 100 },
+              filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.5))',
+              pointerEvents: 'none',
+            }}
+          />
+        )}
           
           {/* 줌 버튼 */}
           <IconButton
@@ -293,6 +333,56 @@ export default function ProductImageGallery({
           },
         }}
       >
+        {/* 비디오 썸네일 */}
+        {hasVideo && (
+          <Box
+            onClick={() => {
+              setIsVideoSelected(true);
+              // 부모 컴포넌트의 onImageChange를 호출하지 않음 (비디오는 이미지가 아니므로)
+            }}
+            sx={{
+              flexShrink: 0,
+              width: { xs: 60, sm: 80 },
+              height: { xs: 60, sm: 80 },
+              cursor: 'pointer',
+              border: isVideoSelected ? '3px solid #1976d2' : '1px solid #e0e0e0',
+              borderRadius: 1,
+              overflow: 'hidden',
+              transition: 'all 0.2s',
+              position: 'relative',
+              '&:hover': {
+                borderColor: '#1976d2',
+                transform: 'scale(1.05)',
+              },
+            }}
+          >
+            <Box
+              component="img"
+              src={`/api/1688/image-proxy?url=${encodeURIComponent(getVideoThumbnail())}`}
+              alt="Video thumbnail"
+              sx={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                filter: 'brightness(0.8)',
+              }}
+            />
+            {/* 비디오 플레이 아이콘 오버레이 */}
+            <PlayCircleIcon
+              sx={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                color: 'white',
+                fontSize: { xs: 24, sm: 32 },
+                filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.5))',
+              }}
+            />
+          </Box>
+        )}
+        
+        {/* 이미지 썸네일들 */}
         {images.map((image, index) => {
           // 현재 표시되는 이미지와 썸네일 이미지가 같은지 확인
           const isSelected = (currentImage && currentImage === image) || (!currentImage && index === 0);
