@@ -42,6 +42,51 @@ export function useProductDetail(offerId: string) {
           console.log('Attributes:', productData.productAttributes);
           console.log('Features:', productData.productFeatureList);
           
+          // description 내의 이미지 URL을 프록시 URL로 변환
+          if (productData.description) {
+            console.log('Processing description for image proxy...');
+            
+            // 더 강력한 정규식 - src 속성 전체를 캡처
+            productData.description = productData.description.replace(
+              /<img([^>]*?)src\s*=\s*["']([^"']+)["']([^>]*?)>/gi,
+              (match, beforeSrc, url, afterSrc) => {
+                // 이미 프록시 URL이거나 로컬 이미지인 경우 그대로 유지
+                if (url.includes('/api/1688/image-proxy') || url.startsWith('/images/')) {
+                  return match;
+                }
+                // alicdn.com, aliimg.com, 또는 1688.com 이미지인 경우 프록시 적용
+                if (url.includes('alicdn.com') || url.includes('aliimg.com') || url.includes('1688.com')) {
+                  const proxyUrl = `/api/1688/image-proxy?url=${encodeURIComponent(url)}`;
+                  console.log('Replacing image URL:', url, '->', proxyUrl);
+                  return `<img${beforeSrc}src="${proxyUrl}"${afterSrc}>`;
+                }
+                // https:// 또는 http://로 시작하는 외부 이미지도 프록시 처리
+                if (url.startsWith('http://') || url.startsWith('https://')) {
+                  const proxyUrl = `/api/1688/image-proxy?url=${encodeURIComponent(url)}`;
+                  console.log('Proxying external image:', url);
+                  return `<img${beforeSrc}src="${proxyUrl}"${afterSrc}>`;
+                }
+                return match;
+              }
+            );
+            
+            // data-src 속성도 처리 (lazy loading 이미지)
+            productData.description = productData.description.replace(
+              /<img([^>]*?)data-src\s*=\s*["']([^"']+)["']([^>]*?)>/gi,
+              (match, beforeDataSrc, url, afterDataSrc) => {
+                if (url.includes('/api/1688/image-proxy') || url.startsWith('/images/')) {
+                  return match;
+                }
+                if (url.includes('alicdn.com') || url.includes('aliimg.com') || url.includes('1688.com') || url.startsWith('http')) {
+                  const proxyUrl = `/api/1688/image-proxy?url=${encodeURIComponent(url)}`;
+                  console.log('Replacing data-src:', url, '->', proxyUrl);
+                  return `<img${beforeDataSrc}data-src="${proxyUrl}" src="${proxyUrl}"${afterDataSrc}>`;
+                }
+                return match;
+              }
+            );
+          }
+          
           setProductDetail(productData);
         } else {
           console.error('API Error:', result.error || 'No data');

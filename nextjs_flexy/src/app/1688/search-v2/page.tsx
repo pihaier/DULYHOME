@@ -15,6 +15,7 @@ import {
   Badge,
   Chip,
   Divider,
+  TextField,
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { FilterList as FilterIcon, Close as CloseIcon } from '@mui/icons-material';
@@ -22,11 +23,11 @@ import Button from '@mui/material/Button';
 
 // 컴포넌트
 import SearchBar from './components/SearchBar';
+import SearchBarWithCategories from './components/SearchBarWithCategories';
 import FilterPanel from './components/FilterPanel';
 import SortSelector from './components/SortSelector';
 import ProductGrid from './components/ProductGrid';
 import ImageSearchModal from './components/ImageSearchModal';
-import KeywordCategoryNav from './components/KeywordCategoryNav';
 
 // Hooks
 import { useSearch1688 } from './hooks/useSearch1688';
@@ -300,26 +301,33 @@ export default function Search1688Page() {
       <HpHeader />
       
       <Container maxWidth="xl" sx={{ py: 3 }}>
-        {/* 검색바 섹션 */}
-        <Paper elevation={1} sx={{ p: 3, mb: 3 }}>
-          <SearchBar
+        {/* 데스크톱: 통합된 검색바와 카테고리 섹션 */}
+        {!isMobile ? (
+          <SearchBarWithCategories
             value={searchKeyword}
             onChange={setSearchKeyword}
             onSearch={handleSearch}
             onImageSearchOpen={() => setImageSearchOpen(true)}
             popularKeywords={POPULAR_KEYWORDS}
-          />
-        </Paper>
-        
-        {/* 데스크톱: 키워드 카테고리 네비게이션 */}
-        {!isMobile && currentKeyword && (
-          <KeywordCategoryNav
             categories={keywordCategories}
-            loading={categoriesLoading}
-            error={categoriesError}
+            categoriesLoading={categoriesLoading}
+            categoriesError={categoriesError}
             selectedCategoryIds={selectedCategoryIds}
             onCategorySelect={handleKeywordCategorySelect}
+            filters={filters}
+            onFilterChange={handleFilterChange}
           />
+        ) : (
+          /* 모바일: 검색바만 표시 (카테고리는 필터 Drawer에) */
+          <Paper elevation={1} sx={{ p: 3, mb: 3 }}>
+            <SearchBar
+              value={searchKeyword}
+              onChange={setSearchKeyword}
+              onSearch={handleSearch}
+              onImageSearchOpen={() => setImageSearchOpen(true)}
+              popularKeywords={POPULAR_KEYWORDS}
+            />
+          </Paper>
         )}
         
         {/* 모바일: 필터 버튼 */}
@@ -342,45 +350,122 @@ export default function Search1688Page() {
         )}
         
         {/* 메인 콘텐츠 */}
-        <Grid container spacing={3}>
-          {/* 데스크톱: 필터 패널 */}
-          {!isMobile && (
-            <Grid size={{ xs: 12, md: 3 }}>
-              <Stack spacing={2}>
-                <FilterPanel
-                  filters={filters}
-                  onFilterChange={handleFilterChange}
-                  onReset={handleFilterReset}
-                />
-              </Stack>
-            </Grid>
-          )}
-          
-          {/* 검색 결과 */}
-          <Grid size={{ xs: 12, md: isMobile ? 12 : 9 }}>
-            {/* 정렬 바 */}
+        <Grid container>
+          {/* 검색 결과 - 전체 너비 사용 */}
+          <Grid size={12}>
+            {/* 검색 결과 헤더 바 */}
             <Paper elevation={1} sx={{ p: 2, mb: 3 }}>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Typography variant="body1">
-                  {initialImageAddress ? '유사 상품 검색 결과' : currentKeyword ? `"${currentKeyword}" 검색 결과` : '상품 목록'}
-                  {displayTotalRecords > 0 && (
-                    <Typography component="span" variant="body2" color="text.secondary" sx={{ ml: 1 }}>
-                      ({displayTotalRecords.toLocaleString()}개)
-                    </Typography>
-                  )}
-                </Typography>
-                
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <Typography variant="body2" color="text.secondary">
-                    정렬:
+              <Stack spacing={2}>
+                {/* 첫 번째 줄: 검색 결과 수와 정렬 */}
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <Typography variant="body1">
+                    {initialImageAddress ? '유사 상품 검색 결과' : currentKeyword ? `"${currentKeyword}" 검색 결과` : '상품 목록'}
+                    {displayTotalRecords > 0 && (
+                      <Typography component="span" variant="body2" color="text.secondary" sx={{ ml: 1 }}>
+                        ({displayTotalRecords.toLocaleString()}개)
+                      </Typography>
+                    )}
                   </Typography>
-                  <SortSelector
-                    value={sortBy}
-                    onChange={handleSortChange}
-                    disabled={isLoading}
-                  />
+                  
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Typography variant="body2" color="text.secondary">
+                      정렬:
+                    </Typography>
+                    <SortSelector
+                      value={sortBy}
+                      onChange={handleSortChange}
+                      disabled={isLoading}
+                    />
+                  </Box>
                 </Box>
-              </Box>
+
+                {/* 두 번째 줄: 가격 범위와 업체 유형 필터 */}
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
+                  {/* 가격 범위 */}
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Typography variant="caption" color="text.secondary">
+                      가격:
+                    </Typography>
+                    <TextField
+                      size="small"
+                      placeholder="최소 (¥)"
+                      value={filters.priceMin}
+                      onChange={(e) => handleFilterChange({ ...filters, priceMin: e.target.value })}
+                      type="number"
+                      sx={{ width: 100 }}
+                      InputProps={{ sx: { height: 32 } }}
+                    />
+                    <Typography variant="caption" color="text.secondary">
+                      ~
+                    </Typography>
+                    <TextField
+                      size="small"
+                      placeholder="최대 (¥)"
+                      value={filters.priceMax}
+                      onChange={(e) => handleFilterChange({ ...filters, priceMax: e.target.value })}
+                      type="number"
+                      sx={{ width: 100 }}
+                      InputProps={{ sx: { height: 32 } }}
+                    />
+                  </Box>
+
+                  <Divider orientation="vertical" flexItem />
+
+                  {/* 업체 유형 필터 */}
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Typography variant="caption" color="text.secondary">
+                      업체 유형:
+                    </Typography>
+                    <Chip
+                      label="제조사"
+                      size="small"
+                      onClick={() => {/* TODO: 제조사 필터 */}}
+                      variant="outlined"
+                    />
+                    <Chip
+                      label="무역회사"
+                      size="small"
+                      onClick={() => {/* TODO: 무역회사 필터 */}}
+                      variant="outlined"
+                    />
+                    <Chip
+                      label="실사인증"
+                      size="small"
+                      color={filters.isJxhy ? 'primary' : 'default'}
+                      onClick={() => handleFilterChange({ ...filters, isJxhy: !filters.isJxhy })}
+                      variant={filters.isJxhy ? 'filled' : 'outlined'}
+                    />
+                  </Box>
+
+                  <Divider orientation="vertical" flexItem />
+
+                  {/* 기타 필터 */}
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Chip
+                      label="1개 구매 가능"
+                      size="small"
+                      color={filters.isOnePsale ? 'primary' : 'default'}
+                      onClick={() => handleFilterChange({ ...filters, isOnePsale: !filters.isOnePsale })}
+                      variant={filters.isOnePsale ? 'filled' : 'outlined'}
+                    />
+                  </Box>
+
+                  {/* 필터 초기화 */}
+                  {(filters.priceMin || filters.priceMax || filters.isJxhy || filters.isOnePsale) && (
+                    <>
+                      <Divider orientation="vertical" flexItem />
+                      <Button
+                        size="small"
+                        variant="text"
+                        onClick={handleFilterReset}
+                        sx={{ minWidth: 'auto' }}
+                      >
+                        필터 초기화
+                      </Button>
+                    </>
+                  )}
+                </Box>
+              </Stack>
             </Paper>
             
             {/* 상품 그리드 */}
