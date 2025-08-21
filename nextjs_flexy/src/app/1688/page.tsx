@@ -338,7 +338,7 @@ export default function Search1688Page() {
                     <CardMedia
                       component="img"
                       height="200"
-                      image={product.image}
+                      image={`/api/1688/image-proxy?url=${encodeURIComponent(product.image)}`}
                       alt={product.title}
                       sx={{ objectFit: 'cover' }}
                     />
