@@ -112,7 +112,6 @@ export default function ProductDescription({
                   const img = target as HTMLImageElement;
                   // Extract original URL from proxy URL if it exists
                   let originalUrl = img.src;
-                  console.log('Clicked image src:', img.src);
                   
                   // Check for proxy URL pattern (including localhost)
                   if (img.src.includes('/api/1688/image-proxy?url=') || img.src.includes('image-proxy?url=')) {
@@ -122,33 +121,38 @@ export default function ProductDescription({
                       const encodedUrl = url.searchParams.get('url');
                       if (encodedUrl) {
                         originalUrl = decodeURIComponent(encodedUrl);
-                        console.log('Extracted original URL:', originalUrl);
                       }
                     } catch (error) {
-                      console.error('Failed to extract original URL:', error);
                       // Fallback: try simple split
                       try {
                         const urlParam = img.src.split('url=')[1];
                         originalUrl = decodeURIComponent(urlParam);
                       } catch (e) {
-                        console.error('Fallback extraction failed:', e);
+                        // Silent fail
                       }
                     }
                   }
                   
-                  console.log('Sending to translate:', originalUrl);
                   onTranslateImage(originalUrl);
                 }
               }}
               dangerouslySetInnerHTML={{ __html: productDetail.description }}
               sx={{
                 width: '100%',
+                maxWidth: '800px',
+                margin: '0 auto',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                '& > *': {
+                  maxWidth: '100%',
+                },
                 '& img': {
-                  width: '100% !important',
+                  width: 'auto !important',
                   maxWidth: '100% !important',
                   height: 'auto !important',
                   display: 'block !important',
-                  margin: '0 auto !important',
+                  margin: '16px auto !important',
                   objectFit: 'contain',
                   cursor: 'pointer',
                   '&:hover': {
@@ -156,8 +160,9 @@ export default function ProductDescription({
                   },
                 },
                 '& p': {
-                  margin: '10px 0',
-                  padding: '0 10px',
+                  margin: '10px auto',
+                  padding: '0 16px',
+                  textAlign: 'center',
                   wordBreak: 'break-word',
                   fontSize: { xs: '14px', sm: '16px' },
                   lineHeight: 1.6,

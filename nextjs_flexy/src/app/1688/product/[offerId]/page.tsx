@@ -8,6 +8,7 @@ import Grid from '@mui/material/Grid';
 import PageContainer from '@/app/components/container/PageContainer';
 import HpHeader from '@/app/components/frontend-pages/shared/header/HpHeader';
 import Footer from '@/app/components/frontend-pages/shared/footer';
+import { useUser } from '@/lib/context/GlobalContext';
 
 // 분리된 컴포넌트들
 import ProductImageGallery from './components/ProductImageGallery';
@@ -26,6 +27,9 @@ import { useCart } from './hooks/useCart';
 export default function ProductDetailPage() {
   const params = useParams();
   const offerId = params.offerId as string;
+  
+  // GlobalContext에서 user 정보 가져오기
+  const { user, loading: authLoading } = useUser();
   
   // Ref for scrolling to shop products section
   const shopProductsRef = useRef<HTMLDivElement>(null);
@@ -363,6 +367,7 @@ export default function ProductDetailPage() {
                 onAddToCart={() => handleAddToCart(productDetail, selectedSku, quantity)}
                 onOpenCalculator={() => setCalculatorOpen(true)}
                 onFindSimilar={handleFindSimilar}
+                user={user}
               />
               
               {/* SKU 선택기 */}

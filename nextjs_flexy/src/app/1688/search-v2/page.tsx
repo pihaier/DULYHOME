@@ -135,7 +135,6 @@ export default function Search1688Page() {
   // imageAddress가 있으면 자동으로 이미지 검색 실행
   useEffect(() => {
     if (initialImageAddress) {
-      console.log('🔍 imageAddress로 유사 상품 검색 시작:', initialImageAddress);
       setCurrentImageUrl(initialImageAddress);
       setIsImageUrlSearch(true);
       searchByImage(initialImageAddress, 1, 'default', undefined, true); // isImageAddress = true
@@ -144,15 +143,11 @@ export default function Search1688Page() {
   
   // 검색 핸들러
   const handleSearch = () => {
-    console.log('🔍 handleSearch called with:', searchKeyword);
     if (searchKeyword.trim()) {
-      console.log('✅ Setting currentKeyword to:', searchKeyword.trim());
       setCurrentKeyword(searchKeyword.trim());
       setCurrentPage(1);
       // 이미지 검색 결과 초기화
       imageSearchProducts.length > 0 && clearImageSearchResults();
-    } else {
-      console.log('❌ Empty search keyword');
     }
   };
   
@@ -204,8 +199,6 @@ export default function Search1688Page() {
   
   // 카테고리 선택 핸들러 (키워드 카테고리용)
   const handleKeywordCategorySelect = async (categoryId: number | null, parentId?: number) => {
-    console.log('카테고리 선택:', categoryId, '부모ID:', parentId);
-    
     // 카테고리 선택 상태 업데이트 (부모ID와 함께 전달)
     selectCategory(categoryId, parentId);
     setCurrentPage(1); // 페이지를 1로 리셋
@@ -271,11 +264,7 @@ export default function Search1688Page() {
     router.push(`/1688/product/${offerId}`);
   };
   
-  // 문의하기
-  const handleInquiryClick = (product: Product1688) => {
-    // TODO: 문의하기 로직 구현
-    console.log('문의하기:', product);
-  };
+
 
   // 유사 상품 찾기
   const handleFindSimilar = async (imageUrl: string) => {
@@ -478,7 +467,6 @@ export default function Search1688Page() {
               totalRecords={displayTotalRecords}
               onPageChange={handlePageChange}
               onProductClick={handleProductClick}
-              onInquiryClick={handleInquiryClick}
               onFindSimilar={handleFindSimilar}
             />
           </Grid>

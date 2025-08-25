@@ -22,7 +22,6 @@ interface ProductGridProps {
   totalRecords?: number;
   onPageChange: (page: number) => void;
   onProductClick?: (offerId: number) => void;
-  onInquiryClick?: (product: Product1688) => void;
   onFindSimilar?: (imageUrl: string) => void;
 }
 
@@ -35,7 +34,6 @@ export default function ProductGrid({
   totalRecords,
   onPageChange,
   onProductClick,
-  onInquiryClick,
   onFindSimilar,
 }: ProductGridProps) {
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
@@ -99,8 +97,8 @@ export default function ProductGrid({
           >
             <ProductCard
               product={product}
+              index={index}
               onDetailClick={onProductClick}
-              onInquiryClick={onInquiryClick}
               onFindSimilar={onFindSimilar}
             />
           </Grid>

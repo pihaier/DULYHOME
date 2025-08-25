@@ -104,12 +104,10 @@ export function useSearch1688({
       });
 
       if (functionError) {
-        console.error('Edge Function 오류:', functionError);
         throw new Error(functionError.message || '검색 중 오류가 발생했습니다.');
       }
 
       if (!data) {
-        console.warn('검색 결과가 없습니다');
         setProducts([]);
         setTotalPages(0);
         setTotalRecords(0);
@@ -120,7 +118,6 @@ export function useSearch1688({
       if (data && data.success) {
         // 성공 응답
         const searchData = data.data as SearchData;
-        console.log('검색 결과 설정:', searchData);
         setProducts(searchData.data || []);
         setTotalPages(searchData.totalPage || 0);
         setTotalRecords(searchData.totalRecords || 0);
@@ -131,7 +128,6 @@ export function useSearch1688({
       }
 
     } catch (err) {
-      console.error('검색 오류:', err);
       setError(err instanceof Error ? err.message : '검색 중 오류가 발생했습니다.');
       setProducts([]);
       setTotalPages(0);
@@ -145,7 +141,6 @@ export function useSearch1688({
   useEffect(() => {
     // 키워드가 있을 때만 검색 실행
     if (keyword && keyword.trim()) {
-      console.log('🔄 useEffect 실행 - keyword:', keyword, 'page:', page, 'snIds:', snIds, 'sortBy:', sortBy, 'filters:', filters);
       searchProducts();
     }
   }, [keyword, page, snIds, sortBy, filters]);

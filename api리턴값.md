@@ -1,117 +1,173 @@
 {
     "success": true,
     "data": {
-        "offerId": 822737307436,
-        "categoryId": 121802003,
+        "offerId": 852315035423,
+        "categoryId": 325,
         "categoryName": null,
-        "topCategoryId": 122916001,
-        "secondCategoryId": 121828001,
-        "thirdCategoryId": 121802003,
-        "subject": "ZOOLAND狗狗胸背牵引绳遛宠物幼小中型犬比熊博美泰迪柴犬狗链子",
-        "subjectTrans": "동물원 개 가슴과 뒷다리 애완 동물 산책 작은 중간 개 꿀벌 곰 보메 테디 차이 개 체인",
-        "description": "<div id=\"offer-template-0\"></div><div style=\"width: 790.0px;\"><img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01BROvRN1L9IRAyqOMy_!!2217592221256-0-cib.jpg\" usemap=\"#_sdmap_0\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01y7X9GX1L9IR9GyW0Z_!!2217592221256-0-cib.jpg\" usemap=\"#_sdmap_1\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN012bVj1k1L9IR50I1BE_!!2217592221256-0-cib.jpg\" usemap=\"#_sdmap_2\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01gZl36C1L9IR0TJeEc_!!2217592221256-0-cib.jpg\" usemap=\"#_sdmap_3\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN017DA45q1L9IR9GzaWT_!!2217592221256-0-cib.jpg\" usemap=\"#_sdmap_4\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01CXPjlH1L9IR5noXwB_!!2217592221256-0-cib.jpg\" usemap=\"#_sdmap_5\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01XteMHG1L9IR0TFxYE_!!2217592221256-0-cib.jpg\" usemap=\"#_sdmap_6\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01bf6Ulz1L9IR7Vvf0M_!!2217592221256-0-cib.jpg\" usemap=\"#_sdmap_7\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01NL5MLT1L9IRAyqBus_!!2217592221256-0-cib.jpg\" usemap=\"#_sdmap_8\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01y7MyQA1L9IR0TH25R_!!2217592221256-0-cib.jpg\" usemap=\"#_sdmap_9\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN011rstaK1L9IR9Ofm9j_!!2217592221256-0-cib.jpg\" usemap=\"#_sdmap_10\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01pULPeh1L9IR9H0KHP_!!2217592221256-0-cib.jpg\" usemap=\"#_sdmap_11\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01PCIqkS1L9IR7xC1vd_!!2217592221256-0-cib.jpg\" usemap=\"#_sdmap_12\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01LX7yQp1L9IRABMXhy_!!2217592221256-0-cib.jpg\" usemap=\"#_sdmap_13\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01okNwN01L9IR8u8B14_!!2217592221256-0-cib.jpg\" usemap=\"#_sdmap_14\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01Kk1Zwt1L9IR50Ma0I_!!2217592221256-0-cib.jpg\" usemap=\"#_sdmap_15\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01a04czW1L9IR9H1jbo_!!2217592221256-0-cib.jpg\" usemap=\"#_sdmap_16\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01oX6bpG1L9IR7xCMij_!!2217592221256-0-cib.jpg\" usemap=\"#_sdmap_17\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01IyjxEZ1L9IR9Ohebk_!!2217592221256-0-cib.jpg\" usemap=\"#_sdmap_18\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01SVjZSn1L9IR7PUHWx_!!2217592221256-0-cib.jpg\" usemap=\"#_sdmap_19\"/></div>",
-        "mainVideo": "https://cloud.video.taobao.com/play/u/2217592221256/p/1/e/6/t/1/476692655787.mp4",
+        "topCategoryId": 54,
+        "secondCategoryId": 127508004,
+        "thirdCategoryId": 325,
+        "subject": "2024针织毛线围巾围脖女冬季新款高级感百搭韩版纯色保暖学院风短",
+        "subjectTrans": "2024 니트 양모 스카프 여자 겨울 새 하이 엔드 올매치 한국식 솔리드 컬러 따뜻한 프리피 스타일 쇼트",
+        "description": "<div id=\"offer-template-0\"></div><div style=\"width: 790.0px;\"><img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01Yc5rIz1rkSJ1Re7Lf_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_0\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01jxXwGD1rkSJ20cxlW_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_1\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01EEb84i1rkSJ4JKIST_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_2\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01LGbed01rkSJ1RfKCB_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_3\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01SmqBHd1rkSJ2bHsF9_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_4\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN0102Lt0Q1rkSIzLVLla_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_5\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01Q4so1Z1rkSJ3mESv2_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_6\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01vaa22J1rkSJ03yd89_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_7\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN012zMUaj1rkSJ2xuuzE_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_8\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01tYLWNp1rkSJ1vJTH2_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_9\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01rWWFTG1rkSJ0HV8tj_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_10\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01Tz6e6o1rkSJ4nzLSq_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_11\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01zHaXKH1rkSJ2bHwO2_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_12\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN012lEshh1rkSJ3mHHYJ_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_13\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01lvqB6A1rkSJ1vJsEh_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_14\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01xQwCDe1rkSJ4JKA8P_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_15\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01UvCHeO1rkSJ2xvvKU_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_16\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01oLNHmd1rkSJ4JLq4j_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_17\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01DhiaE11rkSJ3mGD0p_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_18\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN018jIeQQ1rkSJ3mFjwT_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_19\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN016NPNfu1rkSJ3mGbyl_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_20\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01Gc35ti1rkSJ3fygtq_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_21\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN011WnakH1rkSIzLUsfG_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_22\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN0123EBJX1rkSIzLVt1H_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_23\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01IRSsbi1rkSJ20eAad_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_24\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN012dpXF21rkSJ29bti1_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_25\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01bJ6MSO1rkSJ3fxor0_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_26\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01Hfstgb1rkSJ2xtueC_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_27\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01o7N93O1rkSJ29aDk4_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_28\"/></div>",
+        "mainVideo": "https://cloud.video.taobao.com/play/u/2218888425669/p/1/e/6/t/1/492819077642.mp4",
         "detailVideo": null,
         "productImage": {
             "images": [
-                "https://cbu01.alicdn.com/img/ibank/O1CN01GqsfpX1L9IRAyll4H_!!2217592221256-0-cib.jpg",
-                "https://cbu01.alicdn.com/img/ibank/O1CN01id8ARA1L9IRBYGh9m_!!2217592221256-0-cib.jpg",
-                "https://cbu01.alicdn.com/img/ibank/O1CN010b3d291L9IR7x57B9_!!2217592221256-0-cib.jpg",
-                "https://cbu01.alicdn.com/img/ibank/O1CN01Rk3jvG1L9IR9OXzMT_!!2217592221256-0-cib.jpg",
-                "https://cbu01.alicdn.com/img/ibank/O1CN01GPnOxT1L9IR89sask_!!2217592221256-0-cib.jpg"
+                "https://cbu01.alicdn.com/img/ibank/O1CN01j8ECTv1rkSJ39nNcw_!!2218888425669-0-cib.jpg",
+                "https://cbu01.alicdn.com/img/ibank/O1CN01rGFXSa1rkSJ2eMGQg_!!2218888425669-0-cib.jpg",
+                "https://cbu01.alicdn.com/img/ibank/O1CN01C51JIm1rkSJHNajMG_!!2218888425669-0-cib.jpg",
+                "https://cbu01.alicdn.com/img/ibank/O1CN014jYvoQ1rkSJIA1OA5_!!2218888425669-0-cib.jpg",
+                "https://cbu01.alicdn.com/img/ibank/O1CN01QFAzjg1rkSJIAN8lB_!!2218888425669-0-cib.jpg"
             ]
         },
         "productAttribute": [
             {
-                "attributeId": "287",
-                "attributeName": "材质",
-                "value": "特多龙",
-                "attributeNameTrans": "재료",
-                "valueTrans": "테도론"
+                "attributeId": "2176",
+                "attributeName": "品牌",
+                "value": "其他",
+                "attributeNameTrans": "브랜드",
+                "valueTrans": "다른"
             },
             {
-                "attributeId": "7869",
-                "attributeName": "是否进口",
-                "value": "否",
-                "attributeNameTrans": "수입 여부",
-                "valueTrans": "아니요"
+                "attributeId": "188",
+                "attributeName": "编织方法",
+                "value": "经编",
+                "attributeNameTrans": "뜨개질 방법",
+                "valueTrans": "경편"
             },
             {
-                "attributeId": "364",
-                "attributeName": "产品类别",
-                "value": "胸带",
-                "attributeNameTrans": "제품 카테고리",
-                "valueTrans": "가슴 끈"
+                "attributeId": "1141",
+                "attributeName": "功能",
+                "value": "保暖",
+                "attributeNameTrans": "기능",
+                "valueTrans": "따뜻하게 유지하다"
+            },
+            {
+                "attributeId": "2531",
+                "attributeName": "适合季节",
+                "value": "秋季",
+                "attributeNameTrans": "계절에 적합",
+                "valueTrans": "가을"
             },
             {
                 "attributeId": "1398",
                 "attributeName": "货号",
-                "value": "ZLHL-002",
+                "value": "002",
                 "attributeNameTrans": "품목 번호",
-                "valueTrans": "ZLHL-002"
+                "valueTrans": "002"
             },
             {
-                "attributeId": "2176",
-                "attributeName": "品牌",
-                "value": "zooland",
-                "attributeNameTrans": "브랜드",
-                "valueTrans": "zooland"
+                "attributeId": "346",
+                "attributeName": "产地",
+                "value": "浙江",
+                "attributeNameTrans": "원산지",
+                "valueTrans": "저장성"
             },
             {
-                "attributeId": "143220385",
-                "attributeName": "是否专利货源",
-                "value": "否",
-                "attributeNameTrans": "특허 출처 여부",
-                "valueTrans": "아니요"
-            },
-            {
-                "attributeId": "3216",
-                "attributeName": "颜色",
-                "value": "孔雀绿",
-                "attributeNameTrans": "색깔",
-                "valueTrans": "공작석 녹색"
+                "attributeId": "1811",
+                "attributeName": "款式",
+                "value": "加长",
+                "attributeNameTrans": "스타일",
+                "valueTrans": "확장"
             },
             {
                 "attributeId": "3216",
                 "attributeName": "颜色",
-                "value": "淡橘橙",
+                "value": "爆款墨绿色",
                 "attributeNameTrans": "색깔",
-                "valueTrans": "라이트 오렌지"
+                "valueTrans": "인기 짙은 녹색"
             },
             {
                 "attributeId": "3216",
                 "attributeName": "颜色",
-                "value": "烈焰红",
+                "value": "爆款红色",
                 "attributeNameTrans": "색깔",
-                "valueTrans": "불꽃 레드"
+                "valueTrans": "인기 레드"
             },
             {
                 "attributeId": "3216",
                 "attributeName": "颜色",
-                "value": "宝石蓝",
+                "value": "爆款蓝色",
                 "attributeNameTrans": "색깔",
-                "valueTrans": "사파이어 블루"
+                "valueTrans": "인기 블루"
             },
             {
-                "attributeId": "100018513",
-                "attributeName": "规格（长*宽）",
-                "value": "S码（胸围39-56cm）建议6-15斤",
-                "attributeNameTrans": "사양(길이*너비)",
-                "valueTrans": "S사이즈(가슴둘레 39-56cm) 추천 3-7.5kg"
+                "attributeId": "3216",
+                "attributeName": "颜色",
+                "value": "爆款黑色",
+                "attributeNameTrans": "색깔",
+                "valueTrans": "인기 블랙"
             },
             {
-                "attributeId": "100018513",
-                "attributeName": "规格（长*宽）",
-                "value": "M码（胸围49-73cm）建议15-30斤",
-                "attributeNameTrans": "사양(길이*너비)",
-                "valueTrans": "M사이즈(가슴 49-73cm) 추천 7.5-15kg"
+                "attributeId": "3216",
+                "attributeName": "颜色",
+                "value": "爆款咖色",
+                "attributeNameTrans": "색깔",
+                "valueTrans": "핫한 커피 컬러"
+            },
+            {
+                "attributeId": "3216",
+                "attributeName": "颜色",
+                "value": "爆款灰色",
+                "attributeNameTrans": "색깔",
+                "valueTrans": "인기 그레이"
+            },
+            {
+                "attributeId": "9024",
+                "attributeName": "长度(CM)",
+                "value": "165*25",
+                "attributeNameTrans": "길이(CM)",
+                "valueTrans": "165*25"
+            },
+            {
+                "attributeId": "182318189",
+                "attributeName": "主要下游平台",
+                "value": "ebay",
+                "attributeNameTrans": "주요 다운스트림 플랫폼",
+                "valueTrans": "ebay"
+            },
+            {
+                "attributeId": "182318189",
+                "attributeName": "主要下游平台",
+                "value": "亚马逊",
+                "attributeNameTrans": "주요 다운스트림 플랫폼",
+                "valueTrans": "아마존"
+            },
+            {
+                "attributeId": "182318189",
+                "attributeName": "主要下游平台",
+                "value": "wish",
+                "attributeNameTrans": "주요 다운스트림 플랫폼",
+                "valueTrans": "wish"
+            },
+            {
+                "attributeId": "182318189",
+                "attributeName": "主要下游平台",
+                "value": "速卖通",
+                "attributeNameTrans": "주요 다운스트림 플랫폼",
+                "valueTrans": "AliExpress"
+            },
+            {
+                "attributeId": "182318189",
+                "attributeName": "主要下游平台",
+                "value": "独立站",
+                "attributeNameTrans": "주요 다운스트림 플랫폼",
+                "valueTrans": "독립 스테이션"
+            },
+            {
+                "attributeId": "182318189",
+                "attributeName": "主要下游平台",
+                "value": "LAZADA",
+                "attributeNameTrans": "주요 다운스트림 플랫폼",
+                "valueTrans": "LAZADA"
             },
             {
                 "attributeId": "193290003",
                 "attributeName": "有可授权的自有品牌",
-                "value": "是",
+                "value": "否",
                 "attributeNameTrans": "라이센스가 있는 개인 브랜드가 있습니다.",
-                "valueTrans": "예"
+                "valueTrans": "아니요"
             },
             {
                 "attributeId": "182282223",
@@ -121,268 +177,336 @@
                 "valueTrans": "예"
             },
             {
-                "attributeId": "233195015",
-                "attributeName": "是否属于礼品",
-                "value": "否",
-                "attributeNameTrans": "선물인가요?",
-                "valueTrans": "아니요"
+                "attributeId": "20666",
+                "attributeName": "上市年份/季节",
+                "value": "2023年秋季",
+                "attributeNameTrans": "출시 연도/시즌",
+                "valueTrans": "2023년 가을"
             },
             {
-                "attributeId": "246192626",
-                "attributeName": "是否IP授权",
-                "value": "否",
-                "attributeNameTrans": "IP 인증 여부",
-                "valueTrans": "아니요"
+                "attributeId": "149092418",
+                "attributeName": "主面料成分含量",
+                "value": "10%及以下",
+                "attributeNameTrans": "주요 원단 성분 함량",
+                "valueTrans": "10% 이하"
             },
             {
-                "attributeId": "1835",
-                "attributeName": "类别",
-                "value": "宠物链圈、绳带",
-                "attributeNameTrans": "카테고리",
-                "valueTrans": "애완동물 체인 링, 로프 스트랩"
+                "attributeId": "401",
+                "attributeName": "风格",
+                "value": "淑女",
+                "attributeNameTrans": "스타일",
+                "valueTrans": "레이디"
+            },
+            {
+                "attributeId": "401",
+                "attributeName": "风格",
+                "value": "自然",
+                "attributeNameTrans": "스타일",
+                "valueTrans": "자연스러운"
+            },
+            {
+                "attributeId": "401",
+                "attributeName": "风格",
+                "value": "学院风",
+                "attributeNameTrans": "스타일",
+                "valueTrans": "대학 스타일"
+            },
+            {
+                "attributeId": "401",
+                "attributeName": "风格",
+                "value": "田园风",
+                "attributeNameTrans": "스타일",
+                "valueTrans": "목가적인 스타일"
+            },
+            {
+                "attributeId": "401",
+                "attributeName": "风格",
+                "value": "小香风",
+                "attributeNameTrans": "스타일",
+                "valueTrans": "샤오샹펑"
+            },
+            {
+                "attributeId": "401",
+                "attributeName": "风格",
+                "value": "圣诞风",
+                "attributeNameTrans": "스타일",
+                "valueTrans": "크리스마스 스타일"
+            },
+            {
+                "attributeId": "401",
+                "attributeName": "风格",
+                "value": "仙女风",
+                "attributeNameTrans": "스타일",
+                "valueTrans": "요정 스타일"
+            },
+            {
+                "attributeId": "100031521",
+                "attributeName": "面料名称",
+                "value": "腈纶",
+                "attributeNameTrans": "원단명",
+                "valueTrans": "아크릴 섬유"
+            },
+            {
+                "attributeId": "117130178",
+                "attributeName": "主面料成分",
+                "value": "腈纶",
+                "attributeNameTrans": "주요 원단 구성",
+                "valueTrans": "아크릴 섬유"
+            },
+            {
+                "attributeId": "18066441",
+                "attributeName": "风格分类",
+                "value": "清新甜美",
+                "attributeNameTrans": "스타일 분류",
+                "valueTrans": "신선하고 달콤한"
+            },
+            {
+                "attributeId": "7195",
+                "attributeName": "处理工艺",
+                "value": "针织",
+                "attributeNameTrans": "처리 과정",
+                "valueTrans": "뜨개질"
+            },
+            {
+                "attributeId": "100301270",
+                "attributeName": "主要销售地区",
+                "value": "欧洲",
+                "attributeNameTrans": "주요 판매지역",
+                "valueTrans": "유럽"
+            },
+            {
+                "attributeId": "100301270",
+                "attributeName": "主要销售地区",
+                "value": "南美",
+                "attributeNameTrans": "주요 판매지역",
+                "valueTrans": "남미"
+            },
+            {
+                "attributeId": "100301270",
+                "attributeName": "主要销售地区",
+                "value": "东南亚",
+                "attributeNameTrans": "주요 판매지역",
+                "valueTrans": "동남아"
+            },
+            {
+                "attributeId": "100301270",
+                "attributeName": "主要销售地区",
+                "value": "北美",
+                "attributeNameTrans": "주요 판매지역",
+                "valueTrans": "북미"
+            },
+            {
+                "attributeId": "100301270",
+                "attributeName": "主要销售地区",
+                "value": "东北亚",
+                "attributeNameTrans": "주요 판매지역",
+                "valueTrans": "동북아시아"
+            },
+            {
+                "attributeId": "100301270",
+                "attributeName": "主要销售地区",
+                "value": "中东",
+                "attributeNameTrans": "주요 판매지역",
+                "valueTrans": "중동"
+            },
+            {
+                "attributeId": "446",
+                "attributeName": "尺寸",
+                "value": "165*25",
+                "attributeNameTrans": "크기",
+                "valueTrans": "165*25"
+            },
+            {
+                "attributeId": "275934765",
+                "attributeName": "流行元素分类",
+                "value": "形状/图案",
+                "attributeNameTrans": "인기 요소 분류",
+                "valueTrans": "모양/패턴"
             }
         ],
         "productSkuInfos": [
             {
-                "amountOnSale": 38,
-                "price": "47.0",
+                "amountOnSale": 9,
+                "price": "7.5",
                 "jxhyPrice": null,
-                "skuId": 5705677587369,
-                "specId": "149f04c1244c8abb073973032d06cba2",
+                "skuId": 5820406875215,
+                "specId": "cd7a301cc3e6dd472857a5c720479433",
                 "skuAttributes": [
                     {
                         "attributeId": 3216,
                         "attributeName": "颜色",
                         "attributeNameTrans": "색깔",
-                        "value": "孔雀绿",
-                        "valueTrans": "공작석 녹색",
-                        "skuImageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN01GPnOxT1L9IR89sask_!!2217592221256-0-cib.jpg"
+                        "value": "爆款墨绿色",
+                        "valueTrans": "인기 짙은 녹색",
+                        "skuImageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN01nt3Vkg1rkSJGMAFkv_!!2218888425669-0-cib.jpg"
                     },
                     {
-                        "attributeId": 100018513,
-                        "attributeName": "规格（长*宽）",
-                        "attributeNameTrans": "사양(길이*너비)",
-                        "value": "S码（胸围39-56cm）建议6-15斤",
-                        "valueTrans": "S사이즈(가슴둘레 39-56cm) 추천 3-7.5kg",
+                        "attributeId": 9024,
+                        "attributeName": "长度(CM)",
+                        "attributeNameTrans": "길이(CM)",
+                        "value": "165*25",
+                        "valueTrans": "165*25",
                         "skuImageUrl": null
                     }
                 ],
                 "pfJxhyPrice": null,
-                "consignPrice": "47.0",
-                "cargoNumber": "ZLHL-002C-S",
-                "promotionPrice": null
+                "consignPrice": "7.5",
+                "cargoNumber": "",
+                "promotionPrice": "7.13"
             },
             {
-                "amountOnSale": 44,
-                "price": "57.0",
+                "amountOnSale": 214311,
+                "price": "7.5",
                 "jxhyPrice": null,
-                "skuId": 5705677587370,
-                "specId": "c3727982dd7ce37ff502f1f21f72fee0",
+                "skuId": 5820406875214,
+                "specId": "f290a2a8a4c132fc02fa16ce2fa95b5a",
                 "skuAttributes": [
                     {
                         "attributeId": 3216,
                         "attributeName": "颜色",
                         "attributeNameTrans": "색깔",
-                        "value": "孔雀绿",
-                        "valueTrans": "공작석 녹색",
-                        "skuImageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN01GPnOxT1L9IR89sask_!!2217592221256-0-cib.jpg"
+                        "value": "爆款红色",
+                        "valueTrans": "인기 레드",
+                        "skuImageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN01UWPyhS1rkSJG2N5rQ_!!2218888425669-0-cib.jpg"
                     },
                     {
-                        "attributeId": 100018513,
-                        "attributeName": "规格（长*宽）",
-                        "attributeNameTrans": "사양(길이*너비)",
-                        "value": "M码（胸围49-73cm）建议15-30斤",
-                        "valueTrans": "M사이즈(가슴 49-73cm) 추천 7.5-15kg",
+                        "attributeId": 9024,
+                        "attributeName": "长度(CM)",
+                        "attributeNameTrans": "길이(CM)",
+                        "value": "165*25",
+                        "valueTrans": "165*25",
                         "skuImageUrl": null
                     }
                 ],
                 "pfJxhyPrice": null,
-                "consignPrice": "57.0",
-                "cargoNumber": "ZLHL-002C-L",
-                "promotionPrice": null
+                "consignPrice": "7.5",
+                "cargoNumber": "",
+                "promotionPrice": "7.13"
+            },
+            {
+                "amountOnSale": 27973,
+                "price": "7.5",
+                "jxhyPrice": null,
+                "skuId": 5820406875212,
+                "specId": "08b2a307900e741b1a9f5003416fb800",
+                "skuAttributes": [
+                    {
+                        "attributeId": 3216,
+                        "attributeName": "颜色",
+                        "attributeNameTrans": "색깔",
+                        "value": "爆款蓝色",
+                        "valueTrans": "인기 블루",
+                        "skuImageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN01urRBC31rkSJGdz4Em_!!2218888425669-0-cib.jpg"
+                    },
+                    {
+                        "attributeId": 9024,
+                        "attributeName": "长度(CM)",
+                        "attributeNameTrans": "길이(CM)",
+                        "value": "165*25",
+                        "valueTrans": "165*25",
+                        "skuImageUrl": null
+                    }
+                ],
+                "pfJxhyPrice": null,
+                "consignPrice": "7.5",
+                "cargoNumber": "",
+                "promotionPrice": "7.13"
             },
             {
                 "amountOnSale": 0,
-                "price": "47.0",
+                "price": "7.5",
                 "jxhyPrice": null,
-                "skuId": 5705677587371,
-                "specId": "9ce4784c07f38f3cab3dbf72274e2d47",
+                "skuId": 5820406875213,
+                "specId": "9d8e4179c31ef8606a304d6589a97574",
                 "skuAttributes": [
                     {
                         "attributeId": 3216,
                         "attributeName": "颜色",
                         "attributeNameTrans": "색깔",
-                        "value": "淡橘橙",
-                        "valueTrans": "라이트 오렌지",
-                        "skuImageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN01S7ZoHi1L9IR0T7IQr_!!2217592221256-0-cib.jpg"
+                        "value": "爆款黑色",
+                        "valueTrans": "인기 블랙",
+                        "skuImageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN01ZGMPxC1rkSJGdxzn2_!!2218888425669-0-cib.jpg"
                     },
                     {
-                        "attributeId": 100018513,
-                        "attributeName": "规格（长*宽）",
-                        "attributeNameTrans": "사양(길이*너비)",
-                        "value": "S码（胸围39-56cm）建议6-15斤",
-                        "valueTrans": "S사이즈(가슴둘레 39-56cm) 추천 3-7.5kg",
+                        "attributeId": 9024,
+                        "attributeName": "长度(CM)",
+                        "attributeNameTrans": "길이(CM)",
+                        "value": "165*25",
+                        "valueTrans": "165*25",
                         "skuImageUrl": null
                     }
                 ],
                 "pfJxhyPrice": null,
-                "consignPrice": "47.0",
-                "cargoNumber": "ZLHL-002D-S",
-                "promotionPrice": null
+                "consignPrice": "7.5",
+                "cargoNumber": "",
+                "promotionPrice": "7.13"
             },
             {
-                "amountOnSale": 35,
-                "price": "57.0",
+                "amountOnSale": 21383,
+                "price": "7.5",
                 "jxhyPrice": null,
-                "skuId": 5705677587372,
-                "specId": "191ff415cd4fae0f6c3f13260b98c713",
+                "skuId": 5820406875211,
+                "specId": "9da49a42993654e37a05352d3f9a52be",
                 "skuAttributes": [
                     {
                         "attributeId": 3216,
                         "attributeName": "颜色",
                         "attributeNameTrans": "색깔",
-                        "value": "淡橘橙",
-                        "valueTrans": "라이트 오렌지",
-                        "skuImageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN01S7ZoHi1L9IR0T7IQr_!!2217592221256-0-cib.jpg"
+                        "value": "爆款咖色",
+                        "valueTrans": "핫한 커피 컬러",
+                        "skuImageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN01390BJh1rkSJHNg22c_!!2218888425669-0-cib.jpg"
                     },
                     {
-                        "attributeId": 100018513,
-                        "attributeName": "规格（长*宽）",
-                        "attributeNameTrans": "사양(길이*너비)",
-                        "value": "M码（胸围49-73cm）建议15-30斤",
-                        "valueTrans": "M사이즈(가슴 49-73cm) 추천 7.5-15kg",
+                        "attributeId": 9024,
+                        "attributeName": "长度(CM)",
+                        "attributeNameTrans": "길이(CM)",
+                        "value": "165*25",
+                        "valueTrans": "165*25",
                         "skuImageUrl": null
                     }
                 ],
                 "pfJxhyPrice": null,
-                "consignPrice": "57.0",
-                "cargoNumber": "ZLHL-002D-L",
-                "promotionPrice": null
+                "consignPrice": "7.5",
+                "cargoNumber": "",
+                "promotionPrice": "7.13"
             },
             {
-                "amountOnSale": 36,
-                "price": "47.0",
+                "amountOnSale": 26753,
+                "price": "7.5",
                 "jxhyPrice": null,
-                "skuId": 5705677587373,
-                "specId": "6523bbaf440c7e3d2feda246d3a5b777",
+                "skuId": 5820406875217,
+                "specId": "a49e11948f207bb9b0633254f15a5059",
                 "skuAttributes": [
                     {
                         "attributeId": 3216,
                         "attributeName": "颜色",
                         "attributeNameTrans": "색깔",
-                        "value": "烈焰红",
-                        "valueTrans": "불꽃 레드",
-                        "skuImageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN01HHH7vP1L9IR8twtlg_!!2217592221256-0-cib.jpg"
+                        "value": "爆款灰色",
+                        "valueTrans": "인기 그레이",
+                        "skuImageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN01rDHrXT1rkSJHP5J1Z_!!2218888425669-0-cib.jpg"
                     },
                     {
-                        "attributeId": 100018513,
-                        "attributeName": "规格（长*宽）",
-                        "attributeNameTrans": "사양(길이*너비)",
-                        "value": "S码（胸围39-56cm）建议6-15斤",
-                        "valueTrans": "S사이즈(가슴둘레 39-56cm) 추천 3-7.5kg",
+                        "attributeId": 9024,
+                        "attributeName": "长度(CM)",
+                        "attributeNameTrans": "길이(CM)",
+                        "value": "165*25",
+                        "valueTrans": "165*25",
                         "skuImageUrl": null
                     }
                 ],
                 "pfJxhyPrice": null,
-                "consignPrice": "47.0",
-                "cargoNumber": "ZLHL-002F-S",
-                "promotionPrice": null
-            },
-            {
-                "amountOnSale": 43,
-                "price": "57.0",
-                "jxhyPrice": null,
-                "skuId": 5705677587374,
-                "specId": "f88c4144655ad50df97110911caafae6",
-                "skuAttributes": [
-                    {
-                        "attributeId": 3216,
-                        "attributeName": "颜色",
-                        "attributeNameTrans": "색깔",
-                        "value": "烈焰红",
-                        "valueTrans": "불꽃 레드",
-                        "skuImageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN01HHH7vP1L9IR8twtlg_!!2217592221256-0-cib.jpg"
-                    },
-                    {
-                        "attributeId": 100018513,
-                        "attributeName": "规格（长*宽）",
-                        "attributeNameTrans": "사양(길이*너비)",
-                        "value": "M码（胸围49-73cm）建议15-30斤",
-                        "valueTrans": "M사이즈(가슴 49-73cm) 추천 7.5-15kg",
-                        "skuImageUrl": null
-                    }
-                ],
-                "pfJxhyPrice": null,
-                "consignPrice": "57.0",
-                "cargoNumber": "ZLHL-002F-L",
-                "promotionPrice": null
-            },
-            {
-                "amountOnSale": 42,
-                "price": "47.0",
-                "jxhyPrice": null,
-                "skuId": 5705677587375,
-                "specId": "630fcac8396311087c843bf3685bc8d3",
-                "skuAttributes": [
-                    {
-                        "attributeId": 3216,
-                        "attributeName": "颜色",
-                        "attributeNameTrans": "색깔",
-                        "value": "宝石蓝",
-                        "valueTrans": "사파이어 블루",
-                        "skuImageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN0112nj001L9IR7VjJ8i_!!2217592221256-0-cib.jpg"
-                    },
-                    {
-                        "attributeId": 100018513,
-                        "attributeName": "规格（长*宽）",
-                        "attributeNameTrans": "사양(길이*너비)",
-                        "value": "S码（胸围39-56cm）建议6-15斤",
-                        "valueTrans": "S사이즈(가슴둘레 39-56cm) 추천 3-7.5kg",
-                        "skuImageUrl": null
-                    }
-                ],
-                "pfJxhyPrice": null,
-                "consignPrice": "47.0",
-                "cargoNumber": "ZLHL-002A-S",
-                "promotionPrice": null
-            },
-            {
-                "amountOnSale": 46,
-                "price": "57.0",
-                "jxhyPrice": null,
-                "skuId": 5705677587376,
-                "specId": "bda906b1035273e44018f0bbbec51973",
-                "skuAttributes": [
-                    {
-                        "attributeId": 3216,
-                        "attributeName": "颜色",
-                        "attributeNameTrans": "색깔",
-                        "value": "宝石蓝",
-                        "valueTrans": "사파이어 블루",
-                        "skuImageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN0112nj001L9IR7VjJ8i_!!2217592221256-0-cib.jpg"
-                    },
-                    {
-                        "attributeId": 100018513,
-                        "attributeName": "规格（长*宽）",
-                        "attributeNameTrans": "사양(길이*너비)",
-                        "value": "M码（胸围49-73cm）建议15-30斤",
-                        "valueTrans": "M사이즈(가슴 49-73cm) 추천 7.5-15kg",
-                        "skuImageUrl": null
-                    }
-                ],
-                "pfJxhyPrice": null,
-                "consignPrice": "57.0",
-                "cargoNumber": "ZLHL-002A-L",
-                "promotionPrice": null
+                "consignPrice": "7.5",
+                "cargoNumber": "",
+                "promotionPrice": "7.13"
             }
         ],
         "productSaleInfo": {
             "priceRanges": null,
-            "amountOnSale": 284,
+            "amountOnSale": 290429,
             "priceRangeList": [
                 {
                     "startQuantity": 1,
-                    "price": "47.0",
+                    "price": "7.5",
                     "promotionPrice": null
                 }
             ],
@@ -390,12 +514,12 @@
             "consignPrice": null,
             "jxhyPrice": null,
             "unitInfo": {
-                "unit": "个",
-                "transUnit": "하나"
+                "unit": "条",
+                "transUnit": "기사"
             }
         },
         "productShippingInfo": {
-            "sendGoodsAddressText": "广东省广州市",
+            "sendGoodsAddressText": "浙江省金华市",
             "weight": null,
             "width": null,
             "height": null,
@@ -404,97 +528,76 @@
             "shippingTimeGuarantee": "shipIn48Hours",
             "skuShippingDetails": [
                 {
-                    "skuId": "5705677587370",
+                    "skuId": "5820406875217",
                     "width": 0,
                     "length": 0,
                     "height": 0,
-                    "weight": 0.5,
+                    "weight": 0.3,
                     "pkgSizeSource": "商家自填"
                 },
                 {
-                    "skuId": "5705677587369",
+                    "skuId": "5820406875215",
                     "width": 0,
                     "length": 0,
                     "height": 0,
-                    "weight": 0.5,
+                    "weight": 0.3,
                     "pkgSizeSource": "商家自填"
                 },
                 {
-                    "skuId": "5705677587376",
+                    "skuId": "5820406875214",
                     "width": 0,
                     "length": 0,
                     "height": 0,
-                    "weight": 0.5,
+                    "weight": 0.3,
                     "pkgSizeSource": "商家自填"
                 },
                 {
-                    "skuId": "5705677587375",
+                    "skuId": "5820406875213",
                     "width": 0,
                     "length": 0,
                     "height": 0,
-                    "weight": 0.5,
+                    "weight": 0.3,
                     "pkgSizeSource": "商家自填"
                 },
                 {
-                    "skuId": "5705677587374",
+                    "skuId": "5820406875212",
                     "width": 0,
                     "length": 0,
                     "height": 0,
-                    "weight": 0.5,
+                    "weight": 0.3,
                     "pkgSizeSource": "商家自填"
                 },
                 {
-                    "skuId": "5705677587373",
+                    "skuId": "5820406875211",
                     "width": 0,
                     "length": 0,
                     "height": 0,
-                    "weight": 0.5,
-                    "pkgSizeSource": "商家自填"
-                },
-                {
-                    "skuId": "5705677587372",
-                    "width": 0,
-                    "length": 0,
-                    "height": 0,
-                    "weight": 0.5,
-                    "pkgSizeSource": "商家自填"
-                },
-                {
-                    "skuId": "5705677587371",
-                    "width": 0,
-                    "length": 0,
-                    "height": 0,
-                    "weight": 0.5,
+                    "weight": 0.3,
                     "pkgSizeSource": "商家自填"
                 }
             ],
             "pkgSizeSource": null
         },
-        "sellerOpenId": "BBBNLox0NYsHrlGYo0xP-anIw",
+        "sellerOpenId": "BBBGIzzltF29NDdsy3XtH0mbA",
         "sellerDataInfo": {
-            "tradeMedalLevel": "1",
+            "tradeMedalLevel": "2",
             "compositeServiceScore": "4.0",
             "logisticsExperienceScore": "3.0",
             "disputeComplaintScore": "5.0",
             "offerExperienceScore": "5.0",
-            "consultingExperienceScore": "0.0",
-            "repeatPurchasePercent": "0.7111843597329489",
-            "afterSalesExperienceScore": "4.4",
+            "consultingExperienceScore": "5.0",
+            "repeatPurchasePercent": "0.4908511424581573",
+            "afterSalesExperienceScore": "2.3",
             "collect30DayWithin48HPercent": "1.0",
             "qualityRefundWithin30Day": "0.0"
         },
-        "sellerMixSetting": {
-            "isGeneralHunpi": null,
-            "mixAmount": 1000,
-            "mixNumber": 2,
-            "generalHunpi": true
-        },
+        "sellerMixSetting": null,
         "status": "published",
-        "soldOut": "38",
+        "soldOut": "52",
         "tagInfoList": [
             {
                 "key": "isOnePsale",
-                "value": false
+                "value": true
             },
             {
                 "key": "isSupportMix",
@@ -502,7 +605,7 @@
             },
             {
                 "key": "isOnePsaleFreePostage",
-                "value": false
+                "value": true
             },
             {
                 "key": "noReason7DReturn",
@@ -510,21 +613,32 @@
             },
             {
                 "key": "1688_yx",
-                "value": false
+                "value": true
+            },
+            {
+                "key": "isQqyx",
+                "value": true
+            },
+            {
+                "key": "select",
+                "value": true
             }
         ],
-        "isJxhy": false,
+        "isJxhy": true,
         "minOrderQuantity": 1,
         "batchNumber": null,
-        "productCargoNumber": "ZLHL-002",
+        "productCargoNumber": "002",
         "channelPrice": null,
-        "promotionModel": null,
-        "tradeScore": "5.0",
+        "promotionModel": {
+            "hasPromotion": true,
+            "promotionType": "plus"
+        },
+        "tradeScore": "4.9",
         "sellingPoint": null,
         "offerIdentities": [
             "tp_member"
         ],
-        "createDate": "2024-08-08 15:14:21",
-        "traceInfo": "object_id@822737307436^object_type@offer"
+        "createDate": "2024-11-12 19:22:50",
+        "traceInfo": "object_id@852315035423^object_type@offer"
     }
 }

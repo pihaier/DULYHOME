@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, Suspense, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   Box,
   Typography,
@@ -19,6 +20,7 @@ import {
   DialogActions,
   CircularProgress,
   Drawer,
+  Snackbar,
 } from '@mui/material';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
@@ -47,6 +49,7 @@ interface ProductInfoProps {
   onAddToCart?: () => void;
   onOpenCalculator: () => void;
   onFindSimilar?: () => void;
+  user?: any;
 }
 
 // ChatPanel 동적 import
@@ -61,8 +64,10 @@ export default function ProductInfo({
   onAttributeSelect,
   onAddToCart,
   onOpenCalculator,
-  onFindSimilar 
+  onFindSimilar,
+  user
 }: ProductInfoProps) {
+  const router = useRouter();
   const [chatDialog, setChatDialog] = useState(false);
   const [skuModalOpen, setSkuModalOpen] = useState(false);
   const [tempSelectedSku, setTempSelectedSku] = useState(selectedSku);
@@ -70,6 +75,7 @@ export default function ProductInfo({
   const [tempSelectedAttributes, setTempSelectedAttributes] = useState<{ [key: string]: string }>({});
   const [imageModalOpen, setImageModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState('');
+  const [loginAlert, setLoginAlert] = useState(false);
   
   // 모달이 열릴 때 현재 선택된 SKU와 수량을 임시 상태에 동기화
   useEffect(() => {
@@ -475,7 +481,17 @@ export default function ProductInfo({
           fullWidth
           color="info"
           startIcon={<ChatIcon />}
-          onClick={() => setChatDialog(true)}
+          onClick={() => {
+            if (!user) {
+              setLoginAlert(true);
+              // 2초 후 로그인 페이지로 리다이렉트
+              setTimeout(() => {
+                router.push('/auth/customer/login?redirect=' + encodeURIComponent(window.location.pathname));
+              }, 2000);
+            } else {
+              setChatDialog(true);
+            }
+          }}
         >
           제품 문의하기
         </Button>
@@ -921,6 +937,18 @@ export default function ProductInfo({
           </Box>
         </DialogContent>
       </Dialog>
+
+      {/* 로그인 필요 알림 */}
+      <Snackbar
+        open={loginAlert}
+        autoHideDuration={2000}
+        onClose={() => setLoginAlert(false)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert severity="warning" onClose={() => setLoginAlert(false)}>
+          문의하기 기능은 로그인이 필요합니다. 로그인 페이지로 이동합니다...
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }

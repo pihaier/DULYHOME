@@ -9,12 +9,12 @@ import type { Product1688 } from '../../types';
 
 interface ProductCardProps {
   product: Product1688;
+  index?: number;
   onDetailClick?: (offerId: number) => void;
-  onInquiryClick?: (product: Product1688) => void;
   onFindSimilar?: (imageUrl: string) => void;
 }
 
-function ProductCard({ product, onDetailClick, onInquiryClick, onFindSimilar }: ProductCardProps) {
+function ProductCard({ product, index = 0, onDetailClick, onFindSimilar }: ProductCardProps) {
   const router = useRouter();
   const [imageError, setImageError] = React.useState(false);
 
@@ -27,12 +27,7 @@ function ProductCard({ product, onDetailClick, onInquiryClick, onFindSimilar }: 
     }
   };
 
-  const handleInquiryClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (onInquiryClick) {
-      onInquiryClick(product);
-    }
-  };
+
 
   const handleFindSimilar = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -95,11 +90,10 @@ function ProductCard({ product, onDetailClick, onInquiryClick, onFindSimilar }: 
             }}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             onError={() => {
-              console.error('Image load failed:', product.imageUrl);
               setImageError(true);
             }}
-            priority={false}
-            loading="lazy"
+            priority={index < 4}
+            loading={index < 4 ? "eager" : "lazy"}
           />
         ) : (
           <Box 
@@ -193,16 +187,7 @@ function ProductCard({ product, onDetailClick, onInquiryClick, onFindSimilar }: 
           )}
         </Box>
 
-        {/* 액션 버튼 */}
-        <Button
-          variant="outlined"
-          size="small"
-          fullWidth
-          onClick={handleInquiryClick}
-          sx={{ mt: 'auto' }}
-        >
-          문의하기
-        </Button>
+
       </CardContent>
     </Card>
   );

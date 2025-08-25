@@ -77,11 +77,9 @@ export function useImageSearch(): UseImageSearchReturn {
         throw new Error('이미지 ID를 받지 못했습니다');
       }
 
-      console.log('이미지 업로드 성공:', imageId);
       return imageId;
 
     } catch (err) {
-      console.error('이미지 업로드 오류:', err);
       setError(err instanceof Error ? err.message : '이미지 업로드 중 오류가 발생했습니다.');
       return null;
     } finally {
@@ -138,13 +136,6 @@ export function useImageSearch(): UseImageSearchReturn {
         return acc;
       }, {} as any);
 
-      console.log('이미지 검색 파라미터:', {
-        ...cleanParams,
-        isImageAddress,
-        hasImageAddress: 'imageAddress' in cleanParams,
-        hasImageId: 'imageId' in cleanParams
-      });
-
       // Edge Function 호출 - 이미지 검색
       const { data, error: searchError } = await functionsClient.invoke('search-by-image', {
         body: cleanParams,
@@ -173,7 +164,6 @@ export function useImageSearch(): UseImageSearchReturn {
       return searchResults;
 
     } catch (err) {
-      console.error('이미지 검색 오류:', err);
       setError(err instanceof Error ? err.message : '이미지 검색 중 오류가 발생했습니다.');
       setProducts([]);
       return [];
