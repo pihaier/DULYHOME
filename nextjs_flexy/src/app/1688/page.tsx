@@ -39,6 +39,8 @@ export default function Search1688Page() {
     isOnePsale: false,
     priceMin: '',
     priceMax: '',
+    shipInToday: false,
+    ksCiphertext: false,
   });
 
   // 키워드 카테고리 Hook 사용
