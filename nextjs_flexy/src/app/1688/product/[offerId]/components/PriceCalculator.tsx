@@ -224,7 +224,6 @@ export default function PriceCalculator({
 
       if (response.ok) {
         const data = await response.json();
-        console.log('Tariff API Response:', data);
 
         if (data.success && data.tariffRates) {
           // 기본관세, WTO, 한중FTA 3개만 비교하여 최저값 선택

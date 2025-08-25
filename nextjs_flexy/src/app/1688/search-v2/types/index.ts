@@ -118,8 +118,10 @@ export interface CategoryQueryParams {
 
 // 필터 옵션
 export interface FilterOptions {
-  isJxhy?: boolean;          // 精选货源 (우수 공급업체)
-  isOnePsale?: boolean;      // 一件代发 (드롭쉬핑 가능)
+  isJxhy?: boolean;          // 精选货源 (우수공급업체)
+  isOnePsale?: boolean;      // 一件代发 (드롭쉬핑)
+  shipInToday?: boolean;     // 当日发货 (당일발송)
+  ksCiphertext?: boolean;    // 金牌商家 (골드셀러)
   priceRange?: {
     min?: string;
     max?: string;
@@ -150,6 +152,8 @@ export const SORT_OPTIONS: Record<string, { label: string; value: SortOption }> 
 export interface SelectedFilters {
   isJxhy: boolean;
   isOnePsale: boolean;
+  shipInToday: boolean;
+  ksCiphertext: boolean;
   priceMin: string;
   priceMax: string;
 }

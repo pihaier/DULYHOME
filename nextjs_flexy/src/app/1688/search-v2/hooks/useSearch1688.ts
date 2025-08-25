@@ -59,10 +59,18 @@ export function useSearch1688({
       filterParts.push('isOnePsale');
     }
     
+    if (filters.shipInToday) {
+      filterParts.push('shipInToday');
+    }
+    
+    if (filters.ksCiphertext) {
+      filterParts.push('ksCiphertext');
+    }
+    
     return filterParts.length > 0 ? filterParts.join(',') : undefined;
   }, [filters]);
 
-  const searchProducts = async () => {
+  const searchProducts = useCallback(async () => {
     // 키워드, 카테고리ID, snIds 모두 없으면 리턴
     if ((!keyword || keyword.trim() === '') && !categoryId && (!snIds || snIds.length === 0)) {
       setProducts([]);
@@ -135,7 +143,7 @@ export function useSearch1688({
     } finally {
       setLoading(false);
     }
-  };
+  }, [keyword, page, sortBy, filters, categoryId, snIds, buildFilterString, functionsClient]);
 
   // 검색 파라미터 변경 시 자동 검색
   useEffect(() => {
@@ -143,7 +151,7 @@ export function useSearch1688({
     if (keyword && keyword.trim()) {
       searchProducts();
     }
-  }, [keyword, page, snIds, sortBy, filters]);
+  }, [keyword, searchProducts]);
 
   // 수동 재검색 함수
   const refetch = async () => {

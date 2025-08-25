@@ -1,6 +1,6 @@
 
 const nextConfig = {
-    reactStrictMode: true,
+    reactStrictMode: false, // API 1번 호출을 위해 비활성화
     images: {
         remotePatterns: [
             {

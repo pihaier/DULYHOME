@@ -43,11 +43,11 @@ function ProductCard({ product, index = 0, onDetailClick, onFindSimilar }: Produ
   const price = product.priceInfo?.price ? parseFloat(product.priceInfo.price) : null;
   const consignPrice = product.priceInfo?.consignPrice ? parseFloat(product.priceInfo.consignPrice) : null;
   
-  // 1개 구매 가능하고 consignPrice가 있으면 두 가격 모두 표시
-  const displayPrice = product.isOnePsale && consignPrice
-    ? `¥${consignPrice.toFixed(2)} (도매: ¥${price?.toFixed(2)})`
-    : price 
-    ? `¥${price.toFixed(2)}`
+  // 가격 표시 로직: 실제 가격과 드롭쉬핑 가격 구분
+  const displayPrice = price 
+    ? product.isOnePsale && consignPrice
+      ? `¥${price.toFixed(2)}${consignPrice !== price ? ` / 드롭쉬핑: ¥${consignPrice.toFixed(2)}` : ''}`
+      : `¥${price.toFixed(2)}`
     : '가격 문의';
 
   // 재구매율 표시 (이미 "12%" 형태로 옴)
@@ -174,7 +174,7 @@ function ProductCard({ product, index = 0, onDetailClick, onFindSimilar }: Produ
             <Chip label="우수공급업체" size="small" color="primary" />
           )}
           {product.isOnePsale && (
-            <Chip label="1개 구매가능" size="small" color="success" />
+            <Chip label="드롭쉬핑" size="small" color="success" />
           )}
           {product.sellerIdentities?.includes('manufacturer') && (
             <Chip label="공장인증" size="small" color="info" />

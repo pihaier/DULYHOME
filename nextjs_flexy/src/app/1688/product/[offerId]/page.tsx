@@ -204,7 +204,6 @@ export default function ProductDetailPage() {
           }
         }
       });
-      console.log('Setting selectedSkus:', skus);
       setSelectedSkus(skus);
     }
   }, [productDetail]);
@@ -277,10 +276,7 @@ export default function ProductDetailPage() {
         );
 
         if (matchingSku) {
-          console.log('Setting selectedSku:', matchingSku);
           setSelectedSku(matchingSku);
-        } else {
-          console.log('No matching SKU found for attributes:', newAttributes);
         }
       }
     }

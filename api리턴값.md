@@ -1,644 +1,228 @@
 {
     "success": true,
     "data": {
-        "offerId": 852315035423,
-        "categoryId": 325,
-        "categoryName": null,
-        "topCategoryId": 54,
-        "secondCategoryId": 127508004,
-        "thirdCategoryId": 325,
-        "subject": "2024针织毛线围巾围脖女冬季新款高级感百搭韩版纯色保暖学院风短",
-        "subjectTrans": "2024 니트 양모 스카프 여자 겨울 새 하이 엔드 올매치 한국식 솔리드 컬러 따뜻한 프리피 스타일 쇼트",
-        "description": "<div id=\"offer-template-0\"></div><div style=\"width: 790.0px;\"><img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01Yc5rIz1rkSJ1Re7Lf_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_0\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01jxXwGD1rkSJ20cxlW_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_1\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01EEb84i1rkSJ4JKIST_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_2\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01LGbed01rkSJ1RfKCB_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_3\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01SmqBHd1rkSJ2bHsF9_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_4\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN0102Lt0Q1rkSIzLVLla_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_5\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01Q4so1Z1rkSJ3mESv2_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_6\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01vaa22J1rkSJ03yd89_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_7\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN012zMUaj1rkSJ2xuuzE_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_8\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01tYLWNp1rkSJ1vJTH2_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_9\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01rWWFTG1rkSJ0HV8tj_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_10\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01Tz6e6o1rkSJ4nzLSq_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_11\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01zHaXKH1rkSJ2bHwO2_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_12\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN012lEshh1rkSJ3mHHYJ_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_13\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01lvqB6A1rkSJ1vJsEh_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_14\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01xQwCDe1rkSJ4JKA8P_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_15\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01UvCHeO1rkSJ2xvvKU_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_16\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01oLNHmd1rkSJ4JLq4j_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_17\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01DhiaE11rkSJ3mGD0p_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_18\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN018jIeQQ1rkSJ3mFjwT_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_19\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN016NPNfu1rkSJ3mGbyl_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_20\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01Gc35ti1rkSJ3fygtq_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_21\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN011WnakH1rkSIzLUsfG_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_22\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN0123EBJX1rkSIzLVt1H_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_23\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01IRSsbi1rkSJ20eAad_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_24\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN012dpXF21rkSJ29bti1_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_25\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01bJ6MSO1rkSJ3fxor0_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_26\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01Hfstgb1rkSJ2xtueC_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_27\"/> <img style=\"display: block;width: 100.0%;height: auto;\" src=\"https://cbu01.alicdn.com/img/ibank/O1CN01o7N93O1rkSJ29aDk4_!!2218888425669-0-cib.jpg\" usemap=\"#_sdmap_28\"/></div>",
-        "mainVideo": "https://cloud.video.taobao.com/play/u/2218888425669/p/1/e/6/t/1/492819077642.mp4",
-        "detailVideo": null,
-        "productImage": {
-            "images": [
-                "https://cbu01.alicdn.com/img/ibank/O1CN01j8ECTv1rkSJ39nNcw_!!2218888425669-0-cib.jpg",
-                "https://cbu01.alicdn.com/img/ibank/O1CN01rGFXSa1rkSJ2eMGQg_!!2218888425669-0-cib.jpg",
-                "https://cbu01.alicdn.com/img/ibank/O1CN01C51JIm1rkSJHNajMG_!!2218888425669-0-cib.jpg",
-                "https://cbu01.alicdn.com/img/ibank/O1CN014jYvoQ1rkSJIA1OA5_!!2218888425669-0-cib.jpg",
-                "https://cbu01.alicdn.com/img/ibank/O1CN01QFAzjg1rkSJIAN8lB_!!2218888425669-0-cib.jpg"
-            ]
-        },
-        "productAttribute": [
+        "sellerOpenId": "BBBQZd-P6RgzdacZ0q4WbaEeg",
+        "totalRecords": 12,
+        "totalPage": 2,
+        "pageSize": 12,
+        "currentPage": 1,
+        "data": [
             {
-                "attributeId": "2176",
-                "attributeName": "品牌",
-                "value": "其他",
-                "attributeNameTrans": "브랜드",
-                "valueTrans": "다른"
+                "imageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN01jXBf6U1yYH13ng4QX_!!2213333416590-0-cib.jpg",
+                "subject": "红白黑色手提塑料袋 外卖打包袋透明超市购物袋食品级背心袋批发",
+                "subjectTrans": "빨간색과 흰색 검은 색 휴대용 비닐 봉지 일회용 야채 시장 슈퍼마켓 투명 빨간색과 검은 색 조끼 쇼핑백 도매",
+                "offerId": 680012407138,
+                "isJxhy": true,
+                "priceInfo": {
+                    "price": "0.56",
+                    "jxhyPrice": "0.56",
+                    "pfJxhyPrice": "0.56",
+                    "consignPrice": "3"
+                },
+                "repurchaseRate": "23%",
+                "monthSold": 5299386,
+                "traceInfo": "object_id%40680012407138%5Eobject_type%40offer%5Etrace%402108837b17560952320206025e0f26%5Ekeyword%40null%5EoutMemberId%40null",
+                "isOnePsale": true,
+                "sellerIdentities": []
             },
             {
-                "attributeId": "188",
-                "attributeName": "编织方法",
-                "value": "经编",
-                "attributeNameTrans": "뜨개질 방법",
-                "valueTrans": "경편"
+                "imageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN01YzfiF41yYGsmE1Bge_!!2213333416590-0-cib.jpg",
+                "subject": "食品级透明白色塑料袋一次性全新料背心塑料袋手提袋子厂家批发",
+                "subjectTrans": "식품 등급 투명 흰색 비닐 봉투 일회용 신소재 조끼 비닐 봉투 핸드백 제조 업체 도매",
+                "offerId": 700638611025,
+                "isJxhy": true,
+                "priceInfo": {
+                    "price": "0.63",
+                    "jxhyPrice": "0.63",
+                    "pfJxhyPrice": "0.63",
+                    "consignPrice": "3"
+                },
+                "repurchaseRate": "29%",
+                "monthSold": 178470,
+                "traceInfo": "object_id%40700638611025%5Eobject_type%40offer%5Etrace%402108837b17560952320206025e0f26%5Ekeyword%40null%5EoutMemberId%40null",
+                "isOnePsale": true,
+                "sellerIdentities": []
             },
             {
-                "attributeId": "1141",
-                "attributeName": "功能",
-                "value": "保暖",
-                "attributeNameTrans": "기능",
-                "valueTrans": "따뜻하게 유지하다"
+                "imageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN01ozi0U51yYH151DDrx_!!2213333416590-0-cib.jpg",
+                "subject": "红白黑色手提塑料袋 一次性菜市场超市透明红黑色背心购物袋批发",
+                "subjectTrans": "빨간색과 흰색 검은 색 휴대용 비닐 봉지 일회용 야채 시장 슈퍼마켓 투명 빨간색과 검은 색 조끼 쇼핑백 도매",
+                "offerId": 779508722222,
+                "isJxhy": true,
+                "priceInfo": {
+                    "price": "0.56",
+                    "jxhyPrice": "0.56",
+                    "pfJxhyPrice": "0.56",
+                    "consignPrice": "33"
+                },
+                "repurchaseRate": "8%",
+                "monthSold": 48245,
+                "traceInfo": "object_id%40779508722222%5Eobject_type%40offer%5Etrace%402108837b17560952320206025e0f26%5Ekeyword%40null%5EoutMemberId%40null",
+                "isOnePsale": true,
+                "sellerIdentities": []
             },
             {
-                "attributeId": "2531",
-                "attributeName": "适合季节",
-                "value": "秋季",
-                "attributeNameTrans": "계절에 적합",
-                "valueTrans": "가을"
+                "imageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN01WbObFG1yYGw8TwNEk_!!2213333416590-0-cib.jpg",
+                "subject": "塑料袋批发白色透明手提方便袋外卖打包袋超市购物袋背心袋包装袋",
+                "subjectTrans": "비닐 봉투 도매 흰색 투명 휴대용 편의 가방 테이크 아웃 포장 가방 슈퍼마켓 쇼핑백 조끼 가방 포장 가방",
+                "offerId": 673006463832,
+                "isJxhy": true,
+                "priceInfo": {
+                    "price": "0.56",
+                    "jxhyPrice": "0.56",
+                    "pfJxhyPrice": "0.56",
+                    "consignPrice": "3"
+                },
+                "repurchaseRate": "31%",
+                "monthSold": 47058,
+                "traceInfo": "object_id%40673006463832%5Eobject_type%40offer%5Etrace%402108837b17560952320206025e0f26%5Ekeyword%40null%5EoutMemberId%40null",
+                "isOnePsale": true,
+                "sellerIdentities": []
             },
             {
-                "attributeId": "1398",
-                "attributeName": "货号",
-                "value": "002",
-                "attributeNameTrans": "품목 번호",
-                "valueTrans": "002"
+                "imageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN013zKnkl1yYGquf44vw_!!2213333416590-0-cib.jpg",
+                "subject": "黑色垃圾袋批发一次性加厚家用背心垃圾袋超市菜市场手提购物袋子",
+                "subjectTrans": "검은 쓰레기 봉투 도매 일회용 가정 조끼 쓰레기 봉투 슈퍼마켓 야채 시장 휴대용 쇼핑백",
+                "offerId": 671950568418,
+                "isJxhy": false,
+                "priceInfo": {
+                    "price": "0.70",
+                    "jxhyPrice": null,
+                    "pfJxhyPrice": null,
+                    "consignPrice": "3.15"
+                },
+                "repurchaseRate": "9%",
+                "monthSold": 25919,
+                "traceInfo": "object_id%40671950568418%5Eobject_type%40offer%5Etrace%402108837b17560952320206025e0f26%5Ekeyword%40null%5EoutMemberId%40null",
+                "isOnePsale": true,
+                "sellerIdentities": []
             },
             {
-                "attributeId": "346",
-                "attributeName": "产地",
-                "value": "浙江",
-                "attributeNameTrans": "원산지",
-                "valueTrans": "저장성"
+                "imageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN01BwKN9X1yYGzhIqmLO_!!2213333416590-0-cib.jpg",
+                "subject": "奶茶打包袋单双杯一次性加厚透明手提塑料袋网红豆浆袋饮品饮料袋",
+                "subjectTrans": "우유 차 포장 가방 싱글 더블 컵 일회용 두껍게 투명 휴대용 비닐 봉투 인터넷 유명 인사 콩 우유 가방 음료 음료 가방",
+                "offerId": 764766537988,
+                "isJxhy": true,
+                "priceInfo": {
+                    "price": "3.40",
+                    "jxhyPrice": "3.40",
+                    "pfJxhyPrice": "3.4",
+                    "consignPrice": "3.4"
+                },
+                "repurchaseRate": "14%",
+                "monthSold": 14930,
+                "traceInfo": "object_id%40764766537988%5Eobject_type%40offer%5Etrace%402108837b17560952320206025e0f26%5Ekeyword%40null%5EoutMemberId%40null",
+                "isOnePsale": true,
+                "sellerIdentities": []
             },
             {
-                "attributeId": "1811",
-                "attributeName": "款式",
-                "value": "加长",
-                "attributeNameTrans": "스타일",
-                "valueTrans": "확장"
+                "imageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN01pfRuZs1yYGqtt23mg_!!2213333416590-0-cib.jpg",
+                "subject": "红色塑料袋厂家批发加厚一次性打包购物袋超市婚庆手提背心方便袋",
+                "subjectTrans": "빨강 비닐 봉투 메이커 도매 두꺼운 일회용 포장 쇼핑백 슈퍼마켓 결혼식 휴대용 조끼 편리한 가방",
+                "offerId": 673007875173,
+                "isJxhy": false,
+                "priceInfo": {
+                    "price": "1.00",
+                    "jxhyPrice": null,
+                    "pfJxhyPrice": null,
+                    "consignPrice": "3.4"
+                },
+                "repurchaseRate": "15%",
+                "monthSold": 13038,
+                "traceInfo": "object_id%40673007875173%5Eobject_type%40offer%5Etrace%402108837b17560952320206025e0f26%5Ekeyword%40null%5EoutMemberId%40null",
+                "isOnePsale": true,
+                "sellerIdentities": []
             },
             {
-                "attributeId": "3216",
-                "attributeName": "颜色",
-                "value": "爆款墨绿色",
-                "attributeNameTrans": "색깔",
-                "valueTrans": "인기 짙은 녹색"
+                "imageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN017zOHoJ1yYGsoGjKrY_!!2213333416590-0-cib.jpg",
+                "subject": "白色红色食品袋塑料袋 透明一次性外卖打包袋全新料背心袋子批发",
+                "subjectTrans": "흰색 빨강 식품 봉투 비닐 봉투 투명 일회용 포장용 포장 봉투 신소재 조끼 가방 도매",
+                "offerId": 700364966807,
+                "isJxhy": true,
+                "priceInfo": {
+                    "price": "0.63",
+                    "jxhyPrice": "0.63",
+                    "pfJxhyPrice": "0.63",
+                    "consignPrice": "3"
+                },
+                "repurchaseRate": "22%",
+                "monthSold": 9909,
+                "traceInfo": "object_id%40700364966807%5Eobject_type%40offer%5Etrace%402108837b17560952320206025e0f26%5Ekeyword%40null%5EoutMemberId%40null",
+                "isOnePsale": true,
+                "sellerIdentities": []
             },
             {
-                "attributeId": "3216",
-                "attributeName": "颜色",
-                "value": "爆款红色",
-                "attributeNameTrans": "색깔",
-                "valueTrans": "인기 레드"
+                "imageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN018huJXL1yYH0xp1uJk_!!2213333416590-0-cib.jpg",
+                "subject": "黑色大垃圾袋加厚酒店餐饮环卫物业大号塑料袋商用平口垃圾袋批发",
+                "subjectTrans": "블랙 대형 쓰레기 봉투 두꺼운 호텔 취사 위생 재산 대형 비닐 봉투 상업용 평면 쓰레기 봉투 도매",
+                "offerId": 684051903459,
+                "isJxhy": false,
+                "priceInfo": {
+                    "price": "4.00",
+                    "jxhyPrice": null,
+                    "pfJxhyPrice": null,
+                    "consignPrice": "4"
+                },
+                "repurchaseRate": "20%",
+                "monthSold": 845,
+                "traceInfo": "object_id%40684051903459%5Eobject_type%40offer%5Etrace%402108837b17560952320206025e0f26%5Ekeyword%40null%5EoutMemberId%40null",
+                "isOnePsale": true,
+                "sellerIdentities": []
             },
             {
-                "attributeId": "3216",
-                "attributeName": "颜色",
-                "value": "爆款蓝色",
-                "attributeNameTrans": "색깔",
-                "valueTrans": "인기 블루"
+                "imageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN01AdpiEs1yYGqU3LlZ9_!!2213333416590-0-cib.jpg",
+                "subject": "一件代发包邮 一次性抽绳束口手提式垃圾袋家用商用 厂家批发代发",
+                "subjectTrans": "우송료 일회용 드로스트링 빔 휴대 쓰레기 봉투 가정용 상업 메이커 도매 발전",
+                "offerId": 681076138506,
+                "isJxhy": false,
+                "priceInfo": {
+                    "price": "3.10",
+                    "jxhyPrice": null,
+                    "pfJxhyPrice": null,
+                    "consignPrice": "3.1"
+                },
+                "repurchaseRate": "29%",
+                "monthSold": 289,
+                "traceInfo": "object_id%40681076138506%5Eobject_type%40offer%5Etrace%402108837b17560952320206025e0f26%5Ekeyword%40null%5EoutMemberId%40null",
+                "isOnePsale": true,
+                "sellerIdentities": []
             },
             {
-                "attributeId": "3216",
-                "attributeName": "颜色",
-                "value": "爆款黑色",
-                "attributeNameTrans": "색깔",
-                "valueTrans": "인기 블랙"
+                "imageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN01pktm2J1yYGqxvv3kz_!!2213333416590-0-cib.jpg",
+                "subject": "特大号手提背心包装袋批发 加厚防刺破搬家收纳方便袋服装大袋子",
+                "subjectTrans": "초대형 휴대용 조끼 포장 가방 도매 두꺼운 펑크 방지 이동 보관 편리한 가방 의류 큰 가방",
+                "offerId": 683265842835,
+                "isJxhy": true,
+                "priceInfo": {
+                    "price": "9.45",
+                    "jxhyPrice": "7.27",
+                    "pfJxhyPrice": "4.74",
+                    "consignPrice": "7.27"
+                },
+                "repurchaseRate": "16%",
+                "monthSold": 220,
+                "traceInfo": "object_id%40683265842835%5Eobject_type%40offer%5Etrace%402108837b17560952320206025e0f26%5Ekeyword%40null%5EoutMemberId%40null",
+                "isOnePsale": true,
+                "sellerIdentities": []
             },
             {
-                "attributeId": "3216",
-                "attributeName": "颜色",
-                "value": "爆款咖色",
-                "attributeNameTrans": "색깔",
-                "valueTrans": "핫한 커피 컬러"
-            },
-            {
-                "attributeId": "3216",
-                "attributeName": "颜色",
-                "value": "爆款灰色",
-                "attributeNameTrans": "색깔",
-                "valueTrans": "인기 그레이"
-            },
-            {
-                "attributeId": "9024",
-                "attributeName": "长度(CM)",
-                "value": "165*25",
-                "attributeNameTrans": "길이(CM)",
-                "valueTrans": "165*25"
-            },
-            {
-                "attributeId": "182318189",
-                "attributeName": "主要下游平台",
-                "value": "ebay",
-                "attributeNameTrans": "주요 다운스트림 플랫폼",
-                "valueTrans": "ebay"
-            },
-            {
-                "attributeId": "182318189",
-                "attributeName": "主要下游平台",
-                "value": "亚马逊",
-                "attributeNameTrans": "주요 다운스트림 플랫폼",
-                "valueTrans": "아마존"
-            },
-            {
-                "attributeId": "182318189",
-                "attributeName": "主要下游平台",
-                "value": "wish",
-                "attributeNameTrans": "주요 다운스트림 플랫폼",
-                "valueTrans": "wish"
-            },
-            {
-                "attributeId": "182318189",
-                "attributeName": "主要下游平台",
-                "value": "速卖通",
-                "attributeNameTrans": "주요 다운스트림 플랫폼",
-                "valueTrans": "AliExpress"
-            },
-            {
-                "attributeId": "182318189",
-                "attributeName": "主要下游平台",
-                "value": "独立站",
-                "attributeNameTrans": "주요 다운스트림 플랫폼",
-                "valueTrans": "독립 스테이션"
-            },
-            {
-                "attributeId": "182318189",
-                "attributeName": "主要下游平台",
-                "value": "LAZADA",
-                "attributeNameTrans": "주요 다운스트림 플랫폼",
-                "valueTrans": "LAZADA"
-            },
-            {
-                "attributeId": "193290003",
-                "attributeName": "有可授权的自有品牌",
-                "value": "否",
-                "attributeNameTrans": "라이센스가 있는 개인 브랜드가 있습니다.",
-                "valueTrans": "아니요"
-            },
-            {
-                "attributeId": "182282223",
-                "attributeName": "是否跨境出口专供货源",
-                "value": "是",
-                "attributeNameTrans": "국경 간 수출 전용 공급 여부",
-                "valueTrans": "예"
-            },
-            {
-                "attributeId": "20666",
-                "attributeName": "上市年份/季节",
-                "value": "2023年秋季",
-                "attributeNameTrans": "출시 연도/시즌",
-                "valueTrans": "2023년 가을"
-            },
-            {
-                "attributeId": "149092418",
-                "attributeName": "主面料成分含量",
-                "value": "10%及以下",
-                "attributeNameTrans": "주요 원단 성분 함량",
-                "valueTrans": "10% 이하"
-            },
-            {
-                "attributeId": "401",
-                "attributeName": "风格",
-                "value": "淑女",
-                "attributeNameTrans": "스타일",
-                "valueTrans": "레이디"
-            },
-            {
-                "attributeId": "401",
-                "attributeName": "风格",
-                "value": "自然",
-                "attributeNameTrans": "스타일",
-                "valueTrans": "자연스러운"
-            },
-            {
-                "attributeId": "401",
-                "attributeName": "风格",
-                "value": "学院风",
-                "attributeNameTrans": "스타일",
-                "valueTrans": "대학 스타일"
-            },
-            {
-                "attributeId": "401",
-                "attributeName": "风格",
-                "value": "田园风",
-                "attributeNameTrans": "스타일",
-                "valueTrans": "목가적인 스타일"
-            },
-            {
-                "attributeId": "401",
-                "attributeName": "风格",
-                "value": "小香风",
-                "attributeNameTrans": "스타일",
-                "valueTrans": "샤오샹펑"
-            },
-            {
-                "attributeId": "401",
-                "attributeName": "风格",
-                "value": "圣诞风",
-                "attributeNameTrans": "스타일",
-                "valueTrans": "크리스마스 스타일"
-            },
-            {
-                "attributeId": "401",
-                "attributeName": "风格",
-                "value": "仙女风",
-                "attributeNameTrans": "스타일",
-                "valueTrans": "요정 스타일"
-            },
-            {
-                "attributeId": "100031521",
-                "attributeName": "面料名称",
-                "value": "腈纶",
-                "attributeNameTrans": "원단명",
-                "valueTrans": "아크릴 섬유"
-            },
-            {
-                "attributeId": "117130178",
-                "attributeName": "主面料成分",
-                "value": "腈纶",
-                "attributeNameTrans": "주요 원단 구성",
-                "valueTrans": "아크릴 섬유"
-            },
-            {
-                "attributeId": "18066441",
-                "attributeName": "风格分类",
-                "value": "清新甜美",
-                "attributeNameTrans": "스타일 분류",
-                "valueTrans": "신선하고 달콤한"
-            },
-            {
-                "attributeId": "7195",
-                "attributeName": "处理工艺",
-                "value": "针织",
-                "attributeNameTrans": "처리 과정",
-                "valueTrans": "뜨개질"
-            },
-            {
-                "attributeId": "100301270",
-                "attributeName": "主要销售地区",
-                "value": "欧洲",
-                "attributeNameTrans": "주요 판매지역",
-                "valueTrans": "유럽"
-            },
-            {
-                "attributeId": "100301270",
-                "attributeName": "主要销售地区",
-                "value": "南美",
-                "attributeNameTrans": "주요 판매지역",
-                "valueTrans": "남미"
-            },
-            {
-                "attributeId": "100301270",
-                "attributeName": "主要销售地区",
-                "value": "东南亚",
-                "attributeNameTrans": "주요 판매지역",
-                "valueTrans": "동남아"
-            },
-            {
-                "attributeId": "100301270",
-                "attributeName": "主要销售地区",
-                "value": "北美",
-                "attributeNameTrans": "주요 판매지역",
-                "valueTrans": "북미"
-            },
-            {
-                "attributeId": "100301270",
-                "attributeName": "主要销售地区",
-                "value": "东北亚",
-                "attributeNameTrans": "주요 판매지역",
-                "valueTrans": "동북아시아"
-            },
-            {
-                "attributeId": "100301270",
-                "attributeName": "主要销售地区",
-                "value": "中东",
-                "attributeNameTrans": "주요 판매지역",
-                "valueTrans": "중동"
-            },
-            {
-                "attributeId": "446",
-                "attributeName": "尺寸",
-                "value": "165*25",
-                "attributeNameTrans": "크기",
-                "valueTrans": "165*25"
-            },
-            {
-                "attributeId": "275934765",
-                "attributeName": "流行元素分类",
-                "value": "形状/图案",
-                "attributeNameTrans": "인기 요소 분류",
-                "valueTrans": "모양/패턴"
+                "imageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN01ERBmYc1yYGpH7bdAR_!!2213333416590-0-cib.jpg",
+                "subject": "海南全生物降解塑料袋定制 书店超市医院PLA手提背心购物袋子定做",
+                "subjectTrans": "하이난 완전 생분해 비닐 봉투 커스텀 서점 슈퍼마켓 병원 PLA 휴대용 조끼 쇼핑백 커스텀",
+                "offerId": 673574631740,
+                "isJxhy": false,
+                "priceInfo": {
+                    "price": "0.10",
+                    "jxhyPrice": null,
+                    "pfJxhyPrice": null,
+                    "consignPrice": "0.1"
+                },
+                "repurchaseRate": "0%",
+                "monthSold": 0,
+                "traceInfo": "object_id%40673574631740%5Eobject_type%40offer%5Etrace%402108837b17560952320206025e0f26%5Ekeyword%40null%5EoutMemberId%40null",
+                "isOnePsale": false,
+                "sellerIdentities": []
             }
-        ],
-        "productSkuInfos": [
-            {
-                "amountOnSale": 9,
-                "price": "7.5",
-                "jxhyPrice": null,
-                "skuId": 5820406875215,
-                "specId": "cd7a301cc3e6dd472857a5c720479433",
-                "skuAttributes": [
-                    {
-                        "attributeId": 3216,
-                        "attributeName": "颜色",
-                        "attributeNameTrans": "색깔",
-                        "value": "爆款墨绿色",
-                        "valueTrans": "인기 짙은 녹색",
-                        "skuImageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN01nt3Vkg1rkSJGMAFkv_!!2218888425669-0-cib.jpg"
-                    },
-                    {
-                        "attributeId": 9024,
-                        "attributeName": "长度(CM)",
-                        "attributeNameTrans": "길이(CM)",
-                        "value": "165*25",
-                        "valueTrans": "165*25",
-                        "skuImageUrl": null
-                    }
-                ],
-                "pfJxhyPrice": null,
-                "consignPrice": "7.5",
-                "cargoNumber": "",
-                "promotionPrice": "7.13"
-            },
-            {
-                "amountOnSale": 214311,
-                "price": "7.5",
-                "jxhyPrice": null,
-                "skuId": 5820406875214,
-                "specId": "f290a2a8a4c132fc02fa16ce2fa95b5a",
-                "skuAttributes": [
-                    {
-                        "attributeId": 3216,
-                        "attributeName": "颜色",
-                        "attributeNameTrans": "색깔",
-                        "value": "爆款红色",
-                        "valueTrans": "인기 레드",
-                        "skuImageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN01UWPyhS1rkSJG2N5rQ_!!2218888425669-0-cib.jpg"
-                    },
-                    {
-                        "attributeId": 9024,
-                        "attributeName": "长度(CM)",
-                        "attributeNameTrans": "길이(CM)",
-                        "value": "165*25",
-                        "valueTrans": "165*25",
-                        "skuImageUrl": null
-                    }
-                ],
-                "pfJxhyPrice": null,
-                "consignPrice": "7.5",
-                "cargoNumber": "",
-                "promotionPrice": "7.13"
-            },
-            {
-                "amountOnSale": 27973,
-                "price": "7.5",
-                "jxhyPrice": null,
-                "skuId": 5820406875212,
-                "specId": "08b2a307900e741b1a9f5003416fb800",
-                "skuAttributes": [
-                    {
-                        "attributeId": 3216,
-                        "attributeName": "颜色",
-                        "attributeNameTrans": "색깔",
-                        "value": "爆款蓝色",
-                        "valueTrans": "인기 블루",
-                        "skuImageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN01urRBC31rkSJGdz4Em_!!2218888425669-0-cib.jpg"
-                    },
-                    {
-                        "attributeId": 9024,
-                        "attributeName": "长度(CM)",
-                        "attributeNameTrans": "길이(CM)",
-                        "value": "165*25",
-                        "valueTrans": "165*25",
-                        "skuImageUrl": null
-                    }
-                ],
-                "pfJxhyPrice": null,
-                "consignPrice": "7.5",
-                "cargoNumber": "",
-                "promotionPrice": "7.13"
-            },
-            {
-                "amountOnSale": 0,
-                "price": "7.5",
-                "jxhyPrice": null,
-                "skuId": 5820406875213,
-                "specId": "9d8e4179c31ef8606a304d6589a97574",
-                "skuAttributes": [
-                    {
-                        "attributeId": 3216,
-                        "attributeName": "颜色",
-                        "attributeNameTrans": "색깔",
-                        "value": "爆款黑色",
-                        "valueTrans": "인기 블랙",
-                        "skuImageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN01ZGMPxC1rkSJGdxzn2_!!2218888425669-0-cib.jpg"
-                    },
-                    {
-                        "attributeId": 9024,
-                        "attributeName": "长度(CM)",
-                        "attributeNameTrans": "길이(CM)",
-                        "value": "165*25",
-                        "valueTrans": "165*25",
-                        "skuImageUrl": null
-                    }
-                ],
-                "pfJxhyPrice": null,
-                "consignPrice": "7.5",
-                "cargoNumber": "",
-                "promotionPrice": "7.13"
-            },
-            {
-                "amountOnSale": 21383,
-                "price": "7.5",
-                "jxhyPrice": null,
-                "skuId": 5820406875211,
-                "specId": "9da49a42993654e37a05352d3f9a52be",
-                "skuAttributes": [
-                    {
-                        "attributeId": 3216,
-                        "attributeName": "颜色",
-                        "attributeNameTrans": "색깔",
-                        "value": "爆款咖色",
-                        "valueTrans": "핫한 커피 컬러",
-                        "skuImageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN01390BJh1rkSJHNg22c_!!2218888425669-0-cib.jpg"
-                    },
-                    {
-                        "attributeId": 9024,
-                        "attributeName": "长度(CM)",
-                        "attributeNameTrans": "길이(CM)",
-                        "value": "165*25",
-                        "valueTrans": "165*25",
-                        "skuImageUrl": null
-                    }
-                ],
-                "pfJxhyPrice": null,
-                "consignPrice": "7.5",
-                "cargoNumber": "",
-                "promotionPrice": "7.13"
-            },
-            {
-                "amountOnSale": 26753,
-                "price": "7.5",
-                "jxhyPrice": null,
-                "skuId": 5820406875217,
-                "specId": "a49e11948f207bb9b0633254f15a5059",
-                "skuAttributes": [
-                    {
-                        "attributeId": 3216,
-                        "attributeName": "颜色",
-                        "attributeNameTrans": "색깔",
-                        "value": "爆款灰色",
-                        "valueTrans": "인기 그레이",
-                        "skuImageUrl": "https://cbu01.alicdn.com/img/ibank/O1CN01rDHrXT1rkSJHP5J1Z_!!2218888425669-0-cib.jpg"
-                    },
-                    {
-                        "attributeId": 9024,
-                        "attributeName": "长度(CM)",
-                        "attributeNameTrans": "길이(CM)",
-                        "value": "165*25",
-                        "valueTrans": "165*25",
-                        "skuImageUrl": null
-                    }
-                ],
-                "pfJxhyPrice": null,
-                "consignPrice": "7.5",
-                "cargoNumber": "",
-                "promotionPrice": "7.13"
-            }
-        ],
-        "productSaleInfo": {
-            "priceRanges": null,
-            "amountOnSale": 290429,
-            "priceRangeList": [
-                {
-                    "startQuantity": 1,
-                    "price": "7.5",
-                    "promotionPrice": null
-                }
-            ],
-            "quoteType": 1,
-            "consignPrice": null,
-            "jxhyPrice": null,
-            "unitInfo": {
-                "unit": "条",
-                "transUnit": "기사"
-            }
-        },
-        "productShippingInfo": {
-            "sendGoodsAddressText": "浙江省金华市",
-            "weight": null,
-            "width": null,
-            "height": null,
-            "length": null,
-            "skuShippingInfoList": null,
-            "shippingTimeGuarantee": "shipIn48Hours",
-            "skuShippingDetails": [
-                {
-                    "skuId": "5820406875217",
-                    "width": 0,
-                    "length": 0,
-                    "height": 0,
-                    "weight": 0.3,
-                    "pkgSizeSource": "商家自填"
-                },
-                {
-                    "skuId": "5820406875215",
-                    "width": 0,
-                    "length": 0,
-                    "height": 0,
-                    "weight": 0.3,
-                    "pkgSizeSource": "商家自填"
-                },
-                {
-                    "skuId": "5820406875214",
-                    "width": 0,
-                    "length": 0,
-                    "height": 0,
-                    "weight": 0.3,
-                    "pkgSizeSource": "商家自填"
-                },
-                {
-                    "skuId": "5820406875213",
-                    "width": 0,
-                    "length": 0,
-                    "height": 0,
-                    "weight": 0.3,
-                    "pkgSizeSource": "商家自填"
-                },
-                {
-                    "skuId": "5820406875212",
-                    "width": 0,
-                    "length": 0,
-                    "height": 0,
-                    "weight": 0.3,
-                    "pkgSizeSource": "商家自填"
-                },
-                {
-                    "skuId": "5820406875211",
-                    "width": 0,
-                    "length": 0,
-                    "height": 0,
-                    "weight": 0.3,
-                    "pkgSizeSource": "商家自填"
-                }
-            ],
-            "pkgSizeSource": null
-        },
-        "sellerOpenId": "BBBGIzzltF29NDdsy3XtH0mbA",
-        "sellerDataInfo": {
-            "tradeMedalLevel": "2",
-            "compositeServiceScore": "4.0",
-            "logisticsExperienceScore": "3.0",
-            "disputeComplaintScore": "5.0",
-            "offerExperienceScore": "5.0",
-            "consultingExperienceScore": "5.0",
-            "repeatPurchasePercent": "0.4908511424581573",
-            "afterSalesExperienceScore": "2.3",
-            "collect30DayWithin48HPercent": "1.0",
-            "qualityRefundWithin30Day": "0.0"
-        },
-        "sellerMixSetting": null,
-        "status": "published",
-        "soldOut": "52",
-        "tagInfoList": [
-            {
-                "key": "isOnePsale",
-                "value": true
-            },
-            {
-                "key": "isSupportMix",
-                "value": true
-            },
-            {
-                "key": "isOnePsaleFreePostage",
-                "value": true
-            },
-            {
-                "key": "noReason7DReturn",
-                "value": false
-            },
-            {
-                "key": "1688_yx",
-                "value": true
-            },
-            {
-                "key": "isQqyx",
-                "value": true
-            },
-            {
-                "key": "select",
-                "value": true
-            }
-        ],
-        "isJxhy": true,
-        "minOrderQuantity": 1,
-        "batchNumber": null,
-        "productCargoNumber": "002",
-        "channelPrice": null,
-        "promotionModel": {
-            "hasPromotion": true,
-            "promotionType": "plus"
-        },
-        "tradeScore": "4.9",
-        "sellingPoint": null,
-        "offerIdentities": [
-            "tp_member"
-        ],
-        "createDate": "2024-11-12 19:22:50",
-        "traceInfo": "object_id@852315035423^object_type@offer"
+        ]
     }
 }

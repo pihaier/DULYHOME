@@ -73,6 +73,8 @@ export default function Search1688Page() {
   const [filters, setFilters] = useState<SelectedFilters>({
     isJxhy: false,
     isOnePsale: false,
+    shipInToday: false,
+    ksCiphertext: false,
     priceMin: '',
     priceMax: '',
   });
@@ -211,6 +213,8 @@ export default function Search1688Page() {
     setFilters({
       isJxhy: false,
       isOnePsale: false,
+      shipInToday: false,
+      ksCiphertext: false,
       priceMin: '',
       priceMax: '',
     });
@@ -221,6 +225,8 @@ export default function Search1688Page() {
   const activeFilterCount = [
     filters.isJxhy,
     filters.isOnePsale,
+    filters.shipInToday,
+    filters.ksCiphertext,
     filters.priceMin && filters.priceMin.trim(),
     filters.priceMax && filters.priceMax.trim(),
   ].filter(Boolean).length;
@@ -400,38 +406,34 @@ export default function Search1688Page() {
 
                   <Divider orientation="vertical" flexItem />
 
-                  {/* 업체 유형 필터 */}
+                  {/* 인증/배송 필터 */}
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                     <Typography variant="caption" color="text.secondary">
-                      업체 유형:
+                      필터:
                     </Typography>
                     <Chip
-                      label="제조사"
+                      label="당일발송"
                       size="small"
-                      onClick={() => {/* TODO: 제조사 필터 */}}
-                      variant="outlined"
+                      color={filters.shipInToday ? 'primary' : 'default'}
+                      onClick={() => handleFilterChange({ ...filters, shipInToday: !filters.shipInToday })}
+                      variant={filters.shipInToday ? 'filled' : 'outlined'}
                     />
                     <Chip
-                      label="무역회사"
-                      size="small"
-                      onClick={() => {/* TODO: 무역회사 필터 */}}
-                      variant="outlined"
-                    />
-                    <Chip
-                      label="실사인증"
+                      label="우수공급업체"
                       size="small"
                       color={filters.isJxhy ? 'primary' : 'default'}
                       onClick={() => handleFilterChange({ ...filters, isJxhy: !filters.isJxhy })}
                       variant={filters.isJxhy ? 'filled' : 'outlined'}
                     />
-                  </Box>
-
-                  <Divider orientation="vertical" flexItem />
-
-                  {/* 기타 필터 */}
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                     <Chip
-                      label="1개 구매 가능"
+                      label="골드셀러"
+                      size="small"
+                      color={filters.ksCiphertext ? 'primary' : 'default'}
+                      onClick={() => handleFilterChange({ ...filters, ksCiphertext: !filters.ksCiphertext })}
+                      variant={filters.ksCiphertext ? 'filled' : 'outlined'}
+                    />
+                    <Chip
+                      label="드롭쉬핑"
                       size="small"
                       color={filters.isOnePsale ? 'primary' : 'default'}
                       onClick={() => handleFilterChange({ ...filters, isOnePsale: !filters.isOnePsale })}
@@ -439,8 +441,14 @@ export default function Search1688Page() {
                     />
                   </Box>
 
+                  <Divider orientation="vertical" flexItem />
+
+                  {/* 기타 필터 */}
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  </Box>
+
                   {/* 필터 초기화 */}
-                  {(filters.priceMin || filters.priceMax || filters.isJxhy || filters.isOnePsale) && (
+                  {(filters.priceMin || filters.priceMax || filters.isJxhy || filters.isOnePsale || filters.shipInToday || filters.ksCiphertext) && (
                     <>
                       <Divider orientation="vertical" flexItem />
                       <Button
