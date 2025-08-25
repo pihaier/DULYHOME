@@ -1,4 +1,5 @@
 'use client';
+'use client';
 import React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -6,8 +7,13 @@ import Stack from '@mui/material/Stack';
 import Logo from '@/app/dashboard/layout/shared/logo/Logo';
 import { NavLinks } from './Navigations';
 import { Chip } from '@mui/material';
+import { usePathname, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 
 const MobileSidebar = () => {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  
   return (
     <>
       <Box px={3}>
@@ -37,7 +43,12 @@ const MobileSidebar = () => {
           >
             대시보드
           </Button>
-          <Button color="primary" variant="contained" href="/auth/customer/login">
+          <Button 
+            component={Link}
+            color="primary" 
+            variant="contained" 
+            href={`/auth/customer/login?redirect=${encodeURIComponent(pathname + (searchParams.toString() ? '?' + searchParams.toString() : ''))}`}
+          >
             로그인
           </Button>
         </Stack>

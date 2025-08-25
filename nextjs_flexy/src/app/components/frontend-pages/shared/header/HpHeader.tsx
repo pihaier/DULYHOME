@@ -1,4 +1,5 @@
 'use client';
+'use client';
 import React, { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
@@ -16,9 +17,13 @@ import MobileSidebar from './MobileSidebar';
 import Profile from '@/app/dashboard/layout/vertical/header/Profile';
 import { IconMenu2 } from '@tabler/icons-react';
 import { useUser } from '@/lib/context/GlobalContext';
+import { usePathname, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 
 const HpHeader = (props: any) => {
   const { user, userProfile } = useUser();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const AppBarStyled = styled(AppBar)(({ theme }) => ({
     justifyContent: 'center',
@@ -82,7 +87,12 @@ const HpHeader = (props: any) => {
                 ) : (
                   // 비로그인 사용자 UI
                   <>
-                    <Button color="primary" variant="contained" href="/auth/customer/login">
+                    <Button 
+                      component={Link}
+                      color="primary" 
+                      variant="contained" 
+                      href={`/auth/customer/login?redirect=${encodeURIComponent(pathname + (searchParams.toString() ? '?' + searchParams.toString() : ''))}`}
+                    >
                       고객 로그인
                     </Button>
                   </>

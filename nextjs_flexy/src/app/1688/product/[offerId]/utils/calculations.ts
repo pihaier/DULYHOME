@@ -14,11 +14,12 @@ export interface CalculatorData {
   chinaShippingNextFee: number;
   chinaShippingType: 'quantity' | 'weight';
   
-  // 포장 정보
-  packageWeight: number;
-  packageLength: number;
-  packageWidth: number;
-  packageHeight: number;
+  // 포장 정보 (박스 단위)
+  packageWeight: number;  // 박스당 무게
+  packageLength: number;  // 박스 길이
+  packageWidth: number;   // 박스 너비
+  packageHeight: number;  // 박스 높이
+  piecesPerBox: number;   // 박스당 개수
   
   // 운송 정보
   shippingMethod: 'auto' | 'LCL' | 'FCL';
@@ -120,14 +121,19 @@ export const calculateImportCosts = (data: CalculatorData) => {
   // 1차 결제 금액
   const firstPayment = exwTotal + commission + commissionVAT;
   
-  // CBM 계산
+  // CBM 계산 (박스 기준)
   let totalCBM = 0;
   let totalWeight = 0;
   
   if (data.packageLength > 0 && data.packageWidth > 0 && data.packageHeight > 0) {
-    const singleItemCBM = (data.packageLength * data.packageWidth * data.packageHeight) / 1000000;
-    totalCBM = singleItemCBM * quantity;
-    totalWeight = data.packageWeight * quantity;
+    // 박스당 CBM 계산 (cm³ to m³)
+    const boxCBM = (data.packageLength * data.packageWidth * data.packageHeight) / 1000000;
+    // 총 박스 수 계산
+    const totalBoxes = Math.ceil(quantity / (data.piecesPerBox || 1));
+    // 총 CBM = 박스당 CBM × 박스 수
+    totalCBM = boxCBM * totalBoxes;
+    // 총 무게 = 박스당 무게 × 박스 수
+    totalWeight = data.packageWeight * totalBoxes;
   }
   
   // 운송비 계산
@@ -139,7 +145,9 @@ export const calculateImportCosts = (data: CalculatorData) => {
   }
   
   if (shippingMethodUsed === 'LCL') {
-    shippingCost = Math.floor(totalCBM * 90000); // 90,000원/CBM
+    // LCL은 최소 1CBM으로 계산
+    const chargeableCBM = Math.max(totalCBM, 1);
+    shippingCost = Math.floor(chargeableCBM * 90000); // 90,000원/CBM
   } else {
     // FCL - 직접 입력 또는 견적
     shippingCost = data.fclQuote || 0;

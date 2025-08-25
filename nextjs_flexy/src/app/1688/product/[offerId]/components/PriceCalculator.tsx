@@ -23,9 +23,9 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import CloseIcon from '@mui/icons-material/Close';
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+// LocalShippingIcon 제거 (중국 배송비 자동 조회 제거)
 import SearchIcon from '@mui/icons-material/Search';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+// ShoppingCartIcon 제거 (장바구니 추가 버튼 제거)
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import { CalculatorData, calculateImportCosts, getCurrentPriceForQuantity } from '../utils/calculations';
 import type { ProductDetail } from '../types';
@@ -68,6 +68,7 @@ export default function PriceCalculator({
     packageLength: 0,
     packageWidth: 0,
     packageHeight: 0,
+    piecesPerBox: 1,  // 박스당 개수
     
     // 운송 정보
     shippingMethod: 'auto',
@@ -77,13 +78,13 @@ export default function PriceCalculator({
     
     // 관세 정보
     hsCode: '',
-    tariffRate: 0,
+    tariffRate: 8,  // 기본 8%로 설정
     certificateOfOrigin: false,
     certificatePrice: 30000,
     customsBrokerFee: 30000
   });
 
-  const [chinaShippingLoading, setChinsShippingLoading] = useState(false);
+  // 중국 배송비 로딩 상태 제거 (수동 입력으로 변경)
   const [lookingUpHsCode, setLookingUpHsCode] = useState(false);
   const [hsCodeProgress, setHsCodeProgress] = useState<string | null>(null);
   const [tariffDetails, setTariffDetails] = useState<any>(null);
@@ -91,172 +92,26 @@ export default function PriceCalculator({
   // 다이얼로그 열릴 때 초기화
   useEffect(() => {
     if (open && productDetail) {
-      console.log('PriceCalculator opened with:', {
-        selectedSku,
-        selectedSkus,
-        quantity,
-        productDetail
-      });
-      
       const currentPrice = getCurrentPriceForQuantity(productDetail, quantity);
       
-      // SKU 정보가 있으면 자동으로 설정
-      let packageInfo = {
-        packageWeight: 0,
-        packageLength: 0,
-        packageWidth: 0,
-        packageHeight: 0
-      };
-
-      // 여러 SKU 선택된 경우 CBM 합산
-      if (selectedSkus && selectedSkus.length > 0) {
-        let totalCBM = 0;
-        let totalWeight = 0;
-        
-        selectedSkus.forEach((sku: any) => {
-          const skuQty = sku.quantity || 1;
-          let skuCBM = 0;
-          let skuWeight = 0;
-          
-          // productShippingInfo.skuShippingDetails에서 찾기
-          if (productDetail.productShippingInfo?.skuShippingDetails) {
-            const skuShipping = productDetail.productShippingInfo.skuShippingDetails.find(
-              detail => detail.skuId === sku.skuId?.toString()
-            );
-            if (skuShipping) {
-              const length = skuShipping.packageLength || 0;
-              const width = skuShipping.packageWidth || 0;
-              const height = skuShipping.packageHeight || 0;
-              skuCBM = (length * width * height) / 1000000; // mm³ to m³
-              skuWeight = skuShipping.grossWeight || 0;
-            }
-          }
-          
-          // skuShippingDetails에 없으면 SKU 속성에서 찾기
-          if (skuCBM === 0 && sku.skuAttributes) {
-            // SKU 속성에 포장 정보가 있는 경우 (예: 무게, 크기 등)
-            sku.skuAttributes.forEach((attr: any) => {
-              if (attr.attributeName?.includes('重量') || attr.attributeName?.includes('weight')) {
-                const weight = parseFloat(attr.value);
-                if (!isNaN(weight)) skuWeight = weight;
-              }
-            });
-          }
-          
-          totalCBM += skuCBM * skuQty;
-          totalWeight += skuWeight * skuQty;
-        });
-        
-        // CBM을 역산하여 평균 치수 계산 (간단한 방법)
-        // 실제로는 패킹 효율을 고려해야 하지만, 여기서는 단순 합산
-        if (totalCBM > 0) {
-          // CBM에서 평균 치수 역산 (정육면체 가정)
-          const avgDimension = Math.cbrt(totalCBM * 1000000); // m³ to mm³의 세제곱근
-          packageInfo = {
-            packageWeight: totalWeight,
-            packageLength: Math.round(avgDimension),
-            packageWidth: Math.round(avgDimension),
-            packageHeight: Math.round(avgDimension)
-          };
-        } else {
-          // CBM 정보가 없으면 기본값 사용
-          packageInfo = {
-            packageWeight: totalWeight,
-            packageLength: 0,
-            packageWidth: 0,
-            packageHeight: 0
-          };
-        }
-      }
-      // 단일 SKU 선택된 경우 해당 SKU의 포장 정보 사용
-      else if (selectedSku) {
-        // productShippingInfo.skuShippingDetails에서 찾기
-        if (productDetail.productShippingInfo?.skuShippingDetails) {
-          const skuShipping = productDetail.productShippingInfo.skuShippingDetails.find(
-            detail => detail.skuId === selectedSku.skuId?.toString()
-          );
-          if (skuShipping) {
-            packageInfo = {
-              packageWeight: skuShipping.grossWeight || 0,
-              packageLength: skuShipping.packageLength || 0,
-              packageWidth: skuShipping.packageWidth || 0,
-              packageHeight: skuShipping.packageHeight || 0
-            };
-          }
-        }
-        
-        // skuShippingDetails에 없으면 SKU 속성에서 찾기
-        if (packageInfo.packageWeight === 0 && selectedSku.skuAttributes) {
-          // SKU 속성에 포장 정보가 있는 경우 (예: 무게, 크기 등)
-          selectedSku.skuAttributes.forEach((attr: any) => {
-            if (attr.attributeName?.includes('重量') || attr.attributeName?.includes('weight')) {
-              const weight = parseFloat(attr.value);
-              if (!isNaN(weight)) packageInfo.packageWeight = weight;
-            }
-          });
-        }
-      } 
-      // SKU가 없으면 기본 상품 포장 정보 사용
-      else if (productDetail.productShippingInfo) {
-        const shipping = productDetail.productShippingInfo;
-        packageInfo = {
-          packageWeight: shipping.weight || 0,
-          packageLength: shipping.length || 0,
-          packageWidth: shipping.width || 0,
-          packageHeight: shipping.height || 0
-        };
-      }
-
       setCalculatorData(prev => ({
         ...prev,
         chinaPrice: currentPrice,
         quantity: quantity,
-        ...packageInfo
+        // 포장 정보는 자동으로 설정하지 않음 (사용자가 직접 입력)
       }));
     }
-  }, [open, productDetail, selectedSku, selectedSkus, quantity]);
+  }, [open, productDetail, quantity]);
 
-  // 중국 배송비 조회
-  const handleFetchChinaShipping = async () => {
-    if (!productDetail || !selectedSku) {
-      alert('옵션을 먼저 선택해주세요.');
-      return;
-    }
+  // 중국 배송비 조회 함수 제거 (수동 입력으로 변경)
 
-    setChinsShippingLoading(true);
-    try {
-      const { getEdgeFunctionsClient } = await import('@/lib/supabase/edge-functions-client');
-      const functionsClient = getEdgeFunctionsClient();
-      
-      const { data, error } = await functionsClient.invoke('calculate-shipping', {
-        body: {
-          offerId: productDetail.offerId,
-          skuId: selectedSku.skuId,
-          quantity: calculatorData.quantity,
-          cityCode: '310100' // 상하이
-        }
-      });
-
-      if (error) throw error;
-
-      if (data?.freightFee) {
-        setCalculatorData(prev => ({
-          ...prev,
-          chinaShippingFee: data.freightFee
-        }));
-      }
-    } catch (error) {
-      console.error('Failed to fetch shipping fee:', error);
-      alert('배송비 조회 실패. 수동으로 입력해주세요.');
-    } finally {
-      setChinsShippingLoading(false);
-    }
-  };
+  // HS 코드 조회용 제품명 상태
+  const [hsProductName, setHsProductName] = useState('');
 
   // HS 코드 조회
   const handleHsCodeLookup = async () => {
-    if (!productDetail?.subjectTrans) {
-      alert('제품명이 없습니다');
+    if (!hsProductName.trim()) {
+      alert('제품명을 입력해주세요');
       return;
     }
 
@@ -276,7 +131,7 @@ export default function PriceCalculator({
           'Authorization': `Bearer ${ANON_KEY}`,
         },
         body: JSON.stringify({
-          productName: productDetail.subjectTrans
+          productName: hsProductName
         }),
       });
 
@@ -619,21 +474,20 @@ export default function PriceCalculator({
                 🚚 중국 내 배송비
               </Typography>
               
-              <Button
-                variant="contained"
+              <TextField
                 fullWidth
-                onClick={handleFetchChinaShipping}
-                disabled={chinaShippingLoading}
-                startIcon={chinaShippingLoading ? <CircularProgress size={20} /> : <LocalShippingIcon />}
-              >
-                {chinaShippingLoading ? '조회 중...' : '배송비 자동 조회'}
-              </Button>
-
-              {calculatorData.chinaShippingFee !== null && (
-                <Alert severity="success">
-                  조회된 배송비: ¥{calculatorData.chinaShippingFee}
-                </Alert>
-              )}
+                label="중국 내 배송비"
+                type="number"
+                value={calculatorData.chinaShippingFee || ''}
+                onChange={(e) =>
+                  setCalculatorData(prev => ({ ...prev, chinaShippingFee: Number(e.target.value) || 0 }))
+                }
+                InputProps={{
+                  startAdornment: <InputAdornment position="start">¥</InputAdornment>,
+                }}
+                placeholder="예: 15"
+                helperText="중국 내 배송비를 위안화로 입력하세요"
+              />
 
               <Typography variant="subtitle2" color="primary" sx={{ mt: 2 }}>
                 📦 포장 정보
@@ -656,6 +510,21 @@ export default function PriceCalculator({
                   </Typography>
                 </Alert>
               )}
+
+              <TextField
+                fullWidth
+                label="박스당 개수"
+                type="number"
+                value={calculatorData.piecesPerBox}
+                onChange={(e) =>
+                  setCalculatorData(prev => ({ ...prev, piecesPerBox: Number(e.target.value) || 1 }))
+                }
+                InputProps={{
+                  endAdornment: <InputAdornment position="end">개/박스</InputAdornment>,
+                }}
+                helperText={`총 ${Math.ceil(calculatorData.quantity / (calculatorData.piecesPerBox || 1))}박스 필요`}
+                sx={{ mb: 2 }}
+              />
               
               <Grid container spacing={1}>
                 <Grid size={6}>
@@ -755,14 +624,24 @@ export default function PriceCalculator({
                 🏛️ 관세 정보
               </Typography>
               
+              <TextField
+                fullWidth
+                label="한글 제품명"
+                value={hsProductName}
+                onChange={(e) => setHsProductName(e.target.value)}
+                placeholder="예: 헤어핀, 머리핀"
+                helperText="정확한 한글 제품명을 입력하세요"
+                sx={{ mb: 1 }}
+              />
+              
               <Button
                 variant="outlined"
                 fullWidth
                 onClick={handleHsCodeLookup}
-                disabled={lookingUpHsCode}
+                disabled={lookingUpHsCode || !hsProductName.trim()}
                 startIcon={lookingUpHsCode ? <CircularProgress size={20} /> : <SearchIcon />}
               >
-                HS 코드 자동 조회
+                HS 코드 조회
               </Button>
               
               {hsCodeProgress && (
@@ -793,7 +672,7 @@ export default function PriceCalculator({
                 InputProps={{
                   endAdornment: <InputAdornment position="end">%</InputAdornment>,
                 }}
-                helperText={calculatorData.hsCode ? "HS 코드에 따라 자동 설정됨" : "HS 코드 조회 후 자동 설정"}
+                helperText="기본 관세율 8% (HS 코드에 따라 변경 가능)"
               />
             </Stack>
           </Grid>
@@ -803,6 +682,10 @@ export default function PriceCalculator({
             <Paper sx={{ p: 2, bgcolor: '#f8f9fa' }}>
               <Typography variant="h6" gutterBottom>
                 💰 계산 결과
+              </Typography>
+              
+              <Typography variant="caption" color="error" sx={{ display: 'block', mb: 2 }}>
+                ※ 실제 금액은 환율 및 배송비에 따라 다를 수 있습니다
               </Typography>
               
               <Table size="small">
@@ -897,17 +780,7 @@ export default function PriceCalculator({
       </DialogContent>
 
       <DialogActions>
-        <Button onClick={onClose}>닫기</Button>
-        <Button 
-          variant="contained" 
-          startIcon={<ShoppingCartIcon />}
-          onClick={() => {
-            // TODO: 장바구니 추가 로직
-            alert('장바구니 추가 기능 구현 예정');
-          }}
-        >
-          장바구니 추가
-        </Button>
+        <Button onClick={onClose} variant="contained">닫기</Button>
       </DialogActions>
     </Dialog>
   );

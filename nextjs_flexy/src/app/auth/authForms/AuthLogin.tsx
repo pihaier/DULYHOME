@@ -113,11 +113,15 @@ const AuthLogin = ({
           .single();
 
         // 로그인 성공 - 리다이렉트 처리
+        const redirect = searchParams.get('redirect');
         const redirectTo = searchParams.get('redirectTo');
         const returnUrl = searchParams.get('returnUrl');
 
-        if (redirectTo) {
-          // middleware에서 보낸 redirectTo 파라미터 우선
+        if (redirect) {
+          // redirect 파라미터 (1688 상품 페이지에서 사용)
+          router.push(decodeURIComponent(redirect));
+        } else if (redirectTo) {
+          // middleware에서 보낸 redirectTo 파라미터
           router.push(decodeURIComponent(redirectTo));
         } else if (returnUrl) {
           // 기존 returnUrl 파라미터
