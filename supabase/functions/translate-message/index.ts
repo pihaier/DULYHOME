@@ -35,11 +35,15 @@ Deno.serve(async (req) => {
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
-    // service_type에 따라 해당 테이블에서만 주문 정보 가져오기
+    // PROD 메시지인 경우 metadata에서 제품 정보 가져오기
     let orderData = null;
+    let compressedOrderInfo = ''
     
-    if (record.service_type) {
-      // service_type과 테이블 매핑
+    if (record.reservation_number?.startsWith('PROD-') && record.metadata?.productName) {
+      // PROD 메시지는 metadata의 제품명 사용
+      compressedOrderInfo = `1688 제품 문의: ${record.metadata.productName}`
+    } else if (record.service_type) {
+      // 기존 service_type 기반 처리
       const tableMap = {
         'market-research': 'market_research_requests',
         'factory-contact': 'factory_contact_requests', 
@@ -61,28 +65,27 @@ Deno.serve(async (req) => {
         
         orderData = data;
       }
-    }
-    
-    // 주문 정보 압축 (시스템 메시지용)
-    let compressedOrderInfo = ''
-    if (orderData) {
-      // GPT-5-mini로 주문 정보 압축
-      const compressionResponse = await openai.chat.completions.create({
-        model: 'gpt-5-mini',
-        messages: [
-          {
-            role: 'system',
-            content: '주문 정보를 한국어로 간단히 요약하세요. 핵심 정보만 1-2줄로 압축하세요.'
-          },
-          {
-            role: 'user',
-            content: `서비스: ${orderData.service_type}\n회사: ${orderData.company_name}\n제품: ${orderData.product_name || ''}\n상태: ${orderData.status}`
-          }
-        ],
-        max_completion_tokens: 200,
-      })
       
-      compressedOrderInfo = compressionResponse.choices[0]?.message?.content?.trim() || ''
+      // 주문 정보 압축 (시스템 메시지용)
+      if (orderData) {
+        // GPT-5-mini로 주문 정보 압축
+        const compressionResponse = await openai.chat.completions.create({
+          model: 'gpt-5-mini',
+          messages: [
+            {
+              role: 'system',
+              content: '주문 정보를 한국어로 간단히 요약하세요. 핵심 정보만 1-2줄로 압축하세요.'
+            },
+            {
+              role: 'user',
+              content: `서비스: ${orderData.service_type}\n회사: ${orderData.company_name}\n제품: ${orderData.product_name || ''}\n상태: ${orderData.status}`
+            }
+          ],
+          max_completion_tokens: 200,
+        })
+        
+        compressedOrderInfo = compressionResponse.choices[0]?.message?.content?.trim() || ''
+      }
     }
 
     // 최근 메시지 5개 가져오기

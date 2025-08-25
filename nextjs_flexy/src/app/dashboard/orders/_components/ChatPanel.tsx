@@ -51,6 +51,9 @@ interface ChatPanelProps {
   currentUserName?: string;
   serviceType?: string; // 서비스 타입 추가 ('market-research' | 'factory-contact' | 'inspection')
   onFileUpload?: () => void;
+  productMetadata?: {
+    productName?: string;
+  };
 }
 
 // 파일 타입 헬퍼 함수들
@@ -95,6 +98,7 @@ export default function ChatPanel({
   currentUserName,
   serviceType,
   onFileUpload,
+  productMetadata,
 }: ChatPanelProps) {
   const [chatMessage, setChatMessage] = useState('');
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
@@ -183,6 +187,7 @@ export default function ChatPanel({
           message_type: 'text',
           service_type: serviceType, // service_type 추가
           is_read: false, // 새 메시지는 읽지 않은 상태로 추가
+          metadata: productMetadata || null, // product metadata 추가
         })
         .select()
         .single();
@@ -330,22 +335,7 @@ export default function ChatPanel({
     if (!reservationNumber) return;
 
     setLoadingChat(true);
-    fetchChatMessages().then(() => {
-      // 번역 안 된 메시지 찾아서 번역 요청
-      const translatePendingMessages = async () => {
-        const { data: untranslated } = await supabase
-          .from('chat_messages')
-          .select('*')
-          .eq('reservation_number', reservationNumber)
-          .is('translated_message', null)
-          .not('original_message', 'is', null);
-
-        // Realtime 리스너가 자동으로 번역 처리
-        // 중복 호출 제거
-      };
-
-      translatePendingMessages();
-    });
+    fetchChatMessages();
 
     // Realtime 구독 - 더 간단한 방식으로
 

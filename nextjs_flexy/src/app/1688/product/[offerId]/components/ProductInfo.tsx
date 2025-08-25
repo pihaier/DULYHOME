@@ -610,6 +610,9 @@ export default function ProductInfo({
                 reservationNumber={`PROD-${productDetail.offerId}`}
                 currentUserId={undefined}
                 currentUserRole={undefined}
+                productMetadata={{
+                  productName: productDetail.subjectTrans || productDetail.subject
+                }}
               />
             )}
           </Suspense>

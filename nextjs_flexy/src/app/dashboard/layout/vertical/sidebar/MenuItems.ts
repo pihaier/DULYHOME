@@ -135,6 +135,18 @@ const Menuitems: MenuitemsType[] = [
   // },
   {
     navlabel: true,
+    subheader: '💬 메시지',
+  },
+  {
+    id: uniqueId(),
+    title: '전체 메시지',
+    icon: IconMessage2,
+    href: '/dashboard/messages',
+    chip: 'NEW',
+    chipColor: 'error',
+  },
+  {
+    navlabel: true,
     subheader: '⚡ 빠른 액세스',
   },
   {
